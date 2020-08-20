@@ -1,0 +1,22 @@
+<div class='spotbie-overlay-window animated fadeIn' #spotbieShareWindow [ngStyle]="{ 'background-color' : bg_color }">
+
+    <div class='spotbie-repost-title' #spotbie_post_report_title>Is this post unappropiate?</div>
+
+    <app-stream-post [stream_post]="stream_post" [input_flag]="input_flag"></app-stream-post>
+
+    <div class='spotbie-repost-title'>Tell us why...</div>
+
+    <div class='spotbie-report-reasons' *ngFor='let report_reason of report_reason_list' (click)='reportReasonSelect($event, report_reason)'> 
+        {{ report_reason.report_reason }} 
+    </div>
+
+    <div class='spotbie-toast-message animated fadeIn' *ngIf="report_sent"> {{ report_send_msg }}</div>
+
+    <table class="spotbie-bottom-button-bar">
+        <tr>
+            <td class="spotbie-button spotbie-td-button" (click)="sendReport()">report</td>
+            <td class="spotbie-button spotbie-td-button" (click)="closeWindowX()">cancel</td>
+        </tr>
+    </table>
+
+</div>

@@ -1,0 +1,71 @@
+<app-loading-screen *ngIf="loading"></app-loading-screen>
+
+
+<div class='spotbie-overlay-window'>
+    
+    <div class='spotbie-friend-actions-image'
+        *ngIf="blocked_user.user_info.exe_user_default_picture | defaultImage as exe_user_default"
+        [ngStyle]="{'background' : 'url(' + exe_user_default + ')'}"></div>
+
+        <div class='spotbie-friend-actions-username'>{{ blocked_user.user_info.exe_username }}</div>
+
+    <table class='spotbie-friend-action-buttons' *ngIf="isDesktop">
+        <tr>
+            <td>
+                <div class='spotbie-button' [routerLink]="['/user-profile/' + blocked_user.user_info.exe_username]">View Profile</div>
+            </td>
+            <td>
+                <div class='spotbie-button' (click)="unblockUser()">Unblock</div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class='spotbie-button' (click)="friendUser()">Befriend</div>
+            </td>
+            <td>
+                <div class='spotbie-button' (click)="report()">Report</div>
+            </td>            
+        </tr>
+    </table>
+
+    <table class='spotbie-friend-action-buttons' *ngIf="isMobile">
+        <tr>
+            <td>
+                <div class='spotbie-button' [routerLink]="['/user-profile/' + blocked_user.user_info.exe_username]">View Profile</div>
+            </td>
+        </tr>
+        <tr>            
+            <td>
+                <div class='spotbie-button' (click)="unblockUser()">Unblock</div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class='spotbie-button' (click)="friendUser()">Befriend</div>
+            </td>
+        </tr>
+        <tr>            
+            <td>
+                <div class='spotbie-button' (click)="report()">Report</div>
+            </td>            
+        </tr>
+    </table>    
+
+    <div class="spotbie-close-button" (click)="closeWindow()">close actions for "{{blocked_user.user_info.exe_username}}"</div>
+
+    <div class="spotbie-successful-action-wrapper" *ngIf="successful_action">
+        <div class="spotbie-successful-action-title">
+            {{ successful_action_title }}
+        </div>
+        <div class="spotbie-successful-action-description">
+            {{ successful_action_description }}
+        </div>        
+    </div>
+    
+    <app-questions-answer [user]="blocked_user" *ngIf="questions_answer" (closeWindow)="closeWindow()" 
+                                                (friendRequested)="friendRequested()">
+    </app-questions-answer>
+
+
+</div>
+        

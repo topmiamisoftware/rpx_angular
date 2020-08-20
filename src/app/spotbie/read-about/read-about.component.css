@@ -1,0 +1,1042 @@
+html{
+    position: relative;
+    margin: 0 auto;
+    position: relative;
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    min-height: 100%;
+    max-height:  100%;
+    height: 100%;
+    color: white !important;
+    background-color: rgb(31, 31, 31);                 
+    overflow-y: scroll;
+    overflow-x: hidden;
+    font-family: Arial, Helvetica, sans-serif;
+}
+h2{
+    font-size: 18px;
+}
+.HA{
+    position: relative;
+    margin: 0 auto;
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;             
+    min-width: 100%;
+    max-width: 100%;
+    width: 100%;
+    text-align: center;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    background-color: rgb(31, 31, 31);
+    color: #8BC34A;
+    z-index: 1;
+}
+.QuestionsPar{
+    position: relative;
+    top: -9px;
+    margin-top: 0;
+    font-size: 19px;
+    line-height: 24px;
+    padding: 25px;
+    padding-top: 40px;
+    padding-bottom: 40px;                
+    background-color: rgba(39, 39, 39, 0.89);
+    color: white;
+    letter-spacing: 2px;
+    line-height: 30px;
+}
+.Pgh{
+    position: absolute;
+    top: 0%;
+    bottom: 0%;
+    left: 0%;
+    right: 0%;
+    background-color: rgba(0,0,0,.23) !important;                
+}
+.QuestionsTuto{
+    position: relative;
+    margin: 0 auto;
+    width: 100%;
+    min-width: unset !important;
+    max-width: 1200px !important;
+    overflow-y: scroll;
+    z-index: 9;
+    color: inherit !important;
+}
+.QuestionsVideo{
+    position: relative;
+    display: block;
+    margin: 0 auto;
+    height: 420px;
+    min-height: 420px;
+    max-height: 420px;
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    margin-bottom: 20px;
+}
+.BetaRelease{
+    position: relative;
+    margin: 0 auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    background-color: rgba(0, 0, 0, 0.79);
+    padding-top: 20px;
+    padding-bottom: 20px;
+    text-align: center;
+    color: white !important;
+    font-size: 20px;
+    letter-spacing: 3px;
+}            
+.QuestionsImage{
+    position: relative;
+    top: -3px;                
+    margin: 0 auto;
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    background-size: contain !important;
+}
+.AppsRx {
+    position: relative;
+    margin: 0 auto;
+    margin-top: 20px;
+    height: 50px;
+    min-height: 50px;
+    max-height: 50px;
+    min-width: 100%;
+    width: 100%;
+    max-width: 660px;
+    table-layout: fixed;
+    background-color: rgb(44, 44, 44);
+    border-radius: 25px;
+}    
+.Axmvx {
+    position: fixed;
+    right: 42px;
+    bottom: 23px;
+    width: 200px;
+    max-width: 200px;
+    min-width: 200px;
+    text-align: center;
+    color: white!important;
+    padding-bottom: 15px;
+    padding-top: 15px;
+    background-color: #609329;
+    color: #ffffff !important;
+    font-size: 22px;
+    border-radius: 10px;
+    z-index: 999;
+    cursor: pointer;
+    box-shadow: #bdff71 1px 1px 10px inset;     
+}
+.Axmvx:hover{
+    background-color: rgb(25, 25, 25);
+    box-shadow: #535353 1px 1px 10px inset;   
+}
+a:hover,a:active,a,a:after{
+    color: #8BC34A;
+    text-decoration: underline;
+    font-weight: bold !important;
+}
+.xfDs{
+    cursor : pointer;
+}
+.dfg{
+    position: relative;
+    display: block;
+    width: 100%;
+    min-width: 100%;
+    text-decoration: none !important;
+}                       
+.HomeWrapper{
+    position: relative;
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    max-height: 100%;           
+}
+.termsAndService{
+    max-width: 550px !important;
+    cursor: pointer;
+    font-size: 20px;
+}
+.termsAndService:hover{
+    text-decoration: underline;
+}
+.signUpBox{
+    position: fixed;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    padding: 20px;
+    padding-left: 40px;
+    padding-right: 40px;
+    width: 850px;
+    min-width: 850px;
+    max-width: 850px;
+    top: 2%;
+    bottom: 2%;
+    background-color: rgb(12, 12, 12);
+    border-radius: 20px;
+    overflow-y: scroll;
+    border: 1px solid #4f4f4f;
+}
+.closeSignUp{
+    position: absolute;
+    background-color: #b90303;
+    color: white;
+    font-size: 17px;
+    padding: 20px;
+    right: 10px;
+    top: 10px;
+    padding: 10px;
+    border-radius: 99%;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    cursor: pointer;
+    box-shadow: inset 1px 1px 4px #757575;
+    z-index: 99;
+}
+.closeSignUp:hover{
+    box-shadow: inset 1px 1px 2px #757575;   
+}
+.spotbie-desc{
+    text-indent: 50px;
+}
+.signUpBoxInstructions{
+    position: relative;
+    display: block;
+    margin: 0 auto;
+    padding-top: 10px;
+    padding-bottom: 0px;
+    font-size: 20px;
+    letter-spacing: 1px;
+}
+.signUpBoxHolder{
+    position: fixed;
+    top:0;
+    bottom: 0;
+    right: 0;
+    bottom: 0;
+    min-height: 100%;
+    height: 100%;
+    min-width: 100%;
+    width: 100%;
+    background-color: rgba(0,0,0,.82);            
+    z-index: 999999999999;
+    transition: all 1s;
+    -webkit-overflow-scrolling: touch;
+}
+.signUpInput{
+    position: relative;
+    border-radius: 10px;
+    margin: unset;
+    margin-top: 10px !important;
+    margin-bottom: 5px !important;
+    padding: 10px;
+    font-size: 20px;
+    background-color: rgba(0,0,0,.23);
+    border: 0;
+    color: #8BC34A;
+    letter-spacing: 1px;
+    width: 450px;
+    min-width: 450px;
+    max-width: 450px;
+    border: 1px solid #3c3c3c;
+    text-align: left;
+}
+.signUpInput::placeholder{
+    color: #8BC34A !important;
+}
+.spotbieSignUpButton{
+    position: relative;
+    margin: 0 auto;
+    text-align: center;
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 20px;
+    border: 1px solid #3c3c3c;
+    background-color: #609329;
+    color: white !important;
+}
+.spotbieSignUpButton:hover{
+    background-color: #131313;
+}
+.displayTableName{
+    position: relative;
+    margin: 0 auto;
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+}
+.displayTableName td{
+    padding-left: 20px;
+    text-align: left;
+    min-width: unset;
+    width: unset;
+}
+.signUpTable{
+    table-layout: fixed;
+}
+.signUpTable td{
+    width: 50%;
+    min-width: 50%;
+    max-width: 50%;
+}
+#sign_up_general_instructions{
+    text-align: center;
+    padding-top: 20px;
+    padding-bottom: 10px;
+    font-size: 15px;
+}
+.successBoxNames{
+    color: #8BC34A;
+}
+.successBoxOutter{
+    position: fixed;
+    display: none;
+    top:0;
+    bottom: 0;
+    right: 0;
+    bottom: 0;
+    min-height: 100%;
+    height: 100%;
+    min-width: 100%;
+    width: 100%;
+    background-color: rgba(0,0,0,.53);
+    z-index: 99999999999999999999999999999;
+}
+.successBoxPage{
+    position: fixed;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    padding: 20px;
+    padding-left: 40px;
+    padding-right: 40px;
+    width: 750px;
+    min-width: 750px;
+    max-width: 750px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    top: 20%;
+    background-color: rgb(25, 25, 25);
+    border-radius: 20px;
+    line-height: 39px;
+    font-size: 20px;
+    letter-spacing: 1px;
+    overflow-y: scroll;
+    border: 1px solid white;
+}
+.signUpTerms{
+    font-size: 15px;
+    text-align: center;
+    padding-bottom: 20px;                
+}
+.spotBieLogo{
+    color: white;
+    font-family: sitka-italic;
+    text-shadow: 1px 2px 1px #609329;
+    font-size: 45px;
+    letter-spacing: -3px;
+}
+.spotbieFinishButton{
+    margin-top: 20px;
+    max-width: 150px;
+    width: 150px;
+    min-width: 150px;
+    padding-top: 5px;
+    padding-bottom: 5px;            
+}
+.superBoxPerksOutter{
+    position: fixed;
+    display: none;
+    top:0;
+    bottom: 0;
+    right: 0;
+    bottom: 0;
+    min-height: 100%;
+    height: 100%;
+    min-width: 100%;
+    width: 100%;
+    background-color: rgba(0,0,0,.53);
+    z-index: 99999999999999999999999999999;
+}            
+.superBoxPerks{
+    position: fixed;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    padding: 20px;
+    padding-left: 40px;
+    padding-right: 40px;
+    width: 750px;
+    min-width: 750px;
+    max-width: 750px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    top: 20%;
+    background-color: rgb(25, 25, 25);
+    border-radius: 20px;
+    line-height: 39px;
+    font-size: 20px;
+    letter-spacing: 1px;
+    overflow-y: scroll;
+    border: 1px solid #4f4f4f;
+}
+.spotBieSlideShow{
+    position: fixed;
+    display : none;
+    top:0;
+    bottom: 0;
+    right: 0;
+    bottom: 0;
+    min-height: 100%;
+    height: 100%;
+    min-width: 100%;
+    width: 100%;
+    background-color: rgba(0,0,0,.92);
+    z-index: 9999999;                
+}
+.featuresSlideshow{
+    position: fixed;
+    display: none;
+    top: 10px;
+    left: 10px;
+    background-color: rgba(0, 0, 0, 0.78);
+    z-index: 998;
+    padding: 5px;
+    padding-left: 6px;
+    padding-right: 12px;
+    border-radius: 10px;
+    cursor: pointer;
+    z-index: 999;
+}
+.featuresSlideshow:hover{
+    background-color: rgba(0, 0, 0, 0.5);
+}
+.featuresSlideshow img{
+    margin-top: 4px;
+    margin-left: 4px;
+    width: 22px;
+    min-width: 22px;
+    max-width: 22px;
+    opacity: 0.6;                
+}
+.featuresSlideshow span{
+    color: #8BC34A;
+    float: right;
+    margin-top: 5px;
+    margin-left: 10px;
+}
+.slideshowArrow{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    border-radius: 99%;
+    color: white;
+    font-size: 65px;
+    background-color: #2f2f2f;
+    padding: 21px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    cursor: pointer;
+}
+.slideshowArrow:hover{
+    background-color: #171717;
+}
+.arrowLeft{
+    left: 1%;
+    padding-left: 17px;
+}
+.arrowRight{
+    right: 1%;
+    padding-right: 17px;
+}
+.slideshowMain{
+    position: relative;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    margin-top: 30px;                
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    min-height: 70%;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    background-size: contain !important;
+    z-index: -1;             
+}
+.closeSlideshow{
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    bottom: 20px;
+    color: white;
+    text-align: center;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    border-radius: 10px;
+    font-size: 20px;
+    cursor: pointer;
+    background-color: #567e27;
+    width: 250px;
+    min-width: 250px;
+    max-width: 250px;
+    z-index: 9;
+}
+closeSlideshow:hover{
+    background-color: rgb(35,35,35);
+}
+.slideshowDisclaimer{
+    position: relative;
+    margin: 0 auto;
+    margin-top: 40px;
+    text-align: center;
+    font-size: 20px;
+    max-width: 1000px;
+    line-height: 35px;
+}
+.signUpInnerA{
+    position: relative;
+    margin: 0 auto;
+    margin-top: 30px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 23px;
+    width: 250px;
+    min-width: 250px;
+    max-width: 250px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    text-align: center;
+    border-radius: 10px;
+}
+.signUpInnerA:hover{
+    text-decoration: underline;
+}
+.spotbieAddPointerCursor{
+    cursor: pointer;
+}
+#loading_screen{
+    position: fixed;
+    display: none;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    bottom: 0;
+    min-height: 100%;
+    height: 100%;
+    min-width: 100%;
+    width: 100%;
+    background-color: rgba(0,0,0,.92);
+    z-index: 9999999999999998;
+}
+.loading_gif{
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    width: 50px;
+    min-width: 50px;
+    max-width: 50px;
+    height: 50px;
+    min-height: 50px;
+    max-height: 50px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: url(../../../assets/images/loading.gif);
+    background-size: contain;
+}
+#timerx{
+    position: relative;
+    margin-top: 15px;
+    font-size: 45px;
+    color: #8BC34A;
+}
+.Timer{
+    max-width: 80%;
+    width: 80%;
+    min-width: 80%;
+    border-radius: 20px;
+    background-color: rgba(0, 0, 0, 0.74);            
+}
+input{
+    outline-color: #609329;
+}
+body{
+    margin: 0 auto;
+}
+::-webkit-scrollbar{
+    height: 1px;
+    width: 1px;
+    background: transparent;
+}
+::-webkit-scrollbar-thumb{
+    background: transparent;
+}
+
+::-webkit-scrollbar-corner{
+    background: transparent;
+}
+::-webkit-scrollbar-button{
+    background-color: #000;
+}
+@font-face{
+    font-family: sitka-italic;
+    src: url(../../../assets/fonts/Fluent_SitkaSmall-Italic.ttf);
+    font-display: swap;
+}
+.AppsRx{
+    margin-top: 20px;
+    margin-bottom: 20px;
+    max-width: 600px;
+    width: 600px;
+    min-width: 600px;
+}
+.AppsRx td {
+    text-align: center;
+    padding: .5%;
+    width: 50%;
+    min-width: 50%;
+    max-width: 50%;
+    border: 11px solid #00000021;
+    /* padding: 6px; */
+    border-radius: 27px;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    background-size: contain !important;
+    background-color: rgba(0, 0, 0, 0.95) !important;
+    /* box-shadow: 4px 4px 4px inset; */
+}
+.AppsRx td i{
+    font-size: 45px;
+}
+.spotbie-banner-wrapper{
+    position: relative;
+}
+.gRetScreen{
+    position: fixed;
+    display: none;
+    top: 0%;
+    bottom: 0%;
+    left: 0%;
+    right: 0%;
+    background-color: rgba(0,0,0,.23) !important;
+    z-index: 9999999999999999;
+}
+.grec {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    margin: 0 auto;
+    margin-top: 39px;
+    max-width: 301px;
+    z-index: 9999999999999999;
+}
+.spotbie-version{
+    position: relative;
+    margin: 0 auto;
+    padding-top: 20px;
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    font-size: 16px;
+    color: #8BC34A;
+    text-align: center;
+    letter-spacing: 0px;
+}
+/**WIDTH MEDIA QUERIES */
+@media (max-width: 1300px) { 
+
+}
+@media (max-width: 1200px) {   
+    .featuresSlideshow{
+        display: none !important;
+    }
+}
+@media (max-width: 1024px) { 
+    .slideshowArrow{
+        font-size: 30px !important;
+        padding: 6px  !important;
+    }
+    .arrowLeft{
+        padding-right: 10px !important;
+        padding-left: 10px !important;
+    }
+    .arrowRight{
+        padding-right: 10px !important;
+        padding-left: 10px !important;
+    } 
+}
+@media (max-width: 900px) { 
+
+}
+@media (max-width: 855px) { 
+    .signUpBox{
+        min-width: 92% !important;
+        max-width: 92% !important;
+        width: 92% !important;
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+    }
+    .successBoxPage{
+        min-width: 90% !important;
+        max-width: 90% !important;
+        width: 90% !important;
+        padding-left: 15px !important;
+        padding-right: 15px !important;
+        font-size: 18px !important;
+        top: 10% !important;       
+    }
+}
+@media (max-width: 800px) { 
+    .AppsRx {
+        max-width: 450px !important;
+        min-width: 450px !important;
+        width: 450px !important;
+    }
+    .AppsRx td{
+        padding: 20px;
+        padding-top: 25px;
+        padding-bottom: 25px;
+    }
+    .HA{
+        font-size:  27px !important;      
+    }
+    .termsAndService{
+        font-size: 20px !important;
+    }
+    .friendster_x{
+        height: 175px !important;
+        min-height: 175px !important;
+        max-height: 175px !important;
+    }
+    .SliderRight{
+        width: 650px !important;
+        min-width: 650px !important;
+        max-width: 650px !important;
+    }
+    .LayerPull{
+        font-size: 16px;
+    }
+}
+@media (max-width: 768px) {
+    .slideshowMain{
+        min-height: 50% !important;
+    }
+    .superBoxPerks{
+        min-width: 92% !important;
+        max-width: 92% !important;
+        width: 92% !important;
+        padding-left: 2% !important;
+        padding-right: 2% !important;
+    }
+    .signUpInput{
+        min-width: 94% !important;
+        max-width: 94% !important;
+        width: 94% !important;     
+    }
+    .displayTableName td{
+        padding-left: 10px !important;
+        padding-right: 10px !important;
+    }
+    .signUpBoxInstructions{
+        font-size: 17px !important;   
+    }
+    .spotBieLogo{
+        font-size: 40px !important;
+    }
+    h2{
+        font-size: 25px !important;
+    }
+    .Axmvx{        
+       right: 0 !important;
+       left: 0 !important;
+       margin: 0 auto;
+       width: 150px !important;
+       min-width: 150px !important;
+       max-width: 150px !important;
+       padding-top: 15px !important;
+       padding-bottom: 15px !important;
+    }
+    .AppsRx {
+        max-width: 75% !important;
+        min-width: 75% !important;
+        width: 75% !important;
+    }
+    .AppsRx td {
+        padding: 20px;
+        padding-top: 25px;
+        padding-bottom: 25px;
+    }
+    .slideshowArrow{
+        font-size: 30px !important;
+        padding: 0px !important;
+        padding-top: 2px !important;
+        background-color: rgba(0, 0, 0, 0.38) !important;
+    }
+    .arrowLeft{
+        padding-right: 10px !important;
+        padding-left: 10px !important;
+    }
+    .arrowRight{
+        padding-right: 10px !important;
+        padding-left: 10px !important;
+    }
+    .slideshowDisclaimer{
+        max-width: 90% !important;
+        left: 0;
+        right: 0;
+        margin: 0 auto !important;
+        line-height: 25px !important;
+    }
+    .confirmBox{
+        min-width: 90% !important;
+        max-width: 90% !important;
+        width: 90% !important;
+        padding-left: 20px !important;
+        padding-right: 20px !important;
+        line-height: 32px;        
+    }
+    .QuestionsPar{
+        text-align: center !important;
+    }
+    .spotbie-desc{
+        text-indent: 0px;
+    }
+}
+@media (max-width: 700px) { 
+    .QuestionsVideo{
+        width: unset !important;
+        max-width: 320px !important;
+    }
+}
+@media (max-width: 600px) {
+    .signUpInput{
+        font-size: 20px;
+    }
+}
+@media (max-width: 560px) { 
+
+}
+@media (max-width: 460px) { 
+    .HA{
+        font-size: 19px !important;
+        letter-spacing: 1px;
+    }
+    .AppsRx{
+        max-width: 80% !important;
+        min-width: 80% !important;
+        width: 80% !important;
+    }
+    .AppsRx td{
+        padding: 20px;
+        padding-top: 0px;
+        padding-bottom: 0px;
+    }        
+}
+@media (max-width: 420px) {
+    #timerx{
+        margin-top: 10px !important;
+        font-size: 25px !important;
+    }
+    .featuresSlideshow span{
+        margin-top: 5px !important;
+    }
+    .scrollArrowSptb {
+        left: unset !important;
+        right: 2% !important;
+        width: 25px !important;
+        min-width: 25px !important;
+        max-width: 25px !important;
+        height: 25px !important;
+        min-height: 25px !important;
+        max-height: 25px !important;
+    }
+    .closeSlideshow{
+        bottom: unset !important;
+        position: relative !important;
+        margin-top: 30px !important;
+    }
+    .confirmBox {
+        min-width: 88% !important;
+        max-width: 88% !important;
+        width: 88% !important;
+    }
+    .BetaRelease{
+        line-height: 35px !important;
+        font-size: 18px !important;
+    }
+    .QuestionsPar{
+        font-size: 16px !important;
+        padding-top: 20px !important;
+        padding-bottom: 20px !important;
+    }
+    .signUpBox{
+        border: unset !important;
+    }
+    .superBoxPerks{
+        width: 88% !important;
+        min-width: 88% !important;
+        max-width: 88% !important;
+        padding-left: 4% !important;
+        padding-right: 4% !important;
+        font-size: 14px !important;
+        top: 13% !important;
+        line-height: 27px !important;
+    }
+    li{
+        padding-top: 15px;
+        padding-bottom: 15px;
+    }
+    .Axmvx{
+        font-size: 18px !important;
+        padding-top: 12px !important;
+        padding-bottom: 12px !important;
+    }
+    .AppsRx td {
+        padding-top: 0px;
+        padding-bottom: 0px;
+    }
+    h2 {
+        font-size: 19px !important;
+    }
+    .signUpBoxInstructions {
+        font-size: 14px !important;
+        line-height: 30px !important;
+    }
+    input{
+        font-size: 20px !important;
+    }
+    #sign_up_general_instructions{
+        line-height: 27px !important;
+    }
+    .signUpTerms{
+        line-height: 27px !important;
+    }
+    .spotbieSignUpButton {
+        padding-top: 8px !important;
+        padding-bottom: 8px !important;
+        font-size: 17px !important;
+    }
+    .spotbieFinishButton{
+        padding-top: 5px !important;
+        padding-bottom: 5px !important;
+    }
+    .passLa{
+        margin-top: 15px !important;
+    }
+    .termsAndService{
+        font-size: 16px !important;
+    }
+}
+@media (max-width: 360px) { 
+ 
+}
+
+@media (max-width: 320px) {
+    .confirmBox {
+        min-width: 85% !important;
+        max-width: 85% !important;
+        width: 85% !important;
+    }    
+    .signUpInput{
+        padding-left: 5px !important;
+        padding-right: 5px !important;        
+    }
+    .LayerPull{
+        padding-left: 10px;
+        padding-right: 10px;      
+    }
+    .spotBieLogo{
+        font-size: 28px !important;
+    }
+    .BetaRelease{
+        font-size: 17px !important;
+        padding-left: 4%;
+        padding-right: 4%;
+        max-width: 92%;
+        width: 92%;
+        min-width: 92%;        
+    }
+    .QuestionsPar{
+        font-size: 14px;
+    }
+    .dfg{
+        font-size: 14px;
+    }
+    .signUpBoxInstructions {
+        font-size: 11px;
+        line-height: 25px;
+        padding-top: unset;
+    }
+    h2 {
+        font-size: 19px;
+    }
+    .AppsRx td {
+        padding-top: 0px;
+        padding-bottom: 0px;
+        border-radius: 20px;
+    } 
+    .signUpInput{
+        font-size: 11px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+    #sign_up_general_instructions{
+        line-height: 20px;
+    }
+    .confirmBox {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+    .spotbieSignUpButton {
+        font-size: 14px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+    .signUpTerms{
+        line-height: 21px;
+    }
+    .superBoxPerks {
+        top: 5%;
+        width: 86%;
+        min-width: 86%;
+        max-width: 86%;
+        padding-left: 4%;
+        padding-right: 4%;
+        font-size: 11px;
+        line-height: 18px;
+    }
+    li{
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+    .termsAndService {
+        font-size: 14px;
+        padding-top: 0px;
+        margin-bottom: 40px;
+    }    
+}
+@media (max-width: 220px) { 
+
+}
+@media (max-width: 120px) { 
+
+}

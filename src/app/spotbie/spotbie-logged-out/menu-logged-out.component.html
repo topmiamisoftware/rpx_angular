@@ -1,0 +1,36 @@
+<table class="spotbie-el-100
+              spotbie-menu
+              spotbie-menu-fixed-logged-out" #spotbieMainMenu>
+  <tr>
+    <td (click)="home()">
+      <img class='spotbie-mini-logo' src="../../assets/favicon/android-icon-72x72.png" />
+    </td>       
+    <td (click)="openWindow(logInWindow)">
+      Log-In
+    </td>
+    <td (click)="openWindow(signUpWindow)">
+      Sign-Up
+    </td>
+    <td (click)="goToBlog()">
+      <a class='spotbie-our-blog-link' href="https://blog.spotbie.com/">
+        Our Blog
+      </a>
+    </td>
+  </tr>
+</table>
+
+<div class="spotbie-menu-page-padding-top"></div>
+
+<app-profile-header [public_profile_info]="public_profile_info"
+                    [current_user_bg]="spotbieBackgroundImage"
+                    [album_id]="album_id"
+                    [album_media_id]="album_media_id"
+                    *ngIf="public_profile"></app-profile-header>
+
+<app-read-about class="spotbie-app-read-about" *ngIf="home_route"></app-read-about>
+
+<app-log-in *ngIf="logInWindow.open"></app-log-in>
+
+<app-sign-up *ngIf="signUpWindow.open" [window_obj]="signUpWindow"></app-sign-up>
+
+<app-features *ngIf="featuresWindow.open"></app-features>

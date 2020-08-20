@@ -1,0 +1,94 @@
+<app-loading-screen *ngIf="loading"></app-loading-screen>
+
+<div class="spotbie-overlay-window" [ngStyle]="{'background-color' : bg_color}">
+
+    <div *ngIf="info_object !== null">
+
+        <div class='spotbie-info-object-title'>
+            {{ info_object.name }}
+            <span class='spotbie-search-result-price' *ngIf="info_object.price_on == '1'">({{ info_object.price }})</span>
+        </div>
+    
+        <div class='spotbie-info-object-image' [ngStyle]="{ 'background' : 'url(' + _info_object_image_url + ')'}"></div>
+    
+        <div class='spotbie-info-object-image-list'>
+    
+            <div class='spotbie-info-object-image-thumb'
+                *ngFor="let thumbnail of info_object.photos"
+                (click)="switchPhoto(thumbnail)"
+                [ngStyle]="{ 'background' : 'url(' + thumbnail + ')'}"></div>
+    
+        </div>
+        
+        <div class='spotbie-search-result-phone' *ngIf="info_object.phone != ''">
+            
+            <a href="tel:{{info_object.phone}}" class='spotbie-friendly-ph'>
+                {{ info_object.display_phone }}
+            </a>
+
+        </div>
+
+        <div class='spotbie-info-object-rating' *ngIf="info_object.type_of_info_object == 'yelp_business'">
+
+            <table class='spotbie-yelp-rating-table'>
+                <tr>
+                  <td>
+                    <div class='spotbie-search-result-rating-img' [ngStyle]="{ 'background' : 'url(' + info_object.rating_image + ')' }"></div>
+                  </td>
+                  <td>
+                    <div class='spotbie-search-result-yelp-logo' [ngStyle]="{ 'background' : 'url(../assets/images/yelp/yelp_logo.png)' }"></div>
+                  </td>
+                </tr>
+            </table>
+
+        </div>
+        
+        <div class='spotbie-review-count' *ngIf="info_object.type_of_info_object == 'yelp_business'">
+            Based on {{ info_object.review_count }} Reviews
+        </div>
+        
+        <div class='spotbie-info-object-address' *ngIf="info_object.type_of_info_object == 'ticketmaster_event'">
+
+            <div class='spotbie-venue-name'>{{ info_object._embedded.venues[0].name }}</div>
+             
+            <br/>
+            
+            {{ info_object._embedded.venues[0].address.line1 }} {{ info_object._embedded.venues[0].city.name }}, {{ info_object._embedded.venues[0].state.stateCode }} {{ info_object._embedded.venues[0].postalCode }}    
+        
+            <div class='spotbie-time-event' *ngIf="info_object.dates.start.localDate">
+                {{ info_object.dates.start.spotbieDate }}
+            </div>
+  
+            <div class='spotbie-price-ranges' *ngIf="info_object.priceRanges !== undefined">
+                Price Ranges ${{ info_object.priceRanges[0].min }} to ${{ info_object.priceRanges[0].max }}
+            </div>
+
+            <div class='spotbie-event-code' *ngIf="info_object.dates.status.code">
+                Status: {{ info_object.dates.status.code }}
+            </div>
+
+        </div>
+
+        <div class="spotbie-google-maps-it" (click)="openWithGoogleMaps()">
+
+            <div class='spotbie-distance'>{{ info_object.distance }} miles from you.</div>
+
+            <img class='spotbie-marker-icon' src='../../assets/images/marker.png'>
+    
+            <div class='spotbie-info-object-address' *ngIf="info_object.type_of_info_object == 'yelp_business'">
+                {{ info_object.location.display_address[0] }} 
+                <br/>
+                {{ info_object.location.display_address[1] }}            
+            </div>
+
+        </div>
+    
+        <div class='spotbie-info-object-transactions'> {{ info_object.friendly_transactions }} </div>
+
+        <div class='spotbie-button' (click)="goToTicket()" *ngIf="info_object.type_of_info_object == 'ticketmaster_event'">Buy Tickets</div>
+
+    </div>
+
+    <div class="spotbie-close-button" (click)="closeWindow()">close</div>
+
+</div>

@@ -1,0 +1,376 @@
+<app-loading-screen *ngIf="loading"></app-loading-screen>
+
+<div class="spotbie-map">
+
+  <agm-map class="spotbie-map" 
+            [gestureHandling]="'greedy'"
+            [streetViewControl]="false"
+            #spotbie_map
+            [latitude]="lat" 
+            [longitude]="lng"
+            [styles]="map_styles"
+            [zoom]="32"
+            [fitBounds]="true">
+
+    <agm-overlay [latitude]="lat" [longitude]="lng" *ngIf="locationFound">
+
+      <div class='spotbie-marker-bg'
+          *ngIf="iconUrl"
+          [ngStyle]="{'background' : 'url(' + iconUrl + ')',                      
+                      'border' : '4px solid ' + bg_color }"></div>
+          
+    </agm-overlay>
+
+    <agm-marker [latitude]="lat" 
+                [longitude]="lng"
+                *ngIf="locationFound"
+                [opacity]="0"
+                (markerClick)="selfMarker()"
+                [agmFitBounds]="true">
+
+        <agm-info-window #spotbie_user_marker_info_window [isOpen]="true">
+          <div class='agm_infowindow_color'>{{ spotbie_username }}</div>
+        </agm-info-window>
+
+    </agm-marker>
+
+    <div *ngIf="display_surrounding_object_list">
+
+      <agm-overlay *ngFor="let map_object of surrounding_object_list"                  
+                    [latitude]="map_object.loc_x"
+                    [longitude]="map_object.loc_y">
+
+        <div class='spotbie-marker-bg' 
+              (click)="pullMarker(map_object)"
+              title="{{ map_object.username }}"
+              [ngStyle]="{'background' : 'url(' + map_object.map_icon + ')',
+                          'border' : '4px solid ' + map_object.bg_color }">
+        </div>
+
+      </agm-overlay>  
+        
+    </div>
+
+    <div *ngIf="show_search_box && search_results.length > 0">
+
+      <agm-overlay *ngFor="let map_object of search_results"
+                    [latitude]="map_object.coordinates.latitude" 
+                    [longitude]="map_object.coordinates.longitude">
+
+        <div class='spotbie-marker-bg'
+              (click)="pullSearchMarker(map_object)"
+              [ngStyle]="{'background' : 'url(' + map_object.icon + ')',
+                          'border' : '4px solid ' + bg_color}">
+        </div>
+
+      </agm-overlay>                    
+      
+      <agm-marker *ngFor="let map_object of search_results"
+                  [latitude]="map_object.coordinates.latitude" 
+                  [longitude]="map_object.coordinates.longitude"
+                  [agmFitBounds]="true"
+                  [visible]="false"></agm-marker>
+      
+    </div>
+
+  </agm-map>
+
+</div>
+
+<app-info-object [info_object]="info_object" *ngIf="info_object_window.open"></app-info-object>
+
+<div class="spotbie-map-search-wrapper">
+
+  <table class='spotbie-map-search-by' id="spotbie-search-by">
+    <tr>
+      <td (click)="spotMe()" title="Find Me">
+        <div id='spotbie_me_search'></div>
+      </td>
+      <td (click)="spawnCategories('food')" title="Find Food">
+        <i class="fa fa-cutlery" aria-hidden="true"></i>
+      </td>    
+      <td (click)="spawnCategories('shopping')" title="Find Shopping Places">
+        <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+      </td>   
+      <td (click)="spawnCategories('events')" title="Find Events">
+        <div id='spotbie_events_search'></div>
+      </td>      
+      <td (click)="mediaSearch(0)" title="Find Media">
+        <div id='spotbie_media_search'></div>
+      </td>
+      <td (click)="artistSearch(0)" title="Find Content Creators">
+        <i class="fa fa-star" aria-hidden="true"></i>
+      </td>
+      <td (click)="placeSearch(0)" title="Find Places">
+        <div id='spotbie_place_search'></div>
+      </td>
+    </tr>
+  </table>
+  
+</div>
+
+
+<div class='spotbie-category-search-yelp animated slideInUp' *ngIf="cats_up">
+  <input type='text' class='spotbie-searchbar spotbie-input' placeholder="{{ search_categories_placeholder }}" (keyup)="searchSpotBie($event)" />
+  <div class='spotbie-close-categories' (click)="closeCategories()" *ngIf="cats_up" [ngStyle]="{ 'background-color' : bg_color }">close</div>
+</div>
+
+<div class='spotbie-categories animated slideInRight' *ngIf="cats_up && search_category != 'events'" [ngStyle]="{ 'background-color' : bg_color }">
+
+  <div class='spotbie-single-cat' *ngFor="let category of categories" (click)="apiSearch(category)">
+    {{ category }}
+  </div>
+
+</div>
+
+<div class='spotbie-categories animated slideInRight' *ngIf="cats_up && search_category == 'events'" [ngStyle]="{ 'background-color' : bg_color }">
+
+  <div class='spotbie-single-cat' *ngFor="let category of categories" (click)="showEventSub(category)">
+    
+    {{ category.name }}
+
+    <div class='spotbie-sub-cat-wrapper' *ngIf="category.show_sub && category.type !== undefined">
+
+      <div class='spotbie-sub-cat' *ngFor="let sub_cat_type of category.type._embedded.subtypes" (click)="apiSearch(sub_cat_type.name)" [SpotBieStopClickPropagation]>
+        
+        {{ sub_cat_type.name }}
+
+      </div>
+
+    </div>
+
+    <div class='spotbie-sub-cat-wrapper' *ngIf="category.show_sub && category.segment !== undefined">
+
+      <div class='spotbie-sub-cat' *ngFor="let sub_cat_type of category.segment._embedded.genres" (click)="showEventSubCategory(sub_cat_type)" [SpotBieStopClickPropagation]>
+        
+        {{ sub_cat_type.name }}
+
+        <div *ngIf="sub_cat_type.show_sub_sub">
+
+          <div class='spotbie-subgenre' *ngFor="let subgenre of sub_cat_type._embedded.subgenres" (click)="apiSearch(subgenre.name)" [SpotBieStopClickPropagation]>
+
+            {{ subgenre.name }}
+  
+          </div>
+
+        </div> 
+
+      </div>
+
+    </div>    
+
+  </div>
+
+</div>
+
+
+<div class='spotbie-search-results' *ngIf="show_search_box && search_results.length > 0" [ngStyle]="{ 'background-color' : bg_color }">
+
+  <!--<table class='spotbie-pull-from'>
+    <tr>
+      <td (click)="pullFrom('yelp')" class='spotbie-api-pull' [ngStyle]="getApiPullStyle('yelp')" title="Pull from Yelp">YELP</td>
+      <td (click)="pullFrom('google')" class='spotbie-api-pull' [ngStyle]="getApiPullStyle('google')" title="Pull from Google">Google</td>
+    </tr>
+  </table>-->
+
+  <div class='spotbie-search-results-title' *ngIf="search_category == 'shopping' || search_category == 'food'">
+    Max Distance  <mat-slider min="0" max="25" step="1" value="{{ max_distance }}"
+                            (change)="updateDistance($event)"></mat-slider>
+    {{ max_distance }} miles.                            
+  </div>
+
+  <table class='spotbie-controls-search-results' *ngIf="search_category_sorter == 'food'">
+    <tr>
+      <td (click)="hideSearchResults()" title="Hide Results"><img src='assets/images/eye.png' /></td>
+      <td (click)="sortBy(0)" title="Sort By Distance"><img src='assets/images/road.png' /></td>
+      <td (click)="sortBy(1)" title="Sort By Rating"><img src='assets/images/star.png' /></td>
+      <td (click)="sortBy(2)" title="Sort By Reviews"><img src='assets/images/review.png' /></td>
+      <td (click)="sortBy(3)" title="Sory By Pricing"><img src='assets/images/money.png' /></td>
+      <td (click)="sortBy(4)" title="Offers Delivery"><img src='assets/images/bag.png' /></td>
+      <td (click)="sortBy(5)" title="Offers Pick-Up"><img src='assets/images/arm.png' /></td>
+      <td (click)="sortBy(6)" [ngStyle]="{ 'border-right' : 'unset' }" title="Offers Reservations"><img src='assets/images/hotel.png' /></td>
+    </tr>    
+  </table>
+
+  <table class='spotbie-controls-search-results' *ngIf="search_category_sorter == 'shopping'">
+    <tr>
+      <td (click)="hideSearchResults()" title="Hide Results"><img src='assets/images/eye.png' /></td>
+      <td (click)="sortBy(0)" title="Sort By Distance"><img src='assets/images/road.png' /></td>
+      <td (click)="sortBy(1)" title="Sort By Rating"><img src='assets/images/star.png' /></td>
+      <td (click)="sortBy(2)" title="Sort By Reviews"><img src='assets/images/review.png' /></td>
+      <td (click)="sortBy(3)" [ngStyle]="{ 'border-right' : 'unset' }"  title="Sory By Pricing"><img src='assets/images/money.png' /></td>
+    </tr>    
+  </table>
+
+  <table class='spotbie-controls-search-results' *ngIf="search_category_sorter == 'events'">
+    <tr>
+      <td (click)="hideSearchResults()" title="Hide Results"><img src='assets/images/eye.png' /></td>
+      <td (click)="sortBy(0)" title="Sort By Distance"><img src='assets/images/road.png' /></td>
+      <td (click)="sortBy(3)" [ngStyle]="{ 'border-right' : 'unset' }"  title="Sory By Pricing"><img src='assets/images/money.png' /></td>
+    </tr>    
+  </table>
+
+  <div class='spotbie-search-results-title spotbie-sorting'>
+
+    Sorted by {{ sort_by_txt }} ({{ sorting_order }})
+
+  </div>
+
+  <div class='spotbie-search-results-title spotbie-search-results-title-larger-font'>
+
+    {{ total_results | numberFormat }} "{{ search_keyword }}" {{ search_results_subtitle }} within {{ max_distance_cap }} miles of you.
+    
+    <div class='spotbie-close-results' (click)="closeSearchResults()">close</div>
+
+  </div>
+
+  <div class='spotbie-search-result-wrapper'>
+
+    <div class='spotbie-search-results-title'>
+
+      <span *ngIf="search_category !== 'events'">Showing {{ loaded_total_results }} results within {{ max_distance }} miles. </span>
+  
+      <span class='spotbie-button' (click)="loadMoreResults(0)" *ngIf="all_pages > 1">
+        Previous
+      </span>   
+
+      <span class='spotbie-button' (click)="loadMoreResults(1)" *ngIf="all_pages > 1">
+        Next
+      </span>
+  
+      <span>{{ around_me_search_page }} / {{ all_pages }}</span>
+  
+    </div>
+    
+    <div class='spotbie-no-results' *ngIf='search_results.length == 0'>No Results Available.</div>
+
+    <div class='spotbie-search-result' *ngFor='let search_result of search_results' (click)="pullSearchMarker(search_result)">
+      
+      <div class='spotbie-search-result-title' >
+        {{ search_result.name }} 
+        <span class='spotbie-search-result-price' *ngIf="search_result.price_on == '1'">({{ search_result.price }})</span>
+      </div>
+      
+      <table class='spotbie-search-result-table'>
+        <tr>
+          
+          <td *ngIf="search_result.image_url != '0'">
+            <div class='spotbie-search-result-image'[ngStyle]="{ 'background' : 'url(' + search_result.image_url + ')' }" ></div>          
+          </td>
+          
+          <td *ngIf="type_of_info_object == 'yelp_business'">
+
+            <table class='spotbie-yelp-rating-table'>
+              <tr>
+                <td>
+                  <div class='spotbie-search-result-rating-img' [ngStyle]="{ 'background' : 'url(' + search_result.rating_image + ')' }"></div>
+                </td>
+                <td>
+                  <div class='spotbie-search-result-yelp-logo' [ngStyle]="{ 'background' : 'url(../assets/images/yelp/yelp_logo.png)' }"></div>
+                </td>
+              </tr>
+            </table>
+  
+            <div class='spotbie-review-count'>
+              Based on {{ search_result.review_count }} Reviews
+            </div>
+
+            <div class='spotbie-distance'>
+              {{ search_result.distance }} miles from you.
+            </div>                        
+
+            <div class='spotbie-search-result-phone' *ngIf="search_result.phone != ''">
+              {{ search_result.display_phone }}
+            </div>       
+
+          </td>
+
+          <td *ngIf="type_of_info_object == 'ticketmaster_events'">
+
+            <div class='spotbie-venue-name' *ngIf="search_result._embedded.venues[0]">
+              {{ search_result._embedded.venues[0].name }}
+            </div>
+
+            <div class='spotbie-distance'>
+              {{ search_result.distance }} miles from you.
+            </div>
+                        
+            <div class='spotbie-time-event' *ngIf="search_result.dates.start.localDate">
+              {{ search_result.dates.start.spotbieDate }}
+            </div>
+
+            <div class='spotbie-time-event' *ngIf="search_result.dates.start.spotbieHour">
+              {{ search_result.dates.start.spotbieHour }}
+            </div>
+
+            <div class='spotbie-price-ranges' *ngIf="search_result.priceRanges !== undefined">
+              Price Ranges ${{ search_result.priceRanges[0].min }} to ${{ search_result.priceRanges[0].max }}
+            </div>
+
+            <div class='spotbie-event-code' *ngIf="search_result.dates.status.code">
+              Status: {{ search_result.dates.status.code }}
+            </div>      
+
+          </td>
+
+        </tr>
+
+      </table>
+  
+      <div class='spotbie-search-result-transactions' *ngIf="search_result.transactions_on == '1'">{{ search_result.friendly_transactions }}</div>
+  
+    </div>
+
+    <table class='spotbie-next-previous-table-big' *ngIf="all_pages > 1">
+      <tr>
+        <td class='spotbie-button spotbie-button-cell' (click)="loadMoreResults(0)">
+          Previous
+        </td>         
+        <td class='spotbie-button spotbie-button-cell' (click)="loadMoreResults(1)">
+          Next
+        </td>     
+      </tr>
+    </table>
+
+    <div class='spotbie-search-results-title' style="text-align: center;">
+        {{ around_me_search_page }} / {{ all_pages }}
+    </div>
+
+  </div>
+
+</div>
+
+<div class='spotbie-profile-slide-right animated slideInRight' 
+      *ngIf="slider_right" 
+      ngHammer="{ event : 'swipe', direction : 'right'}"
+      (eventTriggered)="closeMarkerOverlay()"
+      [ngStyle]="{ 'background-color' : current_marker.bg_color }">
+
+  <div class='spotbie-profile-right-username'>{{ current_marker.username }}</div>
+
+  <div class='spotbie-profile-right-user-default' 
+    *ngIf="current_marker.default_picture | defaultImage as userBackgroundImage"
+    [ngStyle]="{ 'background' : 'url(' + userBackgroundImage + ')' }"></div>
+
+    <div class="spotbie-profile-right-visit-profile" (click)="viewProfile(current_marker.username)">View Profile</div>
+
+    <div class="spotbie-bar-profile-description" *ngIf="exe_desc !== false">{{ current_marker.description }}</div>
+
+  <div class='spotbie-profile-right-close-slider' (click)="closeMarkerOverlay()">close</div>
+
+</div>
+
+<div class="spotbie-overlay-window" *ngIf="coming_soon_ov" [ngStyle]="{'background-color' : bg_color}">
+
+  <div class='spotbie-coming-soon'>
+      {{coming_soon_ov_title}}
+  </div>
+  <div class='spotbie-coming-soon-desc'>
+    {{coming_soon_ov_text}}
+  </div>    
+  <div class="spotbie-close-button" (click)="closeCmS()">close</div>
+</div>
+
+<app-toast-helper [helper_config]="toast_helper_config" 
+                *ngIf="toast_helper"
+                (dismiss_toast)="dismissToast($event)"></app-toast-helper>

@@ -1,0 +1,87 @@
+<app-loading-screen *ngIf="loading"></app-loading-screen>
+
+<div class="spotbie-overlay-window">
+
+  <div class="spotbie-close-button" (click)="closeWindow()">close</div>
+
+  <div class="spotbie-no-repeat-bg-contain
+              spotbie-margin
+              spotbie-log-in-picture"
+        [ngStyle]="{'background' : 'url('+ current_login_photo +')'}">        
+
+  </div>
+
+  <img class="spotbie-log-in-picture-inside" [src]="current_login_photo" />
+
+  <form [formGroup]="logInForm" (ngSubmit)="initLogIn()">
+
+    <div *ngIf="submitted && f.spotbieUsername.errors else username_normal" class="spotbie-invalid-feedback animated shake">
+                
+      <div *ngIf="f.spotbieUsername.errors.required || f.spotbieUsername.errors.emptyUsername">
+        Username or e-mail required.
+      </div>
+
+      <div *ngIf="f.spotbieUsername.errors.wrongLength">
+        Username must be between 5 and 15 characters.
+      </div>     
+
+      <div *ngIf="f.spotbieUsername.errors.illegalChars">
+        Username must only contain letters, numbers, and underscores.
+      </div>
+      
+    </div> 
+
+    <ng-template #username_normal>
+      <div #spotbieLogInIssues class="spotbie-input-info">
+        Enter your log-in...
+      </div>
+    </ng-template>
+
+    <input class="spotbie-input" id="spotbieLoginUsername" formControlName="spotbieUsername" type="text" placeholder="Username or E-mail" autocomplete="username"/>
+
+    <div *ngIf="submitted && f.spotbiePassword.errors else password_normal" class="spotbie-invalid-feedback animated shake">
+              
+      <div *ngIf="f.spotbiePassword.errors.required">
+        Password is required.
+      </div>   
+      
+    </div>
+
+    <ng-template #password_normal>
+      <div class="spotbie-input-info">
+        Now enter your password!
+      </div>
+    </ng-template>
+
+    <input class="spotbie-input" id="spotbieLoginPassword" formControlName="spotbiePassword" type="password" placeholder="Password" autocomplete="password"/>
+
+    <table class="spotbie-toggle" (click)="toggleRememberMe()">
+
+      <tr>
+        <td class="spotbie-toggle-info-text" id="spotbieRememberMeText">Remember Me</td>
+
+        <td class="spotbie-toggle-light" id="spotbieRememberMeLight" [ngStyle]="{'background-color' : rememberMeLight }"></td>
+
+      </tr>
+
+    </table>
+    
+    <button class="spotbie-button spotbie-padding">
+      Log-In
+    </button>
+
+  </form>
+
+  <input id="spotbieRememberMe" type="hidden" [value]="rememberMeState" />
+
+  <div class="spotbie-rel-div
+      spotbie-margin
+      spotbie-padding
+      spotbie-link"
+      (click)="openWindow(forgotPasswordWindow)">
+        Forgot Password?
+  </div>
+
+  <app-forgot-password *ngIf="forgotPasswordWindow.open"></app-forgot-password>
+
+</div>

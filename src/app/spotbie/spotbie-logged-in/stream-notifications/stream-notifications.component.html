@@ -1,0 +1,36 @@
+
+<app-loading-screen *ngIf="loading"></app-loading-screen>
+
+<div class='spotbie-notifications-box-holder'>
+
+    <div class='spotbie-notifications-box' 
+        *ngFor="let notification of notis_list"
+        [ngStyle]="notificationStyle(notification)"
+        (click)="openNotification(notification)">        
+
+        <div class='spotbie-notification-user-image'
+            *ngIf="notification.user_info.exe_user_default_picture | defaultImage as exe_user_default"
+            [ngStyle]="{'background' : 'url(' + exe_user_default + ')'}"></div>
+
+        <div class='spotbie-notification-text'>{{ notification.text }}</div>
+
+        <div class='spotbie-notification-time'>{{ notification.made_on }}</div>
+
+        <table class='spotbie-friend-actions-table' *ngIf="notification.relation == 0" attr.id="spotbieStreamNotification{{notification.relation_id}}">
+            <tr>
+                <td (click)="viewProfile(notification)">Delete Notification</td>
+                <td (click)="acceptRequest(notification)">View Profile</td>
+            </tr>
+        </table>
+
+    </div>
+
+    <div class='spotbie-load-more-button spotbie-button' *ngIf="load_more_notifications" (click)="loadMoreNotifications()">Load More</div>
+
+    <div class='spotbie-no-notis-box' *ngIf='no_notis'>
+        <div>
+            No one has posted on your stream!
+        </div>
+    </div>
+
+</div>

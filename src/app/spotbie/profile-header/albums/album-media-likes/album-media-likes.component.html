@@ -1,0 +1,42 @@
+<div class='spotbie-overlay-window'>
+
+    <div class='spotbie-streamer-likes-list' *ngIf="likes_list_loaded">
+
+        <div class='spotbie-likes-list-wrapper' [ngStyle]="{ 'background-color' : bg_color }">
+    
+            <div class='spotbie-stream-post-likes-title'>Album Media Likes</div>
+    
+            <div class='spotbie-stream-post-likes-holder'>
+    
+                <div class='spotbie-stream-post-like-holder'             
+                    *ngFor="let album_item_like of album_media_likes_array">
+    
+                    <table class='spotbie-likes-all-table'>
+                        <tr [routerLink]="['/user-profile/' + album_item_like.like_by.exe_username]">
+                            <td class='spotbie-likes-profile-picture'                            
+                                *ngIf="album_item_like.like_by.exe_user_default_picture | defaultImage as userBackgroundImage" 
+                                [ngStyle]="{'background' : 'url(' + userBackgroundImage  + ')' } ">
+    
+                            </td>
+                            <td class='spotbie-likes-profile-username'>
+                                {{ album_item_like.like_by.exe_username }}
+                            </td>                
+                        </tr>                
+                    </table>
+    
+                </div>
+    
+                <div class='spotbie-see-more' *ngIf="album_item_likes_next" (click)="pullAlbumMediaLikes()">
+                    Load More
+                </div>
+                
+            </div>
+    
+        </div>
+    
+        <div class="spotbie-close-button" (click)="closeWindow()">close</div>
+    
+    </div>
+</div>
+
+<app-toast-helper [helper_config]="toast_helper_config" *ngIf="toast_helper"></app-toast-helper>

@@ -1,0 +1,195 @@
+.spotbie-overlay-window{
+    padding-bottom: 90px;
+    text-align: left;
+}
+.spotbie-repost-title{
+    position: relative;
+    margin: 0 auto;
+    text-align: center;
+    margin-top: 60px;
+    margin-bottom: 20px;
+}
+.spotbie-copy-link-button{
+    margin-top: 30px;
+    margin-bottom: 30px;
+    cursor: pointer;
+    text-align: center;
+}
+.spotbie-share-post-link{
+    margin-top: 30px;
+    margin-bottom: 30px;
+    cursor: pointer;
+}
+.spotbie-input{
+    width: 550px;
+    min-width: 550px;
+    max-width: 550px;
+    background-color: rgba(0,0,0,0.23);
+    color: white;
+    cursor: pointer;
+}
+.spotbie-share-button{
+    margin-left: 10px;
+    margin-right: 10px;
+    border-radius: 99%;
+    padding: 15px;
+    min-width: 70px;
+    border: none;
+    box-shadow: 0px 0px 12px #ffffff45;
+    cursor: pointer;
+}
+.spotbie-share-buttons-wrappper{
+    margin-top: 40px;
+    text-align: center;
+}
+.spotbie-media-caption{
+    position: relative;
+    margin: 0 auto;
+    text-align: center;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+.spotbie-media-caption{
+    position: relative;
+    width: 650px;
+    max-width: 650px;
+    max-height: 550px;
+}
+.spotbie-album-media-upload-title{
+    position: relative;
+    margin: 0 auto;
+    margin-top: 30px;
+    margin-bottom: 30px;
+    width: 650px;
+    max-width: 650px;
+    text-align: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.spotbie-input-textarea{
+    font-size: 18px;
+    text-align: left;
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    resize: vertical;
+    max-height: 300px;
+}
+.spotbie-album-media-image-wrapper{
+    position: absolute;
+    width: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    height: 100%;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    text-align: center;
+    z-index: -1;
+}
+.spotbie-album-media-image{
+    position: relative;
+    display: block;
+    margin: 0 auto;
+    margin-top: 30px;
+    max-width: 650px;
+    max-height: 550px;
+    height: 550px;
+}
+.spotbie-album-media-image-blur{
+    position: absolute;
+    left: 0;
+    right: 0;
+    width: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,.7);
+}
+::-webkit-input-placeholder { /* Edge */
+    color: white;
+}
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+color: white;
+}
+::placeholder {
+color: white;
+}
+.spotbie-button{
+    margin-top: 0px;
+    margin-bottom: 40px;
+    background-color: rgba(122, 122, 122, 0.83);
+}
+/**WIDTH MEDIA QUERIES */
+@media (max-width: 1300px) { 
+
+}
+@media (max-width: 1200px) {   
+
+}
+@media (max-width: 1024px) { 
+    .spotbie-menu-fixed{
+        width: 100%;
+        min-width: 100%;
+        max-width: 100%;
+    }
+}
+@media (max-width: 900px) { 
+    .spotbie-settings-table{
+        width: 100%;
+        min-width: 100%;
+        max-width: 100%;        
+    }
+    .spotbie-album-maker{
+        padding-left: 2%;
+        padding-right: 2%;
+    }
+}
+@media (max-width: 768px) { 
+
+}
+@media (max-width: 700px) { 
+
+}
+@media (max-width: 650px) { 
+    .spotbie-media-caption {
+        width: 100%;
+        max-width: 100%;
+        min-width: 100%;
+        max-height: 550px;
+    }
+    .spotbie-album-media-upload-title{
+        width: 100%;
+        max-width: 100%;
+        min-width: 100%;
+    }
+}
+@media (max-width: 560px){
+    .spotbie-close-button{
+        max-width: 80px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        padding-left: 25px;
+        padding-right: 25px;
+        font-size: 16px;
+        border-radius: 12px;
+    } 
+}
+@media (max-width: 460px) {
+      
+}
+@media (max-width: 420px) { 
+}
+@media (max-width: 360px) { 
+ 
+}
+
+@media (max-width: 320px) {
+
+}
+@media (max-width: 220px) { 
+
+}
+@media (max-width: 120px) { 
+
+}

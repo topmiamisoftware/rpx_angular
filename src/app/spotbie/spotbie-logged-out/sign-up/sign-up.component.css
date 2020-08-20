@@ -1,0 +1,26 @@
+.spotbie-input{
+    width: 450px;
+    min-width: 450px;
+    max-width: 450px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.spotbie-register-info{
+    position: relative;
+    margin: 0 auto;
+    margin-top: 10px;
+    margin-bottom: 40px;
+}
+.spobie-register-holder{
+    position: relative;
+    margin: 0 auto;
+    margin-top: 40px;
+}
+.spotbie-successful-register{
+    position: relative;
+    margin: 0 auto;
+    text-align: center;
+    padding-top: 130px;
+    font-size: 32px;
+    line-height: 70px;
+}

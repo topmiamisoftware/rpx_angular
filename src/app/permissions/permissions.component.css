@@ -1,0 +1,24 @@
+.spotbie-rel-div{
+    margin: 0 auto;
+    margin-top: 40px;
+    text-align: center;
+}
+.spotbie-link{
+    font-size: 25px;
+    background-color: transparent !important;
+}
+
+.spotbie-normal-font-size{
+    font-size: 19px;
+}
+.spotbie-permissions{
+    padding-top: 20px;
+    padding-bottom: 80px;
+    background-color: #181818;
+}
+
+.spotbie-h2{
+    margin-top: 20px !important;
+    margin-bottom: unset !important;
+    padding-bottom: 30px !important;
+}

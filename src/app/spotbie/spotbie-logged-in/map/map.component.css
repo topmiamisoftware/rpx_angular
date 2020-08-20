@@ -1,0 +1,741 @@
+::-webkit-scrollbar{
+    height: 10px;
+    width: 10px;
+    background: transparent;
+}
+::-webkit-scrollbar-thumb{
+    background: transparent;
+}
+::-webkit-scrollbar-corner{
+    background: transparent;
+}
+::-webkit-scrollbar-button{
+    background-color: transparent;
+}
+.spotbie-map{
+    position: relative;
+    margin: 0 auto;
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    height: 500px;
+    min-height: 500px;
+    max-height: 500px;
+    background-color: #181818;
+}
+.agm-map-container-inner{
+    margin: 0 auto !important;
+}
+.spotbie-profile-slide-right{
+    position: fixed;
+    top: 0%;
+    right: 0%;
+    bottom: 0%;
+    width: 400px;
+    min-width: 400px;
+    max-width: 400px;
+    z-index: 9999999;
+}
+.spotbie-profile-right-user-default{
+    position: relative;
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    min-height: 250px;
+    height: 250px;
+    max-height: 250px;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;     
+}
+.spotbie-search-result-price{
+    font-size: 16px;
+    font-weight: bold;
+}
+.spotbie-category-search-yelp{
+    position: fixed;
+    bottom: 20px;
+    right: 0px;
+    left: 0px;
+    margin: 0 auto;
+    min-width: 450px;
+    max-width: 450px;
+    width: 450px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    z-index: 99999998;
+}
+.spotbie-search-result-transactions{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    font-size: 16px;
+}
+.spotbie-searchbar{
+    position: relative;
+    margin: 0 auto;
+    width: 90%;
+    min-width: 90%;
+    max-width: 90%;
+}
+.spotbie-close-categories{
+    position: absolute;
+    top: 11px;
+    right: -70px;
+    z-index: 9999999;
+    padding: 8px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+.spotbie-controls-search-results{
+    position: relative;
+    padding: 15px;
+    padding-left: 0%;
+    padding-right: 1%;
+    padding-top: 10px;
+    font-size: 16px;
+    cursor: pointer;
+    text-align: center;
+}
+.spotbie-controls-search-results td{
+    border-right: 1px solid white;
+    padding: 0 10px;
+}
+.spotbie-categories{
+    position: fixed;
+    z-index: 9999999;
+    min-width: 250px;
+    max-width: 250px;
+    width: 250px;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    overflow-y: scroll;
+    padding-left: 10px;
+    padding-right: 10px;
+    direction: rtl;
+}
+
+.spotbie-categories::-webkit-scrollbar{
+    height: 10px;
+    width: 10px;
+    background: black;
+}
+.spotbie-categories::-webkit-scrollbar-thumb{
+    background: rgb(52, 52, 52);
+}
+.spotbie-categories::-webkit-scrollbar-corner{
+    background: rgb(52, 52, 52);
+}
+.spotbie-categories::-webkit-scrollbar-button{
+    background-color: rgb(52, 52, 52);
+}
+
+.search-spotbie-categories{
+    direction: ltr;
+    position: fixed;
+    top: 20px;
+    right: 280px;
+    background-color: inherit;
+    border-radius: 99%;
+    color: white;
+    padding: 5px;
+}
+.spotbie-single-cat{
+    position: relative;
+    margin: 0 auto;
+    margin-top: 3px;
+    padding: 15px;
+    text-align: center;
+    cursor: pointer;
+    background-color: rgba(0,0,0,.15);
+    border-radius: 15px;
+    transition: all .2s;
+}
+.spotbie-single-cat:hover{
+    margin-top: 8px;
+    margin-bottom: 8px;
+}
+.spotbie-search-results-title{
+    position: relative;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding: 10px;
+    text-align: left;
+}
+.spotbie-sorting{
+    font-size: 14px;
+    padding-top: 0px;
+}
+.spotbie-sub-cat{
+    position: relative;
+    background-color: rgba(0, 0, 0, 0.13);
+    padding: 11px;
+    padding-left: 18px;
+    text-align: left;
+    border-radius: 20px;
+    margin-top: 10px;
+    word-break: break-word;
+}
+.spotbie-subgenre{
+    position: relative;
+    right: -8px;
+    background-color: rgba(0, 0, 0, 0.08);
+    padding: 11px;
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    margin-top: 7px;
+    font-size: 15px;
+}
+.spotbie-search-result-title{
+    position: relative;
+    width: 100%;
+    margin: 0 auto;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+.spotbie-review-count{
+    position: relative;
+    padding-bottom: 5px;
+    padding-left: 1px;
+    font-size: 14px;
+}
+.spotbie-time-event,
+.spotbie-distance,
+.spotbie-event-code,
+.spotbie-price-ranges,
+.spotbie-venue-name{
+    position: relative;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+.spotbie-price-ranges{
+    font-size: 16px;
+}
+.spotbie-venue-name{
+    font-weight: bold;
+}
+.spotbie-event-code{
+    font-size: 13px;
+    text-transform: capitalize;
+}
+.spotbie-search-result-phone{
+    position: relative;
+    padding-top: 5px;
+    padding-bottom: 5px;  
+}
+.spotbie-search-result-rating{
+    position: relative;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+.spotbie-search-result-rating-img{
+    position: relative;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    height: 24px;
+    min-height: 24px;
+    max-height: 24px;
+    width: 132px;
+    min-width: 132px;
+    max-width: 132px;   
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    background-size: contain !important;      
+}
+.spotbie-search-result-yelp-logo{
+    position: relative;
+    margin-top: 2px;
+    height: 24px;
+    min-height: 24px;
+    max-height: 24px;
+    width: 48px;
+    min-width: 48px;
+    max-width: 48px;       
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    background-size: contain !important;      
+}
+.spotbie-yelp-rating-table td{
+    vertical-align: middle;
+}
+.spotbie-search-result-table td{
+    vertical-align: top !important;
+}
+
+.spotbie-search-result-image{
+    position: relative;
+    height: 150px;
+    min-height: 150px;
+    max-height: 150px;
+    width: 150px;
+    min-width: 150px;
+    max-width: 150px;    
+    margin-right: 15px;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;     
+}
+.spotbie-search-results {
+    position: relative;
+    margin: 0 auto;
+    padding: 15px;
+    background-color: rgba(0,0,0,.23);
+    margin-top: 5px;
+}
+.spotbie-search-result-wrapper{
+    position: relative;
+    margin: 0 auto;
+    text-align: center;
+}
+.spotbie-search-result{
+    position: relative;
+    display: inline-block;
+    vertical-align: top;
+    width: 23%;
+    min-width: 23%;
+    max-width: 23%;
+    height: 275px;
+    min-height: 275px;
+    max-height: 275px;
+    margin-left: 2px;
+    margin-right: 2px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    padding: 15px;
+    border-radius: 5px;
+    background-color: rgba(0,0,0,.23);
+    cursor: pointer;
+    transition: all .2s;
+    text-align: left;
+}
+.spotbie-next-previous-table-big{
+    position: relative;
+    margin: 0 auto;
+    margin-top: 20px;
+    margin-bottom: 15px;
+}
+.spotbie-next-previous-table-big .spotbie-button-cell{
+    display: table-cell;
+    font-size: 16px;
+}
+span.spotbie-button{
+    position: relative;
+    display: inline-block;
+    font-size: 16px;
+    text-decoration: unset;
+    margin-left: 5px;
+    margin-right: 5px;
+    max-width: 150px;
+    width: 150px;
+    min-width: 162px;
+}
+.spotbie-button{
+    background-color: rgba(0,0,0,.23);
+}
+.spotbie-profile-right-username{
+    position: relative;
+    margin: 0 auto;
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    text-align: center;
+    background-color: rgba(0,0,0,.23);
+    padding-top: 10px;
+    padding-bottom: 10px;
+    color: #FFF;
+}
+.spotbie-profile-right-close-slider{
+    position: absolute;
+    bottom: 0;
+    text-align: center;
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    background-color: rgba(0,0,0,.23);
+    padding-top: 10px;
+    padding-bottom: 10px;
+    cursor: pointer;    
+}
+.spotbie-profile-right-visit-profile{
+    position: relative;
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    background-color: rgba(0,0,0,.23);    
+    padding-top: 10px;
+    padding-bottom: 10px;
+    cursor: pointer;     
+    text-align: center;
+}
+.spotbie-map-search-wrapper{
+    position: relative;
+    top: 3px;
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    overflow-x: scroll;
+    overflow-y: hidden;    
+}
+.spotbie-map-search-by{
+    position: relative;
+    margin: 0 auto;
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;    
+    min-height:40px;
+    height: 40px;
+    max-height: 40px;
+    table-layout: fixed;
+}
+.spotbie-map-search-by td{
+    border-radius: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: rgba(8, 8, 8, 0.68);
+    cursor: pointer;
+    width: 100%/7;
+}
+.spotbie-map-search-by{
+    text-align: center;
+}
+.spotbie-map-search-by div{
+    position: relative;
+    margin: 0 auto;
+    min-height: 35px;
+    height: 35px;
+    max-height: 35px;
+    width: 50px;
+    min-width: 50px;
+    max-width: 50px;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    background-size: contain !important;    
+}
+.spotbie-controls-search-results img{
+    width: 20px;
+    min-width: 20px;
+    max-width: 20px;
+}
+.spotbie-map-search-by i{
+    position: relative;
+    margin: 0 auto;
+    display: block;
+    font-size: 35px;
+}
+.spotbie-bar-profile-description{
+    position: relative;
+    margin: 0 auto;
+    margin-top: 20px;
+    width: 88%;
+    min-width: 88%;
+    max-width: 88%;
+    padding: 4%;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.23);
+    border-radius: 10px;
+    font-size: 16px;
+}
+#spotbie_me_search{
+    background: url(../../../../assets/images/spot.png);
+}
+#spotbie_people_search{
+    background: url(../../../../assets/images/find_people.png);
+}
+#spotbie_media_search{
+    background: url(../../../../assets/images/multimedia.png);
+}
+#spotbie_events_search{
+    background: url(../../../../assets/images/map_bar_icons/events.png);
+}
+#spotbie_retail_search{
+    background: url(../../../../assets/images/shop.png);
+}
+#spotbie_food_search{
+    background: url(../../../../assets/images/food.png);
+}
+#spotbie_artist_search{
+    background: url(../../../../assets/images/full_star.png);
+}
+#spotbie_place_search{
+    background: url(../../../../assets/images/map_icon.png);
+}
+.spotbie-profile-right-close-slider{
+    background-color:black;
+}
+.spotbie-is-closed{
+    margin-top: 5px;
+    text-align: center;
+}
+.agm_infowindow_color{
+    color: black;
+    font-size: 18px;
+    padding-left: 5px;
+    padding-right: 5px;    
+}
+.spotbie-marker-bg{
+    position: absolute;
+    left: -8px;
+    top: -20px;
+    min-height: 40px;
+    height: 40px;
+    width: 40px;
+    min-width: 40px;
+    background-color: teal;
+    border-radius: 99px;
+    background-position: center !important;
+    background-size: cover !important;
+    cursor: pointer;
+    z-index: 99;
+}
+.spotbie-marker-bg:hover{
+    border: 1px;
+}
+.spotbie-close-results{
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    cursor: pointer;
+    font-size: 18px;
+}
+.spotbie-pull-from{
+    position: relative;
+    padding: 10px;
+    padding-left: 0px;
+}
+.spotbie-pull-from td{    
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+.spotbie-api-pull{
+    cursor: pointer;
+    background-color: rgba(0,0,0,.25);
+    border-radius: 20px;
+}
+/**WIDTH MEDIA QUERIES */
+@media (max-width: 1583px) { 
+    .spotbie-search-result{
+        width: 47%;
+        min-width: 47%;
+        max-width: 47%;
+    }
+}
+@media (max-width: 1300px) { 
+
+}
+@media (max-width: 1200px) {   
+
+}
+@media (max-width: 1169px) {
+    .spotbie-search-result{
+        width: 45%;
+        min-width: 45%;
+        max-width: 45%;
+    }
+}
+@media (max-width: 1024px) { 
+
+}
+@media (max-width: 900px) { 
+
+}
+@media (max-width: 840px) {
+    .spotbie-search-result{
+        width: 90%;
+        min-width: 90%;
+        max-width: 90%;
+        height: unset;
+        min-height: unset;
+        max-height: unset;
+    }
+}
+@media (max-width: 768px) { 
+    .spotbie-controls-search-results{
+        width: 100%;
+        min-width: 100%
+    }
+}
+@media (max-width: 700px) { 
+    .spotbie-map{
+        width: 99%;
+        min-width: 99%;
+        max-width: 99%;
+        height: 500px;
+        min-height: 500px;
+        max-height: 500px;           
+    }
+}
+@media (max-width: 600px) { 
+    .spotbie-close-categories{
+        top: -42px;
+        left: 14px;
+        right: unset;        
+    }     
+    .spotbie-map-search-by{
+        top: 3px;
+        margin-bottom: 10px;
+    }
+    .spotbie-map-search-by td{
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+    .spotbie-map-search-by div{
+        min-height: 30px;
+        height: 30px;
+        max-height: 30px;
+        width: 80px;
+        min-width: 80px;
+        max-width: 80px;
+    }
+    .spotbie-map{
+        height: 450px;
+        min-height: 450px;
+        max-height: 450px;              
+    }
+    .spotbie-profile-slide-right{
+        width: 100%;
+        min-width: 100%;
+        max-width: 100%;
+    }    
+}
+@media (max-width: 560px) { 
+    .spotbie-map{
+        height: 400px;
+        min-height: 400px;
+        max-height: 400px;              
+    }
+    .spotbie-search-result-image{
+        height: 120px;
+        min-height: 120px;
+        max-height: 120px;
+        width: 120px;
+        min-width: 120px;
+        max-width: 120px;
+        border-radius: 5px;
+        margin-right: 10px;
+    }
+    .spotbie-search-result-transactions{
+        line-height: 27px;
+        text-align: center;
+    }
+    .spotbie-controls-search-results._mobile{
+        padding-left: unset;
+        padding-right: unset;
+    }
+    .spotbie-controls-search-results td{
+        border: unset;
+    }    
+    .spotbie-controls-search-results img{
+        width: 22px;
+        min-width: 22px;
+        max-width: 22px;
+    }
+    .spotbie-close-results{
+        top: 19px;
+    }     
+}
+@media (max-width: 460px) { 
+    .spotbie-category-search-yelp{
+        min-width: 100%;
+        max-width: 100%;
+        width: 100%;
+    }
+    .spotbie-categories{
+        max-width: 200px;
+        width: 200px;
+        min-width: 200px;
+    }
+    .spotbie-map-search-by{
+        margin-bottom: 0px;
+    }       
+}
+@media (max-width: 420px) { 
+    .spotbie-map{
+        height: 380px;
+        min-height: 380px;
+        max-height: 380px;           
+    }
+    .spotbie-search-results-title{
+        margin-top: 0px;
+    }
+    .spotbie-map-search-by i{
+        font-size: 25px;
+    }
+    .spotbie-map-search-by div{
+        min-height: 30px;
+        height: 30px;
+        max-height: 30px;
+        width: 30px;
+        min-width: 30px;
+        max-width: 30px;        
+    }   
+}
+@media (max-width: 375px) { 
+    .spotbie-search-result-image{
+        height: 100px;
+        min-height: 100px;
+        max-height: 100px;
+        width: 100px;
+        min-width: 100px;
+        max-width: 100px;
+        border-radius: 5px;
+    }
+    .spotbie-controls-search-results img{
+        width: 18px;
+        min-width: 18px;
+        max-width: 18px;
+    }    
+}
+@media (max-width: 360px) { 
+    .spotbie-search-result-image{
+        height: 75px;
+        min-height: 75px;
+        max-height: 75px;
+        width: 75px;
+        min-width: 75px;
+        max-width: 75px;     
+    }
+    .spotbie-close-results{
+        top: 16px;
+    }
+}
+@media (max-width: 340px) {
+    .spotbie-search-result-image{
+        height: 65px;
+        min-height: 65px;
+        max-height: 65px;
+        width: 65px;
+        min-width: 65px;
+        max-width: 65px;
+        margin-right: 5px; 
+    }    
+}
+@media (max-width: 320px) {
+    .spotbie-search-result-image{
+        height: 60px;
+        min-height: 60px;
+        max-height: 60px;
+        width: 60px;
+        min-width: 60px;
+        max-width: 60px;
+        margin-right: 3px;    
+    } 
+    .spotbie-controls-search-results img {
+        width: 13px;
+        min-width: 13px;
+        max-width: 13px;
+    } 
+    .spotbie-search-results-title{
+        margin-bottom: 10px;
+    }
+}
+@media (max-width: 220px) { 
+
+}
+@media (max-width: 120px) { 
+
+}

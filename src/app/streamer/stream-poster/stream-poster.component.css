@@ -1,0 +1,309 @@
+@import '~@ctrl/ngx-emoji-mart/picker.css';
+
+.spotbie-button{
+    text-align: center;
+    background-color: rgba(0,0,0,.23);
+    margin-top: unset;
+    width: 200px;
+    min-width: 200px;
+    max-width: 200px;    
+}
+.spotbie-stream-poster-holder{
+    position: relative;
+    margin: 0 auto;
+    width: 94%;
+    min-width: 94%;
+    max-width: 94%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 3%;
+    padding-right: 3%;
+    background-color: rgba(0,0,0,.23);
+}
+.spotbie-stream-extra-media-message{
+    position: relative;
+    margin: 0 auto;
+    text-align: center;
+    margin-top: 10px;    
+}
+.spotbie-stream-extra-media-progress{
+    text-align: center;
+}
+.spotbie-embed-video{
+    position: relative;
+    display: block;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 1200px;
+    height: 520px;
+}
+.spotbie-stream-poster-info{
+    position: relative;
+    margin: 0 auto;    
+    max-width: 1200px; 
+}
+.spotbie-stream-poster-teaxtarea::placeholder{
+    color: white;
+}
+.spotbie-stream-poster-teaxtarea{
+    position: relative;
+    display: block;
+    margin: 0 auto;
+    width: 96%;
+    min-width: 96%;
+    max-width: 96%;
+    height: 150px;
+    min-height: 150px;
+    max-height: 550px;
+    background-color: rgba(0, 0, 0, 0.2); 
+    color : white;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding: 10px;
+    padding-left: 2%;
+    padding-right: 2%;
+    font-size: 16px;
+    line-height: 30px;
+    border-radius: 15px;
+}
+.spotbie-stream-poster-extra-media-options{
+    position: relative;
+    margin: 0 auto;
+    margin-bottom: 20px;
+    width: 600px;
+    min-width: 600px;
+    max-width: 600px;
+    text-align: center;
+}
+.spotbie-stream-poster-extra-media-option{
+    position: relative;
+    display: inline-block;
+    min-width: 30px;
+    width: 30px;
+    max-width: 30px;
+    min-height: 30px;
+    height: 30px;
+    max-height: 30px;
+    cursor: pointer;
+    text-align: center;
+    margin: 5px;
+    border: 21px solid transparent;
+    border-radius: 99%;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    background-size: contain !important;  
+}
+.spotbie-stream-poster-extra-media-option i{
+    font-size: 30px;
+}
+.spotbie-extra-media-upload-title{
+    position: relative;
+    margin: 0 auto;
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    text-align: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.spotbie-stream-post-wrapper{
+    position: relative;
+    margin: 0 auto;
+    max-width: 1200px;
+}
+.spotbie-extra-media-upload-input{
+    display: none;
+}
+.stream-poster-extra-media-wrapper{
+    position: relative;
+    text-align: center; 
+    margin-bottom: 20px;
+}
+.spotbie-extra-media{
+    position: relative;
+    display: inline-block;
+    width: 50%;
+    min-width: 50%;
+    max-width: 50%;
+    padding-top: 10px;
+    background-color: rgba(0,0,0,.23);
+}
+.spotbie-extra-media div{
+    position: relative;
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    min-height: 250px;
+    max-height: 250px;
+    height: 250px;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    background-size: contain !important;
+}
+
+.spotbie-extra-media-video{
+    position: relative;
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    height: 250px;
+    min-height: 250px;
+    max-height: 250px;
+}
+
+.spotbie-remove-extra-media-button{
+    position: relative;
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    height: unset !important;
+    min-height: unset !important;
+    max-height: unset !important;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: center;
+    color: white;
+    cursor: pointer;
+}
+.spotbie-likes-list-wrapper{
+    position: relative;
+}
+.spotbie-emoji-picker{
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  width: 25px;
+  min-width: 25px;
+  max-width: 25px;
+  height: 25px;
+  min-height: 25px;
+  max-height: 25px;
+  cursor: pointer;
+  z-index: 9;
+}
+.spotbie-emoji-picker i{
+    font-size: 25px;
+}
+#spotbie_emoji_close_button{
+    left: 328px;
+    position: absolute;
+    font-size: 20px;
+    cursor: pointer;
+}
+/**WIDTH MEDIA QUERIES */
+@media (max-width: 1300px) { 
+
+}
+@media (max-width: 1200px) {   
+
+}
+@media (max-width: 1024px) { 
+    .spotbie-menu-fixed{
+        width: 100%;
+        min-width: 100%;
+        max-width: 100%;
+    }
+}
+@media (max-width: 900px) { 
+
+}
+@media (max-width: 768px) { 
+    .spotbie-stream-poster-holder{
+        width: 97%;
+        min-width: 97%;
+        max-width: 97%;
+        padding-left: 1%;
+        padding-right: 1%;
+        border-radius: 0px;
+        margin-top: 0;
+    }
+    .spotbie-stream-poster-extra-media-options{
+        width: 100%;
+        min-width: 100%;
+        max-width: 100%;        
+    }
+}
+@media (max-width: 700px) { 
+
+}
+@media (max-width: 600px) { 
+
+}
+@media (max-width: 560px) { 
+    .spotbie-extra-media div {
+        min-height: 150px;
+        max-height: 150px;
+        height: 150px;    
+    }
+    .spotbie-stream-poster-extra-media-options{
+        margin-bottom: 5px;
+    }    
+    .spotbie-stream-poster-extra-media-option{
+        min-width: 25px;
+        width: 25px;
+        max-width: 25px;
+        min-height: 25px;
+        height: 25px;
+        max-height: 25px;
+        margin: 8px;        
+    }
+    .spotbie-stream-poster-holder{
+        padding-top: 10px;
+    }
+    .spotbie-stream-poster-teaxtarea{
+        border-color: rgba(0,0,0,.2);
+        width: 94%;
+        min-width: 94%;
+        max-width: 94%;
+        padding-left: 3%;
+        padding-right: 3%;
+        margin-top: 10px;     
+    }     
+    .spotbie-stream-poster-info-text{
+        display: none;
+    }  
+    .spotbie-button {
+        font-size: 20px;
+    }
+}
+@media (max-width: 460px) { 
+}
+@media (max-width: 420px) { 
+    .spotbie-stream-poster-teaxtarea{
+        border-radius: 0px;
+    }
+    .spotbie-stream-poster-extra-media-option{
+        min-width: 23px;
+        width: 23px;
+        max-width: 23px;
+        min-height: 23px;
+        height: 23px;
+        max-height: 23px;
+        margin: -4px;
+    }
+    .spotbie-stream-poster-extra-media-option i {
+        font-size: 23px;
+    }
+    .spotbie-button {
+        font-size: 18px;
+        margin-top: 20px;
+        width: 150px;
+        min-width: 150px;
+        max-width: 150px;        
+    }      
+}
+@media (max-width: 360px) { 
+    .spotbie-stream-poster-extra-media-option {
+        margin: 3px;
+    }    
+}
+
+@media (max-width: 320px) {
+
+}
+@media (max-width: 220px) { 
+
+}
+@media (max-width: 120px) { 
+
+}

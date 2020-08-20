@@ -1,0 +1,171 @@
+<app-loading-screen *ngIf="loading"></app-loading-screen>
+
+<div class='spotbie-stream-poster-holder'>
+
+    <div class="spotbie-stream-post-wrapper">
+
+        <div class='spotbie-stream-poster-info'></div>
+
+        <form [formGroup]="post_text_form">
+
+            <div *ngIf="post_submitted && f.spotbie_post_text.errors else spotbie_description_normal" class="spotbie-invalid-feedback animated shake">                   
+                <div *ngIf="f.spotbie_post_text.errors.maxlength">
+                    Your post text can only be 300 characters long.
+                </div>                       
+            </div> 
+
+            <ng-template #spotbie_description_normal>
+
+                <div class="spotbie-stream-poster-info-text" #spotbie_description_info>
+                    <span *ngIf="input_flag == 'edit'">Edit your post.</span>
+                    <span *ngIf="input_flag == 'post'">Feel free to share with your friends below.</span>
+                </div>
+                
+            </ng-template>  
+
+            <div class="spotbie-stream-post-wrapper">
+
+                <textarea class='spotbie-stream-poster-teaxtarea'
+                maxlength="5000"
+                formControlName="spotbie_post_text" 
+                placeholder="Share your world..." 
+                (keyup)="checkStreamText($event)"></textarea>  
+
+                <div class='spotbie-emoji-picker'>
+
+                    <i class="fa fa-smile-o" aria-hidden="false" (click)="openEmojiAdd()"></i>
+
+                    <i class="fa fa-times"
+                        (click)="openEmojiAdd()"
+                        id="spotbie_emoji_close_button"
+                        *ngIf="emoji_picker_open"
+                        aria-hidden="false"></i>
+
+                    <emoji-mart *ngIf="emoji_picker_open" isNative="true" title="Pick your emoji…" emoji="point_up" (emojiClick)="addEmoji($event)"></emoji-mart>
+
+                </div> 
+
+            </div> 
+
+        </form>
+
+        <form>
+
+            <div class="spotbie-extra-media-info">
+                <div class="spotbie-stream-extra-media-progress" *ngIf="extra_media_progress > 0">
+                    Upload {{ extra_media_progress }}% done. Please don't close SpotBie!
+                </div>
+                <div class="spotbie-stream-extra-media-message" *ngIf="extra_media_message">
+                    {{extra_media_message}}
+                </div>
+            </div>
+
+            <div class='spotbie-tag-friends' *ngIf='friend_tags > 0'></div>
+
+            <div class='spotbie-content-tags' *ngIf='content_tags > 0'></div>
+            
+            <div class='spotbie-embed-tags' *ngIf='embed_content'>
+                
+                <iframe class="spotbie-embed-video"
+                        *ngIf='embed_content'
+                        id="spotbieEmbedVideo"
+                        [src]="current_embed_video"
+                        frameborder="0"
+                        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen>                        
+                </iframe>
+
+            </div>
+
+            <div class='spotbie-stream-poster-extra-media-options'>
+
+                <input type="file" 
+                        class='spotbie-extra-media-upload-input' 
+                        #extraMediaInput (change)="attachExtraMedia(extraMediaInput.files)" 
+                        accept="application/msword, application/pdf, text/plain, 
+                                image/jpeg, image/gif, image/png, 
+                                video/mp4, video/ogg, video/quicktime, video/avi,
+                                video/x-msvideo, video/x-msvideo, 
+                                audio/mpeg, audio/mp4, "
+                        multiple='true' >
+                        
+                <div class='spotbie-stream-poster-extra-media-option' 
+                    (click)="startExtraMediaUploader()"
+                    title="Attach Images">
+                    <i class="fa fa-picture-o" aria-hidden="true"></i>
+                </div>
+
+                <div class='spotbie-stream-poster-extra-media-option' 
+                    (click)="startExtraMediaUploader()"
+                    title="Attach Videos">
+                    <i class="fa fa-video-camera" aria-hidden="true"></i>
+                </div>
+
+                <div class='spotbie-stream-poster-extra-media-option' 
+                    (click)="startExtraMediaUploader()"
+                    title="Attach Audio">
+                    <i class="fa fa-music" aria-hidden="true"></i>
+                </div>
+
+                <div class='spotbie-stream-poster-extra-media-option' 
+                    (click)="startExtraMediaUploader()"
+                    title="Attach Text">
+                    <i class="fa fa-file-text" aria-hidden="true"></i>
+                </div>
+
+            </div>
+
+        </form>
+
+        <div #spotbieExtraMediaHolderForPost class='stream-poster-extra-media-wrapper' *ngIf="upload_complete">
+
+            <div class='spotbie-extra-media-upload-title' #extraMediaFileInfoMessage></div>
+
+            <div class='spotbie-extra-media' *ngFor="let extra_media of extra_media_array; let i = index" id="{{'extra_media_element' + i}}">
+
+                <div class='spotbie-extra-media-image'
+                    *ngIf="extra_media.media_type == 'image' && extra_media.media_content | extraMediaPath as extra_media_path"
+                    [ngStyle]="{'background' : 'url(' + extra_media_path  + ')' } " ></div>
+
+                <div class='spotbie-extra-media-video-holder' 
+                    *ngIf="extra_media.media_type == 'video'">
+
+                    <video class='spotbie-extra-media-video' controls>
+                        <source *ngIf="extra_media.media_content | extraMediaPath as extra_media_path" src="{{ extra_media_path }}">
+                    </video>
+
+                </div>
+
+                <div class='spotbie-extra-media-audio-holder'
+                    *ngIf="extra_media.media_type == 'audio'">
+
+                    <audio class='spotbie-extra-media-audio'>
+                        <source *ngIf="extra_media.media_content | extraMediaPath as extra_media_path" src="{{ extra_media_path }}">               
+                    </audio>
+                    
+                </div>
+
+                <div class='spotbie-extra-media-text' *ngIf="extra_media.media_type == 'text'"></div>
+                
+                <div class='spotbie-remove-extra-media-button' (click)="removeExtraMediaBeforeUpload(extra_media, $event)" *ngIf="input_flag == 'post'">remove</div>
+
+                <div class='spotbie-remove-extra-media-button' (click)="addToRemoveExtraMediaBeforeUploadEdit(extra_media)" *ngIf="input_flag == 'edit'">remove</div>
+
+            </div>
+
+        </div>
+
+        <div class='spotbie-button'(click)="postToStream()" *ngIf="input_flag == 'post'">POST</div>
+
+        <table class="spotbie-bottom-button-bar" *ngIf="input_flag == 'edit'">
+            <tr>
+                <td class="spotbie-button spotbie-td-button" (click)="saveEdit()">save</td>
+                <td class="spotbie-button spotbie-td-button" (click)="closeWindowX()">close</td>
+            </tr>
+        </table>
+
+    </div>
+
+</div>
+
+<app-toast-helper [helper_config]="toast_helper_config" *ngIf="toast_helper"></app-toast-helper>

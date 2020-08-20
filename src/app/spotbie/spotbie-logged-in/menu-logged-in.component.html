@@ -1,0 +1,109 @@
+<div class="spotbie-el-100 spotbie-menu-fixed" id="spotbieMainMenu" #spotbieMainMenu>
+
+    <table class="spotbie-menu-logged">
+      <tr>
+        <td id="spotbieLogIn" *ngIf="public_profile" [routerLink]="['/user_home']" title="Home">
+          <img style="border-radius:99%;" src="assets/favicon/android-icon-72x72.png" />
+        </td>
+  
+        <td (click)="openApps()" *ngIf="!public_profile" title="Open Apps">
+          <img style="border-radius:99%;" src="assets/favicon/android-icon-72x72.png" />
+        </td>
+  
+        <td (click)="openWindow(messagingWindow)" title="Messages">
+          <i class="fa fa-envelope" aria-hidden="true"></i>
+        </td>
+  
+        <td (click)="openWindow(friendsWindow)" title="Friends">
+          <i class="fa fa-users" aria-hidden="true"></i>
+        </td>
+    
+        <td id="spotbieSignUp" (click)="openWindow(settingsWindow)" title="Settings">
+          <i class="fa fa-cog" aria-hidden="true"></i>   
+        </td>
+    
+        <td id="spotbieLogIn" (click)="logOut()" title="Log Out">
+          <i class="fa fa-power-off" aria-hidden="true"></i>
+        </td> 
+  
+        <td id="spotbieBackgroundColor"
+          *ngIf="!public_profile"
+          (click)="openWindow(backgroundColorWindow)"
+          title="Background Color">
+          <div class="spotbie-color-picker"
+                [ngStyle]="{ 'background-color' : spotbieBackgroundColor }"></div>      
+        </td>
+  
+        <td id="spotbieBackgroundColor"
+          *ngIf="public_profile"
+          title="Background Color">
+          <div class="spotbie-color-picker"
+                [ngStyle]="{ 'background-color' : spotbieBackgroundColor }"></div>      
+        </td>
+  
+      </tr>
+    
+    </table>
+  
+</div>
+
+<div class="spotbie-menu-page-padding-top-not-logged"></div>
+
+<div class='spotbie-apps-overlay' *ngIf="apps_overlay">  
+
+    <div class='spotbie-bg-filler'></div>
+  
+    <div class='spotbie-apps-hover-name' #spotbieHoveredApp>{{ hovered_app }}</div>
+  
+    <div class='spotbie-apps-wrapper'>
+  
+      <div class='spotbie-app-icon-wrapper' 
+          title="{{ spotbie_app.app_name }}"
+          *ngFor="let spotbie_app of spotbie_app_list"
+          (click)="openAppFromList(spotbie_app.app_window)">
+        
+        <i class="{{ spotbie_app.icon_class }}" aria-hidden="true"></i>
+
+        <div class='spotbie-app-name'>{{ spotbie_app.app_name }}</div>
+
+      </div>
+      
+    </div>
+  
+    <div class='spotbie-search-in-apps'>
+      <app-search></app-search>
+    </div>
+  
+    <div class="spotbie-close-button" (click)="closeApps()">close</div>
+  
+  </div>
+
+<app-map *ngIf="mapApp.open"></app-map>
+
+<app-profile-header *ngIf="bg_image_ready"
+                    [album_id]="album_id"
+                    [album_media_id]="album_media_id"                    
+                    [public_profile_info]="public_profile_info" 
+                    [current_user_bg]="spotbieBackgroundImage"></app-profile-header>
+
+<app-notifications></app-notifications>
+
+<app-pairing *ngIf="locationPairingWindow.open"></app-pairing>
+
+<app-background-color *ngIf="backgroundColorWindow.open"></app-background-color>
+
+<app-matcher *ngIf="matcherWindow.open"></app-matcher>
+
+<app-driver-mode *ngIf="drivingWindow.open"></app-driver-mode>
+
+<app-missing-people *ngIf="missingWindow.open"></app-missing-people>
+
+<app-media-player-main *ngIf="mediaPlayerWindow.open"></app-media-player-main>
+
+<app-friends *ngIf="friendsWindow.open"></app-friends>
+
+<app-my-places *ngIf="myPlacesWindow.open"></app-my-places>
+
+<app-settings *ngIf="settingsWindow.open"></app-settings>
+
+<app-messaging *ngIf="messagingWindow.open"></app-messaging>

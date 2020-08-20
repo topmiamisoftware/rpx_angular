@@ -1,0 +1,73 @@
+.spotbie-overlay-window{
+    text-align: left;
+}
+.spotbie-repost-title{
+    position: relative;
+    margin: 0 auto;
+    text-align: center;
+    margin-top: 60px;
+    margin-bottom: 20px;
+}
+.spotbie-repost-button{
+    position: relative;
+    margin: 0 auto;
+    margin-top: 40px;
+    margin-bottom: 120px;
+    min-width: 350px;
+    max-width: 350px;
+    width: 350px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    background-color : rgba(0,0,0,.43);
+    text-align: center;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+/**WIDTH MEDIA QUERIES */
+@media (max-width: 1300px) { 
+
+}
+@media (max-width: 1200px) {   
+
+}
+@media (max-width: 1024px) { 
+}
+@media (max-width: 900px) { 
+
+}
+@media (max-width: 768px) { 
+
+}
+@media (max-width: 700px) { 
+
+}
+@media (max-width: 600px) { 
+
+}
+@media (max-width: 560px) { 
+     
+}
+@media (max-width: 460px) { 
+    .spotbie-repost-button{
+        min-width: 75%;
+        max-width: 75%;
+        width: 75%;        
+    }   
+}
+@media (max-width: 420px) { 
+                   
+}
+@media (max-width: 360px) { 
+ 
+}
+
+@media (max-width: 320px) {
+
+}
+@media (max-width: 220px) { 
+
+}
+@media (max-width: 120px) { 
+
+}

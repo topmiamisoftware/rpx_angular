@@ -1,0 +1,22 @@
+.spotbie-loading-screen{
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.85);
+    z-index: 99999999998;
+    text-align: center;
+}
+.spotbie-loading-gif{
+    display: block;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 150px;
+    min-height: 150px;
+    max-height: 150px;
+}

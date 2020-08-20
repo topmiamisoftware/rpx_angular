@@ -1,0 +1,126 @@
+.spotbie-overlay-window{
+    padding-bottom: 100px;
+}
+.spotbie-info-object-transactions{
+    position: relative;
+    margin: 0 auto;
+    max-width: 98%;
+}
+.spotbie-info-object-image{
+    position: relative;
+    margin: 0 auto;
+    width: 300px;
+    min-width: 300px;
+    max-width: 300px;
+    height: 300px;
+    min-height: 300px;
+    background-size: cover !important;
+    background-position: center !important;
+}
+.spotbie-search-result-phone{
+    position: relative;
+    margin-top: 40px;
+    font-size: 25px;
+}
+.spotbie-friendly-ph{
+    position: relative;
+}
+.spotbie-venue-name{
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+.spotbie-distance{
+    margin-top: 20px;
+}
+.spotbie-marker-icon{
+    position: relative;
+    max-width: 25px;
+}
+.spotbie-info-object-title{
+    position: relative;
+    margin: 0 auto;
+    font-size: 25px;
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+.spotbie-info-object-image-list{
+    position: relative;
+    margin: 0 auto;
+    margin-top: 15px;
+    text-align: center;
+}
+.spotbie-info-object-image-thumb{
+    position: relative;
+    display: inline-block;
+    margin-left: 3px;
+    margin-right: 3px;
+    width: 150px;
+    min-width: 150px;
+    max-width: 150px;
+    height: 150px;
+    min-height: 150px;
+    background-size: cover !important;
+    background-position: center !important;
+    cursor: pointer;        
+}
+.spotbie-search-result-yelp-logo{
+    position: relative;
+    margin-top: 2px;
+    height: 24px;
+    min-height: 24px;
+    max-height: 24px;
+    width: 48px;
+    min-width: 48px;
+    max-width: 48px;       
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    background-size: contain !important;      
+}
+.spotbie-yelp-rating-table{
+    position: relative;
+    margin: 0 auto;
+    margin-top: 30px;
+}
+.spotbie-yelp-rating-table td{
+    vertical-align: middle;
+}
+.spotbie-search-result-table td{
+    vertical-align: top !important;
+}
+.spotbie-search-result-rating{
+    position: relative;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+.spotbie-search-result-rating-img{
+    position: relative;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    height: 24px;
+    min-height: 24px;
+    max-height: 24px;
+    width: 132px;
+    min-width: 132px;
+    max-width: 132px;   
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    background-size: contain !important;      
+}
+.spotbie-distance{
+    position: relative;
+    margin: 0 auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.spotbie-info-object-address{
+    position: relative;
+    margin: 0 auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.spotbie-google-maps-it{
+    cursor: pointer;
+}
+.spotbie-button{
+    background-color: rgba(0,0,0,.5);
+}

@@ -1,0 +1,11 @@
+<app-loading-screen *ngIf="loading"></app-loading-screen>
+
+<div class='spotbie-overlay-window' [ngStyle]="{'background-color' : bg_color }">
+
+    <div class='spotbie-coming-soon'>
+        Groups Coming Soon!
+    </div>
+
+    <div class="spotbie-close-button" (click)="closeWindow()">close groups</div>
+
+</div>

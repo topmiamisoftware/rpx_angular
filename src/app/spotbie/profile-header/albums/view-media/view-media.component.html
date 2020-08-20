@@ -1,0 +1,78 @@
+<div class="spotbie-overlay-window" [ngStyle]="{'background-color' : bg_color}">
+
+    <div class='spotbie-exif-optional'></div>
+    <div class='spotbie-ai-items-in-image'></div>
+
+    <div class='spotbie-view-media-wrapper'>
+
+        <div class='spotbie-album-media-image-wrapper'
+            *ngIf="media.file_type == 'image' && media.file_path | albumMediaPath as media_path"
+            [ngStyle]="{'background' : 'url(' + media_path  + ')' } ">
+
+            <div class='spotbie-album-media-image-blur'></div> 
+
+            <div class='spotbie-m-wrapper'>
+                <img class='spotbie-album-media-image' [src]="media_path" /> 
+                <i class="fa fa-angle-left spotbie-album-editor-buttons previous" aria-hidden="true" (click)="albumMediaSlide('previous')"></i>        
+                <i class="fa fa-angle-right spotbie-album-editor-buttons next" aria-hidden="true" (click)="albumMediaSlide('next')"></i>   
+            </div>
+            
+            <div class='spotbie-media-caption'>
+                {{ media.item_created }}
+            </div>
+
+            <div class='spotbie-media-caption' *ngIf="media.album_item_caption != 'null'">
+                {{ media.album_item_caption }}
+            </div>
+
+            <div class='spotbie-album-media-comments-wrapper'>
+                <app-comments *ngIf="media_comments" [current_subject]="media" [comments_config]="comments_config"></app-comments>
+            </div>
+        
+        </div>
+
+        <div class='spotbie-album-media-image-wrapper'
+            *ngIf="media.file_type == 'video' && media.poster | albumMediaPath as video_poster"
+            [ngStyle]="{'background' : 'url(' + video_poster  + ')' }">
+
+            <div class='spotbie-album-media-image-blur'></div>
+
+            <div class='spotbie-m-wrapper'>
+
+                <video class='spotbie-album-media-video'
+                        *ngIf="media.file_type == 'video' && media.poster | albumMediaPath as video_poster"
+                        poster="{{ video_poster }}"
+                        controls>
+
+                    <source *ngIf="media.file_path | albumMediaPath as media_path" src="{{ media_path }}">
+
+                </video>
+
+                <i class="fa fa-angle-left spotbie-album-editor-buttons previous" aria-hidden="true" (click)="albumMediaSlide('previous')"></i>        
+                <i class="fa fa-angle-right spotbie-album-editor-buttons next" aria-hidden="true" (click)="albumMediaSlide('next')"></i>
+
+            </div>
+
+            <div class='spotbie-media-caption'>
+                {{ media.item_created }}
+            </div>
+
+            <div class='spotbie-media-caption' *ngIf="media.album_item_caption != 'null'">
+                {{ media.album_item_caption }}
+            </div>
+
+            <div class='spotbie-album-media-comments-wrapper'>
+                <app-comments *ngIf="media_comments" [current_subject]="media" [comments_config]="comments_config"></app-comments>
+            </div>
+            
+        </div> 
+
+    </div>
+
+    <div class='spotbie-album-editor-buttons-wrapper'>
+        <i class="fa fa-link spotbie-album-media-share-link" aria-hidden="true" (click)="shareAlbumMedia()"></i>    
+    </div>
+
+    <div class="spotbie-close-button" (click)="closeWindow()">close</div>
+
+</div>

@@ -1,0 +1,38 @@
+.xdebug-error {
+    font-size: 22px !important;
+    width: 95% !important;
+    margin: 0 auto 10px auto !important;
+    border-color: #666 !important;
+    background: #ddd !important;
+}
+
+.xdebug-error th, .xdebug-error td {
+    padding: 5px !important;
+    background-color: #404040 !important;
+    padding-top: 20px !important;
+    padding-bottom: 20px !important;
+    text-align: center;
+}
+
+.xdebug-error th {
+    background: #609329 !important;
+    padding-top: 20px !important;
+    padding-bottom: 20px !important;
+    line-height: 38px;
+    font-size: 20px;
+}
+
+.xdebug-error span {
+    display: none !important;
+}
+
+.xdebug-error_description th {
+    font-size: 1.2em !important;
+    padding: 20px 4px 20px 100px !important;
+    background: #ccc no-repeat left top !important;
+}
+
+.xdebug-error_callStack th {
+    background: #666 !important;
+    color: #ddd !important;
+}

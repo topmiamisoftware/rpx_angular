@@ -1,0 +1,69 @@
+<app-loading-screen *ngIf="loading"></app-loading-screen>
+
+<div class='spotbie-comment-for-this' *ngIf="logged_in">
+    
+    <form [formGroup]="comment_form" (ngSubmit)="addComment()">
+
+        <div *ngIf="comment_submitted && f.spotbie_comment_text.errors else comment_normal" class="spotbie-invalid-feedback animated shake">                   
+            <div *ngIf="f.spotbie_comment_text.errors.maxlength">
+                Your comment can only be 360 characters long.
+            </div>                       
+        </div> 
+
+        <ng-template #comment_normal>
+            <div class="spotbie-toast-info spotbie-description-info">
+                {{ comments_config.info_text.post_comment_text }}
+            </div>
+        </ng-template>      
+
+        <div class='spotbie-emoji-picker' (click)="openEmojiAdd()">
+            <emoji-mart *ngIf="emoji_picker_open" title="Pick your emoji…" emoji="point_up"></emoji-mart>
+        </div>    
+
+        <textarea class='spotbie-input spotbie-textarea'
+                    maxlength="360"                    
+                    formControlName="spotbie_comment_text" 
+                    placeholder="Enter your comment..."></textarea>        
+
+        <button class='spotbie-button' [ngStyle]="comments_config.styling.submit_button">Upload Comment</button>
+
+    </form>
+
+</div>
+
+<div class='spotbie-comment-separator'></div>
+
+<div class='spotbie-no-comments' *ngIf="no_comments">
+    {{ comments_config.info_text.no_comments_text }}
+</div>
+
+<div class='spotbie-comment' *ngFor="let comment of comment_list">
+
+    <table class='spotbie-comment-table'>
+        <tr>
+            <td>
+                <div class='spotbie-comment-user-default' 
+                        *ngIf="comment.comment_by.exe_user_default_picture | defaultImage as userBackgroundImage" 
+                        [ngStyle]="{'background' : 'url(' + userBackgroundImage  + ')' } ">
+                </div>
+            </td>
+            <td>
+                <div class='spotbie-comment-username'>{{ comment.comment_by.exe_username }}</div>
+                <div class='spotbie-comment-description'>{{ comment.comment }}</div>
+                <div class='spotbie-comment-date'>{{ comment.comment_date }}</div>
+                <i class="fa fa-trash spotbie-trash-comment"
+                    *ngIf="comment.user_id == logged_in_user"
+                    title="Delete Comment" 
+                    aria-hidden="false" 
+                    (click)="deleteCommentInit(comment)"></i>
+            </td>
+        </tr>
+    </table>    
+
+</div>
+
+<div class='spotbie-button spotbie-load-more-button' (click)="pullComments()" *ngIf="load_more">Load More</div>
+
+<app-toast-helper [helper_config]="toast_helper_config" 
+                *ngIf="toast_helper"
+                (dismiss_toast)="dismissToast($event)"></app-toast-helper>

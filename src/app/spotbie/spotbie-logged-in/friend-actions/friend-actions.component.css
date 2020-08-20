@@ -1,0 +1,135 @@
+.spotbie-overlay-window{
+    left: 0;
+    right: 0;
+    background-color: rgba(0,0,0,.80);
+    text-align: center;
+}
+.spotbie-friend-actions{
+    position: absolute;
+}
+.spotbie-friend-actions-image{
+    position: relative;
+    margin: 0 auto;
+    margin-top: 100px;
+    width: 350px;
+    min-width: 350px;
+    max-width: 350px;
+    height: 325px;
+    min-height: 325px;
+    max-height: 325px;
+    border-radius: 5px;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;    
+}
+.spotbie-friend-actions-username{
+    position: relative;
+    margin: 0 auto;
+    margin-top: 40px;
+    font-size: 25px;
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    text-align: center;
+    color: white;
+}
+.spotbie-button{
+    margin-left: 5px;
+    margin-right: 5px;
+    background-color:#4a4a4a;
+}
+.spotbie-friend-action-buttons{
+    position: relative;
+    margin: 0 auto;
+    width: 550px;
+    min-width: 550px;
+    max-width: 550px;
+}
+.spotbie-close-button{
+    z-index: 999999;
+}
+.spotbie-successful-action-wrapper{
+    position: absolute;
+    z-index: 9999;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0,0,0,.9);
+}
+.spotbie-successful-action-title{
+    position: relative;
+    margin: 0 auto;
+    margin-top: 200px;
+    margin-bottom: 40px;
+    font-size: 25px;
+}
+.spotbie-successful-action-description{
+    position: relative;
+    margin: 0 auto;
+    margin-top: 100px;
+    margin-bottom: 40px;
+    font-size: 20px;
+}
+/**WIDTH MEDIA QUERIES */
+@media (max-width: 1300px) { 
+
+}
+@media (max-width: 1200px) {   
+
+}
+@media (max-width: 1024px) { 
+}
+@media (max-width: 900px) { 
+
+}
+@media (max-width: 768px) { 
+
+}
+@media (max-width: 700px) { 
+
+}
+@media (max-width: 600px) {   
+    .spotbie-friend-actions-image{
+        width: 75%;
+        min-width: 75%;
+        max-width: 75%;
+        height: 200px;
+        min-height: 200px;
+        max-height: 200px;
+    }
+    .spotbie-friend-action-buttons {
+        margin: 0 auto;
+        width: 95%;
+        min-width: 95%;
+        max-width: 95%;
+    }
+    .spotbie-button{
+        width: 95%;
+        min-width: 95%;
+        max-width: 95%;
+        font-size: 15px;
+    }
+}
+@media (max-width: 560px) { 
+     
+}
+@media (max-width: 460px) { 
+              
+}
+@media (max-width: 420px) { 
+                   
+}
+@media (max-width: 360px) { 
+ 
+}
+
+@media (max-width: 320px) {
+
+}
+@media (max-width: 220px) { 
+
+}
+@media (max-width: 120px) { 
+
+}

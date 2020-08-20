@@ -1,0 +1,23 @@
+<app-loading-screen *ngIf="loading"></app-loading-screen>
+
+<div class='spotbie-friends-list'>
+    <div class='spotbie-friend-tile' *ngFor="let friend of around_me_list">
+        <div class='spotbie-friend-tile-upper' [routerLink]="['/user-profile/' + friend.exe_username]"></div>
+        <div class='spotbie-friend-tile-bottom' (click)="setCurrentAroundMe(friend)"></div>        
+        <div class='spotbie-friend-default'
+            *ngIf="friend.user_info.exe_user_default_picture | defaultImage as exe_user_default"
+            [ngStyle]="{'background-image' : 'url(' + exe_user_default + ')'}"></div>
+        <div class='spotbie-friend-user-name'>{{ friend.user_info.exe_username }}</div>
+    </div>
+    <div class='spotbie-no-notis-box' *ngIf='no_spotbie_around_me'>
+        <div>
+            You have no friends around you!
+        </div>
+    </div>    
+</div>
+
+<div class='spotbie-load-more-button spotbie-button' *ngIf="load_more_around_me" (click)="loadMoreAroundMe()">
+    Load More
+</div>
+
+<app-around-me-actions *ngIf="show_around_me_actions" [around_me_user]="current_around_me"></app-around-me-actions>

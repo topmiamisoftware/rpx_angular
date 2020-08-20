@@ -1,0 +1,16 @@
+<div class='spotbie-overlay-window animated fadeIn' [ngStyle]="{ 'background-color' : bg_color }">
+
+    <div #spotbie_post_repost_title class='spotbie-repost-title'>Delete this post from your stream?</div>
+
+    <app-stream-post [stream_post]="stream_post" [input_flag]="input_flag"></app-stream-post>
+
+    <div class='spotbie-toast-message animated fadeIn' *ngIf="deleted"> {{ deleted_msg }}</div>
+    
+    <table class="spotbie-bottom-button-bar">
+        <tr>
+            <td class='spotbie-button spotbie-td-button' (click)="deleteIt()">delete it</td>
+            <td class="spotbie-button spotbie-td-button" (click)="closeWindowX()">cancel</td>
+        </tr>
+    </table>
+
+</div>

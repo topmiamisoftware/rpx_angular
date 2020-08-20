@@ -1,0 +1,10 @@
+<div class='spotbie-overlay-window animated fadeIn' [ngStyle]="{ 'background-color' : bg_color }">
+
+    <div class='spotbie-repost-title'>Edit your stream post.</div>
+
+    <app-stream-poster [stream_post]="stream_post"
+                        [input_flag]="input_flag" 
+                        (streamPosted)="onStreamPosted($event)"
+                        (closeWindow)="closeWindowX()"></app-stream-poster>
+
+</div>

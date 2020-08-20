@@ -1,0 +1,99 @@
+<app-loading-screen *ngIf="loading"></app-loading-screen>
+
+<div class="spotbie-overlay-window" [ngStyle]="{ 'background-color' : bg_color }">
+
+    <div class='spotbie-msgs-chat-head-wrapper'>
+
+        <div class='spotbie-msgs-chat-heads-in'>
+
+            <div class='spotbie-chat-head' *ngFor='let chat_head of chat_head_list' (click)="openChat(chat_head)">
+
+                <div class='spotbie-chat-head-user-image'
+                    *ngIf="chat_head.exe_user_default_picture | defaultImage as exe_user_default"
+                    [ngStyle]="{'background' : 'url(' + exe_user_default + ')'}">
+                </div>
+
+                <div class='spotbie-chat-head-username'>
+                    {{ chat_head.exe_username }}
+                </div>
+                
+            </div>
+            
+            <div class='spotbie-load-more-chat-heads' *ngIf="load_more_chat_heads" (click)="loadMoreChatHeads()">more</div>
+
+        </div>        
+
+        <div class='spotbie-load-more-button spotbie-button' *ngIf="no_chat_heads" (click)="addFriends()">
+            You have no one to chat with.<br/>
+            Start by adding some friends.
+        </div>
+
+    </div>
+
+    <div class='spotbie-msgs-wrapper'>
+
+        <table class='spotbie-friends-header-table'>
+            <tr>             
+                <td (click)="switchMsgs(0)" [ngStyle]="styleMsgsTab(0)">
+                    All
+                </td>
+                <td (click)="switchMsgs(1)" [ngStyle]="styleMsgsTab(2)">
+                    Unread
+                </td>                
+                <td (click)="switchMsgs(2)" [ngStyle]="styleMsgsTab(1)">
+                    Read
+                </td>             
+            </tr>
+        </table>
+    
+        <div class='spotbie-msgs-box-holder'>
+    
+            <div class='spotbie-notifications-box' 
+                *ngFor="let message of all_msgs_list"
+                [ngStyle]="messageStyle(message)"
+                (click)="openChatFromNoti(message)">        
+    
+                <div class='spotbie-notification-user-image'
+                    *ngIf="message.user_info.exe_user_default_picture | defaultImage as exe_user_default"
+                    [ngStyle]="{'background' : 'url(' + exe_user_default + ')'}">
+                </div>
+    
+                <div class='spotbie-notification-text'>{{ message.text }}</div>
+    
+                <div class='spotbie-notification-time'>{{ message.made_on }}</div>
+    
+                <table class='spotbie-friend-actions-table' attr.id="spotbieMsgNotification{{message.relation_id}}">
+                    <tr>
+                        <td (click)="deleteNotification(notification)">Delete Converstaion</td>
+                        <td (click)="viewProfile(notification)">View Profile</td>
+                        <td (click)="muteNotifications(notification)">Mute</td>
+                    </tr>
+                </table>
+    
+            </div>
+    
+            <div class='spotbie-load-more-button spotbie-button' *ngIf="load_more_msgs" (click)="loadMoreMsgs()">Load More</div>
+    
+            <div class='spotbie-no-notis-box' *ngIf='all_msgs_list.length === 0'>
+                <div>
+                    {{ no_msgs_text }}
+                </div>
+            </div>
+    
+        </div>
+    </div>
+    
+    <div class='spotbie-chats' #spotbie_chats (click)="closeAllChats()">
+
+        <app-messaging-chat SpotBieStopClickPropagation 
+                            *ngFor="let chat of open_chat_list" 
+                            (closeThisChat)="closeChat($event)"
+                            [chat_index]="open_chat_list.indexOf(chat)"
+                            [chat_head_info]="chat">
+        </app-messaging-chat>
+        
+    </div>
+
+    <div class="spotbie-close-button" (click)="closeWindowX()">close</div>
+
+</div>

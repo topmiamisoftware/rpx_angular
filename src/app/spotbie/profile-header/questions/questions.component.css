@@ -1,0 +1,27 @@
+.spotbie-questions-table{
+    position: relative;
+    margin: 0 auto;
+    width: 90%;
+    min-width: 90%;
+    max-width: 90%;
+    background-color: rgba(0,0,0,.23);
+}
+.spotbie-input{
+    width: 400px;
+    min-width: 400px;
+    max-width: 400px;
+}
+.spotbie-questions-info{
+    margin: 0 auto;
+    margin-top: 20px;
+    margin-bottom: 10px;
+    width: 400px;
+    min-width: 400px;
+    max-width: 400px;
+}
+.spotbie-questions-inst{
+    position: relative;
+    margin: 0 auto;
+    margin-top: 10px;
+    text-align: center;
+}

@@ -1,0 +1,13 @@
+.spotbie-map-bg-filler{
+    position: absolute;
+    z-index: 0;
+    opacity: 0.5;
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    height: 493px;
+    min-height: 493px;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important; 
+}

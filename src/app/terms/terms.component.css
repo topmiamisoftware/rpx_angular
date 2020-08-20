@@ -1,0 +1,30 @@
+.spotbie-privacy-terms{
+    position: relative;
+    margin: 0 auto;
+    width: 94%;
+    min-width: 94%;
+    max-width: 94%;
+    padding: 3%;
+    background-color : rgba(0,0,0,.83);
+    line-height: 32px;
+}
+b{
+    color: #a7e235;
+}
+.spotbie-home-fixed{
+    left: unset;
+    right: 20px;
+    display: block;
+    padding-left: 7px;
+    padding-right: 8px;    
+}
+.spotbie-home-fixed i{
+    font-size: 30px;
+}
+h3,
+h3:focus,
+h3:active{
+    outline: none;
+    cursor: pointer;
+    max-width: 350px;
+}

@@ -1,0 +1,13 @@
+.spotbie-app-name{
+    position: relative;
+    margin: 0 auto;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    text-align: center;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: white;
+    font-size: 14px;
+    max-height: 15px;
+    white-space: nowrap;
+}

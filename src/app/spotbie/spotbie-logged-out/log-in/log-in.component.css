@@ -1,0 +1,147 @@
+.spotbie-input-info,
+.spotbie-invalid-feedback{
+    min-width: 90%;
+    max-width: 90%;
+    width: 90%;
+}
+.spotbie-input{  
+    width: 450px;
+    min-width: 450px;
+    max-width: 450px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border: 0;
+    color: #8BC34A;
+    background-color: rgba(0,0,0,.23);
+    border: 1px solid #3c3c3c;
+}
+.spotbie-input::placeholder{
+    color: #8BC34A !important;
+}
+.spotbie-overlay-window{
+    background-color: rgb(12, 12, 12);
+}
+.spotbie-log-in-picture{
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    margin-top: 50px;
+    width: 550px;
+    min-width: 550px;
+    max-width: 550px;
+    height: 250px;
+    min-height: 250px;
+    max-height: 250px;
+    background: url(../../../../assets/images/user.png);
+    background-size: cover !important;
+    border-radius: 10px;
+    cursor: pointer;
+    opacity: 0.4;
+}
+.spotbie-log-in-picture-inside{
+    position: relative;
+    margin: 0 auto;
+    margin-top: 50px;
+    margin-bottom: 50px;
+    max-width: 550px;
+    min-height: 250px;
+    max-height: 250px;
+    cursor: pointer;
+}
+.spotbie-toggle{
+    margin-top: 0px;
+    margin-bottom: unset !important;
+    width: 250px;
+    min-width: 250px;
+    max-width: 250px;    
+}
+.spotbie-button{
+    margin-bottom: unset !important;
+}
+.spotbie-overlay-window{
+    padding-bottom: 80px;
+}
+.spotbie-help-text{
+    margin-top: 30px;
+    margin-bottom: unset !important;
+}
+.spotbie-link{
+    color : white;
+}
+/**WIDTH MEDIA QUERIES */
+@media (max-width: 1300px) { 
+
+}
+@media (max-width: 1200px) {   
+
+}
+@media (max-width: 1024px) { 
+}
+@media (max-width: 900px) { 
+
+}
+@media (max-width: 768px) { 
+    .spotbie-log-in-picture{
+        width: 95%;
+        min-width: 95%;
+        max-width: 95%;
+        height: 350px;
+        min-height: 350px;
+        max-height: 350px;
+    }
+}
+@media (max-width: 700px) { 
+
+}
+@media (max-width: 600px) { 
+
+}
+@media (max-width: 560px) { 
+     
+}
+@media (max-width: 460px) { 
+    .spotbie-log-in-picture{
+        height: 250px;
+        min-height: 250px;
+        max-height: 250px;    
+    } 
+    .spotbie-input{
+        width: 85%;
+        min-width: 85%;
+        max-width: 85%;
+        padding: 12px;
+        padding-left: 1%;
+        padding-right: 1%;       
+    }                 
+}
+@media (max-width: 420px) { 
+          
+}
+@media (max-width: 360px) { 
+    .spotbie-input-info{
+        font-size: 16px;
+    }
+    .spotbie-button{
+        width: 75%;
+        min-width: 75%;
+        max-width: 75%;
+        font-size: 18px;
+    }
+    .spotbie-toggle {
+        width: 200px;
+        min-width: 200px;
+        max-width: 200px;
+        font-size: 18px;
+    }  
+}
+
+@media (max-width: 320px) {
+
+}
+@media (max-width: 220px) { 
+
+}
+@media (max-width: 120px) { 
+
+}

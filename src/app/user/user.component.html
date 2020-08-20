@@ -1,0 +1,18 @@
+<div class="spotbie-main-holder" id="spotbieMainHolder">
+
+    <div class="spotbie-map-bg-filler"></div>
+
+    <app-menu [public_profile_info]="public_profile_info"
+              [album_id]="album_id"
+              [album_media_id]="album_media_id" 
+              *ngIf="awake_apps"></app-menu>
+
+</div>
+
+<app-streamer [public_profile_info]="public_profile_info" [stream_post_id]="stream_post_id" *ngIf="awake_apps"></app-streamer>
+
+<div class="spotbie-scroll-top spotbie-arrow-transparent" 
+        (click)="scrollTop()"
+        #scrollArrow>
+        <i class="fa fa-angle-double-up" aria-hidden="true"></i>
+</div>

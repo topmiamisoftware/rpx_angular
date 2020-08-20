@@ -1,0 +1,31 @@
+<app-loading-screen *ngIf="loading"></app-loading-screen>
+
+<div class="spotbie-overlay-window" [ngStyle]="{'background-color' : bgColor }">
+
+    <table class='spotbie-friends-header-table'>
+        <tr>             
+            <td (click)="switchFriends(0)" [ngStyle]="styleFriendsTab(0)">
+                <i class="fa fa-user-plus" aria-hidden="true"></i>
+            </td>
+            <td (click)="switchFriends(1)" [ngStyle]="styleFriendsTab(1)">
+                <i class="fa fa-clock-o" aria-hidden="true"></i>
+            </td>
+            <td (click)="switchFriends(2)" [ngStyle]="styleFriendsTab(2)">
+                <i class="fa fa-ban" aria-hidden="true"></i>
+            </td>
+            <td (click)="switchFriends(3)" [ngStyle]="styleFriendsTab(3)">
+                <img src='../../assets/images/spot.png' />
+            </td>                  
+        </tr>
+    </table>
+
+    <div class='spotbie-friends-app'>
+        <app-my-friends *ngIf="friends"></app-my-friends>
+        <app-pending-friends *ngIf="pending"></app-pending-friends>
+        <app-blocked-users *ngIf="blocked"></app-blocked-users>
+        <app-around-me *ngIf="around_me"></app-around-me>
+    </div>
+    
+    <div class="spotbie-close-button" (click)="closeWindow()">close friends</div>
+
+</div>

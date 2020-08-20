@@ -1,0 +1,44 @@
+.spotbie-tutorial-image{
+    position: relative;
+    margin: 0 auto;
+    height: 400px;
+    min-height: 400px;
+    max-height: 400px;
+    width: 450px;
+    min-width: 450px;
+    max-width: 450px;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    background-size: contain !important;    
+}
+.spotbie-tutorial-text{
+    position: relative;
+    margin: 0 auto;
+    min-width: 450px;
+    max-width: 450px;
+    width: 450px;
+    line-height: 32px;
+    letter-spacing: 3px;
+}
+
+.spotbie-tutorial-table-buttons{
+    position: relative;
+    width: 450px;
+    min-width: 450px;
+    max-width: 450px;
+    margin: 0 auto;
+    text-align: center;
+    margin-top: 40px;
+    font-size: 25px;
+    table-layout: fixed;
+}
+.spotbie-tutorial-table-buttons td{
+    padding: 20px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    background-color: rgba(0,0,0,.23);
+    cursor: pointer;
+    width: 50%;
+    min-width: 50%;
+    max-width: 50%;
+}

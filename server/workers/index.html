@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script src="webrtc.js?v=12asx623"></script>
+    <style>
+      .RemoteVideo{
+          position: absolute;
+          top: 0%;
+          left: 0%;
+          width: 100%;
+          min-width: 100%;
+          max-width: 100%;
+          min-height: 100%;
+          height: 100%;
+          max-height: 100%;
+          background-color: #1b1b1b;
+      }
+      .LocalVideo{
+          position: absolute;
+          background-color: #000;
+          right: 0%;
+          bottom: 0%;
+          width: 45%;
+          min-width: 45%;
+          max-width: 45%;
+          height: 35%;
+          min-height: 35%;
+          max-height: 35%;
+          border-top: 4px solid #38ff38;
+          border-left: 4px solid green;
+      }      
+    </style>
+    <title>WebRTC Simple Video-Chat</title>
+  </head>
+  <script>
+    var urll = window.location.href;
+    var url = new URL(urll);
+    
+    var from_id = url.searchParams.get("a");
+    var to_id = url.searchParams.get("b");
+    var c_init =  url.searchParams.get("c");    
+  </script>
+  <body>
+    <input type='hidden' value='' id='fromid'/>
+    <input type='hidden' value='' id='toid'/>
+    <input type='hidden' value='' id='vidac'/>
+    <video id="remoteVideo" class="RemoteVideo" webkit-playsinline autoplay playsinline></video>
+    <video id="localVideo"class="LocalVideo"  webkit-playsinline autoplay muted playsinline></video>
+    <div id='to_user'></div>
+  </body>
+  <script>
+    connect();
+    document.getElementById('fromid').value = from_id+'extx';
+    targetUsername = to_id+'extx';
+    document.getElementById('vidac').value = c_init;
+    if(c_init == '0'){
+      invite();
+    }
+  </script>  
+</html>

@@ -1,0 +1,28 @@
+.spotbie-overlay-window{
+    text-align: left;
+}
+.spotbie-repost-title{
+    position: relative;
+    margin: 0 auto;
+    text-align: center;
+    margin-top: 60px;
+    margin-bottom: 20px;
+}
+.spotbie-repost-button{
+    position: relative;
+    margin: 0 auto;
+    margin-top: 40px;
+    margin-bottom: 120px;
+    min-width: 350px;
+    max-width: 350px;
+    width: 350px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    background-color : rgba(0,0,0,.43);
+    text-align: center;
+    cursor: pointer;
+    border-radius: 10px;
+}
+.spotbie-bottom-button-bar{
+    margin-bottom: 80px;
+}

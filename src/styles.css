@@ -1,0 +1,789 @@
+@import './assets/styles/xdebug/xdebug.styles.css';
+html{
+    position: relative;
+    font-size: 19px;
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: rgb(229, 229, 229);
+    cursor: default; 
+    color: white;
+    height: unset !important;
+}
+body{
+    position: relative;
+    max-width: 100%;
+    margin: 0 auto;
+    padding-bottom: 5px;
+    background-color: transparent;
+    box-shadow: 0px 0px 40px #0000006e;
+    color: white;
+    overflow-x : hidden;
+    padding: env(safe-area-inset-top, 20px)
+    env(safe-area-inset-right, 20px)
+    env(safe-area-inset-left, 20px);
+    height: unset !important; 
+}
+.mat-accent .mat-slider-track-fill, .mat-accent .mat-slider-thumb, .mat-accent .mat-slider-thumb-label {
+    background-color: #ffffff;
+}
+.spotbie-bottom-button-bar{
+    position: relative;
+    margin: 0 auto;
+    margin-top: 40px;
+}
+div:active, div:focus{
+    outline: none;
+}
+::-webkit-scrollbar{
+    height: 10px;
+    width: 10px;
+    background: black;
+}
+::-webkit-scrollbar-thumb{
+    background: rgb(52, 52, 52);
+}
+::-webkit-scrollbar-corner{
+    background: rgb(52, 52, 52);
+}
+::-webkit-scrollbar-button{
+    background-color: rgb(52, 52, 52);
+}
+.spotbie-h1{
+    position: relative;
+    margin: 0 auto;
+    text-align: center;
+    color: #99cc00;
+    font-size: 50px;
+}
+.spotbie-h2{
+    position: relative;
+    margin: 0 auto;
+    text-align: center;
+    color: #99cc00;  
+}
+a, a:hover, a:active, a:after{
+    color: #FFF;
+    text-decoration: none;
+    font-weight: bold !important;
+}
+.spotbie-el-100{
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+}
+.spotbie-margin{
+    margin-top: 50px !important;
+    margin-bottom: 50px !important;    
+}
+.spotbie-padding{
+    padding-top: 20px !important;
+    padding-bottom: 20px !important;    
+}
+.spotbie-rel-div{
+    position: relative;
+    margin: 0 auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    background-size: contain !important;
+}
+.spotbie-title{
+    position: relative;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    margin: 0 auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    background-color: rgb(255, 255, 255);
+    color: #74bf23;
+    text-align: center;
+}
+.spotbie-paragraph{
+    position: relative;
+    width: unset;
+    min-width: unset;
+    padding: 20px;
+    margin-bottom: 60px;
+    line-height: 24px;
+    line-height: 30px;
+    text-align: center;
+    letter-spacing: 2px;
+    color: white;
+    background-color: #e5e5e5;
+    text-indent: 30px;
+}
+.spotbie-no-repeat-bg-contain{
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    background-size: contain !important;     
+}
+.spotbie-img{
+    position: relative;
+    display: block;
+    width: 450px;
+    min-width: 450px;
+    max-width: 450px;
+    height: 350px;   
+    min-height: 350px;
+    max-height: 350px;    
+    margin: 0 auto;
+}
+.spotbie-el-fixed-bottom{
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 20px;
+    margin: 0 auto;
+    width: 550px;
+    min-width: 550px;
+    max-width: 550px;
+    text-align: center;
+    color: #fff;
+    z-index: 99;
+    background-color: #7bb126;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    font-size: 28px;
+    border-radius: 20px;
+    cursor: pointer;
+}
+.spotbie-info-text{
+    position: relative;
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    text-align: center;
+    background-color: rgba(0,0,0,.23);
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin-bottom: 30px;
+}
+.spotbie-link{
+    color: #7bb126;
+    cursor: pointer;
+    letter-spacing: 4px;
+}
+.spotbie-color-label{
+    display: none;
+    position: relative;
+    padding-top: 10px;
+    padding-bottom: 10px;    
+    color: #FFF;
+    font-size: 16px;
+}
+.spotbie-color-picker{
+    position: relative;
+    margin: 0 auto;
+    width:  50px;
+    min-width: 50px;
+    max-width: 50px;
+    height:  50px;
+    min-height: 50px;
+    max-height: 50px;
+    background-color: white;
+    border-radius: 99%;
+    box-shadow: inset 2px 2px 5px #9e9e9e;
+}
+.spotbie-close-button{
+    position: fixed;
+    margin: 0 auto;
+    bottom: 1%;
+    left: 0;
+    right: 0;
+    max-width: 135px;
+    z-index: 1000;
+    text-align: center;
+    cursor: pointer;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 25px;
+    padding-right: 25px;
+    color: #FFF;
+    font-size: 18px;
+    border-radius: 17px;
+    background-color: rgb(20, 20, 20);
+}
+
+.spotbie-overlay-window{
+    position: fixed;
+    left: 0;
+    text-align: center;
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;   
+    top: 0;
+    bottom: 0;
+    margin: 0 auto;  
+    z-index: 99999999;
+    overflow-y: scroll;
+    background-color: rgba(0,0,0,.93);    
+    padding-top: env(safe-area-inset-top, 20px);
+}
+
+.spotbie-input{
+    position: relative;
+    display: block;
+    margin: 0 auto;
+    font-size: 25px;
+    color: black;
+    border-radius: 15px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    text-align: center;
+    letter-spacing: 1px;
+}
+.spotbie-input-info{
+    position: relative;
+    margin: 0 auto;
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    text-align: center;
+    letter-spacing: 3px;
+}
+.spotbie-invalid-feedback{
+    position: relative;
+    margin: 0 auto;
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    text-align: center;
+    letter-spacing: 3px;
+    line-height: 40px;
+}
+.spotbie-toggle{
+    position: relative;
+    margin: 0 auto;
+    margin-bottom: 20px;
+    width: 300px;
+    min-width: 300px;
+    max-width: 300px;
+    text-align: center;
+    color: white;
+    cursor: pointer;
+    table-layout: fixed;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-radius: 20px;
+    font-size: 21px;
+}
+.spotbie-toggle-info-text{
+    text-align: center;
+}
+.spotbie-toggle-light{
+    border-radius: 14px;
+    max-width: 15%;
+    width: 15%;
+    min-width: 15%;
+}
+.spotbie-toggle-help-switch{
+    min-width: 10%; 
+    max-width: 10%; 
+    width: 10%;
+}
+.spotbie-play-button{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0, 0, 0, 0.66);
+    margin: 0 auto;
+    left: 0px;
+    right: 0px;
+    max-width: 50px;
+    width: 50px;
+    min-width: 50px;
+    border-radius: 99%;
+    padding-top: 13px;
+    padding-bottom: 13px;
+    text-align: center;
+}
+.spotbie-textarea{
+    position: relative;
+    display: block;
+    margin: 0 auto;
+    width: 90%;
+    min-width: 90%;
+    max-width: 90%;
+    height: 240px;
+    min-height: 240px;
+    resize: vertical;
+    max-height: 650px;    
+    padding-top: 11px;
+    padding-bottom: 11px;
+    padding-left: 10px;
+    padding-right: 10px;        
+    color: white;
+    border: none;
+    background-color: rgba(0,0,0,.23);
+    font-size: 25px;
+    border-radius: 15px;
+}
+.spotbie-textarea:active{
+    outline : none;
+}
+.spotbie-button{
+    display: block;
+    margin: 0 auto;
+    width: 300px;
+    min-width: 300px;
+    max-width: 300px;
+    background-color: #7bb126;
+    border: none;
+    border-radius: 20px;
+    color: inherit;
+    font-size: 19px;
+    cursor: pointer;
+    letter-spacing: 2px;
+    color: white;
+    padding: 0px;
+    margin-top: 25px;
+    padding-top: 15px !important;
+    padding-bottom: 15px !important;
+    text-align: center;
+}
+.spotbie-td-button{
+    display: table-cell;
+}
+.spotbie-help-text{
+    position: relative;
+    margin: 0 auto;
+    width: 500px;
+    min-width: 500px;
+    max-width: 500px; 
+    padding: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    background-color: rgba(0,0,0,.2);
+    letter-spacing: 3px;
+    line-height: 32px;
+}
+.spotbie-menu-selected{
+    background-color: rgba(0,0,0,.5);
+}
+.spotbie-load-more-button{
+    position: relative;
+    background-color: rgba(0,0,0,.23);
+    text-align: center;
+    margin-top: 40px;
+}
+.spotbie-loading-screen{
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: rgba(0, 0, 0, 0.85);
+    z-index: 99999999998;
+    text-align: center;
+}
+.spotbie-loading-gif{
+    display: block;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    height: 150px;
+    min-height: 150px;
+    max-height: 150px;
+}
+.spotbie-main-holder{
+    position: relative;
+    background-color: rgba(0, 0, 0, 0.23);
+}
+.spotbie-select-menu{
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: inherit !important;
+    z-index: 99999999999;
+    text-align: center;
+    overflow-y: scroll;    
+}
+.spotbie-select-menu-option{
+    position: relative;
+    margin: 0 auto;
+    width: 450px;
+    min-width: 450px;
+    max-width: 450px; 
+}
+.spotbie-select-table{
+    position: relative;
+    margin: 0 auto;
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    height: 80px;
+    min-height: 80px;
+    max-height: 80px;    
+    cursor: pointer;  
+}
+.spotbie-select-table-text{
+    background-color: rgba(0,0,0,.23);
+    text-align: left;
+    padding-left: 18px;    
+}
+.spotbie-select-table-img{
+    width: 120px;
+    min-width: 120px;
+    max-width: 120px;
+    height: 80px;
+    min-height: 80px;
+    max-height: 80px;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    background-color: white !important;    
+}
+.spotbie-toast-input-overlay{
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    background-color: rgba(0,0,0,.82);
+    z-index: 99999999999;
+    overflow-y: scroll;
+}
+.spotbie-toast-input-box{
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 20px;
+    margin: 0 auto;
+    max-width: 750px;
+    border-radius: 20px;
+    z-index: 9999999999;
+    text-align: center;
+}
+.spotbie-button-mini{
+    margin-top: 20px;
+    font-size: 18px;
+    background-color: rgba(0,0,0,.23);
+}
+.spotbie-error-display{
+    display: none;
+    position: fixed;
+    overflow-y: scroll;
+    width: 1200px;
+    height: 100%;
+    top: 0;
+    bottom: 0;
+    z-index: 999999999999;
+    background-color: rgba(0,0,0,.93);
+}
+.spotbie-scroll-top{
+    position: fixed;
+    left:  20px;
+    bottom: 20px;
+    transition: 0.5s;
+    background-color: rgba(0,0,0,.5);;
+    padding: 5px;
+    padding-left: 13px;
+    padding-right: 13px;
+    border-radius: 99%;  
+    transition: 0.5s;
+    z-index: 999999;
+}
+.spotbie-scroll-top:hover{
+    cursor: pointer;
+    background-color: rgba(0,0,0,.93);
+}
+.spotbie-scroll-top i{
+    font-size: 38px;
+    opacity: 0.7;
+}
+.spotbie-scroll-top:hover i{
+    opacity: 1;
+}
+.spotbie-arrow-transparent{
+    display: none;
+}
+.spotbie-toast-message{
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    margin: 0 auto;
+    background-color: rgba(0, 0, 0, 0.82);
+    color: white;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    font-size: 22px;
+    z-index: 2;
+    border-radius: 20px;
+    padding-left: 2%;
+    padding-right: 2%;
+    max-width: 350px;
+    text-align: center;
+    letter-spacing: 4px;
+}
+.spotbie-options-bubble-wrap{
+    position: relative;
+    max-width: 300px;
+    min-width: 300px;
+    width: 300px;
+    background-color: rgba(0,0,0,.23);
+    border-radius: 10px;
+}
+.spotbie-x-close{
+    position: absolute;
+    background-color: rgba(0,0,0,.23);
+    cursor : pointer;
+    border-radius: 999px;
+    padding-left: 8px;
+    padding-right: 7px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+.spotbie-x-close:hover{
+    background-color: red;
+    color: white;
+}
+.spotbie-x-close i{
+    font-size: 24px;
+}
+.spotbie-error-red{
+    color: red;
+}
+.spotbie-see-more{
+    position: relative;
+    width: 150px;
+    max-width: 150px;
+    margin: 0 auto;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    text-align: center;
+    cursor: pointer;
+}
+.spotbie-coming-soon{
+    position: relative;
+    width: 98%;
+    min-width: 98%;
+    margin-top: 20%;
+    font-size: 25px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 1%;
+    padding-right: 1%;
+    text-align: center;
+    background-color: rgba(0,0,0,.23);
+}
+.spotbie-coming-soon-desc{
+    position: relative;
+    margin: 0 auto;
+    width: 98%;
+    min-width: 98%;
+    padding-left: 1%;
+    padding-right: 1%;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    text-align: center;
+    background-color: rgba(0,0,0,.23);
+}
+.backgroundImgOverlay{
+    position: fixed;
+    top: 0%;
+    bottom: 0%;
+    left: 0%;
+    right: 0%;    
+    background-color: rgba(0, 0, 0, .32);
+}
+.spotbie-confirm-box{
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    height: 100%;
+    min-height: 100%;
+    max-height: 100%;
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    background-color: rgba(0,0,0,.85);
+    text-align: center;
+}
+.spotbie-confirm-box-inner{
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: 0 auto;    
+    top: 50%;
+    transform: translateY(-50%);
+    border-radius: 20px;
+    padding: 20px;
+}
+.spotbie-confirm-box-table{
+    position: relative;
+    margin: 0 auto;
+    margin-top: 20px;
+    table-layout: fixed;
+    max-width: 450px;
+    width: 450px;
+}
+.spotbie-confirm-box-table td{
+    width: 50%;
+    min-width: 50%;
+    max-width: 50%;
+}
+.spotbie-confirm-box-table td .spotbie-button{
+    font-size: 16px;
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;    
+}
+.color-picker {
+    display: block;
+    visibility: visible;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    left: 0 !important;
+    right: 0 !important;
+    position: fixed;
+    margin: 0 auto !important;
+    background-color: #1b1b1b !important;
+    border: 20px solid #212121 !important;   
+}
+.spotbie-color-picker-ok{
+    position: relative;
+    display: block;
+    margin: 0 auto !important;
+    max-width: 80%;
+    width: 80%;
+    min-width: 80%;
+    font-size: 14px !important;
+    letter-spacing: 2px !important;
+    background-color: rgba(0,0,0,.4);  
+}
+.color-picker .button-area {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.gm-style .gm-style-iw-c{
+    overflow: hidden !important;
+    padding: 12px !important;
+}
+.gm-style-iw-d{
+    overflow: hidden !important;
+}
+/**WIDTH MEDIA QUERIES */
+@media (max-width: 1300px) { 
+
+}
+@media (max-width: 1200px) {   
+
+}
+@media (max-width: 1024px) { 
+    .spotbie-paragraph{
+        color: #ffffff;
+        background-color: #696969;
+        box-shadow: 0 0 4px #000;        
+    }
+    .spotbie-overlay-window{
+        width: 100%;
+        min-width: 100%;
+        max-width: 100%;
+    }
+}
+@media (max-width: 900px) { 
+    .spotbie-h1{
+        margin-top: 10px !important;
+        margin-bottom: 10px !important;   
+        font-size: 35px;
+        letter-spacing: 2px;
+    }    
+    .spotbie-h2{
+        display: block;
+        width: 95% !important;
+        min-width: 95% !important;
+        max-width: 95% !important;
+        font-size: 27px;
+        letter-spacing: 2px;
+        line-height: 44px;
+    }    
+    .spotbie-img{
+        height: unset;
+        min-height: unset;
+        max-height: unset;
+        width: 100%;
+        min-width: 100%;
+        max-width: 100%;  
+    }
+}
+@media (max-width: 768px) { 
+
+}
+@media (max-width: 700px) { 
+
+}
+@media (max-width: 600px) { 
+    .spotbie-el-fixed-bottom{
+        width: 90%;
+        min-width: 90%;
+        max-width: 90%;  
+        padding-top: 15px;
+        padding-bottom: 15px;
+        font-size: 26px;              
+    }
+}
+@media (max-width: 560px) { 
+
+}
+@media (max-width: 460px) { 
+    html{
+        font-size: 17px;
+    } 
+    .spotbie-toast-input-box{
+        border-radius: 0px;
+    }
+    .spotbie-input {
+        font-size: 20px;
+        border-radius: 12px;
+        padding-left: 5px;
+        padding-right: 5px;
+        padding-top: 7px;
+        padding-bottom: 7px;
+    }
+    .spotbie-select-menu-option{
+        position: relative;
+        margin: 0 auto;
+        width: 100%;
+        min-width: 100%;
+        max-width: 100%;
+    }     
+}
+@media (max-width: 420px) { 
+                   
+}
+@media (max-width: 360px) { 
+    .spotbie-select-table-img{
+        width: 15%;
+        min-width: 15%;
+        max-width: 15%;
+        height: 60px;
+        min-height: 60px;
+        max-height: 60px;        
+    }  
+}
+
+@media (max-width: 320px) {
+
+}
+@media (max-width: 220px) { 
+
+}
+@media (max-width: 120px) { 
+
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
