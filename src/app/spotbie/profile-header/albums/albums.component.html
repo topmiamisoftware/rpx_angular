@@ -86,22 +86,22 @@
             (click)="openMedia(album_media)" id="{{'album_media_element' + i}}">
             
             <div class='spotbie-album-media-image-backdrop'
-                *ngIf="album_media.file_type == 'image' && album_media.file_path | albumMediaPath as album_media_path"
+                *ngIf="album_media.media_type == 'image' && album_media.content | albumMediaPath as album_media_path"
                 [ngStyle]="{'background' : 'url(' + album_media_path  + ')' } " >
             </div>
 
             <div class='spotbie-album-media-image'
-                *ngIf="album_media.file_type == 'image' && album_media.file_path | albumMediaPath as album_media_path"
+                *ngIf="album_media.media_type == 'image' && album_media.content | albumMediaPath as album_media_path"
                 [ngStyle]="{'background' : 'url(' + album_media_path  + ')' } " >
             </div>
             
             <div class='spotbie-album-media-image-backdrop'
-                *ngIf="album_media.file_type == 'video' && album_media.poster | albumMediaPath as album_media_poster"
+                *ngIf="album_media.media_type == 'video' && album_media.poster | albumMediaPath as album_media_poster"
                 [ngStyle]="{'background' : 'url(' + album_media_poster  + ')' } " >
             </div>
 
             <div class='spotbie-album-media-video-holder' 
-                *ngIf="album_media.file_type == 'video' && album_media.poster | albumMediaPath as album_media_poster"
+                *ngIf="album_media.media_type == 'video' && album_media.poster | albumMediaPath as album_media_poster"
                 [ngStyle]="{'background' : 'url(' + album_media_poster + ')' }">
             
                 <div class='spotbie-play-button'>
@@ -112,18 +112,18 @@
 
             <div class='spotbie-album-media-tools'>                    
 
-                <div class='spotbie-album-media-button' id='shareMedia' *ngIf="album_media.album_media_id !== undefined" (click)="shareAlbumMedia(album_media, $event)">
+                <div class='spotbie-album-media-button' id='shareMedia' title='Share' *ngIf="album_media.album_media_id !== undefined" (click)="shareAlbumMedia(album_media)" SpotBieStopClickPropagation>
                     <i class="fa fa-link spotbie-album-editor-buttons" aria-hidden="true"></i>
                 </div>                         
 
-                <div class='spotbie-album-media-button' id='likeMedia' *ngIf="album_media.album_media_id !== undefined" (click)="likeAlbumMedia(album_media, $event)">                        
+                <div class='spotbie-album-media-button' id='likeMedia' title='Likes' *ngIf="album_media.album_media_id !== undefined" (click)="likeAlbumItem(album_media)" SpotBieStopClickPropagation>                        
                     <i class="fa fa-thumbs-up spotbie-album-editor-buttons" aria-hidden="true"></i>
-                    <div class='spotbie-album-media-likes-counter'>{{ album_media.total_likes }}</div>
+                    <div class='spotbie-album-media-likes-counter'>{{ album_media.likes_count }}</div>
                 </div> 
 
-                <div class='spotbie-album-media-button' id='commentMedia' *ngIf="album_media.album_media_id !== undefined">                        
+                <div class='spotbie-album-media-button' id='commentMedia' title='Comments' *ngIf="album_media.album_media_id !== undefined">                        
                     <i class="fa fa-comment spotbie-album-editor-buttons" aria-hidden="true"></i>
-                    <div class='spotbie-album-media-comments-counter' >{{ album_media.total_comments }}</div>
+                    <div class='spotbie-album-media-comments-counter' >{{ album_media.comments_count }}</div>
                 </div> 
 
             </div>
@@ -157,7 +157,10 @@
 </div>
 
 <!-- Show this if user is viewing their own albums-->
-<div class='spotbie-overlay-window' spotbieOnScroll (spotbieOnScroll)="albumScroll($event)" *ngIf='album_maker && public_profile_info === undefined' [ngStyle]="{'background-color' : bg_color}">
+<div class='spotbie-overlay-window'  
+        spotbieOnScroll (spotbieOnScroll)="albumScroll($event)" 
+        *ngIf='album_maker && public_profile_info === undefined'
+        [ngStyle]="{'background-color' : bg_color}">
 
     <div class='spotbie-album-editor-buttons-wrapper'>
         <i class="fa fa-pencil spotbie-album-editor-buttons" aria-hidden="false" (click)="toggleAlbumMakerForm()" title="Edit Album"></i>
@@ -185,8 +188,11 @@
             <div class='spotbie-stream-poster-album-media-option'
                 (click)="startAlbumMediaUploader()"
                 title="Drag or Tap for Upload">
-                <div class='spotbie-album-upload-text'>Upload Images or Videos</div>          
+
+                <div class='spotbie-album-upload-text'>Upload Images or Videos</div>       
+                   
             </div>
+
         </form>
 
         <form [formGroup]="album_form" (ngSubmit)="saveAlbum()">
@@ -216,10 +222,13 @@
                             </div>   
 
                         </div>                            
+                        
                         <ng-template #album_name_normal>
                             <div #spotbie_settings_issues class="spotbie-input-info"></div>          
                         </ng-template>                        
+                        
                         <input class="spotbie-input" (click)="$event.target.select()" formControlName="spotbie_album_name" type="text" placeholder="Album Name" maxlength="35" />
+
                     </td>
                 </tr>
 
@@ -282,22 +291,22 @@
                     id="{{'album_media_element' + i}}">
     
                 <div class='spotbie-album-media-image-backdrop'
-                    *ngIf="album_media.file_type == 'image' && album_media.file_path | albumMediaPath as album_media_path"
+                    *ngIf="album_media.media_type == 'image' && album_media.content | albumMediaPath as album_media_path"
                     [ngStyle]="{'background' : 'url(' + album_media_path + ')' } " >
                 </div>
 
                 <div class='spotbie-album-media-image'
-                    *ngIf="album_media.file_type == 'image' && album_media.file_path | albumMediaPath as album_media_path"
+                    *ngIf="album_media.media_type == 'image' && album_media.content | albumMediaPath as album_media_path"
                     [ngStyle]="{'background' : 'url(' + album_media_path + ')' } " >
                 </div>
 
                 <div class='spotbie-album-media-image-backdrop'
-                    *ngIf="album_media.file_type == 'video' && album_media.poster | albumMediaPath as album_media_poster"
+                    *ngIf="album_media.media_type == 'video' && album_media.poster | albumMediaPath as album_media_poster"
                     [ngStyle]="{'background' : 'url(' + album_media_poster  + ')' } " >
                 </div>
 
                 <div class='spotbie-album-media-video-holder' 
-                    *ngIf="album_media.file_type == 'video' && album_media.poster | albumMediaPath as album_media_poster"
+                    *ngIf="album_media.media_type == 'video' && album_media.poster | albumMediaPath as album_media_poster"
                     [ngStyle]="{'background' : 'url(' + album_media_poster + ')' }">
                     
                     <div class='spotbie-play-button'>
@@ -308,34 +317,34 @@
                 
                 <div class='spotbie-album-media-tools'>
 
-                    <div class='spotbie-album-media-button' id='removeMedia' *ngIf="album_media.album_media_id === undefined" (click)="removeAlbumMediaBeforeUpload(album_media, $event)">
+                    <div class='spotbie-album-media-button' id='removeMedia' title='Remove' *ngIf="album_media.album_media_id === undefined" (click)="removeAlbumMediaBeforeUpload(album_media)" (SpotBieStopClickPropagation>
                         <i class="fa fa-times-circle-o spotbie-album-editor-buttons" aria-hidden="true"></i>
                     </div>
 
-                    <div class='spotbie-album-media-button' id='removeMedia' *ngIf="album_media.album_media_id !== undefined" (click)="removeAlbumItem(album_media, $event)">
+                    <div class='spotbie-album-media-button' id='removeMedia' title='Remove' *ngIf="album_media.album_media_id !== undefined" (click)="removeAlbumItem(album_media)" SpotBieStopClickPropagation>
                         <i class="fa fa-times-circle-o spotbie-album-editor-buttons" aria-hidden="true"></i>
                     </div> 
                     
-                    <div class='spotbie-album-media-button' id='albumCoverMedia' *ngIf="album_media.album_media_id !== undefined" (click)="setAlbumCover(album_media, $event)">
+                    <div class='spotbie-album-media-button' id='albumCoverMedia' title='Set as Cover' *ngIf="album_media.album_media_id !== undefined" (click)="setAlbumCover(album_media)" SpotBieStopClickPropagation>
                         <i class="fa fa-picture-o spotbie-album-editor-buttons" aria-hidden="true"></i>
                     </div> 
 
-                    <div class='spotbie-album-media-button' id='editMedia' *ngIf="album_media.album_media_id !== undefined" (click)="editAlbumMedia(album_media, $event)">
+                    <div class='spotbie-album-media-button' id='editMedia' title='Edit Item' *ngIf="album_media.album_media_id !== undefined" (click)="editAlbumMedia(album_media)" SpotBieStopClickPropagation>
                         <i class="fa fa-pencil spotbie-album-editor-buttons" aria-hidden="true"></i>
                     </div> 
 
-                    <div class='spotbie-album-media-button' id='shareMedia' *ngIf="album_media.album_media_id !== undefined" (click)="shareAlbumMedia(album_media, $event)">
+                    <div class='spotbie-album-media-button' id='shareMedia' title='Share' *ngIf="album_media.album_media_id !== undefined" (click)="shareAlbumMedia(album_media)" SpotBieStopClickPropagation>
                         <i class="fa fa-link spotbie-album-editor-buttons" aria-hidden="true"></i>
                     </div>                         
 
-                    <div class='spotbie-album-media-button' id='likeMedia' *ngIf="album_media.album_media_id !== undefined" (click)="pullAlbumMediaLikes(album_media, $event)">                            
+                    <div class='spotbie-album-media-button' id='likeMedia' title='Likes' *ngIf="album_media.album_media_id !== undefined" (click)="pullAlbumMediaLikes(album_media)" SpotBieStopClickPropagation>                            
                         <i class="fa fa-thumbs-up spotbie-album-editor-buttons" aria-hidden="true"></i>
-                        <div class='spotbie-album-media-likes-counter'>{{ album_media.total_likes }}</div>
+                        <div class='spotbie-album-media-likes-counter'>{{ album_media.likes_count }}</div>
                     </div> 
 
-                    <div class='spotbie-album-media-button' id='commentMedia' *ngIf="album_media.album_media_id !== undefined">                            
+                    <div class='spotbie-album-media-button' id='commentMedia' title='Comments' *ngIf="album_media.album_media_id !== undefined">                            
                         <i class="fa fa-comment spotbie-album-editor-buttons" aria-hidden="true"></i>
-                        <div class='spotbie-album-media-comments-counter'>{{ album_media.total_comments }}</div>
+                        <div class='spotbie-album-media-comments-counter'>{{ album_media.comments_count }}</div>
                     </div> 
 
                 </div>

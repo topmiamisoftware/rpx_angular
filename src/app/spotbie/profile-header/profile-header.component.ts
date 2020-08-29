@@ -5,7 +5,6 @@ import { Swiper } from 'swiper/dist/js/swiper.esm.js'
 import * as spotbieGlobals from '../../globals'
 import { Validators, FormGroup, FormBuilder } from '@angular/forms'
 import { SanitizePipe } from '../../pipes/sanitize.pipe'
-import { displayError } from '../../helpers/error-helper'
 import { Subscription } from 'rxjs'
 import { User } from 'src/app/models/user'
 import { ColorsService } from 'src/app/services/background-color/colors.service'
@@ -97,126 +96,112 @@ export class ProfileHeaderComponent implements OnInit {
 
   }
 
-  private getMyProfileHeaderCallback(profile_header_response: any) {
+  private getMyProfileHeaderCallback(profile_header_response: any): void{
 
-    if (profile_header_response.status == '200') {
-      // populate the header
-      // console.log("Profile Header: ", profileHeaderResponse.responseObject)
+    const user = profile_header_response.user
 
-      const stream_by_info = JSON.parse(profile_header_response.responseObject.stream_by_info)
+    const spotbie_user = profile_header_response.spotbie_user
 
-      const profile_pictures = JSON.parse(profile_header_response.responseObject.profile_pictures)
+    const default_images = profile_header_response.default_images
+  
+    let current_index = 0
 
-      //console.log("Stream By Info: ", stream_by_info)
+    if (spotbie_user.default_picture !== 'defaults/user.png') {
 
-      // console.log("Default Profile Image: ", profile_pictures.current)
+      this.user.profile_pictures = default_images.map(default_image => default_image.default_image_url)
+      
+      this.user.profile_pictures.forEach(profile_picture =>{
+        
+        current_index = this.user.profile_pictures.indexOf(profile_picture)
 
-      // console.log("All Default Profile Images: ", profile_pictures.all_defaults)
+        this.user.profile_pictures[current_index] = 'defaults/' + this.user.id + '/' + profile_picture
 
-      let current_index = 0
-
-      if (profile_pictures.current.exe_user_default_picture !== 'defaults/user.png') {
-
-        this.user.profile_pictures = profile_pictures.all_defaults
-
-        const current_default = profile_pictures.current.exe_user_default_picture.replace('defaults/' + this.user.exe_user_id + '/', '')
-
-        // console.log("Current Default: ", current_default)
-
-        for (let i = 0; i < this.user.profile_pictures.length; i++) {
-
-          if (this.user.profile_pictures[i] == current_default) {
-            current_index = i
-            if (i == 0) { this.profile_pictures_index = i } else { this.profile_pictures_index = i - 1 }
-          }
-
-          this.user.profile_pictures[i] = spotbieGlobals.RESOURCES + 'defaults/' + this.user.exe_user_id +  '/' + this.user.profile_pictures[i]
+        if(this.user.profile_pictures[current_index] == spotbie_user.default_picture){
+          
+          this.profile_pictures_index = current_index
 
         }
 
-        this.user.exe_user_full_name = stream_by_info.exe_user_first_name + " " + stream_by_info.exe_user_last_name
-        this.user.username = stream_by_info.username
-        this.user.exe_user_default_picture = this.user.profile_pictures[current_index]
-
-      } else {
-
-        this.user.username = stream_by_info.username
-        this.user.profile_pictures = profile_pictures.all_defaults
-        this.user.exe_user_default_picture = profile_pictures.current.exe_user_default_picture
-        current_index = 0
-
-      }
-
-      this.profile_images_loaded = true
-      this.user.exe_desc = unescape(stream_by_info.exe_desc)
-      this.user.exe_sign = stream_by_info.exe_sign
-      this.user.exe_animal = stream_by_info.exe_animal
-      this.user.ghost = stream_by_info.ghost
-      this.user.privacy = stream_by_info.privacy
-
-      const _this = this
-      this.m_swiper = new Swiper('.spotbie-swiper', {
-        slidesPerView: 1,
-        initialSlide: current_index,
-        spaceBetween: 0,
-        allowTouchMove: false,
-        on: {
-          slideNextTransitionStart() { _this.nextProfilePicIndex() },
-          slidePrevTransitionStart() { _this.prevProfilePicIndex() }
-        }
       })
 
-      const mSwiperSlides = document.getElementsByClassName('swiper-slide')
+    }
 
-      for (let i = 0; i < mSwiperSlides.length; i++) {
-        const el = mSwiperSlides[i] as HTMLElement
-        el.style.position = 'absolute'
+    this.user.exe_user_default_picture = spotbie_user.default_picture
+
+    this.user.exe_user_full_name = spotbie_user.first_name + " " + spotbie_user.last_name
+    this.user.username = user.username
+
+    this.profile_images_loaded = true
+    this.user.exe_desc = unescape(spotbie_user.description)
+    this.user.exe_animal = spotbie_user.animal
+    this.user.ghost = spotbie_user.ghost_mode
+    this.user.privacy = spotbie_user.privacy
+
+    const _this = this
+    
+    this.m_swiper = new Swiper('.spotbie-swiper', {
+      slidesPerView: 1,
+      initialSlide: _this.profile_pictures_index,
+      spaceBetween: 0,
+      allowTouchMove: false,
+      on: {
+        slideNextTransitionStart() { _this.nextProfilePicIndex() },
+        slidePrevTransitionStart() { _this.prevProfilePicIndex() }
       }
+    })
 
-      const description_validators = [Validators.maxLength(360)]
+    const mSwiperSlides = document.getElementsByClassName('swiper-slide')
 
-      this.profile_description_form = this.formBuilder.group({
-        spotbie_profile_description: ['', description_validators],
-      })
-    } else
-      console.log('Profile Header Error: ', profile_header_response)
+    for (let i = 0; i < mSwiperSlides.length; i++) {
+      const el = mSwiperSlides[i] as HTMLElement
+      el.style.position = 'absolute'
+    }
+
+    const description_validators = [Validators.maxLength(360)]
+
+    this.profile_description_form = this.formBuilder.group({
+      spotbie_profile_description: ['', description_validators],
+    })
+
   }
 
-  private prevProfilePicIndex() {
+  private prevProfilePicIndex(): void {
+
     if (this.profile_pictures_index == 0) {
       return
     } else {
       this.profile_pictures_index--
       this.user.exe_user_default_picture = this.user.profile_pictures[this.profile_pictures_index]
     }
-    // console.log("current profile picture index: ", this.profile_pictures_index)
+
   }
 
-  public prevSlide() {
+  public prevSlide(): void {
     if (this.profile_pictures_index == 0) return
     this.m_swiper.slidePrev()
   }
 
-  private nextProfilePicIndex() {
+  private nextProfilePicIndex(): void {
+
     if (this.profile_pictures_index == (this.user.profile_pictures.length - 1)) {
       return
     } else {
       this.profile_pictures_index++
       this.user.exe_user_default_picture = this.user.profile_pictures[this.profile_pictures_index]
     }
-    // console.log("current profile picture index: ", this.profile_pictures_index)
+
   }
 
-  public nextSlide() {
+  public nextSlide(): void {
     if (this.profile_pictures_index == (this.user.profile_pictures.length - 1)) return
     this.m_swiper.slideNext()
   }
 
-  public startBackgroundUploader() {
+  public startBackgroundUploader(): void{
     this.spotBackgroundInput.nativeElement.click()
   }
 
-  public uploadBackground(files) {
+  public uploadBackground(files): void {
 
     const file_list_length = files.length
 
@@ -233,6 +218,7 @@ export class ProfileHeaderComponent implements OnInit {
     const formData = new FormData()
 
     const exe_api_key = localStorage.getItem('spotbie_userApiKey')
+    
     let file_to_upload
     let upload_size = 0
 
@@ -250,29 +236,24 @@ export class ProfileHeaderComponent implements OnInit {
         return
       }
 
-      // console.log("file to upload: ", file_to_upload)
-      // let exif = this.getExif(file_to_upload)
-      // console.log("file to Upload EXIF: ", exif)
       formData.append('filesToUpload[]', file_to_upload, file_to_upload.name)
-      // console.log("file to upload: ", file_to_upload)
 
     }
 
-    // console.log("Total Upload Size: ", upload_size)
-    //console.log('Files To Upload : ', formData.getAll('filesToUpload[]'))
-
     this.http.post(BACKGROUND_UPLOAD_API_URL, formData, {reportProgress: true, observe: 'events'}).subscribe(event => {
+
       if (event.type === HttpEventType.UploadProgress)
         this.background_media_progress = Math.round(100 * event.loaded / event.total)
       else if (event.type === HttpEventType.Response)
         this.backgroundUploadFinished(event.body)
-    }
 
-  )
+    })
+
     return
+
   }
 
-  backgroundUploadFinished(httpResponse: any) {
+  private backgroundUploadFinished(httpResponse: any): void {
 
     if (httpResponse.status == '200') {
       console.log('Background Image File Path: ', httpResponse.responseObject[0].file_path)
@@ -286,7 +267,7 @@ export class ProfileHeaderComponent implements OnInit {
 
   }
 
-  saveBackground() {
+  public saveBackground(): void {
 
     this.loading = true
 
@@ -305,47 +286,40 @@ export class ProfileHeaderComponent implements OnInit {
       error => {
         this.loading = true
         console.log('Save Background Image Error: ', error)
-        displayError(error)
     })
   }
 
-  public setDefault() {
+  public setDefault(): void {
 
     this.loading = true
 
-    const new_profile_image = this.user.profile_pictures[this.profile_pictures_index].replace('/', '')
+    const new_profile_image = this.user.profile_pictures[this.profile_pictures_index]
 
-    const upload_default_object = { exe_api_key: this.exe_api_key, upload_action: 'setDefault', default_set_path: new_profile_image }
-
-    this.http.post<HttpResponse>(DEFAULT_UPLOAD_API_URL, upload_default_object, HTTP_OPTIONS)
-    .subscribe( resp => {
-      const httpResponse = new HttpResponse ({
-        status: resp.status,
-        message: resp.message,
-        full_message: resp.full_message,
-        responseObject: resp.responseObject
-      })
-      this.setDefaultCallback(httpResponse)
-    },
+    this.profile_header_service.setDefault(new_profile_image).subscribe(
+      resp => {
+        this.setDefaultCallback(resp)
+      },
       error => {
-        this.loading = true
-        console.log('Save Default Image Error: ', error)
-    })
+        console.log('setDefault', error)
+      }
+    )
+
   }
 
-  public setDefaultCallback(httpResponse: HttpResponse) {
+  public setDefaultCallback(resp: any) {
 
-    if (httpResponse.status == '200') {      
-      this.successful_default_change = true
-      const _this = this
-      setTimeout(function() {
-        _this.successful_default_change = false
-      }, 2500)
-      console.log('Image uploaded: ', httpResponse)
-      localStorage.setItem('spotbie_userDefaultImage', httpResponse.responseObject.new_profile_default)
-    } else
-      console.log('Save Default Image Error: ', httpResponse)
+    console.log('setDefault', resp)
 
+    this.successful_default_change = true
+
+    setTimeout(function() {
+      this.successful_default_change = false
+    }.bind(this), 2500)
+    
+    if(resp.default_picture !== undefined){
+      localStorage.setItem('spotbie_userDefaultImage', resp.default_picture)
+    }
+    
     this.loading = false
 
   }
@@ -422,7 +396,7 @@ export class ProfileHeaderComponent implements OnInit {
     
   }
 
-  public uploadDefault(files) {
+  public uploadDefault(files): void {
 
     this.loading = true
 
@@ -476,13 +450,13 @@ export class ProfileHeaderComponent implements OnInit {
       else if (event.type === HttpEventType.Response)
         this.defaultUploadFinished(event.body)
 
-    }
+    })
 
-  )
     return
+  
   }
 
-  defaultUploadFinished(httpResponse: any) {
+  public defaultUploadFinished(httpResponse: any): void {
 
     if (httpResponse.status == '200') {
       // console.log("Default Image File Path: ", httpResponse.responseObject[0].file_path)
@@ -520,7 +494,7 @@ export class ProfileHeaderComponent implements OnInit {
   get f() { return this.profile_description_form.controls }
   get spotbie_profile_description() {return this.profile_description_form.get('spotbie_profile_description').value }
 
-  saveDescription() {
+  public setDescription(): void {
 
     if (this.description_submitted) return; else this.description_submitted = true
 
@@ -528,80 +502,62 @@ export class ProfileHeaderComponent implements OnInit {
 
     this.loading = true
 
-    const new_profile_description = this.spotbie_profile_description
-    
-    const get_profile_header_object = { exe_api_key: this.exe_api_key,
-      exe_settings_action: 'saveProfileDescription',
-      spotbie_profile_description: escape(new_profile_description) }
+    const description = this.spotbie_profile_description
 
-    this.http.post<HttpResponse>(PROFILE_HEADER_API, get_profile_header_object, HTTP_OPTIONS)
-    .subscribe( resp => {
-      const httpResponse = new HttpResponse ({
-        status: resp.status,
-        message: resp.message,
-        full_message: resp.full_message,
-        responseObject: resp.responseObject
-      })
-      this.saveDescriptionCallback(httpResponse)
-    },
-      error => {
-        this.loading = true
-        console.log('Profile Description Error: ', error)
-        // alert(error.error.text)
-    })
+    this.profile_header_service.setDescription(description).subscribe(
+      resp =>{
+        this.setDescriptionCallback(resp)
+      }
+    )
 
   }
 
-  public saveDescriptionCallback( httpResponse: HttpResponse): void{
+  public setDescriptionCallback(reponse: any): void{
+
+    this.description_submitted = false
+    this.user.exe_desc = unescape(reponse.description)
+    this.cancelDescription()
+    
     this.loading = false
-    if (httpResponse.status == '200') {
-      this.description_submitted = false
-      this.user.exe_desc = unescape(httpResponse.responseObject.new_profile_description)
-      this.cancelDescription()
-    } else {
-      this.spotbie_description_info.nativeElement.innerHTML = 'There was an error with your request. Try again.'
-      console.log('Description Error: ', httpResponse)
-    }
+
   }
 
   public editDescription(): void {
-
-    //console.log("bg color: ", this.user.exe_background_color);
 
     this.loading = true
 
     this.edit_description = true
     
     let profile_description = new SanitizePipe()
-    let piped_description = profile_description.transform(this.user.exe_desc)
+    let sanitized_description = profile_description.transform(this.user.exe_desc)
 
-    this.profile_description_form.get('spotbie_profile_description').setValue(piped_description)
+    this.profile_description_form.get('spotbie_profile_description').setValue(sanitized_description)
 
     this.loading = false
 
   }
 
-  cancelDescription() {
+  public cancelDescription():void {
     this.edit_description = false
   }
 
-  newBackground() {
+  public newBackground():void {
     this.upload_background = true
   }
 
-  cancelBackground() {
+  public cancelBackground():void {
     this.upload_background = false
   }
 
-  cancelDefault() {
+  public cancelDefault():void {
     this.upload_default = false
   }
 
-  changeProfilePicture() {
+  public changeProfilePicture():void {
     this.upload_default = true
   }
 
-  openWindow(window) {
+  public openWindow(window):void {
     window.open = true
   }
 
@@ -616,7 +572,7 @@ export class ProfileHeaderComponent implements OnInit {
       //Viewing another user's profile.
 
       this.public_profile = true
-      this.user.exe_user_id = this.public_profile_info.public_exe_user_id
+      this.user.id = this.public_profile_info.public_exe_user_id
       this.user.username = this.public_profile_info.public_username
       this.user.acc_splash = this.public_profile_info.public_spotmee_bg
       this.user.exe_background_color = this.public_profile_info.public_bg_color
@@ -627,7 +583,7 @@ export class ProfileHeaderComponent implements OnInit {
 
       //Viewing our own profile.
 
-      this.user.exe_user_id = parseInt(localStorage.getItem('spotbie_userId'))
+      this.user.id = parseInt(localStorage.getItem('spotbie_userId'))
       this.user.acc_splash = this.current_user_bg
 
       this.getMyProfileHeader()

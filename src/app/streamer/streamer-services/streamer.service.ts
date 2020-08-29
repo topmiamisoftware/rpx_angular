@@ -1,83 +1,49 @@
 import { Injectable } from '@angular/core'
-import { HttpResponse } from '../../models/http-reponse'
-import { HttpClient, HttpHeaders } from '@angular/common/http'
+import { HttpClient } from '@angular/common/http'
 import * as spotbieGlobals from '../../globals'
 import { Observable } from 'rxjs'
-import { tap, catchError } from 'rxjs/operators'
+import { catchError } from 'rxjs/operators'
 import { handleError } from 'src/app/helpers/error-helper'
 
 const STREAM_API = spotbieGlobals.API + 'stream'
 
-const HTTP_OPTIONS = {
-  headers: new HttpHeaders({ 'Content-Type' : 'application/json' })
-}
+const STREAM_LIKES_API = spotbieGlobals.API + 'stream_like'
 
 @Injectable({
   providedIn: 'root'
 })
 export class StreamerService {
 
-  constructor(private http : HttpClient) {}
+  constructor(private http: HttpClient) {}
 
-  public deleteStreamPostComment(stream_comments_object : any, callback : Function){
+  public deleteStreamPostComment(stream_comments_object: any): Observable<any>{
 
-    this.http.post<HttpResponse>(STREAM_API, stream_comments_object, HTTP_OPTIONS)
-        .subscribe( resp => {
-          // console.log("Settings Response", resp)
-            const settings_response = new HttpResponse ({
-            status : resp.status,
-            message : resp.message,
-            full_message : resp.full_message,
-            responseObject : resp.responseObject
-          })
-          callback(settings_response)
-        },
-          error => {
-            console.log('error', error)
-    }) 
+    return this.http.post<any>(STREAM_API, stream_comments_object).pipe(
+      catchError(handleError("deleteStreamPostComment"))
+    )
     
   }
 
-  public addStreamPostComment(stream_comments_object : any, callback : Function){
+  public addStreamPostComment(stream_comments_object: any): Observable<any>{
 
-    this.http.post<HttpResponse>(STREAM_API, stream_comments_object, HTTP_OPTIONS)
-        .subscribe( resp => {
-          // console.log("Settings Response", resp)
-            const settings_response = new HttpResponse ({
-            status : resp.status,
-            message : resp.message,
-            full_message : resp.full_message,
-            responseObject : resp.responseObject
-          })
-          callback(settings_response)
-        },
-          error => {
-            console.log('error', error)
-    }) 
+    return this.http.post<any>(STREAM_API, stream_comments_object).pipe(
+      catchError(handleError("addStreamPostComment"))
+    )
     
   }
 
-  public pullStreamPostComments(stream_obj : any, callback : Function){
+  public pullStreamPostComments(stream_obj: any): Observable<any>{
 
-    this.http.post<HttpResponse>(STREAM_API, stream_obj, HTTP_OPTIONS)
-        .subscribe( resp => {
-          // console.log("Settings Response", resp)
-            const settings_response = new HttpResponse ({
-            status : resp.status,
-            message : resp.message,
-            full_message : resp.full_message,
-            responseObject : resp.responseObject
-          })
-          callback(settings_response)
-        },
-          error => {
-            console.log('error', error)
-    })
+    return this.http.post<any>(STREAM_API, stream_obj).pipe(
+      catchError(handleError("pullStreamPostComments"))
+    )
          
   }
 
-  public deleteAllUnused(media_object: any){
-    this.http.post<HttpResponse>(STREAM_API, JSON.stringify(media_object), HTTP_OPTIONS);
+  public deleteAllUnused(media_object: any): Observable<any>{
+    return this.http.post<any>(STREAM_API, media_object).pipe(
+      catchError(handleError("deleteAllUnused"))
+    )
   }
 
   public getMyStream(stream_obj: any): Observable<any>{
@@ -85,7 +51,7 @@ export class StreamerService {
     let stream_api = STREAM_API + "/my_stream?page=" + stream_obj.page
 
     return this.http.get<any>(stream_api, stream_obj).pipe(
-      catchError(handleError("getMyStream Error"))
+      catchError(handleError("getMyStream"))
     )
 
   }
@@ -95,131 +61,67 @@ export class StreamerService {
     let stream_api = STREAM_API + "/my_general_stream?page=" + stream_obj.page
 
     return this.http.get<any>(stream_api, stream_obj).pipe(
-      catchError(handleError("getMyGeneralStream Error"))
+      catchError(handleError("getMyGeneralStream"))
     )
 
   }
 
-  public uploadStream(stream_obj, callback) {
-    this.http.post<HttpResponse>(STREAM_API, JSON.stringify(stream_obj), HTTP_OPTIONS)
-            .subscribe( resp => {
-              //console.log('Stream Response: ', resp)
-              const httpResponse = new HttpResponse ({
-                status : resp.status,
-                message : resp.message,
-                full_message : resp.full_message,
-                responseObject : resp.responseObject
-              })
-              callback(httpResponse)
-            },
-              error => {
-            })
+  public uploadStream(stream_obj: any): Observable<any> {
+    return this.http.post<any>(STREAM_API, stream_obj).pipe(
+      catchError(handleError("uploadStream"))
+    )
   }
 
-  public getStreamPost(stream_obj, callback){
-    this.http.post<HttpResponse>(STREAM_API, JSON.stringify(stream_obj), HTTP_OPTIONS)
-            .subscribe( resp => {
-              //console.log('View Stream Post Response: ', resp)
-              const httpResponse = new HttpResponse ({
-                status : resp.status,
-                message : resp.message,
-                full_message : resp.full_message,
-                responseObject : resp.responseObject
-              })
-              callback(httpResponse)
-            },
-              error => {
-    })
+  public getStreamPost(stream_obj: any): Observable<any>{
+    return this.http.post<any>(STREAM_API, stream_obj).pipe(
+      catchError(handleError("getStreamPost"))
+    )
   }
 
-  public saveEdit(stream_obj, callback){
+  public saveEdit(stream_obj: any): Observable<any>{
 
-    this.http.post<HttpResponse>(STREAM_API, stream_obj, HTTP_OPTIONS)
-    .subscribe( resp => {
-      const httpResponse = new HttpResponse ({
-        status : resp.status,
-        message : resp.message,
-        full_message : resp.full_message,
-        responseObject : resp.responseObject
-      })
-      callback(httpResponse)
-    },
-      error => {
-        console.log('Save Stream Edit Error : ', error)
-    })
+    return this.http.post<any>(STREAM_API, stream_obj).pipe(
+      catchError(handleError("saveEdit"))
+    )
 
   }
 
-  getMediaStream(stream_obj, callback) {
+  public getMediaStream(stream_obj: any): Observable<any> {
 
-    this.http.post<HttpResponse>(STREAM_API, JSON.stringify(stream_obj), HTTP_OPTIONS)
-            .subscribe( resp => {
-              // console.log("Stream Response: ", resp)
-              const httpResponse = new HttpResponse ({
-                status : resp.status,
-                message : resp.message,
-                full_message : resp.full_message,
-                responseObject : resp.responseObject
-              })
-              callback(httpResponse)
-            },
-              error => {
-                console.log('Get Stream Error : ', error)
-    })
+    return this.http.post<any>(STREAM_API, stream_obj).pipe(
+      catchError(handleError("getMediaStream"))
+    )
 
   }
 
-  public uploadMediaStream(stream_obj, callback) {
-    this.http.post<HttpResponse>(STREAM_API, JSON.stringify(stream_obj), HTTP_OPTIONS)
-            .subscribe( resp => {
-              // console.log("Stream Response: ", resp)
-              const httpResponse = new HttpResponse ({
-                status : resp.status,
-                message : resp.message,
-                full_message : resp.full_message,
-                responseObject : resp.responseObject
-              })
-              callback(httpResponse)
-            },
-              error => {
-                console.log('Get Stream Error : ', error)
-    })
+  public uploadMediaStream(stream_obj: any): Observable<any> {
+    return this.http.post<any>(STREAM_API, stream_obj).pipe(
+      catchError(handleError("uploadMediaStream"))
+    )
   }
 
-  public getLifeStream(stream_obj, callback) {
+  public getLifeStream(stream_obj: any): Observable<any> {
 
-    this.http.post<HttpResponse>(STREAM_API, JSON.stringify(stream_obj), HTTP_OPTIONS)
-            .subscribe( resp => {
-              // console.log("Stream Response: ", resp)
-              const httpResponse = new HttpResponse ({
-                status : resp.status,
-                message : resp.message,
-                full_message : resp.full_message,
-                responseObject : resp.responseObject
-              })
-              callback(httpResponse)
-            },
-              error => {
-                console.log('Get Stream Error : ', error)
-    })
+    return this.http.post<any>(STREAM_API, stream_obj).pipe(
+      catchError(handleError("getLifeStream"))
+    )
 
   }
 
-  public uploadLifeStream(stream_obj, callback) {
-    this.http.post<HttpResponse>(STREAM_API, JSON.stringify(stream_obj), HTTP_OPTIONS)
-            .subscribe( resp => {
-              // console.log("Stream Response: ", resp)
-              const httpResponse = new HttpResponse ({
-                status : resp.status,
-                message : resp.message,
-                full_message : resp.full_message,
-                responseObject : resp.responseObject
-              })
-              callback(httpResponse)
-            },
-              error => {
-                console.log('Get Stream Error : ', error)
-    })
+  public uploadLifeStream(stream_obj: any): Observable<any> {
+    return this.http.post<any>(STREAM_API, stream_obj).pipe(
+      catchError(handleError("uploadLifeStream"))
+    )
+  }
+
+  public insertLike(stream_post_id: number){
+
+    let insert_like_api = `${STREAM_LIKES_API}/like`
+
+    return this.http.post<any>(insert_like_api, stream_post_id).pipe(
+      catchError(handleError("uploadLifeStream"))
+    )
+
   }
 
 }

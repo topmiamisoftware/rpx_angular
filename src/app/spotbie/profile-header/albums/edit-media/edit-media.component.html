@@ -3,25 +3,26 @@
 <div class="spotbie-overlay-window" [ngStyle]="{'background-color' : bg_color}">
 
     <div class='spotbie-album-media-image-wrapper'
-        *ngIf="media.file_type == 'image' && media.file_path | albumMediaPath as media_path"
+        *ngIf="media.media_type == 'image' && media.content | albumMediaPath as media_path"
         [ngStyle]="{'background' : 'url(' + media_path  + ')' } ">
 
         <div class='spotbie-album-media-image-blur'></div>         
 
     </div>
 
-    <img class='spotbie-album-media-image' *ngIf="media.file_type == 'image' && media.file_path | albumMediaPath as media_path" [src]="media_path" /> 
+    <img class='spotbie-album-media-image' *ngIf="media.media_type == 'image' && media.content | albumMediaPath as media_path" [src]="media_path" /> 
 
     <div class='spotbie-album-media-video-holder' 
-        *ngIf="media.file_type == 'video'">
+        *ngIf="media.media_type == 'video'">
 
         <video class='spotbie-album-media-video' controls>
-            <source *ngIf="media.file_path | albumMediaPath as media_path" src="{{ media_path }}">
+            <source *ngIf="media.content | albumMediaPath as media_path" src="{{ media_path }}">
         </video>
 
     </div>  
 
     <form [formGroup]="item_form" *ngIf="caption_form_ready" (ngSubmit)="initSaveItem()">
+        
         <table class='spotbie-media-caption'>
             <tr>
                 <td>
@@ -47,7 +48,9 @@
                 </td>
             </tr>
         </table>
+        
         <button class='spotbie-button'>Save Caption</button>
+
     </form>
 
     <div class='spotbie-exif-optional'></div>

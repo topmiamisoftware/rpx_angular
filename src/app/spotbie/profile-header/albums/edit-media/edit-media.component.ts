@@ -8,8 +8,8 @@ import { HttpResponse } from 'src/app/models/http-reponse';
 const ALBUM_API = spotbieGlobals.API + 'api/albums.service.php'
 
 const HTTP_OPTIONS = {
-  withCredentials : true,
-  headers: new HttpHeaders({ 'Content-Type' : 'application/json' })
+  withCredentials: true,
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 }
 
 @Component({
@@ -23,23 +23,23 @@ export class EditMediaComponent implements OnInit {
 
   @ViewChild('albumMediaFileInfoMessage') albumMediaFileInfoMessage
 
-  public loading : boolean = false
+  public loading: boolean = false
 
-  public submitted : boolean = false
+  public submitted: boolean = false
 
-  public successful_update : boolean
+  public successful_update: boolean
 
-  public bg_color : string
+  public bg_color: string
 
-  public item_form : FormGroup
+  public item_form: FormGroup
 
-  public album_item_updated_msg : string = "Enter your item's caption..."
+  public album_item_updated_msg: string = "Enter your item's caption..."
 
-  private exe_api_key : string
+  private exe_api_key: string
 
-  public caption_form_ready : boolean = false
+  public caption_form_ready: boolean = false
 
-  constructor(private host : AlbumsComponent,
+  constructor(private host: AlbumsComponent,
               private http: HttpClient,
               private formBuilder: FormBuilder) { }
 
@@ -56,7 +56,7 @@ export class EditMediaComponent implements OnInit {
     const item_caption_validators = [Validators.required, Validators.maxLength(300)]
 
     this.item_form = this.formBuilder.group({
-      item_caption : ['', item_caption_validators],
+      item_caption: ['', item_caption_validators],
     })
 
     if(this.media.album_item_caption !== null && this.media.album_item_caption !== 'null') 
@@ -78,12 +78,12 @@ export class EditMediaComponent implements OnInit {
     }
 
     const item_info = {
-      item_caption : escape(this.item_caption),
-      item_id : this.media.album_media_id
+      item_caption: escape(this.item_caption),
+      item_id: this.media.album_media_id
     }
 
-    const settings_object = { exe_api_key : this.exe_api_key,
-                            upload_action : 'saveAlbumItem',
+    const settings_object = { exe_api_key: this.exe_api_key,
+                            upload_action: 'saveAlbumItem',
                             item_info
                           }
 
@@ -91,10 +91,10 @@ export class EditMediaComponent implements OnInit {
             .subscribe( resp => {
                 //console.log("Item Caption Save Response", resp)
                 const settings_response = new HttpResponse ({
-                status : resp.status,
-                message : resp.message,
-                full_message : resp.full_message,
-                responseObject : resp.responseObject
+                status: resp.status,
+                message: resp.message,
+                full_message: resp.full_message,
+                responseObject: resp.responseObject
               })
               this.saveItemCallback(settings_response)
             },
@@ -115,7 +115,7 @@ export class EditMediaComponent implements OnInit {
         setTimeout(function() {this.closeWindow() }.bind(this), 500)
       }
     } else
-      console.log('Save Album Item Error : ', albums_response)
+      console.log('Save Album Item Error: ', albums_response)
   }
 
   ngOnInit(): void {

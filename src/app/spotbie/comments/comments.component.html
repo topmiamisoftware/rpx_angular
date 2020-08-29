@@ -43,16 +43,16 @@
         <tr>
             <td>
                 <div class='spotbie-comment-user-default' 
-                        *ngIf="comment.comment_by.exe_user_default_picture | defaultImage as userBackgroundImage" 
+                        *ngIf="comment.spotbie_user.default_picture | defaultImage as userBackgroundImage" 
                         [ngStyle]="{'background' : 'url(' + userBackgroundImage  + ')' } ">
                 </div>
             </td>
             <td>
-                <div class='spotbie-comment-username'>{{ comment.comment_by.exe_username }}</div>
+                <div class='spotbie-comment-username'>{{ comment.user.username }}</div>
                 <div class='spotbie-comment-description'>{{ comment.comment }}</div>
-                <div class='spotbie-comment-date'>{{ comment.comment_date }}</div>
+                <div class='spotbie-comment-date'>{{ comment.created_at }}</div>
                 <i class="fa fa-trash spotbie-trash-comment"
-                    *ngIf="comment.user_id == logged_in_user"
+                    *ngIf="comment.user.id == logged_in_user"
                     title="Delete Comment" 
                     aria-hidden="false" 
                     (click)="deleteCommentInit(comment)"></i>

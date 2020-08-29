@@ -1,12 +1,11 @@
 import { Component, OnInit, Input, ViewChild, HostListener } from '@angular/core'
-import { Location } from '@angular/common';
+import { Location } from '@angular/common'
 import { Validators, FormBuilder, FormGroup } from '@angular/forms'
-import { AlbumService } from './album-services/album.service';
-import { Album } from './album-models/album';
-import { AlbumMedia } from './album-models/album-media';
-import { AlbumMediaUploadResponse } from './album-models/album-media-upload-response';
-import { HttpResponse } from '../../../models/http-reponse';
-import { ToastRequest } from 'src/app/helpers/toast-helper/toast-models/toast-request';
+import { AlbumService } from './album-services/album.service'
+import { Album } from './album-models/album'
+import { AlbumMedia } from './album-models/album-media'
+import { AlbumMediaUploadResponse } from './album-models/album-media-upload-response'
+import { ToastRequest } from 'src/app/helpers/toast-helper/toast-models/toast-request'
 
 @Component({
   selector: 'app-albums',
@@ -72,7 +71,7 @@ export class AlbumsComponent implements OnInit {
 
   public album_slider: boolean = false
 
-  public media_ite: number = 0
+  public album_items_page: number = 0
 
   public pull_more_album_items: boolean = false
 
@@ -118,65 +117,46 @@ export class AlbumsComponent implements OnInit {
               private _album_service: AlbumService,
               private _platformStrategy: Location) { }
 
-  /**
-   * @description: Used to delete all uploaded media which is not saved
-   * after user uploaded it.
-   */
   @HostListener('window:beforeunload')
   private _deleteAllUnused(): void {
-    const settings_object = { exe_api_key: this.exe_api_key,
-      upload_action: 'deleteAllUnused',
-      current_album: this.current_album 
-    }    
-    this._album_service.deleteAllUnused(settings_object)
+
+    this._album_service.deleteAllUnused(this.current_album.id).subscribe(
+      resp => {
+        console.log("deleted unused media.")
+      }, 
+      error =>{
+        console.log("_deleteAllUnused", error)
+      }
+    )
+
   }
 
   public albumScroll(evt: any){
 
     if((window.innerHeight - evt.srcElement.scrollTop) <= (evt.srcElement.getElementsByClassName('stream-poster-album-media-wrapper')[0].offsetHeight - 2000)){
-      if(this.pull_more_album_items){
-        this.loadMoreAlbumItems()
-      }
+      
+      if(this.pull_more_album_items) this.loadMoreAlbumItems()
+
     }
 
   }
   
-  /**
-   * @description: Used to awake app-edit-media to bring forth the
-   * single media editor in the UI.
-   */
-  public editAlbumMedia(album_media: AlbumMedia, event: Event): void{
-    event.stopPropagation()
+  public editAlbumMedia(album_media: AlbumMedia): void{
     this.current_album_media = album_media
     this.edit_media = true
   }
 
-  /**
-   * @description: Used to view which users have liked an album item.
-   * Only users who own the item can use this function.
-   */
-  public pullAlbumMediaLikes(album_media: AlbumMedia, event: Event): void{
-    event.stopPropagation()
+  public pullAlbumMediaLikes(album_media: AlbumMedia): void{
     this.current_album_media = album_media
     this.media_likes = true
   }
 
-  /**
-   * @description: Used to awake app-share-albm to bring forth the
-   * single media Album Sharer in the UI.
-   */
-  public shareAlbumMedia(album_media: AlbumMedia, event: Event): void{
-    if(event !== null) event.stopPropagation()
+  public shareAlbumMedia(album_media: AlbumMedia): void{
     this.current_album_media = album_media
     this.share_media = true
   }
 
-  /**
-   * @description: Used to send or remove a like on 
-   * an album media item.
-   */
-  public likeAlbumMedia(album_media: AlbumMedia, event: Event): void {
-    event.stopPropagation()
+  public likeAlbumItem(album_media: AlbumMedia): void {
 
     this.current_album_media = album_media
 
@@ -193,56 +173,38 @@ export class AlbumsComponent implements OnInit {
       this.toast_helper = true      
       return
     }
-    
-    const album_media_like_object = {
-      upload_action: "likeAlbumMedia",
-      exe_api_key: this.exe_api_key,
-      current_album: this.current_album_media.album_id,
-      current_media_id: this.current_album_media.album_media_id
-    }
-    this._album_service.likeAlbumMedia(album_media_like_object, this.likeAlbumMediaCallback.bind(this))
-  }
 
-  /**
-   * @description: Used to update UI after user likes a media item.
-   */
-  private likeAlbumMediaCallback(album_media_like_response: HttpResponse){
-    if (album_media_like_response.status == '200') {
-      //console.log("Album Settings Response ", settings_response)
-      const like_response = album_media_like_response.responseObject
-      if(like_response == '1'){
-        //like was added
-        this.current_album_media.total_likes++
-      } else if(like_response == '0'){
-        //like was removed
-        this.current_album_media.total_likes--
+    this._album_service.likeAlbumItem(this.current_album_media.album_id, this.current_album_media.album_media_id).subscribe(
+      resp =>{
+        this.likeAlbumItemCallback(resp)
+      },
+      error => {
+        console.log("likeAlbumItem", error)
       }
-    } else
-      console.log('error', album_media_like_response)
+    )
+
   }
 
-  /**
-   * @description: Used to bring forth the app-album-share
-   * UI which will allow users to share an album.
-   */
+  private likeAlbumItemCallback(album_media_like_response: any): void{
+
+    const like_response = album_media_like_response.message
+
+    if(like_response == 'added')
+      this.current_album_media.likes_count++
+    else if(like_response == 'removed')
+      this.current_album_media.likes_count--
+
+  }
+
   public shareAlbum(): void{
     this.share_album = true
   }
 
-  /**
-   * @description: Used to bring forth the app-view-media
-   * UI which will allow users to view media in full screen.
-   */
   public openMedia(album_media: AlbumMedia): void{
     this.current_album_media = album_media
     this.view_media = true
   }
 
-  /**
-   * @description: Used to toggle the Album Maker which
-   * is also part of the Albums component and only available
-   * to users through their own profiles.
-   */
   public toggleAlbumMakerForm(): void {
     this.show_album_maker_form = !this.show_album_maker_form
     if(this.album_media_array.length == 0 && this.show_album_maker_form == false){
@@ -250,17 +212,10 @@ export class AlbumsComponent implements OnInit {
     }
   }
 
-  /**
-   * @description: Will start the album media uploader.
-   * Used to proxy the click event in the UI.
-   */
   public startAlbumMediaUploader(): void{
     this.albumMediaInput.nativeElement.click()
   }
 
-  /**
-   * @description: Will attach album media for upload.
-   */
   public async attachAlbumMedia(files: FileList){
 
     this.loading = true
@@ -295,8 +250,6 @@ export class AlbumsComponent implements OnInit {
 
   private uploadFinished(httpResponse: any): void{
 
-    // console.log("Upload Response: ", httpResponse)
-
     if (httpResponse.status == '200') {
 
       if(httpResponse.responseObject == '2xz'){
@@ -322,12 +275,11 @@ export class AlbumsComponent implements OnInit {
       Array.prototype.unshift.apply(this.new_album_media_array, httpResponse.responseObject)
       this.upload_complete = true
       this.albumMediaFileInfoMessage.nativeElement.scrollIntoView()
-      
-      //console.log("the uplaod finished: ", this.album_media_array)
 
     } else {
-      console.log('Upload File Error: ', httpResponse)
+
       this.album_media_uploaded_msg = 'There was an error uploading your files. Refresh the component and try again.'
+
     }
     
     this.show_upload_progress = false
@@ -337,25 +289,24 @@ export class AlbumsComponent implements OnInit {
 
   public removeAlbumItem(file, event: Event): void {
 
-    event.stopPropagation()
-
     this.loading = true
-    const path_to_remove = file.file_path
 
-    const remove_media_object = { exe_api_key: this.exe_api_key,
-      upload_action: 'removeAlbumItem',
-      current_album: this.current_album.id,
-      path_to_remove,
-      file_id: file.album_media_id
-    }
+    this._album_service.removeAlbumMedia(this.current_album.id, file.file_path, file.album_media_id).subscribe(
 
-    this._album_service.removeAlbumMedia(remove_media_object, file, this.removeAlbumMediaFinished.bind(this), event)
+      resp =>{
+        this.removeAlbumMediaFinished(resp, file, event) 
+      }, 
+      error => {
+        console.log("removeAlbumItem", error)
+      }
+
+    )
 
   }
 
-  removeAlbumMediaFinished(file, httpResponse, event): void{
+  public removeAlbumMediaFinished(response: any, file, event): void{
 
-    if (httpResponse.status == '200') {
+    if (response.message == 'removed') {
 
       const element_to_pop = this.album_media_array.indexOf(file)
       this.album_media_array.splice(element_to_pop, 1)
@@ -366,10 +317,12 @@ export class AlbumsComponent implements OnInit {
       const elementToRemove = event.srcElement.parentNode
       elementToRemove.parentNode.removeChild(elementToRemove)
 
-    } else{
-      this.toast_helper_config.text.info_text = httpResponse.full_message
+    } else {
+
+      this.toast_helper_config.text.info_text = response.message
       this.toast_helper_config.type = "acknowledge"
       this.toast_helper = true
+
     }
 
     this.loading = false
@@ -378,24 +331,22 @@ export class AlbumsComponent implements OnInit {
 
   public removeAlbumMediaBeforeUpload(file, event: Event): void{
 
-    event.stopPropagation()
     this.loading = true
 
-    const path_to_remove = file.file_path
+    this._album_service.removeAlbumMediaBeforeUpload(this.current_album.id, file.file_path).subscribe(
+      resp =>{
+        this.removeAlbumMediaBeforeUploadCallback(resp, file, event)
+      },
+      error =>{
+        console.log("removeAlbumMediaBeforeUpload", error)
+      }
+    )
 
-    const remove_media_object = { exe_api_key: this.exe_api_key,
-      upload_action: 'removeAlbumMediaBeforeUpload',
-      current_album: this.current_album,
-      path_to_remove 
-    }
-
-    this._album_service.removeAlbumMediaBeforeUpload(file, event, remove_media_object, this.removeAlbumMediaBeforeUploadCallback.bind(this))
-  
   }
   
-  private removeAlbumMediaBeforeUploadCallback(file, httpResponse: HttpResponse, event): void{
+  private removeAlbumMediaBeforeUploadCallback(response: any, file, event): void{
 
-    if (httpResponse.status == '200') {
+    if (response.status == 'removed') {
 
       const element_to_pop = this.album_media_array.indexOf(file)
       this.album_media_array.splice(element_to_pop, 1)
@@ -409,18 +360,20 @@ export class AlbumsComponent implements OnInit {
       console.log('the upload array ', this.album_media_array)
 
     } else
-      this.albumMediaFileInfoMessage.nativeElement.innerHTML = httpResponse.full_message
+      this.albumMediaFileInfoMessage.nativeElement.innerHTML = response.full_message
     
     this.loading = false
     
   }
 
   public createAlbum(): void {
+
     this.current_album = new Album()
     this.current_album.is_new = true
     this.album_maker = true
     this.toggleAlbumMakerForm()
     this.initAlbumsForm()
+
   }
 
   public saveAlbum(): void{
@@ -441,31 +394,31 @@ export class AlbumsComponent implements OnInit {
       album_items: this.new_album_media_array,
     }
 
-    const exe_album_object =  album_info
-    //console.log("Current Album: ", this.current_album)
-    const settings_object = { exe_api_key: this.exe_api_key,
-                            upload_action: 'saveAlbum',
-                            current_album: this.current_album,
-                            exe_album_object
-                          }
-    this._album_service.saveAlbum(settings_object, this.saveAlbumCallback.bind(this))
+    this._album_service.saveAlbum(this.current_album, album_info).subscribe(
+      resp =>{
+        this.saveAlbumCallback(resp)
+      },
+      error =>{
+        console.log("saveAlbum", error)
+      }
+    )
+
   }
 
-  public saveAlbumCallback(albums_response: HttpResponse) {
-    if (albums_response.status == '200') {
-      const album_response_object = albums_response.responseObject
-      if (album_response_object.status == 'saved') {
-        // our album was saved
+  public saveAlbumCallback(albums_response: any) {
+
+    if (albums_response.message == 'saved') {
+
         this.album_media_uploaded_msg = 'Your album has saved successfully.'
         this.albumMediaFileInfoMessage.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' })
-        // console.log('Your new Album ID: ', album_response_object.album_id)
         this.album_page = 0
         this.myAlbums()
         setTimeout(function() {this.closeWindow() }.bind(this), 500)
-      }
+
     } else {
-      console.log('Save Album Error: ', albums_response)
+      console.log('Save Album', albums_response)
     }
+
   }
 
   public toggleAlbumPrivacy(): void{
@@ -503,7 +456,7 @@ export class AlbumsComponent implements OnInit {
 
     this.show_album_maker_form = false
     this.current_album.is_new = true
-    this.media_ite = 0
+    this.album_items_page = 0
     this.album_maker = false
     this.album_slider = false
     this.toast_helper = false
@@ -541,67 +494,21 @@ export class AlbumsComponent implements OnInit {
   }
 
   public async openAlbum(album: Album) {
+
     this.pullSingleAlbum(album)
-    this._album_service.getAlbumSettings(album.id, this.exe_api_key, this.getAlbumSettingsCallback.bind(this))
+
     if (this.public_profile === true)
-      this._platformStrategy.replaceState('/user-profile/' + this.profile_username + '/albums/' + this.album_id)
-  }
-
-  /**
-   * @description: Used to populate album properties after getAlbumSettings is called
-   * from AlbumService
-   */
-  public getAlbumSettingsCallback(settings_response: HttpResponse) {
-
-    if (settings_response.status == '200') {
-      
-      //console.log("Album Settings Response ", settings_response)
-      
-      const album_settings = settings_response.responseObject
-
-      if(album_settings === null){
-        this.view_media = false
-        this.toast_helper_config.text.info_text = "Album does not exist."
-        this.toast_helper_config.type = "acknowledge"
-        this.toast_helper = true        
-        return
-      } else if(album_settings == 'prviate_content'){
-        return
-      }
-
-      this.current_album.description = unescape(album_settings.exe_album_description)
-      this.current_album.name = unescape(album_settings.exe_album_name)
-      this.current_album.privacy = album_settings.album_privacy
-
-      if(this.no_album_object){
-        this.current_album = settings_response.responseObject
-        this.current_album.is_new = false
-      }
-
-      if(this.current_album.cover !== undefined && this.current_album.cover.indexOf('.mp4') > 0){
-        let poster = this.current_album.cover.split('.mp4')
-        this.current_album.cover = poster[0] + ".jpeg"
-      }
-
-      if (this.public_profile === false) this.initAlbumsForm()
-
-    } else
-      console.log('error', settings_response)
+      this._platformStrategy.replaceState(`/user-profile/${this.profile_username}/albums/${this.album_id}`)
 
   }
 
-  /**
-   * @description: Function will pull a single album from the database.
-   * @param album 
-   * @param load_more 
-   */
   private pullSingleAlbum(album: Album, load_more = false): void {
     
-    if(this.media_ite == 0) this.loading = true
+    if(this.album_items_page == 0) this.loading = true
 
     if (load_more == false) {
       this.current_album = album
-      this.media_ite = 0
+      this.album_items_page = 0
       this.album_media_array = []
       this.new_album_media_array = []
     }
@@ -614,77 +521,97 @@ export class AlbumsComponent implements OnInit {
       this.album_id = album_id_to_pull
     } else
       user_id = 'null'
-
-    const albums_object = { exe_api_key: this.exe_api_key,
-      upload_action: 'pullSingleAlbum',
-      current_album: album_id_to_pull,
-      media_ite: this.media_ite
-    }
     
-    //console.log("Album Request Object: ", albums_object)
-    this._album_service.pullSingleAlbum(albums_object, this.pullSingleAlbumCallback.bind(this))
+    this._album_service.pullSingleAlbum(album_id_to_pull, this.album_items_page).subscribe(
+      resp =>{
+        this.pullSingleAlbumCallback(resp)
+      },
+      error => {
+        console.log("pullSingleAlbum", error)
+      }
+    )
 
   }
-  /**
-   * @description: Used to populate album component after pullSingleAlbum function returns a response.
-   * @param album_response 
-   */
-  public pullSingleAlbumCallback(album_response: HttpResponse) {
 
-    if (album_response.status == '200') {
+  
+  public pullSingleAlbumCallback(album_response: any): void {
 
-      if(album_response.responseObject == 'error'){
-        this.loading = false
-        this.toast_helper_config.text.info_text = "Album does not exist."
-        this.toast_helper_config.type = "acknowledge"
-        this.toast_helper = true                
-        return
-      } else if(album_response.responseObject == 'private_content'){
-        this.loading = false
-        this.toast_helper_config.text.info_text = "This album is private."
-        this.toast_helper_config.type = "acknowledge"
-        this.toast_helper = true  
-        return
-      }
+    const album_settings = album_response.album_settings
 
-      album_response.responseObject.forEach(album_media => {
-        
-        //console.log("album media: ", album_media)
-        album_media.file_type = album_media.album_media_type
-        album_media.file_path = album_media.album_media_content
+    if(album_response.message == 'error'){
 
-        if(album_media.file_type == 'video'){
-          let poster = album_media.file_path.split('.mp4')
-          album_media.poster = poster[0] + ".jpeg"
-        }
+      this.loading = false
+      this.toast_helper_config.text.info_text = "Album does not exist."
+      this.toast_helper_config.type = "acknowledge"
+      this.toast_helper = true                
+      return
 
-        album_media.album_item_caption = unescape(album_media.album_item_caption)
+    } else if(album_response.message == 'private_content'){
 
-        album_media.album_username = this.profile_username
+      this.loading = false
+      this.toast_helper_config.text.info_text = "This album is private."
+      this.toast_helper_config.type = "acknowledge"
+      this.toast_helper = true  
+      return
 
-        let album_media_item = new AlbumMedia(album_media, this._album_service)
-        this.album_media_array.push(album_media_item)
-
-      })
-
-      //console.log('Album Response: ', this.album_media_array)
+    } else if(album_settings === null){
       
-      if (this.public_profile === false) {
-        this.album_maker = true
-        this.upload_complete = true
-      } else {
-        this.album_slider = true
+      this.view_media = false
+      this.toast_helper_config.text.info_text = "Album does not exist."
+      this.toast_helper_config.type = "acknowledge"
+      this.toast_helper = true        
+      return
+
+    }
+
+    if(this.no_album_object){
+      this.current_album = album_settings
+      this.current_album.description = unescape(album_settings.description)
+      this.current_album.name = unescape(album_settings.name)
+      this.current_album.privacy = album_settings.privacy      
+      this.current_album.is_new = false
+    }
+
+    if(this.current_album.cover !== undefined && this.current_album.cover.indexOf('.mp4') > 0){
+      let poster = this.current_album.cover.split('.mp4')
+      this.current_album.cover = poster[0] + ".jpeg"
+    }
+
+    if (this.public_profile === false) this.initAlbumsForm()
+
+    const last_page = album_response.album_item_list.last_page
+    const current_page = album_response.album_item_list.current_page
+
+    album_response.album_item_list.data.forEach(album_item => {
+
+      if(album_item.media_type == 'video'){
+        let poster = album_item.content.split('.mp4')
+        album_item.poster = poster[0] + ".jpeg"
       }
 
-      if (album_response.responseObject.length > 10) {
-        this.album_media_array.pop()
-        this.media_ite = this.media_ite + 10
-        this.pull_more_album_items = true
-      } else
-        this.pull_more_album_items = false
+      album_item.album_username = this.profile_username
+
+      let album_media_item = new AlbumMedia(album_item, this._album_service)
+
+      this.album_media_array.push(album_media_item)
+
+    })
+
+    if (this.public_profile === false) {
+      
+      this.album_maker = true
+      this.upload_complete = true
 
     } else
-      console.log('error', album_response)
+      this.album_slider = true
+
+    if (current_page < last_page) {
+
+      this.album_items_page = this.album_items_page + 1
+      this.pull_more_album_items = true
+
+    } else
+      this.pull_more_album_items = false
 
     this.loading = false
     this.loading_more = false
@@ -701,10 +628,8 @@ export class AlbumsComponent implements OnInit {
       user_id = this.spotbie_user_id
     else
       user_id = 'null'
-    
-    const albums_object = { page: this.album_page }
 
-    this._album_service.myAlbums(albums_object).subscribe(
+    this._album_service.myAlbums(this.album_page).subscribe(
       resp => {
         this.myAlbumsCallback(resp)
       },
@@ -740,107 +665,110 @@ export class AlbumsComponent implements OnInit {
         album.cover = poster[0] + ".jpeg"
       }
 
-      if(album.likes_count.length > 2){
-        album.likes_count = "99+"
-      }
+      if(album.likes_count.length > 2) album.likes_count = "99+"
 
-      if(album.comments_count.length > 2){
-        album.comments_count = "99+"
-      }
+      if(album.comments_count.length > 2) album.comments_count = "99+"
     
     })      
 
     this.album_page = this.album_page + 1
 
-    if (current_page < last_page) {
-      this.albums_load_more = true
-    }
+    if (current_page < last_page) this.albums_load_more = true
 
   }
 
-  public setAlbumCover(file, event: Event): void{
-    event.stopPropagation()
+  public setAlbumCover(file): void{
 
-    const albums_object = {
-      exe_api_key: this.exe_api_key,
-      upload_action: 'setAlbumCover',
-      current_album: this.current_album.id,
-      file_path: file.file_path,
-      file_id: file.album_media_id,
-    }
-
-    this._album_service.setAlbumCover(albums_object, this.setAsAlbumCoverCallback.bind(this))
+    this._album_service.setAlbumCover( this.current_album.id, file.file_path, file.album_media_id).subscribe(
+      resp =>{
+        this.setAsAlbumCoverCallback(resp)
+      }, 
+      error =>{
+        console.log("setAlbumCover", error)
+      }
+    )
   
   }
 
-  private setAsAlbumCoverCallback(albums_response: HttpResponse): void{
-    //console.log("Set Album Cover Response: ", albums_response)
-    if(albums_response.status == '200'){
+  private setAsAlbumCoverCallback(albums_response: any): void{
+
+    if(albums_response.message == 'saved'){
+
       this.album_page = 0
       this.toast_helper_config.text.info_text = "Album cover updated successfully."
       this.toast_helper_config.type = "acknowledge"
       this.toast_helper = true       
       this.myAlbums()
+
     } else {
+
       this.toast_helper_config.text.info_text = "Failed to update album cover."
       this.toast_helper_config.type = "acknowledge"
-      this.toast_helper = true      
-      //console.log("Set Album Cover Error: ", albums_response)
+      this.toast_helper = true
+
     }
+
     this.loading = false
+
   }
 
-  public initDeleteAlbum(){
+  public initDeleteAlbum(): void{
+
     this.spotbie_alert_box = true    
+
   }
 
-  public confirmAlbumDelete(){
+  public confirmAlbumDelete(): void {
+
     this.loading = true
     this.spotbie_alert_box = false
     this.deleteAlbum() 
+
   }
 
-  public declineAlbumDelete(){
-    this.spotbie_alert_box = false   
+  public declineAlbumDelete(): void {
+
+    this.spotbie_alert_box = false 
+
   }
 
-  public deleteAlbum(){
-    const delete_album_object = {
-      exe_api_key: this.exe_api_key,
-      upload_action: 'deleteAlbum',
-      current_album: this.current_album.id
-    }
-    this._album_service.deleteAlbum(delete_album_object, this.deleteAlbumCallback.bind(this))
-  }
+  public deleteAlbum(): void {
 
-  private deleteAlbumCallback(albums_response: HttpResponse){
-
-    //console.log("deleteAlbumCallback Response: ", albums_response)
-    if(albums_response.status == '200'){
-
-      if(albums_response.responseObject = 'deleted'){
-
-        this.toast_helper_config.text.info_text = "Your album was deleted."
-        this.toast_helper_config.type = "acknowledge"
-        this.toast_helper_config.actions.acknowledge = function(){this.toast_helper = false}.bind(this)
-        this.toast_helper = true          
-
-        this.album_page = 0
-        this.myAlbums()
-
-        setTimeout(function(){
-          this.closeWindow()
-        }.bind(this), 2000)   
-
-      } else if(albums_response.responseObject = 'failed'){
-        this.toast_helper_config.text.info_text = "There was an error deleting your album."
-        this.toast_helper_config.type = "acknowledge"
-        this.toast_helper_config.actions.acknowledge = function(){this.toast_helper = false}.bind(this)
-        this.toast_helper = true           
+    this._album_service.deleteAlbum(this.current_album.id).subscribe(
+      resp =>{
+        this.deleteAlbumCallback(resp)
+      },
+      error => {
+        console.log("deleteAlbum", error)        
       }
+    )
 
-    } else
-      console.log("deleteAlbumCallback Error: ", albums_response)
+  }
+
+  private deleteAlbumCallback(albums_response: any): void{
+
+    if(albums_response.message = 'deleted'){
+
+      this.toast_helper_config.text.info_text = "Your album was deleted."
+      this.toast_helper_config.type = "acknowledge"
+      this.toast_helper_config.actions.acknowledge = function(){this.toast_helper = false}.bind(this)
+      this.toast_helper = true          
+
+      this.album_page = 0
+      this.myAlbums()
+
+      setTimeout(function(){
+        this.closeWindow()
+      }.bind(this), 2000)   
+
+    } else if(albums_response.message = 'failed'){
+
+      this.toast_helper_config.text.info_text = "There was an error deleting your album."
+      this.toast_helper_config.type = "acknowledge"
+      this.toast_helper_config.actions.acknowledge = function(){this.toast_helper = false}.bind(this)
+      this.toast_helper = true         
+
+    }
 
     this.loading = false
 
@@ -855,83 +783,79 @@ export class AlbumsComponent implements OnInit {
   get spotbie_album_privacy() {return this.album_form.get('spotbie_album_privacy').value }
   get f() { return this.album_form.controls }
 
-  private pullSingleAlbumItem(album_media_id): void{
-
-    let current_id = album_media_id
-
-    const albums_object = { exe_api_key: null,
-      upload_action: 'pullSingleMedia',
-      current_media_id: current_id,
-      current_album: this.album_id
-    }
+  private pullSingleAlbumItem(album_media_id: number): void{
     
-    this._album_service.pullSingleMedia(albums_object, this.pullSingleMediaCallback.bind(this))
+    this._album_service.pullSingleMedia(album_media_id).subscribe(
+      resp => {
+        this.pullSingleMediaCallback(resp)
+      },
+      error => {
+        console.log("pullSingleAlbumItem", error)
+      } 
+    )
 
   }
 
-  private pullSingleMediaCallback(albums_response){
+  private pullSingleMediaCallback(albums_response: any): void{
+
+    if(albums_response.message == 'private_content'){
+      this.loading = false
+      this.toast_helper_config.text.info_text = "This album is private."
+      this.toast_helper_config.type = "acknowledge"
+      this.toast_helper = true        
+      return
+    } else if(albums_response.message == 'error'){
+      this.loading = false
+      this.toast_helper_config.text.info_text = "Error loading album. Try again."
+      this.toast_helper_config.type = "acknowledge"
+      this.toast_helper = true
+      return
+    }
+
+    albums_response.current.file_type = albums_response.current.album_media_type
+    albums_response.current.file_path = albums_response.current.album_media_content
     
-    //console.log("pullSingleMedia Response: ", albums_response)
+    if(albums_response.current.file_type == 'video'){
+
+      let poster = albums_response.current.file_path.split('.mp4')
+      albums_response.current.poster = poster[0] + ".jpeg"
+
+    }
+
+    albums_response.current.album_item_caption = unescape(albums_response.current.album_item_caption)
     
-    if(albums_response.status == '200'){
-
-      if(albums_response.responseObject == 'private_content'){
-        this.loading = false
-        this.toast_helper_config.text.info_text = "This album is private."
-        this.toast_helper_config.type = "acknowledge"
-        this.toast_helper = true        
-        return
-      } else if(albums_response.responseObject == 'error'){
-        this.loading = false
-        this.toast_helper_config.text.info_text = "Error loading album. Try again."
-        this.toast_helper_config.type = "acknowledge"
-        this.toast_helper = true
-        return
-      }
-
-      albums_response.responseObject.current.file_type = albums_response.responseObject.current.album_media_type
-      albums_response.responseObject.current.file_path = albums_response.responseObject.current.album_media_content
-      
-      if(albums_response.responseObject.current.file_type == 'video'){
-        let poster = albums_response.responseObject.current.file_path.split('.mp4')
-        albums_response.responseObject.current.poster = poster[0] + ".jpeg"
-      }
-
-      albums_response.responseObject.current.album_item_caption = unescape(albums_response.responseObject.current.album_item_caption)
-      
-      this.current_album_media = new AlbumMedia(albums_response.responseObject.current, this._album_service)
-      
-      this.view_media = true
-      
-    } else
-      console.log("pullSingleMedia Error: ", albums_response)
+    this.current_album_media = new AlbumMedia(albums_response.current, this._album_service)
+    
+    this.view_media = true
 
   }
   
   ngOnInit() {    
+
     this.bg_color = localStorage.getItem('spotbie_backgroundColor')
-    this.exe_api_key = localStorage.getItem('spotbie_userApiKey')
     this.is_logged_in = localStorage.getItem('spotbie_loggedIn')
     this.logged_in_user_id = localStorage.getItem('spotbie_userId')
+
   }
 
   async ngAfterViewInit() {
 
-    //console.log("Public user id: ", this.public_profile_info)
-
     if (this.public_profile_info !== undefined) {
+
       this.public_profile = true
       this.spotbie_user_id = parseInt(this.public_profile_info.public_exe_user_id)
       this.profile_username = this.public_profile_info.public_username
       this.bg_color = this.public_profile_info.public_bg_color
+
     } else {
+
       this.public_profile = false
       this.spotbie_user_id = parseInt(localStorage.getItem('spotbie_userId'))
       this.bg_color = localStorage.getItem('spotbie_backgroundColor')
       this.profile_username = localStorage.getItem('spotbie_userLogin')
+
     }
 
-    // console.log("Public profile Info: ", this.public_profile_info)
     this.myAlbums()
     this.no_album_object = true
 
@@ -943,10 +867,10 @@ export class AlbumsComponent implements OnInit {
       album.id = this.album_id
           
       this.pullSingleAlbum(album)
-      this._album_service.getAlbumSettings(album.id, this.exe_api_key, this.getAlbumSettingsCallback.bind(this))
+      
       this.pullSingleAlbumItem(this.album_media_id)
 
-      this._platformStrategy.replaceState('/user-profile/' + this.profile_username + '/albums/' + this.album_id + '/media/' + this.album_media_id)
+      this._platformStrategy.replaceState(`/user-profile/${this.profile_username}/albums/${this.album_id}/media/${this.album_media_id}`)
 
       this.no_album_object = false
 
@@ -960,9 +884,8 @@ export class AlbumsComponent implements OnInit {
       album.id = this.album_id
 
       this.pullSingleAlbum(album)
-      this._album_service.getAlbumSettings(album.id, this.exe_api_key, this.getAlbumSettingsCallback.bind(this))
 
-      this._platformStrategy.replaceState('/user-profile/' + this.profile_username + '/albums/' + this.album_id)
+      this._platformStrategy.replaceState(`/user-profile/${this.profile_username}/albums/${this.album_id}`)
 
     }
 

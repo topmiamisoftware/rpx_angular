@@ -1,19 +1,19 @@
 import { Injectable } from '@angular/core';
 import * as spotbieGlobals from '../../../../globals'
-import { HttpHeaders, HttpClient, HttpEventType } from '@angular/common/http';
-import { HttpResponse } from 'src/app/models/http-reponse';
+import { HttpClient, HttpEventType } from '@angular/common/http';
 import { Album } from '../album-models/album';
 import { AlbumMediaUploadResponse } from '../album-models/album-media-upload-response';
 import { Subject, Observable } from 'rxjs';
-import { displayError, handleError } from 'src/app/helpers/error-helper';
+import { handleError } from 'src/app/helpers/error-helper';
 import { catchError } from 'rxjs/operators';
 
 const ALBUM_API = spotbieGlobals.API + 'album'
 
-const HTTP_OPTIONS = {
-  withCredentials: true,
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-}
+const ALBUM_COMMENTS_API = spotbieGlobals.API + 'album_comments'
+
+const ALBUM_LIKES_API = spotbieGlobals.API + 'album_likes'
+
+const ALBUM_ITEMS_API = spotbieGlobals.API + 'album_items'
 
 const MAX_UPLOAD_SIZE = 5e+8
 
@@ -29,133 +29,203 @@ export class AlbumService {
   }
   
   public getMaxFileUploadSize(){ return MAX_UPLOAD_SIZE }
-  
-  /**
-   * @description: Will remove album media that is not saved.
-   */     
-  public deleteAllUnused(settings_object: any): void {
-    this.http.post<HttpResponse>(ALBUM_API, settings_object, HTTP_OPTIONS).subscribe( resp => {
-          console.log('media deleted');
-      },
-        error => {
-          console.log('error', error)
-          displayError(error)
-      })
-  }
+     
+  public deleteAllUnused(album_id: number): Observable<any> {
 
-  /**
-   * @description: Will add or remove an album media like depending if the logged in user
-   * has liked the media item before.
-   */    
-  public likeAlbumMedia(album_media_like_object: any, callback: Function){
+    const delete_all_unused_api = `${ALBUM_ITEMS_API}/delete_all_unused`
 
-    this.http.post<HttpResponse>(ALBUM_API, album_media_like_object, HTTP_OPTIONS)
-        .subscribe( resp => {
-          // console.log("Settings Response", resp)
-            const settings_response = new HttpResponse ({
-            status: resp.status,
-            message: resp.message,
-            full_message: resp.full_message,
-            responseObject: resp.responseObject
-          })
-          callback(settings_response)
-        },
-          error => {
-            console.log('error', error)
-            displayError(error)
-    })
+    const settings_object = {
+      _method : 'delete',
+      album_id
+    }
+
+    return this.http.post<any>(delete_all_unused_api, settings_object).pipe(
+      catchError(handleError("deleteAllUnused"))
+    )
 
   }
   
-  /**
-   * @description: Will post album media comments.
-   */ 
-  public deleteComment(album_media_comments_object: any, callback: Function){
-    this.http.post<HttpResponse>(ALBUM_API, album_media_comments_object, HTTP_OPTIONS)
-        .subscribe( resp => {
-          // console.log("Settings Response", resp)
-            const comments_response = new HttpResponse ({
-            status: resp.status,
-            message: resp.message,
-            full_message: resp.full_message,
-            responseObject: resp.responseObject
-          })
-          callback(comments_response)
-        },
-          error => {
-            console.log('error', error)
-            displayError(error)
-    })    
+  public likeAlbumItem(album_id: number, album_media_id: number): Observable<any>{
+
+    let album_api = `${ALBUM_LIKES_API}/like_album_item`
+
+    const album_media_like_object = {
+      album_id,
+      album_media_id
+    }
+
+    return this.http.post<any>(album_api, album_media_like_object).pipe(
+      catchError(handleError("likeAlbumItem"))
+    )
+
+  }
+  
+  public deleteComment(comment_id: number): Observable<any>{
+
+    const delete_album_comment = `${ALBUM_COMMENTS_API}/destroy`
+
+    const comment_obj = {
+      _method: 'delete',
+      comment_id
+    }
+
+    return this.http.post<any>(delete_album_comment, comment_obj).pipe(
+      catchError(handleError("deleteComment"))
+    )    
+
   } 
 
-  /**
-   * @description: Will post album media comments.
-   */ 
-  public addAlbumMediaComment(album_media_comments_object: any, callback: Function){
-    this.http.post<HttpResponse>(ALBUM_API, album_media_comments_object, HTTP_OPTIONS)
-        .subscribe( resp => {
-          // console.log("Settings Response", resp)
-            const comments_response = new HttpResponse ({
-            status: resp.status,
-            message: resp.message,
-            full_message: resp.full_message,
-            responseObject: resp.responseObject
-          })
-          callback(comments_response)
-        },
-          error => {
-            console.log('error', error)
-            displayError(error)
-    })    
+  public addAlbumMediaComment(album_media_comments_object: any): Observable<any>{
+
+    const add_album_comment = `${ALBUM_COMMENTS_API}/create` 
+
+    return this.http.post<any>(add_album_comment, album_media_comments_object).pipe(
+      catchError(handleError("addAlbumMediaComment"))
+    ) 
+      
   }  
   
-  /**
-   * @description: Will pull album media comments in a list for users to view.
-   */ 
-  public pullAlbumComments(album_media_comments_object: any, callback: Function){
-    this.http.post<HttpResponse>(ALBUM_API, album_media_comments_object, HTTP_OPTIONS)
-        .subscribe( resp => {
-          // console.log("Settings Response", resp)
-            const comments_response = new HttpResponse ({
-            status: resp.status,
-            message: resp.message,
-            full_message: resp.full_message,
-            responseObject: resp.responseObject
-          })
-          callback(comments_response)
-        },
-          error => {
-            console.log('error', error)
-            displayError(error)
-    })    
+  public pullAlbumItemComments(album_item_id: number, page: number){
+
+    const pull_album_comment_api = `${ALBUM_ITEMS_API}/${album_item_id}/comments?page=${page}`
+
+    return this.http.get<any>(pull_album_comment_api).pipe(
+      catchError(handleError("pullAlbumComments"))
+    )  
+
   }
+  
+  public pullAlbumItemLikes(album_item_id: number, page: number): Observable<any>{
 
-  /**
-   * @description: Will pull album media likes in a list for logged-in user to view.
-   */    
-  public pullAlbumMediaLikes(album_media_like_object: any, callback: Function){
+    const pull_album_media_likes = `${ALBUM_LIKES_API}/index?id=${album_item_id}&page=${page}`
 
-    this.http.post<HttpResponse>(ALBUM_API, album_media_like_object, HTTP_OPTIONS)
-        .subscribe( resp => {
-          // console.log("Settings Response", resp)
-            const likes_response = new HttpResponse ({
-            status: resp.status,
-            message: resp.message,
-            full_message: resp.full_message,
-            responseObject: resp.responseObject
-          })
-          callback(likes_response)
-        },
-          error => {
-            console.log('error', error)
-            displayError(error)
-    })
+    return this.http.get<any>(pull_album_media_likes).pipe(
+      catchError(handleError("pullAlbumItemLikes"))
+    )
 
   }
 
-  /**
-   * @description: Used to upload files to the album
-   */  
+  public getAlbumSettings(album_id: number): Observable<any>{
+
+    const get_album_settings_api = `${ALBUM_API}/settings/${album_id}`
+
+    return this.http.get<any>(get_album_settings_api).pipe(
+      catchError(handleError("getAlbumSettings"))
+    )
+
+  }
+  
+  public removeAlbumMediaBeforeUpload(album_id: number, path_to_remove: string): Observable<any> {
+
+    const remove_album_media_api = `${ALBUM_API}/remove_media`
+
+    const remove_media_object = {
+      _method: 'delete',
+      album_id,
+      path_to_remove
+    }
+
+    return this.http.post<any>(remove_album_media_api, remove_media_object).pipe(
+      catchError(handleError("removeAlbumMediaBeforeUpload"))
+    )
+
+  }
+
+  public removeAlbumMedia(album_id: number, file_path: string, album_item_id: number): Observable<any>{
+
+    const remove_album_media_api = `${ALBUM_API}/remove_media`
+
+    const remove_media_object = {
+      _method: 'delete',
+      album_id,
+      file_path,
+      album_item_id
+    }
+
+    return this.http.post<any>(remove_album_media_api, remove_media_object).pipe(
+      catchError(handleError("removeAlbumMedia"))
+    )
+
+  }
+
+  public deleteAlbum(album_id: number): Observable<any>{
+
+    const delete_album_api = `${ALBUM_API}/remove_media`
+    
+    const album_delete_object = {
+      _method: 'delete',
+      album_id
+    }
+
+    return this.http.post<any>(delete_album_api, album_delete_object).pipe(
+      catchError(handleError("deleteAlbum"))
+    )
+
+  }
+
+  public saveAlbum(current_album: any, album_info: any): Observable<any>{
+
+    const save_album_api = `${ALBUM_API}/save`
+
+    const album_save_object = {
+      current_album,
+      album_info
+    }
+
+    return this.http.post<any>(save_album_api, album_save_object).pipe(
+      catchError(handleError("saveAlbum"))
+    )  
+
+  }
+
+  public pullSingleAlbum(album_id: number, page: number): Observable<any>{
+
+    const pull_single_album_api = `${ALBUM_API}/${album_id}&page=${page}`
+
+    return this.http.get<any>(pull_single_album_api).pipe(
+      catchError(handleError("pullSingleAlbum"))
+    )  
+
+  }
+
+  public myAlbums(page: number): Observable<any>{
+
+    let api = `${ALBUM_API}/my_albums?page=${page}`
+
+    return this.http.get<any>(api).pipe(
+      catchError(handleError("myAlbums"))
+    )
+
+  }
+
+  public setAlbumCover(album_id: number, file_path: string, album_media_id: number): Observable<any>{
+    
+    const set_album_cover_api = `${ALBUM_API}/set_cover`
+
+    const albums_object = {
+      album_id,
+      file_path,
+      album_media_id,
+      _method: 'patch'
+    }
+
+    return this.http.post<any>(set_album_cover_api, albums_object).pipe(
+      catchError(handleError("setAlbumCover"))
+    )
+
+  }
+
+  public pullSingleMedia(album_media_id: number): Observable<any>{
+
+    const single_media_api = `${ALBUM_API}/single_media?id=${album_media_id}`
+
+    return this.http.get<any>(single_media_api).pipe(
+      catchError(handleError("pullSingleMedia"))
+    )   
+
+  }
+
+
   public attachAlbumMedia(files: FileList, exe_api_key: string, current_album: Album,
                           callback: Function): AlbumMediaUploadResponse {
     
@@ -177,16 +247,9 @@ export class AlbumService {
         return album_media_upload_response
       }
 
-      // console.log("file to upload: ", file_to_upload)
-      // let exif = this.getExif(file_to_upload)
-      // console.log("file to Upload EXIF: ", exif)
       formData.append('filesToUpload[]', file, file.name)
-      // console.log("file to upload: ", file_to_upload)
 
     }));
-
-    // console.log("Total Upload Size: ", upload_size)
-    // console.log("Files To Upload : ", formData.getAll('filesToUpload[]'))
 
     this.http.post(ALBUM_API, formData, {reportProgress: true, observe: 'events'}).subscribe(event => {
 
@@ -211,175 +274,15 @@ export class AlbumService {
   public getAlbumMediaProgress(): Observable<number>{
     return this.album_media_progress.asObservable()
   }
-
-  /**
-   * @description: Used to fetch current properties from an
-   * album. These properties include Album Description, Album Name,
-   * and Album Privacy.
-   * @callback: callback(settings_response : any, album_id)
-   */  
-  public getAlbumSettings(album_id, exe_api_key: string, callback: Function): void {
-
-    //console.log("the Album ID Is: ", album_id)
-
-    const settings_object = { exe_api_key: exe_api_key,
-      upload_action: 'getAlbumSettings',
-      current_album: album_id
-    }
-    
-    this.http.post<HttpResponse>(ALBUM_API, settings_object, HTTP_OPTIONS)
-        .subscribe( resp => {
-          // console.log("Settings Response", resp)
-            const settings_response = new HttpResponse ({
-            status: resp.status,
-            message: resp.message,
-            full_message: resp.full_message,
-            responseObject: resp.responseObject
-          })
-          callback(settings_response)
-        },
-          error => {
-            console.log('error', error)
-            displayError(error)
-    })
-  }
   
-  public removeAlbumMediaBeforeUpload(file, event: Event, remove_media_object: any, callback: Function): void {
+  public pullSlideShowSet(album_id: number, media_id: number): Observable<any>{
 
-    this.http.post<HttpResponse>(ALBUM_API, remove_media_object, HTTP_OPTIONS)
-    .subscribe( resp => {
-      // console.log("Stream Response: ", resp)
-      const httpResponse = new HttpResponse ({
-        status: resp.status,
-        message: resp.message,
-        full_message: resp.full_message,
-        responseObject: resp.responseObject
-      })
-      callback(file, httpResponse, event)
-    },
-      error => {
-        console.log('error', error)
-    })
+    let slide_show_set_api = `${ALBUM_API}/${album_id}/slide_show_set?item_id=${media_id}`
 
-  }
-
-  public removeAlbumMedia(remove_media_object, file, callback, event: Event): void{
-    this.http.post<HttpResponse>(ALBUM_API, remove_media_object, HTTP_OPTIONS)
-    .subscribe( resp => {
-      // console.log("Stream Response: ", resp)
-      const httpResponse = new HttpResponse ({
-        status: resp.status,
-        message: resp.message,
-        full_message: resp.full_message,
-        responseObject: resp.responseObject
-      })
-      callback(file, httpResponse, event)
-    },
-      error => {
-        console.log('error', error)
-    })
-  }
-
-  public deleteAlbum(album_delete_object: any, callback: Function){
-    this.http.post<HttpResponse>(ALBUM_API, album_delete_object, HTTP_OPTIONS)
-    .subscribe( resp => {
-      // console.log("Stream Response: ", resp)
-      const httpResponse = new HttpResponse ({
-        status: resp.status,
-        message: resp.message,
-        full_message: resp.full_message,
-        responseObject: resp.responseObject
-      })
-      callback(httpResponse, event)
-    },
-      error => {
-        console.log('error', error)
-    })    
-  }
-
-  public saveAlbum(album_save_object: any, callback: Function){
-    this.http.post<HttpResponse>(ALBUM_API, album_save_object, HTTP_OPTIONS)
-    .subscribe( resp => {
-        // console.log("Albums Save Response", resp)
-        const settings_response = new HttpResponse ({
-          status: resp.status,
-          message: resp.message,
-          full_message: resp.full_message,
-          responseObject: resp.responseObject
-        })
-        callback(settings_response)
-    },
-      error => {
-        displayError(error)
-        console.log('Album Save Error: ', error)
-    })    
-  }
-
-  public pullSingleAlbum(albums_object: any, callback: Function): void{
-    this.http.post<HttpResponse>(ALBUM_API, albums_object, HTTP_OPTIONS)
-      .subscribe( resp => {
-        //console.log("Album Response: ", resp)
-        const httpResponse = new HttpResponse ({
-          status: resp.status,
-          message: resp.message,
-          full_message: resp.full_message,
-          responseObject: resp.responseObject
-        })
-
-        callback(httpResponse)
-    },
-      error => {
-        displayError(error)
-        console.log('error', error)
-    })    
-  }
-
-  public myAlbums(albums_object: any): Observable<any>{
-
-    let api = ALBUM_API + '/my_albums?page=' + albums_object.page
-
-    return this.http.get<any>(api, albums_object).pipe(
-      catchError(handleError("myAlbums"))
+    return this.http.get<any>(slide_show_set_api).pipe(
+      catchError(handleError("pullSlideShowSet"))
     )
-
-  }
-
-  public setAlbumCover(albums_object: any, callback: Function){
-    //console.log("Albums Cover Request", albums_object)
-    this.http.post<HttpResponse>(ALBUM_API, albums_object, HTTP_OPTIONS)
-        .subscribe( resp => {
-          //console.log("Albums Pull Response", resp)
-          const albums_response = new HttpResponse ({
-          status: resp.status,
-          message: resp.message,
-          full_message: resp.full_message,
-          responseObject: resp.responseObject
-        })
-        callback(albums_response)
-      },
-        error => {
-          console.log('error', error)
-          displayError(error)
-    })    
-  }
-
-  public pullSingleMedia(albums_object: any, callback: Function){
-    //console.log("Albums Cover Request", albums_object)
-    this.http.post<HttpResponse>(ALBUM_API, albums_object, HTTP_OPTIONS)
-      .subscribe( resp => {
-          //console.log("Single Item Response", resp)
-          const albums_response = new HttpResponse ({
-          status: resp.status,
-          message: resp.message,
-          full_message: resp.full_message,
-          responseObject: resp.responseObject
-        })
-          callback(albums_response)
-      },
-        error => {
-          //console.log('error', error)
-          //displayError(error)
-    })    
+  
   }
 
 }

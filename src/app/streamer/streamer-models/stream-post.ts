@@ -4,6 +4,7 @@ import { I_StreamPost } from '../streamer-interfaces/stream-post'
 import { videoEmbedCheck } from 'src/app/helpers/video-check'
 import { DomSanitizer } from '@angular/platform-browser'
 import { User } from 'src/app/models/user'
+import { Observable } from 'rxjs'
 
 export class StreamPost implements I_StreamPost, I_CommentSubject {
 
@@ -61,48 +62,36 @@ export class StreamPost implements I_StreamPost, I_CommentSubject {
 
     }
 
-    public deleteComment(stream_post_comment_id: number, callback: Function): void{
-
-        const exe_api_key = localStorage.getItem("spotbie_userApiKey")
+    public deleteComment(stream_post_comment_id: number): Observable<any>{
 
         const stream_comment_object = {
-            exe_api_key : exe_api_key,
-            exe_stream_action : "deleteStreamPostComment",
             stream_post_comment_id : stream_post_comment_id,
             stream_post_id : this.stream_post_id,
         } 
           
-        this._streamer_service.deleteStreamPostComment(stream_comment_object, callback.bind(this))        
+        return this._streamer_service.deleteStreamPostComment(stream_comment_object)        
 
     }
 
-    public addComment(comment: string, callback: Function): void {
-
-        const exe_api_key = localStorage.getItem("spotbie_userApiKey")
+    public addComment(comment: string): Observable<any>{
 
         const stream_comment_object = {
-            exe_api_key : exe_api_key,
-            exe_stream_action : "addStreamPostComment",
             stream_post_comment : comment,
             stream_post_id : this.stream_post_id,
             users_glued : ''
         }   
 
-        this._streamer_service.addStreamPostComment(stream_comment_object, callback.bind(this))   
+        return this._streamer_service.addStreamPostComment(stream_comment_object)   
 
     }
     
-    public pullComments(comments_ite: number, callback: Function): void {
+    public pullComments(page: number): Observable<any>{
 
-        const exe_api_key = localStorage.getItem("spotbie_userApiKey")
-
-        const stream_obj = { exe_api_key, 
-                            stream_post_id : this._stream_post_id,  
-                            exe_stream_action : 'getStreamPostComments', 
-                            stream_post_comments_iter : comments_ite
+        const stream_obj = { stream_post_id : this._stream_post_id,  
+            stream_post_comments_iter : page
         }
 
-        this._streamer_service.pullStreamPostComments(stream_obj, callback.bind(this))
+        return this._streamer_service.pullStreamPostComments(stream_obj)
 
     }
 
@@ -123,7 +112,7 @@ export class StreamPost implements I_StreamPost, I_CommentSubject {
         
         let strTime = hours + ':' + new_minutes + ' ' + ampm
 
-        this._dated = (date.getMonth()+1) + "/" + date.getDate() + "/" + date.getUTCFullYear() + "  " + strTime
+        this._dated = (date.getMonth()+1) + "/" + date.getDate() + "/" + date.getUTCFullYear() + " - " + strTime
 
     }
 

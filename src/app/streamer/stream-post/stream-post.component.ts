@@ -44,11 +44,11 @@ export class StreamPostComponent implements OnInit {
 
   public stream_post_actions: any = false
 
-  public post_reposter_window: any = { open : false }
-  public share_post_window: any = { open : false }
-  public post_report_window: any = { open : false }
-  public post_delete_window: any = { open : false }
-  public post_editor_window: any = { open : false }
+  public post_reposter_window: any = { open: false }
+  public share_post_window: any = { open: false }
+  public post_report_window: any = { open: false }
+  public post_delete_window: any = { open: false }
+  public post_editor_window: any = { open: false }
 
   public current_stream: any
   
@@ -58,20 +58,20 @@ export class StreamPostComponent implements OnInit {
 
   public stream_id: number
 
-  public stream_by: string
+  public stream_by: number
   
   public comments_config = {
-    styling : {
-      submit_button : {
-        "background-color" : "rgba(0,0,0,.23)",
+    styling: {
+      submit_button: {
+        "background-color": "rgba(0,0,0,.23)",
       },
-      textarea_placeholder : {
-        "color" : "white"
+      textarea_placeholder: {
+        "color": "white"
       },
     },
-    info_text : {
-      post_comment_text : "Upload a comment for this post.",
-      no_comments_text : "No comments available for this post."
+    info_text: {
+      post_comment_text: "Upload a comment for this post.",
+      no_comments_text: "No comments available for this post."
     }
   }
 
@@ -79,38 +79,43 @@ export class StreamPostComponent implements OnInit {
               private readonly meta: MetaService,
               private _streamer_service: StreamerService) { }
   
-  public updateStreamPosted(stream_post : StreamPost){
-    //console.log("New Stream Post : ", stream_post)
+  public updateStreamPosted(stream_post: StreamPost){
+    //console.log("New Stream Post: ", stream_post)
     this.stream_post = stream_post
   }
 
-  public onStreamPostDeleted(stream_post : StreamPost){
+  public onStreamPostDeleted(stream_post: StreamPost){
       this.streamPostDeleted.emit(stream_post)
   }
 
-  public closeWindow(window_object : any) : void {
+  public closeWindow(window_object: any): void {
     //console.log("Closing Window", window_object)
     window_object.open = false
   }
   
-  public openLikes(stream_id : number = null) : void {
+  public openLikes(stream_id: number = null): void {
 
     this.loading_done = false
 
-    // stream id can be null if we are loading from "load more"
-    if (stream_id != null) {
-      this.stream_id = stream_id
+    if (stream_id != null) this.stream_id = stream_id
+
+    const stream_obj = { 
+      stream_post_id: this.stream_id, 
+      stream_likes_iter: this.likes_iter 
     }
 
-    const exe_api_key = this.exe_api_key
-
-    const stream_obj = { exe_api_key, exe_stream_action : 'pullLikesList', stream_post_id : this.stream_id, stream_likes_iter : this.likes_iter }
-
-    //this._streamer_service.getMyStream(stream_obj, this.populateLikesList.bind(this))
+    this._streamer_service.getMyStream(stream_obj).subscribe(
+      resp =>{
+        this.populateLikesList(resp)
+      },
+      error =>{
+        console.log("openLikes", error)
+      }
+    )
 
   }
 
-  public insertLike(stream : StreamPost) : void {
+  public insertLike(stream: StreamPost): void {
 
     this.current_stream_post = stream
 
@@ -122,10 +127,8 @@ export class StreamPostComponent implements OnInit {
       stream.liked_by_me = '1'
 
     this.updateLikeUI(stream.stream_post_id, liked_by_me)
-
-    const stream_obj = { exe_api_key : this.exe_api_key, exe_stream_action : 'likeStreamPost', stream_post_id : stream.stream_post_id}
     
-    /*this._streamer_service.getMyStream(stream_obj).subscribe(
+    this._streamer_service.insertLike(stream.stream_post_id).subscribe(
       resp => {
         this.insertLikeCallback(resp)
       },
@@ -133,11 +136,11 @@ export class StreamPostComponent implements OnInit {
         console.log("insertLike Error", error)
       }
 
-    )*/
+    )
 
   }
 
-  private insertLikeCallback(httpResponse : HttpResponse) {
+  private insertLikeCallback(httpResponse: HttpResponse) {
     if (httpResponse.status == '200') {
       return
     } else {
@@ -156,7 +159,7 @@ export class StreamPostComponent implements OnInit {
     }
   }
 
-  private populateLikesList(httpResponse : HttpResponse) {
+  private populateLikesList(httpResponse: HttpResponse) {
 
     if (httpResponse.status == '200') {
 
@@ -179,17 +182,17 @@ export class StreamPostComponent implements OnInit {
     // console.log("The likes stream is: ", _this.stream_post_like_list)
   }
 
-  public switchToExtraMedia(stream_post : StreamPost, extra_media : any) : void {
+  public switchToExtraMedia(stream_post: StreamPost, extra_media: any): void {
     let item = stream_post.extra_media_obj.splice(stream_post.extra_media_obj.indexOf(extra_media), 1)
     stream_post.extra_media_obj.unshift(item[0])
   }
   
-  public openComments(stream_post : StreamPost) : void {
+  public openComments(stream_post: StreamPost): void {
     stream_post.open_comments = true
     this.current_stream_post = stream_post 
   }
 
-  public linkCopy(input_element) : void {
+  public linkCopy(input_element): void {
 
     input_element.select()
     document.execCommand('copy')
@@ -202,7 +205,7 @@ export class StreamPostComponent implements OnInit {
 
   }
 
-  public closeLikesList() : void {
+  public closeLikesList(): void {
 
     this.stream_post_like_list = new Array()
     this.likes_iter = 0
@@ -211,7 +214,7 @@ export class StreamPostComponent implements OnInit {
 
   }
 
-  public updateLikeUI(stream_post_id, liked_by_me) : void {
+  public updateLikeUI(stream_post_id, liked_by_me): void {
 
     const like_counter = document.getElementById('spotbieLikeStreamPost' + stream_post_id) as HTMLElement
     
@@ -229,13 +232,13 @@ export class StreamPostComponent implements OnInit {
 
   }
 
-  public showActions(stream_post : StreamPost) : void {
+  public showActions(stream_post: StreamPost): void {
 
     stream_post.stream_actions = !stream_post.stream_actions
 
   }
 
-  public deletePost(stream_post : StreamPost) : void {
+  public deletePost(stream_post: StreamPost): void {
 
     this.showActions(stream_post)
     this.current_stream_post = stream_post
@@ -243,7 +246,7 @@ export class StreamPostComponent implements OnInit {
 
   }
 
-  public repostStream(stream_post : StreamPost) : void {
+  public repostStream(stream_post: StreamPost): void {
 
     this.showActions(stream_post)
     this.current_stream_post = stream_post
@@ -251,7 +254,7 @@ export class StreamPostComponent implements OnInit {
 
   }
 
-  public editPost(stream_post : StreamPost) : void {
+  public editPost(stream_post: StreamPost): void {
 
     stream_post.stream_actions = false
     this.current_stream_post = stream_post
@@ -259,7 +262,7 @@ export class StreamPostComponent implements OnInit {
 
   }
 
-  public sharePost(stream_post : StreamPost) : void {
+  public sharePost(stream_post: StreamPost): void {
 
     this.showActions(stream_post)
     this.current_stream_post = stream_post
@@ -267,7 +270,7 @@ export class StreamPostComponent implements OnInit {
 
   }
 
-  public reportPost(stream_post : StreamPost) : void {
+  public reportPost(stream_post: StreamPost): void {
 
     this.showActions(stream_post)
     this.current_stream_post = stream_post
@@ -301,9 +304,9 @@ export class StreamPostComponent implements OnInit {
     
     this.exe_api_key = localStorage.getItem('spotbie_userApiKey')
     this.bg_color = localStorage.getItem('spotbie_backgroundColor')
-    this.stream_by = localStorage.getItem('spotbie_userId')
+    this.stream_by = parseInt(localStorage.getItem('spotbie_userId'))
 
-    //console.log("Input Flag : ", this.input_flag);
+    //console.log("Input Flag: ", this.input_flag);
     //console.log("Stream Post", this.stream_post)
 
   }

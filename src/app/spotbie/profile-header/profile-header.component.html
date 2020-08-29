@@ -3,24 +3,24 @@
 <div class='spotbie-profile-header'>
     
     <div class='spotbie-profile-title' *ngIf="!public_profile">
-        {{ user.exe_username }}
+        {{ user.username }}
     </div>
 
     <div class='spotbie-profile-title' *ngIf="public_profile">
-        {{ user.exe_username }}'s Profile      
+        {{ user.username }}'s Profile      
     </div>
 
     <div class='spotbie-profile-slideshow'>
 
         <div class='spotbie-toast-message animated fadeIn' *ngIf="successful_default_change">Profile Image Changed</div>
         
-        <div class='spotbie-slideshow-button-holder' id="spotbie_previous_profile_img_holder" (click)="prevSlide();" title="Previous Default Image">
+        <div class='spotbie-slideshow-button-holder' id="spotbie_previous_profile_img_holder" (click)="prevSlide()" title="Previous Default Image">
             <i class="fa fa-chevron-circle-left spotbie-slideshow-button" 
                 id="spotbie_previous_profile_img" 
                 aria-hidden="false"></i>
         </div>
 
-        <div class='spotbie-slideshow-button-holder' id="spotbie_next_profile_img_holder" (click)="nextSlide();" title="Next Default Image">
+        <div class='spotbie-slideshow-button-holder' id="spotbie_next_profile_img_holder" (click)="nextSlide()" title="Next Default Image">
             <i class="fa fa-chevron-circle-right spotbie-slideshow-button" 
                 id="spotbie_next_profile_img" 
                 aria-hidden="false"></i>
@@ -155,7 +155,7 @@
 
             <textarea class='spotbie-textarea' formControlName="spotbie_profile_description" maxlength="360"></textarea>
 
-            <div class='spotbie-button spotbie-button-mini' (click)="saveDescription()">Save Description</div>
+            <div class='spotbie-button spotbie-button-mini' (click)="setDescription()">Save Description</div>
             <div class='spotbie-button spotbie-button-mini' (click)="cancelDescription()">Cancel</div>
 
         </form>

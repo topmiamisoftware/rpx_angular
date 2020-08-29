@@ -2,8 +2,8 @@ import { I_Album } from '../album-interfaces/album'
 
 export class Album implements I_Album{
 
-    public id : number
-    public name : string
+    public id: number
+    public name: string
     public user_id: number
     public description: string
     public like_list: any
@@ -15,6 +15,6 @@ export class Album implements I_Album{
     public updated_at: string
     public created_at: string
 
-    public is_new : boolean
+    public is_new: boolean
 
 }

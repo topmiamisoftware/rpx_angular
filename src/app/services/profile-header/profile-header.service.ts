@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 const PROFILE_HEADER_API = spotbieGlobals.API + 'profile_header'
 
 const HTTP_OPTIONS = {
-  headers: new HttpHeaders({ 'Content-Type' : 'application/json' })
+  headers: new HttpHeaders({ 'Content-Type' : 'application/x-www-form-urlencoded' })
 }
 
 const BACKGROUND_UPLOAD_API_URL = spotbieGlobals.API + 'api/background_image_upload.service.php'
@@ -34,5 +34,28 @@ export class ProfileHeaderService {
   
   }  
 
+  public setDefault(new_profile_image: string): Observable<any>{
+    
+    let set_default = PROFILE_HEADER_API + '/set_default'
+
+    const new_def_obj = { _method: 'patch', default_picture: encodeURI(new_profile_image) }
+
+    return this.http.post(set_default, new_def_obj).pipe(
+      catchError(handleError("setDefault"))
+    )
+
+  }
   
+  public setDescription(description: string): Observable<any>{
+
+    let set_description = PROFILE_HEADER_API + '/set_description'
+
+    const new_def_obj = { _method: 'patch', description: description }
+
+    return this.http.post(set_description, new_def_obj).pipe(
+      catchError(handleError("setDescription"))
+    )
+
+  }
+
 }

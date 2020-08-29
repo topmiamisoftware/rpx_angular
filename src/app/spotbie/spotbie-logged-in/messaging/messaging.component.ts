@@ -308,7 +308,7 @@ export class MessagingComponent implements OnInit {
 
     const chat_head = {
       exe_user_default_picture : notification.user.exe_user_default_picture,
-      exe_user_id : notification.user.exe_user_id,
+      exe_user_id : notification.user.id,
       exe_username : notification.user.username
     }
 

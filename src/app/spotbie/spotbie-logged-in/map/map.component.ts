@@ -65,10 +65,10 @@ export class MapComponent implements OnInit {
   public show_next_page_button: boolean = false 
 
   public sub_category = {
-    food_sub : { open : false},
-    media_sub : { open : false},
-    artist_sub : { open : false},
-    place_sub : { open : false}
+    food_sub: { open: false},
+    media_sub: { open: false},
+    artist_sub: { open: false},
+    place_sub: { open: false}
   }
 
   public show_search_results: boolean
@@ -104,7 +104,7 @@ export class MapComponent implements OnInit {
 
   public info_object
 
-  public info_object_window = { open : false}
+  public info_object_window = { open: false}
 
   public type_of_info_object: string
 
@@ -128,16 +128,16 @@ export class MapComponent implements OnInit {
   public display_surrounding_object_list: boolean = true
 
   public toast_helper_config: ToastRequest = {
-    type : "acknowledge",
-    text : {
-      info_text : "There are no events in this category.",
-      confirm : null,
-      decline : null,
+    type: "acknowledge",
+    text: {
+      info_text: "There are no events in this category.",
+      confirm: null,
+      decline: null,
     },
     actions: {
-      confirm : null,
-      decline : null,
-      acknowledge : this.dismissToast.bind(this)
+      confirm: null,
+      decline: null,
+      acknowledge: this.dismissToast.bind(this)
     }
   }
 
@@ -178,37 +178,37 @@ export class MapComponent implements OnInit {
   public distanceSortAsc(a, b) {
     a = parseFloat(a.distance)
     b = parseFloat(b.distance)
-    return a > b ? 1 : b > a ? -1 : 0
+    return a > b ? 1: b > a ? -1: 0
   }
 
   public distanceSortDesc(a, b) {
     a = parseFloat(a.distance)
     b = parseFloat(b.distance)
-    return a > b ? -1 : b > a ? 1 : 0
+    return a > b ? -1: b > a ? 1: 0
   }
 
   public ratingSortAsc(a, b) {
     a = a.rating
     b = b.rating
-    return a > b ? 1 : b > a ? -1 : 0
+    return a > b ? 1: b > a ? -1: 0
   }
 
   public ratingSortDesc(a, b) {
     a = a.rating
     b = b.rating
-    return a > b ? -1 : b > a ? 1 : 0
+    return a > b ? -1: b > a ? 1: 0
   }
 
   public reviewsSortAsc(a, b) {
     a = a.review_count
     b = b.review_count
-    return a > b ? 1 : b > a ? -1 : 0
+    return a > b ? 1: b > a ? -1: 0
   }
 
   public reviewsSortDesc(a, b) {
     a = a.review_count
     b = b.review_count
-    return a > b ? -1 : b > a ? 1 : 0
+    return a > b ? -1: b > a ? 1: 0
   }
 
   public priceSortAsc(a, b) {
@@ -216,7 +216,7 @@ export class MapComponent implements OnInit {
     b = b.price
 
     if (a === undefined) { return -1 } else if (b === undefined) { return 1 }
-    return a.length > b.length ? 1 : b.length > a.length ? -1 : 0
+    return a.length > b.length ? 1: b.length > a.length ? -1: 0
   }
 
   public priceSortDesc(a, b) {
@@ -224,7 +224,7 @@ export class MapComponent implements OnInit {
     b = b.price
 
     if (a === undefined) { return 1 } else if (b === undefined) { return -1 }
-    return a.length > b.length ? -1 : b.length > a.length ? 1 : 0
+    return a.length > b.length ? -1: b.length > a.length ? 1: 0
   }
 
   public deliverySort() {
@@ -245,7 +245,7 @@ export class MapComponent implements OnInit {
     })
   }
 
-  public updateDistance(evt : MatSliderChange) : void{
+  public updateDistance(evt: MatSliderChange): void{
     
     clearTimeout(this.update_distance_timeout)
 
@@ -339,19 +339,19 @@ export class MapComponent implements OnInit {
   public classificationSearch(){
 
     let search_obj = {
-      req_url : "",
-      exe_search_action : "classificationSearch"
+      req_url: "",
+      exe_search_action: "classificationSearch"
     }
     
     this.locationService.getClassifications(search_obj, this.classificationSearchCallback.bind(this))
 
   }
 
-  public classificationSearchCallback(http_response : HttpResponse){
+  public classificationSearchCallback(http_response: HttpResponse){
 
     if(http_response.status == '200'){
 
-      let classifications : any = http_response.responseObject._embedded.classifications
+      let classifications: any = http_response.responseObject._embedded.classifications
       
       //console.log("All classification", classifications)
       
@@ -390,7 +390,7 @@ export class MapComponent implements OnInit {
     
   }
 
-  public showEventSubCategory(sub_cat : any){
+  public showEventSubCategory(sub_cat: any){
     
     //console.log("Sub Cat ", sub_cat)
 
@@ -412,11 +412,11 @@ export class MapComponent implements OnInit {
 
   }
 
-  public showEventSub(classification : any){
+  public showEventSub(classification: any){
     classification.show_sub = !classification.show_sub 
   }
 
-  public apiSearch(keyword : string) {
+  public apiSearch(keyword: string) {
 
     // console.log("category ", category)
 
@@ -432,9 +432,9 @@ export class MapComponent implements OnInit {
       this.search_results = []
     }
 
-    let api_url : string
-    let search_action : string
-    let search_obj : any
+    let api_url: string
+    let search_action: string
+    let search_obj: any
 
     switch(this.search_category){
       case 'events':
@@ -449,8 +449,8 @@ export class MapComponent implements OnInit {
     }
 
     search_obj = {
-      req_url : api_url,
-      exe_search_action : search_action
+      req_url: api_url,
+      exe_search_action: search_action
     }
     
     switch(this.search_category){
@@ -465,7 +465,7 @@ export class MapComponent implements OnInit {
 
   }
 
-  public spawnCategories(category : string) : void {
+  public spawnCategories(category: string): void {
 
     this.show_search_box = true
 
@@ -512,17 +512,17 @@ export class MapComponent implements OnInit {
 
   }
 
-  public closeCmS() : void{
+  public closeCmS(): void{
     this.coming_soon_ov_title = ''
     this.coming_soon_ov_text = ''
     this.coming_soon_ov = false
   }
 
-  public closeCategories() : void {
+  public closeCategories(): void {
     this.cats_up = false
   }
 
-  public searchSpotBie(evt : any) : void {
+  public searchSpotBie(evt: any): void {
     
       // console.log("category ", category)
 
@@ -536,8 +536,8 @@ export class MapComponent implements OnInit {
 
         this.loading = true
 
-        let api_url : string
-        let search_action : string
+        let api_url: string
+        let search_action: string
 
         if (this.search_category == 'events') {
           api_url = 'size=20&latlong=' + this.lat + ',' + this.lng + '&keyword=' + search_term + '&radius=45'
@@ -549,8 +549,8 @@ export class MapComponent implements OnInit {
         }
 
         const search_obj = {
-          req_url : api_url,
-          exe_search_action : search_action
+          req_url: api_url,
+          exe_search_action: search_action
         }
 
         this.locationService.getBusinesses(search_obj, this.getBusinessesSearchCallback.bind(this))
@@ -559,7 +559,7 @@ export class MapComponent implements OnInit {
 
   }
 
-  public loadMoreResults(action : number){
+  public loadMoreResults(action: number){
 
     switch(action){
       case 0:
@@ -596,7 +596,7 @@ export class MapComponent implements OnInit {
 
   }
 
-  public hideSearchResults() : void {
+  public hideSearchResults(): void {
 
     this.show_search_results = !this.show_search_results
 
@@ -606,7 +606,7 @@ export class MapComponent implements OnInit {
     const cleaned = ('' + phoneNumberString).replace(/\D/g, '')
     const match = cleaned.match(/^(1|)?(\d{3})(\d{3})(\d{4})$/)
     if (match) {
-      const intlCode = (match[1] ? '+1 ' : '')
+      const intlCode = (match[1] ? '+1 ': '')
       return [intlCode, '(', match[2], ') ', match[3], '-', match[4]].join('')
     }
     return null
@@ -652,11 +652,11 @@ export class MapComponent implements OnInit {
     //console.log('Open Reuslt ', search_result)
   }
 
-  public dismissToast(evt : Event){
+  public dismissToast(evt: Event){
     this.toast_helper = false
   }
 
-  public getEventsSearchCallback (http_response : any) : void {
+  public getEventsSearchCallback (http_response: any): void {
     
     if(http_response.status == '200'){
       
@@ -689,8 +689,8 @@ export class MapComponent implements OnInit {
       for(let i = 0; i < event_object_list.length; i++){
         
         event_object_list[i].coordinates = {
-          latitude : '',
-          longitude : ''
+          latitude: '',
+          longitude: ''
         }
 
         event_object_list[i].coordinates.latitude = parseFloat(event_object_list[i]._embedded.venues[0].location.latitude)
@@ -739,7 +739,7 @@ export class MapComponent implements OnInit {
 
   }
 
-  public getBusinessesSearchCallback(http_response : HttpResponse) : void {
+  public getBusinessesSearchCallback(http_response: HttpResponse): void {
     
     //console.log("getBusinessesSearch response", http_response)
 
@@ -779,11 +779,11 @@ export class MapComponent implements OnInit {
       this.show_search_box = true
 
     } else
-      console.log('Place Search Error : ', http_response)
+      console.log('Place Search Error: ', http_response)
 
   }
 
-  private populateYelpResults(results) : void{
+  private populateYelpResults(results): void{
 
     results.forEach(business => {
 
@@ -813,7 +813,7 @@ export class MapComponent implements OnInit {
         case 2:
         case 3:
           business.transactions_on = '1'            
-          business.transactions = [business.transactions.slice(0, -1).join(', '), business.transactions.slice(-1)[0]].join(business.transactions.length < 2 ? '' : ', and ')
+          business.transactions = [business.transactions.slice(0, -1).join(', '), business.transactions.slice(-1)[0]].join(business.transactions.length < 2 ? '': ', and ')
 
           friendly_transaction = business.transactions.replace('restaurant_reservation', 'restaurant reservations')
 
@@ -852,13 +852,13 @@ export class MapComponent implements OnInit {
 
   }
 
-  public pullSearchMarker(info_object) : void {
+  public pullSearchMarker(info_object): void {
     //console.log("Info Object", info_object);
     this.info_object_window.open = true
     this.info_object = info_object
   }
 
-  public showPosition(position) : void {
+  public showPosition(position): void {
 
     this.locationFound = true
 
@@ -885,10 +885,10 @@ export class MapComponent implements OnInit {
 
   public selfMarker(): void {
 
-    this.current_marker = { user_web_options : { bg_color :  this.bg_color },
-                            user_info : { 
-                              exe_username : this.spotbie_username, 
-                              exe_user_default_picture : localStorage.getItem('spotbie_userDefaultImage')
+    this.current_marker = { user_web_options: { bg_color:  this.bg_color },
+                            user_info: { 
+                              exe_username: this.spotbie_username, 
+                              exe_user_default_picture: localStorage.getItem('spotbie_userDefaultImage')
                             } 
                         }
 
@@ -908,7 +908,7 @@ export class MapComponent implements OnInit {
   public saveUserLocation(): void {
 
     const save_location_obj = { 
-      loc_x : this.lat,
+      loc_x: this.lat,
       loc_y: this.lng
     }
 
@@ -936,9 +936,9 @@ export class MapComponent implements OnInit {
   public retrieveSurroudings(){
 
     const retrieve_surroundings_obj = { 
-      loc_x : this.lat,
+      loc_x: this.lat,
       loc_y: this.lng,
-      search_type : this.current_search_type 
+      search_type: this.current_search_type 
     }
 
     this.locationService.retrieveSurroudings(retrieve_surroundings_obj).subscribe(
@@ -990,15 +990,15 @@ export class MapComponent implements OnInit {
     }
 
     this.createObjectMarker(surrounding_object_list)
-    //console.log("Sorrounding Objects : ", surrounding_object_list)
+    //console.log("Sorrounding Objects: ", surrounding_object_list)
 
   }
 
-  public createObjectMarker(surrounding_object_list) : void {
+  public createObjectMarker(surrounding_object_list): void {
     this.surrounding_object_list = surrounding_object_list
   }
 
-  getNewCoords(x, y, i, f) {
+  public getNewCoords(x, y, i, f): any {
       // Gives the current position a drivative
       // i is the current item
       // f is the total items
@@ -1006,13 +1006,14 @@ export class MapComponent implements OnInit {
       let radius = null
 
       if (this.n2_x - this.n3_x == 0) {
+
         radius = this.rad_1 + this.rad_11
         this.rad_1 = radius
         this.n2_x = 0
         this.n3_x = this.n3_x + 7
-      } else {
+
+      } else
         radius = this.rad_1
-      }
 
       this.n2_x = this.n2_x + 1
 
@@ -1020,12 +1021,12 @@ export class MapComponent implements OnInit {
       x = this.lat + Math.cos(angle) * radius
       y = this.lng + Math.sin(angle) * radius
 
-      const p = { lat : x , lng : y}
+      const p = { lat: x , lng: y}
       return p
 
   }
 
-  mediaSearch(action) {
+  public mediaSearch(action): void {
     //this.host.mediaPlayerWindow.open = true
     this.coming_soon_ov = true
 

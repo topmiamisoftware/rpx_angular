@@ -1,27 +1,27 @@
 <div class="spotbie-overlay-window" [ngStyle]="{'background-color' : bg_color}">
 
     <div class='spotbie-album-media-image-wrapper'
-        *ngIf="media.file_type == 'image' && media.file_path | albumMediaPath as media_path"
+        *ngIf="media.media_type == 'image' && media.content | albumMediaPath as media_path"
         [ngStyle]="{'background' : 'url(' + media_path  + ')' } ">
 
         <div class='spotbie-album-media-image-blur'></div>         
 
     </div>
 
-    <img class='spotbie-album-media-image' *ngIf="media.file_type == 'image' && media.file_path | albumMediaPath as media_path" [src]="media_path" /> 
+    <img class='spotbie-album-media-image' *ngIf="media.media_type == 'image' && media.content | albumMediaPath as media_path" [src]="media_path" /> 
     
     <div class='spotbie-album-media-image-wrapper'
-        *ngIf="media.file_type == 'video' && media.poster | albumMediaPath as video_poster"
+        *ngIf="media.media_type == 'video' && media.poster | albumMediaPath as video_poster"
         [ngStyle]="{'background' : 'url(' + video_poster  + ')' } ">
 
         <div class='spotbie-m-wrapper'>
 
             <video class='spotbie-album-media-video'
-                    *ngIf="media.file_type == 'video' && media.poster | albumMediaPath as video_poster"
+                    *ngIf="media.media_type == 'video' && media.poster | albumMediaPath as video_poster"
                     poster="{'background' : 'url(' + video_poster  + ')' }"
                     controls>
                     
-                <source *ngIf="media.file_path | albumMediaPath as media_path" src="{{ media_path }}">
+                <source *ngIf="media.content | albumMediaPath as media_path" src="{{ media_path }}">
 
             </video>
 

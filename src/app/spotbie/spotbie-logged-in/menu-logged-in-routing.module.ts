@@ -51,8 +51,6 @@ import { AgmOverlays } from "agm-overlays"
 
 import { InfoObjectComponent } from './info-object/info-object.component'
 
-import { StopClickPropagationDirective } from '../../directives/stop-click-propagation.directive'
-
 import { HttpClientModule } from '@angular/common/http'
 import { MenuLoggedInComponent } from './menu-logged-in.component'
 import { ProfileHeaderModule } from 'src/app/spotbie/profile-header/profile-header.module'
@@ -101,8 +99,7 @@ export const options : Partial<IConfig> | (() => Partial<IConfig>) = null;
     PendingFriendActionsComponent,
     PendingFriendsComponent,   
     SearchComponent,
-    SettingsComponent,
-    StopClickPropagationDirective,    
+    SettingsComponent,   
     StreamNotificationsComponent,    
     TagNotificationsComponent,                  
   ],

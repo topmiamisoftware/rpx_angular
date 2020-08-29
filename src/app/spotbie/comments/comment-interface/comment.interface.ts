@@ -1,10 +1,15 @@
+import { User } from 'src/app/models/user';
+import { SpotbieUser } from 'src/app/models/spotbieuser';
+
 export interface I_Comment{
 
-    c_id : number
-    user_id : number
-    comment : string
-    comment_date : string
-    users_glued : string
-    comment_read : number
+    album_id: number
+    album_item_id: number
+    comment: string
+    created_at: string
+    updated_at: string
+    id: number
+    spotbie_user: SpotbieUser
+    user: User
     
 }

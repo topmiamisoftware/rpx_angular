@@ -11,22 +11,22 @@ export class ShareMediaComponent implements OnInit {
 
   @Input() media
 
-  public bg_color : string
+  public bg_color: string
 
-  public album_media_item_link : string
-  public album_media_item_title : string
-  public album_media_description : string
+  public album_media_item_link: string
+  public album_media_item_title: string
+  public album_media_description: string
 
-  public successful_url_copy : boolean = false
+  public successful_url_copy: boolean = false
 
-  constructor(private host : AlbumsComponent,
-              public share : ShareService) { }
+  constructor(private host: AlbumsComponent,
+              public share: ShareService) { }
 
-  public closeWindow() : void{
+  public closeWindow(): void{
     this.host.share_media = false
   }
 
-  private setMediaProperties () : void{    
+  private setMediaProperties (): void{    
     this.album_media_item_link = 'https://www.spotbie.com/user-profile/' + this.host.profile_username + 
                                   '/albums/' + this.media.album_id + 
                                   '/media/' + this.media.album_media_id 
@@ -34,7 +34,7 @@ export class ShareMediaComponent implements OnInit {
     this.album_media_description = ''
   }
 
-  public linkCopy(input_element) : void{
+  public linkCopy(input_element): void{
     input_element.select();
     document.execCommand('copy');
     input_element.setSelectionRange(0, input_element.value.length);

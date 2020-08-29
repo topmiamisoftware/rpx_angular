@@ -66,7 +66,7 @@ export class StreamerComponent implements OnInit {
 
   public stream_is_loading: boolean = false
 
-  public view_post_window: any = { open : false }
+  public view_post_window: any = { open: false }
 
   public spotbie_friends_stream_image = "assets/images/friend_stream.png"
   public spotbie_my_stream_img = "assets/images/my_stream.png"
@@ -105,11 +105,11 @@ export class StreamerComponent implements OnInit {
 
   }
 
-  public closeWindow(window_object : any){
+  public closeWindow(window_object: any){
     window_object.open = false 
   }
 
-  public menuSelectedStream(stream_selector) : void {
+  public menuSelectedStream(stream_selector): void {
 
     if(!this.isLoggedIn && this.public_profile) return
 
@@ -157,7 +157,7 @@ export class StreamerComponent implements OnInit {
 
     this.stream_loaded = false
 
-    const stream_obj = { page : this.page }
+    const stream_obj = { page: this.page }
 
     this._streamer_service.getMyStream(stream_obj).subscribe(
       resp => {
@@ -176,8 +176,6 @@ export class StreamerComponent implements OnInit {
   }
 
   private async populateMyStream(httpResponse: any) {
-
-    //console.log("populateMyStream", httpResponse)
 
     let stream_posts: Array<StreamPost> = httpResponse.stream_post_list.data
 
@@ -230,7 +228,7 @@ export class StreamerComponent implements OnInit {
 
   }
 
-  public openStream(ac : number) {
+  public openStream(ac: number) {
 
     this.spotbie_stream_posts_anchor.nativeElement.scrollIntoView()
 
@@ -245,7 +243,7 @@ export class StreamerComponent implements OnInit {
 
   }
 
-  private myGeneralStream() : void{
+  private myGeneralStream(): void{
 
     if(this.page == 0) 
       this.loading = true
@@ -270,7 +268,7 @@ export class StreamerComponent implements OnInit {
     
     this.stream_loaded = false
 
-    const stream_obj = { page : this.page }
+    const stream_obj = { page: this.page }
 
     this._streamer_service.getMyGeneralStream(stream_obj).subscribe(
       resp => {
@@ -331,7 +329,7 @@ export class StreamerComponent implements OnInit {
 
     if (current_page < last_page) {
       this.stream_next = true
-      this.load_more_stream = function() { this.myStream() }
+      this.load_more_stream = function() { this.myGeneralStream() }
     } else{
       this.stream_next = false
       this.load_more_stream = null
@@ -341,13 +339,11 @@ export class StreamerComponent implements OnInit {
 
     this.loading = false
     this.stream_is_loading = false
-    //console.log('Stream Iter After Load: ', _this.page)
     
   }
 
-  public lifeStream() : void {
-    /*const stream_obj = ''
-    this.streamerService.getLifeStream(this, stream_obj, this.getLifeStreamCallback)*/
+  public lifeStream(): void {
+
     this.stream_posts = []
     this.page = 0    
     this.life_stream_coming_soon = true
@@ -355,49 +351,47 @@ export class StreamerComponent implements OnInit {
     
   }
   
-  getLifeStreamCallback(httpResponse : HttpResponse) {
+  public getLifeStreamCallback(httpResponse: any) {
 
   }
 
-  getMedia() {
-    /*const stream_obj = ''
-    this.streamerService.getLifeStream(this, stream_obj, this.getLifeStreamCallback)*/
+  public getMedia(): void {
+
     this.stream_posts = []
     this.page = 0
     this.life_stream_coming_soon = true
     this.coming_soon_text = "Media Stream Coming Soon. Media Stream will be a timeline of all the media you have uploaded from albums to text documents. Only your friends and followers will see this."        
+  
   }
   
-  getMediaStreamCallback(httpResponse : HttpResponse) {
+  getMediaStreamCallback(httpResponse: HttpResponse) {}
 
-  }
-
-
-  logStream(stream) {
-   // console.log("The stream: ", stream)
-  }
+  logStream(stream) {}
 
   populateLifeStream() {}
 
-  private pullSingleStream() : void{
+  private pullSingleStream(): void{
 
     const stream_obj = {
-      exe_stream_action : 'getStreamPost',
-      stream_post_id : this.stream_post_id
+      stream_post_id: this.stream_post_id
     }
     
-    this._streamer_service.getStreamPost(stream_obj, this.pullStreamPostCallback.bind(this))  
+    this._streamer_service.getStreamPost(stream_obj).subscribe(
+      resp =>{
+        this.pullStreamPostCallback(resp)
+      },
+      error =>{
+        console.log(error)
+      }
+    )
       
   }
   
-  private async pullStreamPostCallback(streamPullResponse : HttpResponse){
+  private async pullStreamPostCallback(streamPullResponse: any){
 
-    //console.log("StreamPullResponse Response: ", streamPullResponse)
     if (streamPullResponse.status == '200') {
 
-      let stream_post : any = streamPullResponse.responseObject
-
-      //console.log("Stream Post: ", stream_post)
+      let stream_post: any = streamPullResponse.responseObject
       
       if(stream_post.extra_media_obj !== undefined)
         stream_post.extra_media_obj = stream_post.extra_media_obj
@@ -405,7 +399,6 @@ export class StreamerComponent implements OnInit {
       stream_post.stream_content = unescape(decodeURI(stream_post.stream_content))
       let youtube_embed = await videoEmbedCheck(stream_post.stream_content, this._sanitizer)
 
-      //console.log("Youtube Embed", youtube_embed)
       if(youtube_embed !== 'no_video'){
 
         stream_post.youtube_video = true
@@ -422,7 +415,7 @@ export class StreamerComponent implements OnInit {
 
   }
 
-  public onStreamPostDeleted(stream_post : StreamPost){
+  public onStreamPostDeleted(stream_post: StreamPost){
     this.page--
     let stream_post_index = this.stream_posts.indexOf(stream_post)
     this.stream_posts.splice(stream_post_index, 1)
@@ -430,7 +423,7 @@ export class StreamerComponent implements OnInit {
 
   ngOnInit() {
 
-    // console.log("The username to view is : ", this.exe_user_name)
+    // console.log("The username to view is: ", this.exe_user_name)
     let is_logged_in = localStorage.getItem('spotbie_loggedIn')
     
     if(is_logged_in == '1'){
@@ -464,7 +457,7 @@ export class StreamerComponent implements OnInit {
       this.public_exe_user_id = null
       this.myGeneralStream()
     }
-    //console.log("Stream post _id : ", this.stream_post_id)
+    //console.log("Stream post _id: ", this.stream_post_id)
 
     if(this.stream_post_id !== undefined && this.stream_post_id !== null)
       this.pullSingleStream()

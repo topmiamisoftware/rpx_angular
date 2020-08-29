@@ -1,83 +1,87 @@
 import { AlbumService } from '../album-services/album.service'
 import { I_AlbumMedia } from '../album-interfaces/album-media'
 import { I_CommentSubject } from 'src/app/spotbie/comments/comment-interface/comment-subject.interface'
+import { Observable } from 'rxjs'
 
 export class AlbumMedia implements I_AlbumMedia, I_CommentSubject{
 
-    public album_by : string
-    public album_id : number
-    public album_item_caption : string
-    public album_media_content : string
-    public album_media_id : number
-    public album_media_type : string
+    public album_by: string
+    public album_id: number
+    public album_item_caption: string
+    public album_media_content: string
+    public album_media_id: number
     public album_username: string
-    public file_path : string
-    public file_type : string
+    public content: string
+    public media_type: string
     public poster ?: string
-    public item_created : string
-    public item_updated : string
-    public total_comments : number
-    public total_likes : number
+    public _item_created: string
+    public item_updated: string
+    public comments_count: number
+    public likes_count: number
 
-    constructor(private album_media_item : any, private _album_service : AlbumService){
-        this.album_by = album_media_item.album_by
+    constructor(private album_media_item: any, private _album_service: AlbumService){
+
+        this.album_by = album_media_item.album_owner_user_id
         this.album_id = album_media_item.album_id
-        this.album_item_caption = album_media_item.album_item_caption
-        this.album_media_content = album_media_item.album_media_content
-        this.album_media_id = album_media_item.album_media_id
-        this.album_media_type = album_media_item.album_media_type
+        this.album_item_caption = escape(album_media_item.caption)
+        this.album_media_content = album_media_item.content
+        this.album_media_id = album_media_item.id
         this.album_username = album_media_item.album_username
-        this.file_path = album_media_item.file_path
-        this.file_type = album_media_item.file_type
+        this.content = album_media_item.content
+        this.media_type = album_media_item.media_type
         this.poster = album_media_item.poster
-        this.item_created = album_media_item.item_created
-        this.item_updated = album_media_item.item_updated
-        this.total_comments = album_media_item.total_comments
-        this.total_likes = album_media_item.total_likes
-    }
-    
-    public deleteComment(comment_id : number, callback : Function){
-        const exe_api_key = localStorage.getItem("spotbie_userApiKey")
-
-        const album_media_comment_object = {
-            upload_action : "deleteAlbumMediaComment",
-            exe_api_key : exe_api_key,
-            comment_id : comment_id,
-            current_media_id : this.album_media_id
-        }   
-
-        this._album_service.deleteComment(album_media_comment_object, callback.bind(this)) 
-    }
-
-    public addComment(comment : string, callback : Function) : void {
-
-        const exe_api_key = localStorage.getItem("spotbie_userApiKey")
-
-        const album_media_comment_object = {
-            upload_action : "addAlbumMediaComment",
-            exe_api_key : exe_api_key,
-            album_media_comment : comment,
-            current_album : this.album_id,
-            current_media_id : this.album_media_id,
-            users_glued : ''
-        }   
-
-        this._album_service.addAlbumMediaComment(album_media_comment_object, callback.bind(this))     
+        this.item_created = album_media_item.created_at
+        this.item_updated = album_media_item.updated_at
+        this.comments_count = album_media_item.comments_count
+        this.likes_count = album_media_item.likes_count
 
     }
     
-    public pullComments(comments_ite : number, callback : Function) : void {
+    public set item_created(value: string){
 
-        const exe_api_key = localStorage.getItem("spotbie_userApiKey");
+        let date = new Date(value)
+       
+        let hours = date.getUTCHours()
+        let minutes = date.getUTCMinutes()
+
+        let ampm = hours >= 12 ? 'pm' : 'am'
+
+        hours = hours % 12
+        hours = hours ? hours : 12 // the hour '0' should be '12'
+
+        let new_minutes = minutes < 10 ? '0'+minutes : minutes
         
-        const album_media_comment_object = {
-            upload_action : "pullAlbumMediaComments",
-            exe_api_key : exe_api_key,
-            current_album : this.album_id,
-            current_media_id : this.album_media_id,
-            comment_ite : comments_ite
-        }
+        let strTime = hours + ':' + new_minutes + ' ' + ampm
 
-        this._album_service.pullAlbumComments(album_media_comment_object, callback.bind(this))
+        this._item_created = (date.getMonth()+1) + "/" + date.getDate() + "/" + date.getUTCFullYear() + " - " + strTime     
+           
     }
+
+    public get item_created(){
+        return this._item_created
+    }
+
+    public deleteComment(comment_id: number): Observable<any>{
+
+        return this._album_service.deleteComment(comment_id)
+
+    }
+
+    public addComment(comment: string): Observable<any>{
+
+        const album_media_comment_object = {
+            album_media_comment: comment,
+            current_album: this.album_id,
+            current_media_id: this.album_media_id,
+            users_glued: ''
+        }   
+
+        return this._album_service.addAlbumMediaComment(album_media_comment_object)     
+
+    }
+    
+    public pullComments(page: number): Observable<any> {
+        return this._album_service.pullAlbumItemComments(this.album_media_id, page)
+    }
+    
 }

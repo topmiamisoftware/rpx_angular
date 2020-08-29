@@ -6,7 +6,7 @@
     <div class='spotbie-view-media-wrapper'>
 
         <div class='spotbie-album-media-image-wrapper'
-            *ngIf="media.file_type == 'image' && media.file_path | albumMediaPath as media_path"
+            *ngIf="media.media_type == 'image' && media.content | albumMediaPath as media_path"
             [ngStyle]="{'background' : 'url(' + media_path  + ')' } ">
 
             <div class='spotbie-album-media-image-blur'></div> 
@@ -22,7 +22,7 @@
             </div>
 
             <div class='spotbie-media-caption' *ngIf="media.album_item_caption != 'null'">
-                {{ media.album_item_caption }}
+                {{ media.caption }}
             </div>
 
             <div class='spotbie-album-media-comments-wrapper'>
@@ -32,7 +32,7 @@
         </div>
 
         <div class='spotbie-album-media-image-wrapper'
-            *ngIf="media.file_type == 'video' && media.poster | albumMediaPath as video_poster"
+            *ngIf="media.media_type == 'video' && media.poster | albumMediaPath as video_poster"
             [ngStyle]="{'background' : 'url(' + video_poster  + ')' }">
 
             <div class='spotbie-album-media-image-blur'></div>
@@ -40,11 +40,11 @@
             <div class='spotbie-m-wrapper'>
 
                 <video class='spotbie-album-media-video'
-                        *ngIf="media.file_type == 'video' && media.poster | albumMediaPath as video_poster"
+                        *ngIf="media.media_type == 'video' && media.poster | albumMediaPath as video_poster"
                         poster="{{ video_poster }}"
                         controls>
 
-                    <source *ngIf="media.file_path | albumMediaPath as media_path" src="{{ media_path }}">
+                    <source *ngIf="media.content | albumMediaPath as media_path" src="{{ media_path }}">
 
                 </video>
 

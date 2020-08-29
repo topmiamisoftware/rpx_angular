@@ -1,12 +1,10 @@
 import { Component, OnInit, ViewChild, EventEmitter, Output, ɵConsole, HostListener, Input } from '@angular/core'
-import { HttpResponse } from '../../models/http-reponse'
 import { HttpClient, HttpHeaders, HttpEventType } from '@angular/common/http'
 import * as spotbieGlobals from '../../globals'
 import { StreamerService } from '../../streamer/streamer-services/streamer.service'
 import { DomSanitizer } from '@angular/platform-browser'
 import * as mobile_js_i from '../../../assets/scripts/mobile_interface.js'
 import { videoEmbedCheck } from '../../helpers/video-check'
-import { displayError } from 'src/app/helpers/error-helper'
 import { StreamPost } from '../streamer-models/stream-post'
 import { Validators, FormBuilder, FormGroup } from '@angular/forms'
 import { ToastRequest } from 'src/app/helpers/toast-helper/toast-models/toast-request'
@@ -14,7 +12,7 @@ import { ToastRequest } from 'src/app/helpers/toast-helper/toast-models/toast-re
 const EXTRA_MEDIA_UPLOAD_API_URL = spotbieGlobals.API + 'api/extra_media_upload.service.php'
 
 const HTTP_OPTIONS = {
-  headers: new HttpHeaders({ 'Content-Type' : 'application/json' })
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 }
 
 const MAX_UPLOAD_SIZE = 5e+8
@@ -80,12 +78,12 @@ export class StreamPosterComponent implements OnInit {
   private saving_post: boolean
 
   public toast_helper_config: ToastRequest = {
-    type : "acknowledge",
-    text : {
-      info_text : "Your post was updated."
+    type: "acknowledge",
+    text: {
+      info_text: "Your post was updated."
     },
-    actions : {
-      acknowledge : this.closeToastHelper
+    actions: {
+      acknowledge: this.closeToastHelper
     }
   }
 
@@ -96,7 +94,7 @@ export class StreamPosterComponent implements OnInit {
               private _sanitizer: DomSanitizer,
               private form_builder: FormBuilder) { }
   /**
-   * @description : Used to delete all uploaded media which is not saved
+   * @description: Used to delete all uploaded media which is not saved
    * after user uploaded it.
    */
   @HostListener('window:beforeunload')
@@ -106,23 +104,17 @@ export class StreamPosterComponent implements OnInit {
 
     const media_object = { 
       exe_api_key,
-      upload_action : 'deleteAllUnused',
+      upload_action: 'deleteAllUnused',
     }    
 
-    this.http.post<HttpResponse>(EXTRA_MEDIA_UPLOAD_API_URL, media_object, HTTP_OPTIONS).subscribe( resp => {
-      
-      //console.log("Stream Response: ", resp)
-      const httpResponse = new HttpResponse ({
-        status : resp.status,
-        message : resp.message,
-        full_message : resp.full_message,
-        responseObject : resp.responseObject
-      })
-
-    },
+    this.http.post<any>(EXTRA_MEDIA_UPLOAD_API_URL, media_object).subscribe( 
+      resp => {
+        console.log('_deleteAllUnused', resp)
+      },
       error => {
-        console.log('Get Stream Error : ', error)
-    })
+        console.log('_deleteAllUnused', error)
+      }
+    )
 
   }
   
@@ -201,7 +193,7 @@ export class StreamPosterComponent implements OnInit {
 
   }
 
-  public saveEditPost(){
+  public saveEditPost(): void{
 
     if (this.post_text_form.invalid) return
   
@@ -209,94 +201,85 @@ export class StreamPosterComponent implements OnInit {
 
     let new_post_text
 
-    if(this.spotbie_post_text.length > 0){
+    if(this.spotbie_post_text.length > 0)
       new_post_text = escape(this.spotbie_post_text)
-    } else {
+    else
       new_post_text = ''
-    }
     
     this.stream_post.stream_content = new_post_text
 
     const post_id = this.stream_post.stream_post_id
 
     const stream_obj = { 
-      exe_api_key : this.exe_api_key,
-      exe_stream_action : 'savePostText',
-      stream_post_description : new_post_text,
-      stream_post_id : post_id
+      stream_post_description: new_post_text,
+      stream_post_id: post_id
     }
 
-    this._streamerService.saveEdit(stream_obj, this.editSaveCallback.bind(this))
+    this._streamerService.saveEdit(stream_obj).subscribe(
+      resp =>{
+        this.editSaveCallback(resp)
+      },
+      error =>{
+        console.log("saveEditPost", error)
+      }
+    )
 
   }
 
-  public editSaveCallback(streamSaveResponse: HttpResponse){
+  public editSaveCallback(save_stream_response: any): void{
 
-    if (streamSaveResponse.status == '200') {
+    if (save_stream_response.message == 'updated') {
 
-      this.loading = false
-
-      if (streamSaveResponse.responseObject == 'updated') {
-
-        this.toast_helper_config.text.info_text = "Your post was updated."
-        this.toast_helper = true
-        this.streamPosted.emit(this.stream_post)
-
-      } else if (streamSaveResponse.responseObject == 'noexist'){
-
-        this.toast_helper_config.text.info_text = "That post does not exist."
-        this.toast_helper = true
-      
-      }
-      
-
-      this.saving_post = false
-
-      setTimeout(function() {     
-        this.closeWindowX()
-      }.bind(this), 2500)
-
+      this.toast_helper_config.text.info_text = "Your post was updated."
+      this.toast_helper = true
+      this.streamPosted.emit(this.stream_post)
 
     } else {
 
-      this.loading = false
-      this.saving_post = false
-      console.log('Error Sending Report : ', streamSaveResponse)
+      this.toast_helper_config.text.info_text = "Error saving post."
+      this.toast_helper = true
+    
+    }
 
-    }    
+    this.saving_post = false
+
+    this.loading = false
+
+    setTimeout(function() {     
+      this.closeWindowX()
+    }.bind(this), 2500)   
 
   }
 
-  public postToStream() {
+  public postToStream(): void {
 
     if (this.post_text_form.invalid) return
 
     this.loading = true
     this.saving_post = true
 
-    let encoded_text = escape(this.spotbie_post_text)
-
-    encoded_text = escape(encoded_text)
-
-    //console.log('encoded TExt : ', encoded_text)
+    const encoded_text = escape(this.spotbie_post_text)
 
     const stream_obj = {
-      exe_user_id : 'null',
-      exe_stream_action : 'postToStream',
-      exe_api_key : this.exe_api_key,
-      exe_stream_post_text : encoded_text,
-      exe_extra_media_array : this.extra_media_array
+      exe_stream_post_text: encoded_text,
+      exe_extra_media_array: this.extra_media_array
     }
 
-    this._streamerService.uploadStream(stream_obj, this.streamUploadCallback.bind(this))
+    this._streamerService.uploadStream(stream_obj).subscribe(
+      resp =>{
+        this.streamUploadCallback(resp)
+      }, 
+      error =>{
+        console.log("postToStream", error)
+      }
+    )
 
   }
   
-  public streamUploadCallback(httpResponse: HttpResponse) {
+  public streamUploadCallback(stream_response: any): void {
 
-    this.loading = false
+    if (stream_response.message == 'posted') {
 
-    if (httpResponse.status == '200') {
       this.extra_media_progress = 0
       this.extra_media_message = null
       this.extra_media_array = []
@@ -307,13 +290,15 @@ export class StreamPosterComponent implements OnInit {
       this.current_embed_video = null
       this.post_text_form.get('spotbie_post_text').setValue('')
       this.streamPosted.emit()
-    } else {
-      console.log('Upload Stream Error : ', httpResponse)
-    }
+
+    } else 
+      console.log('streamUploadCallback', stream_response)
+
+    this.loading = false
 
   }
 
-  public startExtraMediaUploader() {
+  public startExtraMediaUploader(): void {
 
     if(this.is_android){
       mobile_js_i.callFilePermissionsAndroid()
@@ -358,16 +343,9 @@ export class StreamPosterComponent implements OnInit {
         return
       }
 
-      // console.log("file to upload : ", file_to_upload)
-      // let exif = this.getExif(file_to_upload)
-      // console.log("file to Upload EXIF: ", exif)
       formData.append('filesToUpload[]', file_to_upload, file_to_upload.name)
-      // console.log("file to upload : ", file_to_upload)
 
     }
-
-    // console.log("Total Upload Size : ", upload_size)
-    //console.log('Files To Upload  : ', formData.getAll('filesToUpload[]'))
 
     this.http.post(EXTRA_MEDIA_UPLOAD_API_URL, formData, {reportProgress: true, observe: 'events'}).subscribe(event => { 
 
@@ -384,7 +362,7 @@ export class StreamPosterComponent implements OnInit {
         this.uploadFinished(event.body)        
 
     }, error => {
-      displayError(error)
+      console.log(error)
     })
 
     return
@@ -405,7 +383,7 @@ export class StreamPosterComponent implements OnInit {
 
   uploadFinished(httpResponse: any) {
 
-    console.log('Upload Response : ', httpResponse)
+    console.log('Upload Response: ', httpResponse)
     
     Array.prototype.push.apply(this.extra_media_array, httpResponse.responseObject)
     
@@ -436,32 +414,21 @@ export class StreamPosterComponent implements OnInit {
     
     this.saving_post = true
 
-    const api_key = this.exe_api_key
-
-    const remove_media_object = { 
-      exe_api_key : api_key,
-      upload_action : 'removeExtraMediaBeforeUploadEdit',
-      media_to_remove :  this.to_remove_on_edit
+    const remove_media_object = {
+      media_to_remove:  this.to_remove_on_edit
     }
 
     let promise = new Promise((resolve, reject) =>{
 
-      this.http.post<HttpResponse>(EXTRA_MEDIA_UPLOAD_API_URL, remove_media_object, HTTP_OPTIONS)
-      .subscribe( resp => {
-        // console.log("Stream Response: ", resp)
-        const http_response = new HttpResponse ({
-          status : resp.status,
-          message : resp.message,
-          full_message : resp.full_message,
-          responseObject : resp.responseObject
-        })
-
-        resolve()
-      },
+      this.http.post<any>(EXTRA_MEDIA_UPLOAD_API_URL, remove_media_object).subscribe(
+        resp => {
+          resolve()
+        },
         error => {
-          console.log('error', error)
-          reject()
-      })
+            console.log('error', error)
+            reject()
+        }
+      )
 
     })
 
@@ -469,39 +436,30 @@ export class StreamPosterComponent implements OnInit {
 
   }
 
-  public removeExtraMediaBeforeUpload(file, event) : void {
+  public removeExtraMediaBeforeUpload(file, event): void {
 
     const path_to_remove = file.file_path
     const api_key = this.exe_api_key
 
-    const remove_media_object = { 
-      exe_api_key : api_key,
-      upload_action : 'removeExtraMediaBeforeUpload',
+    const remove_media_object = {
+      upload_action: 'removeExtraMediaBeforeUpload',
       path_to_remove 
     }
 
-    this.http.post<HttpResponse>(EXTRA_MEDIA_UPLOAD_API_URL, remove_media_object, HTTP_OPTIONS)
-    .subscribe( resp => {
-      // console.log("Stream Response: ", resp)
-      const httpResponse = new HttpResponse ({
-        status : resp.status,
-        message : resp.message,
-        full_message : resp.full_message,
-        responseObject : resp.responseObject
-      })
-
-      this.removeExtraMediaBeforeUploadFinished(file, httpResponse, event)
-
-    },
+    this.http.post<any>(EXTRA_MEDIA_UPLOAD_API_URL, remove_media_object).subscribe(
+      resp => {
+        this.removeExtraMediaBeforeUploadFinished(file, resp, event)
+      },
       error => {
         console.log('error', error)
-    })
+      }
+    )
 
   }
 
-  private removeExtraMediaBeforeUploadFinished(file, httpResponse: HttpResponse, event) : void {
+  private removeExtraMediaBeforeUploadFinished(file, response: any, event): void {
 
-    if (httpResponse.status == '200') {
+    if (response.message == 'removed') {
 
       const element_to_pop = this.extra_media_array.indexOf(file)
       this.extra_media_array.splice(element_to_pop, 1)
@@ -509,11 +467,8 @@ export class StreamPosterComponent implements OnInit {
       const elementToRemove = event.srcElement.parentNode
       elementToRemove.parentNode.removeChild(elementToRemove)
 
-      console.log('the upload array ', this.extra_media_array)
-
-    } else {
-      this.extraMediaFileInfoMessage.nativeElement.innerHTML = httpResponse.full_message
-    }
+    } else
+      this.extraMediaFileInfoMessage.nativeElement.innerHTML = response.message
 
   }
 
@@ -530,7 +485,7 @@ export class StreamPosterComponent implements OnInit {
     const stream_post_validators = [Validators.maxLength(5000)]
     
     this.post_text_form = this.form_builder.group({
-      spotbie_post_text : ['', stream_post_validators],
+      spotbie_post_text: ['', stream_post_validators],
     })
     
   }
