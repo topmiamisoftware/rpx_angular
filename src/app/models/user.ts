@@ -1,10 +1,12 @@
+import { SpotbieUser } from './spotbieuser'
+
 export class User {
 
     public id: number = null // (11)
 
     public username: string = null // (35)
 
-    public exe_user_email: string = null // (135)
+    public email: string = null // (135)
 
     public exe_date_joined: string = null // (timestamp)
     
@@ -50,5 +52,13 @@ export class User {
     public spotbie_place_address: any
     public spotbie_origin: any
     public spotbie_origin_description: any
-    
+
+    public spotbie_user: SpotbieUser
+
+    constructor(user_object?: any){
+
+
+
+    }
+
 }

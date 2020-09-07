@@ -1,6 +1,4 @@
 import { Component, OnInit } from '@angular/core'
-import { COLOR_LIST } from '../../../lists/color.list'
-import { HttpResponse } from '../../../models/http-reponse'
 import { MenuLoggedInComponent } from '../menu-logged-in.component'
 import { Subscription } from 'rxjs'
 import { ColorsService } from 'src/app/services/background-color/colors.service'
@@ -12,71 +10,69 @@ import { ColorsService } from 'src/app/services/background-color/colors.service'
 })
 export class BackgroundColorComponent implements OnInit {
 
-  color_list = COLOR_LIST
-
   public picked_color = ''
 
-  public web_options_subscriber : Subscription
+  public web_options_subscriber: Subscription
 
-  constructor( private host : MenuLoggedInComponent,
-               private web_options_service : ColorsService) { 
-
-    this.web_options_subscriber = this.web_options_service.getWebOptions().subscribe(web_options =>{
-
-      console.log("web options", web_options)
-
-      if(web_options){
-        this.picked_color = web_options.bg_color
-      }
-
-    })
-
+  constructor( private host: MenuLoggedInComponent,
+               private web_options_service: ColorsService) { 
   }
 
-  public triggerColorCancel() : void{
+  public triggerColorCancel(): void{
     this.closeWindow()
   }
 
-  public confirmColorPick(color : string) : void{
+  public confirmColorPick(color: string): void{
     //console.log("trigger color pick")
     this.pickColor(color)
   }
 
-  public pickColor(color) : void {
-
-    const exe_api_key = localStorage.getItem('spotbie_userApiKey')
+  public pickColor(color: string): void {
     
-    const exe_color_object = { exe_api_key, exe_colors_action : 'setBgColor', exe_color_picked : color}
-
-    this.web_options_service.callWebOptionsApi()
+    this.web_options_service.setBgColor(color).subscribe(
+      resp => {
+        this.setColor(resp)
+      },
+      error => {
+        console.log("pickColor", error)
+      }
+    )
     
     this.closeWindow()
 
   }
 
-  private setColor(web_options_response : HttpResponse) : void{
-    if (web_options_response.status == '200') {
+  private setColor(web_options_response: any): void{
 
-      document.getElementsByTagName('body')[0].style.backgroundColor =  this.picked_color
+    if (web_options_response.message == 'success') {
+
+      document.getElementsByTagName('body')[0].style.backgroundColor = this.picked_color
 
     } else
-      console.log('Color Error: ', web_options_response)    
+      console.log('setColor', web_options_response)    
+
   }
 
-  public closeWindow() : void {
+  public closeWindow(): void {
     this.host.closeWindow(this.host.backgroundColorWindow)
   }
 
   ngOnInit() {
     
-    //console.log("Background pick")
-    
-    const picked_color = localStorage.getItem('spotbie_backgroundColor')
-    
-    if (picked_color != '') {
-      this.picked_color = picked_color
-    } else
+    this.picked_color = localStorage.getItem('spotbie_backgroundColor');
+
+    if (this.picked_color == '' 
+      || this.picked_color == undefined 
+      || this.picked_color == null)
       this.picked_color = 'dimgrey'
+
+    this.web_options_subscriber = this.web_options_service.getWebOptions().subscribe(web_options =>{
+
+      if(web_options.bg_color){
+        this.picked_color = web_options.bg_color
+      }
+
+    })
 
   }
 

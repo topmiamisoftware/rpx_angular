@@ -163,6 +163,7 @@
     margin-bottom: 0px;
     padding: 10px;
     text-align: left;
+    background-color: transparent;
 }
 .spotbie-sorting{
     font-size: 14px;
@@ -282,7 +283,7 @@
     position: relative;
     margin: 0 auto;
     padding: 15px;
-    background-color: rgba(0,0,0,.23);
+    background-color: rgba(0,0,0,.73);
     margin-top: 5px;
 }
 .spotbie-search-result-wrapper{
@@ -439,28 +440,28 @@ span.spotbie-button{
     font-size: 16px;
 }
 #spotbie_me_search{
-    background: url(../../../../assets/images/spot.png);
+    background: url(../../../assets/images/spot.png);
 }
 #spotbie_people_search{
-    background: url(../../../../assets/images/find_people.png);
+    background: url(../../../assets/images/find_people.png);
 }
 #spotbie_media_search{
-    background: url(../../../../assets/images/multimedia.png);
+    background: url(../../../assets/images/multimedia.png);
 }
 #spotbie_events_search{
-    background: url(../../../../assets/images/map_bar_icons/events.png);
+    background: url(../../../assets/images/map_bar_icons/events.png);
 }
 #spotbie_retail_search{
-    background: url(../../../../assets/images/shop.png);
+    background: url(../../../assets/images/shop.png);
 }
 #spotbie_food_search{
-    background: url(../../../../assets/images/food.png);
+    background: url(../../../assets/images/food.png);
 }
 #spotbie_artist_search{
-    background: url(../../../../assets/images/full_star.png);
+    background: url(../../../assets/images/full_star.png);
 }
 #spotbie_place_search{
-    background: url(../../../../assets/images/map_icon.png);
+    background: url(../../../assets/images/map_icon.png);
 }
 .spotbie-profile-right-close-slider{
     background-color:black;
@@ -603,6 +604,9 @@ span.spotbie-button{
     }    
 }
 @media (max-width: 560px) { 
+    .spotbie-search-page-number{
+        display: none;
+    }
     .spotbie-map{
         height: 400px;
         min-height: 400px;
@@ -637,6 +641,9 @@ span.spotbie-button{
     .spotbie-close-results{
         top: 19px;
     }     
+    .spotbie-search-results-title{
+        text-align: center;
+    }    
 }
 @media (max-width: 460px) { 
     .spotbie-category-search-yelp{

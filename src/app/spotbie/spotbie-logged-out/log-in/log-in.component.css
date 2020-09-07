@@ -19,7 +19,9 @@
     color: #8BC34A !important;
 }
 .spotbie-overlay-window{
-    background-color: rgb(12, 12, 12);
+    background: url(/assets/images/background.png);
+    background-position: center;
+    background-color: rgb(21 21 21);
 }
 .spotbie-log-in-picture{
     position: absolute;

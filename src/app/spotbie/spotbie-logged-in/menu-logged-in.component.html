@@ -6,21 +6,21 @@
           <img style="border-radius:99%;" src="assets/favicon/android-icon-72x72.png" />
         </td>
   
-        <td (click)="openApps()" *ngIf="!public_profile" title="Open Apps">
+        <td (click)="openWindow(settingsWindow)" *ngIf="!public_profile" title="Open Apps">
           <img style="border-radius:99%;" src="assets/favicon/android-icon-72x72.png" />
         </td>
   
-        <td (click)="openWindow(messagingWindow)" title="Messages">
+        <!--<td (click)="openWindow(messagingWindow)" title="Messages">
           <i class="fa fa-envelope" aria-hidden="true"></i>
-        </td>
+        </td>-->
   
         <td (click)="openWindow(friendsWindow)" title="Friends">
           <i class="fa fa-users" aria-hidden="true"></i>
         </td>
     
-        <td id="spotbieSignUp" (click)="openWindow(settingsWindow)" title="Settings">
+        <!--<td id="spotbieSignUp" (click)="openWindow(settingsWindow)" title="Settings">
           <i class="fa fa-cog" aria-hidden="true"></i>   
-        </td>
+        </td>-->
     
         <td id="spotbieLogIn" (click)="logOut()" title="Log Out">
           <i class="fa fa-power-off" aria-hidden="true"></i>
@@ -86,19 +86,19 @@
                     [public_profile_info]="public_profile_info" 
                     [current_user_bg]="spotbieBackgroundImage"></app-profile-header>
 
-<app-notifications></app-notifications>
+<!--<app-notifications></app-notifications>-->
 
-<app-pairing *ngIf="locationPairingWindow.open"></app-pairing>
+<!--<app-pairing *ngIf="locationPairingWindow.open"></app-pairing>-->
 
 <app-background-color *ngIf="backgroundColorWindow.open"></app-background-color>
 
-<app-matcher *ngIf="matcherWindow.open"></app-matcher>
+<!--<app-matcher *ngIf="matcherWindow.open"></app-matcher>-->
 
-<app-driver-mode *ngIf="drivingWindow.open"></app-driver-mode>
+<!--<app-driver-mode *ngIf="drivingWindow.open"></app-driver-mode>-->
 
-<app-missing-people *ngIf="missingWindow.open"></app-missing-people>
+<!--<app-missing-people *ngIf="missingWindow.open"></app-missing-people>-->
 
-<app-media-player-main *ngIf="mediaPlayerWindow.open"></app-media-player-main>
+<!--<app-media-player-main *ngIf="mediaPlayerWindow.open"></app-media-player-main>-->
 
 <app-friends *ngIf="friendsWindow.open"></app-friends>
 
@@ -106,4 +106,4 @@
 
 <app-settings *ngIf="settingsWindow.open"></app-settings>
 
-<app-messaging *ngIf="messagingWindow.open"></app-messaging>
+<!--<app-messaging *ngIf="messagingWindow.open"></app-messaging>-->

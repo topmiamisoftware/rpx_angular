@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild, Input } from '@angular/core'
 import { HttpClient, HttpHeaders, HttpEventType } from '@angular/common/http'
-import { HttpResponse } from '../../models/http-reponse'
 import { Swiper } from 'swiper/dist/js/swiper.esm.js'
 import * as spotbieGlobals from '../../globals'
 import { Validators, FormGroup, FormBuilder } from '@angular/forms'
@@ -11,10 +10,6 @@ import { ColorsService } from 'src/app/services/background-color/colors.service'
 import { ProfileHeaderService } from 'src/app/services/profile-header/profile-header.service'
 
 const PROFILE_HEADER_API = spotbieGlobals.API + 'api/settings.service.php'
-
-const HTTP_OPTIONS = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-}
 
 const BACKGROUND_UPLOAD_API_URL = spotbieGlobals.API + 'api/background_image_upload.service.php'
 const BACKGROUND_MAX_UPLOAD_SIZE = 1e+7
@@ -103,28 +98,26 @@ export class ProfileHeaderComponent implements OnInit {
     const spotbie_user = profile_header_response.spotbie_user
 
     const default_images = profile_header_response.default_images
-  
+
     let current_index = 0
 
-    if (spotbie_user.default_picture !== 'defaults/user.png') {
+    this.user.profile_pictures = default_images.map(default_image => default_image.default_image_url)
 
-      this.user.profile_pictures = default_images.map(default_image => default_image.default_image_url)
-      
+    if(this.user.profile_pictures.length > 0){
+
       this.user.profile_pictures.forEach(profile_picture =>{
-        
+      
         current_index = this.user.profile_pictures.indexOf(profile_picture)
-
+  
         this.user.profile_pictures[current_index] = 'defaults/' + this.user.id + '/' + profile_picture
-
-        if(this.user.profile_pictures[current_index] == spotbie_user.default_picture){
-          
+  
+        if(this.user.profile_pictures[current_index] == spotbie_user.default_picture)
           this.profile_pictures_index = current_index
+  
+      }) 
 
-        }
-
-      })
-
-    }
+    } else
+      this.user.profile_pictures[current_index] = 'defaults/user.png'
 
     this.user.exe_user_default_picture = spotbie_user.default_picture
 
@@ -271,27 +264,29 @@ export class ProfileHeaderComponent implements OnInit {
 
     this.loading = true
 
-    const get_profile_header_object = { exe_api_key: this.exe_api_key, exe_settings_action: 'saveBackground', new_background_image: this.user.acc_splash }
+    const get_profile_header_object = {
+      new_background_image: this.user.acc_splash 
+    }
 
-    this.http.post<HttpResponse>(PROFILE_HEADER_API, get_profile_header_object, HTTP_OPTIONS)
+    this.http.post<any>(PROFILE_HEADER_API, get_profile_header_object)
     .subscribe( resp => {
-      const httpResponse = new HttpResponse ({
-        status: resp.status,
-        message: resp.message,
-        full_message: resp.full_message,
-        responseObject: resp.responseObject
-      })
-      this.saveBackgroundCallback(httpResponse)
+      this.saveBackgroundCallback(resp)
     },
       error => {
         this.loading = true
         console.log('Save Background Image Error: ', error)
     })
+
   }
 
   public setDefault(): void {
 
     this.loading = true
+
+    if (this.user.exe_user_default_picture == 'defaults/user.png') {
+      this.loading = false
+      return
+    }
 
     const new_profile_image = this.user.profile_pictures[this.profile_pictures_index]
 
@@ -307,8 +302,6 @@ export class ProfileHeaderComponent implements OnInit {
   }
 
   public setDefaultCallback(resp: any) {
-
-    console.log('setDefault', resp)
 
     this.successful_default_change = true
 
@@ -332,62 +325,46 @@ export class ProfileHeaderComponent implements OnInit {
 
     this.loading = true
 
-    const a = this.user.exe_user_default_picture.replace(spotbieGlobals.RESOURCES, '')
+    const current_profile_image = this.user.profile_pictures[this.profile_pictures_index]
 
-    // console.log("trying to delete: ", a)
-
-    if (a == 'defaults/user.png') {
+    if (current_profile_image == 'defaults/user.png') {
       this.loading = false
       return
     }
 
-    const upload_default_object = { exe_api_key: this.exe_api_key, upload_action: 'deleteCurrentDefault', current_profile_picture: a }
-
-    this.http.post<HttpResponse>(DEFAULT_UPLOAD_API_URL, upload_default_object, HTTP_OPTIONS)
-    .subscribe( resp => {
-      const httpResponse = new HttpResponse ({
-        status: resp.status,
-        message: resp.message,
-        full_message: resp.full_message,
-        responseObject: resp.responseObject
-      })
-      this.deleteDefaultCallback(httpResponse)
-    },
+    this.profile_header_service.deleteDefault(current_profile_image).subscribe( 
+      resp => {
+        this.deleteDefaultCallback(resp)
+      },
       error => {
-        this.loading = true
         console.log('Delete Default Image Error: ', error)
-    })
+      }
+    )
 
   }
 
-  public deleteDefaultCallback(httpResponse: HttpResponse) {
+  public deleteDefaultCallback(httpResponse: any) {
 
-    if (httpResponse.status == '200') {
-
-      // console.log("Current Index: ", this.profile_pictures_index)
+    if (httpResponse.status == 'success') {
 
       this.user.profile_pictures.splice(this.profile_pictures_index, 1)
 
-      this.user.exe_user_default_picture = spotbieGlobals.RESOURCES + httpResponse.responseObject.new_profile_default
+      this.user.exe_user_default_picture = spotbieGlobals.RESOURCES + httpResponse.new_profile_default
 
-      // console.log("Returned profile picture:  ", this.user.exe_user_default_picture)
-      // console.log("All profile pictures:  ", this.user.profile_pictures)
+      if (this.user.exe_user_default_picture == 'defaults/user.png') {
 
-      if (this.user.exe_user_default_picture == spotbieGlobals.RESOURCES + 'defaults/user.png') {
         this.user.profile_pictures = []
         this.user.profile_pictures[0] = this.user.exe_user_default_picture
-        // console.log("profile pictures 2: ", this.user.profile_pictures[0])
         this.m_swiper.slideTo(0)
+
       } else {
+
         const a = this.user.profile_pictures.indexOf(this.user.exe_user_default_picture)
-        // console.log("Sliding to:  ", a)
         this.m_swiper.slideTo(a)
+
       }
 
-      localStorage.setItem('spotbie_userDefaultImage', httpResponse.responseObject.new_profile_default)
-
-      // console.log("profile pictures 3: ", this.user.profile_pictures)
-      // console.log("Image Deleted: ", httpResponse)
+      localStorage.setItem('spotbie_userDefaultImage', httpResponse.new_profile_default)
 
     } else
       console.log('Deleted Default Image Error: ', httpResponse)
@@ -414,12 +391,10 @@ export class ProfileHeaderComponent implements OnInit {
 
     const formData = new FormData()
 
-    const exe_api_key = localStorage.getItem('spotbie_userApiKey')
     let file_to_upload
     let upload_size = 0
 
     formData.append('upload_action', 'uploadDefault')
-    formData.append('exe_api_key', exe_api_key)
 
     for (let i = 0; i < file_list_length; i++) {
 
@@ -432,16 +407,9 @@ export class ProfileHeaderComponent implements OnInit {
         return
       }
 
-      // console.log("file to upload: ", file_to_upload)
-      // let exif = this.getExif(file_to_upload)
-      // console.log("file to Upload EXIF: ", exif)
       formData.append('filesToUpload[]', file_to_upload, file_to_upload.name)
-      // console.log("file to upload: ", file_to_upload)
 
     }
-
-    // console.log("Total Upload Size: ", upload_size)
-    // console.log("Files To Upload : ", formData.getAll('filesToUpload[]'))
 
     this.http.post(DEFAULT_UPLOAD_API_URL, formData, {reportProgress: true, observe: 'events'}).subscribe(event => {
 
@@ -458,34 +426,36 @@ export class ProfileHeaderComponent implements OnInit {
 
   public defaultUploadFinished(httpResponse: any): void {
 
-    if (httpResponse.status == '200') {
-      // console.log("Default Image File Path: ", httpResponse.responseObject[0].file_path)
-      // console.log("DEfault Iamges:", this.user.profile_pictures)
+    if (httpResponse.message == 'success') {
+
       this.cancelDefault()
-      this.user.exe_user_default_picture = spotbieGlobals.RESOURCES + httpResponse.responseObject[0].file_path
-      localStorage.setItem('spotbie_userDefaultImage', httpResponse.responseObject[0].file_path)
+
+      this.user.exe_user_default_picture = spotbieGlobals.RESOURCES + httpResponse.default_picture
+      localStorage.setItem('spotbie_userDefaultImage', this.user.exe_user_default_picture)
+
       this.user.profile_pictures.unshift(this.user.exe_user_default_picture)
       this.profile_pictures_index = 0
       this.m_swiper.slideTo(this.profile_pictures_index)
 
       if (this.user.profile_pictures[1].indexOf('defaults/user.png') > -1) this.user.profile_pictures.pop()
 
-      //console.log('Default Image Array ', this.user.profile_pictures)
-
     } else
-      console.log('Background Image Upload Error:', httpResponse)
+      console.log('defaultUploadFinished', httpResponse)
 
     this.loading = false
 
   }
 
-  private saveBackgroundCallback(httpResponse: HttpResponse): void {
+  private saveBackgroundCallback(httpResponse: any): void {
 
-    if (httpResponse.status == '200') {
+    if (httpResponse.status == 'success') {
+
       localStorage.setItem('spotbie_backgroundImage', this.user.acc_splash)
+
       this.cancelBackground()
+
     } else
-      console.log('Save Background Error: ', httpResponse)    
+      console.log('saveBackgroundCallback', httpResponse)    
     
     this.loading = false
 
@@ -561,11 +531,10 @@ export class ProfileHeaderComponent implements OnInit {
     window.open = true
   }
 
-  ngOnInit(): void{
-    this.exe_api_key = localStorage.getItem('spotbie_userApiKey')
+  ngOnInit(){
   }
 
-  ngAfterViewInit(): void {
+  ngAfterViewInit(){
 
     if (this.public_profile_info !== undefined) {
 
@@ -590,11 +559,9 @@ export class ProfileHeaderComponent implements OnInit {
 
     }
 
-    this.user.exe_background_color = localStorage.getItem('spotbie_backgroundColor')
-
     this.web_options_subscriber = this.web_options_service.getWebOptions().subscribe(web_options =>{
 
-      if(web_options){
+      if(web_options.bg_color){
         this.user.exe_background_color = web_options.bg_color
       }
 

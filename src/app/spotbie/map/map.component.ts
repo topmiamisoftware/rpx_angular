@@ -1,15 +1,17 @@
 import { Component, OnInit, ViewChild } from '@angular/core'
-import { LocationService } from '../../../location-service/location.service'
-import { HttpResponse } from '../../../models/http-reponse'
+import { LocationService } from '../../location-service/location.service'
+import { HttpResponse } from '../../models/http-reponse'
 import { DeviceDetectorService } from 'ngx-device-detector'
 import { AgmMap, AgmInfoWindow } from '@agm/core'
-import * as mobile_js_i from '../../../../assets/scripts/mobile_interface.js'
+import * as mobile_js_i from '../../../assets/scripts/mobile_interface.js'
 import { Router } from '@angular/router'
-import { MapObjectIconPipe } from '../../../pipes/map-object-icon.pipe'
+import { MapObjectIconPipe } from '../../pipes/map-object-icon.pipe'
 import * as map_extras from './map_extras/map_extras'
 import { ToastRequest } from 'src/app/helpers/toast-helper/toast-models/toast-request'
 import { DateFormatPipe, TimeFormatPipe } from 'src/app/pipes/date-format.pipe'
 import { MatSliderChange } from '@angular/material/slider'
+import { ColorsService } from 'src/app/services/background-color/colors.service'
+import { Subscription } from 'rxjs'
 
 const YELP_BUSINESS_SEARCH_API = 'https://api.yelp.com/v3/businesses/search'
 
@@ -24,12 +26,15 @@ export class MapComponent implements OnInit {
 
   @ViewChild('spotbie_user_marker_info_window') spotbie_user_marker_info_window: AgmInfoWindow
 
+  public is_logged_in: string
+
   public map_zoom = 32
   public lat: number
   public lng: number
   public og_lat: number
   public og_lng: number
   public iconUrl:  string
+  public user_default_image: string
 
   public locationFound: boolean = false
 
@@ -151,9 +156,12 @@ export class MapComponent implements OnInit {
 
   public items_per_page: number = 0
 
+  public web_options_subscriber: Subscription
+
   constructor(private locationService: LocationService,
               private deviceService: DeviceDetectorService,
               private router: Router,
+              private _web_options_service: ColorsService,
               private mapIconPipe: MapObjectIconPipe) { }
 
   public spotMe() {
@@ -476,7 +484,6 @@ export class MapComponent implements OnInit {
 
     this.loading = true
 
-    this.bg_color = localStorage.getItem('spotbie_backgroundColor')
     this.search_category = category
     
     switch (category) {
@@ -867,11 +874,7 @@ export class MapComponent implements OnInit {
     this.og_lat = position.coords.latitude
     this.og_lng = position.coords.longitude
 
-    let spotbie_userDefaultImage
-
-    spotbie_userDefaultImage = localStorage.getItem('spotbie_userDefaultImage')
-
-    this.iconUrl = this.mapIconPipe.transform(spotbie_userDefaultImage)
+    this.iconUrl = this.mapIconPipe.transform(this.user_default_image)
 
     this.saveUserLocation()
 
@@ -912,24 +915,31 @@ export class MapComponent implements OnInit {
       loc_y: this.lng
     }
 
-    this.locationService.saveCurrentLocation(save_location_obj).subscribe(
-      resp => {
-        this.saveCurrentLocationCallback(resp) 
-      },
-      error =>{
-        console.log("saveAndRetrieve Error", error)
-      }
-    )
+    if(this.is_logged_in === '1'){
+
+      this.locationService.saveCurrentLocation(save_location_obj).subscribe(
+        resp => {
+          this.saveCurrentLocationCallback(resp) 
+        },
+        error =>{
+          console.log("saveAndRetrieve Error", error)
+        }
+      )
+
+    } else {
+
+      this.retrieveSurroudings()
+
+    }
 
   }
 
   public saveCurrentLocationCallback(resp: any): void {
 
-    if(resp.message == 'success'){
+    if(resp.message == 'success')
       this.retrieveSurroudings()
-    } else {
+    else 
       console.log("saveCurrentLocationCallback Error", resp)
-    }
 
   }
 
@@ -956,7 +966,6 @@ export class MapComponent implements OnInit {
 
   public retrieveSurroudingsCallback(resp: any){
     
-    // Draw objects on the map
     const surrounding_object_list = resp.surrounding_object_list
 
     const total_objects = surrounding_object_list.length
@@ -1021,7 +1030,7 @@ export class MapComponent implements OnInit {
       x = this.lat + Math.cos(angle) * radius
       y = this.lng + Math.sin(angle) * radius
 
-      const p = { lat: x , lng: y}
+      const p = { lat: x , lng: y }
       return p
 
   }
@@ -1056,6 +1065,10 @@ export class MapComponent implements OnInit {
     this.show_search_box = false
   }
 
+  public myFavorites(){
+    
+  }
+
   ngOnInit() {
 
     if (this.deviceService.isDesktop || this.deviceService.isTablet)
@@ -1065,15 +1078,22 @@ export class MapComponent implements OnInit {
     
     this.rad_1 = this.rad_11
 
-    this.bg_color = localStorage.getItem('spotbie_backgroundColor')
-    this.spotbie_username = localStorage.getItem('spotbie_userLogin')
-
   }
 
   ngAfterViewInit() {
 
     this.exe_api_key = localStorage.getItem('spotbie_userApiKey')
-    //console.log("Map AFter Init");
+    this.is_logged_in = localStorage.getItem('spotbie_loggedIn')
+    this.bg_color = localStorage.getItem('spotbie_backgroundColor')
+    this.user_default_image = localStorage.getItem('spotbie_userDefaultImage')
+    this.spotbie_username = localStorage.getItem('spotbie_userLogin')
+
+    if(this.is_logged_in !== '1'){
+      this.user_default_image = 'user.png'
+      this.spotbie_username = 'Guest'      
+      this.bg_color = '#353535'
+    }
+    
     this.is_android = mobile_js_i.android_i
     this.is_iphone = mobile_js_i.iphone_i
     
@@ -1082,6 +1102,15 @@ export class MapComponent implements OnInit {
     }
 
     if (window.navigator.geolocation) { window.navigator.geolocation.getCurrentPosition(this.showPosition.bind(this)) }
+
+    this.web_options_subscriber = this._web_options_service.getWebOptions().subscribe(web_options =>{
+
+      if(web_options.bg_color){
+        this.bg_color = web_options.bg_color
+      }
+
+    })
+
 
   }
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, HostListener } from '@angular/core'
+import { Component, OnInit, ViewChild, HostListener, Output, EventEmitter } from '@angular/core'
 import * as $ from 'jquery'
 import * as spotbieGlboals from '../../globals'
 import * as mobile_js_i from '../../../assets/scripts/mobile_interface.js'
@@ -18,6 +18,8 @@ export class ReadAboutComponent implements OnInit {
 
     @ViewChild('vc_spotbie_sign_up_box_inner') vc_spotbie_sign_up_box_inner
     @ViewChild('vc_spotbie_sign_up_box') vc_spotbie_sign_up_box
+
+    @Output() spawnCategories = new EventEmitter()
 
     public account_perks: boolean = false
 
@@ -81,6 +83,18 @@ export class ReadAboutComponent implements OnInit {
 
     scrollTo(el: string): void{
         $('html, body').animate({ scrollTop: $(el).offset().top }, 'slow')
+    }
+
+    public searchEvents(){
+        this.spawnCategories.emit('events')
+    }
+
+    public searchRetail(){
+        this.spawnCategories.emit('shopping');
+    }
+
+    public searchFood(){
+        this.spawnCategories.emit('food');
     }
 
     public signUp(): void{

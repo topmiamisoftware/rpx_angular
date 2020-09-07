@@ -10,12 +10,13 @@ import { MustMatch } from '../../../helpers/must-match.validator'
 import { MenuLoggedInComponent } from '../menu-logged-in.component'
 import { ValidateUsername } from 'src/app/helpers/username.validator'
 import { ValidatePersonName } from 'src/app/helpers/name.validator'
+import { UserauthService } from 'src/app/services/userauth.service'
 
 const SETTINGS_API = spotbieGlobals.API + 'api/settings.service.php'
 
 const HTTP_OPTIONS = {
-  withCredentials : true,
-  headers: new HttpHeaders({ 'Content-Type' : 'application/json' })
+  withCredentials: true,
+  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
 }
 
 @Component({
@@ -33,12 +34,12 @@ export class SettingsComponent implements OnInit {
 
   @ViewChild('addressSearch') addressSearch
 
-  public bg_color : string
+  public bg_color: string
 
-  public lat : number
-  public lng : number
-  public zoom : number = 18
-  public iconUrl : string
+  public lat: number
+  public lng: number
+  public zoom: number = 18
+  public iconUrl: string
 
   public locationFound = false
 
@@ -47,64 +48,64 @@ export class SettingsComponent implements OnInit {
   public privacy_light_color = 'green'
   public privacy_state = 'ON'
   public ghost_mode_state = 'ON'
-  public privacy_help = { help_text : 'Setting your privacy to OFF will allow users who ARE NOT your friends to view your profile (includes posts, albums, and contact info). Setting your privacy to ON will only allow users who are your friends to view your profile. If your privacy mode is set to ON, users who are not your friends will be able to send your friend requests and view partial profile info(includes most recent profile picture, username, and your full name.)'}
-  public ghost_mode_help = { help_text : 'Setting Ghost Mode to OFF will allow users who ARE NOT your friends to spot on you the Spotbie Map as yourself. If you set Ghost Mode to ON, users who are NOT your friends will identify you on the map as GHOST, while users who ARE your friends will identify you as yourself.'}
+  public privacy_help = { help_text: 'Setting your privacy to OFF will allow users who ARE NOT your friends to view your profile (includes posts, albums, and contact info). Setting your privacy to ON will only allow users who are your friends to view your profile. If your privacy mode is set to ON, users who are not your friends will be able to send your friend requests and view partial profile info(includes most recent profile picture, username, and your full name.)'}
+  public ghost_mode_help = { help_text: 'Setting Ghost Mode to OFF will allow users who ARE NOT your friends to spot on you the Spotbie Map as yourself. If you set Ghost Mode to ON, users who are NOT your friends will identify you on the map as GHOST, while users who ARE your friends will identify you as yourself.'}
 
-  public settings_form : FormGroup
+  public settings_form: FormGroup
 
-  public password_form : FormGroup
+  public password_form: FormGroup
 
   public save_password = false
 
-  public deactivation_form : FormGroup
+  public deactivation_form: FormGroup
   public account_deactivation = false
   public deactivation_submitted = false
 
   public loading = false
 
   public animal_list = new Array(
-    { animal_name : 'Alligator', animal_img : '../../assets/images/animals/alligator.png'},
-    { animal_name : 'Bunny', animal_img : '../../assets/images/animals/bunny.png'},
-    { animal_name : 'Cat', animal_img : '../../assets/images/animals/cat.png'},
-    { animal_name : 'Cheetah', animal_img : '../../assets/images/animals/cheetah.png'},
-    { animal_name : 'Dragon', animal_img : '../../assets/images/animals/dragon.png'},
-    { animal_name : 'Elephant', animal_img : '../../assets/images/animals/elephant.png'},
-    { animal_name : 'Fox', animal_img : '../../assets/images/animals/fox.png'},
-    { animal_name : 'Giraffe', animal_img : '../../assets/images/animals/giraffe.png'},
-    { animal_name : 'Honey Bee', animal_img : '../../assets/images/animals/honey_bee.png'},
-    { animal_name : 'Iguana', animal_img : '../../assets/images/animals/iguana.png'},
-    { animal_name : 'Jaguar', animal_img : '../../assets/images/animals/jaguar.png'},
-    { animal_name : 'Koala', animal_img : '../../assets/images/animals/koala.png'},
-    { animal_name : 'Lion', animal_img : '../../assets/images/animals/lion.png'},
-    { animal_name : 'Manta Ray', animal_img : '../../assets/images/animals/manta_ray.png'},
-    { animal_name : 'Nighthawk', animal_img : '../../assets/images/animals/nighthawk.png'},
-    { animal_name : 'Ostrich', animal_img : '../../assets/images/animals/ostrich.png'},
-    { animal_name : 'Panda', animal_img : '../../assets/images/animals/panda.png'},
-    { animal_name : 'Parrot', animal_img : '../../assets/images/animals/parrot.png'},
-    { animal_name : 'Phoenix', animal_img : '../../assets/images/animals/phoenix.png'},
-    { animal_name : 'Poison Dart Frog', animal_img : '../../assets/images/animals/poison_dart_frog.png'},
-    { animal_name : 'Quagga', animal_img : '../../assets/images/animals/quagga.png'},
-    { animal_name : 'Raven', animal_img : '../../assets/images/animals/raven.png'},
-    { animal_name : 'Rhino', animal_img : '../../assets/images/animals/rhino.png'},
-    { animal_name : 'Sea Turtle', animal_img : '../../assets/images/animals/sea_turtle.png'},
-    { animal_name : 'Sloth', animal_img : '../../assets/images/animals/sloth.png'},
-    { animal_name : 'Tiger', animal_img : '../../assets/images/animals/tiger.png'},
-    { animal_name : 'Uakari', animal_img : '../../assets/images/animals/uakari.png'},
-    { animal_name : 'Vampire Bat', animal_img : '../../assets/images/animals/vampire_bat.png'},
-    { animal_name : 'Weasel', animal_img : '../../assets/images/animals/weasel.png'},
-    { animal_name : 'Whale Shark', animal_img : '../../assets/images/animals/whale_shark.png'},
-    { animal_name : 'Xerus', animal_img : '../../assets/images/animals/xerus.png'},
-    { animal_name : 'Yak', animal_img : '../../assets/images/animals/yak.png'},
-    { animal_name : 'Zebra Shark', animal_img : '../../assets/images/animals/zebra_shark.png'}
+    { animal_name: 'Alligator', animal_img: '../../assets/images/animals/alligator.png'},
+    { animal_name: 'Bunny', animal_img: '../../assets/images/animals/bunny.png'},
+    { animal_name: 'Cat', animal_img: '../../assets/images/animals/cat.png'},
+    { animal_name: 'Cheetah', animal_img: '../../assets/images/animals/cheetah.png'},
+    { animal_name: 'Dragon', animal_img: '../../assets/images/animals/dragon.png'},
+    { animal_name: 'Elephant', animal_img: '../../assets/images/animals/elephant.png'},
+    { animal_name: 'Fox', animal_img: '../../assets/images/animals/fox.png'},
+    { animal_name: 'Giraffe', animal_img: '../../assets/images/animals/giraffe.png'},
+    { animal_name: 'Honey Bee', animal_img: '../../assets/images/animals/honey_bee.png'},
+    { animal_name: 'Iguana', animal_img: '../../assets/images/animals/iguana.png'},
+    { animal_name: 'Jaguar', animal_img: '../../assets/images/animals/jaguar.png'},
+    { animal_name: 'Koala', animal_img: '../../assets/images/animals/koala.png'},
+    { animal_name: 'Lion', animal_img: '../../assets/images/animals/lion.png'},
+    { animal_name: 'Manta Ray', animal_img: '../../assets/images/animals/manta_ray.png'},
+    { animal_name: 'Nighthawk', animal_img: '../../assets/images/animals/nighthawk.png'},
+    { animal_name: 'Ostrich', animal_img: '../../assets/images/animals/ostrich.png'},
+    { animal_name: 'Panda', animal_img: '../../assets/images/animals/panda.png'},
+    { animal_name: 'Parrot', animal_img: '../../assets/images/animals/parrot.png'},
+    { animal_name: 'Phoenix', animal_img: '../../assets/images/animals/phoenix.png'},
+    { animal_name: 'Poison Dart Frog', animal_img: '../../assets/images/animals/poison_dart_frog.png'},
+    { animal_name: 'Quagga', animal_img: '../../assets/images/animals/quagga.png'},
+    { animal_name: 'Raven', animal_img: '../../assets/images/animals/raven.png'},
+    { animal_name: 'Rhino', animal_img: '../../assets/images/animals/rhino.png'},
+    { animal_name: 'Sea Turtle', animal_img: '../../assets/images/animals/sea_turtle.png'},
+    { animal_name: 'Sloth', animal_img: '../../assets/images/animals/sloth.png'},
+    { animal_name: 'Tiger', animal_img: '../../assets/images/animals/tiger.png'},
+    { animal_name: 'Uakari', animal_img: '../../assets/images/animals/uakari.png'},
+    { animal_name: 'Vampire Bat', animal_img: '../../assets/images/animals/vampire_bat.png'},
+    { animal_name: 'Weasel', animal_img: '../../assets/images/animals/weasel.png'},
+    { animal_name: 'Whale Shark', animal_img: '../../assets/images/animals/whale_shark.png'},
+    { animal_name: 'Xerus', animal_img: '../../assets/images/animals/xerus.png'},
+    { animal_name: 'Yak', animal_img: '../../assets/images/animals/yak.png'},
+    { animal_name: 'Zebra Shark', animal_img: '../../assets/images/animals/zebra_shark.png'}
   )
 
-  public chosen_animal : any
+  public chosen_animal: any
   public load_animals = false
 
-  private exe_api_key : string
+  private exe_api_key: string
 
   public account_type_list = ['Personal', 'Content Creator']
-  public chosen_account_type : string
+  public chosen_account_type: string
   public load_account_types = false
 
   public account_type_category: string
@@ -115,7 +116,7 @@ export class SettingsComponent implements OnInit {
 
   public submitted = false
 
-  public adSettingsWindow = {open : false}
+  public adSettingsWindow = {open: false}
 
   geoCoder: any
   address: any
@@ -126,29 +127,86 @@ export class SettingsComponent implements OnInit {
               private http: HttpClient,
               private formBuilder: FormBuilder,
               private mapsAPILoader: MapsAPILoader,
-              private ngZone: NgZone) { }
+              private ngZone: NgZone,
+              private user_auth_service: UserauthService) { }
 
-  private fetchCurrentSettings() {
+  private fetchCurrentSettings(): any {
 
-    const settings_object = { exe_api_key : this.exe_api_key, exe_settings_action : 'getSettings' }
-    this.http.post<HttpResponse>(SETTINGS_API, settings_object, HTTP_OPTIONS)
-        .subscribe( resp => {
-          // console.log("Settings Response", resp)
-            const settings_response = new HttpResponse ({
-            status : resp.status,
-            message : resp.message,
-            full_message : resp.full_message,
-            responseObject : resp.responseObject
-          })
-          this.populateSettings(settings_response)
-        },
-          error => {
-            console.log('error', error)
-    })
+    this.user_auth_service.getSettings().subscribe(
+      resp =>{
+        this.populateSettings(resp)
+      },
+      error =>{
+        console.log("Error", error)
+      }
+    )
 
   }
 
-  openWindow(window : any){
+  private populateSettings(settings_response: any) {
+
+    console.log("Settings Response:", settings_response)
+    
+    if (settings_response.message == 'success') {
+
+      this.user = settings_response.user
+      this.user.spotbie_user = settings_response.spotbie_user
+
+      this.settings_form.get('spotbie_username').setValue(this.user.username)
+      this.settings_form.get('spotbie_first_name').setValue(this.user.spotbie_user.first_name)
+      this.settings_form.get('spotbie_last_name').setValue(this.user.spotbie_user.last_name)
+      this.settings_form.get('spotbie_email').setValue(this.user.email)
+      this.settings_form.get('spotbie_phone_number').setValue(this.user.spotbie_user.phone_number)
+      //this.settings_form.get('spotbie_acc_type').setValue(this.user.exe_user_type)
+
+      this.password_form.get('spotbie_password').setValue('userpassword')
+      this.password_form.get('spotbie_confirm_password').setValue('123456789')
+
+      //this.chosen_account_type = this.user.exe_user_type
+
+      this.account_type_category = 'Personal'
+      this.settings_form.get('spotbie_animal').setValue(this.user.spotbie_user.animal)
+      this.settings_form.get('spotbie_privacy').setValue(this.user.spotbie_user.privacy)
+      this.settings_form.get('spotbie_ghost_mode').setValue(this.user.spotbie_user.ghost_mode)
+
+      if (this.user.spotbie_user.privacy == true) {
+        this.privacy_state = 'ON'
+        this.privacy_light_color = 'green'
+      } else {
+        this.privacy_state = 'OFF'
+        this.privacy_light_color = 'red'
+      }
+
+      if (this.user.spotbie_user.ghost_mode == true) {
+        this.ghost_mode_state = 'ON'
+        this.ghost_light_color = 'green'
+      } else {
+        this.ghost_mode_state = 'OFF'
+        this.ghost_light_color = 'red'
+      }
+
+      /*if (this.chosen_account_type == 'Personal' || this.chosen_account_type == 'Content Creator') {
+
+
+      } else {
+
+        this.user.spotbie_origin = settings_response.responseObject.place_attributes.place_coords
+        this.user.spotbie_origin_description = settings_response.responseObject.place_attributes.place_description
+        this.user.spotbie_place_address = settings_response.responseObject.place_attributes.place_address
+
+        this.account_type_category = 'Business'
+        this.initSettingsForm('business')
+
+      }*/
+
+    } else
+      console.log('Settings Error: ', settings_response)
+
+    this.loading = false
+
+  }
+
+  openWindow(window: any){
     window.open = true
   }
 
@@ -161,7 +219,7 @@ export class SettingsComponent implements OnInit {
 
     const _this = this
 
-    service.getQueryPredictions({ input : inputAddress.value }, function(predictions, status) {
+    service.getQueryPredictions({ input: inputAddress.value }, function(predictions, status) {
 
       if (status != google.maps.places.PlacesServiceStatus.OK) {
         return
@@ -255,9 +313,9 @@ export class SettingsComponent implements OnInit {
   }
 
   getAddress(latitude, longitude) {
+
     this.geoCoder.geocode({ location: { lat: latitude, lng: longitude } }, (results, status) => {
-      console.log(results)
-      console.log(status)
+
       if (status === 'OK') {
         if (results[0]) {
           this.zoom = 18
@@ -272,63 +330,7 @@ export class SettingsComponent implements OnInit {
       }
 
     })
-  }
 
-  private populateSettings(settings_response : HttpResponse) {
-    this.loading = false
-    // console.log("Settings Response:", settings_response)
-    if (settings_response.status == '200') {
-
-      this.user = settings_response.responseObject
-
-      this.settings_form.get('spotbie_username').setValue(this.user.username)
-      this.settings_form.get('spotbie_first_name').setValue(this.user.exe_user_first_name)
-      this.settings_form.get('spotbie_last_name').setValue(this.user.exe_user_last_name)
-      this.settings_form.get('spotbie_email').setValue(this.user.exe_user_email)
-      this.settings_form.get('spotbie_phone_number').setValue(this.user.ph)
-      this.settings_form.get('spotbie_acc_type').setValue(this.user.exe_user_type)
-
-      this.password_form.get('spotbie_password').setValue('userpassword')
-      this.password_form.get('spotbie_confirm_password').setValue('123456789')
-
-      this.chosen_account_type = this.user.exe_user_type
-
-      if (this.chosen_account_type == 'Personal' || this.chosen_account_type == 'Content Creator') {
-        this.account_type_category = 'Personal'
-        this.settings_form.get('spotbie_animal').setValue(this.user.exe_animal)
-        this.settings_form.get('spotbie_privacy').setValue(this.user.privacy)
-        this.settings_form.get('spotbie_ghost_mode').setValue(this.user.ghost)
-
-        if (this.user.privacy == 1) {
-          this.privacy_state = 'ON'
-          this.privacy_light_color = 'green'
-        } else {
-          this.privacy_state = 'OFF'
-          this.privacy_light_color = 'red'
-        }
-
-        if (this.user.ghost == 1) {
-          this.ghost_mode_state = 'ON'
-          this.ghost_light_color = 'green'
-        } else {
-          this.ghost_mode_state = 'OFF'
-          this.ghost_light_color = 'red'
-        }
-
-      } else {
-
-        this.user.spotbie_origin = settings_response.responseObject.place_attributes.place_coords
-        this.user.spotbie_origin_description = settings_response.responseObject.place_attributes.place_description
-        this.user.spotbie_place_address = settings_response.responseObject.place_attributes.place_address
-
-        this.account_type_category = 'Business'
-        this.initSettingsForm('business')
-
-      }
-
-    } else {
-      console.log('Settings Error: ', settings_response)
-    }
   }
 
   showPosition(lat, lng) {
@@ -339,7 +341,7 @@ export class SettingsComponent implements OnInit {
 
   }
 
-  public savePassword() : void {
+  public savePassword(): void {
 
     this.password_submitted = true
 
@@ -365,7 +367,7 @@ export class SettingsComponent implements OnInit {
 
   }
 
-  completeSavePassword() {
+  public completeSavePassword() {
 
     if (this.password_submitted) {
       return
@@ -378,16 +380,16 @@ export class SettingsComponent implements OnInit {
     }
 
     const _this = this
-    const exe_save_password_object = { password : this.password, confirm_password : this.confirm_password, current_password : this.current_password }
-    const settings_object = { exe_api_key : this.exe_api_key, exe_settings_object : JSON.stringify(exe_save_password_object), exe_settings_action : 'savePassword' }
+    const exe_save_password_object = { password: this.password, confirm_password: this.confirm_password, current_password: this.current_password }
+    const settings_object = { exe_api_key: this.exe_api_key, exe_settings_object: JSON.stringify(exe_save_password_object), exe_settings_action: 'savePassword' }
     this.http.post<HttpResponse>(SETTINGS_API, settings_object, HTTP_OPTIONS)
             .subscribe( resp => {
               // console.log("Settings Response", resp)
                 const settings_response = new HttpResponse ({
-                status : resp.status,
-                message : resp.message,
-                full_message : resp.full_message,
-                responseObject : resp.responseObject
+                status: resp.status,
+                message: resp.message,
+                full_message: resp.full_message,
+                responseObject: resp.responseObject
               })
                 _this.passwordChanged(settings_response)
             },
@@ -396,7 +398,7 @@ export class SettingsComponent implements OnInit {
             })
   }
 
-  passwordChanged(settings_response: HttpResponse) {
+  private passwordChanged(settings_response: HttpResponse) {
 
     if (settings_response.status == '200') {
 
@@ -442,26 +444,26 @@ export class SettingsComponent implements OnInit {
       console.log(settings_response)
   }
 
-  cancelPasswordSet() {
+  public cancelPasswordSet() {
     this.password_submitted = false
     this.save_password = false
   }
 
-  changeAnimal() {
+  public changeAnimal() {
     this.load_animals = true
   }
 
-  selectAnimal(animal) {
+  public selectAnimal(animal) {
     this.chosen_animal = animal
     this.settings_form.get('spotbie_animal').setValue(animal.animal_name)
     this.load_animals = false
   }
 
-  changeAccType() {
+  public changeAccType() {
     this.load_account_types = true
   }
 
-  selectAccountType(account_type : string) {
+  public selectAccountType(account_type: string) {
 
     this.settings_form.get('spotbie_acc_type').setValue(account_type)
     this.chosen_account_type = account_type
@@ -478,7 +480,7 @@ export class SettingsComponent implements OnInit {
 
   }
 
-  initSettingsForm(action : string) {
+  private initSettingsForm(action: string) {
 
     // will set validators for form and take care of animations
     const username_validators = [Validators.required, Validators.maxLength(15)]
@@ -495,26 +497,26 @@ export class SettingsComponent implements OnInit {
       case 'basic':
 
         this.settings_form = this.formBuilder.group({
-          spotbie_username : ['', username_validators],
-          spotbie_first_name : ['', first_name_validators],
-          spotbie_last_name : ['', last_name_validators],
-          spotbie_email : ['', email_validators],
-          spotbie_phone_number : ['', phone_validators],
-          spotbie_acc_type : [],
-          spotbie_animal : [],
-          spotbie_ghost_mode : [],
-          spotbie_privacy : []
+          spotbie_username: ['', username_validators],
+          spotbie_first_name: ['', first_name_validators],
+          spotbie_last_name: ['', last_name_validators],
+          spotbie_email: ['', email_validators],
+          spotbie_phone_number: ['', phone_validators],
+          spotbie_acc_type: [],
+          spotbie_animal: [],
+          spotbie_ghost_mode: [],
+          spotbie_privacy: []
         }, {
-          validators : [ValidateUsername('spotbie_username'),
+          validators: [ValidateUsername('spotbie_username'),
                     ValidatePersonName('spotbie_first_name'),
                     ValidatePersonName('spotbie_last_name')]
         })
 
         this.password_form = this.formBuilder.group({
-          spotbie_password : ['', password_validators],
-          spotbie_confirm_password : ['', password_confirm_validators]
+          spotbie_password: ['', password_validators],
+          spotbie_confirm_password: ['', password_confirm_validators]
         }, {
-          validators : [ValidatePassword('spotbie_password'),
+          validators: [ValidatePassword('spotbie_password'),
                     MustMatch('spotbie_password', 'spotbie_confirm_password')]
         })
 
@@ -581,7 +583,7 @@ export class SettingsComponent implements OnInit {
   get last_name() { return this.settings_form.get('spotbie_last_name').value }
   get email() { return this.settings_form.get('spotbie_email').value }
   get spotbie_phone_number() { return this.settings_form.get('spotbie_phone_number').value }
-  get account_type() { return this.settings_form.get('spotbie_acc_type').value }
+  //get account_type() { return this.settings_form.get('spotbie_acc_type').value }
   get animal() { return this.settings_form.get('spotbie_animal').value }
   get spotbie_place_address() {return this.settings_form.get('spotbie_place_address').value }
   get spotbie_origin() { return this.settings_form.get('spotbie_origin').value }
@@ -617,8 +619,8 @@ export class SettingsComponent implements OnInit {
     this.user.username = this.username
     this.user.exe_user_first_name = this.first_name
     this.user.exe_user_last_name = this.last_name
-    this.user.exe_user_email = this.email
-    this.user.exe_user_type = this.account_type
+    this.user.email = this.email
+    //this.user.exe_user_type = this.account_type
     this.user.ph = this.spotbie_phone_number;
 
     if (this.account_type_category == 'Business') {
@@ -633,15 +635,15 @@ export class SettingsComponent implements OnInit {
 
     const exe_settings_object =  JSON.stringify(this.user)
 
-    const settings_object = { exe_api_key : this.exe_api_key, exe_settings_action : 'saveSettings', exe_settings_object }
+    const settings_object = { exe_api_key: this.exe_api_key, exe_settings_action: 'saveSettings', exe_settings_object }
     this.http.post<HttpResponse>(SETTINGS_API, settings_object, HTTP_OPTIONS)
             .subscribe( resp => {
               // console.log("Settings Response", resp)
               const settings_response = new HttpResponse ({
-                status : resp.status,
-                message : resp.message,
-                full_message : resp.full_message,
-                responseObject : resp.responseObject
+                status: resp.status,
+                message: resp.message,
+                full_message: resp.full_message,
+                responseObject: resp.responseObject
               })
                 this.saveSettingsCallback(settings_response)
             },
@@ -665,25 +667,25 @@ export class SettingsComponent implements OnInit {
     }
   }
 
-  cancelDeactivateAccount() {
+  public cancelDeactivateAccount() {
     this.account_deactivation = false
   }
 
-  startDeactivateAccount() {
+  public startDeactivateAccount() {
 
     this.account_deactivation = true
 
     const deactivation_password_validator = [Validators.required]
 
     this.deactivation_form = this.formBuilder.group({
-      spotbie_deactivation_password : ['', deactivation_password_validator]
+      spotbie_deactivation_password: ['', deactivation_password_validator]
     })
 
     this.deactivation_form.get('spotbie_deactivation_password').setValue('123456789')
 
   }
 
-  deactivateAccount() {
+  public deactivateAccount() {
 
     this.deactivation_submitted = true
 
@@ -696,17 +698,17 @@ export class SettingsComponent implements OnInit {
 
     const _this = this
 
-    const exe_settings_object =  JSON.stringify( { current_password : this.deactivation_password } )
+    const exe_settings_object =  JSON.stringify( { current_password: this.deactivation_password } )
 
-    const settings_object = { exe_api_key : this.exe_api_key, exe_settings_action : 'deactivateAccount', exe_settings_object }
+    const settings_object = { exe_api_key: this.exe_api_key, exe_settings_action: 'deactivateAccount', exe_settings_object }
     this.http.post<HttpResponse>(SETTINGS_API, settings_object, HTTP_OPTIONS)
             .subscribe( resp => {
               // console.log("Settings Response", resp)
                 const settings_response = new HttpResponse ({
-                status : resp.status,
-                message : resp.message,
-                full_message : resp.full_message,
-                responseObject : resp.responseObject
+                status: resp.status,
+                message: resp.message,
+                full_message: resp.full_message,
+                responseObject: resp.responseObject
               })
                 _this.deactivateCallback(settings_response)
             },
@@ -715,7 +717,7 @@ export class SettingsComponent implements OnInit {
             })
   }
 
-  deactivateCallback(settings_response: HttpResponse) {
+  private deactivateCallback(settings_response: HttpResponse) {
     this.loading = false
     if (settings_response.status == '200') {
       const _this = this
@@ -739,11 +741,11 @@ export class SettingsComponent implements OnInit {
           break
       }
     } else {
-      console.log('Account Deactivate Error : ', settings_response)
+      console.log('Account Deactivate Error: ', settings_response)
     }
   }
 
-  toggleGhostMode() {
+  public toggleGhostMode() {
     let ghost_mode: number
     if (this.spotbie_ghost_mode == 1) {
       this.ghost_mode_state = 'OFF'
@@ -755,7 +757,7 @@ export class SettingsComponent implements OnInit {
     this.settings_form.get('spotbie_ghost_mode').setValue(ghost_mode)
   }
 
-  togglePrivacy() {
+  public togglePrivacy() {
     let spotbie_privacy: number
     if (this.spotbie_privacy == 1) {
       this.privacy_state = 'OFF'
@@ -767,19 +769,19 @@ export class SettingsComponent implements OnInit {
     this.settings_form.get('spotbie_privacy').setValue(spotbie_privacy)
   }
 
-  toggleHelp(help_object) {
+  public toggleHelp(help_object) {
     this.help_text = help_object.help_text
   }
 
-  getLight(light_name: any) {
-    if (light_name == 1) { return {'background-color': 'green'} } else { return {'background-color' : 'red'} }
+  public getLight(light_name: any) {
+    if (light_name == 1) { return {'background-color': 'green'} } else { return {'background-color': 'red'} }
   }
 
-  closeWindow() {
+  public closeWindow() {
     this.host.settingsWindow.open = false
   }
 
-  closeAnimals(){
+  public closeAnimals(){
     this.load_animals = false
   }
 

@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, ViewChild, EventEmitter, Output, ElementRef } from '@angular/core'
 import { Router } from '@angular/router'
 import { Location } from '@angular/common'
-import { HttpResponse } from 'src/app/models/http-reponse'
 import { ColorsService } from 'src/app/services/background-color/colors.service'
 import { UserauthService } from 'src/app/services/userauth.service'
 import { Subscription } from 'rxjs'
@@ -63,13 +62,13 @@ export class MenuLoggedInComponent implements OnInit {
     { app_name : 'Friends', icon_class : 'fa fa-user', app_window : this.friendsWindow},
     { app_name : 'Settings', icon_class : 'fa fa-cog', app_window : this.settingsWindow},
     // { app_name : "Groups", icon_class : "../../assets/images/groups.png", app_window : this.groupWindow},
-    { app_name : 'Location Pairing', icon_class : 'fa fa-street-view', app_window : this.locationPairingWindow},
+    //{ app_name : 'Location Pairing', icon_class : 'fa fa-street-view', app_window : this.locationPairingWindow},
     // { app_name : "Media", icon_class : "../../assets/images/multimedia.png", app_window : this.mediaPlayerWindow},
-    { app_name : 'Location Saver', icon_class : 'fa fa-map-pin', app_window : this.locationSaverWindow},
+    //{ app_name : 'Location Saver', icon_class : 'fa fa-map-pin', app_window : this.locationSaverWindow},
     // { app_name : "Memos", icon_class : "../../assets/images/memo.png", app_window : this.memosWindow},
-    { app_name : 'Matcher', icon_class : 'fa fa-heartbeat', app_window : this.matcherWindow},
-    { app_name : 'Drive Mode', icon_class : 'fa fa-car', app_window : this.drivingWindow},
-    { app_name : 'Missing People', icon_class : 'fa fa-exclamation-triangle', app_window : this.missingWindow}
+    //{ app_name : 'Matcher', icon_class : 'fa fa-heartbeat', app_window : this.matcherWindow},
+    //{ app_name : 'Drive Mode', icon_class : 'fa fa-car', app_window : this.drivingWindow},
+    //{ app_name : 'Missing People', icon_class : 'fa fa-exclamation-triangle', app_window : this.missingWindow}
     // { app_name : "Food", icon_image : "../../assets/images/food.png", app_window : this.foodWindow}
   )
 
@@ -130,10 +129,10 @@ export class MenuLoggedInComponent implements OnInit {
 
   }
   
-  private logOutCallback(log_out_response : string){
+  private logOutCallback(log_out_response : any){
 
-    if(log_out_response == 'success')
-      this.router.navigate(['/home'])
+    if(log_out_response.message === 'success')
+      window.location.assign('/home')
     else
       console.log("Log Out Error : ", log_out_response)
 

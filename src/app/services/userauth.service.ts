@@ -9,12 +9,6 @@ import { handleError } from '../helpers/error-helper'
 
 const LOGIN_API = spotbieGlobals.API + 'user'
 
-const HTTP_OPTIONS = {
-  headers: new HttpHeaders({ 
-    'Content-Type' : 'application/json',
-   })
-}
-
 @Injectable({
   providedIn: 'root'
 })
@@ -33,7 +27,7 @@ export class UserauthService {
   constructor(private http: HttpClient,
               private router: Router) { }
 
-  public async checkIfLoggedIn() : Promise<any>{
+  public async checkIfLoggedIn(): Promise<any>{
 
     let check_login_object = {}
 
@@ -65,8 +59,7 @@ export class UserauthService {
     const log_out_api = LOGIN_API + '/logout'
 
     return this.http.post<any>(log_out_api, log_out_object).pipe(
-      tap( resp => { this.logOutCallback(resp) }),
-      catchError(handleError("Log Out Error"))
+      tap( resp => { this.logOutCallback(resp) })
     )
 
   }
@@ -87,23 +80,32 @@ export class UserauthService {
 
   }
 
-  public initLogin(token: string = '0'): Observable<any>{
+  public initLogin(): Observable<any>{
 
     this.userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone
 
     const params = {
       'login' : this.userLogin,
       'password' : this.userPassword,
-      'remember_me' : this.userRememberMe,
-      'remember_me_token' : token,
-      'user_time_zone' : this.userTimezone
+      'remember_me_opt' : this.userRememberMe,
+      'timezone' : this.userTimezone
     }
 
     let login_api = LOGIN_API + '/login'
 
     return this.http.post<any>(login_api, params).pipe(
-      catchError(handleError("initLogin Error"))
+      catchError(handleError("initLogin"))
     )
+
+  }
+
+  public getSettings(): Observable<any>{
+
+    const get_settings_api = LOGIN_API + "/settings"; 
+
+    return this.http.get<any>(get_settings_api).pipe(
+      catchError(handleError("getSettings"))
+    )  
 
   }
 

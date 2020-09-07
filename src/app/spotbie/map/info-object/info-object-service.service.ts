@@ -1,14 +1,9 @@
 import { Injectable } from '@angular/core'
-import { displayError } from '../../../helpers/error-helper'
 import { HttpClient, HttpHeaders } from '@angular/common/http'
-import { HttpResponse } from '../../../models/http-reponse'
+import { displayError } from 'src/app/helpers/error-helper'
+import { HttpResponse } from 'src/app/models/http-reponse'
 
 const YELP_API = 'https://www.spotbie.com/api/yelp.php'
-
-const HTTP_OPTIONS = {
-  withCredentials : true,
-  headers: new HttpHeaders({ 'Content-Type' : 'application/json' })
-}
 
 const HTTP_OPTIONS_2 = {
   headers: new HttpHeaders({ 'Content-Type' : 'application/json' })

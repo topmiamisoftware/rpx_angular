@@ -24,27 +24,7 @@
             <i class="fa fa-chevron-circle-right spotbie-slideshow-button" 
                 id="spotbie_next_profile_img" 
                 aria-hidden="false"></i>
-        </div>
-
-        <table class='spotbie-profile-image-options' *ngIf='!public_profile'>
-            <tr>
-                <td>
-                    <div class='spotbie-profile-image-button-holder' (click)="changeProfilePicture()" title="Upload Default Image">
-                        <i class="fa fa-camera" aria-hidden="true"></i>
-                    </div> 
-                </td>                    
-                <td>
-                    <div class='spotbie-profile-image-button-holder' (click)="setDefault()" title="Set as Default Image">
-                        <i class="fa fa-check" aria-hidden="true"></i>
-                    </div> 
-                </td>
-                <td>
-                    <div class='spotbie-profile-image-button-holder' (click)="deleteProfilePicture()" title="Delete Default Image">
-                        <i class="fa fa-times" aria-hidden="true"></i>
-                    </div>
-                </td>                                            
-            </tr>
-        </table>    
+        </div>   
 
         <div class='spotbie-slide-wrapper'>             
             
@@ -79,6 +59,26 @@
                          
         </div>
 
+        <table class='spotbie-profile-image-options' *ngIf='!public_profile'>
+            <tr>
+                <td>
+                    <div class='spotbie-profile-image-button-holder' (click)="changeProfilePicture()" title="Upload Default Image">
+                        <i class="fa fa-camera" aria-hidden="true"></i>
+                    </div> 
+                </td>                    
+                <td>
+                    <div class='spotbie-profile-image-button-holder' (click)="setDefault()" title="Set as Default Image">
+                        <i class="fa fa-check" aria-hidden="true"></i>
+                    </div> 
+                </td>
+                <td>
+                    <div class='spotbie-profile-image-button-holder' (click)="deleteProfilePicture()" title="Delete Default Image">
+                        <i class="fa fa-times" aria-hidden="true"></i>
+                    </div>
+                </td>                                            
+            </tr>
+        </table> 
+
     </div>
 
     <div class='spotbie-profile-header-bottom'>
@@ -111,11 +111,11 @@
                     </div>
                 </td>
 
-                <td (click)="openWindow(questionsWindow)" *ngIf='!public_profile' title="Change Friendship Questions">
+                <!--<td (click)="openWindow(questionsWindow)" *ngIf='!public_profile' title="Change Friendship Questions">
                     <div>
                         <i class="fa fa-question-circle" aria-hidden="true"></i>
                     </div>
-                </td>
+                </td>-->
 
                 <td (click)="openWindow(contactMeWindow)" title="Update ContactMe">
                     <div>
@@ -127,9 +127,9 @@
 
         </table>        
 
-        <app-albums [public_profile_info]="public_profile_info"
+        <!--<app-albums [public_profile_info]="public_profile_info"
                     [album_id]="album_id"
-                    [album_media_id]="album_media_id"></app-albums>
+                    [album_media_id]="album_media_id"></app-albums>-->
         
     </div>
     
@@ -232,6 +232,6 @@
 
 </div>
 
-<app-questions *ngIf="questionsWindow.open"></app-questions>
+<!--<app-questions *ngIf="questionsWindow.open"></app-questions>-->
 
-<app-contactme *ngIf="contactMeWindow.open"></app-contactme>
+<app-contactme *ngIf="contactMeWindow.open" [user_id]="user.id"></app-contactme>

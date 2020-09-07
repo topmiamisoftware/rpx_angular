@@ -70,7 +70,7 @@ export class LogInComponent implements OnInit {
 
   public loginUser(remember_me_token: string){
 
-    this.userAuthService.initLogin(remember_me_token).subscribe(
+    this.userAuthService.initLogin().subscribe(
 
       resp =>{
         this.loginCallback(resp)    
@@ -107,12 +107,9 @@ export class LogInComponent implements OnInit {
 
     let login_status = loginResponse.message
 
-    if(login_status == 'success'){
+    if(login_status == 'success' || login_status == 'confirm'){
 
-      //User logged in successfully. Will eventually map the User model here to use throughout the whole application instead
-      //of using localstorage.
-
-      localStorage.setItem('spotbie_userLogin', this.userAuthService.userLogin)
+      localStorage.setItem('spotbie_userLogin', loginResponse.user.username)
 
       localStorage.setItem('spotbie_loggedIn', '1')
       
@@ -130,7 +127,10 @@ export class LogInComponent implements OnInit {
       }
 
       // redirect user to user_home
-      this.router.navigate(['/user_home'])
+      if(login_status == 'success')
+        this.router.navigate(['/user_home'])
+      else if(login_status == 'confirm')
+        this.router.navigate(['/confirm'])
 
     } else {
 
@@ -215,7 +215,7 @@ export class LogInComponent implements OnInit {
     this.initLogInForm()
 
     const remember_me = localStorage.getItem('spotbie_rememberMe')
-    const logged_in = localStorage.getItem('spotbie_rememberMe')
+    const logged_in = localStorage.getItem('spotbie_loggedIn')
 
     if (remember_me == '1' && logged_in !== '1') this.initTokenLogin()
 

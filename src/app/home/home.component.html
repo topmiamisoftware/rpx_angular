@@ -1,10 +1,10 @@
 <div class='backgroundImg'></div>
 
-<div class='backgroundImgOverlay'></div>
-
 <div class="spotbie-main-holder" id="spotbieMainHolder">
-    
-    <app-menu-logged-out class="spotbie-app-menu"></app-menu-logged-out>
+
+    <app-map #app_map></app-map>
+
+    <app-menu-logged-out class="spotbie-app-menu" (spawnCategoriesOut)="spawnCategories($event)"></app-menu-logged-out>
 
     <div class="spotbie-scroll-top spotbie-arrow-transparent" 
         (click)="scrollTop()"
@@ -13,5 +13,3 @@
     </div>
     
 </div>
-
-

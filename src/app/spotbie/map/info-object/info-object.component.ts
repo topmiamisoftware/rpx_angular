@@ -1,8 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core'
-import { MapComponent } from '../map/map.component'
 import { InfoObjectServiceService } from './info-object-service.service'
-import { HttpResponse } from '../../../models/http-reponse'
 import { Router } from '@angular/router'
+import { HttpResponse } from 'src/app/models/http-reponse'
+import { MapComponent } from '../map.component'
 
 const YELP_BUSINESS_DETAILS_API = "https://api.yelp.com/v3/businesses/"
 
@@ -28,8 +28,7 @@ export class InfoObjectComponent implements OnInit {
   public _info_object_image_url : string
 
   constructor(private host : MapComponent, 
-              private info_object_service : InfoObjectServiceService,
-              private router : Router) { }
+              private info_object_service : InfoObjectServiceService) { }
 
   public closeWindow() : void {
     this.host.info_object_window.open = false

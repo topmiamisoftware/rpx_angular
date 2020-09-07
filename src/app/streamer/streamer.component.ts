@@ -40,7 +40,7 @@ export class StreamerComponent implements OnInit {
   public stream_loaded: boolean = false
 
   public bg_color: string
-  public web_options_subscriber: Subscription;
+  public web_options_subscriber: Subscription
 
   protected exe_api_key: string  
 
@@ -434,7 +434,7 @@ export class StreamerComponent implements OnInit {
 
     this.web_options_subscriber = this._web_options_service.getWebOptions().subscribe(web_options =>{
 
-      if(web_options){
+      if(web_options.bg_color){
         this.bg_color = web_options.bg_color
       }
 

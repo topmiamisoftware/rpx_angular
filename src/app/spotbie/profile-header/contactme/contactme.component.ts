@@ -1,16 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { ProfileHeaderComponent } from '../profile-header.component';
-import { FormGroup, Validators, FormBuilder } from '@angular/forms';
-import * as spotbieGlobals from '../../../globals';
-import { HttpResponse } from '../../../models/http-reponse';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Component, OnInit, ViewChild, Input } from '@angular/core'
+import { ProfileHeaderComponent } from '../profile-header.component'
+import { FormGroup, Validators, FormBuilder } from '@angular/forms'
+import * as spotbieGlobals from '../../../globals'
+import { HttpClient } from '@angular/common/http'
 
-const PROFILE_HEADER_API = spotbieGlobals.API + 'api/settings.service.php';
-
-const HTTP_OPTIONS = {
-  headers: new HttpHeaders({ 'Content-Type' : 'application/json' })
-};
-
+const PROFILE_HEADER_API = spotbieGlobals.API + 'contact_me'
 
 @Component({
   selector: 'app-contactme',
@@ -19,145 +13,144 @@ const HTTP_OPTIONS = {
 })
 export class ContactmeComponent implements OnInit {
 
-  @ViewChild('spotbie_contact_me_info') spotbie_contact_me_info;
+  @ViewChild('spotbie_contact_me_info') spotbie_contact_me_info
 
-  public contact_me_submitted = false;
-  public spotbie_contact_me_form : FormGroup;
-  public background_color : string;
+  @Input() user_id: string
 
-  private exe_api_key : string;
+  public contact_me_submitted = false
+  public spotbie_contact_me_form: FormGroup
+  public background_color: string
 
-  public loading = false;
+ 
+
+  public loading = false
 
   constructor(private host: ProfileHeaderComponent,
               private http: HttpClient,
               private formBuilder: FormBuilder) { }
 
-  closeWindow() {
-    this.host.contactMeWindow.open = false;
+  public closeWindow(): void {
+    this.host.contactMeWindow.open = false
   }
 
-  initContactMeForm() {
+  public initContactMeForm(): void {
 
-    const contact_me_1_validators = [Validators.required, Validators.maxLength(130)];
-    const contact_me_2_validators = [Validators.required, Validators.maxLength(130)];
-    const contact_me_3_validators = [Validators.required, Validators.maxLength(130)];
-    const contact_me_4_validators = [Validators.required, Validators.maxLength(130)];
-    const contact_me_5_validators = [Validators.required, Validators.maxLength(130)];
-
+    const facebook_validators = [Validators.required, Validators.maxLength(130)]
+    const instagram_validators = [Validators.required, Validators.maxLength(130)]
+    const twitter_validators = [Validators.required, Validators.maxLength(130)]
+    const whatsapp_validators = [Validators.required, Validators.maxLength(130)]
+    const snapchat_validators = [Validators.required, Validators.maxLength(130)]
 
     this.spotbie_contact_me_form = this.formBuilder.group({
-      spotbie_contact_me_1 : ['', contact_me_1_validators],
-      spotbie_contact_me_2 : ['', contact_me_2_validators],
-      spotbie_contact_me_3 : ['', contact_me_3_validators],
-      spotbie_contact_me_4 : ['', contact_me_4_validators],
-      spotbie_contact_me_5 : ['', contact_me_5_validators]
-    });
+      facebook: ['', facebook_validators],
+      instagram: ['', instagram_validators],
+      twitter: ['', twitter_validators],
+      whatsapp: ['', whatsapp_validators],
+      snapchat: ['', snapchat_validators]
+    })
 
-    this.getContactMe();
-
-  }
-
-  getContactMe() {
-
-    const get_profile_header_object = { exe_api_key : this.exe_api_key, exe_settings_action : 'getContactMe', public_exe_user_id : 'null' };
-
-    this.http.post<HttpResponse>(PROFILE_HEADER_API, get_profile_header_object, HTTP_OPTIONS)
-    .subscribe( resp => {
-      const httpResponse = new HttpResponse ({
-        status : resp.status,
-        message : resp.message,
-        full_message : resp.full_message,
-        responseObject : resp.responseObject
-      });
-      this.getContactMeCallback(httpResponse);
-    },
-      error => {
-        console.log('Profile Contact Me Error : ', error);
-    });
+    this.getContactMe()
 
   }
 
-  getContactMeCallback(httpResponse: HttpResponse) {
-    if (httpResponse.status == '200') {
-      console.log('Contact Me : ', httpResponse);
-      this.populateContactMe(httpResponse.responseObject);
-    } else {
-      console.log('Contact Me Error : ', httpResponse);
-    }
+  public getContactMe(): void {
+
+    const get_contact_me_api = `${PROFILE_HEADER_API}/${this.user_id}/show`
+
+    this.http.get<any>(get_contact_me_api).subscribe( 
+      resp => {
+        this.getContactMeCallback(resp)
+      },
+        error => {
+          console.log('getContactMe', error)
+      }
+    )
+
   }
 
-  saveContactMe() {
+  public getContactMeCallback(httpResponse: any): void {
 
-    this.loading = true;
+    console.log('Contact Me: ', httpResponse)
+
+    if (httpResponse.message == 'success')
+      this.populateContactMe(httpResponse.contact_me)
+    else
+      console.log('getContactMeCallback', httpResponse)
+
+  }
+
+  public saveContactMe(): void {
+
+    this.loading = true
 
     if (this.contact_me_submitted) {
-      this.loading = false;
-      return;
-    } else { this.contact_me_submitted = true; }
+      this.loading = false
+      return
+    } else { this.contact_me_submitted = true }
 
     if (this.spotbie_contact_me_form.invalid) {
-      this.loading = false;
-      return;
+      this.loading = false
+      return
     }
 
     const contact_me_object = {
-      contact_me_1 : this.spotbie_contact_me_1,
-      contact_me_2 : this.spotbie_contact_me_2,
-      contact_me_3 : this.spotbie_contact_me_3,
-      contact_me_4 : this.spotbie_contact_me_4,
-      contact_me_5 : this.spotbie_contact_me_5,
-    };
+      facebook: this.facebook,
+      instagram: this.instagram,
+      twitter: this.twitter,
+      whatsapp: this.whatsapp,
+      snapchat: this.snapchat
+    }
 
-    const get_profile_header_object = { exe_api_key : this.exe_api_key, exe_settings_action : 'saveContactMe', contact_me_object };
+    const save_contact_me_api = `${PROFILE_HEADER_API}/update`
 
-    this.http.post<HttpResponse>(PROFILE_HEADER_API, get_profile_header_object, HTTP_OPTIONS)
-    .subscribe( resp => {
-      const httpResponse = new HttpResponse ({
-        status : resp.status,
-        message : resp.message,
-        full_message : resp.full_message,
-        responseObject : resp.responseObject
-      });
-      this.saveQuestionsCallback(httpResponse);
-    },
+    this.http.post<any>(save_contact_me_api, contact_me_object).subscribe( 
+      resp => {
+        this.saveQuestionsCallback(resp)
+      },
       error => {
-        console.log('Profile Save Contact Me Error : ', error);
-    });
+        console.log('saveContactMe', error)
+      }
+    )
 
   }
 
-  saveQuestionsCallback(httpResponse: HttpResponse) {
-    this.loading = false;
-    this.contact_me_submitted = false;
-    if (httpResponse.status == '200') {
-      this.spotbie_contact_me_info.nativeElement.innerHTML = 'ContactMe Saved.';
-    } else {
-      console.log('Profile Save Contact Me Error : ', httpResponse);
-    }
+  public saveQuestionsCallback(httpResponse: any): void {
+
+    this.loading = false
+    this.contact_me_submitted = false
+
+    if (httpResponse.message == 'success')
+      this.spotbie_contact_me_info.nativeElement.innerHTML = 'ContactMe Saved.'
+    else
+      console.log('Profile Save Contact Me Error: ', httpResponse)
+
   }
 
   private populateContactMe(contact_me_object: any) {
-    this.spotbie_contact_me_form.get('spotbie_contact_me_1').setValue(contact_me_object.fb);
-    this.spotbie_contact_me_form.get('spotbie_contact_me_2').setValue(contact_me_object.ig);
-    this.spotbie_contact_me_form.get('spotbie_contact_me_3').setValue(contact_me_object.sp);
-    this.spotbie_contact_me_form.get('spotbie_contact_me_4').setValue(contact_me_object.twt);
-    this.spotbie_contact_me_form.get('spotbie_contact_me_5').setValue(contact_me_object.wtu);
-    this.loading = false;
+
+    this.spotbie_contact_me_form.get('facebook').setValue(contact_me_object.facebook)
+    this.spotbie_contact_me_form.get('instagram').setValue(contact_me_object.instagram)
+    this.spotbie_contact_me_form.get('twitter').setValue(contact_me_object.twitter)
+    this.spotbie_contact_me_form.get('whatsapp').setValue(contact_me_object.whatsapp)
+    this.spotbie_contact_me_form.get('snapchat').setValue(contact_me_object.snapchat)
+
+    this.loading = false
+
   }
 
-  get spotbie_contact_me_1() { return this.spotbie_contact_me_form.get('spotbie_contact_me_1').value; }
-  get spotbie_contact_me_2() { return this.spotbie_contact_me_form.get('spotbie_contact_me_2').value; }
-  get spotbie_contact_me_3() { return this.spotbie_contact_me_form.get('spotbie_contact_me_3').value; }
-  get spotbie_contact_me_4() { return this.spotbie_contact_me_form.get('spotbie_contact_me_4').value; }
-  get spotbie_contact_me_5() { return this.spotbie_contact_me_form.get('spotbie_contact_me_5').value; }
-  get g() { return this.spotbie_contact_me_form.controls; }
+  get facebook() { return this.spotbie_contact_me_form.get('facebook').value }
+  get instagram() { return this.spotbie_contact_me_form.get('instagram').value }
+  get twitter() { return this.spotbie_contact_me_form.get('twitter').value }
+  get whatsapp() { return this.spotbie_contact_me_form.get('whatsapp').value }
+  get snapchat() { return this.spotbie_contact_me_form.get('snapchat').value }
+  get g() { return this.spotbie_contact_me_form.controls }
 
   ngOnInit() {
-    this.loading = true;
-    this.background_color = localStorage.getItem('spotbie_backgroundColor');
-    this.exe_api_key = localStorage.getItem('spotbie_userApiKey');
-    this.initContactMeForm();
+
+    this.loading = true
+    this.background_color = localStorage.getItem('spotbie_backgroundColor')
+    this.initContactMeForm()
+
   }
 
 }

@@ -46,6 +46,18 @@ export class ProfileHeaderService {
 
   }
   
+  public deleteDefault(default_picture: string): Observable<any>{
+    
+    let delete_default = PROFILE_HEADER_API + '/delete_default'
+
+    const new_def_obj = { _method: 'delete', default_picture: encodeURI(default_picture) }
+
+    return this.http.post(delete_default, new_def_obj).pipe(
+      catchError(handleError("setDefault"))
+    )
+
+  }
+
   public setDescription(description: string): Observable<any>{
 
     let set_description = PROFILE_HEADER_API + '/set_description'

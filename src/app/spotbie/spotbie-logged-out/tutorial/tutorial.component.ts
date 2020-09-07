@@ -39,9 +39,6 @@ export class TutorialComponent implements OnInit {
     this.bgColor = localStorage.getItem('spotbie_backgroundColor');
     if (this.bgColor == '') { this.bgColor = 'dimgrey'; }
 
-    this.fontColor = localStorage.getItem('spotbie_fontColor');
-    if (this.fontColor == '') { this.fontColor = 'white'; }
-
   }
 
 }

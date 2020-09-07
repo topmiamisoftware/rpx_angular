@@ -82,28 +82,37 @@
 <div class="spotbie-map-search-wrapper">
 
   <table class='spotbie-map-search-by' id="spotbie-search-by">
+
     <tr>
+
       <td (click)="spotMe()" title="Find Me">
         <div id='spotbie_me_search'></div>
       </td>
+
       <td (click)="spawnCategories('food')" title="Find Food">
         <i class="fa fa-cutlery" aria-hidden="true"></i>
-      </td>    
+      </td>   
+
       <td (click)="spawnCategories('shopping')" title="Find Shopping Places">
         <i class="fa fa-shopping-cart" aria-hidden="true"></i>
-      </td>   
+      </td> 
+
       <td (click)="spawnCategories('events')" title="Find Events">
         <div id='spotbie_events_search'></div>
-      </td>      
-      <td (click)="mediaSearch(0)" title="Find Media">
+      </td> 
+
+      <!--<td (click)="mediaSearch(0)" title="Find Media" *ngIf="is_logged_in == '1'">
         <div id='spotbie_media_search'></div>
-      </td>
-      <td (click)="artistSearch(0)" title="Find Content Creators">
-        <i class="fa fa-star" aria-hidden="true"></i>
-      </td>
+      </td>-->
+
       <td (click)="placeSearch(0)" title="Find Places">
         <div id='spotbie_place_search'></div>
       </td>
+
+      <td (click)="myFavorites()" title="My Favorites">
+        <i class="fa fa-star" aria-hidden="true"></i>
+      </td>
+
     </tr>
   </table>
   
@@ -164,7 +173,7 @@
 </div>
 
 
-<div class='spotbie-search-results' *ngIf="show_search_box && search_results.length > 0" [ngStyle]="{ 'background-color' : bg_color }">
+<div class='spotbie-search-results' *ngIf="show_search_box && search_results.length > 0">
 
   <!--<table class='spotbie-pull-from'>
     <tr>
@@ -238,7 +247,7 @@
         Next
       </span>
   
-      <span>{{ around_me_search_page }} / {{ all_pages }}</span>
+      <span class='spotbie-search-page-number'>{{ around_me_search_page }} / {{ all_pages }}</span>
   
     </div>
     

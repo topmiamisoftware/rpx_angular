@@ -131,7 +131,7 @@
                     </td>
                 </tr>
 
-                <div *ngIf="submitted && f.spotbie_acc_type.errors else user_account_type_normal" class="spotbie-invalid-feedback animated shake">
+                <!--<div *ngIf="submitted && f.spotbie_acc_type.errors else user_account_type_normal" class="spotbie-invalid-feedback animated shake">
             
                     <div *ngIf="f.spotbie_acc_type.errors.required">
                         You must choose an account type!
@@ -153,7 +153,7 @@
                                 type="text"
                                 readonly="readonly" />
                     </td>
-                </tr> 
+                </tr> -->
                 
                 <!-- Personal Accounts information -->
                 <div *ngIf="submitted && f.spotbie_animal.errors else user_animal_normal" class="spotbie-invalid-feedback animated shake">
@@ -488,7 +488,7 @@
         </form>
     </div>
 
-    <div class="spotbie-close-button" (click)="closeWindow()">close settings</div>
+    <div class="spotbie-close-button" (click)="closeWindow()">close</div>
 
     <div class="spotbie-select-menu" *ngIf="load_animals">
         

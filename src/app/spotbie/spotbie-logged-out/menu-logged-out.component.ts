@@ -1,7 +1,6 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core'
+import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angular/core'
 import { Location } from '@angular/common'
 import { Router } from '@angular/router'
-import { ColorsService } from 'src/app/services/background-color/colors.service'
 
 @Component({
   selector: 'app-menu-logged-out',
@@ -10,12 +9,14 @@ import { ColorsService } from 'src/app/services/background-color/colors.service'
 })
 export class MenuLoggedOutComponent implements OnInit {
 
-  @Input() public_profile_info : any
+  @Input() public_profile_info: any
 
-  @Input() album_id : string
-  @Input() album_media_id : string
+  @Input() album_id: string
+  @Input() album_media_id: string
 
   @ViewChild('spotbieMainMenu') spotbieMainMenu
+
+  @Output() spawnCategoriesOut = new EventEmitter()
 
   public spotbieFontColor = 'white'
   public spotbieBackgroundColor = ''
@@ -23,18 +24,21 @@ export class MenuLoggedOutComponent implements OnInit {
 
   public public_profile: boolean = false
 
-  public logInWindow = { open : false }
-  public signUpWindow = { open : false }
+  public logInWindow = { open: false }
+  public signUpWindow = { open: false }
 
-  public featuresWindow = { open : false }
+  public featuresWindow = { open: false }
 
-  public home_route : boolean = false
+  public home_route: boolean = false
 
   public prevScrollpos
 
-  constructor(private location : Location,
-              private router : Router,
-              private webOptionsService: ColorsService) { }
+  constructor(private location: Location,
+              private router: Router) { }
+
+  public spawnCategories(type: any): void{
+    this.spawnCategoriesOut.emit(type)
+  }
 
   goToBlog(){
     window.location.assign("https://blog.spotbie.com/")

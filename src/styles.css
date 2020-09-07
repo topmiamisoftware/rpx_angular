@@ -1,9 +1,15 @@
 @import './assets/styles/xdebug/xdebug.styles.css';
+
+@font-face{
+    font-family: sitka-italic;
+    src: url(/assets/fonts/Fluent_SitkaSmall-Italic.ttf);
+    font-display: swap;
+}
+
 html{
     position: relative;
     font-size: 19px;
-    font-family: Arial, Helvetica, sans-serif;
-    background-color: rgb(229, 229, 229);
+    background-color: white;
     cursor: default; 
     color: white;
     height: unset !important;
@@ -14,13 +20,13 @@ body{
     margin: 0 auto;
     padding-bottom: 5px;
     background-color: transparent;
-    box-shadow: 0px 0px 40px #0000006e;
     color: white;
     overflow-x : hidden;
     padding: env(safe-area-inset-top, 20px)
     env(safe-area-inset-right, 20px)
     env(safe-area-inset-left, 20px);
     height: unset !important; 
+    font-family: Arial, he;
 }
 .mat-accent .mat-slider-track-fill, .mat-accent .mat-slider-thumb, .mat-accent .mat-slider-thumb-label {
     background-color: #ffffff;
@@ -392,7 +398,6 @@ a, a:hover, a:active, a:after{
 }
 .spotbie-main-holder{
     position: relative;
-    background-color: rgba(0, 0, 0, 0.23);
 }
 .spotbie-select-menu{
     position: fixed;
@@ -483,10 +488,10 @@ a, a:hover, a:active, a:after{
 }
 .spotbie-scroll-top{
     position: fixed;
-    left:  20px;
-    bottom: 20px;
+    left: 15px;
+    bottom: 15px;
     transition: 0.5s;
-    background-color: rgba(0,0,0,.5);;
+    background-color: #609329;
     padding: 5px;
     padding-left: 13px;
     padding-right: 13px;
@@ -496,7 +501,7 @@ a, a:hover, a:active, a:after{
 }
 .spotbie-scroll-top:hover{
     cursor: pointer;
-    background-color: rgba(0,0,0,.93);
+    background-color: #609329;
 }
 .spotbie-scroll-top i{
     font-size: 38px;
@@ -759,7 +764,10 @@ a, a:hover, a:active, a:after{
         width: 100%;
         min-width: 100%;
         max-width: 100%;
-    }     
+    } 
+    .spotbie-scroll-top i {
+        font-size: 30px;
+    }    
 }
 @media (max-width: 420px) { 
                    
@@ -786,4 +794,3 @@ a, a:hover, a:active, a:after{
 }
 
 html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

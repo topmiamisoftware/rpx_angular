@@ -16,30 +16,52 @@ export class ColorsService {
 
   constructor(private http: HttpClient) { }
 
-  public populateWebOptions(web_options: any): void {
-
-    localStorage.setItem('spotbie_backgroundColor', web_options.bg_color)
-    localStorage.setItem('spotbie_backgroundImage', web_options.spotmee_bg) 
-
-    this.bg_color_subject.next(web_options)
-
-  }
-
   public getWebOptions(): Observable<any> {
     return this.bg_color_subject.asObservable()
   }
 
   public callWebOptionsApi(): Observable<any> {
     
-    let colors_api = COLORS_API + "/show"
+    const colors_api = COLORS_API + "/show"
 
     return this.http.get<any>(colors_api).pipe(
       tap(resp => { 
         this.populateWebOptions(resp)
       }),
-      catchError(handleError("callWebOptionsApi Error"))
+      catchError(handleError("callWebOptionsApi"))
     )
   
+  }
+
+  public populateWebOptions(web_options: any): void {
+
+    if(web_options.bg_color){
+      localStorage.setItem('spotbie_backgroundColor', web_options.bg_color)
+    }
+
+    if(web_options.spotmee_bg){
+      localStorage.setItem('spotbie_backgroundImage', web_options.spotmee_bg)
+    }
+     
+    this.bg_color_subject.next(web_options)
+
+  }
+
+  public setBgColor(color: string){
+
+    const colors_api = COLORS_API + "/set_bg_color"
+
+    const colors_obj = {
+      'color': color
+    }
+
+    return this.http.post<any>(colors_api, colors_obj).pipe(
+      tap(resp => { 
+        this.populateWebOptions(resp)
+      }),
+      catchError(handleError("setBgColor"))
+    )
+
   }
 
 }

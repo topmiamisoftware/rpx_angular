@@ -1,3 +1,8 @@
+.spotbie-overlay-window{
+    background: url(/assets/images/background.png);
+    background-position: center;
+    background-color: rgb(21 21 21);
+}
 .spotbie-input{
     width: 450px;
     min-width: 450px;

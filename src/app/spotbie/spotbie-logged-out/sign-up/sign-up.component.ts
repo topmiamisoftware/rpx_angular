@@ -11,6 +11,11 @@ import { ValidatePersonName } from '../../../helpers/name.validator'
 import { ValidatePassword } from '../../../helpers/password.validator'
 
 import { SignUpService } from 'src/app/services/spotbie-logged-out/sign-up/sign-up.service'
+import { fromErrorResponse } from 'src/app/helpers/error-helper'
+import { HttpErrorResponse } from '@angular/common/http'
+import { take, catchError } from 'rxjs/operators'
+import { Observable } from 'rxjs/internal/Observable'
+import { of } from 'rxjs'
 
 @Component({
   selector: 'app-sign-up',
@@ -78,7 +83,7 @@ export class SignUpComponent implements OnInit {
     this.signUpFormx.get(key).setValue(this.signUpFormx.get(key).value.trim())
   }
 
-  public initSignUp() : void {
+  public initSignUp(): void {
 
     // will be used when the user hits the submit button
     this.submitted = true
@@ -144,67 +149,171 @@ export class SignUpComponent implements OnInit {
 
     // send to server
     const sign_up_obj = {
-        exe_register_action: 'register',
-        login: username,
+        username,
         first_name: user_first_name,
         last_name: user_last_name,
         password,
         password_confirmation: confirm_password,
-        exe_email: email,
+        email,
         phone_number
     }
 
-    this.sign_up_service.initRegister(sign_up_obj).subscribe(
+    this.sign_up_service.initRegister(sign_up_obj)
+    .pipe(
+      catchError(this.signUpError())
+    )
+    .subscribe(
       resp =>{
         this.initSignUpCallback(resp)
-    }, error => {
-        this.handleSignUpIssue(error)
-        console.log("Sign Up Error", error)
-    })
+      }
+    )
 
   }
 
   private initSignUpCallback(httpResponse: any) {
-
-      console.log("Register User Callback: ", httpResponse)
       
-      this.loading = false
+      if(httpResponse.message == 'success'){
+        
+        let sign_up_instructions = this.spotbieSignUpIssues.nativeElement
+
+        const loginResponse = httpResponse
+  
+        // save the user information.
+        localStorage.setItem('spotbie_userLogin', loginResponse.user.username)
+        localStorage.setItem('spotbie_loggedIn', '1')
+        localStorage.setItem('spotbie_rememberMe', '0')
+        localStorage.setItem('spotbie_userId', loginResponse.user.id)
+        localStorage.setItem('spotbie_userDefaultImage', loginResponse.spotbie_user.default_picture)
+  
+        sign_up_instructions.className = 'signUpBoxInstructions'
+        sign_up_instructions.innerHTML = 'Welcome to SpotBie!'
+  
+        this.loading = false
+        this.router.navigate(['/user_home'])
+
+      }
+
       this.signing_up = false
-
-      let sign_up_instructions = this.spotbieSignUpIssues.nativeElement
-
-      const loginResponse = httpResponse
-
-      // save the user information.
-      localStorage.setItem('spotbie_userLogin', loginResponse.responseObject.exe_username)
-      localStorage.setItem('spotbie_loggedIn', '1')
-      localStorage.setItem('spotbie_rememberMe', '0')
-      localStorage.setItem('spotbie_userId', loginResponse.responseObject.exe_user_id)
-      localStorage.setItem('spotbie_userDefaultImage', loginResponse.responseObject.exe_user_default_picture)
-
-      sign_up_instructions.className = 'signUpBoxInstructions animated shake'
-      sign_up_instructions.style.display = 'none'
-
-      sign_up_instructions.innerHTML = 'Welcome to SpotBie.'
-      
-      setTimeout(function() {sign_up_instructions.style.display = 'block' } , 200)
-
-      this.loading = false
-      this.router.navigate(['/user_home'])
 
   }
 
-  private handleSignUpIssue(httpResponse){
-    
-    let sign_up_instructions = this.spotbieSignUpIssues.nativeElement
+  public signUpError<T>(operation = 'operation', result?: T) {
 
-    sign_up_instructions.className = 'signUpBoxInstructions spotbie-error-red animated shake'
-    sign_up_instructions.style.display = 'none'
-    sign_up_instructions.innerHTML = httpResponse.full_message
-    
-    setTimeout(function() {
-      sign_up_instructions.style.display = 'block' 
-    } , 200)    
+    this.signing_up = false
+
+    return (error: any): Observable<T> => {
+
+      // TODO: send the error to remote logging infrastructure
+      console.log(error) // log to console instead
+
+      // TODO: better job of transforming error for user consumption
+      //this.log(`${operation} failed: ${error.message}`);
+
+      let sign_up_instructions = this.spotbieSignUpIssues.nativeElement
+
+      sign_up_instructions.className = 'signUpBoxInstructions spotbie-error-red animated shake'
+      sign_up_instructions.style.display = 'none'
+
+      sign_up_instructions.innerHTML = "There was an error signing-up."
+
+      const error_list = error.error.errors
+
+      console.log("Error List", error_list)
+
+      if(error_list.username){
+
+        let errors: {[k: string]: any} = {};
+        error_list.username.forEach(error => {
+          errors[error] = true
+        })
+        this.signUpFormx.get('spotbieUsername').setErrors(errors)
+        document.getElementById('spotbie_username').style.border = '1px solid red' 
+
+      } else
+        document.getElementById('spotbie_username').style.border = 'unset'
+
+      if(error_list.first_name){
+
+        let errors: {[k: string]: any} = {};
+        error_list.first_name.forEach(error => {
+          errors[error] = true
+        })        
+        this.signUpFormx.get('spotbieFirstName').setErrors(errors)
+        document.getElementById('user_first_name').style.border = '1px solid red' 
+
+      } else
+        document.getElementById('user_first_name').style.border = 'unset'
+
+      if(error_list.last_name){
+
+        let errors: {[k: string]: any} = {};
+        error_list.last_name.forEach(error => {
+          errors[error] = true
+        })                
+        this.signUpFormx.get('spotbieLastName').setErrors(errors)
+        document.getElementById('user_last_name').style.border = '1px solid red' 
+
+      } else
+        document.getElementById('user_last_name').style.border = 'unset'
+
+      if(error_list.email){
+
+        let errors: {[k: string]: any} = {};
+        error_list.email.forEach(error => {
+          errors[error] = true
+        })            
+        this.signUpFormx.get('spotbiePhone').setErrors(errors)
+        document.getElementById('user_phone').style.border = '1px solid red' 
+
+      } else
+        document.getElementById('user_phone').style.border = 'unset'
+
+      if(error_list.phone_number){
+
+        let errors: {[k: string]: any} = {};
+        error_list.phone_number.forEach(error => {
+          errors[error] = true
+        })          
+        this.signUpFormx.get('spotbieEmail').setErrors(errors)
+        document.getElementById('user_email').style.border = '1px solid red' 
+
+      } else
+        document.getElementById('user_email').style.border = 'unset'
+
+      if(error_list.password){
+
+        let errors: {[k: string]: any} = {};
+        error_list.username.forEach(error => {
+          errors[error] = true
+        })          
+        this.signUpFormx.get('spotbiePassword').setErrors(errors)
+        document.getElementById('user_pass').style.border = '1px solid red'
+
+      } else
+        document.getElementById('user_pass').style.border = 'unset'
+
+      if(error_list.password_confirmation){
+
+        let errors: {[k: string]: any} = {};
+        error_list.password_confirmation.forEach(error => {
+          error[error] = true
+        })          
+        this.signUpFormx.get('spotbieConfirm').setErrors(errors)
+        document.getElementById('user_pass_confirm').style.border = '1px solid red' 
+        
+      } else
+        document.getElementById('user_pass_confirm').style.border = 'unset'
+
+      this.signing_up = false
+
+      setTimeout(function() {
+        sign_up_instructions.style.display = 'block' 
+      } , 200)  
+
+      // Let the app keep running by returning an empty result.
+      return of(result as T)
+
+    }
 
   }
 
@@ -227,27 +336,27 @@ export class SignUpComponent implements OnInit {
 
     this.signUpFormx = this.formBuilder.group({
         spotbieUsername: ['', usernameValidators],
-        spotbieEmail : ['', emailValidators],
-        spotbiePhone : ['', phoneValidators],
-        spotbieFirstName : ['', firstNameValidators],
-        spotbieLastName : ['', lastNameValidators],
+        spotbieEmail: ['', emailValidators],
+        spotbiePhone: ['', phoneValidators],
+        spotbieFirstName: ['', firstNameValidators],
+        spotbieLastName: ['', lastNameValidators],
         spotbiePassword: ['', passwordValidators],
-        spotbieConfirm : ['', passwordValidators]
+        spotbieConfirm: ['', passwordValidators]
     }, {
-        validators : [ValidateUsername('spotbieUsername'),
+        validators: [ValidateUsername('spotbieUsername'),
                     ValidatePassword('spotbiePassword'),
                     MustMatch('spotbiePassword', 'spotbieConfirm'),
                     ValidatePersonName('spotbieFirstName'),
                     ValidatePersonName('spotbieLastName')]
     })
 
-
-
     this.loading = false
+
   }
 
   ngOnInit() {
     this.loading = true
     this.initSignUpForm()
   }
+
 }

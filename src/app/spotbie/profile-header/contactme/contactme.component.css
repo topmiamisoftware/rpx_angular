@@ -9,22 +9,26 @@
     min-width: 30px;
     max-width: 30px;
     font-size: 30px;
-    margin-top: 51px;
 }
 .spotbie-contact-me-table{
     position: relative;
     margin: 0 auto;
+    padding-top: 20px;
+    padding-bottom: 25px;    
     width: 90%;
     min-width: 90%;
     max-width: 90%;
     background-color: rgba(0,0,0,.23);
-    padding-bottom: 25px;
     border-bottom-right-radius: 20px;
     border-bottom-left-radius: 20px;
     table-layout: fixed;
 }
 .spotbie-toast-input-box{
     max-width: 500px;
+}
+.spotbie-contact-me-table td{
+    padding-top: 20px;
+    padding-bottom: 20px;
 }
 .spotbie-contact-me-table tr td:nth-of-type(1){
     width: 10%;

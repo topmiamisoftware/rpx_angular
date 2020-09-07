@@ -2,36 +2,11 @@
                 
     <div class="QuestionsTuto" style="background-color: transparent;">                                            
 
-        <div class='superBoxPerksOutter' #vc_account_perks_box *ngIf="account_perks">
-            <div class='superBoxPerks'>
-                <p>
-                    Here is a list of <span class='successBoxNames'>perks</span> for <span class='successBoxNames'>early accounts</span>:
-                </p>
-                
-                <ul>
-                    <li>Early account badge on your profile. Something unique to remind other users that your were here from the beginning.</li>
-                    <li>Profile banner and footer. Banners and footers are a special way to showcase your profile's personality.</li>
-                    <li>5 extra matches for your personality matcher.</li>                   
-                </ul>
-                
-                <div class='spotbieSignUpButton spotbieFinishButton' (click)="closePerks();">Close</div>
-                
-            </div>
-        </div>
-
         <div role="banner" class="spotbie-banner-wrapper">
             
-            <h1 class="HA" style="background-color: rgba(0,0,0,.8);
-                                padding-top: 10px;
-                                padding-bottom: 0px;">
+            <h1 class="HA" style="background-color: rgba(0,0,0,.8);">
                 <span class='spotBieLogo'>SpotBie.com</span>
-            </h1>
-
-            <h2 class="HA" style="border-bottom-right-radius: 20px;
-                                border-bottom-left-radius: 20px;
-                                background-color: #1f1f1f;">
-                The New Social Network
-            </h2>                
+            </h1>           
             
         </div>        
 
@@ -41,37 +16,17 @@
 
                 <p class="spotbie-desc">
 
-                SpotBie is a location based social platform providing users with multiple tools and features for personal, social, and financial fulfillment.                        
-                
-                Spotbie connects <a href="/home#people" class="xfDs" rel="tag">people</a>,
-
-                <a href="/home#media" class="xfDs" rel="tag">media files</a>,
-
-                <a href="/home#retail" class="xfDs" rel="tag">retail shops</a>,
-
-                <a href="/home#places-to-eat" class="xfDs" rel="tag">places to eat</a>,
-
-                <a href="/home#authors" class="xfDs" rel="tag">authors</a>,
-
-                and <a href="/home#authors" class="xfDs" rel="tag">artists</a>
-
-                to users based on their physical location. SpotBie allows all users to <a href="/home#earnfromcontent" class="xfDs" rel="tag">earn from their profiles</a>.
-                If you're a content creator, there are different ways in which you can profit from SpotBie.
-                Check out our <span class='successBoxNames' style="text-decoration: underline; cursor: pointer;" (click)="openSlideShow(0);">features slideshow</span>.
-                </p>
-
-                <p class="spotbie-desc">
                     
-                SpotBie's initiative as an everyday tool for our users is also to bring safety. This is why we have incoorporated the following tools into our app:
+                    Connecting <a href="/home#people" class="xfDs" rel="tag">users</a>,
 
-                <a href="/home#locationPairing" class="xfDs" rel="tag">location pairing</a>,
+                    <a href="/home#retail" class="xfDs" rel="tag">retail shops</a>,
 
-                <a href="/home#textingAndDriving" class="xfDs" rel="tag">texting and driving</a>, and
+                    <a href="/home#places-to-eat" class="xfDs" rel="tag">places to eat</a>,
 
-                <a href="/home#missingPeople" class="xfDs" rel="tag">missing people</a>.
-                
+                    and <a href="/home#authors" class="xfDs" rel="tag">events</a>.
+
                 </p>
-                
+
             </div>                        
 
             <table class="AppsRx" *ngIf="!is_android && !is_iphone">
@@ -87,40 +42,52 @@
                 </tbody>
             </table> 
     
-            <div class='BetaRelease' id="people">
+            <!--<div class='BetaRelease' id="people">
                 {{ spotbie_users }} people have joined SpotBie!
                 <div class='spotbie-version'>{{ spotbie_version }}</div>           
-            </div>                     
+            </div>-->                                
 
-            <h2 class="HA spotbieAddPointerCursor" (click)="openSlideShow(1);">
+            <h2 class="HA spotbieAddPointerCursor">
+                <span class="dfg">Connecting Users to Places to Eat</span>
+            </h2>                                     
 
-                <span class="dfg">Connecting Users by Location</span>
-
-            </h2>                                          
-            
             <picture>
+                <source srcset='assets/images/home_imgs/webp/providing-you-places-to-eat-around-you.webp' media="(min-width: 881px)" type='image/webp'>
+                <source srcset='assets/images/home_imgs/webp/providing-you-places-to-eat-around-you1x.webp' media="(min-width: 481px)" type='image/webp'>
+                <source srcset='assets/images/home_imgs/webp/providing-you-places-to-eat-around-you2x.webp'  media="(min-width: 415px)" type='image/webp'>
+                <source srcset='assets/images/home_imgs/webp/providing-you-places-to-eat-around-you3x.webp' media="(min-width: 1px)" type='image/webp'>
+                <source srcset='assets/images/home_imgs/jxr/providing-you-places-to-eat-around-you.jxr' type='image/vnd.ms-photo'>
+                <source srcset='assets/images/home_imgs/jp2/providing-you-places-to-eat-around-you.jp2' type='image/jp2'>
 
-                <source srcset='assets/images/home_imgs/webp/find-and-make-new-friends.webp' media="(min-width: 415px)" type='image/webp'>
-                <source srcset='assets/images/home_imgs/webp/find-and-make-new-friends1x.webp' media="(min-width: 481px)" type='image/webp'>
-                <source srcset='assets/images/home_imgs/webp/find-and-make-new-friends2x.webp'  media="(min-width: 415px)" type='image/webp'>
-                <source srcset='assets/images/home_imgs/webp/find-and-make-new-friends3x.webp' media="(min-width: 1px)" type='image/webp'>
-                <source srcset='assets/images/home_imgs/jxr/find-and-make-new-friends.jxr' type='image/vnd.ms-photo'>
-                <source srcset='assets/images/home_imgs/jp2/find-and-make-new-friends.jp2' type='image/jp2'>
+                <img class="QuestionsImage spotbieAddPointerCursor" style="margin-top: 0%;"
+                    src="assets/images/home_imgs/png/providing-you-places-to-eat-around-you.jpg" 
+                    alt="Picture of girl in her twenties enjoying food in a restaurant." />
 
-                <img class="QuestionsImage spotbieAddPointerCursor" 
-                        (click)="openSlideShow(1);" 
-                        style="margin-top: 0%;"
-                        src="assets/images/home_imgs/png/find-and-make-new-friends.jpg" 
-                        alt="Picture of group of friends in a circle playing cards at the beach." />
+            </picture>  
 
-            </picture>        
+            <p class="QuestionsPar spotbieAddPointerCursor" id="authors">        
+                Driving around a new part of town? Don't know what to eat? By giving you the most reviews from other users on nearby places to eat, SpotBie        
+                makes it easier to choose where to eat. With access to menus, reservations, and ratings, we are giving our users and places to eat       
+                another way to do business.
+                <span class='spotbie-search-click' (click)="searchFood()">Search Places to Eat</span>        
+            </p>   
 
-            <p class="QuestionsPar spotbieAddPointerCursor" (click)="openSlideShow(1);" id="earnfromcontent">
-                SpotBie utilizes our users' locations to find other users around them. Each user is asked for permission before their location is accessed by the map. If a user does        
-                not want to be seen on the map, they can disappear with the tap of a button which turns on ghost mode.
-            </p>              
+            <h2 class="HA spotbieAddPointerCursor">
+                <span class="dfg">Connecting Users to Events</span>
+            </h2>                                     
 
-            <h2 class="HA spotbieAddPointerCursor" (click)="openSlideShow(0);">
+            <img class="QuestionsImage" style="margin-top: 0%;"
+                    src="assets/images/home_imgs/jpg/find_events_around.jpg" 
+                    alt="Picture of girl in her twenties enjoying food in a restaurant." />
+
+            <p class="QuestionsPar" id="authors">        
+                Let's suppose that you're bored on a Friday night. Don't know where to take your girlfriend? Want to make your boyfriend a suggestion
+                to take you somewhere but don't know where? Just look for events around you.                
+                <span class='spotbie-search-click' (click)="searchEvents()">Search Events</span>
+            </p>  
+
+
+            <!-- <h2 class="HA spotbieAddPointerCursor" (click)="openSlideShow(0);">
                 <span class="dfg">Monetizable Profiles</span>
             </h2>                                                
 
@@ -170,10 +137,10 @@
             <p class="QuestionsPar spotbieAddPointerCursor" (click)="openSlideShow(2);" id="retail">        
                 We localize media files such as music, graphic design, video games, movies, and text documents for our users.
                 By browsing the map near their location or thousands of miles away, our users are introduced to content based on its exact place of origin.        
-            </p>              
+            </p>-->
 
             
-            <h2 class="HA spotbieAddPointerCursor" (click)="openSlideShow(3);">
+            <h2 class="HA spotbieAddPointerCursor">
 
                 <span class="dfg">Connecting Users to Retail Shops</span>
 
@@ -189,41 +156,45 @@
                 <source srcset='assets/images/home_imgs/jp2/providing-you-places-to-shop-around-you.jp2' type='image/jp2'>
 
                 <img class="QuestionsImage spotbieAddPointerCursor" 
-                    (click)="openSlideShow(3);" style="margin-top: 0%;"
+                    style="margin-top: 0%;"
                     src="assets/images/home_imgs/png/providing-you-places-to-shop-around-you.jpg" 
                     alt="Picture of two women shopping in a mall." />
 
             </picture>  
 
-            <p class="QuestionsPar spotbieAddPointerCursor" (click)="openSlideShow(3);" id="places-to-eat">
-                SpotBie allows users to see nearby retail shops with the tap of a button. By doing so, SpotBie makes the access to each shop easier and helps our users plan their shopping wisely. Not only will users get to see nearby shops, but they will also see featured offers and products.        
-            </p>              
+            <p class="QuestionsPar spotbieAddPointerCursor" id="places-to-eat">
+                SpotBie allows users to see nearby retail shops with the tap of a button. By doing so, SpotBie makes the access to each shop easier and helps our users plan their shopping wisely. Not only will users get to see nearby shops, but they will also see featured offers and products.
+                <span class='spotbie-search-click' (click)="searchRetail()">Search Retail Shops</span>      
+            </p>                         
 
-            <h2 class="HA spotbieAddPointerCursor" (click)="openSlideShow(4);">
-                <a class="dfg">Connecting Users to Places to Eat</a>
-            </h2>                                     
+            <h2 class="HA spotbieAddPointerCursor">
 
+                <span class="dfg">Connecting Users by Location</span>
+
+            </h2>                                          
+            
             <picture>
-                <source srcset='assets/images/home_imgs/webp/providing-you-places-to-eat-around-you.webp' media="(min-width: 881px)" type='image/webp'>
-                <source srcset='assets/images/home_imgs/webp/providing-you-places-to-eat-around-you1x.webp' media="(min-width: 481px)" type='image/webp'>
-                <source srcset='assets/images/home_imgs/webp/providing-you-places-to-eat-around-you2x.webp'  media="(min-width: 415px)" type='image/webp'>
-                <source srcset='assets/images/home_imgs/webp/providing-you-places-to-eat-around-you3x.webp' media="(min-width: 1px)" type='image/webp'>
-                <source srcset='assets/images/home_imgs/jxr/providing-you-places-to-eat-around-you.jxr' type='image/vnd.ms-photo'>
-                <source srcset='assets/images/home_imgs/jp2/providing-you-places-to-eat-around-you.jp2' type='image/jp2'>
 
-                <img class="QuestionsImage spotbieAddPointerCursor" (click)="openSlideShow(4);" style="margin-top: 0%;"
-                    src="assets/images/home_imgs/png/providing-you-places-to-eat-around-you.jpg" 
-                    alt="Picture of girl in her twenties enjoying food in a restaurant." />
+                <source srcset='assets/images/home_imgs/webp/find-and-make-new-friends.webp' media="(min-width: 415px)" type='image/webp'>
+                <source srcset='assets/images/home_imgs/webp/find-and-make-new-friends1x.webp' media="(min-width: 481px)" type='image/webp'>
+                <source srcset='assets/images/home_imgs/webp/find-and-make-new-friends2x.webp'  media="(min-width: 415px)" type='image/webp'>
+                <source srcset='assets/images/home_imgs/webp/find-and-make-new-friends3x.webp' media="(min-width: 1px)" type='image/webp'>
+                <source srcset='assets/images/home_imgs/jxr/find-and-make-new-friends.jxr' type='image/vnd.ms-photo'>
+                <source srcset='assets/images/home_imgs/jp2/find-and-make-new-friends.jp2' type='image/jp2'>
 
-            </picture>  
+                <img class="QuestionsImage spotbieAddPointerCursor"
+                        style="margin-top: 0%;"
+                        src="assets/images/home_imgs/png/find-and-make-new-friends.jpg" 
+                        alt="Picture of group of friends in a circle playing cards at the beach." />
 
-            <p class="QuestionsPar spotbieAddPointerCursor" (click)="openSlideShow(4);" id="authors">        
-                Driving around a new part of town? Don't know what to eat? By giving you the most reviews from other users on nearby places to eat, SpotBie        
-                makes it easier to choose where to eat. With access to menus, reservations, and ratings, we are giving our users and places to eat       
-                another way to do business.        
-            </p>              
+            </picture>        
 
-            <h2 class="HA spotbieAddPointerCursor" (click)="openSlideShow(5);">        
+            <p class="QuestionsPar" id="earnfromcontent">
+                Find new friends around you. Each user is asked for permission before their location is accessed by the map. If a user does        
+                not want to be seen on the map, they can disappear with the tap of a button which turns on ghost mode.
+            </p>   
+
+            <!-- <h2 class="HA spotbieAddPointerCursor" (click)="openSlideShow(5);">        
                 <span class="dfg">Connecting Users to Content Creators</span>        
             </h2>                            
 
@@ -270,13 +241,13 @@
             <p class="QuestionsPar spotbieAddPointerCursor" (click)="openSlideShow(6);" id="textingAndDriving">
                 We all have someone we care for. SpotBie allows you to pair up your location with those you care for. This way you will both know where you are in case of emergencies, or when
                 you can't talk on the phone.
-            </p>              
+            </p> -->
 
-            <h2 class="HA">        
+            <!--<h2 class="HA">        
                 <span class="dfg">Prevent Texting and Driving</span>        
             </h2>                            
 
-            <picture >
+            <picture>
 
                 <source srcset='assets/images/home_imgs/webp/spotbie-reminds-you-to-not-text-and-drive.webp' media="(min-width: 415px)" type='image/webp'>
                 <source srcset='assets/images/home_imgs/webp/spotbie-reminds-you-to-not-text-and-drive1x.webp' media="(min-width: 481px)" type='image/webp'>
@@ -289,7 +260,7 @@
                         src="assets/images/home_imgs/png/spotbie-reminds-you-to-not-text-and-drive.jpg" 
                         alt="Don't text and drive. Image of man driving car while texting on mobile phone." />
 
-            </picture> 
+            </picture>
 
             <p class="QuestionsPar" id="missingPeople">
                 The National Safety Council reports that cell phone use while driving leads to 1.6 million crashes each year. SpotBie offers our users a button to send notifications that
@@ -297,7 +268,7 @@
             </p>                       
 
             <h2 class="HA">        
-                <span class="dfg">Helping Find Missing People</span>
+                <span class="dfg">Help Find Missing People</span>
             </h2>                            
 
             <picture class="QuestionsImage spotbieAddPointerCursor" style="margin-top: 0%;">
@@ -317,9 +288,9 @@
 
             <p class="QuestionsPar" id="everyday_objects">
                 Every year in the United States, around 600,000 people go missing. SpotBie offers a way to help find those who go missing through our app.                        
-            </p>              
+            </p>              -->
             
-            <h2 class="HA">        
+            <!--<h2 class="HA">        
                 <span class="dfg">Everyday Objects</span>        
             </h2>                            
 
@@ -340,17 +311,10 @@
 
             <p class="QuestionsPar">        
                 While it's only a technology under progress, SpotBie extends its service to bringing people a better understanding of everyday objects and how they function.      
-            </p>                      
-            
-            <!--<iframe class="QuestionsVideo"
-                    src="https://www.youtube.com/embed/8oHbreQkn54"
-                    frameborder="0"
-                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>                        
-            </iframe> -->                 
+            </p>       -->                           
             
             <div class="HA termsAndService" style="text-align: center;
-                                background-color: transparent !important;
-                                margin-bottom: 120px;
+                                margin-bottom: 15px;
                                 border-bottom-right-radius: 20px;
                                 border-bottom-left-radius: 20px;">
                 <a class="dfg termsAndService" [routerLink]="['/terms']" >Terms of Use and Privacy Policy</a>
@@ -358,11 +322,7 @@
             
         </div>
         
-            
-        <div class="Axmvx" (click)="signUp();">Sign-Up</div>
-                
-        
-        <div class='spotBieSlideShow' id="spotbie_slide_show">
+        <!--<div class='spotBieSlideShow' id="spotbie_slide_show">
         
             <div class='slideshowArrow arrowLeft' (click)="slidePrev();"><</div>
             <div class='slideshowArrow arrowRight' (click)="slideNext();">></div>                                    
@@ -373,7 +333,7 @@
             
             <div class='closeSlideshow' (click)="closeSlideShow();">close</div>
             
-        </div>
+        </div>-->
         
         <div id='loading_screen' *ngIf="loading">
             

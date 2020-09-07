@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { AgmCoreModule, GoogleMapsAPIWrapper, MarkerManager } from '@agm/core'
+
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 
 import { DeviceDetectorService } from 'ngx-device-detector'
 
 import { BackgroundColorComponent } from './background-color/background-color.component'
-import { MapComponent } from './map/map.component'
+
 import { FriendsComponent } from './friends/friends.component'
 import { MyFriendsComponent } from './my-friends/my-friends.component'
 import { PendingFriendsComponent } from './pending-friends/pending-friends.component'
@@ -19,7 +19,6 @@ import { BlockedUsersComponent } from './blocked-users/blocked-users.component'
 import { BlockedUserActionsComponent } from './blocked-user-actions/blocked-user-actions.component'
 
 import { MissingPeopleComponent } from './missing-people/missing-people.component'
-import { MyPlacesComponent } from './my-places/my-places.component'
 
 import { NotificationsComponent } from './notifications/notifications.component'
 import { StreamNotificationsComponent } from './stream-notifications/stream-notifications.component'
@@ -42,14 +41,8 @@ import { MediaPlayerStreamComponent } from './media_player/media-player-stream/m
 
 import { SearchComponent } from './search/search.component'
 
-import { LocationSaverComponent } from './location-saver/location-saver.component'
 import { DriverModeComponent } from './driver-mode/driver-mode.component'
 import { MatcherComponent } from './matcher/matcher.component'
-
-import { MapObjectIconPipe } from '../../pipes/map-object-icon.pipe'
-import { AgmOverlays } from "agm-overlays"
-
-import { InfoObjectComponent } from './info-object/info-object.component'
 
 import { HttpClientModule } from '@angular/common/http'
 import { MenuLoggedInComponent } from './menu-logged-in.component'
@@ -59,11 +52,9 @@ import { RouterModule } from '@angular/router'
 import { ColorPickerModule } from 'ngx-color-picker'
 import { NgxMaskModule, IConfig } from 'ngx-mask'
 
-import { environment } from 'src/environments/environment'
 import { HelperModule } from 'src/app/helpers/helper.module'
-
-import { MatSliderModule } from '@angular/material/slider'
 import { MessagingChatComponent } from './messaging/messaging-chat/messaging-chat.component'
+import { MapModule } from '../map/map.module'
 
 export const options : Partial<IConfig> | (() => Partial<IConfig>) = null;
 
@@ -79,9 +70,6 @@ export const options : Partial<IConfig> | (() => Partial<IConfig>) = null;
     FriendActionsComponent,    
     FriendsComponent,
     FriendNotificationsComponent,
-    InfoObjectComponent,    
-    LocationSaverComponent,      
-    MapComponent,
     MatcherComponent,    
     MediaPlayerMainComponent,
     MediaPlayerContentComponent,
@@ -92,8 +80,7 @@ export const options : Partial<IConfig> | (() => Partial<IConfig>) = null;
     MessagingChatComponent,    
     MissingPeopleComponent,
     MsgNotificationsComponent,             
-    MyFriendsComponent,
-    MyPlacesComponent,
+    MyFriendsComponent,    
     NotificationsComponent,
     PairingComponent,  
     PendingFriendActionsComponent,
@@ -103,8 +90,7 @@ export const options : Partial<IConfig> | (() => Partial<IConfig>) = null;
     StreamNotificationsComponent,    
     TagNotificationsComponent,                  
   ],
-  imports: [
-    AgmOverlays,    
+  imports: [  
     CommonModule,
     FormsModule, 
     ReactiveFormsModule,
@@ -114,19 +100,11 @@ export const options : Partial<IConfig> | (() => Partial<IConfig>) = null;
     ColorPickerModule,
     RouterModule,
     HelperModule,
-    MatSliderModule,
-    AgmCoreModule.forRoot({
-      apiKey: environment.google_maps_apiKey,
-      language: 'en',
-      libraries: ['geometry', 'places']
-    }),
+    MapModule,
     NgxMaskModule.forRoot(options)
   ],
   providers: [
-    DeviceDetectorService,
-    MarkerManager,
-    GoogleMapsAPIWrapper,
-    MapObjectIconPipe
+    DeviceDetectorService
   ],
   exports: [MenuLoggedInComponent] 
 })

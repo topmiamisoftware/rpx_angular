@@ -18,7 +18,7 @@ export function ValidateUsername(username_control_name: string) {
         // set error on matchingControl if validation fails
         if (username.value == '') {
             username.setErrors({ emptyUsername: true });
-        } else if ((username.value.length < 1) || (username.value.length > 15)) {
+        } else if ((username.value.length < 1) || (username.value.length > 35)) {
             username.setErrors({ wrongLength: true });
         } else if (illegalChars.test(username.value)) {
             username.setErrors({ illegalChars : true });

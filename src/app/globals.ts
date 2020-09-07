@@ -8,6 +8,6 @@ export const CHAT = 'https://express.spotbie.com:8080'
 
 var today = new Date()
 var date = today.getFullYear()+'.'+(today.getMonth()+1)+'.'+today.getDate()
-export const VERSION = "Beta v." + date
+export const VERSION = "Version: Beta " + date
 
 // export const LOGIN_USER_API = "https://www.spotbie.com/"
