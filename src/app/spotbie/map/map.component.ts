@@ -596,8 +596,8 @@ export class MapComponent implements OnInit {
 
     this.current_offset = (this.around_me_search_page * this.items_per_page) - this.items_per_page
 
-    console.log("current offset", this.current_offset)
-    console.log("search page", this.around_me_search_page)
+    //console.log("current offset", this.current_offset)
+    //console.log("search page", this.around_me_search_page)
 
     this.apiSearch(this.search_keyword)
 

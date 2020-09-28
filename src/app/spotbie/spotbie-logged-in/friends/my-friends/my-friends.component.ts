@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core'
 import * as spotbieGlobals from '../../../../globals'
-import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http'
+import { HttpClient } from '@angular/common/http'
+import { catchError } from 'rxjs/operators'
+import { handleError } from 'src/app/helpers/error-helper'
 
-const FRIENDS_API = spotbieGlobals.API + "api/friends_general.service.php"
+const FRIENDS_API = spotbieGlobals.API + "friendship"
 
-const HTTP_OPTIONS = {
-  headers: new HttpHeaders({ 'Content-Type' : 'application/json' })
-}
 @Component({
   selector: 'app-my-friends',
   templateUrl: './my-friends.component.html',
@@ -14,70 +13,72 @@ const HTTP_OPTIONS = {
 })
 export class MyFriendsComponent implements OnInit {
 
-  private exe_api_key : string
-
-  private friends_ite : number = 0
+  private page: number = 1
 
   public friends_list = [] 
 
-  public load_more_friends : boolean = false
+  public load_more_friends: boolean = false
 
-  public loading : boolean = false
+  public loading: boolean = false
 
-  public no_spotbie_friends : boolean = false
+  public no_spotbie_friends: boolean = false
 
-  public current_friend : string
+  public current_friend: string
 
-  public show_friend_actions : boolean = false
+  public show_friend_actions: boolean = false
 
   constructor(private http: HttpClient){}
   
   public setCurrentFriend(friend){
+
     this.show_friend_actions = true
     this.current_friend = friend
+
   }
 
-  public initCallFriends(){
+  public initCallFriends(): void{
 
     this.loading = true
 
-    let call_friends_obj = { exe_api_key : this.exe_api_key, exe_friend_action : "getMyFriends",  exe_friends_ite : this.friends_ite, public_exe_user_id : 'null'}
-    
-    this.http.post<HttpResponse<any>>(FRIENDS_API, call_friends_obj, HTTP_OPTIONS)
-    .subscribe( resp => {
-      this.callFriendsCallback(resp)
-    },
-      error => {
-        console.log("Call Friends Error", error)
-    }) 
+    const show_friends_api = `${FRIENDS_API}/show_friends?page=${this.page}`
+
+    this.http.get<any>(show_friends_api).pipe(
+      catchError(handleError("initCallFriends"))
+    ).subscribe( 
+      resp => {
+        this.callFriendsCallback(resp)
+      },
+        error => {
+          console.log("initCallFriends", error)
+      }
+    )
 
   }
 
-  private callFriendsCallback(http_response : HttpResponse<any>){
+  private callFriendsCallback(http_response: any): void{
 
-    if(http_response.status === 200){  
-          
-      http_response.body.responseObject.forEach(friend => {
-        friend = JSON.parse(friend)
+    if(http_response.message === 'success'){  
+      
+      const current_page = http_response.friend_list.current_page
+      const last_page =  http_response.friend_list.last_page
+
+      http_response.friend_list.data.forEach(friend => {
         this.friends_list.push(friend)
       })      
 
-      if(http_response.body.responseObject.length > 20){
-        this.friends_ite = this.friends_ite + 20
-        this.friends_list.pop()
+      if(current_page < last_page){
+        this.page++
         this.load_more_friends = true
-      } else {
+      } else
         this.load_more_friends = false
-      }
 
-      if(this.friends_list.length == 0){
+      if(this.friends_list.length == 0)
         this.no_spotbie_friends = true
-      }
 
       this.loading = false
-      //console.log("your friends are : ", this.friends_list)    
+
     } else
-      console.log("Error callFriendsCallback : ", http_response)
+      console.log("Error callFriendsCallback: ", http_response)
 
   }
 
@@ -86,7 +87,6 @@ export class MyFriendsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.exe_api_key = localStorage.getItem('spotbie_userApiKey')
     this.initCallFriends()
   }
 

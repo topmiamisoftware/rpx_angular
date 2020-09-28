@@ -1,0 +1,64 @@
+<app-loading-screen *ngIf="loading"></app-loading-screen>
+
+<div class='spotbie-overlay-window'>
+    
+    <div class='spotbie-friend-actions-image'
+        *ngIf="blocked_user.spotbie_user.default_picture as user_default"
+        [ngStyle]="{'background' : 'url(' + user_default + ')'}"></div>
+
+    <div class='spotbie-friend-actions-username'>{{ blocked_user.user.username }}</div>
+
+    <table class='spotbie-friend-action-buttons' *ngIf="isDesktop">
+        <tr>
+            <td>
+                <div class='spotbie-button' [routerLink]="['/user-profile/' + blocked_user.user.username]">View Profile</div>
+            </td>
+            <td>
+                <div class='spotbie-button' (click)="unblockUser()">Unblock</div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class='spotbie-button' (click)="friendUser()">Befriend</div>
+            </td>
+            <td>
+                <div class='spotbie-button' (click)="report()">Report</div>
+            </td>            
+        </tr>
+    </table>
+
+    <table class='spotbie-friend-action-buttons' *ngIf="isMobile">
+        <tr>
+            <td>
+                <div class='spotbie-button' [routerLink]="['/user-profile/' + blocked_user.user.username]">View Profile</div>
+            </td>
+        </tr>
+        <tr>            
+            <td>
+                <div class='spotbie-button' (click)="unblockUser()">Unblock</div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class='spotbie-button' (click)="friendUser()">Befriend</div>
+            </td>
+        </tr>
+        <tr>            
+            <td>
+                <div class='spotbie-button' (click)="report()">Report</div>
+            </td>            
+        </tr>
+    </table>    
+
+    <div class="spotbie-close-button" (click)="closeWindow()">close</div>
+
+    <div class="spotbie-successful-action-wrapper" *ngIf="successful_action">
+        <div class="spotbie-successful-action-title">
+            {{ successful_action_title }}
+        </div>
+        <div class="spotbie-successful-action-description">
+            {{ successful_action_description }}
+        </div>        
+    </div>
+
+</div>  

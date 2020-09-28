@@ -1,0 +1,43 @@
+<app-loading-screen *ngIf="loading"></app-loading-screen>
+
+<div class='spotbie-overlay-window'>
+    
+    <div class='spotbie-friend-actions-image'
+        *ngIf="pending_friend.spotbie_user.default_picture as user_default"
+        [ngStyle]="{'background' : 'url(' + user_default + ')'}"></div>
+
+        <div class='spotbie-friend-actions-username'>{{ pending_friend.user.username }}</div>
+
+    <table class='spotbie-friend-action-buttons'>
+        <tr>
+            <td>
+                <div class='spotbie-button' [routerLink]="['/user-profile/' + pending_friend.user.username]">View Profile</div>
+            </td>
+            <td>
+                <div class='spotbie-button' (click)="cancelRequest()" *ngIf="pending_friend.made_by == my_id">Cancel Request</div>
+                <div class='spotbie-button' (click)="acceptRequest()" *ngIf="pending_friend.made_by != my_id">Accept Request</div>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <div class='spotbie-button' (click)="blockUser()">Block</div>
+            </td>
+            <td>
+                <div class='spotbie-button' (click)="report()">Report</div>
+            </td>            
+        </tr>
+    </table>
+
+    <div class="spotbie-close-button" (click)="closeWindow()">close</div>
+
+    <div class="spotbie-successful-action-wrapper" *ngIf="successful_action">
+        <div class="spotbie-successful-action-title">
+            {{ successful_action_title }}
+        </div>
+        <div class="spotbie-successful-action-description">
+            {{ successful_action_description }}
+        </div>        
+    </div>
+
+</div>
+    

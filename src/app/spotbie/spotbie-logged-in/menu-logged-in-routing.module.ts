@@ -7,17 +7,6 @@ import { DeviceDetectorService } from 'ngx-device-detector'
 
 import { BackgroundColorComponent } from './background-color/background-color.component'
 
-import { FriendsComponent } from './friends/friends.component'
-import { MyFriendsComponent } from './my-friends/my-friends.component'
-import { PendingFriendsComponent } from './pending-friends/pending-friends.component'
-import { FriendActionsComponent } from './friend-actions/friend-actions.component'
-import { PendingFriendActionsComponent } from './pending-friend-actions/pending-friend-actions.component'
-import { AroundMeComponent } from './around-me/around-me.component'
-import { AroundMeActionsComponent } from './around-me-actions/around-me-actions.component'
-
-import { BlockedUsersComponent } from './blocked-users/blocked-users.component'
-import { BlockedUserActionsComponent } from './blocked-user-actions/blocked-user-actions.component'
-
 import { MissingPeopleComponent } from './missing-people/missing-people.component'
 
 import { NotificationsComponent } from './notifications/notifications.component'
@@ -28,7 +17,6 @@ import { SettingsComponent } from './settings/settings.component'
 import { MessagingComponent } from './messaging/messaging.component'
 import { PairingComponent } from './pairing/pairing.component'
 
-import { FriendNotificationsComponent } from './friend-notifications/friend-notifications.component'
 import { MsgNotificationsComponent } from './msg-notifications/msg-notifications.component'
 
 import { TagNotificationsComponent } from './tag-notifications/tag-notifications.component'
@@ -56,20 +44,15 @@ import { HelperModule } from 'src/app/helpers/helper.module'
 import { MessagingChatComponent } from './messaging/messaging-chat/messaging-chat.component'
 import { MapModule } from '../map/map.module'
 
+import { FriendsModule } from './friends/friends.module'
+
 export const options : Partial<IConfig> | (() => Partial<IConfig>) = null;
 
 @NgModule({
   declarations: [
     AllNotificationsComponent,    
-    AroundMeComponent,
-    AroundMeActionsComponent,
     BackgroundColorComponent,
-    BlockedUserActionsComponent,     
-    BlockedUsersComponent,
     DriverModeComponent,
-    FriendActionsComponent,    
-    FriendsComponent,
-    FriendNotificationsComponent,
     MatcherComponent,    
     MediaPlayerMainComponent,
     MediaPlayerContentComponent,
@@ -79,16 +62,13 @@ export const options : Partial<IConfig> | (() => Partial<IConfig>) = null;
     MessagingComponent,
     MessagingChatComponent,    
     MissingPeopleComponent,
-    MsgNotificationsComponent,             
-    MyFriendsComponent,    
+    MsgNotificationsComponent,    
     NotificationsComponent,
-    PairingComponent,  
-    PendingFriendActionsComponent,
-    PendingFriendsComponent,   
+    PairingComponent,   
     SearchComponent,
     SettingsComponent,   
     StreamNotificationsComponent,    
-    TagNotificationsComponent,                  
+    TagNotificationsComponent             
   ],
   imports: [  
     CommonModule,
@@ -101,6 +81,7 @@ export const options : Partial<IConfig> | (() => Partial<IConfig>) = null;
     RouterModule,
     HelperModule,
     MapModule,
+    FriendsModule,
     NgxMaskModule.forRoot(options)
   ],
   providers: [

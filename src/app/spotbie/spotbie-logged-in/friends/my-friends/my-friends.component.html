@@ -1,19 +1,29 @@
 <app-loading-screen *ngIf="loading"></app-loading-screen>
 
 <div class='spotbie-friends-list'>
+
     <div class='spotbie-friend-tile' *ngFor="let friend of friends_list">
-        <div class='spotbie-friend-tile-upper' [routerLink]="['/user-profile/' + friend.exe_username]"></div>
+
+        <div class='spotbie-friend-tile-upper' [routerLink]="['/user-profile/' + friend.user.username]"></div>
+        
         <div class='spotbie-friend-tile-bottom' (click)="setCurrentFriend(friend)"></div>
+
         <div class='spotbie-friend-default'
-            *ngIf="friend.exe_user_default_picture | defaultImage as exe_user_default"
-            [ngStyle]="{'background-image' : 'url(' + exe_user_default + ')'}"></div>
-        <div class='spotbie-friend-user-name'>{{ friend.exe_username }}</div>
+            *ngIf="friend.spotbie_user.default_picture as user_default"
+            [ngStyle]="{'background-image' : 'url(' + user_default + ')'}"></div>
+
+        <div class='spotbie-friend-user-name'>{{ friend.user.username }}</div>
+
     </div>
+
     <div class='spotbie-no-notis-box' *ngIf='no_spotbie_friends'>
+
         <div>
-            You have no SpotBie Friends!
+            No SpotBie Friends
         </div>
+
     </div>
+
 </div>
 
 <div class='spotbie-load-more-button spotbie-button' *ngIf="load_more_friends" (click)="loadMoreFriends()">

@@ -2,12 +2,8 @@
 
 <div class='spotbie-profile-header'>
     
-    <div class='spotbie-profile-title' *ngIf="!public_profile">
-        {{ user.username }}
-    </div>
-
-    <div class='spotbie-profile-title' *ngIf="public_profile">
-        {{ user.username }}'s Profile      
+    <div class='spotbie-profile-title'>
+        {{ user.username }}  
     </div>
 
     <div class='spotbie-profile-slideshow'>

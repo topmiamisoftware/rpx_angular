@@ -21,8 +21,6 @@ export class ContactmeComponent implements OnInit {
   public spotbie_contact_me_form: FormGroup
   public background_color: string
 
- 
-
   public loading = false
 
   constructor(private host: ProfileHeaderComponent,

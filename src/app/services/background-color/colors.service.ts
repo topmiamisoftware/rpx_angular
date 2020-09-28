@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 import * as spotbieGlobals from '../../globals'
 import { Subject, Observable } from 'rxjs'
-import { tap, catchError } from 'rxjs/operators'
+import { catchError, tap } from 'rxjs/operators'
 import { handleError } from 'src/app/helpers/error-helper'
 
 const COLORS_API = spotbieGlobals.API + 'web_options'

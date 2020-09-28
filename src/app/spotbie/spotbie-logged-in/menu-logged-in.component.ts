@@ -171,10 +171,9 @@ export class MenuLoggedInComponent implements OnInit {
     }
 
     if (this.public_profile_info !== undefined) {
-      //console.log("The public menu is : ", this.public_profile_info)
       this.public_profile = true
-      pickedColor = this.public_profile_info.public_bg_color
-      this.spotbieBackgroundImage = this.public_profile_info.public_spotmee_bg
+      pickedColor = this.public_profile_info.web_options.bg_color
+      this.spotbieBackgroundImage = this.public_profile_info.web_options.spotmee_bg
       this.bg_image_ready = true
     } else
       pickedColor = this.spotbieBackgroundColor

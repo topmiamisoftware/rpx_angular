@@ -141,7 +141,7 @@ a:hover,a:active,a,a:after{
     min-width: 100%;
     text-decoration: none !important;
     font-size: 23px;
-    font-weight: normal;
+    font-weight: bold;
 }                       
 .HomeWrapper{
     position: relative;
@@ -155,6 +155,7 @@ a:hover,a:active,a,a:after{
     cursor: pointer;
     font-size: 20px;
     border-radius: 20px;
+    background-color: rgb(255 255 255);
 }
 .termsAndService:hover{
     text-decoration: underline;

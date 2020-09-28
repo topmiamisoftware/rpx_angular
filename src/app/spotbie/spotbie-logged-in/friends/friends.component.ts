@@ -1,5 +1,4 @@
-import { Component, OnInit } from '@angular/core';
-import { MenuLoggedInComponent } from '../menu-logged-in.component';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 
 @Component({
   selector: 'app-friends',
@@ -7,85 +6,94 @@ import { MenuLoggedInComponent } from '../menu-logged-in.component';
   styleUrls: ['./friends.component.css']
 })
 export class FriendsComponent implements OnInit {
+  
+  @Input() window_obj
 
-  public bgColor;
-  public fontColor;
+  @Output() closeWindow = new EventEmitter
 
-  private exe_api_key: string;
+  public bgColor
+  public fontColor
 
-  public loading = false;
+  public loading = false
 
-  public friends: boolean;
-  public pending: boolean;
-  public blocked: boolean;
-  public around_me: boolean;
+  public friends: boolean
+  public pending: boolean
+  public blocked: boolean
+  public around_me: boolean
 
-  constructor(private host: MenuLoggedInComponent) {}
+  constructor() {}
 
-  public closeWindow() {
-    this.host.closeWindow(this.host.friendsWindow);
+  public closeWindowX(): void {
+    this.closeWindow.emit(this.window_obj)
   }
 
   public styleFriendsTab(ac) {
+
     switch (ac) {
       case 0:
-        if (this.friends === true) { return {'background-color' : 'rgba(0,0,0,.5)'}; }
-        break;
+        if (this.friends === true) { return {'background-color' : 'rgba(0,0,0,.5)'} }
+        break
       case 1:
-        if (this.pending === true) { return {'background-color' : 'rgba(0,0,0,.5)'}; }
-        break;
+        if (this.pending === true) { return {'background-color' : 'rgba(0,0,0,.5)'} }
+        break
       case 2:
-        if (this.blocked === true) { return {'background-color' : 'rgba(0,0,0,.5)'}; }
-        break;
+        if (this.blocked === true) { return {'background-color' : 'rgba(0,0,0,.5)'} }
+        break
       case 3:
-        if (this.around_me === true) { return {'background-color' : 'rgba(0,0,0,.5)'}; }
-        break;
+        if (this.around_me === true) { return {'background-color' : 'rgba(0,0,0,.5)'} }
+        break
     }
+    
   }
 
   public switchFriends(ac) {
-    this.friends = false;
-    this.pending = false;
-    this.blocked = false;
-    this.around_me = false;
+
+    this.friends = false
+    this.pending = false
+    this.blocked = false
+    this.around_me = false
+
     switch (ac) {
       case 0:
-        this.myFriends();
-        break;
+        this.myFriends()
+        break
       case 1:
-        this.myPending();
-        break;
+        this.myPending()
+        break
       case 2:
-        this.myBlocked();
-        break;
+        this.myBlocked()
+        break
       case 3:
-        this.myAroundMe();
-        break;
+        this.myAroundMe()
+        break
     }
+
   }
 
   myFriends() {
-    this.friends = !this.friends;
+    this.friends = !this.friends
   }
 
   myPending() {
-    this.pending = !this.pending;
+    this.pending = !this.pending
   }
 
   myBlocked() {
-    this.blocked = !this.blocked;
+    this.blocked = !this.blocked
   }
 
   myAroundMe() {
-    this.around_me = !this.around_me;
+    this.around_me = !this.around_me
   }
 
   ngOnInit() {
-    this.bgColor = localStorage.getItem('spotbie_backgroundColor');
-    if (this.bgColor == '') { this.bgColor = 'dimgrey'; }
 
-    this.exe_api_key = localStorage.getItem('spotbie_userApiKey');
+    this.bgColor = localStorage.getItem('spotbie_backgroundColor')
 
-    this.myFriends();
+    if (this.bgColor == '') this.bgColor = 'dimgrey'
+
+    this.myFriends()
+
   }
+
 }

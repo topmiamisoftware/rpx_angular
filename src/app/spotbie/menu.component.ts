@@ -11,7 +11,7 @@ export class MenuComponent implements OnInit {
   @Input() album_id : string
   @Input() album_media_id : string
 
-  public public_profile : boolean;
+  public public_profile : boolean
 
   @ViewChild('spotbieMainMenu') spotbieMainMenu;
 

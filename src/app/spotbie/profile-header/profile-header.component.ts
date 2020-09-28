@@ -1,12 +1,11 @@
 import { Component, OnInit, ViewChild, Input } from '@angular/core'
-import { HttpClient, HttpHeaders, HttpEventType } from '@angular/common/http'
+import { HttpClient, HttpEventType } from '@angular/common/http'
 import { Swiper } from 'swiper/dist/js/swiper.esm.js'
 import * as spotbieGlobals from '../../globals'
 import { Validators, FormGroup, FormBuilder } from '@angular/forms'
 import { SanitizePipe } from '../../pipes/sanitize.pipe'
 import { Subscription } from 'rxjs'
 import { User } from 'src/app/models/user'
-import { ColorsService } from 'src/app/services/background-color/colors.service'
 import { ProfileHeaderService } from 'src/app/services/profile-header/profile-header.service'
 
 const PROFILE_HEADER_API = spotbieGlobals.API + 'api/settings.service.php'
@@ -75,7 +74,6 @@ export class ProfileHeaderComponent implements OnInit {
 
   constructor(private http: HttpClient,
               private formBuilder: FormBuilder,
-              private web_options_service: ColorsService,
               private profile_header_service: ProfileHeaderService) {}
 
   private getMyProfileHeader(): void {
@@ -94,9 +92,7 @@ export class ProfileHeaderComponent implements OnInit {
   private getMyProfileHeaderCallback(profile_header_response: any): void{
 
     const user = profile_header_response.user
-
     const spotbie_user = profile_header_response.spotbie_user
-
     const default_images = profile_header_response.default_images
 
     let current_index = 0
@@ -108,8 +104,6 @@ export class ProfileHeaderComponent implements OnInit {
       this.user.profile_pictures.forEach(profile_picture =>{
       
         current_index = this.user.profile_pictures.indexOf(profile_picture)
-  
-        this.user.profile_pictures[current_index] = 'defaults/' + this.user.id + '/' + profile_picture
   
         if(this.user.profile_pictures[current_index] == spotbie_user.default_picture)
           this.profile_pictures_index = current_index
@@ -532,22 +526,18 @@ export class ProfileHeaderComponent implements OnInit {
   }
 
   ngOnInit(){
+    
+    this.user.exe_background_color = localStorage.getItem('spotbie_backgroundColor')
+
   }
 
   ngAfterViewInit(){
 
     if (this.public_profile_info !== undefined) {
 
-      //Viewing another user's profile.
-
+      this.getMyProfileHeaderCallback(this.public_profile_info)
       this.public_profile = true
-      this.user.id = this.public_profile_info.public_exe_user_id
-      this.user.username = this.public_profile_info.public_username
-      this.user.acc_splash = this.public_profile_info.public_spotmee_bg
-      this.user.exe_background_color = this.public_profile_info.public_bg_color
-
       
-
     } else {
 
       //Viewing our own profile.
@@ -558,14 +548,6 @@ export class ProfileHeaderComponent implements OnInit {
       this.getMyProfileHeader()
 
     }
-
-    this.web_options_subscriber = this.web_options_service.getWebOptions().subscribe(web_options =>{
-
-      if(web_options.bg_color){
-        this.user.exe_background_color = web_options.bg_color
-      }
-
-    })
 
   }
 }

@@ -1,7 +1,7 @@
 <app-loading-screen *ngIf="loading"></app-loading-screen>
 
 <div class='spotbie-friends-list'>
-    <div class='spotbie-friend-tile' *ngFor="let friend of pending_list">
+    <div class='spotbie-friend-tile' *ngFor="let friend of blocked_list">
         <div class='spotbie-friend-tile-upper' [routerLink]="['/user-profile/' + friend.user.username]"></div>
         <div class='spotbie-friend-tile-bottom' (click)="setCurrentPending(friend)"></div>        
         <div class='spotbie-friend-default'
@@ -9,15 +9,15 @@
             [ngStyle]="{'background-image' : 'url(' + user_default + ')'}"></div>
         <div class='spotbie-friend-user-name'>{{ friend.user.username }}</div>
     </div>
-    <div class='spotbie-no-notis-box' *ngIf='pending_list.length == 0'>
+    <div class='spotbie-no-notis-box' *ngIf='blocked_list.length == 0'>
         <div>
-            No Pending Requests
+            No Blocked Users
         </div>
     </div>    
 </div>
 
-<div class='spotbie-load-more-button spotbie-button' *ngIf="load_more_pending" (click)="loadMorePending()">
+<div class='spotbie-load-more-button spotbie-button' *ngIf="load_more_blocked" (click)="loadMoreBlocked()">
     Load More
 </div>
 
-<app-pending-friend-actions *ngIf="show_pending_actions" [pending_friend]="current_pending"></app-pending-friend-actions>
+<app-blocked-user-actions *ngIf="show_blocked_actions" [blocked_user]="current_blocked"></app-blocked-user-actions>

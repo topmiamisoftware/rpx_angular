@@ -1,18 +1,12 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
 import * as $ from 'jquery'
-import { HttpResponse } from '../models/http-reponse'
-import { displayError } from '../helpers/error-helper'
 import * as spotbieGlobals from '../globals'
-import { HttpHeaders, HttpClient } from '@angular/common/http'
 import { MetaService } from '@ngx-meta/core'
+import { HttpClient } from '@angular/common/http'
 
-const INFO_API = spotbieGlobals.API + 'api/search.service.php'
+const INFO_API = spotbieGlobals.API
 
-const HTTP_OPTIONS = {
-  withCredentials : true,
-  headers: new HttpHeaders({ 'Content-Type' : 'application/json' })
-}
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
@@ -20,87 +14,66 @@ const HTTP_OPTIONS = {
 })
 export class UserComponent implements OnInit {
 
-  public exe_user_name : string
+  public exe_user_name: string
 
-  public stream_post_id : string
+  public stream_post_id: string
 
-  public exe_api_key : string
-
-  public arrowOn : boolean = false
+  public arrowOn: boolean = false
 
   public bg_image: string
 
-  public bgColor : string
+  public bgColor: string
 
   public public_exe_user_id: number
 
-  public album_id : string
+  public album_id: string
 
-  public album_media_id : string
+  public album_media_id: string
 
   public public_profile_info = {}
 
-  @ViewChild('scrollArrow') scrollArrow : ElementRef
+  @ViewChild('scrollArrow') scrollArrow: ElementRef
 
-  public awake_apps : boolean  = false
+  public awake_apps: boolean  = false
 
-  public loggedIn : boolean = false
+  public loggedIn: boolean = false
 
   constructor(private activated_route: ActivatedRoute,
               private http: HttpClient,
               private readonly meta: MetaService) { }
 
-  private getUserInfo() : void{
+  private getUser(): void{
 
-    const search_object = { exe_api_key : this.exe_api_key,
-      exe_search_action : 'getPublicUserInfo',
-      exe_username : this.exe_user_name
-    }
+    const user_api = `${INFO_API}/user/${this.exe_user_name}`
 
-    this.http.post<HttpResponse>(INFO_API, search_object, HTTP_OPTIONS)
-    .subscribe( resp => {
-      const info_response = new HttpResponse ({
-      status : resp.status,
-      message : resp.message,
-      full_message : resp.full_message,
-      responseObject : resp.responseObject
-      })
-      this.getUserInfoCb(info_response)
-    }, error => {
-      displayError(error)
-      console.log('Msgs Notifications Error : ', error)
-    })
-
-  }
-
-  public getUserProfileMeta() : any{
-    return {
-      meta: {
-        title: 'Toothpaste',
-        'twitter:title' : 'Toothpaste',
-        override: true,
-        description: 'Eating toothpaste is considered to be too healthy!',
-        'twitter:description' : 'Eating toothpaste is considered to be too healthy!'
+    this.http.get<any>(user_api).subscribe(
+      resp => {
+        this.getUserCb(resp)
+      }, 
+      error => {
+        console.log("getUserInfo", error)
       }
-    }    
+    )
+
   }
   
-  private getUserInfoCb(httpResponse : HttpResponse) {
+  private getUserCb(httpResponse: any) {
 
-    if (httpResponse.status == '200') {
+    console.log('httpResponse', httpResponse)
 
-      const info_object = httpResponse.responseObject
+    if (httpResponse.message == 'success') {
 
-      // console.log("User Info CB : ", info_object)
       this.public_profile_info = {
-        public_exe_user_id : info_object.exe_user_id,
-        public_username : this.exe_user_name,
-        public_bg_color : info_object.web_options.bg_color,
-        public_spotmee_bg : info_object.web_options.spotmee_bg
+        user: httpResponse.user,
+        spotbie_user: httpResponse.spotbie_user,
+        default_images: httpResponse.default_images,
+        web_options: httpResponse.web_options
       }
 
-      document.getElementsByTagName('body')[0].style.backgroundColor = info_object.web_options.bg_color
-      this.bg_image = info_object.web_options.spotmee_bg
+      document.getElementsByTagName('body')[0].style.backgroundColor = httpResponse.web_options.bg_color
+      document.getElementsByTagName('html')[0].style.backgroundColor = httpResponse.web_options.bg_color
+      
+      this.bg_image = httpResponse.web_options.spotmee_bg
 
       this.meta.setTag('og:image', this.bg_image)
       this.meta.setTag('twitter:image', this.bg_image)      
@@ -115,11 +88,25 @@ export class UserComponent implements OnInit {
 
   }
 
-  public scrollTop() : void{
+  public getUserProfileMeta(): any{
+
+    return {
+      meta: {
+        title: 'Toothpaste',
+        'twitter:title': 'Toothpaste',
+        override: true,
+        description: 'Eating toothpaste is considered to be too healthy!',
+        'twitter:description': 'Eating toothpaste is considered to be too healthy!'
+      }
+    }
+        
+  }
+
+  public scrollTop(): void{
     $('html, body').animate({ scrollTop: 0 }, 'slow')
   }
 
-  private addScrollEvent() : void {
+  private addScrollEvent(): void {
 
     const _this = this
 
@@ -145,7 +132,6 @@ export class UserComponent implements OnInit {
     this.album_id = this.activated_route.snapshot.paramMap.get('album_id')
     this.album_media_id = this.activated_route.snapshot.paramMap.get('album_media_id')
 
-    this.exe_api_key = localStorage.getItem('spotbie_userApiKey')
     let loggedIn = localStorage.getItem('spotbie_loggedIn')
 
     if(loggedIn == '1')
@@ -153,7 +139,7 @@ export class UserComponent implements OnInit {
     else
       this.loggedIn = false
 
-    await this.getUserInfo()
+    await this.getUser()
 
   }
 

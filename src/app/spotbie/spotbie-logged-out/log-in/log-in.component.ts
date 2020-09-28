@@ -127,10 +127,12 @@ export class LogInComponent implements OnInit {
       }
 
       // redirect user to user_home
-      if(login_status == 'success')
+     /* if(login_status == 'success')
         this.router.navigate(['/user_home'])
       else if(login_status == 'confirm')
-        this.router.navigate(['/confirm'])
+        this.router.navigate(['/confirm'])*/
+
+        this.router.navigate(['/user_home'])
 
     } else {
 

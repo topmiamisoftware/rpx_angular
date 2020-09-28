@@ -1,12 +1,9 @@
 import { Component, OnInit } from '@angular/core'
 import * as spotbieGlobals from '../../../../globals'
-import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http'
+import { HttpClient } from '@angular/common/http'
 
-const FRIENDS_API = spotbieGlobals.API + "api/friends_general.service.php"
+const FRIENDS_API = spotbieGlobals.API + "friendship"
 
-const HTTP_OPTIONS = {
-  headers: new HttpHeaders({ 'Content-Type' : 'application/json' })
-}
 @Component({
   selector: 'app-pending-friends',
   templateUrl: './pending-friends.component.html',
@@ -14,17 +11,15 @@ const HTTP_OPTIONS = {
 })
 export class PendingFriendsComponent implements OnInit {
 
-  private exe_api_key : string
-
-  private pending_ite : number = 0
+  private page: number = 1
 
   public pending_list = [] 
 
-  public load_more_pending : boolean = false
+  public load_more_pending: boolean = false
 
-  public loading : boolean = false
+  public loading: boolean = false
 
-  public show_pending_actions : boolean = false
+  public show_pending_actions: boolean = false
 
   public current_pending
 
@@ -35,32 +30,38 @@ export class PendingFriendsComponent implements OnInit {
     this.show_pending_actions = true    
   }
 
-  public initCallPending(){
+  public initCallPending(): void{
     
     this.loading = true
     
-    let call_friends_obj = { exe_api_key : this.exe_api_key, exe_friend_action : "getMyPending",  exe_friends_ite : this.pending_ite, public_exe_user_id : 'null'}
-    
-    this.http.post<HttpResponse<any>>(FRIENDS_API, call_friends_obj, HTTP_OPTIONS)
-    .subscribe( resp => {
-      this.callPendingCallback(resp)
-    },
+    const pending_friends_apis = `${FRIENDS_API}/show_pending?page=${this.page}`
+
+    this.http.get<any>(pending_friends_apis).subscribe(
+      resp => {
+        this.callPendingCallback(resp)
+      },
       error => {
-        console.log("Pending Friends Error", error)
-    })    
+        console.log("initCallPending", error)
+      }
+    )    
+
   }
 
-  private callPendingCallback(http_response : HttpResponse<any>){
+  private callPendingCallback(http_response: any){
 
-    if(http_response.status === 200){      
+    console.log(http_response)
 
-      http_response.body.responseObject.forEach(friend => {
+    if(http_response.message === 'success'){      
+
+      const current_page = http_response.current_page
+      const last_page = http_response.last_page
+
+      http_response.pending_friends_list.data.forEach(friend => {
         this.pending_list.push(friend)
       })      
 
-      if(http_response.body.responseObject.length > 6){
-        this.pending_ite = this.pending_ite + 6
-        this.pending_list.pop()
+      if(current_page < last_page){
+        this.page++
         this.load_more_pending = true
       } else
         this.load_more_pending = false
@@ -68,7 +69,7 @@ export class PendingFriendsComponent implements OnInit {
       this.loading = false
 
     } else
-      console.log("Call Pending Callback Error", http_response)
+      console.log("callPendingCallback", http_response)
 
   }
 
@@ -77,7 +78,6 @@ export class PendingFriendsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.exe_api_key = localStorage.getItem('spotbie_userApiKey')
     this.initCallPending()
   }
 

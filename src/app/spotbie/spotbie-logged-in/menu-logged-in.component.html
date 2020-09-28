@@ -100,7 +100,7 @@
 
 <!--<app-media-player-main *ngIf="mediaPlayerWindow.open"></app-media-player-main>-->
 
-<app-friends *ngIf="friendsWindow.open"></app-friends>
+<app-friends *ngIf="friendsWindow.open" [window_obj]="friendsWindow" (closeWindow)="closeWindow($event)"></app-friends>
 
 <app-my-places *ngIf="myPlacesWindow.open"></app-my-places>
 

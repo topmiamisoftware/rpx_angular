@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core'
 
 import * as $ from 'jquery'
+import { UserauthService } from '../services/userauth.service'
 
 @Component({
   selector: 'app-user-home',
@@ -13,11 +14,13 @@ export class UserHomeComponent implements OnInit {
 
   public bg_image: string
 
+  public userId: string
+
   @ViewChild('scrollArrow') scrollArrow: ElementRef
 
-  public loggedIn : boolean = false
+  public loggedIn: boolean = false
 
-  constructor() { }
+  constructor(private userAuthService: UserauthService) { }
 
   scrollTop() {
     $('html, body').animate({ scrollTop: 0 }, 'slow')
@@ -37,11 +40,14 @@ export class UserHomeComponent implements OnInit {
     }.bind(this))
   }
 
-  setcurrentUserBgImage(evt : any) {
+  setcurrentUserBgImage(evt: any) {
     this.bg_image = evt.user_bg
   }
 
-  ngOnInit() {}
+  async ngOnInit(){
+    const response = await this.userAuthService.checkIfLoggedIn()
+    this.userId = response.user_id 
+  }
 
   ngAfterViewInit() {
     this.addScrollEvent()
