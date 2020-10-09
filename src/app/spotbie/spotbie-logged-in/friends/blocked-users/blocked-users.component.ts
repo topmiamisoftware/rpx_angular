@@ -50,10 +50,12 @@ export class BlockedUsersComponent implements OnInit {
 
   private callBlockedCallback(httpResponse: any){
 
+    console.log("callBlockedCallback", httpResponse)
+
     if(httpResponse.message == "success"){   
 
-      const current_page = httpResponse.current_page
-      const last_page = httpResponse.last_page
+      const current_page = httpResponse.blocked_friendships_list.current_page
+      const last_page = httpResponse.blocked_friendships_list.last_page
 
       httpResponse.blocked_friendships_list.data.forEach(friend => {
         this.blocked_list.push(friend)

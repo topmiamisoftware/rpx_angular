@@ -123,7 +123,7 @@
 
         </table>        
 
-        <!--<app-albums [public_profile_info]="public_profile_info"
+        <!--<app-albums [publicProfileInfo]="publicProfileInfo"
                     [album_id]="album_id"
                     [album_media_id]="album_media_id"></app-albums>-->
         
@@ -230,4 +230,4 @@
 
 <!--<app-questions *ngIf="questionsWindow.open"></app-questions>-->
 
-<app-contactme *ngIf="contactMeWindow.open" [user_id]="user.id"></app-contactme>
+<app-contactme *ngIf="contactMeWindow.open" [userId]="user.id" [bgColor]="user.exe_background_color" [publicProfileInfo]="publicProfileInfo"></app-contactme>

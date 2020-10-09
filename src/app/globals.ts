@@ -1,7 +1,8 @@
 'user strict'
 
 export const API = 'api/'
-export const RESOURCES = '/'
+export const RESOURCES = 'http://localhost:8000/'
+export const DEFAULTS = 'http://localhost:8000/defaults/'
 export const FRONT_END = '/'
 
 export const CHAT = 'https://express.spotbie.com:8080'

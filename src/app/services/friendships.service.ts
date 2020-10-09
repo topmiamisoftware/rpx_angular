@@ -14,22 +14,25 @@ export class FriendshipsService {
 
   constructor(private http: HttpClient) { }
 
-  public blockUser(user_id: any): Observable<any>{    
+  public blockUser(peer_id: any): Observable<any>{    
 
     const block_api = `${FRIENDS_API}/block`
+    const block_obj = {
+      peer_id: peer_id
+    }
 
-    return this.http.post<any>(block_api, user_id).pipe(
+    return this.http.post<any>(block_api, block_obj).pipe(
       catchError(handleError("blockUser"))
     )
 
   }
 
-  public unblockUser(user_id: any): Observable<any>{    
+  public unblockUser(peer_id: any): Observable<any>{    
 
     const unblock_api = `${FRIENDS_API}/unblock`
     const unblock_obj = {
       _method: 'DELETE',
-      user_id: user_id
+      peer_id: peer_id
     }
 
     return this.http.post<any>(unblock_api, unblock_obj).pipe(
@@ -38,12 +41,12 @@ export class FriendshipsService {
 
   }
 
-  public unfriend(user_id: any): Observable<any>{    
+  public unfriend(peer_id: any): Observable<any>{    
 
     const unfriend_api = `${FRIENDS_API}/unfriend`
     const unfriend_obj = {
       _method: 'DELETE',
-      user_id: user_id
+      peer_id: peer_id
     }
 
     return this.http.post<any>(unfriend_api, unfriend_obj).pipe(
@@ -55,8 +58,11 @@ export class FriendshipsService {
   public befriend(user_id: any): Observable<any>{    
 
     const add_friend_api = `${FRIENDS_API}/add_friend`
+    const befriend_obj = {
+      peer_id: user_id
+    }
 
-    return this.http.post<any>(add_friend_api, user_id).pipe(
+    return this.http.post<any>(add_friend_api, befriend_obj).pipe(
       catchError(handleError("befriend"))
     )
 
@@ -96,6 +102,20 @@ export class FriendshipsService {
 
     return this.http.get<any>(around_me_api).pipe(
       catchError(handleError("befriend"))
+    )
+
+  }
+
+  public report(peer_id: number, report_reason: number): Observable<any>{    
+
+    const report_peer_api = `${FRIENDS_API}/report`
+    const report_obj = {
+      peer_id: peer_id,
+      report_reason: report_reason
+    }
+
+    return this.http.post<any>(report_peer_api, report_obj).pipe(
+      catchError(handleError("report"))
     )
 
   }

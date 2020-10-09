@@ -6,7 +6,7 @@ import { MyFriendsComponent } from '../my-friends.component'
 @Component({
   selector: 'app-friend-actions',
   templateUrl: './friend-actions.component.html',
-  styleUrls: ['./friend-actions.component.css']
+  styleUrls: ['./friend-actions.component.css', '../../actions.css']
 })
 export class FriendActionsComponent implements OnInit {
 
@@ -23,8 +23,18 @@ export class FriendActionsComponent implements OnInit {
     public isMobile: boolean
     public isDesktop: boolean
 
+    public reportReasonList: Array<any> = [
+        { name : "Mature Content", id : 0 },
+        { name : "Copyright", id : 1 },
+        { name : "Impersonation", id : 2 }
+      ]
+    
+      public reportReasonsUp: boolean = false
+    
+      public bgColor: string
+
     constructor(private host: MyFriendsComponent,
-                private friendshipSerivce: FriendshipsService,
+                private friendshipService: FriendshipsService,
                 private deviceDetector: DeviceDetectorService) { }
 
 
@@ -32,11 +42,50 @@ export class FriendActionsComponent implements OnInit {
         this.host.show_friend_actions = false
     }
 
+    public reportReasonsWindow(): void{
+        this.reportReasonsUp = !this.reportReasonsUp
+    }
+
+    public report(reportReason: number): void{
+
+        this.loading = true
+
+        this.friendshipService.report(this.friend.user.id, reportReason).subscribe( 
+            resp => {
+                this.reportCallback(resp)
+            },
+            error => {
+                console.log("report", error)
+            }
+        )
+
+    }
+
+    private reportCallback(httpResponse: any): void{
+
+        if(httpResponse.message === "success"){
+
+            this.successful_action_title = "User was reported succesfully."
+            this.successful_action_description = `You have reported \"${this.friend.user.username}\".`
+
+            this.successful_action = true
+
+            setTimeout(function(){
+                this.successful_action = false
+            }.bind(this), 2500)
+
+            this.loading = false  
+
+        } else
+            console.log("reportCallback", httpResponse)
+
+    }
+
     public blockUser(): void{
 
         this.loading = true
 
-        this.friendshipSerivce.blockUser(this.friend.user.id).subscribe( 
+        this.friendshipService.blockUser(this.friend.user.id).subscribe( 
             resp => {
                 this.blockUserCallback(resp)
             },
@@ -75,7 +124,7 @@ export class FriendActionsComponent implements OnInit {
 
         this.loading = true
 
-        this.friendshipSerivce.unfriend(this.friend.user.id).subscribe( 
+        this.friendshipService.unfriend(this.friend.user.id).subscribe( 
             resp => {
                 this.unfriendCallback(resp)
             },
@@ -111,7 +160,9 @@ export class FriendActionsComponent implements OnInit {
     }
 
     ngOnInit() {
-    
+        
+        this.bgColor = localStorage.getItem('spotbie_backgroundColor')
+
         if(this.deviceDetector.isMobile())
             this.isMobile = true
         else

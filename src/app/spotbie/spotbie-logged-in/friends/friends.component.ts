@@ -46,7 +46,7 @@ export class FriendsComponent implements OnInit {
     
   }
 
-  public switchFriends(ac) {
+  public switchFriends(ac): void {
 
     this.friends = false
     this.pending = false

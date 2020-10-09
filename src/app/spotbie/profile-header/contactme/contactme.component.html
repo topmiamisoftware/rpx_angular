@@ -3,11 +3,11 @@
 
 <div class='spotbie-overlay-window'>
 
-    <div class='spotbie-toast-input-box'  [ngStyle]="{ 'background-color' : background_color }">
+    <div class='spotbie-toast-input-box' [ngStyle]="{ 'background-color' : bgColor }">
 
-        <div class='spotbie-contact-me-info' #spotbie_contact_me_info>Ways for friends to reach you.</div>
+        <div class='spotbie-contact-me-info' #spotbieContactMeInfo></div>
 
-        <form [formGroup]="spotbie_contact_me_form">
+        <form [formGroup]="spotbieContactMeForm">
             
             <table class='spotbie-contact-me-table'>
                 <tr>
@@ -16,13 +16,13 @@
                     </td>                    
                     <td>
 
-                        <div *ngIf="contact_me_submitted && g.facebook.errors" class="spotbie-invalid-feedback animated shake">                   
+                        <div *ngIf="contactMeSubmitted && g.facebook.errors" class="spotbie-invalid-feedback animated shake">                   
                             <div *ngIf="g.facebook.errors.maxlength">
                                 Facebook can only be 130 characters or less in length.
                             </div>                                                  
                         </div>     
 
-                        <input class='spotbie-input' formControlName="facebook" (click)="$event.target.select()" maxlength="130" />       
+                        <input class='spotbie-input' formControlName="facebook" placeholder="Facebook" (click)="$event.target.select()" maxlength="130" />       
 
                     </td>
                 </tr>
@@ -31,12 +31,12 @@
                         <i class="fa fa-instagram" aria-hidden="true"></i>
                     </td>                     
                     <td>
-                        <div *ngIf="contact_me_submitted && g.instagram.errors" class="spotbie-invalid-feedback animated shake">                   
+                        <div *ngIf="contactMeSubmitted && g.instagram.errors" class="spotbie-invalid-feedback animated shake">                   
                             <div *ngIf="g.instagram.errors.maxlength">
                                 Instagram can only be 130 characters or less in length.
                             </div>                                             
                         </div>                                         
-                        <input class='spotbie-input' formControlName="instagram" (click)="$event.target.select()" maxlength="130" />                        
+                        <input class='spotbie-input' formControlName="instagram" placeholder="Instagram" (click)="$event.target.select()" maxlength="130" />                        
                     </td>
                 </tr>
                 <tr>
@@ -44,12 +44,12 @@
                         <i class="fa fa-twitter-square" aria-hidden="true"></i>
                     </td>                     
                     <td>
-                        <div *ngIf="contact_me_submitted && g.twitter.errors" class="spotbie-invalid-feedback animated shake">                   
+                        <div *ngIf="contactMeSubmitted && g.twitter.errors" class="spotbie-invalid-feedback animated shake">                   
                             <div *ngIf="g.twitter.errors.maxlength">
                                 Twitter can only be 130 characters or less in length.
                             </div>                                                 
                         </div>                                          
-                        <input class='spotbie-input' formControlName="twitter" (click)="$event.target.select()" maxlength="130" />                        
+                        <input class='spotbie-input' formControlName="twitter" placeholder="Twitter" (click)="$event.target.select()" maxlength="130" />                        
                     </td>
                 </tr>
                 <tr>
@@ -57,13 +57,13 @@
                         <i class="fa fa-whatsapp" aria-hidden="true"></i>
                     </td>                      
                     <td>
-                        <div *ngIf="contact_me_submitted && g.whatsapp.errors" class="spotbie-invalid-feedback animated shake">                   
+                        <div *ngIf="contactMeSubmitted && g.whatsapp.errors" class="spotbie-invalid-feedback animated shake">                   
                             <div *ngIf="g.whatsapp.errors.maxlength">
                                 WatsApp can only be 130 characters or less in length.
                             </div>                                                 
                         </div>                         
                 
-                        <input class='spotbie-input' formControlName="whatsapp" (click)="$event.target.select()" maxlength="130" />                        
+                        <input class='spotbie-input' formControlName="whatsapp" placeholder="WhatsApp" (click)="$event.target.select()" maxlength="130" />                        
                     </td>
                 </tr>
                 <tr>
@@ -71,17 +71,17 @@
                         <i class="fa fa-snapchat-square" aria-hidden="true"></i>
                     </td>                     
                     <td>
-                        <div *ngIf="contact_me_submitted && g.snapchat.errors" class="spotbie-invalid-feedback animated shake">                   
+                        <div *ngIf="contactMeSubmitted && g.snapchat.errors" class="spotbie-invalid-feedback animated shake">                   
                             <div *ngIf="g.snapchat.errors.maxlength">
                                 Snapchat can only be 130 characters or less in length.
                             </div>                                                  
                         </div>                                             
-                        <input class='spotbie-input' formControlName="snapchat" (click)="$event.target.select()" maxlength="130" />                        
+                        <input class='spotbie-input' formControlName="snapchat" placeholder="Snapchat" (click)="$event.target.select()" maxlength="130" />                        
                     </td>
                 </tr>                
             </table>
 
-            <div class='spotbie-button spotbie-button-mini' (click)="saveContactMe()">Save ContactMe</div>
+            <div class='spotbie-button spotbie-button-mini' (click)="saveContactMe()" *ngIf="this.publicProfileInfo === undefined">Save ContactMe</div>
             <div class='spotbie-button spotbie-button-mini' (click)="closeWindow()">Close</div>
 
         </form>

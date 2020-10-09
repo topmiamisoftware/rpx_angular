@@ -38,8 +38,6 @@ export class MapComponent implements OnInit {
 
   public locationFound: boolean = false
 
-  public exe_api_key: string
-
   public current_search_type= '0'
 
   private n2_x = 0
@@ -1081,8 +1079,7 @@ export class MapComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-
-    this.exe_api_key = localStorage.getItem('spotbie_userApiKey')
+    
     this.is_logged_in = localStorage.getItem('spotbie_loggedIn')
     this.bg_color = localStorage.getItem('spotbie_backgroundColor')
     this.user_default_image = localStorage.getItem('spotbie_userDefaultImage')

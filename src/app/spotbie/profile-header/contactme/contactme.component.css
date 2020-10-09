@@ -19,8 +19,7 @@
     min-width: 90%;
     max-width: 90%;
     background-color: rgba(0,0,0,.23);
-    border-bottom-right-radius: 20px;
-    border-bottom-left-radius: 20px;
+    border-radius: 20px;
     table-layout: fixed;
 }
 .spotbie-toast-input-box{

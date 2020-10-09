@@ -49,8 +49,6 @@ export class PendingFriendsComponent implements OnInit {
 
   private callPendingCallback(http_response: any){
 
-    console.log(http_response)
-
     if(http_response.message === 'success'){      
 
       const current_page = http_response.current_page

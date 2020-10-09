@@ -7,13 +7,14 @@ import { SanitizePipe } from '../../pipes/sanitize.pipe'
 import { Subscription } from 'rxjs'
 import { User } from 'src/app/models/user'
 import { ProfileHeaderService } from 'src/app/services/profile-header/profile-header.service'
+import { ColorsService } from 'src/app/services/background-color/colors.service'
 
 const PROFILE_HEADER_API = spotbieGlobals.API + 'api/settings.service.php'
 
 const BACKGROUND_UPLOAD_API_URL = spotbieGlobals.API + 'api/background_image_upload.service.php'
 const BACKGROUND_MAX_UPLOAD_SIZE = 1e+7
 
-const DEFAULT_UPLOAD_API_URL = spotbieGlobals.API + 'api/default_image_upload.service.php'
+const DEFAULT_UPLOAD_API_URL = spotbieGlobals.API + 'profile_header/upload_default'
 const DEFAULT_MAX_UPLOAD_SIZE = 1e+7
 
 @Component({
@@ -23,7 +24,7 @@ const DEFAULT_MAX_UPLOAD_SIZE = 1e+7
 })
 export class ProfileHeaderComponent implements OnInit {
 
-  @Input() public_profile_info
+  @Input() publicProfileInfo
 
   @Input() current_user_bg
   
@@ -54,10 +55,6 @@ export class ProfileHeaderComponent implements OnInit {
   public m_swiper: Swiper
   public profile_images_loaded: boolean
 
-  public exe_api_key: string
-
-  public web_options_subscriber: Subscription
-
   public edit_description: boolean = false
 
   public profile_description_form: FormGroup
@@ -72,9 +69,12 @@ export class ProfileHeaderComponent implements OnInit {
 
   public loading: boolean = false
 
+  public webOptionsSubscriber: Subscription
+
   constructor(private http: HttpClient,
               private formBuilder: FormBuilder,
-              private profile_header_service: ProfileHeaderService) {}
+              private profile_header_service: ProfileHeaderService,
+              private webOptionsService: ColorsService) {}
 
   private getMyProfileHeader(): void {
                                     
@@ -89,11 +89,14 @@ export class ProfileHeaderComponent implements OnInit {
 
   }
 
-  private getMyProfileHeaderCallback(profile_header_response: any): void{
+  private getMyProfileHeaderCallback(profileHeaderResponse: any): void{
 
-    const user = profile_header_response.user
-    const spotbie_user = profile_header_response.spotbie_user
-    const default_images = profile_header_response.default_images
+    const user = profileHeaderResponse.user
+    const spotbie_user = profileHeaderResponse.spotbie_user
+    const default_images = profileHeaderResponse.default_images
+    const webOptions = profileHeaderResponse.web_options
+
+    console.log("Header response", profileHeaderResponse)
 
     let current_index = 0
 
@@ -123,6 +126,7 @@ export class ProfileHeaderComponent implements OnInit {
     this.user.exe_animal = spotbie_user.animal
     this.user.ghost = spotbie_user.ghost_mode
     this.user.privacy = spotbie_user.privacy
+    this.user.exe_background_color = webOptions.bg_color
 
     const _this = this
     
@@ -343,7 +347,7 @@ export class ProfileHeaderComponent implements OnInit {
 
       this.user.profile_pictures.splice(this.profile_pictures_index, 1)
 
-      this.user.exe_user_default_picture = spotbieGlobals.RESOURCES + httpResponse.new_profile_default
+      this.user.exe_user_default_picture = spotbieGlobals.DEFAULTS + httpResponse.new_profile_default
 
       if (this.user.exe_user_default_picture == 'defaults/user.png') {
 
@@ -385,23 +389,21 @@ export class ProfileHeaderComponent implements OnInit {
 
     const formData = new FormData()
 
-    let file_to_upload
+    let default_picture
     let upload_size = 0
-
-    formData.append('upload_action', 'uploadDefault')
 
     for (let i = 0; i < file_list_length; i++) {
 
-      file_to_upload = files[i] as File
+      default_picture = files[i] as File
 
-      upload_size += file_to_upload.size
+      upload_size += default_picture.size
 
       if (upload_size > DEFAULT_MAX_UPLOAD_SIZE) {
-        this.default_media_message = 'Max upload size is 10MB.'
+        this.default_media_message = 'Max upload size is 3MB.'
         return
       }
 
-      formData.append('filesToUpload[]', file_to_upload, file_to_upload.name)
+      formData.append('default_picture', default_picture, default_picture.name)
 
     }
 
@@ -420,18 +422,20 @@ export class ProfileHeaderComponent implements OnInit {
 
   public defaultUploadFinished(httpResponse: any): void {
 
+    console.log("defaultUploadFinished", httpResponse)
+
     if (httpResponse.message == 'success') {
 
       this.cancelDefault()
 
-      this.user.exe_user_default_picture = spotbieGlobals.RESOURCES + httpResponse.default_picture
+      this.user.exe_user_default_picture = spotbieGlobals.DEFAULTS + httpResponse.default_picture
       localStorage.setItem('spotbie_userDefaultImage', this.user.exe_user_default_picture)
 
       this.user.profile_pictures.unshift(this.user.exe_user_default_picture)
       this.profile_pictures_index = 0
       this.m_swiper.slideTo(this.profile_pictures_index)
 
-      if (this.user.profile_pictures[1].indexOf('defaults/user.png') > -1) this.user.profile_pictures.pop()
+      if (this.user.profile_pictures[1].indexOf('user.png') > -1) this.user.profile_pictures.pop()
 
     } else
       console.log('defaultUploadFinished', httpResponse)
@@ -498,7 +502,7 @@ export class ProfileHeaderComponent implements OnInit {
     this.profile_description_form.get('spotbie_profile_description').setValue(sanitized_description)
 
     this.loading = false
-
+    
   }
 
   public cancelDescription():void {
@@ -526,16 +530,21 @@ export class ProfileHeaderComponent implements OnInit {
   }
 
   ngOnInit(){
-    
-    this.user.exe_background_color = localStorage.getItem('spotbie_backgroundColor')
+
+    this.webOptionsSubscriber = this.webOptionsService.getWebOptions().subscribe(
+      web_options =>{
+        if(web_options.bg_color) this.user.exe_background_color = web_options.bg_color
+      }
+    )
 
   }
 
   ngAfterViewInit(){
 
-    if (this.public_profile_info !== undefined) {
+    if (this.publicProfileInfo !== undefined) {
 
-      this.getMyProfileHeaderCallback(this.public_profile_info)
+      this.getMyProfileHeaderCallback(this.publicProfileInfo)
+      this.user.id = this.publicProfileInfo.user.id
       this.public_profile = true
       
     } else {

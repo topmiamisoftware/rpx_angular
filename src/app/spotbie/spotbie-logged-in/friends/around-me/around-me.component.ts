@@ -56,15 +56,12 @@ export class AroundMeComponent implements OnInit {
 
   private aroundMeCallback(httpResponse: any){
 
-    console.log("aroundMeCallback", httpResponse)
-
     if(httpResponse.message === "success"){      
 
       const current_page = httpResponse.around_me_friend_list.current_page
       const last_page = httpResponse.around_me_friend_list.last_page
 
       httpResponse.around_me_friend_list.data.forEach(friend => {
-        friend = friend
         this.around_me_list.push(friend)
       })      
 
@@ -100,6 +97,10 @@ export class AroundMeComponent implements OnInit {
 
   public loadMoreAroundMe(): void{
     this.getLocation()
+  }
+
+  public closeActions(): void{
+    this.show_around_me_actions = false
   }
 
   ngOnInit() {

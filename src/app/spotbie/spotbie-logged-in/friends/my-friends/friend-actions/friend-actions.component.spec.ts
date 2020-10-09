@@ -1,6 +1,6 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { FriendActionsComponent } from './friend.actions.component';
 
-import { FriendActionsComponent } from './friend-actions.component';
 
 describe('FriendActionsComponent', () => {
   let component: FriendActionsComponent;

@@ -28,4 +28,4 @@
     Load More
 </div>
 
-<app-around-me-actions *ngIf="show_around_me_actions" [around_me_user]="current_around_me"></app-around-me-actions>
+<app-around-me-actions *ngIf="show_around_me_actions" [around_me_user]="current_around_me" (closeActions)="closeActions()"></app-around-me-actions>
