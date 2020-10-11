@@ -20,70 +20,29 @@
     
     <div class='spotbie-friend-actions-username'>{{ friend.user.username }}</div>
     
-    <table class='spotbie-friend-action-buttons' *ngIf="isDesktop">
-        <tr>
-            <td>
-                <div class='spotbie-button' [routerLink]="['/user-profile/' + friend.user.username]">View Profile</div>
-            </td>
-            <td>
-                <div class='spotbie-button' (click)="unfriend()">Unfriend</div>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <div class='spotbie-button' (click)="blockUser()">Block</div>
-            </td>
-            <td>
-                <div class='spotbie-button' (click)="reportReasonsWindow()">Report</div>
-            </td>            
-        </tr>
-    </table>
+    <div class='spotbie-friend-action-buttons'>
 
-    <table class='spotbie-friend-action-buttons' *ngIf="isMobile">
-        <tr>
-            <td>
-                <div class='spotbie-button' [routerLink]="['/user-profile/' + friend.user.username]">View Profile</div>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <div class='spotbie-button' (click)="unfriend()">Unfriend</div>
-            </td>
-        </tr>
-        <tr>            
-            <td>
-                <div class='spotbie-button' (click)="blockUser()">Block</div>
-            </td>
-        </tr>
-        <tr>            
-            <td>
-                <div class='spotbie-button' (click)="reportReasonsWindow()">Report</div>
-            </td>            
-        </tr>
-    </table>
+        <div class='spotbie-button' [routerLink]="['/user-profile/' + friend.user.username]">View Profile</div>
 
-    <div class="spotbie-close-button" (click)="closeWindow()">close</div>
+        <div class='spotbie-button' (click)="unfriend()">Unfriend</div>
+
+        <div class='spotbie-button' (click)="blockUser()">Block</div>
+
+        <div class='spotbie-button' (click)="reportReasonsWindow()">Report</div>
+
+        <div class="spotbie-close-button" (click)="closeWindow()">close</div>
+
+    </div>
 
     <div class="spotbie-successful-action-wrapper" *ngIf="successful_action">
+
         <div class="spotbie-successful-action-title">
             {{ successful_action_title }}
         </div>
+
         <div class="spotbie-successful-action-description">
             {{ successful_action_description }}
         </div>        
-    </div>
-
-    <div class='spotbie-reportReasons' *ngIf="reportReasonsUp">
-
-        <h4>Why would you like to report {{ around_me_user.username }}?</h4>
-
-        <div class='spotbie-reportReasonsInnerWrapper'>
-
-            <div class="spotbie-reportReason" *ngFor="let reportReason of reportReasonList">
-                {{ reportReason.name }}
-            </div>
-
-        </div>
 
     </div>
 

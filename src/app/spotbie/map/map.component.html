@@ -121,7 +121,7 @@
 
 <div class='spotbie-category-search-yelp animated slideInUp' *ngIf="cats_up">
   <input type='text' class='spotbie-searchbar spotbie-input' placeholder="{{ search_categories_placeholder }}" (keyup)="searchSpotBie($event)" />
-  <div class='spotbie-close-categories' (click)="closeCategories()" *ngIf="cats_up" [ngStyle]="{ 'background-color' : bg_color }">close</div>
+  <div class='spotbie-close-categories' (click)="closeCategories()" *ngIf="cats_up">close</div>
 </div>
 
 <div class='spotbie-categories animated slideInRight' *ngIf="cats_up && search_category != 'events'" [ngStyle]="{ 'background-color' : bg_color }">
@@ -172,8 +172,9 @@
 
 </div>
 
-
 <div class='spotbie-search-results' *ngIf="show_search_box && search_results.length > 0">
+
+  <div class='spotbie-close-results-mobile' (click)="closeSearchResults()">close results</div>
 
   <!--<table class='spotbie-pull-from'>
     <tr>
@@ -330,16 +331,13 @@
   
     </div>
 
-    <table class='spotbie-next-previous-table-big' *ngIf="all_pages > 1">
-      <tr>
-        <td class='spotbie-button spotbie-button-cell' (click)="loadMoreResults(0)">
-          Previous
-        </td>         
-        <td class='spotbie-button spotbie-button-cell' (click)="loadMoreResults(1)">
-          Next
-        </td>     
-      </tr>
-    </table>
+    <span class='spotbie-button' (click)="loadMoreResults(0)" *ngIf="all_pages > 1">
+      Previous
+    </span>   
+
+    <span class='spotbie-button' (click)="loadMoreResults(1)" *ngIf="all_pages > 1">
+      Next
+    </span>
 
     <div class='spotbie-search-results-title' style="text-align: center;">
         {{ around_me_search_page }} / {{ all_pages }}

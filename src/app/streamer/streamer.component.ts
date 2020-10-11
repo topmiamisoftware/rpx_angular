@@ -82,9 +82,9 @@ export class StreamerComponent implements OnInit {
 
   public loading_bottom_stream_text: boolean = false
     
-  constructor(private _streamer_service: StreamerService,
+  constructor(private streamerService: StreamerService,
               private _web_options_service: ColorsService,
-              private _sanitizer: DomSanitizer) {}
+              private sanitizer: DomSanitizer) {}
 
   @HostListener("window:scroll", [])
   onScroll(): void {
@@ -157,14 +157,20 @@ export class StreamerComponent implements OnInit {
 
     this.stream_loaded = false
 
-    const stream_obj = { page: this.page }
+    let userId = null
 
-    this._streamer_service.getMyStream(stream_obj).subscribe(
+    if(this.public_profile_info !== undefined){
+      userId = this.public_exe_user_id
+    }
+
+    const streamObj = { 
+      page: this.page,
+      user_id: userId
+    }
+
+    this.streamerService.getMyStream(streamObj).subscribe(
       resp => {
         this.populateMyStream(resp)
-      },
-      error => {
-        console.log("myStream Error", error)
       }
     )
 
@@ -188,18 +194,18 @@ export class StreamerComponent implements OnInit {
 
     for(let i = 0; i < stream_post_length; i++){
       
-      let stream_post: StreamPost = new StreamPost(stream_posts[i], this._streamer_service, this._sanitizer)               
+      let stream_post: StreamPost = new StreamPost(stream_posts[i], this.streamerService, this.sanitizer)               
 
       if(stream_post.extra_media_obj !== undefined){
 
         stream_post.extra_media_obj.forEach(extra_media => {
 
-            if(extra_media.type == 'video'){
+          if(extra_media.type == 'video'){
 
-              let poster = extra_media.content.split('.mp4')
-              extra_media.poster = poster[0] + ".jpeg"
+            let poster = extra_media.content.split('.mp4')
+            extra_media.poster = poster[0] + ".jpeg"
 
-            }
+          }
 
         })
 
@@ -270,7 +276,7 @@ export class StreamerComponent implements OnInit {
 
     const stream_obj = { page: this.page }
 
-    this._streamer_service.getMyGeneralStream(stream_obj).subscribe(
+    this.streamerService.getMyGeneralStream(stream_obj).subscribe(
       resp => {
         this.populateMyGeneralStream(resp)
       },
@@ -299,7 +305,7 @@ export class StreamerComponent implements OnInit {
 
     for(let i = 0; i < stream_post_length; i++){
       
-      let stream_post: StreamPost = new StreamPost(stream_posts[i], this._streamer_service, this._sanitizer)
+      let stream_post: StreamPost = new StreamPost(stream_posts[i], this.streamerService, this.sanitizer)
 
       if(stream_post.extra_media_obj !== undefined){
 
@@ -376,7 +382,7 @@ export class StreamerComponent implements OnInit {
       stream_post_id: this.stream_post_id
     }
     
-    this._streamer_service.getStreamPost(stream_obj).subscribe(
+    this.streamerService.getStreamPost(stream_obj).subscribe(
       resp =>{
         this.pullStreamPostCallback(resp)
       },
@@ -397,7 +403,7 @@ export class StreamerComponent implements OnInit {
         stream_post.extra_media_obj = stream_post.extra_media_obj
 
       stream_post.stream_content = unescape(decodeURI(stream_post.stream_content))
-      let youtube_embed = await videoEmbedCheck(stream_post.stream_content, this._sanitizer)
+      let youtube_embed = await videoEmbedCheck(stream_post.stream_content, this.sanitizer)
 
       if(youtube_embed !== 'no_video'){
 
@@ -445,13 +451,19 @@ export class StreamerComponent implements OnInit {
   ngAfterViewInit() {
 
     if (this.public_profile_info !== undefined) {
-      // console.log(this.public_profile_info)
+      
+      //console.log(this.public_profile_info)
+      
       this.public_profile = true
-      this.public_username = this.public_profile_info.public_username
-      this.public_exe_user_id = this.public_profile_info.public_exe_user_id
-      this.bg_color = this.public_profile_info.public_bg_color
+      
+      this.public_username = this.public_profile_info.user.username
+      this.public_exe_user_id = this.public_profile_info.user.id
+      this.bg_color = this.public_profile_info.web_options.bg_color
+
       this.stream_by = null
+      
       this.myStream()
+
     } else {
       this.stream_by = localStorage.getItem('spotbie_userId')
       this.public_exe_user_id = null

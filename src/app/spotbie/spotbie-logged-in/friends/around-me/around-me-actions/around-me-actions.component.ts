@@ -1,5 +1,4 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core'
-import { DeviceDetectorService } from 'ngx-device-detector'
 import { FriendshipsService } from 'src/app/services/friendships.service'
 import { AroundMeComponent } from '../around-me.component'
 
@@ -15,10 +14,7 @@ export class AroundMeActionsComponent implements OnInit {
   @Output() closeActions = new EventEmitter()
 
   public loading : boolean = false
-
-  public isMobile: boolean
-  public isDesktop: boolean
-
+  
   public successful_action: boolean = false
 
   public successful_action_title: string
@@ -36,8 +32,7 @@ export class AroundMeActionsComponent implements OnInit {
   public bgColor: string
 
   constructor(private host : AroundMeComponent,
-              private friendshipService: FriendshipsService,
-              private deviceDetector: DeviceDetectorService) { }
+              private friendshipService: FriendshipsService) { }
 
   public blockUser(): void{
 
@@ -46,9 +41,6 @@ export class AroundMeActionsComponent implements OnInit {
     this.friendshipService.blockUser(this.around_me_user.id).subscribe( 
         resp => {
             this.blockUserCallback(resp)
-        },
-        error => {
-            console.log("blockUser", error)
         }
     )
 
@@ -85,9 +77,6 @@ export class AroundMeActionsComponent implements OnInit {
       this.friendshipService.unfriend(this.around_me_user.id).subscribe( 
         resp => {
           this.unfriendCallback(resp)
-        },
-        error => {
-          console.log("unfriend", error)
         }
       )
 
@@ -128,9 +117,6 @@ export class AroundMeActionsComponent implements OnInit {
     this.friendshipService.report(this.around_me_user.id, reportReason).subscribe( 
       resp => {
         this.reportCallback(resp)
-      },
-      error => {
-        console.log("report", error)
       }
     )
 
@@ -164,10 +150,6 @@ export class AroundMeActionsComponent implements OnInit {
 
     this.bgColor = localStorage.getItem('spotbie_backgroundColor')
 
-    if(this.deviceDetector.isMobile())
-      this.isMobile = true
-    else
-      this.isDesktop = true      
   }
   
 }

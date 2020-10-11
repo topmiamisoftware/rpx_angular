@@ -71,11 +71,9 @@ export class LogInComponent implements OnInit {
   public loginUser(remember_me_token: string){
 
     this.userAuthService.initLogin().subscribe(
-
       resp =>{
         this.loginCallback(resp)    
       }
-
     )
 
   }
@@ -132,7 +130,7 @@ export class LogInComponent implements OnInit {
       else if(login_status == 'confirm')
         this.router.navigate(['/confirm'])*/
 
-        this.router.navigate(['/user_home'])
+      window.location.reload()
 
     } else {
 

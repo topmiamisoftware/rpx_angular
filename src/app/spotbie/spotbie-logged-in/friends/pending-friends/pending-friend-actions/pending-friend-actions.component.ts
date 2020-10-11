@@ -1,14 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core'
-import * as spotbieGlobals from '../../../../../globals'
-import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http'
 import { PendingFriendsComponent } from '../pending-friends.component'
 import { FriendshipsService } from 'src/app/services/friendships.service'
 
-const FRIENDS_API = spotbieGlobals.API + "api/friends_general.service.php"
-
-const HTTP_OPTIONS = {
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-}
 @Component({
   selector: 'app-pending-friend-actions',
   templateUrl: './pending-friend-actions.component.html',
@@ -42,7 +35,6 @@ export class PendingFriendActionsComponent implements OnInit {
   public bgColor: string
   
   constructor(private host: PendingFriendsComponent,
-              private http: HttpClient,
               private friendshipService: FriendshipsService) { }
 
   public reportReasonsWindow(): void{
@@ -54,12 +46,9 @@ export class PendingFriendActionsComponent implements OnInit {
     this.loading = true
 
     this.friendshipService.report(this.pending_friend.user.id, reportReason).subscribe( 
-        resp => {
+      resp => {
         this.reportCallback(resp)
-        },
-        error => {
-        console.log("report", error)
-        }
+      }
     )
 
   }
@@ -68,19 +57,19 @@ export class PendingFriendActionsComponent implements OnInit {
 
       if(httpResponse.message === "success"){
 
-          this.successful_action_title = "User was reported succesfully."
-          this.successful_action_description = `You have reported \"${this.pending_friend.user.username}\".`
+        this.successful_action_title = "User was reported succesfully."
+        this.successful_action_description = `You have reported \"${this.pending_friend.user.username}\".`
 
-          this.successful_action = true
+        this.successful_action = true
 
-          setTimeout(function(){
-              this.successful_action = false
-          }.bind(this), 2500)
+        setTimeout(function(){
+            this.successful_action = false
+        }.bind(this), 2500)
 
-          this.loading = false  
+        this.loading = false  
 
       } else
-          console.log("reportCallback", httpResponse)
+        console.log("reportCallback", httpResponse)
 
   }
 
@@ -90,10 +79,7 @@ export class PendingFriendActionsComponent implements OnInit {
 
     this.friendshipService.blockUser(this.pending_friend.user.id).subscribe( 
       resp => {
-          this.blockUserCallback(resp)
-      },
-      error => {
-          console.log("blockUser", error)
+        this.blockUserCallback(resp)
       }
     )
 
@@ -112,8 +98,8 @@ export class PendingFriendActionsComponent implements OnInit {
       this.host.pending_list.splice(friend_index, 1)
 
       setTimeout(function(){
-          this.host.show_friend_actions = false
-          this.successful_action = false
+        this.host.show_friend_actions = false
+        this.successful_action = false
       }.bind(this), 2500)
 
       this.loading = false  
@@ -137,7 +123,7 @@ export class PendingFriendActionsComponent implements OnInit {
 
   private acceptRequestCallback(http_response: any): void{
 
-    if(http_response.message === "success"){
+    if(http_response.success){
 
       this.successful_action_title = "Friend request accepted."
       this.successful_action_description = `You and \"${this.pending_friend.user.username}\" are now friends.`
@@ -156,7 +142,7 @@ export class PendingFriendActionsComponent implements OnInit {
       this.loading = false
 
     } else
-      console.log("Accept Request Callback Error", http_response) 
+      console.log("acceptRequestCallback", http_response) 
 
   }
 
@@ -164,24 +150,20 @@ export class PendingFriendActionsComponent implements OnInit {
     
     this.loading = true    
     
-    let call_friends_obj = { exe_friend_id: this.pending_friend.user.id }
-    
-    this.http.post<HttpResponse<any>>(FRIENDS_API, call_friends_obj, HTTP_OPTIONS)
-    .subscribe( resp => {
-      this.cancelRequestCallback(resp)
-    },
-      error => {
-        console.log("Cancel Friend Request Error", error)
-    })
+    this.friendshipService.cancelRequest(this.pending_friend.user.id).subscribe(
+      resp =>{
+        this.cancelRequestCallback(resp)
+      }
+    )
 
   }
   
-  public cancelRequestCallback( http_response: HttpResponse<any>): void{
+  public cancelRequestCallback( httpResponse: any): void{
     
-    if(http_response.status === 200 && http_response.body.responseObject == "cancelled"){
+    if(httpResponse.success){
 
       this.successful_action_title = "Friend request cancelled."
-      this.successful_action_description = "Your friendship request to \"" + this.pending_friend.user.username + "\" was cancelled."    
+      this.successful_action_description = `Your friendship request to \"${this.pending_friend.user.username }\" was cancelled.`
 
       this.successful_action = true
 
@@ -197,7 +179,7 @@ export class PendingFriendActionsComponent implements OnInit {
       this.loading = false  
 
     } else
-      console.log("Cancel Request Callback Error", http_response)
+      console.log("cancelRequestCallback", httpResponse)
 
   }
 
@@ -207,8 +189,9 @@ export class PendingFriendActionsComponent implements OnInit {
 
   ngOnInit() {
 
-    this.bgColor = localStorage.getItem('spotbie_backgroundColor')
+    console.log("Pending Friend", this.pending_friend)
 
+    this.bgColor = localStorage.getItem('spotbie_backgroundColor')
     this.my_id = localStorage.getItem('spotbie_userId')
       
   }

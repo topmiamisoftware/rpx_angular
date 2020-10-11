@@ -119,7 +119,6 @@ export class EditMediaComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.exe_api_key = this.host.exe_api_key
     this.bg_color = this.host.bg_color
     //console.log("Media Info: ", this.media)
     this.initEditItemForm()

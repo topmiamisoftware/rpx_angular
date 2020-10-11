@@ -59,8 +59,6 @@ export class UserComponent implements OnInit {
   
   private getUserCb(httpResponse: any) {
 
-    console.log('httpResponse', httpResponse)
-
     if (httpResponse.message == 'success') {
 
       this.public_profile_info = {

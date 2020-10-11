@@ -87,6 +87,7 @@
     padding-right: 10px;
     border-radius: 5px;
     cursor: pointer;
+    background-color: rgba(0,0,0,.9);
 }
 .spotbie-controls-search-results{
     position: relative;
@@ -104,7 +105,7 @@
 }
 .spotbie-categories{
     position: fixed;
-    z-index: 9999999;
+    z-index: 9999998;
     min-width: 250px;
     max-width: 250px;
     width: 250px;
@@ -439,6 +440,19 @@ span.spotbie-button{
     border-radius: 10px;
     font-size: 16px;
 }
+.spotbie-close-results-mobile{
+    position: fixed;
+    display: none;
+    bottom: 18px;
+    right: 10px;
+    font-size: 14px;
+    padding: 8px;
+    color: white;
+    background-color: rgb(2 2 2 / 74%);
+    border-radius: 10px;
+    z-index: 9999997;
+    font-weight: bold;
+}
 #spotbie_me_search{
     background: url(../../../assets/images/spot.png);
 }
@@ -639,11 +653,22 @@ span.spotbie-button{
         max-width: 22px;
     }
     .spotbie-close-results{
-        top: 19px;
+        display: none;
     }     
+    .spotbie-close-results-mobile{
+        display: block;
+    }
     .spotbie-search-results-title{
         text-align: center;
-    }    
+    }  
+    span.spotbie-button{
+        max-width: 46%;
+        width: 46%;
+        min-width: 46%;
+        padding: 0px;
+        padding-top: 10px !important;
+        padding-bottom: 10px !important;
+    }     
 }
 @media (max-width: 460px) { 
     .spotbie-category-search-yelp{

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import * as spotbieGlobals from '../../../../globals'
 import { HttpClient } from '@angular/common/http'
+import { FriendshipsService } from 'src/app/services/friendships.service'
 
 const FRIENDS_API = spotbieGlobals.API + "friendship"
 
@@ -25,7 +26,7 @@ export class PendingFriendsComponent implements OnInit {
 
   constructor(private http: HttpClient){}
 
-  public setCurrentPending(friend){
+  public setCurrentPending(friend){    
     this.current_pending = friend
     this.show_pending_actions = true    
   }
@@ -49,7 +50,7 @@ export class PendingFriendsComponent implements OnInit {
 
   private callPendingCallback(http_response: any){
 
-    if(http_response.message === 'success'){      
+    if(http_response.success){      
 
       const current_page = http_response.current_page
       const last_page = http_response.last_page

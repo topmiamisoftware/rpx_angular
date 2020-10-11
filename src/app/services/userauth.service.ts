@@ -6,6 +6,7 @@ import * as spotbieGlobals from 'src/app/globals'
 import { Observable } from 'rxjs'
 import { catchError, tap } from 'rxjs/operators'
 import { handleError } from '../helpers/error-helper'
+import { User } from '../models/user'
 
 const LOGIN_API = spotbieGlobals.API + 'user'
 
@@ -91,9 +92,9 @@ export class UserauthService {
       'timezone' : this.userTimezone
     }
 
-    let login_api = LOGIN_API + '/login'
+    const loInApi = `${LOGIN_API}/login`
 
-    return this.http.post<any>(login_api, params).pipe(
+    return this.http.post<any>(loInApi, params).pipe(
       catchError(handleError("initLogin"))
     )
 
@@ -101,10 +102,32 @@ export class UserauthService {
 
   public getSettings(): Observable<any>{
 
-    const get_settings_api = LOGIN_API + "/settings"; 
+    const getSettingsApi = `${LOGIN_API}/settings`
 
-    return this.http.get<any>(get_settings_api).pipe(
+    return this.http.get<any>(getSettingsApi).pipe(
       catchError(handleError("getSettings"))
+    )  
+
+  }
+
+  public saveSettings(user: User): Observable<any>{
+
+    const saveSettingsApi = `${LOGIN_API}/update`
+
+    const saveSettingsObj = {
+      _method: 'PUT',
+      username: user.username,
+      email: user.email,
+      first_name: user.exe_user_first_name,
+      last_name: user.exe_user_last_name,
+      phone_number: user.ph,
+      ghost_mode: user.ghost,
+      privacy: user.privacy,
+      animal: user.exe_animal
+    }
+
+    return this.http.post<any>(saveSettingsApi, saveSettingsObj).pipe(
+      catchError(handleError("saveSettings"))
     )  
 
   }

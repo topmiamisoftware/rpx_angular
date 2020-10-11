@@ -6,7 +6,7 @@
 
         <div class='spotbie-reportReasonsInnerWrapper' [ngStyle]="{ 'background-color' : bgColor}">
 
-            <h4>Why would you like to report {{ blocked_user.user.username }}?</h4>
+            <h4>Why would you like to report {{ publicProfileInfo.user.username }}?</h4>
 
             <div class="spotbie-reportReason" *ngFor="let reportReason of reportReasonList" (click)="report(reportReason.id)">
                 {{ reportReason.name }}
@@ -17,22 +17,28 @@
     </div>
 
     <div class='spotbie-friend-actions-image'
-        *ngIf="blocked_user.spotbie_user.default_picture as user_default"
+        *ngIf="publicProfileInfo.spotbie_user.default_picture as user_default"
         [ngStyle]="{'background' : 'url(' + user_default + ')'}"></div>
 
-    <div class='spotbie-friend-actions-username'>{{ blocked_user.user.username }}</div>
+    <div class='spotbie-friend-actions-username'>{{ publicProfileInfo.user.username }}</div>
 
     <div class='spotbie-friend-action-buttons'>
-        <div class='spotbie-button' [routerLink]="['/user-profile/' + blocked_user.user.username]">View Profile</div>
 
-        <div class='spotbie-button' (click)="unblockUser()">Unblock</div>
+        <div class='spotbie-button' *ngIf="relationship == 1" (click)="unfriend()">Unfriend</div>
 
-        <div class='spotbie-button' (click)="friendUser()">Befriend</div>
+        <div class='spotbie-button' *ngIf="relationship == 0" (click)="cancelRequest()">Cancel Request</div> 
+
+        <div class='spotbie-button' *ngIf="relationship == null || relationship == 2" (click)="addFriend()">Add Friend</div> 
+
+        <div class='spotbie-button' *ngIf="relationship == null || relationship == 1 || relationship == 0" (click)="blockUser()">Block</div>
+
+        <div class='spotbie-button' *ngIf="relationship == 2" (click)="unblockUser()">Unblock</div>
 
         <div class='spotbie-button' (click)="reportReasonsWindow()">Report</div>
-    </div>   
 
-    <div class="spotbie-close-button" (click)="closeWindow()">close</div>
+    </div>
+
+    <div class="spotbie-close-button" (click)="closeActionsx()">close</div>
 
     <div class="spotbie-successful-action-wrapper" *ngIf="successful_action">
         <div class="spotbie-successful-action-title">
@@ -43,4 +49,5 @@
         </div>        
     </div>
 
-</div>  
+</div>
+        

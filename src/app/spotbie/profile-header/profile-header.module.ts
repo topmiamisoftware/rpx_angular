@@ -6,10 +6,12 @@ import { ContactmeModule } from './contactme/contactme.module'
 import { HttpClientModule } from '@angular/common/http'
 import { SpotbiePipesModule } from '../../spotbie-pipes/spotbie-pipes.module'
 import { ReactiveFormsModule, FormsModule } from '@angular/forms'
-import { HelperModule } from 'src/app/helpers/helper.module'
+import { HelperModule } from 'src/app/helpers/helper.module';
+import { FriendActionsComponent } from './friend-actions/friend-actions.component'
 @NgModule({
   declarations: [
     ProfileHeaderComponent,
+    FriendActionsComponent,
   ],
   imports: [
     CommonModule,

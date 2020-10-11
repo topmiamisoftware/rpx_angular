@@ -41,9 +41,13 @@
 .spotbie-friend-action-buttons{
     position: relative;
     margin: 0 auto;
-    width: 550px;
-    min-width: 550px;
-    max-width: 550px;
+    width: 800px;
+    min-width: 800px;
+    max-width: 800px;
+}
+.spotbie-friend-action-buttons .spotbie-button{
+    position: relative;
+    display: inline-block;
 }
 .spotbie-close-button{
     z-index: 999999;
@@ -159,10 +163,12 @@
     }
 }
 @media (max-width: 560px) { 
-     
+    .spotbie-friend-action-buttons .spotbie-button{
+        display: block;
+    }  
 }
 @media (max-width: 460px) { 
-              
+ 
 }
 @media (max-width: 420px) { 
                    

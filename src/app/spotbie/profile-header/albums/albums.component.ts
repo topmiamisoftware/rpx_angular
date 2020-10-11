@@ -14,7 +14,7 @@ import { ToastRequest } from 'src/app/helpers/toast-helper/toast-models/toast-re
 })
 export class AlbumsComponent implements OnInit {
 
-  @Input() public_profile_info
+  @Input() publicProfileInfo
 
   @Input() album_id: number
   @Input() album_media_id: number
@@ -27,7 +27,6 @@ export class AlbumsComponent implements OnInit {
   public bg_color: string
   public public_profile: boolean
   public profile_username: string
-  public exe_api_key: string
 
   public is_logged_in: string
 
@@ -65,15 +64,15 @@ export class AlbumsComponent implements OnInit {
 
   public new_album_media_array = []
 
-  public album_page: number = 0
+  public albumPage: number = 1
 
   public albums_load_more: boolean = false
 
   public album_slider: boolean = false
 
-  public album_items_page: number = 0
+  public albumItemsPage: number = 1
 
-  public pull_more_album_items: boolean = false
+  public pullMoreAlbumItems: boolean = false
 
   public edit_media: boolean = false
   public share_media: boolean = false
@@ -111,33 +110,31 @@ export class AlbumsComponent implements OnInit {
 
   public upload_progress: number = 0
 
-  public loading_more: boolean = false
+  public loadingMore: boolean = false
 
   constructor(private _formBuilder: FormBuilder,
-              private _album_service: AlbumService,
+              private albumService: AlbumService,
               private _platformStrategy: Location) { }
+
 
   @HostListener('window:beforeunload')
   private _deleteAllUnused(): void {
 
-    this._album_service.deleteAllUnused(this.current_album.id).subscribe(
+    this.albumService.deleteAllUnused(this.current_album.id).subscribe(
       resp => {
         console.log("deleted unused media.")
-      }, 
-      error =>{
-        console.log("_deleteAllUnused", error)
       }
     )
 
   }
 
-  public albumScroll(evt: any){
+  public albumScroll(evt: any): void{
+    
+    if(this.loadingMore) return
 
-    if((window.innerHeight - evt.srcElement.scrollTop) <= (evt.srcElement.getElementsByClassName('stream-poster-album-media-wrapper')[0].offsetHeight - 2000)){
-      
-      if(this.pull_more_album_items) this.loadMoreAlbumItems()
-
-    }
+    //In chrome and some browser scroll is given to body tag
+    if ((window.innerHeight + evt.srcElement.scrollTop) >= (evt.srcElement.getElementsByClassName('stream-poster-album-media-wrapper')[0].offsetHeight - 500))
+      if(typeof this.loadMoreAlbumItems === "function" && this.pullMoreAlbumItems) this.loadMoreAlbumItems()
 
   }
   
@@ -174,12 +171,9 @@ export class AlbumsComponent implements OnInit {
       return
     }
 
-    this._album_service.likeAlbumItem(this.current_album_media.album_id, this.current_album_media.album_media_id).subscribe(
+    this.albumService.likeAlbumItem(this.current_album_media.album_id, this.current_album_media.album_media_id).subscribe(
       resp =>{
         this.likeAlbumItemCallback(resp)
-      },
-      error => {
-        console.log("likeAlbumItem", error)
       }
     )
 
@@ -235,11 +229,11 @@ export class AlbumsComponent implements OnInit {
     let album_media_upload_response: AlbumMediaUploadResponse =  new AlbumMediaUploadResponse()
     
     this.show_upload_progress = true
-    this._album_service.album_media_progress.subscribe(progress =>{
+    this.albumService.album_media_progress.subscribe(progress =>{
       this.upload_progress = progress
     })
 
-    album_media_upload_response = await this._album_service.attachAlbumMedia(files, this.exe_api_key, this.current_album, this.uploadFinished.bind(this))
+    album_media_upload_response = await this.albumService.attachAlbumMedia(files, null, this.current_album, this.uploadFinished.bind(this))
 
     if(album_media_upload_response.album_media_message !== 'success'){
       this.album_media_message = album_media_upload_response.album_media_message
@@ -291,7 +285,7 @@ export class AlbumsComponent implements OnInit {
 
     this.loading = true
 
-    this._album_service.removeAlbumMedia(this.current_album.id, file.file_path, file.album_media_id).subscribe(
+    this.albumService.removeAlbumMedia(this.current_album.id, file.file_path, file.album_media_id).subscribe(
 
       resp =>{
         this.removeAlbumMediaFinished(resp, file, event) 
@@ -333,7 +327,7 @@ export class AlbumsComponent implements OnInit {
 
     this.loading = true
 
-    this._album_service.removeAlbumMediaBeforeUpload(this.current_album.id, file.file_path).subscribe(
+    this.albumService.removeAlbumMediaBeforeUpload(this.current_album.id, file.file_path).subscribe(
       resp =>{
         this.removeAlbumMediaBeforeUploadCallback(resp, file, event)
       },
@@ -394,7 +388,7 @@ export class AlbumsComponent implements OnInit {
       album_items: this.new_album_media_array,
     }
 
-    this._album_service.saveAlbum(this.current_album, album_info).subscribe(
+    this.albumService.saveAlbum(this.current_album, album_info).subscribe(
       resp =>{
         this.saveAlbumCallback(resp)
       },
@@ -411,7 +405,7 @@ export class AlbumsComponent implements OnInit {
 
         this.album_media_uploaded_msg = 'Your album has saved successfully.'
         this.albumMediaFileInfoMessage.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' })
-        this.album_page = 0
+        this.albumPage = 0
         this.myAlbums()
         setTimeout(function() {this.closeWindow() }.bind(this), 500)
 
@@ -456,7 +450,7 @@ export class AlbumsComponent implements OnInit {
 
     this.show_album_maker_form = false
     this.current_album.is_new = true
-    this.album_items_page = 0
+    this.albumItemsPage = 1
     this.album_maker = false
     this.album_slider = false
     this.toast_helper = false
@@ -488,8 +482,8 @@ export class AlbumsComponent implements OnInit {
   }
 
   public loadMoreAlbumItems(): void {
-    if(this.loading_more !== false) return
-    this.loading_more = true
+    if(this.loadingMore) return
+    this.loadingMore = true
     this.pullSingleAlbum(this.current_album, true)
   }
 
@@ -504,35 +498,26 @@ export class AlbumsComponent implements OnInit {
 
   private pullSingleAlbum(album: Album, load_more = false): void {
     
-    if(this.album_items_page == 0) this.loading = true
+    if(this.albumItemsPage == 1) this.loading = true
 
     if (load_more == false) {
       this.current_album = album
-      this.album_items_page = 0
+      this.albumItemsPage = 1
       this.album_media_array = []
       this.new_album_media_array = []
     }
 
-    let user_id
     let album_id_to_pull = album.id
 
-    if (this.public_profile === true){
-      user_id = this.spotbie_user_id
-      this.album_id = album_id_to_pull
-    } else
-      user_id = 'null'
-    
-    this._album_service.pullSingleAlbum(album_id_to_pull, this.album_items_page).subscribe(
+    if(this.public_profile === true) this.album_id = album_id_to_pull
+
+    this.albumService.pullSingleAlbum(album_id_to_pull, this.albumItemsPage).subscribe(
       resp =>{
         this.pullSingleAlbumCallback(resp)
-      },
-      error => {
-        console.log("pullSingleAlbum", error)
       }
     )
 
   }
-
   
   public pullSingleAlbumCallback(album_response: any): void {
 
@@ -579,9 +564,6 @@ export class AlbumsComponent implements OnInit {
 
     if (this.public_profile === false) this.initAlbumsForm()
 
-    const last_page = album_response.album_item_list.last_page
-    const current_page = album_response.album_item_list.current_page
-
     album_response.album_item_list.data.forEach(album_item => {
 
       if(album_item.media_type == 'video'){
@@ -591,7 +573,7 @@ export class AlbumsComponent implements OnInit {
 
       album_item.album_username = this.profile_username
 
-      let album_media_item = new AlbumMedia(album_item, this._album_service)
+      let album_media_item = new AlbumMedia(album_item, this.albumService)
 
       this.album_media_array.push(album_media_item)
 
@@ -605,16 +587,19 @@ export class AlbumsComponent implements OnInit {
     } else
       this.album_slider = true
 
+    const last_page = album_response.album_item_list.last_page
+    const current_page = album_response.album_item_list.current_page
+
     if (current_page < last_page) {
 
-      this.album_items_page = this.album_items_page + 1
-      this.pull_more_album_items = true
+      this.albumItemsPage++
+      this.pullMoreAlbumItems = true
 
     } else
-      this.pull_more_album_items = false
+      this.pullMoreAlbumItems = false
 
     this.loading = false
-    this.loading_more = false
+    this.loadingMore = false
 
   }
 
@@ -629,7 +614,7 @@ export class AlbumsComponent implements OnInit {
     else
       user_id = 'null'
 
-    this._album_service.myAlbums(this.album_page).subscribe(
+    this.albumService.myAlbums(this.albumPage).subscribe(
       resp => {
         this.myAlbumsCallback(resp)
       },
@@ -671,7 +656,7 @@ export class AlbumsComponent implements OnInit {
     
     })      
 
-    this.album_page = this.album_page + 1
+    this.albumPage = this.albumPage + 1
 
     if (current_page < last_page) this.albums_load_more = true
 
@@ -679,7 +664,7 @@ export class AlbumsComponent implements OnInit {
 
   public setAlbumCover(file): void{
 
-    this._album_service.setAlbumCover( this.current_album.id, file.file_path, file.album_media_id).subscribe(
+    this.albumService.setAlbumCover( this.current_album.id, file.file_path, file.album_media_id).subscribe(
       resp =>{
         this.setAsAlbumCoverCallback(resp)
       }, 
@@ -694,7 +679,7 @@ export class AlbumsComponent implements OnInit {
 
     if(albums_response.message == 'saved'){
 
-      this.album_page = 0
+      this.albumPage = 0
       this.toast_helper_config.text.info_text = "Album cover updated successfully."
       this.toast_helper_config.type = "acknowledge"
       this.toast_helper = true       
@@ -734,7 +719,7 @@ export class AlbumsComponent implements OnInit {
 
   public deleteAlbum(): void {
 
-    this._album_service.deleteAlbum(this.current_album.id).subscribe(
+    this.albumService.deleteAlbum(this.current_album.id).subscribe(
       resp =>{
         this.deleteAlbumCallback(resp)
       },
@@ -754,7 +739,7 @@ export class AlbumsComponent implements OnInit {
       this.toast_helper_config.actions.acknowledge = function(){this.toast_helper = false}.bind(this)
       this.toast_helper = true          
 
-      this.album_page = 0
+      this.albumPage = 0
       this.myAlbums()
 
       setTimeout(function(){
@@ -785,7 +770,7 @@ export class AlbumsComponent implements OnInit {
 
   private pullSingleAlbumItem(album_media_id: number): void{
     
-    this._album_service.pullSingleMedia(album_media_id).subscribe(
+    this.albumService.pullSingleMedia(album_media_id).subscribe(
       resp => {
         this.pullSingleMediaCallback(resp)
       },
@@ -824,7 +809,7 @@ export class AlbumsComponent implements OnInit {
 
     albums_response.current.album_item_caption = unescape(albums_response.current.album_item_caption)
     
-    this.current_album_media = new AlbumMedia(albums_response.current, this._album_service)
+    this.current_album_media = new AlbumMedia(albums_response.current, this.albumService)
     
     this.view_media = true
 
@@ -840,12 +825,12 @@ export class AlbumsComponent implements OnInit {
 
   async ngAfterViewInit() {
 
-    if (this.public_profile_info !== undefined) {
+    if (this.publicProfileInfo !== undefined) {
 
       this.public_profile = true
-      this.spotbie_user_id = parseInt(this.public_profile_info.public_exe_user_id)
-      this.profile_username = this.public_profile_info.public_username
-      this.bg_color = this.public_profile_info.public_bg_color
+      this.spotbie_user_id = parseInt(this.publicProfileInfo.public_exe_user_id)
+      this.profile_username = this.publicProfileInfo.public_username
+      this.bg_color = this.publicProfileInfo.public_bg_color
 
     } else {
 

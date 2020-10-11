@@ -41,16 +41,18 @@ export class StreamerService {
   }
 
   public deleteAllUnused(media_object: any): Observable<any>{
+    
     return this.http.post<any>(STREAM_API, media_object).pipe(
       catchError(handleError("deleteAllUnused"))
     )
+
   }
 
-  public getMyStream(stream_obj: any): Observable<any>{
+  public getMyStream(streamObj: any): Observable<any>{
 
-    let stream_api = STREAM_API + "/my_stream?page=" + stream_obj.page
+    let streamApi = `${STREAM_API}/my_stream?page=${streamObj.page}&user_id=${streamObj.user_id}`
 
-    return this.http.get<any>(stream_api, stream_obj).pipe(
+    return this.http.get<any>(streamApi).pipe(
       catchError(handleError("getMyStream"))
     )
 
@@ -58,24 +60,28 @@ export class StreamerService {
 
   public getMyGeneralStream(stream_obj: any): Observable<any>{
 
-    let stream_api = STREAM_API + "/my_general_stream?page=" + stream_obj.page
+    let streamApi = `${STREAM_API}/my_general_stream?page=${stream_obj.page}`
 
-    return this.http.get<any>(stream_api, stream_obj).pipe(
+    return this.http.get<any>(streamApi).pipe(
       catchError(handleError("getMyGeneralStream"))
     )
 
   }
 
   public uploadStream(stream_obj: any): Observable<any> {
+
     return this.http.post<any>(STREAM_API, stream_obj).pipe(
       catchError(handleError("uploadStream"))
     )
+
   }
 
   public getStreamPost(stream_obj: any): Observable<any>{
+
     return this.http.post<any>(STREAM_API, stream_obj).pipe(
       catchError(handleError("getStreamPost"))
     )
+    
   }
 
   public saveEdit(stream_obj: any): Observable<any>{

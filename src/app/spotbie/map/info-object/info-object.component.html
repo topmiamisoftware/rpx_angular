@@ -74,7 +74,9 @@
             <div class='spotbie-distance'>{{ info_object.distance }} miles from you.</div>
 
             <img class='spotbie-marker-icon' src='../../assets/images/marker.png'>
-    
+            
+            <div class='spotbie-distance'>Start Navigation</div>
+
             <div class='spotbie-info-object-address' *ngIf="info_object.type_of_info_object == 'yelp_business'">
                 {{ info_object.location.display_address[0] }} 
                 <br/>

@@ -1,6 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core'
-import { DeviceDetectorService } from 'ngx-device-detector'
-import { HttpResponse } from '@angular/common/http'
 import { BlockedUsersComponent } from '../blocked-users.component'
 import { FriendshipsService } from 'src/app/services/friendships.service'
 
@@ -20,12 +18,6 @@ export class BlockedUserActionsComponent implements OnInit {
   public successful_action_title: string
 
   public successful_action_description: string
-  
-  public questions_answer: boolean
-
-  public isMobile: boolean
-
-  public isDesktop: boolean
 
   public reportReasonList: Array<any> = [
     { name : "Mature Content", id : 0 },
@@ -38,8 +30,7 @@ export class BlockedUserActionsComponent implements OnInit {
   public bgColor: string
 
   constructor(private host: BlockedUsersComponent,
-              private friendshipService: FriendshipsService,
-              private  deviceDetector: DeviceDetectorService) { }
+              private friendshipService: FriendshipsService) { }
   
   public reportReasonsWindow(): void{
     this.reportReasonsUp = !this.reportReasonsUp
@@ -52,9 +43,6 @@ export class BlockedUserActionsComponent implements OnInit {
     this.friendshipService.report(this.blocked_user.user.id, reportReason).subscribe( 
       resp => {
         this.reportCallback(resp)
-      },
-      error => {
-        console.log("report", error)
       }
     )
 
@@ -154,8 +142,6 @@ export class BlockedUserActionsComponent implements OnInit {
 
   public friendRequested(): void{
 
-      this.questions_answer = false
-
       this.successful_action_title = "User friendship requested."
       this.successful_action_description = `You have requested to be friends with \"${this.blocked_user.user.username}\".`
       this.successful_action = true
@@ -182,12 +168,7 @@ export class BlockedUserActionsComponent implements OnInit {
 
   ngOnInit() {
 
-    this.bgColor = localStorage.getItem('spotbie_backgroundColor')
-
-    if(this.deviceDetector.isMobile())
-      this.isMobile = true
-    else
-      this.isDesktop = true    
+    this.bgColor = localStorage.getItem('spotbie_backgroundColor') 
 
   }
 

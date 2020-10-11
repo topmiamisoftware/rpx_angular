@@ -12,7 +12,7 @@
 
         <tr>
 
-            <td *ngIf="public_profile_info === undefined" title="Create New Album">
+            <td *ngIf="publicProfileInfo === undefined" title="Create New Album">
 
                 <div class='spotbie-album-text spotbie-add-album-text-top'>A</div>
 
@@ -32,7 +32,7 @@
                 <div class='spotbie-album-text'>{{ album.name }}</div>
 
                 <div class='spotbie-album'  
-                    *ngIf="album.cover | albumMediaPath as album_media_cover"
+                    *ngIf="album.cover as album_media_cover"
                     [ngStyle]="{ 'background' : 'url(' + album_media_cover + ')' }">                    
                 </div> 
 
@@ -63,7 +63,10 @@
 </div>
 
 <!-- Show this if user is viewing another user's albums-->
-<div class='spotbie-overlay-window' spotbieOnScroll (spotbieOnScroll)="albumScroll($event)" *ngIf='album_slider && public_profile_info !== undefined' [ngStyle]="{'background-color' : bg_color}">
+<div class='spotbie-overlay-window' 
+    (spotbieOnScroll)="albumScroll($event)" 
+    *ngIf='album_slider && publicProfileInfo !== undefined' 
+    [ngStyle]="{'background-color' : bg_color}">
 
     <div class="spotbie-album-media-info-public" *ngIf="show_album_description">  
 
@@ -86,22 +89,22 @@
             (click)="openMedia(album_media)" id="{{'album_media_element' + i}}">
             
             <div class='spotbie-album-media-image-backdrop'
-                *ngIf="album_media.media_type == 'image' && album_media.content | albumMediaPath as album_media_path"
+                *ngIf="album_media.media_type == 'image' && album_media.content as album_media_path"
                 [ngStyle]="{'background' : 'url(' + album_media_path  + ')' } " >
             </div>
 
             <div class='spotbie-album-media-image'
-                *ngIf="album_media.media_type == 'image' && album_media.content | albumMediaPath as album_media_path"
+                *ngIf="album_media.media_type == 'image' && album_media.content as album_media_path"
                 [ngStyle]="{'background' : 'url(' + album_media_path  + ')' } " >
             </div>
             
             <div class='spotbie-album-media-image-backdrop'
-                *ngIf="album_media.media_type == 'video' && album_media.poster | albumMediaPath as album_media_poster"
+                *ngIf="album_media.media_type == 'video' && album_media.poster as album_media_poster"
                 [ngStyle]="{'background' : 'url(' + album_media_poster  + ')' } " >
             </div>
 
             <div class='spotbie-album-media-video-holder' 
-                *ngIf="album_media.media_type == 'video' && album_media.poster | albumMediaPath as album_media_poster"
+                *ngIf="album_media.media_type == 'video' && album_media.poster as album_media_poster"
                 [ngStyle]="{'background' : 'url(' + album_media_poster + ')' }">
             
                 <div class='spotbie-play-button'>
@@ -130,7 +133,7 @@
 
         </div>
         
-        <div class='spotbie-load-more-album-items' *ngIf="pull_more_album_items" (click)="loadMoreAlbumItems()">load more</div>
+        <div class='spotbie-load-more-album-items' *ngIf="pullMoreAlbumItems" (click)="loadMoreAlbumItems()">load more</div>
 
     </div>
 
@@ -157,9 +160,9 @@
 </div>
 
 <!-- Show this if user is viewing their own albums-->
-<div class='spotbie-overlay-window'  
-        spotbieOnScroll (spotbieOnScroll)="albumScroll($event)" 
-        *ngIf='album_maker && public_profile_info === undefined'
+<div class='spotbie-overlay-window'
+        (spotbieOnScroll)="albumScroll($event)" 
+        *ngIf='album_maker && publicProfileInfo === undefined'
         [ngStyle]="{'background-color' : bg_color}">
 
     <div class='spotbie-album-editor-buttons-wrapper'>
@@ -291,22 +294,22 @@
                     id="{{'album_media_element' + i}}">
     
                 <div class='spotbie-album-media-image-backdrop'
-                    *ngIf="album_media.media_type == 'image' && album_media.content | albumMediaPath as album_media_path"
+                    *ngIf="album_media.media_type == 'image' && album_media.content as album_media_path"
                     [ngStyle]="{'background' : 'url(' + album_media_path + ')' } " >
                 </div>
 
                 <div class='spotbie-album-media-image'
-                    *ngIf="album_media.media_type == 'image' && album_media.content | albumMediaPath as album_media_path"
+                    *ngIf="album_media.media_type == 'image' && album_media.content as album_media_path"
                     [ngStyle]="{'background' : 'url(' + album_media_path + ')' } " >
                 </div>
 
                 <div class='spotbie-album-media-image-backdrop'
-                    *ngIf="album_media.media_type == 'video' && album_media.poster | albumMediaPath as album_media_poster"
+                    *ngIf="album_media.media_type == 'video' && album_media.poster as album_media_poster"
                     [ngStyle]="{'background' : 'url(' + album_media_poster  + ')' } " >
                 </div>
 
                 <div class='spotbie-album-media-video-holder' 
-                    *ngIf="album_media.media_type == 'video' && album_media.poster | albumMediaPath as album_media_poster"
+                    *ngIf="album_media.media_type == 'video' && album_media.poster as album_media_poster"
                     [ngStyle]="{'background' : 'url(' + album_media_poster + ')' }">
                     
                     <div class='spotbie-play-button'>
@@ -351,7 +354,7 @@
 
             </div>
 
-            <div class='spotbie-load-more-album-items' *ngIf="pull_more_album_items" (click)="loadMoreAlbumItems()">load more</div>
+            <div class='spotbie-load-more-album-items' *ngIf="pullMoreAlbumItems" (click)="loadMoreAlbumItems()">load more</div>
 
         </div>
 

@@ -1,5 +1,4 @@
 import { Component, OnInit, Input } from '@angular/core'
-import { DeviceDetectorService } from 'ngx-device-detector'
 import { FriendshipsService } from 'src/app/services/friendships.service'
 import { MyFriendsComponent } from '../my-friends.component'
 
@@ -20,9 +19,6 @@ export class FriendActionsComponent implements OnInit {
 
     public successful_action_description: string  
 
-    public isMobile: boolean
-    public isDesktop: boolean
-
     public reportReasonList: Array<any> = [
         { name : "Mature Content", id : 0 },
         { name : "Copyright", id : 1 },
@@ -34,8 +30,7 @@ export class FriendActionsComponent implements OnInit {
       public bgColor: string
 
     constructor(private host: MyFriendsComponent,
-                private friendshipService: FriendshipsService,
-                private deviceDetector: DeviceDetectorService) { }
+                private friendshipService: FriendshipsService) { }
 
 
     public closeWindow(): void{
@@ -53,9 +48,6 @@ export class FriendActionsComponent implements OnInit {
         this.friendshipService.report(this.friend.user.id, reportReason).subscribe( 
             resp => {
                 this.reportCallback(resp)
-            },
-            error => {
-                console.log("report", error)
             }
         )
 
@@ -128,16 +120,13 @@ export class FriendActionsComponent implements OnInit {
             resp => {
                 this.unfriendCallback(resp)
             },
-            error => {
-                console.log("unfriend", error)
-            }
         )
 
     }
 
     private unfriendCallback(http_response: any): void{
 
-        if(http_response.message === "success"){
+        if(http_response.success){
 
             this.successful_action_title = "User was unfriended."
             this.successful_action_description = `You have unfriended \"${this.friend.user.username}\".`
@@ -162,11 +151,6 @@ export class FriendActionsComponent implements OnInit {
     ngOnInit() {
         
         this.bgColor = localStorage.getItem('spotbie_backgroundColor')
-
-        if(this.deviceDetector.isMobile())
-            this.isMobile = true
-        else
-            this.isDesktop = true
 
     }
 

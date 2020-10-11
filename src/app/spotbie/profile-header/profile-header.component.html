@@ -7,8 +7,8 @@
     </div>
 
     <div class='spotbie-profile-slideshow'>
-
-        <div class='spotbie-toast-message animated fadeIn' *ngIf="successful_default_change">Profile Image Changed</div>
+        
+        <div class='spotbie-toast-message animated fadeIn' *ngIf="showDefaultPictureMessage">{{ defaultPictureMessage }}</div>
         
         <div class='spotbie-slideshow-button-holder' id="spotbie_previous_profile_img_holder" (click)="prevSlide()" title="Previous Default Image">
             <i class="fa fa-chevron-circle-left spotbie-slideshow-button" 
@@ -113,6 +113,12 @@
                     </div>
                 </td>-->
 
+                <td (click)="openWindow(friendActionsWindow)" *ngIf="public_profile && isLoggedIn == '1'" title="Friend Actions">
+                    <div>
+                        <i class="fa fa-users" aria-hidden="true"></i>
+                    </div>
+                </td>
+
                 <td (click)="openWindow(contactMeWindow)" title="Update ContactMe">
                     <div>
                         <i class="fa fa-address-card" aria-hidden="true"></i>
@@ -123,9 +129,10 @@
 
         </table>        
 
-        <!--<app-albums [publicProfileInfo]="publicProfileInfo"
+        <app-albums [publicProfileInfo]="publicProfileInfo"
                     [album_id]="album_id"
-                    [album_media_id]="album_media_id"></app-albums>-->
+                    [album_media_id]="album_media_id"
+                    *ngIf="(publicProfileInfo !== undefined && publicProfileInfo.user.username == '0456fra') || user.username == '0456fra'"></app-albums>
         
     </div>
     
@@ -181,12 +188,11 @@
                 (click)="startBackgroundUploader()"
                 #spotbieBackgroundUploader>
                 <div class='spotbie-click-or-drag-upload'>
-                    touch or drag to upload
+                    tap or drag to upload
                 </div>
             </div>
 
-            <div class='spotbie-button spotbie-button-mini' (click)="saveBackground()">Save Background</div>
-            <div class='spotbie-button spotbie-button-mini' (click)="cancelBackground()">Cancel</div>
+            <div class='spotbie-button spotbie-button-mini' (click)="cancelBackground()">close</div>
 
         </form>
 
@@ -216,7 +222,7 @@
                 (click)="startDefaultUploader()"
                 #spotbieDefaultUploader>
                 <div class='spotbie-click-or-drag-upload'>
-                    touch or drag to upload
+                    tap or drag to upload
                 </div>
             </div>
 
@@ -230,4 +236,13 @@
 
 <!--<app-questions *ngIf="questionsWindow.open"></app-questions>-->
 
-<app-contactme *ngIf="contactMeWindow.open" [userId]="user.id" [bgColor]="user.exe_background_color" [publicProfileInfo]="publicProfileInfo"></app-contactme>
+<app-friend-actions *ngIf="friendActionsWindow.open"
+                    [publicProfileInfo]="publicProfileInfo"
+                    (closeActions)="closeWindow(friendActionsWindow)">
+</app-friend-actions>
+
+<app-contactme *ngIf="contactMeWindow.open" 
+                [userId]="user.id" 
+                [bgColor]="user.exe_background_color" 
+                [publicProfileInfo]="publicProfileInfo">
+</app-contactme>

@@ -178,11 +178,13 @@ export class AlbumService {
 
   }
 
-  public pullSingleAlbum(album_id: number, page: number): Observable<any>{
+  public pullSingleAlbum(albumId: number, page: number): Observable<any>{
 
-    const pull_single_album_api = `${ALBUM_API}/${album_id}&page=${page}`
+    const pullSingleAlbumApi = `${ALBUM_API}/${albumId}?page=${page}`
 
-    return this.http.get<any>(pull_single_album_api).pipe(
+    console.log("pullSingleAlbum", pullSingleAlbumApi)
+
+    return this.http.get<any>(pullSingleAlbumApi).pipe(
       catchError(handleError("pullSingleAlbum"))
     )  
 

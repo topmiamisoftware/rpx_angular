@@ -344,6 +344,8 @@ export class MapComponent implements OnInit {
 
   public classificationSearch(){
 
+    this.loading = true
+
     let search_obj = {
       req_url: "",
       exe_search_action: "classificationSearch"
@@ -354,6 +356,8 @@ export class MapComponent implements OnInit {
   }
 
   public classificationSearchCallback(http_response: HttpResponse){
+
+    this.loading = false
 
     if(http_response.status == '200'){
 

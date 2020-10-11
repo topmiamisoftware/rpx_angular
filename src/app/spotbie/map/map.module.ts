@@ -12,12 +12,15 @@ import { LocationSaverComponent } from '../spotbie-logged-in/location-saver/loca
 import { MapComponent } from './map.component'
 import { MyPlacesComponent } from '../spotbie-logged-in/my-places/my-places.component'
 import { MapObjectIconPipe } from 'src/app/pipes/map-object-icon.pipe'
+import { HelperModule } from 'src/app/helpers/helper.module'
+import { InfoObjectComponent } from './info-object/info-object.component'
 
 @NgModule({
   declarations: [
     LocationSaverComponent,      
     MapComponent,
-    MyPlacesComponent,    
+    MyPlacesComponent,   
+    InfoObjectComponent 
   ],
   imports: [
     AgmOverlays,
@@ -29,7 +32,7 @@ import { MapObjectIconPipe } from 'src/app/pipes/map-object-icon.pipe'
       language: 'en',
       libraries: ['geometry', 'places']
     }),     
-    
+    HelperModule
   ],
   providers: [
     MapObjectIconPipe,

@@ -12,7 +12,7 @@ import { ValidateUsername } from 'src/app/helpers/username.validator'
 import { ValidatePersonName } from 'src/app/helpers/name.validator'
 import { UserauthService } from 'src/app/services/userauth.service'
 
-const SETTINGS_API = spotbieGlobals.API + 'api/settings.service.php'
+const SETTINGS_API = spotbieGlobals.API + '/settings.service.php'
 
 const HTTP_OPTIONS = {
   withCredentials: true,
@@ -128,11 +128,11 @@ export class SettingsComponent implements OnInit {
               private formBuilder: FormBuilder,
               private mapsAPILoader: MapsAPILoader,
               private ngZone: NgZone,
-              private user_auth_service: UserauthService) { }
+              private userAuthService: UserauthService) { }
 
   private fetchCurrentSettings(): any {
 
-    this.user_auth_service.getSettings().subscribe(
+    this.userAuthService.getSettings().subscribe(
       resp =>{
         this.populateSettings(resp)
       },
@@ -145,8 +145,6 @@ export class SettingsComponent implements OnInit {
 
   private populateSettings(settings_response: any) {
 
-    console.log("Settings Response:", settings_response)
-    
     if (settings_response.message == 'success') {
 
       this.user = settings_response.user
@@ -633,38 +631,26 @@ export class SettingsComponent implements OnInit {
       this.user.privacy = this.spotbie_privacy
     }
 
-    const exe_settings_object =  JSON.stringify(this.user)
-
-    const settings_object = { exe_api_key: this.exe_api_key, exe_settings_action: 'saveSettings', exe_settings_object }
-    this.http.post<HttpResponse>(SETTINGS_API, settings_object, HTTP_OPTIONS)
-            .subscribe( resp => {
-              // console.log("Settings Response", resp)
-              const settings_response = new HttpResponse ({
-                status: resp.status,
-                message: resp.message,
-                full_message: resp.full_message,
-                responseObject: resp.responseObject
-              })
-                this.saveSettingsCallback(settings_response)
-            },
-              error => {
-                console.log('error', error)
-            })
+    this.userAuthService.saveSettings(this.user).subscribe( 
+      resp => {
+        this.saveSettingsCallback(resp)
+      }
+    )
   }
 
-  private saveSettingsCallback(settings_save_response: HttpResponse) {
+  private saveSettingsCallback(resp: any) {
+    
     this.loading = false
-    if (settings_save_response.status == '200') {
-      if (settings_save_response.responseObject.saved == 'saved') {
-        this.spotbieSettingsInfoText.nativeElement.innerHTML = 'Your settings were saved.'
-      } else {
-        this.spotbieSettingsInfoText.nativeElement.innerHTML = settings_save_response.responseObject.saved
-        //console.log('Failed Save Settings: ', settings_save_response)
-      }
+
+    if (resp.success) {
+
+      this.spotbieSettingsInfoText.nativeElement.innerHTML = 'Your settings were saved.'
+        
       this.spotbieSettingsInfoText.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' })
-    } else {
-      console.log('Failed Save Settings: ', settings_save_response)
-    }
+
+    } else
+      console.log('Failed Save Settings: ', resp)
+
   }
 
   public cancelDeactivateAccount() {

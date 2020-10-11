@@ -14,28 +14,28 @@ export class FriendshipsService {
 
   constructor(private http: HttpClient) { }
 
-  public blockUser(peer_id: any): Observable<any>{    
+  public blockUser(peerId: any): Observable<any>{    
 
-    const block_api = `${FRIENDS_API}/block`
-    const block_obj = {
-      peer_id: peer_id
+    const blockApi = `${FRIENDS_API}/block`
+    const blockObj = {
+      peer_id: peerId
     }
 
-    return this.http.post<any>(block_api, block_obj).pipe(
+    return this.http.post<any>(blockApi, blockObj).pipe(
       catchError(handleError("blockUser"))
     )
 
   }
 
-  public unblockUser(peer_id: any): Observable<any>{    
+  public unblockUser(peerId: any): Observable<any>{    
 
-    const unblock_api = `${FRIENDS_API}/unblock`
-    const unblock_obj = {
+    const unblockApi = `${FRIENDS_API}/unblock`
+    const unblockObj = {
       _method: 'DELETE',
-      peer_id: peer_id
+      peer_id: peerId
     }
 
-    return this.http.post<any>(unblock_api, unblock_obj).pipe(
+    return this.http.post<any>(unblockApi, unblockObj).pipe(
       catchError(handleError("unblockUser"))
     )
 
@@ -55,67 +55,91 @@ export class FriendshipsService {
 
   }
 
-  public befriend(user_id: any): Observable<any>{    
+  public befriend(peerId: any): Observable<any>{    
 
-    const add_friend_api = `${FRIENDS_API}/add_friend`
-    const befriend_obj = {
-      peer_id: user_id
+    const addFriendApi = `${FRIENDS_API}/add_friend`
+    const befriendObj = {
+      peer_id: peerId
     }
 
-    return this.http.post<any>(add_friend_api, befriend_obj).pipe(
+    return this.http.post<any>(addFriendApi, befriendObj).pipe(
       catchError(handleError("befriend"))
     )
 
   }
 
-  public acceptFriend(user_id: any): Observable<any>{    
+  public acceptFriend(userId: any): Observable<any>{    
 
-    const accept_friend_api = `${FRIENDS_API}/accept`
-    const accept_friend_obj = {
+    const acceptFriendApi = `${FRIENDS_API}/accept`
+    const acceptFriendObj = {
       _method: 'PUT',
-      user_id: user_id
+      user_id: userId
     }
 
-    return this.http.post<any>(accept_friend_api, accept_friend_obj).pipe(
+    return this.http.post<any>(acceptFriendApi, acceptFriendObj).pipe(
       catchError(handleError("acceptFriend"))
     )
 
   }
 
-  public declineFriend(user_id: any): Observable<any>{    
+  public declineFriend(userId: any): Observable<any>{    
 
-    const decline_friend_api = `${FRIENDS_API}/decline`
-    const deline_friend_obj = {
-      _method: 'PUT',
-      user_id: user_id
+    const declineFriendApi = `${FRIENDS_API}/decline`
+    const declineFriendObj = {
+      _method: 'DELETE',
+      user_id: userId
     }
 
-    return this.http.post<any>(decline_friend_api, deline_friend_obj).pipe(
+    return this.http.post<any>(declineFriendApi, declineFriendObj).pipe(
       catchError(handleError("declineFriend"))
     )
 
   }
 
-  public aroundMe(around_me_obj: any): Observable<any>{    
+  public aroundMe(aroundMeObj: any): Observable<any>{    
 
-    const around_me_api = `${FRIENDS_API}/show_nearby?loc_x=${around_me_obj.loc_x}&loc_y=${around_me_obj.loc_y}&page=${around_me_obj.page}`
+    const aroundMeApi = `${FRIENDS_API}/show_nearby?loc_x=${aroundMeObj.loc_x}&loc_y=${aroundMeObj.loc_y}&page=${aroundMeObj.page}`
 
-    return this.http.get<any>(around_me_api).pipe(
+    return this.http.get<any>(aroundMeApi).pipe(
       catchError(handleError("befriend"))
     )
 
   }
 
-  public report(peer_id: number, report_reason: number): Observable<any>{    
+  public report(peerId: number, reportReason: number): Observable<any>{    
 
-    const report_peer_api = `${FRIENDS_API}/report`
-    const report_obj = {
-      peer_id: peer_id,
-      report_reason: report_reason
+    const reportPeerId = `${FRIENDS_API}/report`
+    const reportObj = {
+      peer_id: peerId,
+      report_reason: reportReason
     }
 
-    return this.http.post<any>(report_peer_api, report_obj).pipe(
+    return this.http.post<any>(reportPeerId, reportObj).pipe(
       catchError(handleError("report"))
+    )
+
+  }
+
+  public cancelRequest(peerId: number): Observable<any>{
+
+    const cancelRequestApi = `${FRIENDS_API}/cancel_request`
+    const cancelRequestObj = {
+      _method: 'DELETE',
+      peer_id: peerId
+    }
+
+    return this.http.post<any>(cancelRequestApi, cancelRequestObj).pipe(
+      catchError(handleError("report"))
+    )
+
+  }
+
+  public checkRelationship(peerId: number): Observable<any>{
+
+    const checkRelationshipApi = `${FRIENDS_API}/check_relationship?peer_id=${peerId}`
+
+    return this.http.get<any>(checkRelationshipApi).pipe(
+      catchError(handleError("checkRelationship"))
     )
 
   }

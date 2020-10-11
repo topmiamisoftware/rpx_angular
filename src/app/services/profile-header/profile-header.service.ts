@@ -1,21 +1,11 @@
 import { Injectable } from '@angular/core';
 import * as spotbieGlobals from '../../globals'
-import { HttpHeaders, HttpClient } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { catchError } from 'rxjs/operators';
 import { handleError } from 'src/app/helpers/error-helper';
 import { Observable } from 'rxjs';
 
 const PROFILE_HEADER_API = spotbieGlobals.API + 'profile_header'
-
-const HTTP_OPTIONS = {
-  headers: new HttpHeaders({ 'Content-Type' : 'application/x-www-form-urlencoded' })
-}
-
-const BACKGROUND_UPLOAD_API_URL = spotbieGlobals.API + 'api/background_image_upload.service.php'
-const BACKGROUND_MAX_UPLOAD_SIZE = 1e+7
-
-const DEFAULT_UPLOAD_API_URL = spotbieGlobals.API + 'api/default_image_upload.service.php'
-const DEFAULT_MAX_UPLOAD_SIZE = 1e+7
 
 @Injectable({
   providedIn: 'root'
@@ -38,7 +28,10 @@ export class ProfileHeaderService {
     
     let set_default = PROFILE_HEADER_API + '/set_default'
 
-    const new_def_obj = { _method: 'patch', default_picture: encodeURI(new_profile_image) }
+    const new_def_obj = { 
+      _method: 'PATCH', 
+      default_picture: encodeURI(new_profile_image) 
+    }
 
     return this.http.post(set_default, new_def_obj).pipe(
       catchError(handleError("setDefault"))
@@ -50,7 +43,10 @@ export class ProfileHeaderService {
     
     let delete_default = PROFILE_HEADER_API + '/delete_default'
 
-    const new_def_obj = { _method: 'delete', default_picture: encodeURI(default_picture) }
+    const new_def_obj = { 
+      _method: 'delete', 
+      default_image_url: encodeURI(default_picture) 
+    }
 
     return this.http.post(delete_default, new_def_obj).pipe(
       catchError(handleError("setDefault"))

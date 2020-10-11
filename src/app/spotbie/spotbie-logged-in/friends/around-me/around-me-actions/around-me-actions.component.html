@@ -22,47 +22,17 @@
 
     <div class='spotbie-friend-actions-username'>{{ around_me_user.username }}</div>
 
-    <table class='spotbie-friend-action-buttons' *ngIf="isDesktop">
-        <tr>
-            <td>
-                <div class='spotbie-button' [routerLink]="['/user-profile/' + around_me_user.username]">View Profile</div>
-            </td>
-            <td>
-                <div class='spotbie-button' (click)="unfriend()">Unfriend</div>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <div class='spotbie-button' (click)="blockUser()">Block</div>
-            </td>
-            <td>
-                <div class='spotbie-button' (click)="reportReasonsWindow()">Report</div>
-            </td>            
-        </tr>
-    </table>
+    <div class='spotbie-friend-action-buttons'>
 
-    <table class='spotbie-friend-action-buttons' *ngIf="isMobile">
-        <tr>
-            <td>
-                <div class='spotbie-button' [routerLink]="['/user-profile/' + around_me_user.username]">View Profile</div>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <div class='spotbie-button' (click)="unfriend()">Unfriend</div>
-            </td>
-        </tr>
-        <tr>            
-            <td>
-                <div class='spotbie-button' (click)="blockUser()">Block</div>
-            </td>
-        </tr>
-        <tr>            
-            <td>
-                <div class='spotbie-button' (click)="reportReasonsWindow()">Report</div>
-            </td>            
-        </tr>
-    </table>
+        <div class='spotbie-button' [routerLink]="['/user-profile/' + around_me_user.username]">View Profile</div>
+
+        <div class='spotbie-button' (click)="unfriend()">Unfriend</div>
+
+        <div class='spotbie-button' (click)="blockUser()">Block</div>
+
+        <div class='spotbie-button' (click)="reportReasonsWindow()">Report</div>
+
+    </div>
 
     <div class="spotbie-close-button" (click)="closeActionsx()">close</div>
 
