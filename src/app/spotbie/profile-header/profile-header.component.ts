@@ -7,9 +7,7 @@ import { SanitizePipe } from '../../pipes/sanitize.pipe'
 import { Subscription } from 'rxjs'
 import { User } from 'src/app/models/user'
 import { ProfileHeaderService } from 'src/app/services/profile-header/profile-header.service'
-import { ColorsService } from 'src/app/services/background-color/colors.service'
-
-const PROFILE_HEADER_API = spotbieGlobals.API + 'api/settings.service.php'
+import { ColorsService } from '../spotbie-logged-in/background-color/colors.service'
 
 const BACKGROUND_UPLOAD_API_URL = `${spotbieGlobals.API}profile_header/upload_background`
 const BACKGROUND_MAX_UPLOAD_SIZE = 3e+6
@@ -78,12 +76,12 @@ export class ProfileHeaderComponent implements OnInit {
 
   constructor(private http: HttpClient,
               private formBuilder: FormBuilder,
-              private profile_header_service: ProfileHeaderService,
+              private profileHeaderService: ProfileHeaderService,
               private webOptionsService: ColorsService) {}
 
   private getMyProfileHeader(): void {
                                     
-    this.profile_header_service.myProfileHeader().subscribe( 
+    this.profileHeaderService.myProfileHeader().subscribe( 
       resp => {
         this.getMyProfileHeaderCallback(resp)
       },
@@ -266,7 +264,7 @@ export class ProfileHeaderComponent implements OnInit {
 
     const new_profile_image = this.user.profile_pictures[this.profile_pictures_index]
 
-    this.profile_header_service.setDefault(new_profile_image).subscribe(
+    this.profileHeaderService.setDefault(new_profile_image).subscribe(
       resp => {
         this.setDefaultCallback(resp)
       }
@@ -275,7 +273,6 @@ export class ProfileHeaderComponent implements OnInit {
   }
 
   public setDefaultCallback(resp: any) {
-
 
     if(resp.success){
       
@@ -311,7 +308,7 @@ export class ProfileHeaderComponent implements OnInit {
       return
     }
 
-    this.profile_header_service.deleteDefault(current_profile_image).subscribe( 
+    this.profileHeaderService.deleteDefault(current_profile_image).subscribe( 
       resp => {
         this.deleteDefaultCallback(resp)
       }
@@ -434,7 +431,7 @@ export class ProfileHeaderComponent implements OnInit {
 
     const description = this.spotbie_profile_description
 
-    this.profile_header_service.setDescription(description).subscribe(
+    this.profileHeaderService.setDescription(description).subscribe(
       resp =>{
         this.setDescriptionCallback(resp)
       }

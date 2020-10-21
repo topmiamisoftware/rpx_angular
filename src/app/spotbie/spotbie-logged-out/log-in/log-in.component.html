@@ -82,6 +82,6 @@
         Forgot Password?
   </div>
 
-  <app-forgot-password *ngIf="forgotPasswordWindow.open"></app-forgot-password>
+  <app-forgot-password *ngIf="forgotPasswordWindow.open" (closeWindow)="forgotPasswordWindow.open = false"></app-forgot-password>
 
 </div>

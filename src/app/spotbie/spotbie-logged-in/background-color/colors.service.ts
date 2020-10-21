@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
-import * as spotbieGlobals from '../../globals'
+import * as spotbieGlobals from '../../../globals'
 import { Subject, Observable } from 'rxjs'
 import { catchError, tap } from 'rxjs/operators'
 import { handleError } from 'src/app/helpers/error-helper'

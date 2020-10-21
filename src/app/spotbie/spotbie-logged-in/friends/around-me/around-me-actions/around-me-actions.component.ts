@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core'
-import { FriendshipsService } from 'src/app/services/friendships.service'
+import { FriendshipsService } from '../../friendships.service'
 import { AroundMeComponent } from '../around-me.component'
 
 @Component({
@@ -39,9 +39,9 @@ export class AroundMeActionsComponent implements OnInit {
     this.loading = true
 
     this.friendshipService.blockUser(this.around_me_user.id).subscribe( 
-        resp => {
-            this.blockUserCallback(resp)
-        }
+      resp => {
+        this.blockUserCallback(resp)
+      }
     )
 
   }
@@ -136,7 +136,8 @@ export class AroundMeActionsComponent implements OnInit {
       }.bind(this), 2500)
 
       this.loading = false  
-
+      this.reportReasonsWindow()
+      
     } else
       console.log("reportCallback", httpResponse)
 

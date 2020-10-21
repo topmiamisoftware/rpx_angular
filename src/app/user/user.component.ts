@@ -38,7 +38,7 @@ export class UserComponent implements OnInit {
 
   public loggedIn: boolean = false
 
-  constructor(private activated_route: ActivatedRoute,
+  constructor(private activatedRoute: ActivatedRoute,
               private http: HttpClient,
               private readonly meta: MetaService) { }
 
@@ -124,11 +124,11 @@ export class UserComponent implements OnInit {
 
   async ngOnInit() {
 
-    this.exe_user_name = this.activated_route.snapshot.paramMap.get('exe_user_name')
-    this.stream_post_id = this.activated_route.snapshot.paramMap.get('stream_post_id')
+    this.exe_user_name = this.activatedRoute.snapshot.paramMap.get('exe_user_name')
+    this.stream_post_id = this.activatedRoute.snapshot.paramMap.get('stream_post_id')
     
-    this.album_id = this.activated_route.snapshot.paramMap.get('album_id')
-    this.album_media_id = this.activated_route.snapshot.paramMap.get('album_media_id')
+    this.album_id = this.activatedRoute.snapshot.paramMap.get('album_id')
+    this.album_media_id = this.activatedRoute.snapshot.paramMap.get('album_media_id')
 
     let loggedIn = localStorage.getItem('spotbie_loggedIn')
 

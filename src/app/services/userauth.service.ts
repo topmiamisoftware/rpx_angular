@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { HttpClient, HttpHeaders } from '@angular/common/http'
+import { HttpClient } from '@angular/common/http'
 import { Router } from '@angular/router'
 
 import * as spotbieGlobals from 'src/app/globals'
@@ -8,7 +8,7 @@ import { catchError, tap } from 'rxjs/operators'
 import { handleError } from '../helpers/error-helper'
 import { User } from '../models/user'
 
-const LOGIN_API = spotbieGlobals.API + 'user'
+const USER_API = spotbieGlobals.API + 'user'
 
 @Injectable({
   providedIn: 'root'
@@ -32,11 +32,11 @@ export class UserauthService {
 
     let check_login_object = {}
 
-    let login_api = LOGIN_API + '/check_user_auth'
+    let loginApi = USER_API + '/check_user_auth'
 
     return new Promise((resolve, reject) => {
 
-      this.http.post<String>(login_api, check_login_object)
+      this.http.post<String>(loginApi, check_login_object)
       .subscribe( resp => {
         resolve(resp)
       }, error => {
@@ -55,19 +55,17 @@ export class UserauthService {
 
   public logOut(): Observable<any> {
 
-    const log_out_object = {}
+    const logOutApi = USER_API + '/logout'
 
-    const log_out_api = LOGIN_API + '/logout'
-
-    return this.http.post<any>(log_out_api, log_out_object).pipe(
+    return this.http.post<any>(logOutApi, null).pipe(
       tap( resp => { this.logOutCallback(resp) })
     )
 
   }
 
-  private logOutCallback(log_out_response: any): void {
+  private logOutCallback(logOutResponse: any): void {
 
-      if(log_out_response.message == 'success'){
+      if(logOutResponse.success){
 
         localStorage.clear()
 
@@ -92,9 +90,9 @@ export class UserauthService {
       'timezone' : this.userTimezone
     }
 
-    const loInApi = `${LOGIN_API}/login`
+    const logInApi = `${USER_API}/login`
 
-    return this.http.post<any>(loInApi, params).pipe(
+    return this.http.post<any>(logInApi, params).pipe(
       catchError(handleError("initLogin"))
     )
 
@@ -102,7 +100,7 @@ export class UserauthService {
 
   public getSettings(): Observable<any>{
 
-    const getSettingsApi = `${LOGIN_API}/settings`
+    const getSettingsApi = `${USER_API}/settings`
 
     return this.http.get<any>(getSettingsApi).pipe(
       catchError(handleError("getSettings"))
@@ -112,7 +110,7 @@ export class UserauthService {
 
   public saveSettings(user: User): Observable<any>{
 
-    const saveSettingsApi = `${LOGIN_API}/update`
+    const saveSettingsApi = `${USER_API}/update`
 
     const saveSettingsObj = {
       _method: 'PUT',
@@ -129,6 +127,37 @@ export class UserauthService {
     return this.http.post<any>(saveSettingsApi, saveSettingsObj).pipe(
       catchError(handleError("saveSettings"))
     )  
+
+  }
+
+  public setPassResetPin(emailOrPhone: string): Observable<any>{
+
+    const resetPasswordApi = `${USER_API}/send-pass-email`
+    const setPassResetObj = {
+      email_or_phone: emailOrPhone
+    }
+
+    return this.http.post<any>(resetPasswordApi, setPassResetObj).pipe(
+      catchError(handleError("setPassResetPin"))
+    ) 
+
+  }
+
+  public completeReset(password: string, passwordConfirmation: string, email: string, token: string): Observable<any>{
+
+    const resetPasswordApi = `${USER_API}/complete-pass-reset`
+
+    const passResetObj = {
+      _method: 'PUT',
+      password: password,
+      password_confirmation: passwordConfirmation,
+      email: email,
+      token: token
+    }
+
+    return this.http.post<any>(resetPasswordApi, passResetObj).pipe(
+      catchError(handleError("completeReset"))
+    ) 
 
   }
 

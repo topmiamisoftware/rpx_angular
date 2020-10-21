@@ -5,7 +5,7 @@ import { StreamPost } from './streamer-models/stream-post'
 import { videoEmbedCheck } from '../helpers/video-check'
 import { DomSanitizer } from '@angular/platform-browser'
 import { Subscription } from 'rxjs'
-import { ColorsService } from '../services/background-color/colors.service'
+import { ColorsService } from '../spotbie/spotbie-logged-in/background-color/colors.service'
 
 @Component({
   selector: 'app-streamer',

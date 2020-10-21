@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core'
-import { FriendshipsService } from 'src/app/services/friendships.service'
+import { Router } from '@angular/router'
+import { FriendshipsService } from '../../friendships.service'
 import { MyFriendsComponent } from '../my-friends.component'
 
 @Component({
@@ -9,7 +10,7 @@ import { MyFriendsComponent } from '../my-friends.component'
 })
 export class FriendActionsComponent implements OnInit {
 
-    @Input() friend
+    @Input() peer
 
     public loading: boolean = false
 
@@ -30,7 +31,8 @@ export class FriendActionsComponent implements OnInit {
       public bgColor: string
 
     constructor(private host: MyFriendsComponent,
-                private friendshipService: FriendshipsService) { }
+                private friendshipService: FriendshipsService,
+                private router: Router) { }
 
 
     public closeWindow(): void{
@@ -45,7 +47,7 @@ export class FriendActionsComponent implements OnInit {
 
         this.loading = true
 
-        this.friendshipService.report(this.friend.user.id, reportReason).subscribe( 
+        this.friendshipService.report(this.peer.user.id, reportReason).subscribe( 
             resp => {
                 this.reportCallback(resp)
             }
@@ -58,7 +60,7 @@ export class FriendActionsComponent implements OnInit {
         if(httpResponse.message === "success"){
 
             this.successful_action_title = "User was reported succesfully."
-            this.successful_action_description = `You have reported \"${this.friend.user.username}\".`
+            this.successful_action_description = `You have reported \"${this.peer.user.username}\".`
 
             this.successful_action = true
 
@@ -66,6 +68,7 @@ export class FriendActionsComponent implements OnInit {
                 this.successful_action = false
             }.bind(this), 2500)
 
+            this.reportReasonsWindow()
             this.loading = false  
 
         } else
@@ -77,7 +80,7 @@ export class FriendActionsComponent implements OnInit {
 
         this.loading = true
 
-        this.friendshipService.blockUser(this.friend.user.id).subscribe( 
+        this.friendshipService.blockUser(this.peer.user.id).subscribe( 
             resp => {
                 this.blockUserCallback(resp)
             },
@@ -93,11 +96,11 @@ export class FriendActionsComponent implements OnInit {
         if(http_response.message === 'success'){
 
         this.successful_action_title = "User was blocked."
-        this.successful_action_description = `You have blocked \"${this.friend.user.username}\".`
+        this.successful_action_description = `You have blocked \"${this.peer.user.username}\".`
 
         this.successful_action = true
         
-        let friend_index = this.host.friends_list.indexOf(this.friend)
+        let friend_index = this.host.friends_list.indexOf(this.peer)
         this.host.friends_list.splice(friend_index, 1)
 
         setTimeout(function(){
@@ -116,10 +119,10 @@ export class FriendActionsComponent implements OnInit {
 
         this.loading = true
 
-        this.friendshipService.unfriend(this.friend.user.id).subscribe( 
+        this.friendshipService.unfriend(this.peer.user.id).subscribe( 
             resp => {
                 this.unfriendCallback(resp)
-            },
+            }
         )
 
     }
@@ -129,11 +132,11 @@ export class FriendActionsComponent implements OnInit {
         if(http_response.success){
 
             this.successful_action_title = "User was unfriended."
-            this.successful_action_description = `You have unfriended \"${this.friend.user.username}\".`
+            this.successful_action_description = `You have unfriended \"${this.peer.user.username}\".`
 
             this.successful_action = true
 
-            let friend_index = this.host.friends_list.indexOf(this.friend)
+            let friend_index = this.host.friends_list.indexOf(this.peer)
             this.host.friends_list.splice(friend_index, 1)
 
             setTimeout(function(){
@@ -146,6 +149,10 @@ export class FriendActionsComponent implements OnInit {
         } else
             console.log("unfriendCallback", http_response) 
 
+    }
+
+    public viewProfile(): void{
+        this.friendshipService.viewProfile(this)
     }
 
     ngOnInit() {

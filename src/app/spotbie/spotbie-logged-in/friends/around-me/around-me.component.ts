@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core'
-import * as spotbieGlobals from '../../../../globals'
-import { FriendshipsService } from 'src/app/services/friendships.service'
+import { FriendshipsService } from '../friendships.service'
 
 @Component({
   selector: 'app-around-me',
@@ -26,7 +25,7 @@ export class AroundMeComponent implements OnInit {
   public loc_x: number
   public loc_y: number
 
-  constructor(private friendship_service: FriendshipsService){}
+  constructor(private friendshipService: FriendshipsService){}
 
   public setCurrentAroundMe(friend): void{
     this.current_around_me = friend
@@ -43,7 +42,7 @@ export class AroundMeComponent implements OnInit {
       page: this.page
     }
 
-    this.friendship_service.aroundMe(call_friends_obj).subscribe(
+    this.friendshipService.aroundMe(call_friends_obj).subscribe(
       resp => {
         this.aroundMeCallback(resp)
       },

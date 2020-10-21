@@ -117,7 +117,7 @@ export class AlbumsComponent implements OnInit {
               private _platformStrategy: Location) { }
 
 
-  @HostListener('window:beforeunload')
+  //@HostListener('window:beforeunload')
   private _deleteAllUnused(): void {
 
     this.albumService.deleteAllUnused(this.current_album.id).subscribe(

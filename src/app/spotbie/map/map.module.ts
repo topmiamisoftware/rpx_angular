@@ -10,16 +10,16 @@ import { environment } from 'src/environments/environment'
 import { SpotbiePipesModule } from 'src/app/spotbie-pipes/spotbie-pipes.module'
 import { LocationSaverComponent } from '../spotbie-logged-in/location-saver/location-saver.component'
 import { MapComponent } from './map.component'
-import { MyPlacesComponent } from '../spotbie-logged-in/my-places/my-places.component'
 import { MapObjectIconPipe } from 'src/app/pipes/map-object-icon.pipe'
 import { HelperModule } from 'src/app/helpers/helper.module'
 import { InfoObjectComponent } from './info-object/info-object.component'
+import { MyFavoritesComponent } from '../my-favorites/my-favorites.component'
 
 @NgModule({
   declarations: [
     LocationSaverComponent,      
-    MapComponent,
-    MyPlacesComponent,   
+    MapComponent,  
+    MyFavoritesComponent,
     InfoObjectComponent 
   ],
   imports: [

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core'
 import * as spotbieGlobals from '../../../../globals'
 import { HttpClient } from '@angular/common/http'
-import { FriendshipsService } from 'src/app/services/friendships.service'
 
 const FRIENDS_API = spotbieGlobals.API + "friendship"
 
@@ -35,9 +34,9 @@ export class PendingFriendsComponent implements OnInit {
     
     this.loading = true
     
-    const pending_friends_apis = `${FRIENDS_API}/show_pending?page=${this.page}`
+    const pendingFriendsApis = `${FRIENDS_API}/show_pending?page=${this.page}`
 
-    this.http.get<any>(pending_friends_apis).subscribe(
+    this.http.get<any>(pendingFriendsApis).subscribe(
       resp => {
         this.callPendingCallback(resp)
       },
@@ -48,18 +47,18 @@ export class PendingFriendsComponent implements OnInit {
 
   }
 
-  private callPendingCallback(http_response: any){
+  private callPendingCallback(httpResonse: any){
 
-    if(http_response.success){      
+    if(httpResonse.success){      
 
-      const current_page = http_response.current_page
-      const last_page = http_response.last_page
+      const currentPage = httpResonse.pending_friends_list.current_page
+      const lastPage = httpResonse.pending_friends_list.last_page
 
-      http_response.pending_friends_list.data.forEach(friend => {
+      httpResonse.pending_friends_list.data.forEach(friend => {
         this.pending_list.push(friend)
       })      
 
-      if(current_page < last_page){
+      if(currentPage < lastPage){
         this.page++
         this.load_more_pending = true
       } else
@@ -68,7 +67,7 @@ export class PendingFriendsComponent implements OnInit {
       this.loading = false
 
     } else
-      console.log("callPendingCallback", http_response)
+      console.log("callPendingCallback", httpResonse)
 
   }
 

@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FriendshipsService } from 'src/app/services/friendships.service';
+import { FriendshipsService } from '../../spotbie-logged-in/friends/friendships.service';
 
 @Component({
   selector: 'app-friend-actions',
@@ -231,22 +231,23 @@ export class FriendActionsComponent implements OnInit {
 
   private reportCallback(httpResponse: any): void{
 
-  if(httpResponse.message === "success"){
+    if(httpResponse.message === "success"){
 
-    this.successful_action_title = "User was reported succesfully."
-    this.successful_action_description = `You have reported \"${this.publicProfileInfo.username}\".`
+      this.successful_action_title = "User was reported succesfully."
+      this.successful_action_description = `You have reported \"${this.publicProfileInfo.user.username}\".`
 
-    this.successful_action = true
+      this.successful_action = true
 
-    setTimeout(function(){
-      this.successful_action = false
-    }.bind(this), 2500)
+      setTimeout(function(){
+        this.successful_action = false
+      }.bind(this), 2500)
 
-    this.loading = false  
+      this.loading = false  
+      this.reportReasonsWindow()
 
     } else
       console.log("reportCallback", httpResponse)
-
+      
   }
 
   public checkRelationship(): void{

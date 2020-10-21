@@ -1,9 +1,9 @@
 import { Component, OnInit, Input, ViewChild, EventEmitter, Output, ElementRef } from '@angular/core'
 import { Router } from '@angular/router'
 import { Location } from '@angular/common'
-import { ColorsService } from 'src/app/services/background-color/colors.service'
 import { UserauthService } from 'src/app/services/userauth.service'
 import { Subscription } from 'rxjs'
+import { ColorsService } from './background-color/colors.service'
 
 @Component({
   selector: 'app-menu-logged-in',
@@ -75,9 +75,9 @@ export class MenuLoggedInComponent implements OnInit {
   constructor(private router : Router,
               private location : Location,
               private userAuthService : UserauthService,
-              private web_options_service : ColorsService) { 
+              private webOptionsService : ColorsService) { 
 
-    this.web_options_subscriber = this.web_options_service.getWebOptions().subscribe(web_options =>{
+    this.web_options_subscriber = this.webOptionsService.getWebOptions().subscribe(web_options =>{
 
       if(web_options){
         this.spotbieBackgroundColor = web_options.bg_color      
@@ -129,12 +129,12 @@ export class MenuLoggedInComponent implements OnInit {
 
   }
   
-  private logOutCallback(log_out_response : any){
+  private logOutCallback(logOutResponse : any): void{
 
-    if(log_out_response.message === 'success')
-      window.location.assign('/home')
+    if(logOutResponse.success)
+      window.location.reload()
     else
-      console.log("Log Out Error : ", log_out_response)
+      console.log("Log Out Error : ", logOutResponse)
 
   }
 
@@ -162,7 +162,7 @@ export class MenuLoggedInComponent implements OnInit {
 
     if(activatedRoute == '/user_home'){
 
-      this.web_options_service.callWebOptionsApi().subscribe(
+      this.webOptionsService.callWebOptionsApi().subscribe(
         resp =>{
           this.setWebOptions(resp)
         }

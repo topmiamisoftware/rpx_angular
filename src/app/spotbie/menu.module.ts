@@ -8,7 +8,7 @@ import { MenuLoggedInRoutingModule } from './spotbie-logged-in/menu-logged-in-ro
 
 @NgModule({
   declarations: [
-    MenuComponent,
+    MenuComponent
   ],
   imports: [
     CommonModule,

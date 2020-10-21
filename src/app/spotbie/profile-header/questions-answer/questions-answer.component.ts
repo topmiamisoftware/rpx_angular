@@ -2,8 +2,8 @@ import { Component, OnInit, Input, Output, EventEmitter, ViewChild } from '@angu
 import * as spotbieGlobals from '../../../globals';
 import { HttpResponse } from '../../../models/http-reponse';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { FriendshipsService } from '../../../services/friendships.service';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FriendshipsService } from '../../spotbie-logged-in/friends/friendships.service';
 
 const PROFILE_HEADER_API = spotbieGlobals.API + "api/settings.service.php";
 
@@ -55,7 +55,7 @@ export class QuestionsAnswerComponent implements OnInit {
                            exe_friend_action : "requestWithAnswers", 
                            exe_friend_id : this.user.user_info.exe_user_id, 
                            answers_object : answers_object };
-    this.friendshipService.friendService(block_user_obj, function(a){this.sendRequestCallback(a);}.bind(this));
+    //this.friendshipService.friendService(block_user_obj, function(a){this.sendRequestCallback(a);}.bind(this));
   }
 
   sendRequestCallback(httpResponse : HttpResponse){

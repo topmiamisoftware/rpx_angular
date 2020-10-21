@@ -1,24 +1,17 @@
-import { Component, OnInit } from '@angular/core';
-import { LogInComponent } from '../log-in/log-in.component';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { HttpResponse } from '../../../models/http-reponse';
-import * as spotbieGlobals from '../../../globals';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { ValidatePassword } from '../../../helpers/password.validator';
-import { MustMatch } from '../../../helpers/must-match.validator';
+import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core'
+import { FormGroup, FormBuilder, Validators } from '@angular/forms'
+import { ValidatePassword } from '../../../helpers/password.validator'
+import { MustMatch } from '../../../helpers/must-match.validator'
+import { UserauthService } from 'src/app/services/userauth.service'
+import { Observable } from 'rxjs/internal/Observable'
+import { of } from 'rxjs'
+import { ActivatedRoute, Router } from '@angular/router'
 
-const SETTINGS_API = spotbieGlobals.API + 'api/passwordreset.service.php';
+const DEF_INC_PASS_OR_EM_MSG = "Please enter your phone number or e-mail."
 
-const DEF_INC_PASS_OR_EM_MSG = "Enter your Phone Number or E-Mail";
+const DEF_PIN_PASS_OR_EM_MSG = "Check your e-mail for a reset link."
 
-const DEF_PIN_PASS_OR_EM_MSG = "Check your phone or e-mail.";
-
-const NEW_PASS_MSG =  "Enter Your New Password.";
-
-const HTTP_OPTIONS = {
-  headers: new HttpHeaders({ 'Content-Type' : 'application/json' })
-};
-
+const NEW_PASS_MSG =  "Enter Your New Password."
 
 @Component({
   selector: 'app-forgot-password',
@@ -27,256 +20,253 @@ const HTTP_OPTIONS = {
 })
 export class ForgotPasswordComponent implements OnInit {
 
-  public password_reset_form: FormGroup;
-  public password_reset_form_2: FormGroup;
-  public password_form: FormGroup;
+  @Output() closeWindow = new EventEmitter()
 
-  public pass_reset_submitted: boolean = false;
+  @ViewChild('getLinkMessage') getLinkMessage
 
-  public loading: boolean = false;
+  public passwordResetForm: FormGroup
+  public passwordResetForm_2: FormGroup
+  public passwordForm: FormGroup
 
-  public password_submitted: boolean = false;
+  public passResetSubmitted: boolean = false
 
-  public save_password: boolean = false;
+  public loading: boolean = false
 
-  public step_one: boolean = true;
-  public step_two: boolean = false;
-  public step_three: boolean = false;
-  public step_four: boolean = false;
+  public password_submitted: boolean = false
 
-  public pin_reset_submitted: boolean = false;
+  public save_password: boolean = false
 
-  public attempts_remaining: number = 3;
+  public step_one: boolean = false
+  public step_two: boolean = false
+  public step_three: boolean = false
+  public step_four: boolean = false
 
-  public reset_pin: string; 
+  public pin_reset_submitted: boolean = false
 
-  public pin_ready_msg: string = DEF_PIN_PASS_OR_EM_MSG;
+  public attempts_remaining: number = 3
 
-  public email_or_ph_error: string = DEF_INC_PASS_OR_EM_MSG;
+  public reset_pin: string 
+
+  public pin_ready_msg: string = DEF_PIN_PASS_OR_EM_MSG
+
+  public email_or_ph_error: string = DEF_INC_PASS_OR_EM_MSG
   
-  public new_password_msg: string = NEW_PASS_MSG;
+  public new_password_msg: string = NEW_PASS_MSG
 
-  constructor(private host: LogInComponent,
-                private formBuilder: FormBuilder,
-                private http: HttpClient) { }
+  public token: string
 
-  closeWindow(){
-    this.host.forgotPasswordWindow.open = false;
+  public userEmail: string
+
+  constructor(private activatedRoute: ActivatedRoute,
+              private formBuilder: FormBuilder,
+              private userAuthService: UserauthService,
+              private router: Router) { }
+
+  public closeWindowX(): void{
+    if(this.token !== null)
+      this.router.navigate(['/home'])
+    else
+      this.closeWindow.emit(null)
   }
 
-  initForgotPassForm(){
+  private initForgotPassForm(): void{
 
-    const spotbie_email_or_ph_validators = [Validators.required, Validators.maxLength(130)];
+    const spotbie_email_or_ph_validators = [Validators.required, Validators.maxLength(130)]
 
-    this.password_reset_form = this.formBuilder.group({
-      spotbie_email_or_ph : ['', spotbie_email_or_ph_validators]
-    });
+    this.passwordResetForm = this.formBuilder.group({
+      spotbie_email_or_ph: ['', spotbie_email_or_ph_validators]
+    })
 
   }
   
-  get spotbie_email_or_ph() { return this.password_reset_form.get('spotbie_email_or_ph').value; }
-  get g() { return this.password_reset_form.controls; }
-  
-  get spotbie_reset_pin() { return this.password_reset_form_2.get('spotbie_reset_pin').value; }
-  get f() { return this.password_reset_form_2.controls; }
+  get spotbie_email_or_ph() { return this.passwordResetForm.get('spotbie_email_or_ph').value }
+  get g() { return this.passwordResetForm.controls }
 
-  get spotbie_reset_password() { return this.password_form.get('spotbie_reset_password').value; }
-  get spotbie_reset_password_c() { return this.password_form.get('spotbie_reset_password_c').value; }
-  get h() { return this.password_form.controls; }
+  get spotbieResetPassword() { return this.passwordForm.get('spotbieResetPassword').value }
+  get spotbieResetPasswordC() { return this.passwordForm.get('spotbieResetPasswordC').value }
 
-  initPinForm(){
+  get h() { return this.passwordForm.controls }
 
-    this.step_two = true;
+  private showSuccess(): void{
 
-    const spotbie_pin_validators = [Validators.required];
-
-    this.password_reset_form_2 = this.formBuilder.group({
-      spotbie_reset_pin : ['', spotbie_pin_validators]
-    });
+    this.step_two = true
 
   }
 
-  sendPin(){
+  public setPassResetPin(): void{
 
-    this.pin_reset_submitted = true;
+    this.passResetSubmitted = true
 
-    if(this.loading) return;
+    if(this.loading) return
 
-    if(this.password_reset_form_2.invalid) return;
+    if(this.passwordResetForm.invalid) return
 
-    this.loading = true;
+    this.loading = true
     
-    let reset_pin = this.spotbie_reset_pin;
+    let emailOrPhone = this.spotbie_email_or_ph
 
-    const get_profile_header_object = {exe_settings_action : 'initPin', reset_pin : reset_pin};
-
-    this.http.post<HttpResponse>(SETTINGS_API, get_profile_header_object, HTTP_OPTIONS)
-    .subscribe( resp => {
-      const httpResponse = new HttpResponse ({
-        status : resp.status,
-        message : resp.message,
-        full_message : resp.full_message,
-        responseObject : resp.responseObject
-      });
-      this.sendPinCb(httpResponse);
-    },
-      error => {
-        console.log('Pass Reset Error : ', error);
-    });    
-  }
-
-  sendPinCb(httpResponse : HttpResponse){
-    if(httpResponse.status == '200'){
-      if(httpResponse.responseObject == 'true'){
-        this.reset_pin = this.spotbie_reset_pin;
-        this.step_two = false;
-        this.initPasswordForm();
-      } else {
-        this.pin_ready_msg = "Your pin was incorrect.";
+    this.userAuthService.setPassResetPin(emailOrPhone)
+    .subscribe(
+      resp => {
+        this.startPassResetCb(resp)
       }
-    } else {
-      console.log('Pass Reset Error : ', httpResponse);
-    }
-    this.loading = false;
+    )
+
   }
 
-  startPassReset(){
+  private startPassResetCb(httpResponse: any): void{
 
-    this.pass_reset_submitted = true;
+    console.log("startPassResetCb", httpResponse)
 
-    if(this.loading) return;
+    if(httpResponse && httpResponse.success){
 
-    if(this.password_reset_form.invalid) return;
-
-    this.loading = true;
-    
-    let email_or_phone = this.spotbie_email_or_ph;
-
-    const get_profile_header_object = {  exe_settings_action : 'startPasswordReset', email_or_phone : email_or_phone };
-
-    this.http.post<HttpResponse>(SETTINGS_API, get_profile_header_object, HTTP_OPTIONS)
-    .subscribe( resp => {
-      const httpResponse = new HttpResponse ({
-        status : resp.status,
-        message : resp.message,
-        full_message : resp.full_message,
-        responseObject : resp.responseObject
-      });
-      this.startPassResetCb(httpResponse);
-    },
-      error => {
-        console.log('Pass Reset Error : ', error);
-    });
-  }
-
-  startPassResetCb(httpResponse : HttpResponse){
-    if(httpResponse.status == '200'){
-      if(httpResponse.responseObject == 'true'){
-        this.step_one = false;        
-        this.initPinForm();
+      if(httpResponse.status == 'passwords.sent'){
+        this.step_one = false        
+        this.showSuccess()
+      } else if(httpResponse.status == 'passwords.throttled'){
+        this.email_or_ph_error = "You have sent too many password reset requests, please try again later."
       } else {
-        this.email_or_ph_error = "Incorrect e-mail or phone number.";
+        this.email_or_ph_error = "Incorrect e-mail or phone number."
       }
+
     } else {
-      console.log('Pass Reset Error : ', httpResponse);
+      console.log('Pass Reset Error: ', httpResponse)
+      this.email_or_ph_error = "Incorrect e-mail or phone number."
     }
-    this.loading = false;
+      
+    this.getLinkMessage.nativeElement.style.display = 'none'
+    this.getLinkMessage.nativeElement.className = 'spotbie-toast-info spotbie-contact-me-info animated shake'
+    this.getLinkMessage.nativeElement.style.display = 'block'
+
+    this.loading = false
+
   }
 
-  initPasswordForm(){
+  public forgotPassError<T>(operation = 'operation', result?: T) {
 
-    this.step_three = true;
+    return (error: any): Observable<T> => {
 
-    const password_validators = [Validators.required];
-    const password_confirm_validators = [Validators.required];
+      // TODO: send the error to remote logging infrastructure
+      console.log(error) // log to console instead
 
-    this.password_form = this.formBuilder.group({
-      spotbie_reset_password : ['', password_validators],
-      spotbie_reset_password_c : ['', password_confirm_validators]
+      // TODO: better job of transforming error for user consumption
+      //this.log(`${operation} failed: ${error.message}`);
+
+      this.email_or_ph_error = "There was an error signing-up."
+
+      const error_list = error.error.errors
+
+      console.log("Error List", error_list)
+
+      if(error_list.username){
+
+        let errors: {[k: string]: any} = {};
+        error_list.username.forEach(error => {
+          errors[error] = true
+        })
+        //this.signUpFormx.get('spotbieUsername').setErrors(errors)
+        document.getElementById('spotbie_username').style.border = '1px solid red' 
+
+      } else
+        document.getElementById('spotbie_username').style.border = 'unset'
+
+      // Let the app keep running by returning an empty result.
+      return of(result as T)
+
+    }
+
+  }
+
+  private initPasswordForm(): void{
+
+    this.step_three = true
+
+    const password_validators = [Validators.required]
+    const password_confirm_validators = [Validators.required]
+
+    this.passwordForm = this.formBuilder.group({
+      spotbieResetPassword: ['', password_validators],
+      spotbieResetPasswordC: ['', password_confirm_validators]
     },{
-      validators : [ValidatePassword('spotbie_reset_password'),
-                MustMatch('spotbie_reset_password', 'spotbie_reset_password_c')]
-    }); 
+      validators: [ValidatePassword('spotbieResetPassword'),
+                MustMatch('spotbieResetPassword', 'spotbieResetPasswordC')]
+    }) 
     
   }
 
-  completeSavePassword() {
-
+  public completeSavePassword(): void {
     
-    this.password_submitted = true;
+    this.password_submitted = true
     
-    if(this.password_form.invalid){
-      this.save_password = false;
-      return;
+    if(this.passwordForm.invalid){
+      this.save_password = false
+      return
     } 
 
-    if(this.save_password) return;
+    if(this.save_password) return
 
-    this.loading = true;
-
-    const exe_save_password_object = { 
-      password : this.spotbie_reset_password, 
-      confirm_password : this.spotbie_reset_password_c
-    };
-
-    const settings_object = { exe_settings_object : JSON.stringify(exe_save_password_object), 
-                              exe_settings_action : 'savePasswordFromReset',
-                              reset_pin : this.reset_pin
-                            };
+    this.loading = true
     
-    this.http.post<HttpResponse>(SETTINGS_API, settings_object, HTTP_OPTIONS)
-            .subscribe( resp => {
-              // console.log("Settings Response", resp);
-                const settings_response = new HttpResponse ({
-                status : resp.status,
-                message : resp.message,
-                full_message : resp.full_message,
-                responseObject : resp.responseObject
-              });
-                this.passwordChanged(settings_response);
-            },
-              error => {
-                console.log('error', error);
-            });
+    this.userAuthService.completeReset(this.spotbieResetPassword,  this.spotbieResetPasswordC, this.userEmail, this.token).subscribe( 
+      resp => {
+        this.completeSavePasswordCb(resp)
+      }
+    )
+
   }
 
-  passwordChanged(settings_response: HttpResponse) {
+  private completeSavePasswordCb(settingsResponse: any): void {
 
-    if (settings_response.status == '200') {
+    if (settingsResponse.success) {
+      
+      switch (settingsResponse.status) {
 
-      //console.log(settings_response.responseObject);
-      this.save_password = false;
-      switch (settings_response.responseObject.saved) {
-        case 'saved':
-          this.new_password_msg = 'Your password was updated. You can now log-in.';
-          this.step_three = false;
-          this.step_four = true;
+        case 'passwords.reset':
+          this.new_password_msg = 'Your password was updated. You can now log-in.'
+          this.step_three = false
+          this.step_four = true
           setTimeout(function(){
-            this.closeWindow();
-          }.bind(this), 3500);
-          break;
-        case 'SB-E-000':
-          // server error
-          this.new_password_msg = 'There was an error with the server. Try again.';
-          break;
-        case 'SB-E-01':
-          // passwords don't match
-          this.new_password_msg = 'Your passwords must match.';
-          break;
-        case 'SB-E-02':
-          // Invalid password
-          this.new_password_msg = 'Your current password is invalid.';
-          break;
+            this.closeWindowX()
+          }.bind(this), 3000)
+          break
+
+        case 'passwords.token':
+          //Expired Token
+          this.new_password_msg = 'The password reset link has expired, please try to reset your password again.'
+          break
+        
+        default:
+          this.closeWindowX()
       }
       
-    } else {
-      console.log(settings_response);
-    }
-    this.loading = false;
+    } else
+      console.log(settingsResponse)
+
+    this.save_password = false
+    this.loading = false
+
   }
 
   ngOnInit() {
-    this.initForgotPassForm();
+
+    this.token = this.activatedRoute.snapshot.paramMap.get('token')
+
+    if(this.token !== null){
+
+      const urlParams = new URLSearchParams(window.location.search)
+
+      this.userEmail = urlParams.get('email')
+      this.initPasswordForm()
+
+      this.step_three = true
+
+    } else {      
+
+      this.initForgotPassForm()
+      this.step_one = true
+      
+    }
+  
   }
 
 }

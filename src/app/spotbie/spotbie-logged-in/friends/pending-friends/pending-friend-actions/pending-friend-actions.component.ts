@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core'
+import { Router } from '@angular/router'
+import { FriendshipsService } from '../../friendships.service'
 import { PendingFriendsComponent } from '../pending-friends.component'
-import { FriendshipsService } from 'src/app/services/friendships.service'
 
 @Component({
   selector: 'app-pending-friend-actions',
@@ -9,7 +10,7 @@ import { FriendshipsService } from 'src/app/services/friendships.service'
 })
 export class PendingFriendActionsComponent implements OnInit {
 
-  @Input() pending_friend
+  @Input() peer
 
   public loading: boolean = false
 
@@ -35,7 +36,8 @@ export class PendingFriendActionsComponent implements OnInit {
   public bgColor: string
   
   constructor(private host: PendingFriendsComponent,
-              private friendshipService: FriendshipsService) { }
+              private friendshipService: FriendshipsService,
+              private router: Router) { }
 
   public reportReasonsWindow(): void{
     this.reportReasonsUp = !this.reportReasonsUp
@@ -45,7 +47,7 @@ export class PendingFriendActionsComponent implements OnInit {
 
     this.loading = true
 
-    this.friendshipService.report(this.pending_friend.user.id, reportReason).subscribe( 
+    this.friendshipService.report(this.peer.user.id, reportReason).subscribe( 
       resp => {
         this.reportCallback(resp)
       }
@@ -58,12 +60,12 @@ export class PendingFriendActionsComponent implements OnInit {
       if(httpResponse.message === "success"){
 
         this.successful_action_title = "User was reported succesfully."
-        this.successful_action_description = `You have reported \"${this.pending_friend.user.username}\".`
+        this.successful_action_description = `You have reported \"${this.peer.user.username}\".`
 
         this.successful_action = true
 
         setTimeout(function(){
-            this.successful_action = false
+          this.successful_action = false
         }.bind(this), 2500)
 
         this.loading = false  
@@ -77,7 +79,7 @@ export class PendingFriendActionsComponent implements OnInit {
 
     this.loading = true
 
-    this.friendshipService.blockUser(this.pending_friend.user.id).subscribe( 
+    this.friendshipService.blockUser(this.peer.user.id).subscribe( 
       resp => {
         this.blockUserCallback(resp)
       }
@@ -90,11 +92,11 @@ export class PendingFriendActionsComponent implements OnInit {
     if(http_response.message === 'success'){
 
       this.successful_action_title = "User was blocked."
-      this.successful_action_description = `You have blocked \"${this.pending_friend.user.username}\".`
+      this.successful_action_description = `You have blocked \"${this.peer.user.username}\".`
 
       this.successful_action = true
       
-      let friend_index = this.host.pending_list.indexOf(this.pending_friend)
+      let friend_index = this.host.pending_list.indexOf(this.peer)
       this.host.pending_list.splice(friend_index, 1)
 
       setTimeout(function(){
@@ -113,7 +115,7 @@ export class PendingFriendActionsComponent implements OnInit {
 
     this.loading = true
 
-    this.friendshipService.acceptFriend(this.pending_friend.user.id).subscribe(
+    this.friendshipService.acceptFriend(this.peer.user.id).subscribe(
       resp => {
         this.acceptRequestCallback(resp)
       }
@@ -126,11 +128,11 @@ export class PendingFriendActionsComponent implements OnInit {
     if(http_response.success){
 
       this.successful_action_title = "Friend request accepted."
-      this.successful_action_description = `You and \"${this.pending_friend.user.username}\" are now friends.`
+      this.successful_action_description = `You and \"${this.peer.user.username}\" are now friends.`
 
       this.successful_action = true
 
-      let pending_index = this.host.pending_list.indexOf(this.pending_friend)
+      let pending_index = this.host.pending_list.indexOf(this.peer)
 
       this.host.pending_list.splice(pending_index, 1)
 
@@ -150,7 +152,7 @@ export class PendingFriendActionsComponent implements OnInit {
     
     this.loading = true    
     
-    this.friendshipService.cancelRequest(this.pending_friend.user.id).subscribe(
+    this.friendshipService.cancelRequest(this.peer.user.id).subscribe(
       resp =>{
         this.cancelRequestCallback(resp)
       }
@@ -163,11 +165,11 @@ export class PendingFriendActionsComponent implements OnInit {
     if(httpResponse.success){
 
       this.successful_action_title = "Friend request cancelled."
-      this.successful_action_description = `Your friendship request to \"${this.pending_friend.user.username }\" was cancelled.`
+      this.successful_action_description = `Your friendship request to \"${this.peer.user.username }\" was cancelled.`
 
       this.successful_action = true
 
-      let pending_index = this.host.pending_list.indexOf(this.pending_friend)
+      let pending_index = this.host.pending_list.indexOf(this.peer)
 
       this.host.pending_list.splice(pending_index, 1)
 
@@ -183,13 +185,17 @@ export class PendingFriendActionsComponent implements OnInit {
 
   }
 
+  public viewProfile(): void{
+    this.friendshipService.viewProfile(this)
+  }
+
   closeWindow(){
     this.host.show_pending_actions = false
   }
 
   ngOnInit() {
 
-    console.log("Pending Friend", this.pending_friend)
+    console.log("Pending Friend", this.peer)
 
     this.bgColor = localStorage.getItem('spotbie_backgroundColor')
     this.my_id = localStorage.getItem('spotbie_userId')

@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core'
+import { FriendshipsService } from '../../friendships.service'
 import { BlockedUsersComponent } from '../blocked-users.component'
-import { FriendshipsService } from 'src/app/services/friendships.service'
 
 @Component({
   selector: 'app-blocked-user-actions',
@@ -62,6 +62,7 @@ export class BlockedUserActionsComponent implements OnInit {
       }.bind(this), 2500)
 
       this.loading = false  
+      this.reportReasonsWindow()
 
     } else
       console.log("reportCallback", httpResponse)
@@ -82,7 +83,7 @@ export class BlockedUserActionsComponent implements OnInit {
 
   public unblockUserCallback(http_response: any){
 
-    if(http_response.message === "success"){
+    if(http_response.success){
 
       this.successful_action_title = "User was unblocked."
       this.successful_action_description = `You have unblocked \"${this.blocked_user.user.username}\".`
@@ -118,7 +119,7 @@ export class BlockedUserActionsComponent implements OnInit {
 
   public friendUserCallback(http_response: any): void{
 
-    if(http_response.message === 'success'){
+    if(http_response.success){
 
         this.successful_action_title = "User friendship requested."
         this.successful_action_description = `You have requested to be friends with \"${this.blocked_user.user.username}\".`

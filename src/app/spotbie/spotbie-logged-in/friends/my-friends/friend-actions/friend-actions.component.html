@@ -4,7 +4,7 @@
 
         <div class='spotbie-reportReasonsInnerWrapper' [ngStyle]="{ 'background-color' : bgColor}">
 
-            <h4>Why would you like to report {{ friend.user.username }}?</h4>
+            <h4>Why would you like to report {{ peer.user.username }}?</h4>
 
             <div class="spotbie-reportReason" *ngFor="let reportReason of reportReasonList" (click)="report(reportReason.id)">
                 {{ reportReason.name }}
@@ -15,14 +15,14 @@
     </div>
     
     <div class='spotbie-friend-actions-image' 
-        *ngIf="friend.spotbie_user.default_picture as user_default"
+        *ngIf="peer.spotbie_user.default_picture as user_default"
         [ngStyle]="{'background' : 'url(' + user_default + ')'}"></div>
     
-    <div class='spotbie-friend-actions-username'>{{ friend.user.username }}</div>
+    <div class='spotbie-friend-actions-username'>{{ peer.user.username }}</div>
     
     <div class='spotbie-friend-action-buttons'>
 
-        <div class='spotbie-button' [routerLink]="['/user-profile/' + friend.user.username]">View Profile</div>
+        <div class='spotbie-button' (click)="viewProfile()">View Profile</div>
 
         <div class='spotbie-button' (click)="unfriend()">Unfriend</div>
 

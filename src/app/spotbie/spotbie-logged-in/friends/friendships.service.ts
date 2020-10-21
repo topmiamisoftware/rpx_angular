@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
-import * as spotbieGlobals from '../globals';
+import * as spotbieGlobals from '../../../globals';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { catchError } from 'rxjs/operators';
-import { handleError } from '../helpers/error-helper';
+import { handleError } from 'src/app/helpers/error-helper';
+import { FriendActionsComponent } from '../../profile-header/friend-actions/friend-actions.component';
+import { PendingFriendActionsComponent } from './pending-friends/pending-friend-actions/pending-friend-actions.component';
 
 const FRIENDS_API = spotbieGlobals.API + "friendship";
 
@@ -141,6 +143,13 @@ export class FriendshipsService {
     return this.http.get<any>(checkRelationshipApi).pipe(
       catchError(handleError("checkRelationship"))
     )
+
+  }
+
+  public viewProfile(component: any){
+
+    component.closeWindow()
+    component.router.navigate([`/user-profile/${component.peer.user.username}`])
 
   }
 

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { MenuLoggedInComponent } from '../menu-logged-in.component'
 import { Subscription } from 'rxjs'
-import { ColorsService } from 'src/app/services/background-color/colors.service'
+import { ColorsService } from './colors.service'
 
 @Component({
   selector: 'app-background-color',

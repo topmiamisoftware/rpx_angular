@@ -10,8 +10,8 @@ import * as map_extras from './map_extras/map_extras'
 import { ToastRequest } from 'src/app/helpers/toast-helper/toast-models/toast-request'
 import { DateFormatPipe, TimeFormatPipe } from 'src/app/pipes/date-format.pipe'
 import { MatSliderChange } from '@angular/material/slider'
-import { ColorsService } from 'src/app/services/background-color/colors.service'
 import { Subscription } from 'rxjs'
+import { ColorsService } from '../spotbie-logged-in/background-color/colors.service'
 
 const YELP_BUSINESS_SEARCH_API = 'https://api.yelp.com/v3/businesses/search'
 
@@ -26,7 +26,7 @@ export class MapComponent implements OnInit {
 
   @ViewChild('spotbie_user_marker_info_window') spotbie_user_marker_info_window: AgmInfoWindow
 
-  public is_logged_in: string
+  public isLoggedIn: string
 
   public map_zoom = 32
   public lat: number
@@ -156,10 +156,12 @@ export class MapComponent implements OnInit {
 
   public web_options_subscriber: Subscription
 
+  public myFavoritesWindow = { open : false }
+
   constructor(private locationService: LocationService,
               private deviceService: DeviceDetectorService,
               private router: Router,
-              private _web_options_service: ColorsService,
+              private webOptionsService: ColorsService,
               private mapIconPipe: MapObjectIconPipe) { }
 
   public spotMe() {
@@ -917,7 +919,7 @@ export class MapComponent implements OnInit {
       loc_y: this.lng
     }
 
-    if(this.is_logged_in === '1'){
+    if(this.isLoggedIn === '1'){
 
       this.locationService.saveCurrentLocation(save_location_obj).subscribe(
         resp => {
@@ -1045,7 +1047,7 @@ export class MapComponent implements OnInit {
     this.coming_soon_ov_text = "SpotBie Media Search will allow users to find uploaded media locally. (Songs, Videos, Books, Etc.)"    
   }
 
-  artistSearch(action) {
+  public artistSearch(action) {
     //this.host.mediaPlayerWindow.open = true
     this.coming_soon_ov = true
 
@@ -1053,7 +1055,7 @@ export class MapComponent implements OnInit {
     this.coming_soon_ov_text = "SpotBie Content Creator Search will allow users to find content creators locally. (Artists, Producers, Bloggers, Etc.)"    
   }
 
-  placeSearch(action) {
+  public placeSearch(action) {
     //this.host.mediaPlayerWindow.open = true
     this.coming_soon_ov = true
 
@@ -1061,14 +1063,16 @@ export class MapComponent implements OnInit {
     this.coming_soon_ov_text = "SpotBie Place Search will allow users to find places locally. (Parks, Malls, Attractions, Etc.)"    
   }
 
-  closeSearchResults(){
+  public closeSearchResults(){
     this.closeCategories()
     this.display_surrounding_object_list = true
     this.show_search_box = false
   }
 
-  public myFavorites(){
+  public myFavorites(): void{
     
+    this.myFavoritesWindow.open = true
+
   }
 
   ngOnInit() {
@@ -1084,12 +1088,12 @@ export class MapComponent implements OnInit {
 
   ngAfterViewInit() {
     
-    this.is_logged_in = localStorage.getItem('spotbie_loggedIn')
+    this.isLoggedIn = localStorage.getItem('spotbie_loggedIn')
     this.bg_color = localStorage.getItem('spotbie_backgroundColor')
     this.user_default_image = localStorage.getItem('spotbie_userDefaultImage')
     this.spotbie_username = localStorage.getItem('spotbie_userLogin')
 
-    if(this.is_logged_in !== '1'){
+    if(this.isLoggedIn !== '1'){
       this.user_default_image = 'user.png'
       this.spotbie_username = 'Guest'      
       this.bg_color = '#353535'
@@ -1104,7 +1108,7 @@ export class MapComponent implements OnInit {
 
     if (window.navigator.geolocation) { window.navigator.geolocation.getCurrentPosition(this.showPosition.bind(this)) }
 
-    this.web_options_subscriber = this._web_options_service.getWebOptions().subscribe(web_options =>{
+    this.web_options_subscriber = this.webOptionsService.getWebOptions().subscribe(web_options =>{
 
       if(web_options.bg_color){
         this.bg_color = web_options.bg_color

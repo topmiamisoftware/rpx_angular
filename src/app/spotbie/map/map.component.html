@@ -101,7 +101,7 @@
         <div id='spotbie_events_search'></div>
       </td> 
 
-      <!--<td (click)="mediaSearch(0)" title="Find Media" *ngIf="is_logged_in == '1'">
+      <!--<td (click)="mediaSearch(0)" title="Find Media" *ngIf="isLoggedIn == '1'">
         <div id='spotbie_media_search'></div>
       </td>-->
 
@@ -377,6 +377,8 @@
   </div>    
   <div class="spotbie-close-button" (click)="closeCmS()">close</div>
 </div>
+
+<app-my-favorites *ngIf='myFavoritesWindow.open' (closeWindow)="myFavoritesWindow.open = false"></app-my-favorites>
 
 <app-toast-helper [helper_config]="toast_helper_config" 
                 *ngIf="toast_helper"
