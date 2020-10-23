@@ -1,8 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core'
 import { InfoObjectServiceService } from './info-object-service.service'
-import { Router } from '@angular/router'
-import { HttpResponse } from 'src/app/models/http-reponse'
 import { MapComponent } from '../map.component'
+import { MyFavoritesService } from '../../my-favorites/my-favorites.service'
 
 const YELP_BUSINESS_DETAILS_API = "https://api.yelp.com/v3/businesses/"
 
@@ -15,80 +14,158 @@ export class InfoObjectComponent implements OnInit {
 
   @Input() info_object
 
-  public bg_color : string
+  public bgColor: string
 
-  public loading : boolean = false
+  public loading: boolean = false
 
-  public url_api : string
+  public urlApi: string
 
-  public api_action : string
+  public apiAction: string
 
-  public _info_object : any = null
+  public infoObject: any = null
 
-  public _info_object_image_url : string
+  public infoObjectImageUrl: string
 
-  constructor(private host : MapComponent, 
-              private info_object_service : InfoObjectServiceService) { }
+  public showFavorites: boolean = true
 
-  public closeWindow() : void {
-    this.host.info_object_window.open = false
+  public isLoggedIn: string
+
+  constructor(private host: MapComponent, 
+              private infoObjectService: InfoObjectServiceService,
+              private myFavoritesService: MyFavoritesService) { }
+
+  public closeWindow(): void {
+    this.host.infoObjectWindow.open = false
   }
 
-  private pullInfoObject() : void{
-    
-    let api_url = this.url_api
-    let api_action = this.api_action
+  private pullInfoObject(): void{
 
-    const yelp_obj = {
-      req_url : api_url,
-      exe_search_action : api_action
+    const infoObjToPull = {
+      config_url: this.urlApi
     }
 
-    this.info_object_service.pullInfoObject(yelp_obj, this.pullInfoObjectCallback.bind(this))
+    this.infoObjectService.pullInfoObject(infoObjToPull).subscribe(
+      resp =>{
+        this.pullInfoObjectCallback(resp)
+      }
+    )
+
   }
   
-  public openWithGoogleMaps() : void {
-    let confirm_nav = confirm('We will try to open and navigate on your device\'s default navigation app.')
-    if(confirm_nav){
-      window.open('geo:' + this._info_object.coordinates.latitude + ',' + this._info_object.coordinates.longitude )
-    }
-  }
+  private pullInfoObjectCallback(httpResponse: any){
 
-  private pullInfoObjectCallback(http_response : HttpResponse){
+    console.log('pullInfoObjectCallback', httpResponse)
 
-    if (http_response.status == '200') {
+    if (httpResponse.success) {
 
-      this._info_object = http_response.responseObject
+      this.infoObject = httpResponse.data
       this.loading = false
-      
-      console.log("the yelp response ", this.info_object)
 
     } else
-      console.log('Info Object Details Error : ', http_response)
+      console.log('pullInfoObjectCallback', httpResponse)
 
   }
 
-  public switchPhoto(thumbnail) : void{
-    this._info_object_image_url  = thumbnail
+  public openWithGoogleMaps(): void {
+
+    let confirmNav = confirm('We will try to open and navigate on your device\'s default navigation app.')
+    
+    if(confirmNav)
+      window.open('geo:' + this.infoObject.coordinates.latitude + ',' + this.infoObject.coordinates.longitude )
+    
+  }
+
+  public switchPhoto(thumbnail): void{
+    this.infoObjectImageUrl = thumbnail
   }
 
   public goToTicket(){
     window.open(this.info_object.url, "_blank")
   }
 
+  public addFavorite(): void{
+
+    this.loading = true
+
+    const yelpId = this.infoObject.id
+    const name = this.infoObject.name
+    const locX = this.infoObject.coordinates.latitude
+    const locY = this.infoObject.coordinates.longitude
+
+    const favoriteObj = {
+      yelp_id: yelpId,
+      name: name,
+      description: null,
+      loc_x: locX,
+      loc_y: locY
+    }
+
+    if(this.isLoggedIn == '1'){
+
+      this.myFavoritesService.addFavorite(favoriteObj).subscribe(
+        resp => {
+          this.addFavoriteCb(resp)
+        }
+      )
+
+    } else
+      this.myFavoritesService.addFavoriteLoggedOut(favoriteObj)
+    
+  }
+
+  public addFavoriteCb(resp: any): void{
+
+    if(resp.success)
+      this.showFavorites = false
+    else
+      console.log("addFavoriteCb", resp)
+
+    this.loading = false
+
+  }
+
+  public removeFavorite(){
+
+    this.loading = true
+
+    const yelpId = this.infoObject.id
+
+    if(this.isLoggedIn == '1'){
+
+      this.myFavoritesService.removeFavorite(yelpId).subscribe(
+        resp => {
+          this.removeFavoriteCb(resp)
+        }
+      )
+
+    } else {
+      this.myFavoritesService.removeFavoriteLoggedOut(yelpId)
+    }
+
+  }
+
+  public removeFavoriteCb(resp){
+
+    if(resp.success)
+      this.showFavorites = true
+    else
+      console.log("removeFavoriteCb", resp)
+
+    this.loading = false
+
+  }
+
   ngOnInit(){
 
     this.loading = true
 
-    console.log("The Info Object : ", this.info_object)
-    
-    this._info_object_image_url = this.info_object.image_url
-    this.bg_color = localStorage.getItem('spotbie_backgroundColor')
+    this.infoObjectImageUrl = this.info_object.image_url
+    this.bgColor = localStorage.getItem('spotbie_backgroundColor')
+    this.isLoggedIn = localStorage.getItem('spotbie_loggedIn')
 
     switch(this.info_object.type_of_info_object){
       case 'yelp_business':
-        this.url_api = YELP_BUSINESS_DETAILS_API + this.info_object.id
-        this.api_action ='yelpPullBusiness'
+        this.urlApi = YELP_BUSINESS_DETAILS_API + this.info_object.id
         break
       case 'ticketmaster_event':
         this.loading = false

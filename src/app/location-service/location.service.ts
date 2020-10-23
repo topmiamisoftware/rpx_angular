@@ -1,19 +1,17 @@
 import { Injectable } from '@angular/core';
-import { HttpResponse } from '../models/http-reponse';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { displayError, handleError } from '../helpers/error-helper';
+import { HttpClient } from '@angular/common/http';
+import { handleError } from '../helpers/error-helper';
 import * as spotbieGlobals from '../globals';
 import { catchError } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
-const USER_LOCATION_API = spotbieGlobals.API + 'user_location';
+const USER_LOCATION_API = spotbieGlobals.API + 'user_location'
 
-const SEARCH_BUSINESS_API = 'https://www.spotbie.com/api/yelp.php';
+const SEARCH_BUSINESS_API = spotbieGlobals.API + 'search-businesses'
 
-const SEARCH_EVENTS_API = 'https://www.spotbie.com/api/yelp.php';
+const SEARCH_EVENTS_API = spotbieGlobals.API + 'search-events'
 
-const HTTP_OPTIONS_2 = {
-  headers: new HttpHeaders({ 'Content-Type' : 'application/json' })
-};
+const GET_CLASSIFICATIONS = spotbieGlobals.API + 'get-classifications'
 
 @Injectable({
   providedIn: 'root'
@@ -22,91 +20,45 @@ export class LocationService {
 
   constructor(private http: HttpClient) { }
   
-  public getClassifications(search_obj, callback){
+  public getClassifications(): Observable<any>{
 
-    let chosen_api
-    
-    const search_obj2 = JSON.stringify(search_obj)
+    const getClassificationsApi = `${GET_CLASSIFICATIONS}`
 
-    chosen_api = SEARCH_EVENTS_API
-
-    this.http.post<HttpResponse>(chosen_api, search_obj2, HTTP_OPTIONS_2)
-    .subscribe( resp => {
-            //console.log('getEvents Response : ', resp)
-            const httpResponse = new HttpResponse ({
-              status : resp.status,
-              message : resp.message,
-              full_message : resp.full_message,
-              responseObject : resp.responseObject
-            });
-            callback(httpResponse)
-          },
-            error => {
-              displayError(error);
-    });
+    return this.http.get<any>(getClassificationsApi).pipe(
+      catchError(handleError("getClassifications"))
+    )
     
   }
 
-  public getEvents(search_obj, callback) {
+  public getEvents(searchObj: any): Observable<any> {
 
-    let chosen_api
-    
-    const search_obj2 = JSON.stringify(search_obj)
+    const getEventsApi = `${SEARCH_EVENTS_API}`
 
-    chosen_api = SEARCH_EVENTS_API
-
-    this.http.post<HttpResponse>(chosen_api, search_obj2, HTTP_OPTIONS_2)
-    .subscribe( resp => {
-            //console.log('getEvents Response : ', resp)
-            const httpResponse = new HttpResponse ({
-              status : resp.status,
-              message : resp.message,
-              full_message : resp.full_message,
-              responseObject : resp.responseObject
-            });
-            callback(httpResponse)
-          },
-            error => {
-              displayError(error);
-    });
-
-  }
-
-  public getBusinesses(search_obj, callback) {
-
-    let chosen_api
-    
-    const search_obj2 = JSON.stringify(search_obj)
-
-    chosen_api = SEARCH_BUSINESS_API
-
-    this.http.post<HttpResponse>(chosen_api, search_obj2, HTTP_OPTIONS_2)
-    .subscribe( resp => {
-            //console.log('getBusinesses Response : ', resp)
-            const httpResponse = new HttpResponse ({
-              status : resp.status,
-              message : resp.message,
-              full_message : resp.full_message,
-              responseObject : resp.responseObject
-            });
-            callback(httpResponse)
-          },
-            error => {
-              displayError(error);
-    });
-
-  }
-
-  public saveCurrentLocation(save_location_obj: any) {
-
-    let location_api = USER_LOCATION_API + '/save_current_location';
-
-    return this.http.post<any>(location_api, save_location_obj).pipe(
-      catchError(handleError("saveCurrentLocation Error"))
+    return this.http.post<any>(getEventsApi, searchObj).pipe(
+      catchError(handleError("getEvents"))
     )
 
   }
 
+  public getBusinesses(searchObj: any): Observable<any> {
+
+    const getBusinessesApi = `${SEARCH_BUSINESS_API}`
+
+    return this.http.post<any>(getBusinessesApi, searchObj).pipe(
+      catchError(handleError("getBusinesses"))
+    )
+
+  }
+
+  public saveCurrentLocation(saveLocationObj: any) {
+
+    const locationApi = `${USER_LOCATION_API}/save_current_location`;
+
+    return this.http.post<any>(locationApi, saveLocationObj).pipe(
+      catchError(handleError("saveCurrentLocation Error"))
+    )
+
+  }
 
   public retrieveSurroudings(retrieve_surroundings_obj: any){
 

@@ -31,8 +31,8 @@ export class MapComponent implements OnInit {
   public map_zoom = 32
   public lat: number
   public lng: number
-  public og_lat: number
-  public og_lng: number
+  public ogLat: number
+  public ogLng: number
   public iconUrl:  string
   public user_default_image: string
 
@@ -47,34 +47,34 @@ export class MapComponent implements OnInit {
   
   public surrounding_object_list = new Array()
 
-  public slider_right: boolean = false
+  public sliderRight: boolean = false
 
-  public current_marker: any
+  public currentMarker: any
 
   public spotbie_username: string
 
   public bg_color: string
 
-  public search_results = new Array()
+  public searchResults = new Array()
 
   public categories
 
-  public search_results_subtitle: string
+  public searchResultsSubtitle: string
 
   public sort_by_txt: string = "Rating"
 
-  public cats_up = false
+  public catsUp = false
 
   public show_next_page_button: boolean = false 
 
-  public sub_category = {
+  public subCategory = {
     food_sub: { open: false},
     media_sub: { open: false},
     artist_sub: { open: false},
     place_sub: { open: false}
   }
 
-  public show_search_results: boolean
+  public showSearchResults: boolean
 
   public show_search_box: boolean
 
@@ -86,11 +86,11 @@ export class MapComponent implements OnInit {
 
   public search_category: string
 
-  public search_category_sorter: string
+  public searchCategorySorter: string
 
   public loading: boolean = false
 
-  private search_results_original: Array<any> = []
+  private searchResultsOriginal: Array<any> = []
 
   public no_results = false
 
@@ -105,9 +105,9 @@ export class MapComponent implements OnInit {
   public coming_soon_ov_title: string = ""
   public coming_soon_ov_text: string = ""
 
-  public info_object
+  public infoObject
 
-  public info_object_window = { open: false}
+  public infoObjectWindow = { open: false}
 
   public type_of_info_object: string
 
@@ -120,17 +120,17 @@ export class MapComponent implements OnInit {
 
   public around_me_search_page: number = 1
 
-  public toast_helper: boolean = false
+  public toastHelper: boolean = false
 
-  public loaded_total_results: number = 0
+  public loadedTotalResults: number = 0
 
-  public all_pages: number = 0
+  public allPages: number = 0
 
-  public max_distance_cap: number = 45
+  public maxDistanceCap: number = 45
 
-  public display_surrounding_object_list: boolean = true
+  public displaySurroundingObjectList: boolean = true
 
-  public toast_helper_config: ToastRequest = {
+  public toastHelperConfig: ToastRequest = {
     type: "acknowledge",
     text: {
       info_text: "There are no events in this category.",
@@ -144,15 +144,15 @@ export class MapComponent implements OnInit {
     }
   }
 
-  public max_distance: number = 10
+  public maxDistance: number = 10
 
-  public total_results: number = 0
+  public totalResults: number = 0
 
   public current_offset: number = 0
 
   public update_distance_timeout: any
 
-  public items_per_page: number = 0
+  public itemsPerPage: number = 0
 
   public web_options_subscriber: Subscription
 
@@ -168,7 +168,7 @@ export class MapComponent implements OnInit {
 
     this.closeSearchResults()
 
-    this.display_surrounding_object_list = true
+    this.displaySurroundingObjectList = true
     this.n2_x = 0
     this.n3_x = 7
     this.rad_1 = this.rad_11
@@ -236,19 +236,19 @@ export class MapComponent implements OnInit {
   }
 
   public deliverySort() {
-    this.search_results = this.search_results.filter((search_result) => {
+    this.searchResults = this.searchResults.filter((search_result) => {
       return search_result.transactions.indexOf('delivery') > -1
     })
   }
 
   public pickUpSort() {
-    this.search_results = this.search_results.filter((search_result) => {
+    this.searchResults = this.searchResults.filter((search_result) => {
       return search_result.transactions.indexOf('pickup') > -1
     })
   }
 
   public reservationSort() {
-    this.search_results = this.search_results.filter((search_result) => {
+    this.searchResults = this.searchResults.filter((search_result) => {
       return search_result.transactions.indexOf('restaurant_reservation') > -1
     })
   }
@@ -259,15 +259,15 @@ export class MapComponent implements OnInit {
 
     this.update_distance_timeout = setTimeout(function(){
 
-      this.max_distance = evt.value
+      this.maxDistance = evt.value
 
-      let results = this.search_results_original.filter((search_result) => {
-        return search_result.distance < this.max_distance
+      let results = this.searchResultsOriginal.filter((search_result) => {
+        return search_result.distance < this.maxDistance
       })
   
-      this.loaded_total_results = results.length
+      this.loaded_totalResults = results.length
   
-      this.search_results = results
+      this.searchResults = results
 
     }.bind(this), 500)
 
@@ -309,24 +309,24 @@ export class MapComponent implements OnInit {
 
     }
     
-    //console.log("Search Results ", this.search_results)
+    //console.log("Search Results ", this.searchResults)
 
     switch (ac) {
       case 0:
         // sort by distance
-        if (this.sorting_order == 'desc') { this.search_results = this.search_results.sort(this.distanceSortDesc) } else { this.search_results = this.search_results.sort(this.distanceSortAsc) }
+        if (this.sorting_order == 'desc') { this.searchResults = this.searchResults.sort(this.distanceSortDesc) } else { this.searchResults = this.searchResults.sort(this.distanceSortAsc) }
         break
       case 1:
         // sort by rating
-        if (this.sorting_order == 'desc') { this.search_results = this.search_results.sort(this.ratingSortDesc) } else { this.search_results = this.search_results.sort(this.ratingSortAsc) }
+        if (this.sorting_order == 'desc') { this.searchResults = this.searchResults.sort(this.ratingSortDesc) } else { this.searchResults = this.searchResults.sort(this.ratingSortAsc) }
         break
       case 2:
         // sort by reviews
-        if (this.sorting_order == 'desc') { this.search_results = this.search_results.sort(this.reviewsSortDesc) } else { this.search_results = this.search_results.sort(this.reviewsSortAsc) }
+        if (this.sorting_order == 'desc') { this.searchResults = this.searchResults.sort(this.reviewsSortDesc) } else { this.searchResults = this.searchResults.sort(this.reviewsSortAsc) }
         break
       case 3:
         // sort by price
-        if (this.sorting_order == 'desc') { this.search_results = this.search_results.sort(this.priceSortDesc) } else { this.search_results = this.search_results.sort(this.priceSortAsc) }
+        if (this.sorting_order == 'desc') { this.searchResults = this.searchResults.sort(this.priceSortDesc) } else { this.searchResults = this.searchResults.sort(this.priceSortAsc) }
         break
       case 4:
         // sort by delivery
@@ -344,28 +344,25 @@ export class MapComponent implements OnInit {
 
   }
 
-  public classificationSearch(){
+  public classificationSearch(): void{
 
     this.loading = true
-
-    let search_obj = {
-      req_url: "",
-      exe_search_action: "classificationSearch"
-    }
     
-    this.locationService.getClassifications(search_obj, this.classificationSearchCallback.bind(this))
+    this.locationService.getClassifications().subscribe(
+      resp => {
+        this.classificationSearchCallback(resp)        
+      }
+    )
 
   }
 
-  public classificationSearchCallback(http_response: HttpResponse){
+  public classificationSearchCallback(httpResponse: any){
 
     this.loading = false
 
-    if(http_response.status == '200'){
+    if(httpResponse.success){
 
-      let classifications: any = http_response.responseObject._embedded.classifications
-      
-      //console.log("All classification", classifications)
+      let classifications: any = httpResponse.data._embedded.classifications
       
       classifications.forEach(classification => {
 
@@ -392,35 +389,35 @@ export class MapComponent implements OnInit {
 
       this.event_categories = this.event_categories.reverse()
 
-      this.cats_up = true
+      this.catsUp = true
 
     } else
-      console.log("getClassifications Error ", http_response)
+      console.log("getClassifications Error ", httpResponse)
 
-    //console.log("Classification Seach Response", http_response)
+    //console.log("Classification Seach Response", httpResponse)
     this.loading = false
     
   }
 
-  public showEventSubCategory(sub_cat: any){
+  public showEventSubCategory(subCat: any){
     
-    //console.log("Sub Cat ", sub_cat)
+    //console.log("Sub Cat ", subCat)
 
-    if(sub_cat._embedded.subtypes !== undefined &&
-      sub_cat._embedded.subtypes.length == 1){
+    if(subCat._embedded.subtypes !== undefined &&
+      subCat._embedded.subtypes.length == 1){
         
-        this.apiSearch(sub_cat.name)
+        this.apiSearch(subCat.name)
         return
 
-    } else if(sub_cat._embedded.subgenres !== undefined &&
-      sub_cat._embedded.subgenres.length == 1){
+    } else if(subCat._embedded.subgenres !== undefined &&
+      subCat._embedded.subgenres.length == 1){
 
-        this.apiSearch(sub_cat.name)
+        this.apiSearch(subCat.name)
         return
 
     }
 
-    sub_cat.show_sub_sub = !sub_cat.show_sub_sub
+    subCat.show_sub_sub = !subCat.show_sub_sub
 
   }
 
@@ -437,11 +434,11 @@ export class MapComponent implements OnInit {
     keyword = encodeURIComponent(keyword)
 
     if(this.search_keyword !== keyword){
-      this.total_results = 0
-      this.all_pages = 0
+      this.totalResults = 0
+      this.allPages = 0
       this.current_offset = 0
       this.around_me_search_page = 1
-      this.search_results = []
+      this.searchResults = []
     }
 
     let api_url: string
@@ -450,28 +447,32 @@ export class MapComponent implements OnInit {
 
     switch(this.search_category){
       case 'events':
-        api_url = 'size=20&latlong=' + this.lat + ',' + this.lng + '&classificationName=' + keyword + '&radius=45'
-        search_action = 'ticketMasterEventSearch'        
+        api_url = 'size=20&latlong=' + this.lat + ',' + this.lng + '&classificationName=' + keyword + '&radius=45'      
         break
       case 'food':
       case 'shopping':
         api_url = this.search_api_url + '?latitude=' + this.lat + '&longitude=' + this.lng + '&term=' + keyword + '&categories=' + keyword + 
         '&radius=40000&sort_by=rating&limit=50&offset=' + this.current_offset 
-        search_action = 'yelpBusinessSearch'
     }
 
     search_obj = {
-      req_url: api_url,
-      exe_search_action: search_action
+      config_url: api_url
     }
     
     switch(this.search_category){
       case "events":
-        this.locationService.getEvents(search_obj, this.getEventsSearchCallback.bind(this))
-        break
+        this.locationService.getEvents(search_obj).subscribe(
+          resp => {
+            this.getEventsSearchCallback(resp)
+          }
+        )
       case "food":
       case "shopping":
-        this.locationService.getBusinesses(search_obj, this.getBusinessesSearchCallback.bind(this))
+        this.locationService.getBusinesses(search_obj).subscribe(
+          resp => {
+            this.getBusinessesSearchCallback(resp)
+          }
+        )        
         break
     }
 
@@ -482,7 +483,7 @@ export class MapComponent implements OnInit {
     this.show_search_box = true
 
     if(category == this.search_category){
-      this.cats_up = true
+      this.catsUp = true
       return
     }
 
@@ -496,29 +497,29 @@ export class MapComponent implements OnInit {
         this.type_of_info_object = "yelp_business"
         this.categories = this.food_categories        
         this.search_categories_placeholder = 'Search Food Spots...'
-        this.max_distance_cap = 25
-        this.items_per_page = 50
+        this.maxDistanceCap = 25
+        this.itemsPerPage = 50
         break
       case 'shopping':
         this.search_api_url = YELP_BUSINESS_SEARCH_API
         this.type_of_info_object = "yelp_business"        
         this.categories = this.shopping_categories
         this.search_categories_placeholder = 'Search Shop Spots...'
-        this.max_distance_cap = 25
-        this.items_per_page = 50
+        this.maxDistanceCap = 25
+        this.itemsPerPage = 50
         break
       case 'events':
         this.type_of_info_object = "ticketmaster_events"
         this.search_categories_placeholder = 'Search Events Nearby...'
         this.event_categories = []
         this.categories = this.event_categories
-        this.max_distance_cap = 45
-        this.items_per_page = 20
+        this.maxDistanceCap = 45
+        this.itemsPerPage = 20
         this.classificationSearch()
         return
     }
 
-    this.cats_up = true
+    this.catsUp = true
     this.loading = false
 
   }
@@ -530,43 +531,46 @@ export class MapComponent implements OnInit {
   }
 
   public closeCategories(): void {
-    this.cats_up = false
+    this.catsUp = false
   }
 
   public searchSpotBie(evt: any): void {
     
-      // console.log("category ", category)
+    // console.log("category ", category)
 
-      this.search_keyword = evt.target.value
+    this.search_keyword = evt.target.value
 
-      const search_term = encodeURIComponent(evt.target.value)
+    const search_term = encodeURIComponent(evt.target.value)
 
-      clearTimeout(this.finder_search_timeout)
+    clearTimeout(this.finder_search_timeout)
 
-      this.finder_search_timeout = setTimeout(function() {
+    this.finder_search_timeout = setTimeout(function() {
 
-        this.loading = true
+      this.loading = true
 
-        let api_url: string
-        let search_action: string
+      let api_url: string
+      let search_action: string
 
-        if (this.search_category == 'events') {
-          api_url = 'size=20&latlong=' + this.lat + ',' + this.lng + '&keyword=' + search_term + '&radius=45'
-          search_action = 'ticketMasterEventSearch'
-        } else {
-          api_url = this.search_api_url + '?latitude=' + this.lat + '&longitude=' + this.lng + '&term=' + search_term +
-          '&categories=' + this.search_category + '&radius=40000&sort_by=rating&limit=50&offset=' + this.current_offset
-          search_action = 'yelpBusinessSearch'
+      if (this.search_category == 'events') {
+        api_url = 'size=20&latlong=' + this.lat + ',' + this.lng + '&keyword=' + search_term + '&radius=45'
+        search_action = 'ticketMasterEventSearch'
+      } else {
+        api_url = this.search_api_url + '?latitude=' + this.lat + '&longitude=' + this.lng + '&term=' + search_term +
+        '&categories=' + this.search_category + '&radius=40000&sort_by=distance&limit=50&offset=' + this.current_offset
+        search_action = 'yelpBusinessSearch'
+      }
+
+      const search_obj = {
+        config_url: api_url
+      }
+ 
+      this.locationService.getBusinesses(search_obj).subscribe(
+        resp => {
+          this.getBusinessesSearchCallback(resp)
         }
+      )
 
-        const search_obj = {
-          req_url: api_url,
-          exe_search_action: search_action
-        }
-
-        this.locationService.getBusinesses(search_obj, this.getBusinessesSearchCallback.bind(this))
-
-      }.bind(this, search_term), 1000)
+    }.bind(this, search_term), 1000)
 
   }
 
@@ -577,7 +581,7 @@ export class MapComponent implements OnInit {
 
         //previous
         if(this.around_me_search_page == 1){
-          this.around_me_search_page = Math.floor(this.total_results / this.items_per_page)          
+          this.around_me_search_page = Math.floor(this.totalResults / this.itemsPerPage)          
         } else {
           this.around_me_search_page--
         }
@@ -587,7 +591,7 @@ export class MapComponent implements OnInit {
       case 1:
 
         //next
-        if(this.around_me_search_page == Math.floor(this.total_results / this.items_per_page)){
+        if(this.around_me_search_page == Math.floor(this.totalResults / this.itemsPerPage)){
           this.around_me_search_page = 1
           this.current_offset = 0
         } else {          
@@ -598,7 +602,7 @@ export class MapComponent implements OnInit {
 
     }
 
-    this.current_offset = (this.around_me_search_page * this.items_per_page) - this.items_per_page
+    this.current_offset = (this.around_me_search_page * this.itemsPerPage) - this.itemsPerPage
 
     //console.log("current offset", this.current_offset)
     //console.log("search page", this.around_me_search_page)
@@ -609,7 +613,7 @@ export class MapComponent implements OnInit {
 
   public hideSearchResults(): void {
 
-    this.show_search_results = !this.show_search_results
+    this.showSearchResults = !this.showSearchResults
 
   }
 
@@ -664,38 +668,38 @@ export class MapComponent implements OnInit {
   }
 
   public dismissToast(evt: Event){
-    this.toast_helper = false
+    this.toastHelper = false
   }
 
-  public getEventsSearchCallback (http_response: any): void {
+  public getEventsSearchCallback (httpResponse: any): void {
     
-    if(http_response.status == '200'){
+    if(httpResponse.success){
       
       window.scrollTo(0,0)
       
-      let event_object = http_response.responseObject
+      let event_object = httpResponse.responseObject
       
       //console.log("event_object", event_object)
 
       if(event_object._embedded === undefined){
-        this.toast_helper = true
+        this.toastHelper = true
         this.loading = false
         return
       }
 
-      this.show_search_results = true
-      this.cats_up = false  
+      this.showSearchResults = true
+      this.catsUp = false  
       this.loading = false
   
       let event_object_list = event_object._embedded.events
 
       //console.log("Object List", event_object_list)
 
-      this.total_results = event_object_list.length
+      this.totalResults = event_object_list.length
 
-      this.all_pages = Math.floor(this.total_results / this.items_per_page)
+      this.allPages = Math.floor(this.totalResults / this.itemsPerPage)
 
-      if(this.all_pages == 0) this.all_pages = 1
+      if(this.allPages == 0) this.allPages = 1
 
       for(let i = 0; i < event_object_list.length; i++){
         
@@ -721,76 +725,74 @@ export class MapComponent implements OnInit {
         event_object_list[i].dates.start.spotbieDate = time_date
         event_object_list[i].dates.start.spotbieHour = time_hr
         
-        this.search_results.push(event_object_list[i])
+        this.searchResults.push(event_object_list[i])
 
       }
 
-      this.search_category_sorter = this.search_category
+      this.searchCategorySorter = this.search_category
 
-      this.search_results_subtitle = 'Events'
+      this.searchResultsSubtitle = 'Events'
    
-      this.search_results_original = this.search_results
+      this.searchResultsOriginal = this.searchResults
       
-      this.show_search_results = true
+      this.showSearchResults = true
 
       this.spotbie_user_marker_info_window.open()
 
-      this.display_surrounding_object_list = false
+      this.displaySurroundingObjectList = false
 
       this.show_search_box = true
 
-      this.loaded_total_results = this.search_results.length
+      this.loadedTotalResults = this.searchResults.length
 
-      this.max_distance = 45
+      this.maxDistance = 45
 
     } else
-      console.log("getEventsSearchCallback Error: ", http_response)
+      console.log("getEventsSearchCallback Error: ", httpResponse)
 
     this.loading = false
 
   }
 
-  public getBusinessesSearchCallback(http_response: HttpResponse): void {
-    
-    //console.log("getBusinessesSearch response", http_response)
+  public getBusinessesSearchCallback(httpResponse: any): void {
 
     window.scrollTo(0,0)
 
     this.loading = false
-    this.show_search_results = true
-    this.cats_up = false
+    this.showSearchResults = true
+    this.catsUp = false
     
-    this.total_results = http_response.responseObject.total
+    this.totalResults = httpResponse.data.total
 
-    this.all_pages = Math.floor(this.total_results / this.items_per_page)
+    this.allPages = Math.floor(this.totalResults / this.itemsPerPage)
 
-    if(this.all_pages == 0) this.all_pages = 1
+    if(this.allPages == 0) this.allPages = 1
 
-    if(this.total_results > 1000){ 
-      this.total_results = 1000
-      this.all_pages = 20
+    if(this.totalResults > 1000){ 
+      this.totalResults = 1000
+      this.allPages = 20
     }
 
-    if (http_response.status == '200') {
+    if (httpResponse.success) {
 
-      let places_results = http_response.responseObject.businesses
+      let places_results = httpResponse.data.businesses
 
       this.populateYelpResults(places_results)
 
-      if(this.total_results > (this.around_me_search_page * this.items_per_page)){
+      if(this.totalResults > (this.around_me_search_page * this.itemsPerPage)){
         this.show_next_page_button = true        
       }
 
       this.spotbie_user_marker_info_window.open()
 
-      this.search_category_sorter = this.search_category
+      this.searchCategorySorter = this.search_category
 
-      this.display_surrounding_object_list = false
+      this.displaySurroundingObjectList = false
 
       this.show_search_box = true
 
     } else
-      console.log('Place Search Error: ', http_response)
+      console.log('Place Search Error: ', httpResponse)
 
   }
 
@@ -843,40 +845,39 @@ export class MapComponent implements OnInit {
 
     })
 
-    this.search_results_original = results
+    this.searchResultsOriginal = results
 
-    results = results.filter((search_result) => {
-      return search_result.distance < this.max_distance
+    results = results.filter((searchResult) => {
+      return searchResult.distance < this.maxDistance
     })
 
     switch(this.search_category){
       case 'food':
-        this.search_results_subtitle = 'Spots'
+        this.searchResultsSubtitle = 'Spots'
         break
       case 'shopping':
-        this.search_results_subtitle = 'Shopping Spots'
+        this.searchResultsSubtitle = 'Shopping Spots'
         break     
     }
 
-    this.search_results = results  
-    this.loaded_total_results = this.search_results.length
+    this.searchResults = results  
+    this.loadedTotalResults = this.searchResults.length
 
   }
 
-  public pullSearchMarker(info_object): void {
-    //console.log("Info Object", info_object);
-    this.info_object_window.open = true
-    this.info_object = info_object
+  public pullSearchMarker(infoObject: any): void {
+    this.infoObjectWindow.open = true
+    this.infoObject = infoObject
   }
 
-  public showPosition(position): void {
+  public showPosition(position: any ): void {
 
     this.locationFound = true
 
     this.lat = position.coords.latitude
     this.lng = position.coords.longitude
-    this.og_lat = position.coords.latitude
-    this.og_lng = position.coords.longitude
+    this.ogLat = position.coords.latitude
+    this.ogLng = position.coords.longitude
 
     this.iconUrl = this.mapIconPipe.transform(this.user_default_image)
 
@@ -884,27 +885,26 @@ export class MapComponent implements OnInit {
 
   }
 
-  public pullMarker(map_object): void {
-    // console.log("Marker to pull: ", map_object)
-    this.current_marker = map_object
-    this.slider_right = true
+  public pullMarker(mapObject: any): void {
+    this.currentMarker = mapObject
+    this.sliderRight = true
   }
 
   public selfMarker(): void {
 
-    this.current_marker = { user_web_options: { bg_color:  this.bg_color },
+    this.currentMarker = { user_web_options: { bg_color:  this.bg_color },
                             user_info: { 
                               exe_username: this.spotbie_username, 
                               exe_user_default_picture: localStorage.getItem('spotbie_userDefaultImage')
                             } 
                         }
 
-    this.slider_right = true
+    this.sliderRight = true
 
   }
 
   public closeMarkerOverlay(): void {
-    this.slider_right = false
+    this.sliderRight = false
   }
 
   public viewProfile(exe_username: string): void {
@@ -949,13 +949,13 @@ export class MapComponent implements OnInit {
 
   public retrieveSurroudings(){
 
-    const retrieve_surroundings_obj = { 
+    const retrieveSurroundingsObj = { 
       loc_x: this.lat,
       loc_y: this.lng,
       search_type: this.current_search_type 
     }
 
-    this.locationService.retrieveSurroudings(retrieve_surroundings_obj).subscribe(
+    this.locationService.retrieveSurroudings(retrieveSurroundingsObj).subscribe(
 
       resp => {
         this.retrieveSurroudingsCallback(resp) 
@@ -1065,7 +1065,7 @@ export class MapComponent implements OnInit {
 
   public closeSearchResults(){
     this.closeCategories()
-    this.display_surrounding_object_list = true
+    this.displaySurroundingObjectList = true
     this.show_search_box = false
   }
 

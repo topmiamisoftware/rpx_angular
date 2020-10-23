@@ -2,9 +2,21 @@
 
 <div class="spotbie-overlay-window" [ngStyle]="{ 'background-color' : bgColor }">
 
-    <div class='spotbie-favoriteItemWrap' *ngFor="let item of favoriteItems">
+    <div class='spotbie-favoriteItemWrap' *ngFor="let favoriteItem of favoriteItems">
 
+        <div class='spotbie-favoriteItemTitle'>
+            {{ favoriteItem.name }}
+        </div>
+
+    </div>        
+
+    <div class='spotbie-load-more-chat-heads' *ngIf="loadMore" (click)="loadMoreFavorites()">load more</div>
+
+    <div class='spotbie-load-more-button spotbie-button' *ngIf="">
+        You have no favorites yet.<br/>
+        Add favorites through your map.
     </div>
 
+    <div class="spotbie-close-button" (click)="closeWindowX()">close</div>
 
 </div>

@@ -1,6 +1,6 @@
 <app-loading-screen *ngIf="loading"></app-loading-screen>
 
-<div class="spotbie-overlay-window" [ngStyle]="{'background-color' : bg_color}">
+<div class="spotbie-overlay-window">
 
     <div *ngIf="info_object !== null">
 
@@ -9,7 +9,7 @@
             <span class='spotbie-search-result-price' *ngIf="info_object.price_on == '1'">({{ info_object.price }})</span>
         </div>
     
-        <div class='spotbie-info-object-image' [ngStyle]="{ 'background' : 'url(' + _info_object_image_url + ')'}"></div>
+        <div class='spotbie-info-object-image' [ngStyle]="{ 'background' : 'url(' + infoObjectImageUrl + ')'}"></div>
     
         <div class='spotbie-info-object-image-list'>
     
@@ -86,6 +86,10 @@
         </div>
     
         <div class='spotbie-info-object-transactions'> {{ info_object.friendly_transactions }} </div>
+
+        <div class='spotbie-button' (click)="addFavorite()" *ngIf="info_object.type_of_info_object != 'ticketmaster_event' && showFavorites">Add to Favorites</div>
+
+        <div class='spotbie-button' (click)="removeFavorite()" *ngIf="info_object.type_of_info_object != 'ticketmaster_event' && !showFavorites">Remove Favorite</div>
 
         <div class='spotbie-button' (click)="goToTicket()" *ngIf="info_object.type_of_info_object == 'ticketmaster_event'">Buy Tickets</div>
 
