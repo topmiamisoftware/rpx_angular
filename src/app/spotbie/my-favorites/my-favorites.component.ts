@@ -1,11 +1,15 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { last } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { metersToMiles, setYelpRatingImage } from 'src/app/helpers/info-object-helper';
+import { InfoObjectServiceService } from '../map/info-object/info-object-service.service';
 import { MyFavoritesService } from './my-favorites.service';
+
+const YELP_BUSINESS_DETAILS_API = "https://api.yelp.com/v3/businesses/"
 
 @Component({
   selector: 'app-my-favorites',
   templateUrl: './my-favorites.component.html',
-  styleUrls: ['./my-favorites.component.css']
+  styleUrls: [ '../map/map.component.css', './my-favorites.component.css']
 })
 export class MyFavoritesComponent implements OnInit {
 
@@ -24,12 +28,16 @@ export class MyFavoritesComponent implements OnInit {
 
   public noFavorites: boolean = false
 
-  constructor(private favoritesService: MyFavoritesService) { }
+  public infoObjectWindow = { open: false }
+  public infoObject: any
+
+  constructor(private myFavoritesService: MyFavoritesService,
+              private infoObjectService: InfoObjectServiceService) { }
 
   public closeWindowX(){
     this.closeWindow.emit(null)
   }
-
+  
   public getFavorites(){
 
     if(this.isLoggedIn == '1')
@@ -41,7 +49,7 @@ export class MyFavoritesComponent implements OnInit {
 
   private getFavoritesLoggedIn(){
 
-    this.favoritesService.getFavoritesLoggedIn(this.currentPage).subscribe(
+    this.myFavoritesService.getFavoritesLoggedIn(this.currentPage).subscribe(
       resp => {
         this.getFavoritesLoggedInCb(resp) 
       }
@@ -58,32 +66,132 @@ export class MyFavoritesComponent implements OnInit {
       let currentPage = httpResponse.favorite_items.current_page
       let lastPage = httpResponse.favorite_items.last_page
 
-      this.favoriteItems.push(favoriteItems)
+      favoriteItems.forEach(favorite => {
+        
+        this.populateFavorite(favorite.yelp_id).subscribe(
+          resp=>{
+            this.populateFavoriteCallback(resp, favorite)
+          }
+        )
+
+      });      
 
       if(currentPage < lastPage){
         this.currentPage++
         this.loadMore = true
-      } else {
+      } else
         this.loadMore = false
-      }
+      
 
-      if(this.favoriteItems.length == 0 )
-        this.noFavorites = true
+      if(httpResponse.favorite_items.total == 0) this.noFavorites = true
+
     } else
       console.log("getFavoritesLoggedInCb", httpResponse)
-
-      console.log("favoriteItems", this.favoriteItems)
 
   }
 
   private getFavoritesLoggedOut(){
     
-    this.favoriteItems = JSON.parse(localStorage.getItem('spotbie_currentFavorites'))
+    const favoriteItems = this.myFavoritesService.getFavoritesLoggedOut()
+    
+    favoriteItems.forEach(favorite => {
+      this.populateFavorite(favorite.yelp_id).subscribe(
+        resp=>{
+          this.populateFavoriteCallback(resp, favorite)
+        }
+      )
+    })
+
+    if(this.favoriteItems == null) this.noFavorites = true
+    
 
   }
 
   public loadMoreFavorites(){
     this.getFavoritesLoggedIn()
+  }
+
+  public populateFavorite(yelpId: string): Observable<any>{
+
+    let url = `${YELP_BUSINESS_DETAILS_API}${yelpId}`
+
+    const infoObjToPull = {
+      config_url: url
+    }
+
+    return this.infoObjectService.pullInfoObject(infoObjToPull)
+
+  }
+
+  public removeFavorite(evt: any){
+
+    this.favoriteItems.find( (favorite, index) => {
+
+      if(favorite.id == evt.favoriteId) this.favoriteItems.splice(index, 1)
+
+    })
+
+    this.infoObjectWindow.open = false
+
+  }
+
+  public populateFavoriteCallback(resp: any, favorite: any){
+    
+    if(resp.success){
+
+      favorite = resp.data
+
+      favorite.type_of_info_object = 'yelp_business'
+
+      favorite.rating_image = setYelpRatingImage(favorite.rating)
+
+      if (favorite.is_closed)
+        favorite.is_closed_msg = 'Closed'
+      else
+        favorite.is_closed_msg = 'Open'
+
+      if (favorite.price) favorite.price_on = '1'
+
+      if (favorite.image_url == '') favorite.image_url = '0'
+
+      let friendly_transaction = 'This place offers '
+
+      favorite.transactions = favorite.transactions.sort()
+
+      switch (favorite.transactions.length) {
+        case 0:
+          friendly_transaction = ''
+          favorite.transactions_on = '0'
+          break
+        case 1:
+        case 2:
+        case 3:
+          favorite.transactions_on = '1'            
+          favorite.transactions = [favorite.transactions.slice(0, -1).join(', '), favorite.transactions.slice(-1)[0]].join(favorite.transactions.length < 2 ? '': ', and ')
+
+          friendly_transaction = favorite.transactions.replace('restaurant_reservation', 'restaurant reservations')
+
+          friendly_transaction = `This place offers ${friendly_transaction}.`
+          
+          break
+      }
+
+      favorite.friendly_transactions = friendly_transaction
+
+      favorite.icon = favorite.image_url
+
+      this.favoriteItems.push(favorite)
+
+    } else {
+      console.log("populateFavoriteCallback", favorite)
+      console.log("populateFavoriteCallback", resp)
+    }
+
+  }
+
+  public pullSearchMarker(infoObject: any): void {
+    this.infoObjectWindow.open = true
+    this.infoObject = infoObject
   }
 
   ngOnInit(): void {

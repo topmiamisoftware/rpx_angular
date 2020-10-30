@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core'
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core'
 import { InfoObjectServiceService } from './info-object-service.service'
 import { MapComponent } from '../map.component'
 import { MyFavoritesService } from '../../my-favorites/my-favorites.service'
@@ -13,6 +13,9 @@ const YELP_BUSINESS_DETAILS_API = "https://api.yelp.com/v3/businesses/"
 export class InfoObjectComponent implements OnInit {
 
   @Input() info_object
+
+  @Output() closeWindow = new EventEmitter()
+  @Output() removeFavoriteEvent = new EventEmitter()
 
   public bgColor: string
 
@@ -34,8 +37,8 @@ export class InfoObjectComponent implements OnInit {
               private infoObjectService: InfoObjectServiceService,
               private myFavoritesService: MyFavoritesService) { }
 
-  public closeWindow(): void {
-    this.host.infoObjectWindow.open = false
+  public closeWindowX(): void {
+    this.closeWindow.emit(null)
   }
 
   private pullInfoObject(): void{
@@ -54,15 +57,58 @@ export class InfoObjectComponent implements OnInit {
   
   private pullInfoObjectCallback(httpResponse: any){
 
-    console.log('pullInfoObjectCallback', httpResponse)
-
     if (httpResponse.success) {
 
       this.infoObject = httpResponse.data
       this.loading = false
+      
+      this.isInMyFavorites(this.infoObject.id, 'yelp')
 
     } else
       console.log('pullInfoObjectCallback', httpResponse)
+
+  }
+
+  private isInMyFavorites(objId: string, objType: string): void{
+
+    if(this.isLoggedIn === '1'){
+
+      this.myFavoritesService.isInMyFavorites(objId, objType).subscribe(
+        resp =>{
+          this.isInMyFavoritesCb(resp)
+        }
+      )
+
+    } else {
+
+      let isAFavorite = this.myFavoritesService.isInMyFavoritesLoggedOut(objId)
+      
+      console.log("is a favorite", isAFavorite)
+
+      if(isAFavorite)
+        this.showFavorites = false
+      else
+        this.showFavorites = true 
+
+    }
+
+  }
+
+  private isInMyFavoritesCb(httpResponse: any): void{
+
+    if (httpResponse.success) {
+
+      let isAFavorite = httpResponse.is_a_favorite
+
+      if(isAFavorite)
+        this.showFavorites = false
+      else
+        this.showFavorites = true      
+
+    } else
+      console.log('pullInfoObjectCallback', httpResponse)
+
+    this.loading = false
 
   }
 
@@ -108,9 +154,11 @@ export class InfoObjectComponent implements OnInit {
         }
       )
 
-    } else
+    } else {
       this.myFavoritesService.addFavoriteLoggedOut(favoriteObj)
-    
+      this.loading = false
+    }
+
   }
 
   public addFavoriteCb(resp: any): void{
@@ -134,7 +182,7 @@ export class InfoObjectComponent implements OnInit {
 
       this.myFavoritesService.removeFavorite(yelpId).subscribe(
         resp => {
-          this.removeFavoriteCb(resp)
+          this.removeFavoriteCb(resp, yelpId)
         }
       )
 
@@ -144,11 +192,12 @@ export class InfoObjectComponent implements OnInit {
 
   }
 
-  public removeFavoriteCb(resp){
+  public removeFavoriteCb(resp, favoriteId: string){
 
-    if(resp.success)
+    if(resp.success) {
       this.showFavorites = true
-    else
+      this.removeFavoriteEvent.emit({ favoriteId: favoriteId })
+    } else
       console.log("removeFavoriteCb", resp)
 
     this.loading = false

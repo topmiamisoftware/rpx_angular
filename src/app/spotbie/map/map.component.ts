@@ -12,6 +12,8 @@ import { DateFormatPipe, TimeFormatPipe } from 'src/app/pipes/date-format.pipe'
 import { MatSliderChange } from '@angular/material/slider'
 import { Subscription } from 'rxjs'
 import { ColorsService } from '../spotbie-logged-in/background-color/colors.service'
+import { HTTP_INTERCEPTORS } from '@angular/common/http'
+import { metersToMiles, setYelpRatingImage } from 'src/app/helpers/info-object-helper'
 
 const YELP_BUSINESS_SEARCH_API = 'https://api.yelp.com/v3/businesses/search'
 
@@ -85,6 +87,8 @@ export class MapComponent implements OnInit {
   private finder_search_timeout
 
   public search_category: string
+ 
+  public previousSeachCategory: string
 
   public searchCategorySorter: string
 
@@ -107,7 +111,7 @@ export class MapComponent implements OnInit {
 
   public infoObject
 
-  public infoObjectWindow = { open: false}
+  public infoObjectWindow = { open: false }
 
   public type_of_info_object: string
 
@@ -442,7 +446,6 @@ export class MapComponent implements OnInit {
     }
 
     let api_url: string
-    let search_action: string
     let search_obj: any
 
     switch(this.search_category){
@@ -489,38 +492,59 @@ export class MapComponent implements OnInit {
 
     this.loading = true
 
+    if(this.search_category !== undefined) this.previousSeachCategory = this.search_category
+
     this.search_category = category
-    
+
     switch (category) {
       case 'food':
         this.search_api_url = YELP_BUSINESS_SEARCH_API
-        this.type_of_info_object = "yelp_business"
-        this.categories = this.food_categories        
         this.search_categories_placeholder = 'Search Food Spots...'
-        this.maxDistanceCap = 25
-        this.itemsPerPage = 50
+        this.categories = this.food_categories   
         break
       case 'shopping':
         this.search_api_url = YELP_BUSINESS_SEARCH_API
-        this.type_of_info_object = "yelp_business"        
-        this.categories = this.shopping_categories
         this.search_categories_placeholder = 'Search Shop Spots...'
-        this.maxDistanceCap = 25
-        this.itemsPerPage = 50
+        this.categories = this.shopping_categories
         break
       case 'events':
-        this.type_of_info_object = "ticketmaster_events"
-        this.search_categories_placeholder = 'Search Events Nearby...'
         this.event_categories = []
+        this.search_categories_placeholder = 'Search Events Nearby...' 
         this.categories = this.event_categories
-        this.maxDistanceCap = 45
-        this.itemsPerPage = 20
         this.classificationSearch()
         return
     }
 
     this.catsUp = true
     this.loading = false
+
+  }
+
+  public cleanCategory(){
+
+    if(this.search_category !== this.previousSeachCategory){
+
+      this.searchResults = []
+
+      switch (this.search_category) {
+        case 'food':
+          this.type_of_info_object = "yelp_business"             
+          this.maxDistanceCap = 25
+          this.itemsPerPage = 50
+          break
+        case 'shopping':
+          this.type_of_info_object = "yelp_business"                          
+          this.maxDistanceCap = 25
+          this.itemsPerPage = 50
+          break
+        case 'events':
+          this.type_of_info_object = "ticketmaster_events"                   
+          this.maxDistanceCap = 45
+          this.itemsPerPage = 20
+          return
+      }
+      
+    }
 
   }
 
@@ -550,27 +574,43 @@ export class MapComponent implements OnInit {
 
       let api_url: string
       let search_action: string
+      
+      console.log("category ", this.category)
 
       if (this.search_category == 'events') {
+        
         api_url = 'size=20&latlong=' + this.lat + ',' + this.lng + '&keyword=' + search_term + '&radius=45'
         search_action = 'ticketMasterEventSearch'
+
+        const search_obj = {
+          config_url: api_url
+        }
+  
+        this.locationService.getEvents(search_obj).subscribe(
+          resp => {
+            this.getEvents.getEventsSearchCallback(resp)
+          }
+        )
+
       } else {
+
         api_url = this.search_api_url + '?latitude=' + this.lat + '&longitude=' + this.lng + '&term=' + search_term +
         '&categories=' + this.search_category + '&radius=40000&sort_by=distance&limit=50&offset=' + this.current_offset
-        search_action = 'yelpBusinessSearch'
-      }
 
-      const search_obj = {
-        config_url: api_url
-      }
- 
-      this.locationService.getBusinesses(search_obj).subscribe(
-        resp => {
-          this.getBusinessesSearchCallback(resp)
+        const search_obj = {
+          config_url: api_url
         }
-      )
+  
+        this.locationService.getBusinesses(search_obj).subscribe(
+          resp => {
+            this.getBusinessesSearchCallback(resp)
+          }
+        )
+
+      }
 
     }.bind(this, search_term), 1000)
+
 
   }
 
@@ -627,42 +667,6 @@ export class MapComponent implements OnInit {
     return null
   }
 
-  public metersToMiles(m) {
-    const miles: number = 0.00062137 * m
-    const miles_fixed = miles.toPrecision(2)
-    return miles_fixed
-  }
-
-  public setYelpRatingImage(rating: number) {
-
-    let rating_image
-
-    if (rating == 0) {
-      rating_image = 'regular_0.png'
-    } else if (rating == 1) {
-      rating_image = 'regular_1.png'
-    } else if (rating == 1.5) {
-      rating_image = 'regular_1_half.png'
-    } else if (rating == 2) {
-      rating_image = 'regular_2.png'
-    } else if (rating == 2.5) {
-      rating_image = 'regular_2_half.png'
-    } else if (rating == 3) {
-      rating_image = 'regular_3.png'
-    } else if (rating == 3.5) {
-      rating_image = 'regular_3_half.png'
-    } else if (rating == 4) {
-      rating_image = 'regular_4.png'
-    } else if (rating == 4.5) {
-      rating_image = 'regular_4_half.png'
-    } else {
-      rating_image = 'regular_5.png'
-    }
-
-    return '../assets/images/yelp/yelp_stars/' + rating_image
-
-  }
-
   public openSearchResult(search_result){
     //console.log('Open Reuslt ', search_result)
   }
@@ -673,14 +677,16 @@ export class MapComponent implements OnInit {
 
   public getEventsSearchCallback (httpResponse: any): void {
     
-    if(httpResponse.success){
-      
+    console.log("event_object", httpResponse)
+
+    if(httpResponse.success){      
+
+      this.cleanCategory()
+
       window.scrollTo(0,0)
       
-      let event_object = httpResponse.responseObject
+      let event_object = httpResponse.data
       
-      //console.log("event_object", event_object)
-
       if(event_object._embedded === undefined){
         this.toastHelper = true
         this.loading = false
@@ -692,8 +698,6 @@ export class MapComponent implements OnInit {
       this.loading = false
   
       let event_object_list = event_object._embedded.events
-
-      //console.log("Object List", event_object_list)
 
       this.totalResults = event_object_list.length
 
@@ -754,26 +758,29 @@ export class MapComponent implements OnInit {
 
   }
 
-  public getBusinessesSearchCallback(httpResponse: any): void {
-
-    window.scrollTo(0,0)
+  public getBusinessesSearchCallback(httpResponse: any): void {    
 
     this.loading = false
-    this.showSearchResults = true
-    this.catsUp = false
-    
-    this.totalResults = httpResponse.data.total
 
-    this.allPages = Math.floor(this.totalResults / this.itemsPerPage)
+    if(httpResponse.success){
 
-    if(this.allPages == 0) this.allPages = 1
+      window.scrollTo(0,0)
 
-    if(this.totalResults > 1000){ 
-      this.totalResults = 1000
-      this.allPages = 20
-    }
+      this.cleanCategory()
 
-    if (httpResponse.success) {
+      this.showSearchResults = true
+      this.catsUp = false
+      
+      this.totalResults = httpResponse.data.total
+
+      this.allPages = Math.floor(this.totalResults / this.itemsPerPage)
+
+      if(this.allPages == 0) this.allPages = 1
+
+      if(this.totalResults > 1000){ 
+        this.totalResults = 1000
+        this.allPages = 20
+      }
 
       let places_results = httpResponse.data.businesses
 
@@ -800,7 +807,7 @@ export class MapComponent implements OnInit {
 
     results.forEach(business => {
 
-      business.rating_image = this.setYelpRatingImage(business.rating)
+      business.rating_image = setYelpRatingImage(business.rating)
       business.type_of_info_object = this.type_of_info_object
 
       if (business.is_closed)
@@ -837,11 +844,9 @@ export class MapComponent implements OnInit {
 
       business.friendly_transactions = friendly_transaction
 
-      business.distance = this.metersToMiles(business.distance)
+      business.distance = metersToMiles(business.distance)
 
       business.icon = business.image_url
-      
-      //console.log("Businnes: ", business)
 
     })
 

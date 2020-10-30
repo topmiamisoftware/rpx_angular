@@ -5,7 +5,7 @@ import { Observable } from 'rxjs'
 import * as spotbieGlobals from 'src/app/globals'
 import { catchError } from 'rxjs/operators'
 
-const YELP_API = spotbieGlobals.API + 'pull-info-object'
+const PULL_INFO_API = `${spotbieGlobals.API}pull-info-object`
 
 @Injectable({
   providedIn: 'root'
@@ -15,8 +15,8 @@ export class InfoObjectServiceService {
   constructor(private http: HttpClient) { }
 
   public pullInfoObject(yelpObj: any): Observable<any> {
-
-    return this.http.post<any>(YELP_API, yelpObj).pipe(
+    
+    return this.http.post<any>(PULL_INFO_API, yelpObj).pipe(
       catchError(handleError("pullInfoObject"))
     )
 

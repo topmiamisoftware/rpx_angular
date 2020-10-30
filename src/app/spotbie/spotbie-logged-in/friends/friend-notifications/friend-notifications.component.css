@@ -74,12 +74,7 @@
     padding-left: 10px;
     padding-right: 10px;
 }
-.spotbie-no-notis-box{
-    border-radius: 10px;
-    padding-top: 50px;
-    padding-bottom: 50px;
-    background-color: rgba(0,0,0,.23);
-}
+
 /**WIDTH MEDIA QUERIES */
 @media (max-width: 1300px) { 
 

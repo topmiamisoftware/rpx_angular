@@ -680,6 +680,12 @@ a, a:hover, a:active, a:after{
 .gm-style-iw-d{
     overflow: hidden !important;
 }
+.spotbie-no-notis-box{
+    padding-top: 50px;
+    padding-bottom: 50px;
+    background-color: rgba(0,0,0,.23);
+    border-radius: 10px;
+}
 /**WIDTH MEDIA QUERIES */
 @media (max-width: 1300px) { 
 

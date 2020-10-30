@@ -6,8 +6,9 @@ import { handleError } from 'src/app/helpers/error-helper';
 import * as spotbieGlobals from '../../globals'
 
 const GET_FAVORITES_LOGGED_IN_API = `${spotbieGlobals.API}my-favorites`
-const SAVE_FAVORITES_API = `${spotbieGlobals.API}save-favorite`
-const REMOVE_FAVORITES_API = `${spotbieGlobals.API}remove-favorite`
+const SAVE_FAVORITES_API = `${spotbieGlobals.API}my-favorites/save-favorite`
+const REMOVE_FAVORITES_API = `${spotbieGlobals.API}my-favorites/remove-favorite`
+const IS_A_FAVORITE_API = `${spotbieGlobals.API}my-favorites/is-a-favorite`
 
 @Injectable({
   providedIn: 'root'
@@ -28,7 +29,7 @@ export class MyFavoritesService {
 
   public getFavoritesLoggedOut(){
 
-    let myFavoriteItems = localStorage.getItem('spotbie_favoriteItems')
+    let myFavoriteItems = JSON.parse(localStorage.getItem('spotbie_currentFavorites'))
     return myFavoriteItems
 
   }
@@ -47,6 +48,8 @@ export class MyFavoritesService {
 
     let currentFavorites: Array<any> = JSON.parse(localStorage.getItem('spotbie_currentFavorites'))
 
+    if(currentFavorites === null) currentFavorites = []
+      
     currentFavorites.push(favoriteObj)
 
     localStorage.setItem('spotbie_currentFavorites', JSON.stringify(currentFavorites))
@@ -71,16 +74,45 @@ export class MyFavoritesService {
   public removeFavoriteLoggedOut(id: string): void{
 
     let currentFavorites: Array<any> = JSON.parse(localStorage.getItem('spotbie_currentFavorites'))
-    let newCurrentFavorites: Array<any>
 
-    currentFavorites.find(function(favorite, index) {
+    currentFavorites.find( (favorite, index) => {
 
-      if(favorite.id == id)
-        newCurrentFavorites = currentFavorites.splice(index, -1)
+      if(favorite.id == id) currentFavorites.splice(index, 1)
 
     });
 
-    localStorage.setItem('spotbie_currentFavorites', JSON.stringify(newCurrentFavorites))
+    localStorage.setItem('spotbie_currentFavorites', JSON.stringify(currentFavorites))
+
+  }
+
+  public isInMyFavorites(objId: string, objType: string){
+  
+    const isItAFavorite = `${IS_A_FAVORITE_API}?obj_type=${objType}&obj_id=${objId}`
+  
+    return this.http.get<any>(isItAFavorite).pipe(
+      catchError(handleError("pullInfoObject"))
+    )
+  
+  }
+
+  public isInMyFavoritesLoggedOut(objId: string): boolean{
+
+    let currentFavorites: Array<any> = this.getFavoritesLoggedOut()
+    let found = false
+
+    if(currentFavorites == null) return false
+
+    currentFavorites.find( (favorite, index) => {
+
+      if(favorite.yelp_id === objId){
+        console.log("item id", objId)
+        console.log("favorite id", favorite)        
+        found = true
+      }
+
+    })
+
+    return found
 
   }
 

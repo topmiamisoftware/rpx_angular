@@ -2,20 +2,11 @@
                 
     <div class="QuestionsTuto" style="background-color: transparent;">                                            
 
-        <div role="banner" class="spotbie-banner-wrapper">
-            
-            <h1 class="HA" style="background-color: rgba(0,0,0,.8);">
-                <span class='spotBieLogo'>SpotBie.com</span>
-            </h1>           
-            
-        </div>        
-
         <div role="main">                                
 
             <div class="QuestionsPar">
 
                 <p class="spotbie-desc">
-
                     
                     Connecting <a href="/home#people" class="xfDs" rel="tag">users</a>,
 
@@ -23,7 +14,7 @@
 
                     <a href="/home#places-to-eat" class="xfDs" rel="tag">places to eat</a>,
 
-                    and <a href="/home#authors" class="xfDs" rel="tag">events</a>.
+                    and <a href="/home#events" class="xfDs" rel="tag">events</a>.
 
                 </p>
 
@@ -47,7 +38,7 @@
                 <div class='spotbie-version'>{{ spotbie_version }}</div>           
             </div>-->                                
 
-            <h2 class="HA spotbieAddPointerCursor">
+            <h2 class="HA spotbieAddPointerCursor" id="places-to-eat">
                 <span class="dfg">Connecting Users to Places to Eat</span>
             </h2>                                     
 
@@ -65,14 +56,14 @@
 
             </picture>  
 
-            <p class="QuestionsPar spotbieAddPointerCursor" id="authors">        
+            <p class="QuestionsPar spotbieAddPointerCursor">        
                 Driving around a new part of town? Don't know what to eat? By giving you the most reviews from other users on nearby places to eat, SpotBie        
                 makes it easier to choose where to eat. With access to menus, reservations, and ratings, we are giving our users and places to eat       
                 another way to do business.
                 <span class='spotbie-search-click' (click)="searchFood()">Search Places to Eat</span>        
             </p>   
 
-            <h2 class="HA spotbieAddPointerCursor">
+            <h2 class="HA spotbieAddPointerCursor" id="events">
                 <span class="dfg">Connecting Users to Events</span>
             </h2>                                     
 
@@ -80,7 +71,7 @@
                     src="assets/images/home_imgs/jpg/find_events_around.jpg" 
                     alt="Picture of girl in her twenties enjoying food in a restaurant." />
 
-            <p class="QuestionsPar" id="authors">        
+            <p class="QuestionsPar">        
                 Let's suppose that you're bored on a Friday night. Don't know where to take your girlfriend? Want to make your boyfriend a suggestion
                 to take you somewhere but don't know where? Just look for events around you.                
                 <span class='spotbie-search-click' (click)="searchEvents()">Search Events</span>
@@ -140,7 +131,7 @@
             </p>-->
 
             
-            <h2 class="HA spotbieAddPointerCursor">
+            <h2 class="HA spotbieAddPointerCursor" id="retail">
 
                 <span class="dfg">Connecting Users to Retail Shops</span>
 
@@ -162,12 +153,12 @@
 
             </picture>  
 
-            <p class="QuestionsPar spotbieAddPointerCursor" id="places-to-eat">
+            <p class="QuestionsPar spotbieAddPointerCursor">
                 SpotBie allows users to see nearby retail shops with the tap of a button. By doing so, SpotBie makes the access to each shop easier and helps our users plan their shopping wisely. Not only will users get to see nearby shops, but they will also see featured offers and products.
                 <span class='spotbie-search-click' (click)="searchRetail()">Search Retail Shops</span>      
             </p>                         
 
-            <h2 class="HA spotbieAddPointerCursor">
+            <h2 class="HA spotbieAddPointerCursor" id="people">
 
                 <span class="dfg">Connecting Users by Location</span>
 
@@ -189,7 +180,7 @@
 
             </picture>        
 
-            <p class="QuestionsPar" id="earnfromcontent">
+            <p class="QuestionsPar">
                 Find new friends around you. Each user is asked for permission before their location is accessed by the map. If a user does        
                 not want to be seen on the map, they can disappear with the tap of a button which turns on ghost mode.
             </p>   
