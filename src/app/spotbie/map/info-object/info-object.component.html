@@ -71,9 +71,11 @@
 
         <div class="spotbie-google-maps-it" (click)="openWithGoogleMaps()">
 
-            <div class='spotbie-distance'>{{ info_object.distance }} miles from you.</div>
+            <div class='spotbie-distance' *ngIf="info_object.distance !== undefined">
+                {{ info_object.distance }} miles from you.
+            </div>
 
-            <img class='spotbie-marker-icon' src='../../assets/images/marker.png'>
+            <i class="fa fa-map-marker" aria-hidden="true"></i>
             
             <div class='spotbie-distance'>Start Navigation</div>
 
@@ -87,14 +89,19 @@
     
         <div class='spotbie-info-object-transactions'> {{ info_object.friendly_transactions }} </div>
 
-        <div class='spotbie-button' (click)="addFavorite()" *ngIf="info_object.type_of_info_object != 'ticketmaster_event' && showFavorites">Add to Favorites</div>
+        <div class='spotbie-button spotbie-add-to-favorites' (click)="addFavorite()" *ngIf="info_object.type_of_info_object != 'ticketmaster_event' && showFavorites">
+            Add to Favorites
+            <i class='fa fa-star'></i>
+        </div>
 
-        <div class='spotbie-button' (click)="removeFavorite()" *ngIf="info_object.type_of_info_object != 'ticketmaster_event' && !showFavorites">Remove Favorite</div>
+        <div class='spotbie-button spotbie-add-to-favorites' (click)="removeFavorite()" *ngIf="info_object.type_of_info_object != 'ticketmaster_event' && !showFavorites">Remove Favorite</div>
 
-        <div class='spotbie-button' (click)="goToTicket()" *ngIf="info_object.type_of_info_object == 'ticketmaster_event'">Buy Tickets</div>
+        <div class='spotbie-button spotbie-add-to-favorites' (click)="goToTicket()" *ngIf="info_object.type_of_info_object == 'ticketmaster_event'">Buy Tickets</div>
 
     </div>
 
-    <div class="spotbie-close-button" (click)="closeWindowX()">close</div>
+    <div class="spotbie-close-button" (click)="closeWindowX()">
+        <i class="fa fa-times"></i>
+    </div>
 
 </div>

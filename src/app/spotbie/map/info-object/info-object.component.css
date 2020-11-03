@@ -29,12 +29,9 @@
     font-weight: bold;
     margin-bottom: 20px;
 }
-.spotbie-distance{
+.fa-map-marker{
     margin-top: 20px;
-}
-.spotbie-marker-icon{
-    position: relative;
-    max-width: 25px;
+    font-size: 46px;
 }
 .spotbie-info-object-title{
     position: relative;
@@ -110,7 +107,6 @@
     position: relative;
     margin: 0 auto;
     margin-top: 20px;
-    margin-bottom: 20px;
 }
 .spotbie-info-object-address{
     position: relative;
@@ -124,7 +120,13 @@
 .spotbie-button{
     background-color: rgba(0,0,0,.5);
 }
-
+.spotbie-add-to-favorites{
+    position: relative;
+    background-color: red;
+}
+.fa-star{
+    color: gold;
+}
 @media (max-width: 1583px) { 
 
 }

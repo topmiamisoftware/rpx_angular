@@ -5,28 +5,38 @@ import { AgmOverlays } from "agm-overlays"
 import { AgmCoreModule, GoogleMapsAPIWrapper, MarkerManager } from '@agm/core'
 
 import { MatSliderModule } from '@angular/material/slider'
+import { MatInputModule } from '@angular/material/input'
+
 import { environment } from 'src/environments/environment'
 
 import { SpotbiePipesModule } from 'src/app/spotbie-pipes/spotbie-pipes.module'
-import { LocationSaverComponent } from '../spotbie-logged-in/location-saver/location-saver.component'
 import { MapComponent } from './map.component'
 import { MapObjectIconPipe } from 'src/app/pipes/map-object-icon.pipe'
 import { HelperModule } from 'src/app/helpers/helper.module'
 import { InfoObjectComponent } from './info-object/info-object.component'
 import { MyFavoritesComponent } from '../my-favorites/my-favorites.component'
+import { NgxFontAwesomeModule } from 'ngx-font-awesome'
+import { LocationSaverComponent } from '../location-saver/location-saver.component'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
+import { MyPlacesComponent } from '../location-saver/my-places/my-places.component'
 
 @NgModule({
   declarations: [
     LocationSaverComponent,      
     MapComponent,  
     MyFavoritesComponent,
-    InfoObjectComponent 
+    InfoObjectComponent,
+    MyPlacesComponent
   ],
   imports: [
     AgmOverlays,
     CommonModule,
-    MatSliderModule, 
-    SpotbiePipesModule,   
+    MatSliderModule,
+    MatInputModule,
+    SpotbiePipesModule,
+    NgxFontAwesomeModule,
+    ReactiveFormsModule,
+    FormsModule,
     AgmCoreModule.forRoot({
       apiKey: environment.google_maps_apiKey,
       language: 'en',

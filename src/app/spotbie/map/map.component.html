@@ -108,9 +108,9 @@
         <div id='spotbie_media_search'></div>
       </td>-->
 
-      <td (click)="placeSearch(0)" title="Find Places">
+      <!--<td (click)="placeSearch()" title="My Places">
         <div id='spotbie_place_search'></div>
-      </td>
+      </td>-->
 
       <td (click)="myFavorites()" title="My Favorites">
         <i class="fa fa-star" aria-hidden="true"></i>
@@ -177,7 +177,9 @@
 
 <div class='spotbie-search-results' *ngIf="show_search_box && searchResults.length > 0">
 
-  <div class='spotbie-close-results-mobile' (click)="closeSearchResults()">close results</div>
+  <div class='spotbie-close-results-mobile' (click)="closeSearchResults()">close</div>
+
+  <div class='spotbie-close-results' (click)="closeSearchResults()">close</div>
 
   <!--<table class='spotbie-pull-from'>
     <tr>
@@ -229,19 +231,11 @@
 
   </div>
 
-  <div class='spotbie-search-results-title spotbie-search-results-title-larger-font'>
-
-    {{ totalResults | numberFormat }} "{{ search_keyword }}" {{ searchResultsSubtitle }} within {{ maxDistanceCap }} miles of you.
-    
-    <div class='spotbie-close-results' (click)="closeSearchResults()">close</div>
-
-  </div>
-
   <div class='spotbie-search-result-wrapper'>
 
     <div class='spotbie-search-results-title'>
 
-      <span *ngIf="search_category !== 'events'">Showing {{ loaded_totalResults }} results within {{ maxDistance }} miles. </span>
+      <span *ngIf="search_category !== 'events'">Showing {{ loadedTotalResults }} results within {{ maxDistance }} miles. </span>
   
       <span class='spotbie-button' (click)="loadMoreResults(0)" *ngIf="allPages > 1">
         Previous
@@ -334,16 +328,20 @@
   
     </div>
 
-    <span class='spotbie-button' (click)="loadMoreResults(0)" *ngIf="allPages > 1">
-      Previous
-    </span>   
+    <div>
 
-    <span class='spotbie-button' (click)="loadMoreResults(1)" *ngIf="allPages > 1">
-      Next
-    </span>
+      <span class='spotbie-button' (click)="loadMoreResults(0)" *ngIf="allPages > 1">
+        Previous
+      </span>   
+  
+      <span class='spotbie-button' (click)="loadMoreResults(1)" *ngIf="allPages > 1">
+        Next
+      </span>
+  
+      <div class='spotbie-search-results-title' style="text-align: center;">
+          {{ around_me_search_page }} / {{ allPages }}
+      </div>
 
-    <div class='spotbie-search-results-title' style="text-align: center;">
-        {{ around_me_search_page }} / {{ allPages }}
     </div>
 
   </div>
@@ -373,7 +371,7 @@
 <div class="spotbie-overlay-window" *ngIf="coming_soon_ov" [ngStyle]="{'background-color' : bg_color}">
 
   <div class='spotbie-coming-soon'>
-      {{coming_soon_ov_title}}
+    {{coming_soon_ov_title}}
   </div>
 
   <div class='spotbie-coming-soon-desc'>
@@ -386,6 +384,8 @@
 
 <app-my-favorites *ngIf='myFavoritesWindow.open' (closeWindow)="myFavoritesWindow.open = false"></app-my-favorites>
 
+<app-location-saver *ngIf='myPlacesWindow.open' (closeWindow)="myPlacesWindow.open = false"></app-location-saver>
+
 <app-toast-helper [helper_config]="toastHelperConfig" 
-                *ngIf="toastHelper"
-                (dismiss_toast)="dismissToast($event)"></app-toast-helper>
+                  *ngIf="toastHelper"
+                  (dismiss_toast)="dismissToast($event)"></app-toast-helper>

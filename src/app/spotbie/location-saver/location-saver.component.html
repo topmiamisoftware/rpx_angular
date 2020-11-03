@@ -1,0 +1,63 @@
+<div class="spotbie-overlay-window" [ngStyle]="{'background-color' : bgColor}">
+    
+    <div class='spotbie-my-places-wrapper'>
+
+        <div class='spotbie-toast-info'>
+            Want to save this location to your places?
+        </div>
+    
+        <form [formGroup]="locationSaverForm">
+            
+            <div *ngIf="submitted && f.placeName.errors" class="spotbie-invalid-feedback animated shake">                   
+                
+                <mat-error *ngIf="f.placeName.errors.maxlength">
+                    Place name can only be 35 characters long.
+                </mat-error>                       
+    
+            </div>  
+
+            <mat-form-field>
+
+                <mat-label>
+                    Place name.
+                </mat-label>
+    
+                <input matInput
+                        placeholder="Place Name"
+                        formControlName="placeName" 
+                        maxlength="35" />
+
+            </mat-form-field>
+            
+            <div *ngIf="submitted && f.placeDescription.errors" class="spotbie-invalid-feedback animated shake">                   
+                
+                <mat-error *ngIf="f.placeDescription.errors.maxlength">
+                    Place description can only be 300 characters long.
+                </mat-error>                       
+    
+            </div>
+
+            <mat-form-field> 
+
+                <mat-label>
+                    Place description.
+                </mat-label>      
+        
+                <textarea matInput 
+                            placeholder="Enter a description for this place..."
+                            formControlName="placeDescription" 
+                            maxlength="300"></textarea>
+
+            </mat-form-field>
+    
+        </form>
+    
+        <app-my-places></app-my-places>
+
+    </div>
+
+    <div class="spotbie-close-button" (click)="closeWindowX()">
+        <i class="fa fa-times"></i>
+    </div>
+
+</div>

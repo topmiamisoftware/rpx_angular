@@ -14,6 +14,7 @@ import { Subscription } from 'rxjs'
 import { ColorsService } from '../spotbie-logged-in/background-color/colors.service'
 import { HTTP_INTERCEPTORS } from '@angular/common/http'
 import { metersToMiles, setYelpRatingImage } from 'src/app/helpers/info-object-helper'
+import { identifierModuleUrl } from '@angular/compiler'
 
 const YELP_BUSINESS_SEARCH_API = 'https://api.yelp.com/v3/businesses/search'
 
@@ -162,6 +163,8 @@ export class MapComponent implements OnInit {
 
   public myFavoritesWindow = { open : false }
 
+  public myPlacesWindow = { open : false }
+
   constructor(private locationService: LocationService,
               private deviceService: DeviceDetectorService,
               private router: Router,
@@ -269,7 +272,7 @@ export class MapComponent implements OnInit {
         return search_result.distance < this.maxDistance
       })
   
-      this.loaded_totalResults = results.length
+      this.loadedTotalResults = results.length
   
       this.searchResults = results
 
@@ -366,7 +369,7 @@ export class MapComponent implements OnInit {
 
     if(httpResponse.success){
 
-      let classifications: any = httpResponse.data._embedded.classifications
+      let classifications: Array<any> = httpResponse.data._embedded.classifications
       
       classifications.forEach(classification => {
 
@@ -379,14 +382,40 @@ export class MapComponent implements OnInit {
           classification.name = classification.segment.name
 
           classification.segment._embedded.genres.forEach(genre => {
+
             genre.show_sub_sub = false
+
+            if(genre.name === "Chanson Francaise" ||
+              genre.name === "Medieval/Renaissance" ||
+              genre.name === "Religious" ||
+              genre.name === "Undefined" ||
+              genre.name === "World"){
+
+                classification.segment._embedded.genres.splice(classification.segment._embedded.genres.indexOf(genre), 1)
+
+            }
+
           });          
 
         }
 
         if(classification.name !== undefined){
+
           classification.show_sub = false
-          this.event_categories.push(classification)
+
+          if(classification.name !== 'Donation' &&
+          classification.name !== 'Parking' &&
+          classification.name !== 'Transportation' &&
+          classification.name !== 'Upsell' &&
+          classification.name !== 'Venue Based' &&
+          classification.name !== 'Event Style' &&
+          classification.name !== 'Individual' &&
+          classification.name !== 'Merchandise' &&
+          classification.name !== 'Group'){
+            console.log("Classification Name", classification.name)
+            this.event_categories.push(classification)
+          }
+
         }
 
       })
@@ -621,7 +650,7 @@ export class MapComponent implements OnInit {
 
         //previous
         if(this.around_me_search_page == 1){
-          this.around_me_search_page = Math.floor(this.totalResults / this.itemsPerPage)          
+          this.around_me_search_page = Math.ceil(this.totalResults / this.itemsPerPage)          
         } else {
           this.around_me_search_page--
         }
@@ -631,7 +660,7 @@ export class MapComponent implements OnInit {
       case 1:
 
         //next
-        if(this.around_me_search_page == Math.floor(this.totalResults / this.itemsPerPage)){
+        if(this.around_me_search_page == Math.ceil(this.totalResults / this.itemsPerPage)){
           this.around_me_search_page = 1
           this.current_offset = 0
         } else {          
@@ -701,7 +730,7 @@ export class MapComponent implements OnInit {
 
       this.totalResults = event_object_list.length
 
-      this.allPages = Math.floor(this.totalResults / this.itemsPerPage)
+      this.allPages = Math.ceil(this.totalResults / this.itemsPerPage)
 
       if(this.allPages == 0) this.allPages = 1
 
@@ -773,22 +802,9 @@ export class MapComponent implements OnInit {
       
       this.totalResults = httpResponse.data.total
 
-      this.allPages = Math.floor(this.totalResults / this.itemsPerPage)
-
-      if(this.allPages == 0) this.allPages = 1
-
-      if(this.totalResults > 1000){ 
-        this.totalResults = 1000
-        this.allPages = 20
-      }
-
-      let places_results = httpResponse.data.businesses
+      let places_results = httpResponse.data
 
       this.populateYelpResults(places_results)
-
-      if(this.totalResults > (this.around_me_search_page * this.itemsPerPage)){
-        this.show_next_page_button = true        
-      }
 
       this.spotbie_user_marker_info_window.open()
 
@@ -803,8 +819,10 @@ export class MapComponent implements OnInit {
 
   }
 
-  private populateYelpResults(results): void{
+  private populateYelpResults(data: any): void{
 
+    let results = data.businesses
+    
     results.forEach(business => {
 
       business.rating_image = setYelpRatingImage(business.rating)
@@ -867,6 +885,22 @@ export class MapComponent implements OnInit {
 
     this.searchResults = results  
     this.loadedTotalResults = this.searchResults.length
+    
+    this.allPages = Math.ceil(this.loadedTotalResults / this.itemsPerPage)
+
+    if(this.allPages == 0) this.allPages = 1
+
+    if(this.loadedTotalResults > 1000){ 
+      this.totalResults = 1000
+      this.loadedTotalResults = 1000
+      this.allPages = 20
+    }
+
+    if(this.loadedTotalResults > (this.around_me_search_page * this.itemsPerPage)){
+      this.show_next_page_button = true        
+    }
+
+
 
   }
 
@@ -1060,12 +1094,10 @@ export class MapComponent implements OnInit {
     this.coming_soon_ov_text = "SpotBie Content Creator Search will allow users to find content creators locally. (Artists, Producers, Bloggers, Etc.)"    
   }
 
-  public placeSearch(action) {
-    //this.host.mediaPlayerWindow.open = true
-    this.coming_soon_ov = true
+  public placeSearch() {
 
-    this.coming_soon_ov_title = "SpotBie Place Search Coming Soon"
-    this.coming_soon_ov_text = "SpotBie Place Search will allow users to find places locally. (Parks, Malls, Attractions, Etc.)"    
+    this.myPlacesWindow.open = true  
+
   }
 
   public closeSearchResults(){

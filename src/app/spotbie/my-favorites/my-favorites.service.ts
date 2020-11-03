@@ -71,17 +71,21 @@ export class MyFavoritesService {
 
   }
 
-  public removeFavoriteLoggedOut(id: string): void{
+  public removeFavoriteLoggedOut(id: string){
 
-    let currentFavorites: Array<any> = JSON.parse(localStorage.getItem('spotbie_currentFavorites'))
+    let currentFavorites = this.getFavoritesLoggedOut()
+
+    let indextoSplice
 
     currentFavorites.find( (favorite, index) => {
 
-      if(favorite.id == id) currentFavorites.splice(index, 1)
+      if(favorite.yelp_id == id) indextoSplice = index
 
     });
 
+    currentFavorites.splice(indextoSplice, 1)
     localStorage.setItem('spotbie_currentFavorites', JSON.stringify(currentFavorites))
+    return
 
   }
 
@@ -103,13 +107,7 @@ export class MyFavoritesService {
     if(currentFavorites == null) return false
 
     currentFavorites.find( (favorite, index) => {
-
-      if(favorite.yelp_id === objId){
-        console.log("item id", objId)
-        console.log("favorite id", favorite)        
-        found = true
-      }
-
+      if(favorite.yelp_id === objId) found = true
     })
 
     return found

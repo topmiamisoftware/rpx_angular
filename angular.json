@@ -149,5 +149,8 @@
       }
     }
   },
-  "defaultProject": "spotbie"
+  "defaultProject": "spotbie",
+  "cli": {
+    "analytics": false
+  }
 }

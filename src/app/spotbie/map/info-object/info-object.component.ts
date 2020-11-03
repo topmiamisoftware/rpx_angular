@@ -3,6 +3,7 @@ import { InfoObjectServiceService } from './info-object-service.service'
 import { MapComponent } from '../map.component'
 import { MyFavoritesService } from '../../my-favorites/my-favorites.service'
 
+
 const YELP_BUSINESS_DETAILS_API = "https://api.yelp.com/v3/businesses/"
 
 @Component({
@@ -33,8 +34,7 @@ export class InfoObjectComponent implements OnInit {
 
   public isLoggedIn: string
 
-  constructor(private host: MapComponent, 
-              private infoObjectService: InfoObjectServiceService,
+  constructor(private infoObjectService: InfoObjectServiceService,
               private myFavoritesService: MyFavoritesService) { }
 
   public closeWindowX(): void {
@@ -82,8 +82,6 @@ export class InfoObjectComponent implements OnInit {
     } else {
 
       let isAFavorite = this.myFavoritesService.isInMyFavoritesLoggedOut(objId)
-      
-      console.log("is a favorite", isAFavorite)
 
       if(isAFavorite)
         this.showFavorites = false
@@ -156,6 +154,7 @@ export class InfoObjectComponent implements OnInit {
 
     } else {
       this.myFavoritesService.addFavoriteLoggedOut(favoriteObj)
+      this.showFavorites = false
       this.loading = false
     }
 
@@ -188,6 +187,9 @@ export class InfoObjectComponent implements OnInit {
 
     } else {
       this.myFavoritesService.removeFavoriteLoggedOut(yelpId)
+      this.removeFavoriteCb({success: true}, yelpId)
+      this.loading = false
+      this.showFavorites = true
     }
 
   }

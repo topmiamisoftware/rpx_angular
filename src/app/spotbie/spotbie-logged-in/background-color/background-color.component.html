@@ -15,7 +15,10 @@
         [cpDisableInput]="true"
         (colorPickerCancel)="triggerColorCancel()"
         (colorPickerSelect)="confirmColorPick(picked_color)"
-        [style.background]="picked_color" />        
-  <div class="spotbie-close-button" (click)="closeWindow()">close</div>
+        [style.background]="picked_color" />      
+
+        <div class="spotbie-close-button" (click)="closeWindow()">
+          <i class="fa fa-times"></i>
+      </div>
 
 </div>

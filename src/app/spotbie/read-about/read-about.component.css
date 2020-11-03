@@ -160,24 +160,7 @@ a:hover,a:active,a,a:after{
 .termsAndService:hover{
     text-decoration: underline;
 }
-.signUpBox{
-    position: fixed;
-    left: 0;
-    right: 0;
-    margin: 0 auto;
-    padding: 20px;
-    padding-left: 40px;
-    padding-right: 40px;
-    width: 850px;
-    min-width: 850px;
-    max-width: 850px;
-    top: 2%;
-    bottom: 2%;
-    background-color: rgb(12, 12, 12);
-    border-radius: 20px;
-    overflow-y: scroll;
-    border: 1px solid #4f4f4f;
-}
+
 .closeSignUp{
     position: absolute;
     background-color: #b90303;
@@ -200,15 +183,6 @@ a:hover,a:active,a,a:after{
 .spotbie-desc{
     text-align: center;
 }
-.signUpBoxInstructions{
-    position: relative;
-    display: block;
-    margin: 0 auto;
-    padding-top: 10px;
-    padding-bottom: 0px;
-    font-size: 20px;
-    letter-spacing: 1px;
-}
 .signUpBoxHolder{
     position: fixed;
     top:0;
@@ -223,72 +197,14 @@ a:hover,a:active,a,a:after{
     transition: all 1s;
     -webkit-overflow-scrolling: touch;
 }
-.signUpInput{
-    position: relative;
-    border-radius: 10px;
-    margin: unset;
-    margin-top: 10px !important;
-    margin-bottom: 5px !important;
-    padding: 10px;
-    font-size: 20px;
-    background-color: rgba(0,0,0,.23);
-    border: 0;
-    color: #8BC34A;
-    letter-spacing: 1px;
-    width: 450px;
-    min-width: 450px;
-    max-width: 450px;
-    border: 1px solid #3c3c3c;
-    text-align: left;
-}
 .signUpInput::placeholder{
     color: #8BC34A !important;
-}
-.spotbieSignUpButton{
-    position: relative;
-    margin: 0 auto;
-    text-align: center;
-    width: 100%;
-    min-width: 100%;
-    max-width: 100%;
-    padding-top: 15px;
-    padding-bottom: 15px;
-    border-radius: 10px;
-    cursor: pointer;
-    font-size: 20px;
-    border: 1px solid #3c3c3c;
-    background-color: #609329;
-    color: white !important;
-}
-.spotbieSignUpButton:hover{
-    background-color: #131313;
-}
-.displayTableName{
-    position: relative;
-    margin: 0 auto;
-    width: 100%;
-    min-width: 100%;
-    max-width: 100%;
 }
 .displayTableName td{
     padding-left: 20px;
     text-align: left;
     min-width: unset;
     width: unset;
-}
-.signUpTable{
-    table-layout: fixed;
-}
-.signUpTable td{
-    width: 50%;
-    min-width: 50%;
-    max-width: 50%;
-}
-#sign_up_general_instructions{
-    text-align: center;
-    padding-top: 20px;
-    padding-bottom: 10px;
-    font-size: 15px;
 }
 .successBoxNames{
     color: #8BC34A;
@@ -328,11 +244,6 @@ a:hover,a:active,a,a:after{
     letter-spacing: 1px;
     overflow-y: scroll;
     border: 1px solid white;
-}
-.signUpTerms{
-    font-size: 15px;
-    text-align: center;
-    padding-bottom: 20px;                
 }
 .spotBieLogo{
     color: white;
@@ -612,11 +523,11 @@ body{
 }
 .AppsRx td {
     text-align: center;
-    padding: .5%;
+    padding: 1.5%;
     width: 50%;
     min-width: 50%;
     max-width: 50%;
-    border: 11px solid rgb(31 31 31);
+    /* border: 11px solid rgb(31 31 31); */
     border-radius: 27px;
     background-position: center !important;
     background-repeat: no-repeat !important;
@@ -757,7 +668,7 @@ body{
         padding-left: 10px !important;
         padding-right: 10px !important;
     }
-    .signUpBoxInstructions{
+    .Instructions{
         font-size: 17px !important;   
     }
     .spotBieLogo{

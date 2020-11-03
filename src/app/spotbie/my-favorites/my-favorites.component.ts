@@ -94,15 +94,19 @@ export class MyFavoritesComponent implements OnInit {
     
     const favoriteItems = this.myFavoritesService.getFavoritesLoggedOut()
     
-    favoriteItems.forEach(favorite => {
-      this.populateFavorite(favorite.yelp_id).subscribe(
-        resp=>{
-          this.populateFavoriteCallback(resp, favorite)
-        }
-      )
-    })
+    if(favoriteItems != null && favoriteItems.length > 0){
 
-    if(this.favoriteItems == null) this.noFavorites = true
+      favoriteItems.forEach(favorite => {
+
+        this.populateFavorite(favorite.yelp_id).subscribe(
+          resp=>{
+            this.populateFavoriteCallback(resp, favorite)
+          }
+        )
+        
+      })
+
+    } else this.noFavorites = true
     
 
   }
@@ -130,6 +134,8 @@ export class MyFavoritesComponent implements OnInit {
       if(favorite.id == evt.favoriteId) this.favoriteItems.splice(index, 1)
 
     })
+
+    if(this.favoriteItems.length == 0) this.noFavorites = true
 
     this.infoObjectWindow.open = false
 

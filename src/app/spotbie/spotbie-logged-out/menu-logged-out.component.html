@@ -2,21 +2,27 @@
               spotbie-menu
               spotbie-menu-fixed-logged-out" #spotbieMainMenu>
   <tr>
+    
     <td (click)="home()">
       <img class='spotbie-mini-logo' src="../../assets/favicon/android-icon-72x72.png" />
-    </td>       
+    </td>     
+
     <td (click)="openWindow(logInWindow)">
       Log-In
     </td>
+
     <td (click)="openWindow(signUpWindow)">
       Sign-Up
     </td>
+
     <td (click)="goToBlog()">
       <a class='spotbie-our-blog-link' href="https://blog.spotbie.com/">
         Our Blog
       </a>
     </td>
+
   </tr>
+
 </table>
 
 <app-profile-header [publicProfileInfo]="public_profile_info"

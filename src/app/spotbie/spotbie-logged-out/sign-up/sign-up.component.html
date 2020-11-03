@@ -1,256 +1,246 @@
 <app-loading-screen *ngIf="loading"></app-loading-screen>
 
 <div class="spotbie-overlay-window">
-    
-    <div class='signUpBoxHolder' #vc_spotbie_sign_up_box>                                      
-            
-      <div class='signUpBox' #vc_spotbie_sign_up_box_inner>                                                
-          
+         
+    <div class='signUpBox' #vc_spotbie_sign_up_box_inner>                                                
+        
         <div class='signUpBoxInstructions' id="sign_up_general_instructions" #spotbieSignUpIssues>
-            Let's Get to Spottin'
+            Sign up to add friends, customize your profile, save favorties, and more.
         </div>
-          
-          <form [formGroup]="signUpFormx" (ngSubmit)="initSignUp()">                                               
+        
+        <form [formGroup]="signUpFormx" (ngSubmit)="initSignUp()">                                               
 
-              <table class='displayTableName'>
-                  <tr>
-                      <td>
+            <div class='displayTableName'>
 
-                          <div *ngIf="submitted && f.spotbieUsername.errors else username_normal" class="signUpBoxInstructions animated shake">
-    
-                            <div *ngIf="f.spotbieUsername.errors.required || f.spotbieUsername.errors.emptyUsername">
-                                Username required.
-                            </div>
+                <div *ngIf="submitted && f.spotbieUsername.errors else username_normal" class="signUpBoxInstructions animated shake">
 
-                            <div *ngIf="f.spotbieUsername.errors.wrongLength">
-                                Username must be 1 to 35 characters long.
-                            </div>
+                    <div *ngIf="f.spotbieUsername.errors.required || f.spotbieUsername.errors.emptyUsername">
+                        Username required.
+                    </div>
 
-                            <div *ngIf="f.spotbieUsername.errors.illegalChars">
-                                Username must only contain letters, numbers, and underscores.
-                            </div>
-                            
-                            <div *ngIf="f.spotbieUsername.errors.notUnique">
-                                Username is already in use.
-                            </div>
+                    <div *ngIf="f.spotbieUsername.errors.wrongLength">
+                        Username must be 1 to 35 characters long.
+                    </div>
 
-                          </div>   
+                    <div *ngIf="f.spotbieUsername.errors.illegalChars">
+                        Username must only contain letters, numbers, and underscores.
+                    </div>
+                    
+                    <div *ngIf="f.spotbieUsername.errors.notUnique">
+                        Username is already in use.
+                    </div>
 
-                          <ng-template #username_normal>
+                </div>   
 
-                              <label class="signUpBoxInstructions" id='username_label' for='spotbie_username'>
-                                  What will be your username?
-                              </label>
-      
-                          </ng-template>                                             
-                          <input class='spotbie-input signUpInput' type='text' id='spotbie_username' formControlName="spotbieUsername" placeholder='Username' autocomplete="username"/>
-                      </td>
-                  </tr>
-              </table>
+                <ng-template #username_normal>
 
-              <table class='displayTableName'>
-                  <tr>
-                      <td>
-                          <div *ngIf="submitted && f.spotbieFirstName.errors else first_name_normal" class="signUpBoxInstructions animated shake">
-      
-                              <div *ngIf="f.spotbieFirstName.errors.required">
-                                  Please enter your first name.
-                              </div>
-                              
-                              <div *ngIf="f.spotbieFirstName.errors.invalidInput">
-                                  Invalid first name given. Must contain letters and no spaces.
-                              </div>
-      
-                          </div>                                             
-                          <ng-template #first_name_normal>
+                    <label class="signUpBoxInstructions" id='username_label' for='spotbie_username'>
+                        What will be your username?
+                    </label>
 
-                              <label class="signUpBoxInstructions" id='first_name_label' for='user_first_name'>
-                                  May I have your first name?
-                              </label>
-      
-                          </ng-template>                                             
-                          <input class='spotbie-input signUpInput' type='text' id='user_first_name' formControlName="spotbieFirstName" placeholder='First Name' autocomplete="given-name"/>
-                      </td>                            
-                  </tr>
-              </table>
+                </ng-template>    
 
-              <table class='displayTableName'>
-                  <tr>
-                      <td>
-                          <div *ngIf="submitted && f.spotbieLastName.errors else last_name_normal" class="signUpBoxInstructions animated shake">
-      
-                              <div *ngIf="f.spotbieLastName.errors.required">
-                                  Please enter your last name.
-                              </div>
-                              
-                              <div *ngIf="f.spotbieLastName.errors.invalidInput">
-                                  Invalid last name given. Must contain letters and no spaces.
-                              </div>
-      
-                          </div>                                      
-                          <ng-template #last_name_normal>
+                <input class='spotbie-input signUpInput' type='text' id='spotbie_username' formControlName="spotbieUsername" placeholder='Username' autocomplete="username"/>
 
-                              <label class="signUpBoxInstructions" id='last_name_label' for='user_last_name'>
-                                  What about your last name?
-                              </label>
-      
-                          </ng-template>                                             
-                          <input class='spotbie-input signUpInput' type='text' id='user_last_name' formControlName="spotbieLastName" placeholder='Last Name' autocomplete="family-name"/>
-                      </td>                            
-                  </tr>
-              </table>                                     
+            </div>
 
-              <table class='displayTableName'>
-                  <tr>
-                      <td>
+            <div class='displayTableName'>
 
-                          <div *ngIf="submitted && f.spotbieEmail.errors else email_normal" class="signUpBoxInstructions animated shake">
-      
-                            <div *ngIf="f.spotbieEmail.errors.required">
-                                Please enter your e-mail.
-                            </div>
+                <div *ngIf="submitted && f.spotbieFirstName.errors else first_name_normal" class="signUpBoxInstructions animated shake">
 
-                            <div *ngIf="f.spotbieEmail.errors.email">
-                                Invalid e-mail.
-                            </div>                              
-                              
-                            <div *ngIf="f.spotbieEmail.errors.notUnique">
-                                E-mail is already in use.
-                            </div>                             
+                    <div *ngIf="f.spotbieFirstName.errors.required">
+                        Please enter your first name.
+                    </div>
+                    
+                    <div *ngIf="f.spotbieFirstName.errors.invalidInput">
+                        Invalid first name given. Must contain letters and no spaces.
+                    </div>
 
-                          </div>      
+                </div>          
+                                                    
+                <ng-template #first_name_normal>
 
-                          <ng-template #email_normal>
+                    <label class="signUpBoxInstructions" id='first_name_label' for='user_first_name'>
+                        May I have your first name?
+                    </label>
 
-                            <label class="signUpBoxInstructions" id='email_label' for='user_email'>
-                                What e-mail should we reach you at?
-                            </label>
-      
-                          </ng-template> 
+                </ng-template>    
 
-                          <input class='spotbie-input signUpInput' (keyup)="removeWhiteSpace('spotbieEmail')" type='text' id='user_email' formControlName="spotbieEmail" placeholder='E-mail Address' autocomplete="email"/>
-                      </td>
-                  </tr>
-              </table>
+                <input class='spotbie-input signUpInput' type='text' id='user_first_name' formControlName="spotbieFirstName" placeholder='First Name' autocomplete="given-name"/>
 
-              <table class='displayTableName'>
-                  <tr>
-                      <td>
-                          <div *ngIf="submitted && f.spotbiePhone.errors else phone_normal" class="signUpBoxInstructions animated shake">
-      
-                            <div *ngIf="f.spotbiePhone.errors.required">
-                                Please enter your phone number.
-                            </div>                                                
-    
-                            <div *ngIf="f.spotbiePhone.errors.invalidPhone">
-                                Invalid phone number. Format: (786) 555-5555
-                            </div> 
+            </div>
 
-                            <div *ngIf="f.spotbiePhone.errors.notUnique">
-                                Phone Number is already in use.
-                            </div>   
+            <div class='displayTableName'>
 
-                          </div>  
+                <div *ngIf="submitted && f.spotbieLastName.errors else last_name_normal" class="signUpBoxInstructions animated shake">
 
-                          <ng-template #phone_normal>
+                    <div *ngIf="f.spotbieLastName.errors.required">
+                        Please enter your last name.
+                    </div>
+                    
+                    <div *ngIf="f.spotbieLastName.errors.invalidInput">
+                        Invalid last name given. Must contain letters and no spaces.
+                    </div>
 
-                            <label class="signUpBoxInstructions" id='phone_number_label' for='user_phone'>
-                                Phone number to verify that you are human.
-                            </label>
-    
-                          </ng-template>  
+                </div>          
 
-                          <input class='spotbie-input signUpInput' type='text' id='user_phone' mask="(000) 000-0000" autocomplete="tel" placeholder='(555) 555-5555' formControlName="spotbiePhone"/>
-                      </td>
-                  </tr>
-              </table>                    
+                <ng-template #last_name_normal>
 
-              <table class='displayTableName'>
-                  <tr>
-                      <td>
-                          <div *ngIf="submitted && f.spotbiePassword.errors else password_normal" class="signUpBoxInstructions animated shake">
-                              
-                            <div *ngIf="f.spotbiePassword.errors.required">
-                                Please provide a password.
-                            </div>
+                    <label class="signUpBoxInstructions" id='last_name_label' for='user_last_name'>
+                        What about your last name?
+                    </label>
 
-                            <div *ngIf="f.spotbiePassword.errors.wrongLength">
-                                Username must be 1 to 15 characters long.
-                            </div>
+                </ng-template>   
 
-                            <div *ngIf="f.spotbiePassword.errors.oneNumber">
-                                Password must contain at least one number (0-9)!
-                            </div> 
+                <input class='spotbie-input signUpInput' type='text' id='user_last_name' formControlName="spotbieLastName" placeholder='Last Name' autocomplete="family-name"/>
 
-                            <div *ngIf="f.spotbiePassword.errors.oneLowerCase">
-                                Password must contain at least one lowercase letter (a-z)!
-                            </div>  
-    
-                            <div *ngIf="f.spotbiePassword.errors.oneUpperCase">
-                                Password must contain at least one uppercase letter (A-Z)!
-                            </div> 
-      
-                          </div> 
-                                                         
-                          <ng-template #password_normal>
+            </div>                                     
 
-                              <label class="signUpBoxInstructions" id='password_label' for='user_pass'>
-                                  What will be your password?
-                              </label>
-      
-                          </ng-template>     
+            <div class='displayTableName'>
 
-                          <input class='spotbie-input signUpInput' type='password' formControlName="spotbiePassword" id='user_pass' autocomplete="new-password" placeholder='Password'/>
+                <div *ngIf="submitted && f.spotbieEmail.errors else email_normal" class="signUpBoxInstructions animated shake">
+
+                    <div *ngIf="f.spotbieEmail.errors.required">
+                        Please enter your e-mail.
+                    </div>
+
+                    <div *ngIf="f.spotbieEmail.errors.email">
+                        Invalid e-mail.
+                    </div>                              
                         
-                        </td>
-                  </tr>
-              </table>                
+                    <div *ngIf="f.spotbieEmail.errors.notUnique">
+                        E-mail is already in use.
+                    </div>                             
 
-              <table class='displayTableName' style="margin-bottom: 20px;">
-                  <tr>                        
-                      <td>
-                          <div *ngIf="submitted && f.spotbieConfirm.errors else confirm_password_normal" class="signUpBoxInstructions animated shake">
+                </div>      
 
-                            <div *ngIf="f.spotbieConfirm.errors.mustMatch">
-                                Your passwords must match.
-                            </div>
-                            
-                            <div *ngIf="f.spotbieConfirm.errors.required">
-                                Please confirm your password.
-                            </div>                              
+                <ng-template #email_normal>
 
-                          </div>                                
-                          <ng-template #confirm_password_normal>
-                              <label class="signUpBoxInstructions" id='confirm_password_label' for='user_pass_confirm'>
-                                  Confirm your password.
-                              </label>  
-                          </ng-template>                                                               
-                          <input class='spotbie-input signUpInput' type='password' formControlName="spotbieConfirm" id='user_pass_confirm' placeholder='Confirm Password' />
-                      </td>
-                  </tr>
-              </table>                           
-              
-              <p class='signUpBoxInstructions signUpTerms'>
-                  By clicking or tapping "Let's Go!" you are agreeing to <a [routerLink]="['/terms']">our terms and privacy policy.</a>
-              </p>
-              
-              <table class='displayTableName signUpTable' style="margin-bottom: 20px;">
-                  <tr>                        
-                      <td>                                                
-                          <button class='spotbieSignUpButton'>Let's Go!</button>                        
-                      </td>
-                      <td>
-                          <div class='spotbieSignUpButton' (click)="closeWindowX();">Cancel</div>
-                      </td>
-                  </tr>
-              </table>    
+                    <label class="signUpBoxInstructions" id='email_label' for='user_email'>
+                        What e-mail should we reach you at?
+                    </label>
 
-          </form>
+                </ng-template> 
 
-      </div>                                                                
-      
-    </div><!-- END OF SIGN UP BOX -->                
-  
+                <input class='spotbie-input signUpInput' (keyup)="removeWhiteSpace('spotbieEmail')" type='text' id='user_email' formControlName="spotbieEmail" placeholder='E-mail Address' autocomplete="email"/>
+
+            </div>                 
+
+            <div class='displayTableName'>
+
+                <div *ngIf="submitted && f.spotbiePassword.errors else password_normal" class="signUpBoxInstructions animated shake">
+                        
+                    <div *ngIf="f.spotbiePassword.errors.required">
+                        Please provide a password.
+                    </div>
+
+                    <div *ngIf="f.spotbiePassword.errors.wrongLength">
+                        Username must be 1 to 15 characters long.
+                    </div>
+
+                    <div *ngIf="f.spotbiePassword.errors.oneNumber">
+                        Password must contain at least one number (0-9)!
+                    </div> 
+
+                    <div *ngIf="f.spotbiePassword.errors.oneLowerCase">
+                        Password must contain at least one lowercase letter (a-z)!
+                    </div>  
+
+                    <div *ngIf="f.spotbiePassword.errors.oneUpperCase">
+                        Password must contain at least one uppercase letter (A-Z)!
+                    </div> 
+
+                </div> 
+                                                
+                <ng-template #password_normal>
+
+                    <label class="signUpBoxInstructions" id='password_label' for='user_pass'>
+                        What will be your password?
+                    </label>
+
+                </ng-template>     
+
+                <input class='spotbie-input signUpInput' type='password' formControlName="spotbiePassword" id='user_pass' autocomplete="new-password" placeholder='Password'/>
+                
+            </div>                
+
+            <div class='displayTableName' style="margin-bottom: 20px;">
+
+                <div *ngIf="submitted && f.spotbieConfirm.errors else confirm_password_normal" class="signUpBoxInstructions animated shake">
+
+                    <div *ngIf="f.spotbieConfirm.errors.mustMatch">
+                        Your passwords must match.
+                    </div>
+                    
+                    <div *ngIf="f.spotbieConfirm.errors.required">
+                        Please confirm your password.
+                    </div>                              
+
+                </div>        
+                                        
+                <ng-template #confirm_password_normal>
+                    <label class="signUpBoxInstructions" id='confirm_password_label' for='user_pass_confirm'>
+                        Confirm your password.
+                    </label>  
+                </ng-template>    
+
+                <input class='spotbie-input signUpInput' type='password' formControlName="spotbieConfirm" id='user_pass_confirm' placeholder='Confirm Password' />
+
+            </div>                           
+            
+            <div class='displayTableName'>
+
+                <div *ngIf="submitted && f.spotbiePhone.errors else phone_normal" class="signUpBoxInstructions animated shake">
+
+                <div *ngIf="f.spotbiePhone.errors.required">
+                    Please enter your phone number.
+                </div>                                                
+
+                <div *ngIf="f.spotbiePhone.errors.invalidPhone">
+                    Invalid phone number. Format: (786) 555-5555
+                </div> 
+
+                <div *ngIf="f.spotbiePhone.errors.notUnique">
+                    Phone Number is already in use.
+                </div>   
+
+                </div>  
+
+                <ng-template #phone_normal>
+
+                    <label class="signUpBoxInstructions" id='phone_number_label' for='user_phone'>
+                        Phone number to verify that you are human.
+                    </label>
+
+                </ng-template>  
+
+                <input class='spotbie-input signUpInput' type='text' id='user_phone' mask="(000) 000-0000" autocomplete="tel" placeholder='(555) 555-5555' formControlName="spotbiePhone"/>
+
+            </div>   
+
+            <p class='signUpBoxInstructions signUpTerms'>
+                By clicking or tapping "Let's Go!" you are agreeing to <a [routerLink]="['/terms']">our terms and privacy policy.</a>
+            </p>
+            
+            <table class='signUpTable'>
+                <tr>                        
+                    <td>                                                
+                        <button class='spotbieSignUpButton'>Let's Go!</button>                        
+                    </td>
+                    <td>
+                        <div class='spotbieSignUpButton' (click)="closeWindowX();">Cancel</div>
+                    </td>
+                </tr>
+            </table>    
+
+        </form>
+
+        <div class="spotbie-close-button" (click)="closeWindowX()">
+            <i class="fa fa-times"></i>
+        </div>
+
+    </div>                                                                
+                  
     <div id='success_box' class='successBoxOutter'>
       
       <div class='successBoxPage'>
@@ -301,6 +291,8 @@
           
           <div class='spotbieSignUpButton spotbieFinishButton' (click)="closePerks();">Close</div>
           
+closeWindow
+
       </div>                    
     </div>
 

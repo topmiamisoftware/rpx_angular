@@ -2,6 +2,7 @@
     background: url(/assets/images/background.png);
     background-position: center;
     background-color: rgb(21 21 21);
+    text-align: left;
 }
 .spotbie-input{
     width: 450px;
@@ -28,4 +29,96 @@
     padding-top: 130px;
     font-size: 32px;
     line-height: 70px;
+}
+.signUpBox{
+    position: relative;
+    margin: 0 auto;
+    padding: 20px;
+    width: 1100px;
+    max-width: 98%;
+    top: 2%;
+    bottom: 2%;
+    border-radius: 20px;
+    overflow-y: scroll;
+}
+.displayTableName{
+    position: relative;
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-bottom: 15px;
+    display: inline-block;
+    width: 48%;
+    min-width: 48%;
+    max-width: 48%;
+}
+.signUpInput{
+    position: relative;
+    border-radius: 10px;
+    margin: unset;
+    margin-top: 10px !important;
+    margin-bottom: 5px !important;
+    padding: 10px;
+    font-size: 20px;
+    background-color: rgba(0,0,0,.23);
+    border: 0;
+    color: #8BC34A;
+    letter-spacing: 1px;
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    border: 1px solid #3c3c3c;
+    text-align: left;
+}
+.signUpBoxInstructions{
+    position: relative;
+    margin-left: 10px;
+    display: block;
+    padding-top: 10px;
+    padding-bottom: 0px;
+    font-size: 16px;
+    letter-spacing: 1px;
+    text-align: left;
+}
+#sign_up_general_instructions{
+    text-align: center;
+    padding-top: 20px;
+    padding-bottom: 10px;
+    margin-bottom: 30px;
+    font-size: 16px;
+}
+.signUpTerms{
+    font-size: 15px;
+    text-align: center;
+    padding-bottom: 20px; 
+    margin-top: 30px;               
+}
+.signUpTable{
+    position: relative;
+    margin: 0 auto;
+    table-layout: fixed;
+    margin-bottom: 20px;
+}
+.signUpTable td{
+    width: 50%;
+    min-width: 50%;
+    max-width: 50%;
+}
+.spotbieSignUpButton{
+    position: relative;
+    margin: 0 auto;
+    text-align: center;
+    width: 300px;
+    min-width: 300px;
+    max-width: 300px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 20px;
+    border: 1px solid #3c3c3c;
+    background-color: #609329;
+    color: white !important;
+}
+.spotbieSignUpButton:hover{
+    background-color: #131313;
 }

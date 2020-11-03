@@ -179,6 +179,8 @@
     border-radius: 20px;
     margin-top: 10px;
     word-break: break-word;
+    font-size: 16px;
+    font-weight: normal;
 }
 .spotbie-subgenre{
     position: relative;
@@ -514,6 +516,7 @@ span.spotbie-button{
     right: 15px;
     cursor: pointer;
     font-size: 18px;
+    z-index: 99;
 }
 .spotbie-pull-from{
     position: relative;
@@ -534,9 +537,9 @@ span.spotbie-button{
 /**WIDTH MEDIA QUERIES */
 @media (max-width: 1583px) { 
     .spotbie-search-result{
-        width: 47%;
-        min-width: 47%;
-        max-width: 47%;
+        width: 30%;
+        min-width: 30%;
+        max-width: 30%;
     }
 }
 @media (max-width: 1300px) { 

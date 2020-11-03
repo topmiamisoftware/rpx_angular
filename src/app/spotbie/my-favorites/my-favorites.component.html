@@ -1,12 +1,15 @@
 <app-loading-screen *ngIf="loading"></app-loading-screen>
 
-<div class="spotbie-overlay-window" [ngStyle]="{ 'background-color' : bgColor }">
+<div class="spotbie-overlay-window">
 
     <div class='spotbie-search-result' *ngFor='let favorite of favoriteItems' (click)="pullSearchMarker(favorite)">
       
         <div class='spotbie-search-result-title' >
+          
           {{ favorite.name }} 
+          
           <span class='spotbie-search-result-price' *ngIf="favorite.price_on == '1'">({{ favorite.price }})</span>
+
         </div>
         
         <table class='spotbie-search-result-table'>
@@ -89,7 +92,9 @@
         </div>
     </div>
 
-    <div class="spotbie-close-button" (click)="closeWindowX()">close</div>
+    <div class="spotbie-close-button" (click)="closeWindowX()">
+      <i class="fa fa-times"></i>
+    </div>
 
 </div>
 

@@ -68,7 +68,7 @@ export const options : Partial<IConfig> | (() => Partial<IConfig>) = null;
     SearchComponent,
     SettingsComponent,   
     StreamNotificationsComponent,    
-    TagNotificationsComponent             
+    TagNotificationsComponent,
   ],
   imports: [  
     CommonModule,
