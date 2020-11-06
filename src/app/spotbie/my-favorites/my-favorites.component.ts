@@ -68,7 +68,7 @@ export class MyFavoritesComponent implements OnInit {
 
       favoriteItems.forEach(favorite => {
         
-        this.populateFavorite(favorite.yelp_id).subscribe(
+        this.populateFavorite(favorite.third_party_id).subscribe(
           resp=>{
             this.populateFavoriteCallback(resp, favorite)
           }
@@ -98,7 +98,7 @@ export class MyFavoritesComponent implements OnInit {
 
       favoriteItems.forEach(favorite => {
 
-        this.populateFavorite(favorite.yelp_id).subscribe(
+        this.populateFavorite(favorite.third_party_id).subscribe(
           resp=>{
             this.populateFavoriteCallback(resp, favorite)
           }

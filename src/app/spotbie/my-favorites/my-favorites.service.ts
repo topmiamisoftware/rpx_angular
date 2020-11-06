@@ -79,7 +79,7 @@ export class MyFavoritesService {
 
     currentFavorites.find( (favorite, index) => {
 
-      if(favorite.yelp_id == id) indextoSplice = index
+      if(favorite.third_party_id == id) indextoSplice = index
 
     });
 
@@ -91,7 +91,7 @@ export class MyFavoritesService {
 
   public isInMyFavorites(objId: string, objType: string){
   
-    const isItAFavorite = `${IS_A_FAVORITE_API}?obj_type=${objType}&obj_id=${objId}`
+    const isItAFavorite = `${IS_A_FAVORITE_API}?obj_type=${objType}&third_party_id=${objId}`
   
     return this.http.get<any>(isItAFavorite).pipe(
       catchError(handleError("pullInfoObject"))
@@ -107,7 +107,7 @@ export class MyFavoritesService {
     if(currentFavorites == null) return false
 
     currentFavorites.find( (favorite, index) => {
-      if(favorite.yelp_id === objId) found = true
+      if(favorite.third_party_id === objId) found = true
     })
 
     return found

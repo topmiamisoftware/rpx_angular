@@ -95,7 +95,7 @@ export class MyPlacesService {
     if(currentPlaces == null) return false
 
     currentPlaces.find( (favorite, index) => {
-      if(favorite.yelp_id === objId) found = true
+      if(favorite.third_party_id === objId) found = true
     })
 
     return found

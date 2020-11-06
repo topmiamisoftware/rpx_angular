@@ -137,7 +137,7 @@ export class InfoObjectComponent implements OnInit {
     const locY = this.infoObject.coordinates.longitude
 
     const favoriteObj = {
-      yelp_id: yelpId,
+      third_party_id: yelpId,
       name: name,
       description: null,
       loc_x: locX,

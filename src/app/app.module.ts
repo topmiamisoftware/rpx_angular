@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { DeviceDetectorService } from 'ngx-device-detector';
 
 import { AppComponent } from './app.component';
@@ -16,6 +16,7 @@ import { VersionCheckService } from './services/version-check.service';
 import { MetaModule } from '@ngx-meta/core';
 import { HelperModule } from './helpers/helper.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { TokenInterceptor } from './helpers/token-interceptor/token-interceptor.service';
 
 
 @NgModule({
@@ -36,7 +37,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
   ],  
   providers: [
     DeviceDetectorService,
-    VersionCheckService
+    VersionCheckService,
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
   ],
   bootstrap: [AppComponent]
 })

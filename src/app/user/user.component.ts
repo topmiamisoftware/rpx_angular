@@ -44,7 +44,7 @@ export class UserComponent implements OnInit {
 
   private getUser(): void{
 
-    const user_api = `${INFO_API}/user/${this.exe_user_name}`
+    const user_api = `${INFO_API}user/${this.exe_user_name}`
 
     this.http.get<any>(user_api).subscribe(
       resp => {

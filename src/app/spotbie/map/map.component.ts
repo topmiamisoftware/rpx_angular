@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core'
 import { LocationService } from '../../location-service/location.service'
-import { HttpResponse } from '../../models/http-reponse'
 import { DeviceDetectorService } from 'ngx-device-detector'
 import { AgmMap, AgmInfoWindow } from '@agm/core'
 import * as mobile_js_i from '../../../assets/scripts/mobile_interface.js'
@@ -12,9 +11,7 @@ import { DateFormatPipe, TimeFormatPipe } from 'src/app/pipes/date-format.pipe'
 import { MatSliderChange } from '@angular/material/slider'
 import { Subscription } from 'rxjs'
 import { ColorsService } from '../spotbie-logged-in/background-color/colors.service'
-import { HTTP_INTERCEPTORS } from '@angular/common/http'
 import { metersToMiles, setYelpRatingImage } from 'src/app/helpers/info-object-helper'
-import { identifierModuleUrl } from '@angular/compiler'
 
 const YELP_BUSINESS_SEARCH_API = 'https://api.yelp.com/v3/businesses/search'
 
@@ -1131,7 +1128,7 @@ export class MapComponent implements OnInit {
     this.spotbie_username = localStorage.getItem('spotbie_userLogin')
 
     if(this.isLoggedIn !== '1'){
-      this.user_default_image = 'user.png'
+      this.user_default_image = 'https://api.spotbie.com/defaults/user.png'
       this.spotbie_username = 'Guest'      
       this.bg_color = '#353535'
     }

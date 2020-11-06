@@ -1,8 +1,10 @@
 'user strict'
 
-export const API = 'api/'
-export const RESOURCES = 'http://localhost:8000/'
-export const DEFAULTS = 'http://localhost:8000/defaults/'
+import { environment } from 'src/environments/environment'
+
+export const API = `${environment.apiEndpoint}`
+export const RESOURCES = `${environment.apiEndpoint}`
+export const DEFAULTS = `${environment.apiEndpoint}defaults/`
 export const FRONT_END = '/'
 
 export const CHAT = 'https://express.spotbie.com:8080'

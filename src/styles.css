@@ -767,7 +767,11 @@ a, a:hover, a:active, a:after{
         width: 100%;
         min-width: 100%;
         max-width: 100%;
-    } 
+    }
+    .spotbie-scroll-top{
+        padding-top: 6px;
+        padding-bottom: 6px;
+    }
     .spotbie-scroll-top i {
         font-size: 22px;
     }    

@@ -10,6 +10,7 @@ import { dismissToast } from './helpers/error-helper';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  
   title = 'spotbie';
 
   constructor(private versionCheckService : VersionCheckService) {}
