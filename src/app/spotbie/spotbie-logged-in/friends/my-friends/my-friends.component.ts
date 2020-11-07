@@ -40,9 +40,13 @@ export class MyFriendsComponent implements OnInit {
 
     this.loading = true
 
-    const show_friends_api = `${FRIENDS_API}/show_friends?page=${this.page}`
+    const show_friends_api = `${FRIENDS_API}/show_friends`
 
-    this.http.get<any>(show_friends_api).pipe(
+    const friendsObj = {
+      page: this.page
+    }
+
+    this.http.post<any>(show_friends_api, friendsObj).pipe(
       catchError(handleError("initCallFriends"))
     ).subscribe( 
       resp => {

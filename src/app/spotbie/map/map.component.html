@@ -382,6 +382,22 @@
 
 </div>
 
+
+<div class="spotbie-overlay-window" *ngIf="locationPrompt">
+
+  <div class="spotie-prompt">
+
+    <p>
+      SpotBie uses your location to find nearby users, retail shops, places to eat, and events.
+      Other users can't see you unless you make an account and disable Ghost Mode.
+    </p>
+
+    <div class="spotbie-button spotbie-button-prompt"(click)="acceptLocationPrompt()">I Understand</div>
+
+  </div>
+  
+</div>
+
 <app-my-favorites *ngIf='myFavoritesWindow.open' (closeWindow)="myFavoritesWindow.open = false"></app-my-favorites>
 
 <app-location-saver *ngIf='myPlacesWindow.open' (closeWindow)="myPlacesWindow.open = false"></app-location-saver>

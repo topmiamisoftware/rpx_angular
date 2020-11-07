@@ -12,6 +12,20 @@
 ::-webkit-scrollbar-button{
     background-color: transparent;
 }
+.spotie-prompt{
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 450px;
+    background-color: white;
+    border-radius: 20px;
+    padding: 20px;
+    text-align: center;
+    color: black;
+}
 .spotbie-map{
     position: relative;
     margin: 0 auto;
@@ -338,6 +352,9 @@ span.spotbie-button{
 }
 .spotbie-button{
     background-color: rgba(0,0,0,.23);
+}
+.spotbie-button-prompt{
+    background-color: #8BC34A;
 }
 .spotbie-profile-right-username{
     position: relative;
@@ -671,6 +688,14 @@ span.spotbie-button{
         padding: 0px;
         padding-top: 10px !important;
         padding-bottom: 10px !important;
+    }
+    .spotie-prompt{
+        right: -3%;
+        width: 92%;
+        min-width: 92%;
+        max-width: 92%;
+        border-radius: 15px;
+        padding: 10px;
     }     
 }
 @media (max-width: 460px) { 
@@ -687,6 +712,9 @@ span.spotbie-button{
     .spotbie-map-search-by{
         margin-bottom: 0px;
     }       
+    .spotbie-map-search-wrapper {
+        top: 0px;
+    }
 }
 @media (max-width: 420px) { 
     .spotbie-map{

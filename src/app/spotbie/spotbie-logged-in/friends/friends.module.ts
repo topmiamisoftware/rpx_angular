@@ -7,12 +7,13 @@ import { FriendsComponent } from './friends.component'
 import { FriendNotificationsComponent } from './friend-notifications/friend-notifications.component'
 import { RouterModule } from '@angular/router'
 import { HelperModule } from 'src/app/helpers/helper.module'
-import { HttpClientModule } from '@angular/common/http'
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
 import { BlockedUserActionsComponent } from './blocked-users/blocked-user-actions/blocked-user-actions.component'
 import { FriendActionsComponent } from './my-friends/friend-actions/friend.actions.component'
 import { PendingFriendActionsComponent } from './pending-friends/pending-friend-actions/pending-friend-actions.component'
 import { AroundMeComponent } from './around-me/around-me.component'
 import { AroundMeActionsComponent } from './around-me/around-me-actions/around-me-actions.component'
+import { TokenInterceptor } from 'src/app/helpers/token-interceptor/token-interceptor.service'
 
 @NgModule({
   declarations: [
@@ -35,6 +36,9 @@ import { AroundMeActionsComponent } from './around-me/around-me-actions/around-m
   ],
   exports: [
     FriendsComponent
+  ],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
   ]
 })
 export class FriendsModule { }

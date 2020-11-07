@@ -102,7 +102,7 @@ export class UserauthService {
 
     const getSettingsApi = `${USER_API}/settings`
 
-    return this.http.get<any>(getSettingsApi).pipe(
+    return this.http.post<any>(getSettingsApi, null).pipe(
       catchError(handleError("getSettings"))
     )  
 

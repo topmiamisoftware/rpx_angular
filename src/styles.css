@@ -1,5 +1,3 @@
-@import './assets/styles/xdebug/xdebug.styles.css';
-
 @font-face{
     font-family: sitka-italic;
     src: url(/assets/fonts/Fluent_SitkaSmall-Italic.ttf);
@@ -191,7 +189,7 @@ a, a:hover, a:active, a:after{
 .spotbie-close-button{
     position: fixed;
     display: block;
-    top: 2%;
+    top: 1%;
     right: 20px;
     padding: 10px;
     padding-top: 6px;
@@ -744,6 +742,14 @@ a, a:hover, a:active, a:after{
     .spotbie-close-button{
         max-width: 50px;
         font-size: 16px;        
+    }
+    .spotbie-button {
+        width: 260px;
+        min-width: 260px;
+        max-width: 260px;
+        font-size: 16px;
+        padding-top: 10px !important;
+        padding-bottom: 10px !important;        
     }
 }
 @media (max-width: 460px) { 

@@ -221,17 +221,14 @@
             <p class='signUpBoxInstructions signUpTerms'>
                 By clicking or tapping "Let's Go!" you are agreeing to <a [routerLink]="['/terms']">our terms and privacy policy.</a>
             </p>
-            
-            <table class='signUpTable'>
-                <tr>                        
-                    <td>                                                
-                        <button class='spotbieSignUpButton'>Let's Go!</button>                        
-                    </td>
-                    <td>
-                        <div class='spotbieSignUpButton' (click)="closeWindowX();">Cancel</div>
-                    </td>
-                </tr>
-            </table>    
+
+            <div class='displayTableName'>
+                <button class='spotbieSignUpButton'>Let's Go!</button>
+            </div>
+
+            <div class='displayTableName'>
+                <div class='spotbieSignUpButton' (click)="closeWindowX();">Cancel</div>
+            </div>  
 
         </form>
 
@@ -258,42 +255,6 @@
           
       </div>                    
       
-    </div>
-
-    <div class='superBoxPerksOutter' #vc_account_perks_box *ngIf="account_perks">
-        <div class='superBoxPerks'>
-            <p>
-                Here is a list of <span class='successBoxNames'>perks</span> for <span class='successBoxNames'>early accounts</span>:
-            </p>
-            
-            <ul>
-                <li>Early account badge on your profile. Something unique to remind other users that your were here from the beginning.</li>
-                <li>Profile banner and footer. Banners and footers are a special way to showcase your profile's personality.</li>
-                <li>5 extra matches for your personality matcher.</li>                   
-            </ul>
-            
-            <div class='spotbieSignUpButton spotbieFinishButton' (click)="closePerks();">Close</div>
-            
-        </div>                    
-    </div>
-
-    <div class='superBoxPerksOutter' #vc_account_perks_box *ngIf="account_perks">
-      <div class='superBoxPerks'>
-          <p>
-              Here is a list of <span class='successBoxNames'>perks</span> for <span class='successBoxNames'>early accounts</span>:
-          </p>
-          
-          <ul>
-              <li>Early account badge on your profile. Something unique to remind other users that your were here from the beginning.</li>
-              <li>Profile banner and footer. Banners and footers are a special way to showcase your profile's personality.</li>
-              <li>5 extra matches for your personality matcher.</li>                   
-          </ul>
-          
-          <div class='spotbieSignUpButton spotbieFinishButton' (click)="closePerks();">Close</div>
-          
-closeWindow
-
-      </div>                    
     </div>
 
 </div>

@@ -35,9 +35,13 @@ export class BlockedUsersComponent implements OnInit {
 
     this.loading = true
     
-    const blocked_friendships_api = `${FRIENDS_API}/show_blocked?page=${this.page}`
+    const blocked_friendships_api = `${FRIENDS_API}/show_blocked`
 
-    this.http.get<any>(blocked_friendships_api).subscribe(
+    const blockedFriendsObj= {
+      page: this.page
+    }
+
+    this.http.post<any>(blocked_friendships_api, blockedFriendsObj).subscribe(
       resp => {
         this.callBlockedCallback(resp)
       },

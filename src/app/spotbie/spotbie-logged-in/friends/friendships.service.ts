@@ -100,9 +100,9 @@ export class FriendshipsService {
 
   public aroundMe(aroundMeObj: any): Observable<any>{    
 
-    const aroundMeApi = `${FRIENDS_API}/show_nearby?loc_x=${aroundMeObj.loc_x}&loc_y=${aroundMeObj.loc_y}&page=${aroundMeObj.page}`
+    const aroundMeApi = `${FRIENDS_API}/show_nearby`
 
-    return this.http.get<any>(aroundMeApi).pipe(
+    return this.http.post<any>(aroundMeApi, aroundMeObj).pipe(
       catchError(handleError("befriend"))
     )
 
@@ -138,9 +138,13 @@ export class FriendshipsService {
 
   public checkRelationship(peerId: number): Observable<any>{
 
-    const checkRelationshipApi = `${FRIENDS_API}/check_relationship?peer_id=${peerId}`
+    const checkRelationshipApi = `${FRIENDS_API}/check_relationship`
 
-    return this.http.get<any>(checkRelationshipApi).pipe(
+    const checkRelationshipObj = {
+      peer_id: peerId
+    } 
+
+    return this.http.post<any>(checkRelationshipApi, checkRelationshipObj).pipe(
       catchError(handleError("checkRelationship"))
     )
 

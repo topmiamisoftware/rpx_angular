@@ -16,7 +16,5 @@
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    height: 150px;
-    min-height: 150px;
-    max-height: 150px;
+    font-size: 38px;
 }

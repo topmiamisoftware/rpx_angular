@@ -19,9 +19,7 @@ export class MyFavoritesService {
 
   public getFavoritesLoggedIn(page: number): Observable<any>{
 
-    const getFavoritesLoggedInApi = `${GET_FAVORITES_LOGGED_IN_API}?page=${page}`
-
-    return this.http.get(getFavoritesLoggedInApi).pipe(
+    return this.http.post(GET_FAVORITES_LOGGED_IN_API, page).pipe(
       catchError(handleError("getFavoritesLoggedIn"))
     )
 
@@ -91,9 +89,12 @@ export class MyFavoritesService {
 
   public isInMyFavorites(objId: string, objType: string){
   
-    const isItAFavorite = `${IS_A_FAVORITE_API}?obj_type=${objType}&third_party_id=${objId}`
-  
-    return this.http.get<any>(isItAFavorite).pipe(
+    const isInMyFavoritesObj = {
+      obj_type: objType,
+      third_party_id: objId
+    }
+
+    return this.http.post<any>(IS_A_FAVORITE_API, isInMyFavoritesObj).pipe(
       catchError(handleError("pullInfoObject"))
     )
   

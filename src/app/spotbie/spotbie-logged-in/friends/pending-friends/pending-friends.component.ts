@@ -34,9 +34,12 @@ export class PendingFriendsComponent implements OnInit {
     
     this.loading = true
     
-    const pendingFriendsApis = `${FRIENDS_API}/show_pending?page=${this.page}`
+    const pendingFriendsApi = `${FRIENDS_API}/show_pending`
+    const showPendingObj = {
+      page: this.page
+    }
 
-    this.http.get<any>(pendingFriendsApis).subscribe(
+    this.http.post<any>(pendingFriendsApi, showPendingObj).subscribe(
       resp => {
         this.callPendingCallback(resp)
       },

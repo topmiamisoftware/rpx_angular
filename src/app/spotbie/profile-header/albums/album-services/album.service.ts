@@ -192,9 +192,13 @@ export class AlbumService {
 
   public myAlbums(page: number): Observable<any>{
 
-    let api = `${ALBUM_API}/my_albums?page=${page}`
+    let api = `${ALBUM_API}/my_albums`
 
-    return this.http.get<any>(api).pipe(
+    const myAlbumsObj = {
+      page: page
+    }
+
+    return this.http.post<any>(api, myAlbumsObj).pipe(
       catchError(handleError("myAlbums"))
     )
 

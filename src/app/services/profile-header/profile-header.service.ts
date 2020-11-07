@@ -16,9 +16,9 @@ export class ProfileHeaderService {
 
   public myProfileHeader(): Observable<any>{
 
-    let my_profile_header_api = PROFILE_HEADER_API + '/my_profile_header'
+    let my_profile_header_api = `${PROFILE_HEADER_API}/my_profile_header`
 
-    return this.http.get(my_profile_header_api).pipe(
+    return this.http.post(my_profile_header_api, null).pipe(
       catchError(handleError("myProfileHeader"))
     )
   

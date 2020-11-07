@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { AlbumsComponent } from './albums.component'
-import { HttpClientModule } from '@angular/common/http'
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
 import { ReactiveFormsModule, FormsModule } from '@angular/forms'
 import { SpotbiePipesModule } from '../../../spotbie-pipes/spotbie-pipes.module'
 import { ShareAlbumComponent } from './share-album/share-album.component'
@@ -15,6 +15,7 @@ import { AlbumService } from './album-services/album.service'
 import { RouterModule } from '@angular/router'
 import { CommentsModule } from '../../comments/comments.module'
 import { HelperModule } from 'src/app/helpers/helper.module'
+import { TokenInterceptor } from 'src/app/helpers/token-interceptor/token-interceptor.service'
 
 @NgModule({
   declarations: [
@@ -38,6 +39,9 @@ import { HelperModule } from 'src/app/helpers/helper.module'
     HelperModule
   ],
   exports : [AlbumsComponent],
-  providers : [AlbumService]
+  providers: [
+    AlbumService,
+    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
+  ]
 })
 export class AlbumsModule { }

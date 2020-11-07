@@ -43,6 +43,7 @@
 }
 .displayTableName{
     position: relative;
+    text-align: center;
     margin-left: 10px;
     margin-right: 10px;
     margin-bottom: 15px;
@@ -63,9 +64,9 @@
     border: 0;
     color: #8BC34A;
     letter-spacing: 1px;
-    width: 100%;
-    min-width: 100%;
-    max-width: 100%;
+    width: 96%;
+    min-width: 96%;
+    max-width: 96%;
     border: 1px solid #3c3c3c;
     text-align: left;
 }
@@ -121,4 +122,58 @@
 }
 .spotbieSignUpButton:hover{
     background-color: #131313;
+}
+
+/**WIDTH MEDIA QUERIES */
+@media (max-width: 1300px) { 
+
+}
+@media (max-width: 1200px) {   
+    .displayTableName{
+        width: 45%;
+        min-width: 45%;
+        max-width: 45%;
+    }
+}
+@media (max-width: 1024px) { 
+}
+@media (max-width: 900px) { 
+
+}
+@media (max-width: 768px) { 
+
+}
+@media (max-width: 700px) { 
+
+}
+@media (max-width: 600px) { 
+
+}
+@media (max-width: 560px) { 
+    .displayTableName{
+        position: relative;
+        display: block;
+        width: 92%;
+        min-width: 92%;
+        max-width: 92%;
+    }
+}
+@media (max-width: 460px) { 
+              
+}
+@media (max-width: 420px) { 
+                   
+}
+@media (max-width: 360px) { 
+ 
+}
+
+@media (max-width: 320px) {
+
+}
+@media (max-width: 220px) { 
+
+}
+@media (max-width: 120px) { 
+
 }

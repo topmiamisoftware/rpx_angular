@@ -162,6 +162,8 @@ export class MapComponent implements OnInit {
 
   public myPlacesWindow = { open : false }
 
+  public locationPrompt: boolean = false
+
   constructor(private locationService: LocationService,
               private deviceService: DeviceDetectorService,
               private router: Router,
@@ -1109,6 +1111,36 @@ export class MapComponent implements OnInit {
 
   }
 
+  public promptForLocation(){
+
+    let locationPrompted = localStorage.getItem('spotbie_locationPrompted');
+
+    (locationPrompted == '1') ? this.startLocation() : this.locationPrompt = true
+
+  }
+
+  public acceptLocationPrompt(){
+
+    this.locationPrompt = false
+    localStorage.setItem('spotbie_locationPrompted', '1')
+    this.startLocation()
+
+  }
+
+  public startLocation(){
+
+    if (window.navigator.geolocation) { window.navigator.geolocation.getCurrentPosition(this.showPosition.bind(this)) }
+
+    this.web_options_subscriber = this.webOptionsService.getWebOptions().subscribe(web_options =>{
+
+      if(web_options.bg_color){
+        this.bg_color = web_options.bg_color
+      }
+
+    })
+
+  }
+
   ngOnInit() {
 
     if (this.deviceService.isDesktop || this.deviceService.isTablet)
@@ -1136,19 +1168,13 @@ export class MapComponent implements OnInit {
     this.is_android = mobile_js_i.android_i
     this.is_iphone = mobile_js_i.iphone_i
     
+    this.promptForLocation()
+
     if(this.is_android){
       mobile_js_i.accesLocationAndroid()
     }
 
-    if (window.navigator.geolocation) { window.navigator.geolocation.getCurrentPosition(this.showPosition.bind(this)) }
 
-    this.web_options_subscriber = this.webOptionsService.getWebOptions().subscribe(web_options =>{
-
-      if(web_options.bg_color){
-        this.bg_color = web_options.bg_color
-      }
-
-    })
 
 
   }
