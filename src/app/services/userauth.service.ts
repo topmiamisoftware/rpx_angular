@@ -16,13 +16,9 @@ const USER_API = spotbieGlobals.API + 'user'
 export class UserauthService {
 
   public userLogin: string
-
   public userPassword: string
-
   public userRememberMe: string
-
   public userRememberMeToken: string
-
   public userTimezone: string
 
   constructor(private http: HttpClient,
@@ -32,7 +28,7 @@ export class UserauthService {
 
     let check_login_object = {}
 
-    let loginApi = USER_API + '/check_user_auth'
+    let loginApi = `${USER_API}/check_user_auth`
 
     return new Promise((resolve, reject) => {
 
@@ -55,7 +51,7 @@ export class UserauthService {
 
   public logOut(): Observable<any> {
 
-    const logOutApi = USER_API + '/logout'
+    const logOutApi = `${USER_API}/logout`
 
     return this.http.post<any>(logOutApi, null).pipe(
       tap( resp => { this.logOutCallback(resp) })
@@ -69,6 +65,7 @@ export class UserauthService {
 
         localStorage.clear()
 
+        localStorage.setItem('spotbie_locationPrompted', '1')
         localStorage.setItem('spotbie_userId', '0')
         localStorage.setItem('spotbie_loggedIn', '0')
         localStorage.setItem('spotbie_userApiKey', null)
@@ -157,6 +154,38 @@ export class UserauthService {
 
     return this.http.post<any>(resetPasswordApi, passResetObj).pipe(
       catchError(handleError("completeReset"))
+    ) 
+
+  }
+
+  public passwordChange(passwordChangeObj: any): Observable<any>{
+
+    const resetPasswordApi = `${USER_API}/change-password`
+
+    const passResetObj = {
+      _method: 'PUT',
+      password: passwordChangeObj.password,
+      password_confirmation: passwordChangeObj.passwordConfirmation,
+      current_password: passwordChangeObj.currentPassword
+    }
+
+    return this.http.post<any>(resetPasswordApi, passResetObj).pipe(
+      catchError(handleError("passwordChange"))
+    ) 
+
+  }
+
+  public deactivateAccount(password: string): Observable<any>{
+
+    const resetPasswordApi = `${USER_API}/deactivate`
+
+    const passResetObj = {
+      _method: 'DELETE',
+      password
+    }
+
+    return this.http.post<any>(resetPasswordApi, passResetObj).pipe(
+      catchError(handleError("deactivateAccount"))
     ) 
 
   }

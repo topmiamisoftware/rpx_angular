@@ -21,7 +21,8 @@ export class LoginGuardServiceService {
       } else {
 
         localStorage.clear()
-  
+        
+        localStorage.setItem('spotbie_locationPrompted', '1')
         localStorage.setItem('spotbie_userId', '0')
         localStorage.setItem('spotbie_loggedIn', '0')
         localStorage.setItem('spotbie_rememberMe', '0')

@@ -295,9 +295,7 @@
 }
 .spotbie-close-button {
     position: fixed;
-    background-color: rgb(0, 0, 0);
 }
-
 .spotbie-stream-poster-album-media-option{
     position: relative;
     margin: 0 auto;
@@ -454,15 +452,6 @@
         width: 94%;
         min-width: 94%;
         max-width: 94%;
-    }
-    .spotbie-close-button{
-        max-width: 80px;
-        padding-top: 10px;
-        padding-bottom: 10px;
-        padding-left: 25px;
-        padding-right: 25px;
-        font-size: 16px;
-        border-radius: 12px;
     }
     .spotbie-settings-table{
         margin-top: 20px;

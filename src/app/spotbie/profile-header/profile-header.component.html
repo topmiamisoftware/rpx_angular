@@ -10,13 +10,13 @@
         
         <div class='spotbie-toast-message animated fadeIn' *ngIf="showDefaultPictureMessage">{{ defaultPictureMessage }}</div>
         
-        <div class='spotbie-slideshow-button-holder' id="spotbie_previous_profile_img_holder" (click)="prevSlide()" title="Previous Default Image">
+        <div class='spotbie-slideshow-button-holder' *ngIf="user.profile_pictures.length > 1" id="spotbie_previous_profile_img_holder" (click)="prevSlide()" title="Previous Default Image">
             <i class="fa fa-chevron-circle-left spotbie-slideshow-button" 
                 id="spotbie_previous_profile_img" 
                 aria-hidden="false"></i>
         </div>
 
-        <div class='spotbie-slideshow-button-holder' id="spotbie_next_profile_img_holder" (click)="nextSlide()" title="Next Default Image">
+        <div class='spotbie-slideshow-button-holder' *ngIf="user.profile_pictures.length > 1" id="spotbie_next_profile_img_holder" (click)="nextSlide()" title="Next Default Image">
             <i class="fa fa-chevron-circle-right spotbie-slideshow-button" 
                 id="spotbie_next_profile_img" 
                 aria-hidden="false"></i>

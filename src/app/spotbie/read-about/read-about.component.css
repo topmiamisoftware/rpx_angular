@@ -459,7 +459,6 @@ closeSlideshow:hover{
     max-height: 50px;
     top: 50%;
     transform: translateY(-50%);
-    background: url(../../../assets/images/loading.gif);
     background-size: contain;
 }
 #timerx{

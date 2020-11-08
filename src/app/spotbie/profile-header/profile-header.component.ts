@@ -510,6 +510,7 @@ export class ProfileHeaderComponent implements OnInit {
 
       this.getMyProfileHeaderCallback(this.publicProfileInfo)
       this.user.id = this.publicProfileInfo.user.id
+      this.user.acc_splash = this.publicProfileInfo.web_options.spotmee_bg
       this.public_profile = true
       
     } else {

@@ -190,12 +190,18 @@ export class AlbumService {
 
   }
 
-  public myAlbums(page: number): Observable<any>{
+  public myAlbums(page: number, isPublic: boolean, peer_id: any): Observable<any>{
 
-    let api = `${ALBUM_API}/my_albums`
+    let api
+
+    if(!isPublic)
+      api = `${ALBUM_API}/my_albums`
+    else
+      api = `${ALBUM_API}/public-albums`
 
     const myAlbumsObj = {
-      page: page
+      page: page,
+      peer_id: peer_id
     }
 
     return this.http.post<any>(api, myAlbumsObj).pipe(

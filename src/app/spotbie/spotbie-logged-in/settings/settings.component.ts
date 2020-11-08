@@ -14,11 +14,6 @@ import { UserauthService } from 'src/app/services/userauth.service'
 
 const SETTINGS_API = spotbieGlobals.API + '/settings.service.php'
 
-const HTTP_OPTIONS = {
-  withCredentials: true,
-  headers: new HttpHeaders({ 'Content-Type': 'application/json' })
-}
-
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
@@ -118,10 +113,10 @@ export class SettingsComponent implements OnInit {
 
   public adSettingsWindow = {open: false}
 
-  geoCoder: any
-  address: any
-  address_results: google.maps.places.QueryAutocompletePrediction[]
-  password_submitted: boolean
+  public geoCoder: any
+  public address: any
+  public address_results: google.maps.places.QueryAutocompletePrediction[]
+  public password_submitted: boolean = false
 
   constructor(private host: MenuLoggedInComponent,
               private http: HttpClient,
@@ -341,8 +336,6 @@ export class SettingsComponent implements OnInit {
 
   public savePassword(): void {
 
-    this.password_submitted = true
-
     if (this.password_form.invalid) {
       this.spotbiePasswordInfoText.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' })
       return
@@ -365,42 +358,39 @@ export class SettingsComponent implements OnInit {
 
   }
 
-  public completeSavePassword() {
+  public completeSavePassword(): void {
 
-    if (this.password_submitted) {
-      return
-    } else {
-      this.password_submitted = true
+    if(this.loading) return
+    
+    this.loading = true
+
+    if (this.password_form.invalid) return
+
+    const savePasswordObj = {
+      password: this.password,
+      passwordConfirmation: this.confirm_password,
+      currentPassword: this.current_password
     }
 
-    if (this.password_form.invalid) {
-      return
-    }
+    this.userAuthService.passwordChange(savePasswordObj).subscribe( 
+      resp => {
+        this.passwordChangeCallback(resp)
+      },
+      error => {
+        console.log('error', error)
+      }
+    )
 
-    const _this = this
-    const exe_save_password_object = { password: this.password, confirm_password: this.confirm_password, current_password: this.current_password }
-    const settings_object = { exe_api_key: this.exe_api_key, exe_settings_object: JSON.stringify(exe_save_password_object), exe_settings_action: 'savePassword' }
-    this.http.post<HttpResponse>(SETTINGS_API, settings_object, HTTP_OPTIONS)
-            .subscribe( resp => {
-              // console.log("Settings Response", resp)
-                const settings_response = new HttpResponse ({
-                status: resp.status,
-                message: resp.message,
-                full_message: resp.full_message,
-                responseObject: resp.responseObject
-              })
-                _this.passwordChanged(settings_response)
-            },
-              error => {
-                console.log('error', error)
-            })
   }
 
-  private passwordChanged(settings_response: HttpResponse) {
+  private passwordChangeCallback(resp: any) {
 
-    if (settings_response.status == '200') {
+    console.log("passwordChangeCallback", resp)
 
-      switch (settings_response.responseObject.saved) {
+    if (resp.success) {
+
+      switch (resp.message) {
+
         case 'saved':
 
           this.spotbieCurrentPasswordInfoText.nativeElement.innerHTML = 'Your password was updated.'
@@ -414,32 +404,26 @@ export class SettingsComponent implements OnInit {
           setTimeout(function() {
             this.password_submitted = false
             this.save_password = false
-          }.bind(this), 1000)
+          }.bind(this), 2000)
 
           break
+
         case 'SB-E-000':
           // server error
           this.save_password = false
           this.password_submitted = false
           this.spotbiePasswordInfoText.nativeElement.innerHTML = 'There was an error with the server. Try again.'
           break
-        case 'SB-E-01':
-          // passwords don't match
-          this.save_password = false
-          this.password_submitted = false
-          this.spotbiePasswordInfoText.nativeElement.innerHTML = 'Your passwords must match.'
-          break
-        case 'SB-E-02':
-          // Invalid password
-          this.password_submitted = false
-          this.spotbieCurrentPasswordInfoText.nativeElement.innerHTML = 'That is not your current password.'
-          break
+          
       }
 
       this.spotbieSettingsInfoText.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' })
 
     } else
-      console.log(settings_response)
+      console.log(resp)
+
+    this.loading = false
+
   }
 
   public cancelPasswordSet() {
@@ -657,7 +641,7 @@ export class SettingsComponent implements OnInit {
     this.account_deactivation = false
   }
 
-  public startDeactivateAccount() {
+  public startDeactivateAccount(): void {
 
     this.account_deactivation = true
 
@@ -673,62 +657,54 @@ export class SettingsComponent implements OnInit {
 
   public deactivateAccount() {
 
-    this.deactivation_submitted = true
+    if(this.loading) return
+
+    this.loading = true
 
     if (this.deactivation_form.invalid) {
       this.spotbieAccountDeactivationInfo.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' })
       return
     }
 
-    this.loading = true
+    this.userAuthService.deactivateAccount( this.deactivation_password).subscribe(
+      resp => {
+        this.deactivateCallback(resp)
+      }
+    )
 
-    const _this = this
-
-    const exe_settings_object =  JSON.stringify( { current_password: this.deactivation_password } )
-
-    const settings_object = { exe_api_key: this.exe_api_key, exe_settings_action: 'deactivateAccount', exe_settings_object }
-    this.http.post<HttpResponse>(SETTINGS_API, settings_object, HTTP_OPTIONS)
-            .subscribe( resp => {
-              // console.log("Settings Response", resp)
-                const settings_response = new HttpResponse ({
-                status: resp.status,
-                message: resp.message,
-                full_message: resp.full_message,
-                responseObject: resp.responseObject
-              })
-                _this.deactivateCallback(settings_response)
-            },
-              error => {
-                console.log('error', error)
-            })
   }
 
-  private deactivateCallback(settings_response: HttpResponse) {
+  private deactivateCallback(resp: any) {
+
     this.loading = false
-    if (settings_response.status == '200') {
-      const _this = this
-      switch (settings_response.responseObject.saved) {
+
+    if (resp.success) {
+
+      switch (resp.message) {
         case 'saved':
+
           // account deactivation complete
           setTimeout(function() {
-            _this.spotbieAccountDeactivationInfo.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' })
-            _this.spotbieAccountDeactivationInfo.nativeElement.innerHTML = 'Your account was deativated. You can re-activate your account by loggin-in again. While deactivated your account is non-accessible to any of our users.'
-            _this.host.logOut()
-          }, 1500)
+
+            this.spotbieAccountDeactivationInfo.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' })
+            this.spotbieAccountDeactivationInfo.nativeElement.innerHTML = 'Your account was deativated. You can re-activate your account by loggin-in again. While deactivated your account is non-accessible to any of our users.'
+            this.host.logOut()
+
+          }.bind(this), 1500)
+
           break
-        case 'SB-E-02':
-          this.deactivation_submitted = false
-          this.spotbieAccountDeactivationInfo.nativeElement.innerHTML = 'Deactivation failed. Your password is incorrect.'
-          break
+
         case 'SB-E-000':
           // Server error
           this.deactivation_submitted = false
           this.spotbieAccountDeactivationInfo.nativeElement.innerHTML = 'Deactivation failed. Server Error, please try again.'
           break
+
       }
-    } else {
-      console.log('Account Deactivate Error: ', settings_response)
-    }
+      
+    } else 
+      console.log('deactivateCallback', resp)
+    
   }
 
   public toggleGhostMode() {

@@ -1,6 +1,6 @@
 <div class='spotbie-loading-screen' *ngIf="loading">
 
-    <img class='spotbie-loading-gif' src='../../../assets/images/loading.gif'/>
+    <i class="fa fa-spinner fa-spin"></i>
     <div class='spotbie-loading-percent' *ngIf='show_upload_progress'>{{ upload_progress }}% completed.</div>
     <div class='spotbie-loading-percent' *ngIf='upload_progress > 99 && show_upload_progress'>Upload complete...processing.</div>
 
@@ -283,7 +283,9 @@
 
         </form>
 
-        <div class='spotbie-close-button' (click)="toggleAlbumMakerForm()"><i class="fa fa-times"></i></div>
+        <div class='spotbie-close-button' (click)="toggleAlbumMakerForm()">
+            <i class="fa fa-times"></i>
+        </div>
 
     </div>
 

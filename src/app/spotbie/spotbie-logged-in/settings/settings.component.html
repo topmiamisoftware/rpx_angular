@@ -328,6 +328,7 @@
         <form [formGroup]="password_form">
 
             <table class='spotbie-settings-table' id="spotbie-password-table">
+
                     <!-- Change Password Block -->
             
                     <div *ngIf="password_submitted && g.spotbie_password.errors else spotbie_password_normal" class="spotbie-invalid-feedback animated shake">    
@@ -395,7 +396,11 @@
             </table>
         
             <div class="spotbie-overlay-window" *ngIf="save_password">
-        
+                
+                <div class="spotbie-close-button" (click)="cancelPasswordSet()">
+                    <i class="fa fa-times"></i>
+                </div>
+
                 <div class="spotbie-toast-input-box" [ngStyle]="{ 'background-color' : bg_color }">
                     
                     <table class='spotbie-settings-table'>
@@ -422,10 +427,6 @@
                                 <div class="spotbie-button spotbie-button-mini" (click)="completeSavePassword()">
                                     Complete Change
                                 </div>
-
-                                <div class="spotbie-button spotbie-button-mini" (click)="cancelPasswordSet()">
-                                    Cancel
-                                </div>
                                 
                             </td>
                         </tr>
@@ -441,7 +442,7 @@
     </div>
 
     <div class='spotbie-block'>
-
+        
         <table class="spotbie-settings-table" id="spotbie-deactivate-table">
             <tr>
                 <td class='spotbie-button' style="margin-top: 0px;" (click)="startDeactivateAccount()">
@@ -453,6 +454,10 @@
         <form [formGroup]="deactivation_form" *ngIf="account_deactivation">
     
             <div class="spotbie-toast-input-overlay">
+    
+                <div class="spotbie-button spotbie-button-mini" (click)="cancelDeactivateAccount()">
+                    <i class="fa fa-times"></i>
+                </div>
         
                 <div class="spotbie-toast-input-box" [ngStyle]="{ 'background-color' : bg_color }">
                     
@@ -475,10 +480,6 @@
         
                     <div class="spotbie-button spotbie-button-mini" (click)="deactivateAccount()">
                         Deactivate Account
-                    </div>
-        
-                    <div class="spotbie-button spotbie-button-mini" (click)="cancelDeactivateAccount()">
-                        Cancel
                     </div>
         
                 </div>

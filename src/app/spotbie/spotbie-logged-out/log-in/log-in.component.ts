@@ -68,7 +68,7 @@ export class LogInComponent implements OnInit {
     this.helpToggle = !this.helpToggle
   }
 
-  public loginUser(remember_me_token: string){
+  public loginUser(){
 
     this.userAuthService.initLogin().subscribe(
       resp =>{
@@ -78,32 +78,11 @@ export class LogInComponent implements OnInit {
 
   }
 
-  public initLogIn(): void{
-
-    this.loading = true
-
-    // will be used when the user hits the submit button
-    this.submitted = true
-
-    // stop here if form is invalid
-    if (this.logInForm.invalid) {
-      this.loading = false
-      return
-    }
-
-    // user UserAuth Service to log the user in.
-    this.userAuthService.userLogin = this.email
-    this.userAuthService.userPassword = this.password
-    this.userAuthService.userRememberMe = this.rememberMeState
-    // console.log(this.rememberMeState)
-
-    this.loginUser('0')
-
-  }
-
   private loginCallback(loginResponse: any): void{
 
     let login_status = loginResponse.message
+
+    console.log("loginCallback", loginResponse)
 
     if(login_status == 'success' || login_status == 'confirm'){
 
@@ -156,6 +135,29 @@ export class LogInComponent implements OnInit {
 
   }
 
+  public initLogIn(): void{
+
+    this.loading = true
+
+    // will be used when the user hits the submit button
+    this.submitted = true
+
+    // stop here if form is invalid
+    if (this.logInForm.invalid) {
+      this.loading = false
+      return
+    }
+
+    // user UserAuth Service to log the user in.
+    this.userAuthService.userLogin = this.email
+    this.userAuthService.userPassword = this.password
+    this.userAuthService.userRememberMe = this.rememberMeState
+    // console.log(this.rememberMeState)
+
+    this.loginUser()
+
+  }
+
   private initLogInForm(): void{
 
     const usernameValidators = [Validators.required]
@@ -185,7 +187,7 @@ export class LogInComponent implements OnInit {
     this.userAuthService.userRememberMe = '1'
     this.userAuthService.userRememberMeToken = saved_remember_me_token
 
-    this.loginUser(saved_remember_me_token)
+    this.loginUser()
 
   }
 

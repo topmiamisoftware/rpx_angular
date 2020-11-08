@@ -605,22 +605,29 @@ export class AlbumsComponent implements OnInit {
 
   public myAlbums(): void{
 
-    let user_id
-
+    let peer_id
+    let isPublic: boolean = true
+    
     this.all_albums_array = []
 
-    if (this.public_profile === true)
-      user_id = this.spotbie_user_id
-    else
-      user_id = 'null'
+    if (this.public_profile === true){
+      peer_id = this.publicProfileInfo.user.id
+    } else {
+      peer_id = 'null'
+      isPublic = false
+    }
 
-    this.albumService.myAlbums(this.albumPage).subscribe(
+    console.log("Peer Id", peer_id)
+
+    this.albumService.myAlbums(this.albumPage, isPublic, peer_id).subscribe(
+
       resp => {
         this.myAlbumsCallback(resp)
       },
       error =>{
         console.log("myAlbums", error)
       } 
+      
     )
 
     this.loading = false
@@ -828,9 +835,9 @@ export class AlbumsComponent implements OnInit {
     if (this.publicProfileInfo !== undefined) {
 
       this.public_profile = true
-      this.spotbie_user_id = parseInt(this.publicProfileInfo.public_exe_user_id)
-      this.profile_username = this.publicProfileInfo.public_username
-      this.bg_color = this.publicProfileInfo.public_bg_color
+      this.spotbie_user_id = parseInt(this.publicProfileInfo.user.id)
+      this.profile_username = this.publicProfileInfo.user.username
+      this.bg_color = this.publicProfileInfo.web_options.bg_color
 
     } else {
 
