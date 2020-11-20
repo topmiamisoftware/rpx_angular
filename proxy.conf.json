@@ -9,32 +9,42 @@
         "changeOrigin": true,
         "timeout" : 360000
     },
+    "/ads/*": {
+        "target": "http://localhost:8001",
+        "secure": false,
+        "pathRewrite": {
+            "^/ads": ""
+        },        
+        "logLevel": "debug",
+        "changeOrigin": true,
+        "timeout" : 360000
+    },    
     "/defaults/*": {
-        "target": "https://www.spotbie.com",
+        "target": "https://spotbie.com",
         "secure": false,
         "logLevel": "debug",
         "changeOrigin": true
     },
     "/defaults_c/*": {
-        "target": "https://www.spotbie.com",
+        "target": "https://spotbie.com",
         "secure": false,
         "logLevel": "debug",
         "changeOrigin": true
     },
     "/bg_images/*": {
-        "target": "https://www.spotbie.com",
+        "target": "https://spotbie.com",
         "secure": false,
         "logLevel": "debug",
         "changeOrigin": true
     },
     "/extra-media/*": {
-        "target": "https://www.spotbie.com",
+        "target": "https://spotbie.com",
         "secure": false,
         "logLevel": "debug",
         "changeOrigin": true
     },
     "/albums/*": {
-        "target": "https://www.spotbie.com",
+        "target": "https://spotbie.com",
         "secure": false,
         "logLevel": "debug",
         "changeOrigin": true

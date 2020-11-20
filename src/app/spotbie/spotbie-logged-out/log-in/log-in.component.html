@@ -1,10 +1,10 @@
 <app-loading-screen *ngIf="loading"></app-loading-screen>
 
-<div class="spotbie-overlay-window">
+<div class="spotbie-close-button" (click)="closeWindow()">
+  <i class="fa fa-times"></i>
+</div>
 
-  <div class="spotbie-close-button" (click)="closeWindow()">
-    <i class="fa fa-times"></i>
-  </div>
+<div class="spotbie-overlay-window">
 
   <div class="spotbie-no-repeat-bg-contain
               spotbie-margin
@@ -84,6 +84,6 @@
         Forgot Password?
   </div>
 
-  <app-forgot-password *ngIf="forgotPasswordWindow.open" (closeWindow)="forgotPasswordWindow.open = false"></app-forgot-password>
-
 </div>
+
+<app-forgot-password *ngIf="forgotPasswordWindow.open" (closeWindow)="forgotPasswordWindow.open = false"></app-forgot-password>

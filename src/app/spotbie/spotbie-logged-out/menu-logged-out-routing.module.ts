@@ -13,6 +13,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { HttpClientModule } from '@angular/common/http'
 import { ProfileHeaderModule } from 'src/app/spotbie/profile-header/profile-header.module'
 import { NgxMaskModule, IConfig } from 'ngx-mask'
+import { HelperModule } from 'src/app/helpers/helper.module'
 
 export const options : Partial<IConfig> | (() => Partial<IConfig>) = null
 
@@ -25,7 +26,7 @@ export const options : Partial<IConfig> | (() => Partial<IConfig>) = null
     ForgotPasswordComponent,
     ReadAboutComponent,
     TermsComponent,
-    FeaturesComponent,    
+    FeaturesComponent
   ],
   imports: [
     CommonModule,
@@ -34,6 +35,7 @@ export const options : Partial<IConfig> | (() => Partial<IConfig>) = null
     HttpClientModule,
     ProfileHeaderModule,
     RouterModule,
+    HelperModule,
     NgxMaskModule.forRoot(options)
   ],
   exports : [ MenuLoggedOutComponent ],

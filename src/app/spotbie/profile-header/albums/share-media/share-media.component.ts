@@ -27,7 +27,7 @@ export class ShareMediaComponent implements OnInit {
   }
 
   private setMediaProperties (): void{    
-    this.album_media_item_link = 'https://www.spotbie.com/user-profile/' + this.host.profile_username + 
+    this.album_media_item_link = 'https://spotbie.com/user-profile/' + this.host.profile_username + 
                                   '/albums/' + this.media.album_id + 
                                   '/media/' + this.media.album_media_id 
     this.album_media_item_title = ''

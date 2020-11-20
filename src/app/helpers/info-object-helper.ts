@@ -24,7 +24,7 @@ export function setYelpRatingImage(rating: number) {
       rating_image = 'regular_5.png'
     }
 
-    return `../assets/images/yelp/yelp_stars/${rating_image}`
+    return `assets/images/yelp/yelp_stars/${rating_image}`
 
 }
 

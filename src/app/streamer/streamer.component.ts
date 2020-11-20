@@ -74,7 +74,7 @@ export class StreamerComponent implements OnInit {
   public spotbie_life_stream_image = "assets/images/extra_media_image.png"
   public spotbie_extra_media_image = "assets/images/multimedia.png"
 
-  public loading_default = 'assets/images/spotbie_loading_default.png'
+  public loadingDefault = 'assets/images/spotbie_loading_default.png'
 
   public current_stream_post: StreamPost
 

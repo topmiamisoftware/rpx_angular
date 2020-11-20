@@ -1,11 +1,11 @@
 <app-loading-screen *ngIf="loading"></app-loading-screen>
 
 <div class="spotbie-overlay-window">
-         
+
     <div class='signUpBox' #vc_spotbie_sign_up_box_inner>                                                
         
         <div class='signUpBoxInstructions' id="sign_up_general_instructions" #spotbieSignUpIssues>
-            Sign up to add friends, customize your profile, save favorties, and more.
+            Sign up to add friends and customize your profile.
         </div>
         
         <form [formGroup]="signUpFormx" (ngSubmit)="initSignUp()">                                               
@@ -222,19 +222,13 @@
                 By clicking or tapping "Let's Go!" you are agreeing to <a [routerLink]="['/terms']">our terms and privacy policy.</a>
             </p>
 
-            <div class='displayTableName'>
+            <div class='displayTableName signUpButtons'>
                 <button class='spotbieSignUpButton'>Let's Go!</button>
-            </div>
 
-            <div class='displayTableName'>
                 <div class='spotbieSignUpButton' (click)="closeWindowX();">Cancel</div>
             </div>  
 
         </form>
-
-        <div class="spotbie-close-button" (click)="closeWindowX()">
-            <i class="fa fa-times"></i>
-        </div>
 
     </div>                                                                
                   
@@ -251,11 +245,14 @@
           <br/>
           Your e-mail: <span id='email_x_vo' class='successBoxNames'></span>
           
-          <div class='spotbieSignUpButton spotbieFinishButton' (click)="finishSignUp();">Finish</div>
+          <div class='spotbie-button spotbie-button-mini' (click)="finishSignUp();">Finish</div>
           
       </div>                    
       
     </div>
 
 </div>
-  
+
+<div class="spotbie-close-button" (click)="closeWindowX()">
+    <i class="fa fa-times"></i>
+</div>

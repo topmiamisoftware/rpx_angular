@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { StreamPostComponent } from './stream-post.component';
+import { WelcomeComponent } from './welcome.component';
 
-describe('StreamPostComponent', () => {
-  let component: StreamPostComponent;
-  let fixture: ComponentFixture<StreamPostComponent>;
+describe('WelcomeComponent', () => {
+  let component: WelcomeComponent;
+  let fixture: ComponentFixture<WelcomeComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ StreamPostComponent ]
+      declarations: [ WelcomeComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(StreamPostComponent);
+    fixture = TestBed.createComponent(WelcomeComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -22,5 +22,4 @@ describe('StreamPostComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-  
 });

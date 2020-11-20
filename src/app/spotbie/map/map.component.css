@@ -127,9 +127,8 @@
     top: 0;
     bottom: 0;
     overflow-y: scroll;
-    padding-left: 10px;
-    padding-right: 10px;
     direction: rtl;
+    -webkit-overflow-scrolling: touch;
 }
 
 .spotbie-categories::-webkit-scrollbar{
@@ -161,16 +160,15 @@
     position: relative;
     margin: 0 auto;
     margin-top: 3px;
-    padding: 15px;
+    padding-top: 15px;
+    padding-bottom: 15px;
     text-align: center;
     cursor: pointer;
     background-color: rgba(0,0,0,.15);
-    border-radius: 15px;
     transition: all .2s;
 }
 .spotbie-single-cat:hover{
-    margin-top: 8px;
-    margin-bottom: 8px;
+    background-color: rgba(0,0,0,.25);
 }
 .spotbie-search-results-title{
     position: relative;
@@ -187,14 +185,14 @@
 .spotbie-sub-cat{
     position: relative;
     background-color: rgba(0, 0, 0, 0.13);
-    padding: 11px;
     padding-left: 18px;
     text-align: left;
-    border-radius: 20px;
-    margin-top: 10px;
+    margin-top: 3px;
     word-break: break-word;
     font-size: 16px;
     font-weight: normal;
+    padding-top: 20px;
+    padding-bottom: 20px;
 }
 .spotbie-subgenre{
     position: relative;
@@ -375,7 +373,7 @@ span.spotbie-button{
     width: 100%;
     min-width: 100%;
     max-width: 100%;
-    background-color: rgba(0,0,0,.23);
+    background-color:black;
     padding-top: 10px;
     padding-bottom: 10px;
     cursor: pointer;    
@@ -415,7 +413,7 @@ span.spotbie-button{
     border-radius: 10px;
     padding-top: 10px;
     padding-bottom: 10px;
-    background-color: rgba(8, 8, 8, 0.68);
+    background-color: rgba(0, 0, 0, 0.82);
     cursor: pointer;
     width: 100%/7;
 }
@@ -495,9 +493,6 @@ span.spotbie-button{
 }
 #spotbie_place_search{
     background: url(../../../assets/images/map_icon.png);
-}
-.spotbie-profile-right-close-slider{
-    background-color:black;
 }
 .spotbie-is-closed{
     margin-top: 5px;
@@ -593,6 +588,9 @@ span.spotbie-button{
         width: 100%;
         min-width: 100%
     }
+    .spotbie-profile-right-close-slider{
+        padding-bottom: env(safe-area-inset-bottom);   
+    } 
 }
 @media (max-width: 700px) { 
     .spotbie-map{
@@ -696,7 +694,11 @@ span.spotbie-button{
         max-width: 92%;
         border-radius: 15px;
         padding: 10px;
-    }     
+    }
+    .spotbie-categories{
+        padding-top: env(safe-area-inset-top);
+        padding-bottom: env(safe-area-inset-bottom);
+    }    
 }
 @media (max-width: 460px) { 
     .spotbie-category-search-yelp{

@@ -34,7 +34,7 @@ import { HelperModule } from '../helpers/helper.module';
     StreamPostEditorComponent,
     ExtraMediaUploadPipe,
     StreamPostComponent,
-    ViewStreamPostComponent,
+    ViewStreamPostComponent
   ],
   imports: [
     ShareModule,

@@ -76,13 +76,13 @@ export class MyFavoritesService {
     let indextoSplice
 
     currentFavorites.find( (favorite, index) => {
-
       if(favorite.third_party_id == id) indextoSplice = index
-
-    });
+    })
 
     currentFavorites.splice(indextoSplice, 1)
+
     localStorage.setItem('spotbie_currentFavorites', JSON.stringify(currentFavorites))
+    
     return
 
   }

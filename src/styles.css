@@ -7,7 +7,6 @@
 html{
     position: relative;
     font-size: 19px;
-    background-color: white;
     cursor: default; 
     color: white;
     height: unset !important;
@@ -20,11 +19,8 @@ body{
     background-color: transparent;
     color: white;
     overflow-x : hidden;
-    padding: env(safe-area-inset-top, 20px)
-    env(safe-area-inset-right, 20px)
-    env(safe-area-inset-left, 20px);
     height: unset !important; 
-    font-family: Arial, he;
+    font-family: 'Josefin Sans', sans-serif;
 }
 
 .spotbie-bottom-button-bar{
@@ -190,7 +186,7 @@ a, a:hover, a:active, a:after{
     position: fixed;
     display: block;
     top: 1%;
-    right: 20px;
+    right: 1%;
     padding: 10px;
     padding-top: 6px;
     padding-bottom: 6px;
@@ -200,7 +196,7 @@ a, a:hover, a:active, a:after{
     color: #FFF;
     font-size: 23px;
     border-radius: 999px;
-    background-color: #333333;
+    background-color: #333333;    
 }
 .spotbie-overlay-window{
     position: fixed;
@@ -215,7 +211,9 @@ a, a:hover, a:active, a:after{
     z-index: 99999999;
     overflow-y: scroll;
     background-color: rgba(0, 0, 0,.88);    
-    padding-top: env(safe-area-inset-top, 20px);
+    padding-top: 20px;
+    padding-bottom: 20px;
+    -webkit-overflow-scrolling: touch;
 }
 
 .spotbie-input{
@@ -384,6 +382,7 @@ a, a:hover, a:active, a:after{
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
+    font-size: 38px;
 }
 .spotbie-main-holder{
     position: relative;
@@ -677,10 +676,19 @@ a, a:hover, a:active, a:after{
 }
 .mat-slider.mat-slider-horizontal .mat-slider-track-fill {
     background-color: white;
-  }
-  .mat-accent .mat-slider-thumb {
+}
+.mat-accent .mat-slider-thumb {
     background-color: white;
-  }
+}
+
+.spotbie-ad-wrapper a, 
+.spotbie-ad-wrapper img, 
+.spotbie-ad-wrapper div{
+    width: 100% !important;
+    min-width: 100% !important;
+    max-width: 100%;
+}
+
 /**WIDTH MEDIA QUERIES */
 @media (max-width: 1300px) { 
 
@@ -726,7 +734,14 @@ a, a:hover, a:active, a:after{
     }
 }
 @media (max-width: 768px) { 
-
+    .spotbie-overlay-window{
+        padding-top: env(safe-area-inset-top, 20px);
+        padding-bottom: env(safe-area-inset-bottom, 20px);
+    }
+    .spotbie-close-button{
+        top: env(safe-area-inset-top);
+        right: 2%;
+    }
 }
 @media (max-width: 700px) { 
 
@@ -745,6 +760,7 @@ a, a:hover, a:active, a:after{
     .spotbie-close-button{
         max-width: 50px;
         font-size: 16px;        
+        right: 2%;
     }
     .spotbie-button {
         width: 260px;
@@ -783,7 +799,7 @@ a, a:hover, a:active, a:after{
     }
     .spotbie-scroll-top i {
         font-size: 22px;
-    }    
+    }
 }
 @media (max-width: 420px) { 
                    

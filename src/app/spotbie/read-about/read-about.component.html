@@ -8,13 +8,13 @@
 
                 <p class="spotbie-desc">
                     
-                    Connecting <a href="/home#people" class="xfDs" rel="tag">users</a>,
+                    Connecting <span>users</span>,
 
-                    <a href="/home#retail" class="xfDs" rel="tag">retail shops</a>,
+                    <span>retail shops</span>,
 
-                    <a href="/home#places-to-eat" class="xfDs" rel="tag">places to eat</a>,
+                    <span>places to eat</span>,
 
-                    and <a href="/home#events" class="xfDs" rel="tag">events</a>.
+                    and <span>events</span>.
 
                 </p>
 
@@ -31,12 +31,7 @@
                         </td>
                     </tr>
                 </tbody>
-            </table> 
-    
-            <!--<div class='BetaRelease' id="people">
-                {{ spotbie_users }} people have joined SpotBie!
-                <div class='spotbie-version'>{{ spotbie_version }}</div>           
-            </div>-->                                
+            </table>                                
 
             <h2 class="HA spotbieAddPointerCursor" id="places-to-eat">
                 <span class="dfg">Connecting Users to Places to Eat</span>
@@ -51,17 +46,16 @@
                 <source srcset='assets/images/home_imgs/jp2/providing-you-places-to-eat-around-you.jp2' type='image/jp2'>
 
                 <img class="QuestionsImage spotbieAddPointerCursor" style="margin-top: 0%;"
-                    src="assets/images/home_imgs/png/providing-you-places-to-eat-around-you.jpg" 
-                    alt="Picture of girl in her twenties enjoying food in a restaurant." />
+                        src="assets/images/home_imgs/png/providing-you-places-to-eat-around-you.jpg" 
+                        alt="Picture of girl in her twenties enjoying food in a restaurant." />
 
             </picture>  
 
             <p class="QuestionsPar spotbieAddPointerCursor">        
-                Driving around a new part of town? Don't know what to eat? By giving you the most reviews from other users on nearby places to eat, SpotBie        
-                makes it easier to choose where to eat. With access to menus, reservations, and ratings, we are giving our users and places to eat       
-                another way to do business.
                 <span class='spotbie-search-click' (click)="searchFood()">Search Places to Eat</span>        
             </p>   
+
+            <app-single-ad></app-single-ad>
 
             <h2 class="HA spotbieAddPointerCursor" id="events">
                 <span class="dfg">Connecting Users to Events</span>
@@ -71,12 +65,11 @@
                     src="assets/images/home_imgs/jpg/find_events_around.jpg" 
                     alt="Picture of girl in her twenties enjoying food in a restaurant." />
 
-            <p class="QuestionsPar">        
-                Let's suppose that you're bored on a Friday night. Don't know where to take your girlfriend? Want to make your boyfriend a suggestion
-                to take you somewhere but don't know where? Just look for events around you.                
+            <p class="QuestionsPar">                     
                 <span class='spotbie-search-click' (click)="searchEvents()">Search Events</span>
             </p>  
 
+            <app-single-ad></app-single-ad>
 
             <!-- <h2 class="HA spotbieAddPointerCursor" (click)="openSlideShow(0);">
                 <span class="dfg">Monetizable Profiles</span>
@@ -154,9 +147,10 @@
             </picture>  
 
             <p class="QuestionsPar spotbieAddPointerCursor">
-                SpotBie allows users to see nearby retail shops with the tap of a button. By doing so, SpotBie makes the access to each shop easier and helps our users plan their shopping wisely. Not only will users get to see nearby shops, but they will also see featured offers and products.
                 <span class='spotbie-search-click' (click)="searchRetail()">Search Retail Shops</span>      
             </p>                         
+
+            <app-single-ad></app-single-ad>
 
             <h2 class="HA spotbieAddPointerCursor" id="people">
 
@@ -180,10 +174,6 @@
 
             </picture>        
 
-            <p class="QuestionsPar">
-                Find new friends around you. Each user is asked for permission before their location is accessed by the map. If a user does        
-                not want to be seen on the map, they can disappear with the tap of a button which turns on ghost mode.
-            </p>   
 
             <!-- <h2 class="HA spotbieAddPointerCursor" (click)="openSlideShow(5);">        
                 <span class="dfg">Connecting Users to Content Creators</span>        
@@ -304,6 +294,8 @@
                 While it's only a technology under progress, SpotBie extends its service to bringing people a better understanding of everyday objects and how they function.      
             </p>       -->                           
             
+            <app-single-ad></app-single-ad>
+
             <div class="HA termsAndService" style="text-align: center;
                                 margin-bottom: 15px;
                                 border-bottom-right-radius: 20px;

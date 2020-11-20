@@ -216,10 +216,10 @@ export class StreamPosterComponent implements OnInit {
     }
 
     this._streamerService.saveEdit(stream_obj).subscribe(
-      resp =>{
+      resp => {
         this.editSaveCallback(resp)
       },
-      error =>{
+      error => {
         console.log("saveEditPost", error)
       }
     )

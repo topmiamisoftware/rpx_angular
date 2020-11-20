@@ -22,6 +22,13 @@
     background: url(/assets/images/background.png);
     background-position: center;
     background-color: rgb(21 21 21);
+    width: 102%;
+    min-width: 102%;
+    max-width: 102%;
+    z-index: 9999998;      
+}
+.spotbie-close-button{
+    z-index: 9999999;
 }
 .spotbie-log-in-picture{
     position: absolute;
@@ -54,9 +61,9 @@
 .spotbie-toggle{
     margin-top: 0px;
     margin-bottom: unset !important;
-    width: 250px;
-    min-width: 250px;
-    max-width: 250px;    
+    width: 210px;
+    min-width: 210px;
+    max-width: 210px;    
 }
 .spotbie-button{
     margin-bottom: unset !important;

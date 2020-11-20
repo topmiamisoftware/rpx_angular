@@ -277,12 +277,12 @@ export const MAP_STYLES = [
 
   export const SHOPPING_CATEGORIES = ['Adult', 'Antiques', 'Art Galleries', 'Arts & Crafts', 'Auction Houses', 'Baby Gear', 'Battery Stores',
   'Bespoke Clothing', 'Books, Mags, Music & Video', 'Brewing Supplies', 'Bridal', 'Cannabis Dispensaries', 'Computers', 'Cosmetics & Beauty Supply', 'Customized Merchandise',
-  'Department Stores', 'Discount Storeurg', 'Drones', 'Durgstores', 'Duty-Free Shops', 'Electronics', 'Eyeware & Opticians', 'Farming Equipment',
+  'Department Stores', 'Discount Stores', 'Drones', 'Drugstores', 'Duty-Free Shops', 'Electronics', 'Eyeware & Opticians', 'Farming Equipment',
   'Fashion', 'Fireworks', 'Fitness/Exercise Equipment', 'Flea Markets', 'Flowers & Gifts', 'Gemstones & Minerals', 'Gold Buyers', 'Guns & Ammo',
   'Head Shops', 'High Fidelity Audio Equipment', 'Hobby Shops', 'Home & Garden', 'Horse Equipment Shops', 'Jewelry', 'Knitting Supplies', 'Livestock Feed & Supply',
   'Luggage', 'Medical Supplies', 'Military Surplus', 'Mobile Phone Accessories', 'Mobile Phones', 'Motorcycle Gear', 'Musical Instruments & Teachers',
   'Office Equipment', 'Outlet Stores', 'Packing Supplies', 'Pawn Shops', 'Perfume', 'Photography Stores & Services', 'Pool & Billiards',
   'Pop-up Shops', 'Props', 'Public Markets', 'Religious Items', 'Safe Stores', 'Safety Equipment', 'Shopping Centers',
   'Souvenir Shops', 'Spiritual Shops', 'Sporting Goods', 'Tabletop Games', 'Teacher Supplies', 'Thrift Stores', 'Tobacco Shops',
-  'Toy Stores', 'Trophy Shops', 'Uniforms', 'Used Bookstore', 'Vape Shops', 'Vitamins & Supplements', 'Wacthes',
+  'Toy Stores', 'Trophy Shops', 'Uniforms', 'Used Bookstore', 'Vape Shops', 'Vitamins & Supplements', 'Watches',
   'Wholesale Stores', 'Wigs']

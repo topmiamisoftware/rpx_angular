@@ -3,6 +3,10 @@
 
 <div class='spotbie-overlay-window'>
 
+    <div class='spotbie-close-button' (click)="closeWindow()">
+        <i class="fa fa-times"></i>
+    </div>
+
     <div class='spotbie-toast-input-box' [ngStyle]="{ 'background-color' : bgColor }">
 
         <div class='spotbie-contact-me-info' #spotbieContactMeInfo></div>
@@ -81,8 +85,7 @@
                 </tr>                
             </table>
 
-            <div class='spotbie-button spotbie-button-mini' (click)="saveContactMe()" *ngIf="this.publicProfileInfo === undefined">Save ContactMe</div>
-            <div class='spotbie-button spotbie-button-mini' (click)="closeWindow()">Close</div>
+            <div class='spotbie-button spotbie-button-mini' (click)="saveContactMe()" *ngIf="this.publicProfileInfo === undefined">Save ContactMe</div>            
 
         </form>
 

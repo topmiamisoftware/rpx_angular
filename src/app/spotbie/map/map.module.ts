@@ -19,6 +19,8 @@ import { NgxFontAwesomeModule } from 'ngx-font-awesome'
 import { LocationSaverComponent } from '../location-saver/location-saver.component'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { MyPlacesComponent } from '../location-saver/my-places/my-places.component'
+import { WelcomeComponent } from '../spotbie-logged-out/welcome/welcome.component'
+import { ShareModule } from '@ngx-share/core'
 
 @NgModule({
   declarations: [
@@ -26,7 +28,8 @@ import { MyPlacesComponent } from '../location-saver/my-places/my-places.compone
     MapComponent,  
     MyFavoritesComponent,
     InfoObjectComponent,
-    MyPlacesComponent
+    MyPlacesComponent,
+    WelcomeComponent
   ],
   imports: [
     AgmOverlays,
@@ -37,6 +40,7 @@ import { MyPlacesComponent } from '../location-saver/my-places/my-places.compone
     NgxFontAwesomeModule,
     ReactiveFormsModule,
     FormsModule,
+    ShareModule,
     AgmCoreModule.forRoot({
       apiKey: environment.google_maps_apiKey,
       language: 'en',

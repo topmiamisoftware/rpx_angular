@@ -102,13 +102,7 @@ export class LogInComponent implements OnInit {
         localStorage.setItem('spotbie_rememberMeToken', this.rememberMeToken)
 
       }
-
-      // redirect user to user_home
-     /* if(login_status == 'success')
-        this.router.navigate(['/user_home'])
-      else if(login_status == 'confirm')
-        this.router.navigate(['/confirm'])*/
-
+      
       window.location.reload()
 
     } else {

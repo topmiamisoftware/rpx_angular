@@ -20,8 +20,11 @@ export class LoginGuardServiceService {
       
       } else {
 
+        let loggedOutFavorites = localStorage.getItem('spotbie_currentFavorites')
+
         localStorage.clear()
         
+        localStorage.setItem('spotbie_currentFavorites', loggedOutFavorites)
         localStorage.setItem('spotbie_locationPrompted', '1')
         localStorage.setItem('spotbie_userId', '0')
         localStorage.setItem('spotbie_loggedIn', '0')

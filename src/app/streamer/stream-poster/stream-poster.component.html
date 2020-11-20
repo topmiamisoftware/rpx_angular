@@ -124,14 +124,14 @@
             <div class='spotbie-extra-media' *ngFor="let extra_media of extra_media_array; let i = index" id="{{'extra_media_element' + i}}">
 
                 <div class='spotbie-extra-media-image'
-                    *ngIf="extra_media.media_type == 'image' && extra_media.media_content | extraMediaPath as extra_media_path"
+                    *ngIf="extra_media.media_type == 'image' && extra_media.media_content as extra_media_path"
                     [ngStyle]="{'background' : 'url(' + extra_media_path  + ')' } " ></div>
 
                 <div class='spotbie-extra-media-video-holder' 
                     *ngIf="extra_media.media_type == 'video'">
 
                     <video class='spotbie-extra-media-video' controls>
-                        <source *ngIf="extra_media.media_content | extraMediaPath as extra_media_path" src="{{ extra_media_path }}">
+                        <source *ngIf="extra_media.media_content as extra_media_path" src="{{ extra_media_path }}">
                     </video>
 
                 </div>
@@ -140,7 +140,7 @@
                     *ngIf="extra_media.media_type == 'audio'">
 
                     <audio class='spotbie-extra-media-audio'>
-                        <source *ngIf="extra_media.media_content | extraMediaPath as extra_media_path" src="{{ extra_media_path }}">               
+                        <source *ngIf="extra_media.media_content as extra_media_path" src="{{ extra_media_path }}">               
                     </audio>
                     
                 </div>

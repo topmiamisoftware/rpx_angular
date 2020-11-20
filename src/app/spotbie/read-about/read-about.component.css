@@ -13,7 +13,7 @@ h2{
     text-align: center;
     padding-top: 20px;
     padding-bottom: 16px;
-    background-color: rgb(31, 31, 31);
+    background-color:#000000;
     color: #8BC34A;
     z-index: 1;
     border-top-right-radius: 20px;
@@ -22,6 +22,7 @@ h2{
 .QuestionsPar{
     position: relative;
     margin-top: 0;
+    margin-bottom: 0;
     font-size: 19px;
     line-height: 24px;
     padding: 25px;
@@ -160,7 +161,9 @@ a:hover,a:active,a,a:after{
 .termsAndService:hover{
     text-decoration: underline;
 }
-
+.termsAndService a{
+    color: #4c4c4c;
+}
 .closeSignUp{
     position: absolute;
     background-color: #b90303;
@@ -182,6 +185,10 @@ a:hover,a:active,a,a:after{
 }
 .spotbie-desc{
     text-align: center;
+}
+.spotbie-desc span{
+    color: #8BC34A;
+    font-weight: bold;
 }
 .signUpBoxHolder{
     position: fixed;
@@ -479,7 +486,7 @@ closeSlideshow:hover{
     display: block;
     margin: 0 auto;
     color: #609329;
-    margin-top: 30px;
+    margin-top: 0px;
     cursor: pointer;
     text-align: center;
     font-size: 22px;
@@ -526,12 +533,11 @@ body{
     width: 50%;
     min-width: 50%;
     max-width: 50%;
-    /* border: 11px solid rgb(31 31 31); */
     border-radius: 27px;
     background-position: center !important;
     background-repeat: no-repeat !important;
     background-size: contain !important;
-    background-color: rgb(31 31 31) !important;
+    background-color: #000 !important;
     cursor: pointer;
 }
 .AppsRx td i{

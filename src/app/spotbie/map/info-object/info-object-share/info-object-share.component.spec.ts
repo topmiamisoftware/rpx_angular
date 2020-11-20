@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { StreamPostComponent } from './stream-post.component';
+import { InfoObjectShareComponent } from './info-object-share.component';
 
-describe('StreamPostComponent', () => {
-  let component: StreamPostComponent;
-  let fixture: ComponentFixture<StreamPostComponent>;
+describe('InfoObjectShareComponent', () => {
+  let component: InfoObjectShareComponent;
+  let fixture: ComponentFixture<InfoObjectShareComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ StreamPostComponent ]
+      declarations: [ InfoObjectShareComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(StreamPostComponent);
+    fixture = TestBed.createComponent(InfoObjectShareComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -22,5 +22,4 @@ describe('StreamPostComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-  
 });

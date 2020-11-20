@@ -411,7 +411,6 @@ export class MapComponent implements OnInit {
           classification.name !== 'Individual' &&
           classification.name !== 'Merchandise' &&
           classification.name !== 'Group'){
-            console.log("Classification Name", classification.name)
             this.event_categories.push(classification)
           }
 
@@ -497,6 +496,7 @@ export class MapComponent implements OnInit {
             this.getEventsSearchCallback(resp)
           }
         )
+        break
       case "food":
       case "shopping":
         this.locationService.getBusinesses(search_obj).subscribe(
@@ -601,14 +601,10 @@ export class MapComponent implements OnInit {
       this.loading = true
 
       let api_url: string
-      let search_action: string
-      
-      console.log("category ", this.category)
 
       if (this.search_category == 'events') {
         
-        api_url = 'size=20&latlong=' + this.lat + ',' + this.lng + '&keyword=' + search_term + '&radius=45'
-        search_action = 'ticketMasterEventSearch'
+        api_url = `size=20&latlong=${this.lat},${this.lng}&keyword=${search_term}&radius=45`
 
         const search_obj = {
           config_url: api_url
@@ -622,8 +618,7 @@ export class MapComponent implements OnInit {
 
       } else {
 
-        api_url = this.search_api_url + '?latitude=' + this.lat + '&longitude=' + this.lng + '&term=' + search_term +
-        '&categories=' + this.search_category + '&radius=40000&sort_by=distance&limit=50&offset=' + this.current_offset
+        api_url = `${this.search_api_url}?latitude=${this.lat}&longitude=${this.lng}&term=${search_term}&categories=${this.search_category}&radius=40000&sort_by=distance&limit=50&offset=${this.current_offset}`
 
         const search_obj = {
           config_url: api_url
@@ -637,7 +632,7 @@ export class MapComponent implements OnInit {
 
       }
 
-    }.bind(this, search_term), 1000)
+    }.bind(this, search_term), 3000)
 
 
   }
@@ -826,6 +821,7 @@ export class MapComponent implements OnInit {
 
       business.rating_image = setYelpRatingImage(business.rating)
       business.type_of_info_object = this.type_of_info_object
+      business.type_of_info_object_category = this.search_category
 
       if (business.is_closed)
         business.is_closed_msg = 'Closed'
@@ -1026,7 +1022,7 @@ export class MapComponent implements OnInit {
       
       if(surrounding_object_list[k].ghost_mode == 1){
 
-        surrounding_object_list[k].default_picture = "../assets/images/ghost_white.jpg"
+        surrounding_object_list[k].default_picture = "assets/images/ghost_white.jpg"
         surrounding_object_list[k].username = "User is a Ghost"
         surrounding_object_list[k].description = "This user is a ghost. Ghost Users are not able to be befriended and their profiles remain hidden. Who is this person then? Well... maybe you'll get to find out if they befriend you. Ghost Users normally have less friends than non-Ghost Users due to their profile's low visibility."
 
@@ -1115,7 +1111,11 @@ export class MapComponent implements OnInit {
 
     let locationPrompted = localStorage.getItem('spotbie_locationPrompted');
 
-    (locationPrompted == '1') ? this.startLocation() : this.locationPrompt = true
+    if (locationPrompted == '1') {
+      this.startLocation() 
+     } else {
+      this.locationPrompt = true
+     } 
 
   }
 
@@ -1133,9 +1133,7 @@ export class MapComponent implements OnInit {
 
     this.web_options_subscriber = this.webOptionsService.getWebOptions().subscribe(web_options =>{
 
-      if(web_options.bg_color){
-        this.bg_color = web_options.bg_color
-      }
+      if(web_options.bg_color) this.bg_color = web_options.bg_color
 
     })
 

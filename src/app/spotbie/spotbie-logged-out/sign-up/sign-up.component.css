@@ -3,6 +3,10 @@
     background-position: center;
     background-color: rgb(21 21 21);
     text-align: left;
+    z-index: 9999998;
+}
+.spotbie-close-button{
+    z-index: 9999999;
 }
 .spotbie-input{
     width: 450px;
@@ -52,6 +56,12 @@
     min-width: 48%;
     max-width: 48%;
 }
+.signUpButtons{
+    position: relative;
+    margin: 0 auto;
+    text-align: center;
+    display: block;
+}
 .signUpInput{
     position: relative;
     border-radius: 10px;
@@ -82,9 +92,9 @@
 }
 #sign_up_general_instructions{
     text-align: center;
-    padding-top: 20px;
+    padding-top: 50px;
     padding-bottom: 10px;
-    margin-bottom: 30px;
+    margin-bottom: 15px;
     font-size: 16px;
 }
 .signUpTerms{
@@ -106,11 +116,13 @@
 }
 .spotbieSignUpButton{
     position: relative;
-    margin: 0 auto;
+    display: inline-block;
+    margin-left: 3px;
+    margin-right: 3px;
     text-align: center;
-    width: 300px;
-    min-width: 300px;
-    max-width: 300px;
+    width: 48%;
+    min-width: 48%;
+    max-width: 48%;
     padding-top: 10px;
     padding-bottom: 10px;
     border-radius: 10px;
@@ -123,7 +135,93 @@
 .spotbieSignUpButton:hover{
     background-color: #131313;
 }
+h1{
+    font-family: sitka-italic, cursive;
+    font-size: 103px;
+    height: 180px;
+    max-height: 180px;
+    margin-bottom: 0px;
+    letter-spacing: -11px;
+}
+h2{
+    position: absolute;
+    right: 364px; 
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 30px;
+    letter-spacing: 4px;
+    font-weight: normal;
+    margin-top: 0px;
+}
+h2 strong.sep-one {
+    width: 60px;
+    height: 1px;
+    background: #fff;
+    position: absolute;
+    margin-left: -80px;
+    margin-top: 15px;
+}
 
+h2 strong.sep-two {
+    width: 39px;
+    height: 1px;
+    background: #fff;
+    position: absolute;
+    margin-left: 15px;
+    margin-top: 17px;
+}
+
+p{
+    font-family: 'Josefin Sans', sans-serif;
+}
+.spotbie-welcome-bg{
+    position: fixed;
+    top: 0;
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    z-index: -1;
+    min-height: 100%;
+    max-height: 100%;
+    height: 100%;
+    background: url(../../../../assets/images/bg.jpg);
+    background-position: bottom;
+    background-size: cover;
+}
+.spotbie-welcome-wrapper{
+    position: relative;
+    margin: 0 auto;
+    text-align: center;
+    max-width: 1200px;
+}
+.spotbie-flash-card{
+    position: relative;
+    margin: 0 auto;
+    margin-top: 80px;
+    background-color: rgba(255, 255, 255, .8);
+    text-align: center;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 40px;
+    padding-bottom: 40px;
+    max-width: 600px;
+    line-height: 30px;
+    color: #4a4a4a;
+    font-size: 18px;
+    border-radius: 20px;
+}
+.spotbie-button {
+    width: 200px;
+    min-width: 200px;
+    max-width: 200px;
+    background-color: #272727;
+    font-size: 22px;
+    color: white;
+    padding-top: 9px !important;
+    padding-bottom: 5px !important;
+    display: inline-block;
+    margin-left: 5px;
+    margin-right: 5px;
+}
 /**WIDTH MEDIA QUERIES */
 @media (max-width: 1300px) { 
 
@@ -138,18 +236,43 @@
 @media (max-width: 1024px) { 
 }
 @media (max-width: 900px) { 
-
+    .signUpButtons{
+        width: 80%;
+        min-width: 80%;
+        max-width: 80%;
+    }
 }
 @media (max-width: 768px) { 
 
 }
 @media (max-width: 700px) { 
-
+    .spotbie-flash-card{
+        border-radius: 0px;
+    }
+    h1{
+        font-size: 80px;
+    }    
+    h2{
+        right: 0px;
+        left: 0px;
+        margin: 0 auto;
+        text-align: center;
+        font-size: 22px;
+    }
+    h2 strong.sep-two {
+        display: none;
+    }  
 }
 @media (max-width: 600px) { 
 
 }
 @media (max-width: 560px) { 
+    .spotbieSignUpButton{
+        width: 90%;
+        min-width: 90%;
+        max-width: 90%;
+        margin-bottom: 15px;
+    }
     .displayTableName{
         position: relative;
         display: block;
@@ -159,13 +282,37 @@
     }
 }
 @media (max-width: 460px) { 
-              
+    h1{
+        font-size: 58px;
+        height: 120px;
+        max-height: 120px;        
+    }  
+    h2{
+        font-size: 16px;   
+    }
+    .spotbie-button{
+        font-size: 17px;
+    }
+    .spotbie-flash-card{
+        padding-top: 20px;
+    }          
 }
 @media (max-width: 420px) { 
                    
 }
 @media (max-width: 360px) { 
- 
+    h1{
+        height: 115px;
+        max-height: 115px;
+        margin-top: 0px;
+    }
+    .spotbie-flash-card{
+        margin-top: 44px;
+        padding-top: 10px;
+        padding-bottom: 20px;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
 }
 
 @media (max-width: 320px) {

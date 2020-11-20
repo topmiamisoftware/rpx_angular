@@ -22,7 +22,7 @@ import { TokenInterceptor } from './helpers/token-interceptor/token-interceptor.
 @NgModule({
   declarations: [
     AppComponent,
-    UrlSanitizerPipe
+    UrlSanitizerPipe,
   ],
   imports: [
     AppRoutingModule,
@@ -33,7 +33,7 @@ import { TokenInterceptor } from './helpers/token-interceptor/token-interceptor.
     UserModule,
     HelperModule,
     MetaModule.forRoot(),
-    BrowserAnimationsModule     
+    BrowserAnimationsModule  
   ],  
   providers: [
     DeviceDetectorService,

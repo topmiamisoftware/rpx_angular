@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { StreamPostComponent } from './stream-post.component';
+import { SingleAdComponent } from './single-ad.component';
 
-describe('StreamPostComponent', () => {
-  let component: StreamPostComponent;
-  let fixture: ComponentFixture<StreamPostComponent>;
+describe('SingleAdComponent', () => {
+  let component: SingleAdComponent;
+  let fixture: ComponentFixture<SingleAdComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ StreamPostComponent ]
+      declarations: [ SingleAdComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(StreamPostComponent);
+    fixture = TestBed.createComponent(SingleAdComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
@@ -22,5 +22,4 @@ describe('StreamPostComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-  
 });

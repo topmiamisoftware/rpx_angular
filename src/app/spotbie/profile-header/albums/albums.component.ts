@@ -617,8 +617,6 @@ export class AlbumsComponent implements OnInit {
       isPublic = false
     }
 
-    console.log("Peer Id", peer_id)
-
     this.albumService.myAlbums(this.albumPage, isPublic, peer_id).subscribe(
 
       resp => {

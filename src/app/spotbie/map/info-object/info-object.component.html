@@ -1,6 +1,18 @@
 <app-loading-screen *ngIf="loading"></app-loading-screen>
 
+<div class="spotbie-close-button" (click)="closeWindowX()">
+    <i class="fa fa-times"></i>
+</div>
+
 <div class="spotbie-overlay-window">
+
+    <div class='spotbie-album-media-image-wrapper'
+        *ngIf="info_object.image_url"
+        [ngStyle]="{'background' : 'url(' + infoObjectImageUrl + ')' } ">
+
+        <div class='spotbie-album-media-image-blur'></div> 
+
+    </div>
 
     <div *ngIf="info_object !== null">
 
@@ -8,9 +20,21 @@
             {{ info_object.name }}
             <span class='spotbie-search-result-price' *ngIf="info_object.price_on == '1'">({{ info_object.price }})</span>
         </div>
-    
+
         <div class='spotbie-info-object-image' [ngStyle]="{ 'background' : 'url(' + infoObjectImageUrl + ')'}"></div>
     
+        <div *ngIf="infoObject !== null && infoObject.hours !== undefined">
+
+            <div class='spotbie-info-object-open' *ngIf="!infoObject.isOpenNow">
+                CLOSED <span class='fa fa-circle spotbie-is-closed'></span>
+            </div>
+            
+            <div class='spotbie-info-object-open' *ngIf="infoObject.isOpenNow">
+                OPEN <span class='fa fa-circle spotbie-is-open'></span>
+            </div>
+
+        </div>
+
         <div class='spotbie-info-object-image-list'>
     
             <div class='spotbie-info-object-image-thumb'
@@ -36,7 +60,7 @@
                     <div class='spotbie-search-result-rating-img' [ngStyle]="{ 'background' : 'url(' + info_object.rating_image + ')' }"></div>
                   </td>
                   <td>
-                    <div class='spotbie-search-result-yelp-logo' [ngStyle]="{ 'background' : 'url(../assets/images/yelp/yelp_logo.png)' }"></div>
+                    <div class='spotbie-search-result-yelp-logo' [ngStyle]="{ 'background' : 'url(assets/images/yelp/yelp_logo.png)' }"></div>
                   </td>
                 </tr>
             </table>
@@ -69,17 +93,17 @@
 
         </div>
 
-        <div class="spotbie-google-maps-it" (click)="openWithGoogleMaps()">
+        <div class="spotbie-info-object-buttons">
 
-            <div class='spotbie-distance' *ngIf="info_object.distance !== undefined">
+            <div class='spotbie-distance' *ngIf="info_object.distance !== undefined" (click)="openWithGoogleMaps()">
                 {{ info_object.distance }} miles from you.
             </div>
 
-            <i class="fa fa-map-marker" aria-hidden="true"></i>
+            <i class="fa fa-map-marker" aria-hidden="true" (click)="openWithGoogleMaps()"></i>
             
             <div class='spotbie-distance'>Start Navigation</div>
 
-            <div class='spotbie-info-object-address' *ngIf="info_object.type_of_info_object == 'yelp_business'">
+            <div class='spotbie-info-object-address' *ngIf="info_object.type_of_info_object == 'yelp_business'" (click)="openWithGoogleMaps()">
                 {{ info_object.location.display_address[0] }} 
                 <br/>
                 {{ info_object.location.display_address[1] }}            
@@ -100,8 +124,55 @@
 
     </div>
 
-    <div class="spotbie-close-button" (click)="closeWindowX()">
-        <i class="fa fa-times"></i>
+    <div class='spotbie-exif-optional'></div>
+    <div class='spotbie-ai-items-in-image'></div>
+
+    <div class='spotbie-share-buttons-wrappper'>
+
+        <button mat-fab class="spotbie-share-button" shareButton="facebook" 
+                [style.backgroundColor]="share.prop.facebook.color" 
+                [url]="infoObjectLink"
+                [title]="info_object.name"
+                [description]="infoObjectDescription">     
+            <ngx-fa name="facebook" style="color:white;"></ngx-fa>
+        </button>
+
+        <button mat-fab class="spotbie-share-button" shareButton="twitter" [style.backgroundColor]="share.prop.twitter.color"
+                [url]="infoObjectLink"
+                [title]="info_object.name"
+                [description]="infoObjectDescription">    
+            <ngx-fa name="twitter" style="color:white;"></ngx-fa>
+        </button>
+
+        <button mat-fab class="spotbie-share-button" shareButton="linkedin" [style.backgroundColor]="share.prop.linkedin.color"
+                [url]="infoObjectLink"
+                [title]="info_object.name"
+                [description]="infoObjectDescription">     
+            <ngx-fa name="linkedin" style="color:white;"></ngx-fa>
+        </button>
+
+        <button mat-fab class="spotbie-share-button" shareButton="reddit" [style.backgroundColor]="share.prop.reddit.color"
+                [url]="infoObjectLink"
+                [title]="info_object.name"
+                [description]="infoObjectDescription">   
+            <ngx-fa name="reddit" style="color:white;"></ngx-fa>
+        </button> 
+
+        <button mat-fab class="spotbie-share-button" shareButton="pinterest" [style.backgroundColor]="share.prop.pinterest.color"
+                [url]="infoObjectLink"
+                [title]="info_object.name"
+                [description]="infoObjectDescription">     
+            <ngx-fa name="pinterest" style="color:white;"></ngx-fa>
+        </button>
+
     </div>
+
+    <div class='spotbie-copy-link-button' (click)="linkCopy(infoObjectLink)">tap to copy link</div>
+
+    <div class='spotbie-share-post-link' (click)="linkCopy(infoObjectLink)">
+        <input class='spotbie-input' type='text' [attr.value]="infoObjectLink" readonly #spotbie_share_link/>
+    </div>
+
+    <div class='spotbie-toast-message animated fadeIn' *ngIf="successful_url_copy">Object link copied.</div>
 
 </div>

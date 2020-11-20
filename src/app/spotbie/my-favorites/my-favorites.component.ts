@@ -21,7 +21,8 @@ export class MyFavoritesComponent implements OnInit {
   public isLoggedIn: string
 
   public favoriteItems: Array<any> = []
-  
+  public totalFavoriteItems: number = 0
+
   public loadMore: boolean = false
 
   public currentPage: number = 1
@@ -49,6 +50,8 @@ export class MyFavoritesComponent implements OnInit {
 
   private getFavoritesLoggedIn(){
 
+    this.loading = true
+
     this.myFavoritesService.getFavoritesLoggedIn(this.currentPage).subscribe(
       resp => {
         this.getFavoritesLoggedInCb(resp) 
@@ -62,26 +65,29 @@ export class MyFavoritesComponent implements OnInit {
     if(httpResponse.success){
 
       let favoriteItems = httpResponse.favorite_items.data
+      
+      this.totalFavoriteItems = favoriteItems.length
 
       let currentPage = httpResponse.favorite_items.current_page
       let lastPage = httpResponse.favorite_items.last_page
 
+      if(favoriteItems.length == 0) this.loading = false
+
       favoriteItems.forEach(favorite => {
         
         this.populateFavorite(favorite.third_party_id).subscribe(
-          resp=>{
+          resp => {
             this.populateFavoriteCallback(resp, favorite)
           }
         )
 
-      });      
+      });
 
       if(currentPage < lastPage){
         this.currentPage++
         this.loadMore = true
       } else
         this.loadMore = false
-      
 
       if(httpResponse.favorite_items.total == 0) this.noFavorites = true
 
@@ -91,15 +97,19 @@ export class MyFavoritesComponent implements OnInit {
   }
 
   private getFavoritesLoggedOut(){
-    
+
     const favoriteItems = this.myFavoritesService.getFavoritesLoggedOut()
     
     if(favoriteItems != null && favoriteItems.length > 0){
 
+      this.totalFavoriteItems = favoriteItems.length
+
+      this.loading = true
+
       favoriteItems.forEach(favorite => {
 
         this.populateFavorite(favorite.third_party_id).subscribe(
-          resp=>{
+          resp => {
             this.populateFavoriteCallback(resp, favorite)
           }
         )
@@ -108,36 +118,6 @@ export class MyFavoritesComponent implements OnInit {
 
     } else this.noFavorites = true
     
-
-  }
-
-  public loadMoreFavorites(){
-    this.getFavoritesLoggedIn()
-  }
-
-  public populateFavorite(yelpId: string): Observable<any>{
-
-    let url = `${YELP_BUSINESS_DETAILS_API}${yelpId}`
-
-    const infoObjToPull = {
-      config_url: url
-    }
-
-    return this.infoObjectService.pullInfoObject(infoObjToPull)
-
-  }
-
-  public removeFavorite(evt: any){
-
-    this.favoriteItems.find( (favorite, index) => {
-
-      if(favorite.id == evt.favoriteId) this.favoriteItems.splice(index, 1)
-
-    })
-
-    if(this.favoriteItems.length == 0) this.noFavorites = true
-
-    this.infoObjectWindow.open = false
 
   }
 
@@ -192,6 +172,39 @@ export class MyFavoritesComponent implements OnInit {
       console.log("populateFavoriteCallback", favorite)
       console.log("populateFavoriteCallback", resp)
     }
+
+    if(this.totalFavoriteItems == this.favoriteItems.length)
+      this.loading = false
+
+  }
+
+  public loadMoreFavorites(){
+    this.getFavoritesLoggedIn()
+  }
+
+  public populateFavorite(yelpId: string): Observable<any>{
+
+    let url = `${YELP_BUSINESS_DETAILS_API}${yelpId}`
+
+    const infoObjToPull = {
+      config_url: url
+    }
+
+    return this.infoObjectService.pullInfoObject(infoObjToPull)
+
+  }
+
+  public removeFavorite(evt: any){
+
+    this.favoriteItems.find( (favorite, index) => {
+
+      if(favorite.id == evt.favoriteId) this.favoriteItems.splice(index, 1)
+
+    })
+
+    if(this.favoriteItems.length == 0) this.noFavorites = true
+
+    this.infoObjectWindow.open = false
 
   }
 

@@ -46,7 +46,7 @@
     min-width: 25%;
     max-width: 25%;
     border-radius: 10px;
-    background-color: rgba(36, 36, 36, 0.15);
+    background-color: rgba(0, 0, 0, 0.33);
     padding-top: 10px;
     padding-bottom: 10px;
     vertical-align: middle;
@@ -71,11 +71,10 @@
     background-color: rgba(36, 36, 36, 0.3);
     cursor: pointer;
     text-align: center;
-    margin-top: env(safe-area-inset-top, 20px);
 }
 .spotbie-menu-logged td{
     border-radius: 10px;
-    background-color: rgba(8, 8, 8, 0.68);
+    background-color: rgba(0, 0, 0, 0.33);
     padding-top: 10px;
     padding-bottom: 10px;
     vertical-align: middle;
@@ -102,7 +101,6 @@
     min-width: 100%;
     max-width: 100%;
     z-index: 100;
-    padding-top: env(safe-area-inset-top, 20px);
     transition: top 0.3s;
 }
 .spotbie-menu-fixed-logged-out td:nth-of-type(1){
@@ -242,7 +240,12 @@
 
 }
 @media (max-width: 768px) { 
-
+    .spotbie-menu-logged{
+        margin-top: env(safe-area-inset-top, 20px);
+    }
+    .spotbie-menu-fixed-logged-out{
+        padding-top: env(safe-area-inset-top, 20px);   
+    } 
 }
 @media (max-width: 700px) { 
 

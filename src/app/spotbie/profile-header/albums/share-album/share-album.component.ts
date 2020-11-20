@@ -27,7 +27,7 @@ export class ShareAlbumComponent implements OnInit {
   }
 
   private setMediaProperties (){    
-    this.album_link = 'https://www.spotbie.com/user-profile/' + this.host.profile_username + '/albums/' + this.current_album.exe_album_id
+    this.album_link = 'https://spotbie.com/user-profile/' + this.host.profile_username + '/albums/' + this.current_album.exe_album_id
     this.album_title = unescape(this.current_album.exe_album_name)
     this.album_description = unescape(this.current_album.exe_album_description)
   }
@@ -48,4 +48,5 @@ export class ShareAlbumComponent implements OnInit {
     console.log("Album: ", this.current_album)
     this.setMediaProperties()
   }
+
 }

@@ -75,6 +75,8 @@ export class StreamPostComponent implements OnInit {
     }
   }
 
+  public loading_default: string = "assets/images/spotbie_loading_default.png"
+
   constructor(public share: ShareService,
               private readonly meta: MetaService,
               private _streamer_service: StreamerService) { }

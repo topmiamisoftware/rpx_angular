@@ -10,7 +10,7 @@
 
             <div class='spotbie-stream-post-by'>
 
-                <span class='spotbie-username' [routerLink]="['/user-profile/' + stream_post.stream_by.username ]">{{ stream_post.stream_by.username  }}</span>
+                <span class='spotbie-username' [routerLink]="['/user-profile/' + stream_post.stream_by.username ]">{{ stream_post.stream_by.username }}</span>
                 
                 <span *ngIf="stream_post.repost"> reposted </span>
 
@@ -115,7 +115,7 @@
                                 (click)="openLikes(stream_post.stream_post_id)"
                                 title="Likes"> {{ stream_post.likes_count }} </span>
                         
-                                <span class='spotbie-like-counter' 
+                        <span class='spotbie-like-counter' 
                                 attr.id="spotbieLikeStreamPost{{stream_post.stream_post_id}}" 
                                 *ngIf="stream_post.likes_count == 0"
                                 title="Likes"> {{ stream_post.likes_count }} </span>

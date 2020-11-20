@@ -1,15 +1,15 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core'
 import { InfoObjectServiceService } from './info-object-service.service'
-import { MapComponent } from '../map.component'
 import { MyFavoritesService } from '../../my-favorites/my-favorites.service'
-
+import { DeviceDetectorService } from 'ngx-device-detector'
+import { ShareService } from '@ngx-share/core'
 
 const YELP_BUSINESS_DETAILS_API = "https://api.yelp.com/v3/businesses/"
 
 @Component({
   selector: 'app-info-object',
   templateUrl: './info-object.component.html',
-  styleUrls: ['./info-object.component.css']
+  styleUrls: [ './info-object-share/info-object-share.component.css', './info-object.component.css']
 })
 export class InfoObjectComponent implements OnInit {
 
@@ -34,8 +34,18 @@ export class InfoObjectComponent implements OnInit {
 
   public isLoggedIn: string
 
+  public shareInfoObject: any = { open: false }
+
+  public infoObjectLink: string
+  public infoObjectDescription: string
+  public infoObjectTitle: string
+
+  public successful_url_copy: boolean = false
+
   constructor(private infoObjectService: InfoObjectServiceService,
-              private myFavoritesService: MyFavoritesService) { }
+              private myFavoritesService: MyFavoritesService,
+              private deviceDetector: DeviceDetectorService,
+              public share: ShareService) { }
 
   public closeWindowX(): void {
     this.closeWindow.emit(null)
@@ -55,15 +65,65 @@ export class InfoObjectComponent implements OnInit {
 
   }
   
+  public linkCopy(input_element) {
+    
+    input_element.select();
+    document.execCommand('copy');
+    input_element.setSelectionRange(0, input_element.value.length);
+    this.successful_url_copy = true;
+
+    setTimeout(function() {
+      this.successful_url_copy = false;
+    }.bind(this), 2500);
+
+  }
+
   private pullInfoObjectCallback(httpResponse: any){
+
+    console.log("pullInfoObjectCallback", httpResponse)
+
+    console.log("Info Object", this.info_object)
 
     if (httpResponse.success) {
 
       this.infoObject = httpResponse.data
+
+      switch(this.info_object.type_of_info_object_category){
+        case 'food':
+          this.infoObjectDescription = `You should go eat at ${this.infoObject.name}!`
+          break
+        case 'shopping':
+          this.infoObjectDescription = `I really recommend you go shopping at ${this.infoObject.name}!`
+          break
+        case 'events':
+          this.infoObjectDescription = `Let's go to ${this.infoObject.name}!`
+          break          
+      }
+      
+      switch(this.info_object.type_of_info_object){
+        case 'yelp_business':
+          this.infoObjectLink = `https://spotbie.com/business/${this.infoObject.id}`
+          break
+        case 'ticketmaster_event':
+          this.infoObjectLink = `https://spotbie.com/event/${this.infoObject.id}`
+          return
+      }
+
+      if(this.infoObject.hours !== undefined){
+
+        this.infoObject.hours.forEach(hours => {
+          
+          if(hours.hours_type == "REGULAR")
+            this.infoObject.isOpenNow = hours.is_open_now
+
+        })
+
+      }
+
       this.loading = false
       
       this.isInMyFavorites(this.infoObject.id, 'yelp')
-
+      
     } else
       console.log('pullInfoObjectCallback', httpResponse)
 
@@ -114,8 +174,13 @@ export class InfoObjectComponent implements OnInit {
 
     let confirmNav = confirm('We will try to open and navigate on your device\'s default navigation app.')
     
-    if(confirmNav)
-      window.open('geo:' + this.infoObject.coordinates.latitude + ',' + this.infoObject.coordinates.longitude )
+    let displayAddress = ''
+
+    this.infoObject.location.display_address.forEach(element => {
+      displayAddress = displayAddress + ' ' + element 
+    });
+
+    window.open(`http://www.google.com/maps/place/${displayAddress}`)
     
   }
 
@@ -123,7 +188,7 @@ export class InfoObjectComponent implements OnInit {
     this.infoObjectImageUrl = thumbnail
   }
 
-  public goToTicket(){
+  public goToTicket(): void{
     window.open(this.info_object.url, "_blank")
   }
 
@@ -204,6 +269,10 @@ export class InfoObjectComponent implements OnInit {
 
     this.loading = false
 
+  }
+
+  public shareIt(){
+    this.shareInfoObject.open = true
   }
 
   ngOnInit(){
