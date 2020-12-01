@@ -14,6 +14,8 @@ import { UserauthService } from 'src/app/services/userauth.service'
 
 const SETTINGS_API = spotbieGlobals.API + '/settings.service.php'
 
+declare const google: any
+
 @Component({
   selector: 'app-settings',
   templateUrl: './settings.component.html',
@@ -115,7 +117,7 @@ export class SettingsComponent implements OnInit {
 
   public geoCoder: any
   public address: any
-  public address_results: google.maps.places.QueryAutocompletePrediction[]
+  //public address_results: google.maps.places.QueryAutocompletePrediction[]
   public password_submitted: boolean = false
 
   constructor(private host: MenuLoggedInComponent,
@@ -206,6 +208,7 @@ export class SettingsComponent implements OnInit {
   searchMaps() {
     //console.log('searching')
     // this function will search for an address
+    /*
     const inputAddress = this.addressSearch.nativeElement
 
     const service = new google.maps.places.AutocompleteService()
@@ -223,6 +226,7 @@ export class SettingsComponent implements OnInit {
       })
 
     })
+    */
   }
 
   focusPlace(place) {
@@ -254,6 +258,7 @@ export class SettingsComponent implements OnInit {
 
   mapsAutocomplete() {
 
+    /*
     this.mapsAPILoader.load().then(() => {
 
       this.geoCoder = new google.maps.Geocoder
@@ -283,7 +288,8 @@ export class SettingsComponent implements OnInit {
       })
 
     })
-
+    */
+   
   }
 
   // Get Current Location Coordinates

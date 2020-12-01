@@ -2,6 +2,11 @@
     padding-bottom: 100px;
     z-index: 9999998;
 }
+.spotbie-toast-message{
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+}
 .spotbie-close-button{
     z-index: 9999999;
 }

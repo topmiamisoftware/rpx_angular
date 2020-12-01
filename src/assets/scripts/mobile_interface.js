@@ -1,4 +1,4 @@
-export var android_i = window.JsInter;
+/*export var android_i = window.JsInter;
 export var iphone_i;
 
 if (navigator.platform.substr(0,2) === 'iP'){
@@ -52,4 +52,4 @@ window.spotbieSaveToken = function(the_token){
 
 window.spotbieLocationAccepted = function(){
     //window.alert("Spotbie location accepted.");    
-}
+}*/

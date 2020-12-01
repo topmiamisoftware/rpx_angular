@@ -3,6 +3,9 @@ import { InfoObjectServiceService } from './info-object-service.service'
 import { MyFavoritesService } from '../../my-favorites/my-favorites.service'
 import { DeviceDetectorService } from 'ngx-device-detector'
 import { ShareService } from '@ngx-share/core'
+import { ActivatedRoute, Router } from '@angular/router'
+import { DateFormatPipe, TimeFormatPipe } from 'src/app/pipes/date-format.pipe'
+import { SpotbieMetaService } from 'src/app/services/meta/spotbie-meta.service'
 
 const YELP_BUSINESS_DETAILS_API = "https://api.yelp.com/v3/businesses/"
 
@@ -42,26 +45,56 @@ export class InfoObjectComponent implements OnInit {
 
   public successful_url_copy: boolean = false
 
+  public objectCategories: string = ""
+
+  public objectDisplayAddress: string
+
   constructor(private infoObjectService: InfoObjectServiceService,
               private myFavoritesService: MyFavoritesService,
-              private deviceDetector: DeviceDetectorService,
-              public share: ShareService) { }
+              public share: ShareService,
+              private router: Router,
+              private activatedRoute: ActivatedRoute,
+              private spotbieMetaService: SpotbieMetaService) { }
 
   public closeWindowX(): void {
-    this.closeWindow.emit(null)
+
+    if(this.router.url.indexOf('event') > -1 || this.router.url.indexOf('place-to-eat') > -1 || this.router.url.indexOf('retail') > -1)
+      this.router.navigate(['/home'])
+    else
+      this.closeWindow.emit(null)
+    
   }
 
   private pullInfoObject(): void{
 
+    if(this.router.url.indexOf('event') > -1){
+      
+      let infoObjectId = this.activatedRoute.snapshot.paramMap.get('id')
+      this.urlApi = `id=${infoObjectId}`
+
+    }
+    
     const infoObjToPull = {
       config_url: this.urlApi
     }
 
-    this.infoObjectService.pullInfoObject(infoObjToPull).subscribe(
-      resp =>{
-        this.pullInfoObjectCallback(resp)
-      }
-    )
+    if(this.router.url.indexOf('event') > -1){
+
+      this.infoObjectService.pullEventObject(infoObjToPull).subscribe(
+        resp =>{
+          this.getEventCallback(resp)
+        }
+      )
+
+    } else {
+
+      this.infoObjectService.pullInfoObject(infoObjToPull).subscribe(
+        resp =>{
+          this.pullInfoObjectCallback(resp)
+        }
+      )
+
+    }
 
   }
   
@@ -78,35 +111,31 @@ export class InfoObjectComponent implements OnInit {
 
   }
 
-  private pullInfoObjectCallback(httpResponse: any){
+  private pullInfoObjectCallback(httpResponse: any): void{
 
-    console.log("pullInfoObjectCallback", httpResponse)
+    //console.log("pullInfoObjectCallback", httpResponse)
 
-    console.log("Info Object", this.info_object)
+    //console.log("Info Object", this.info_object)
 
     if (httpResponse.success) {
 
       this.infoObject = httpResponse.data
 
-      switch(this.info_object.type_of_info_object_category){
-        case 'food':
-          this.infoObjectDescription = `You should go eat at ${this.infoObject.name}!`
-          break
-        case 'shopping':
-          this.infoObjectDescription = `I really recommend you go shopping at ${this.infoObject.name}!`
-          break
-        case 'events':
-          this.infoObjectDescription = `Let's go to ${this.infoObject.name}!`
-          break          
+      if(this.info_object === undefined)
+        this.info_object = this.infoObject
+
+      this.infoObjectImageUrl = this.info_object.image_url
+
+      if(this.router.url.indexOf('place-to-eat') > -1 || this.info_object.type_of_info_object_category == 'food'){
+        this.info_object.type_of_info_object = 'yelp_business'
+        this.info_object.type_of_info_object_category = 'food'
+        this.infoObjectLink = `https://spotbie.com/place-to-eat/${this.info_object.alias}/${this.infoObject.id}`
       }
       
-      switch(this.info_object.type_of_info_object){
-        case 'yelp_business':
-          this.infoObjectLink = `https://spotbie.com/business/${this.infoObject.id}`
-          break
-        case 'ticketmaster_event':
-          this.infoObjectLink = `https://spotbie.com/event/${this.infoObject.id}`
-          return
+      if(this.router.url.indexOf('retail') > -1 || this.info_object.type_of_info_object_category == 'shopping'){
+        this.info_object.type_of_info_object = 'yelp_business'
+        this.info_object.type_of_info_object_category = 'shopping'
+        this.infoObjectLink = `https://spotbie.com/retail/${this.info_object.alias}/${this.infoObject.id}`
       }
 
       if(this.infoObject.hours !== undefined){
@@ -120,12 +149,36 @@ export class InfoObjectComponent implements OnInit {
 
       }
 
+      this.objectDisplayAddress = `${this.info_object.location.display_address[0]}, ${this.info_object.location.display_address[1]}`
+
+      this.info_object.categories.forEach(category => {
+        this.objectCategories = `${this.objectCategories}, ${category.title}`
+      });
+
+      this.objectCategories = this.objectCategories.substring(2, this.objectCategories.length)
+
+      switch(this.info_object.type_of_info_object_category){
+        case 'food':
+          this.infoObjectDescription = `Let's go eat at ${this.info_object.name}. I know you'll enjoy some of these categories ${this.objectCategories}. They are located at ${this.objectDisplayAddress}.`
+          break
+        case 'shopping':
+          this.infoObjectDescription = `I really recommend you go shopping at ${this.info_object.name}!`
+          break
+        case 'events':
+          break          
+      }
+
+      this.spotbieMetaService.setTitle(`${this.info_object.name} - ${this.objectCategories} - ${this.objectDisplayAddress}`)
+      this.spotbieMetaService.setDescription(this.infoObjectDescription)
+      
       this.loading = false
       
       this.isInMyFavorites(this.infoObject.id, 'yelp')
       
     } else
       console.log('pullInfoObjectCallback', httpResponse)
+
+    console.log("Info Object", this.info_object)
 
   }
 
@@ -275,21 +328,86 @@ export class InfoObjectComponent implements OnInit {
     this.shareInfoObject.open = true
   }
 
+  public getEventCallback (httpResponse: any): void {
+
+    if(httpResponse.success){      
+      
+      if(httpResponse.data._embedded.events[0] === undefined){
+        this.loading = false
+        return
+      }
+
+      let event_object = httpResponse.data._embedded.events[0]
+
+      event_object.coordinates = {
+        latitude: '',
+        longitude: ''
+      }
+
+      event_object.coordinates.latitude = parseFloat(event_object._embedded.venues[0].location.latitude)
+      event_object.coordinates.longitude = parseFloat(event_object._embedded.venues[0].location.longitude)
+
+      event_object.icon = event_object.images[0].url
+
+      event_object.image_url = event_object.images[8].url
+      this.infoObjectImageUrl = event_object.image_url
+
+      event_object.type_of_info_object = "ticketmaster_event"
+
+      this.infoObjectDescription = `Let's go to ${event_object.name}!`
+
+      this.infoObjectLink = `https://spotbie.com/event/${this.activatedRoute.snapshot.paramMap.get('id')}`
+
+      let dt_obj = new Date(event_object.dates.start.localDate)
+
+      let time_date = new DateFormatPipe().transform(dt_obj)
+      let time_hr = new TimeFormatPipe().transform(event_object.dates.start.localTime)
+
+      event_object.dates.start.spotbieDate = time_date
+      event_object.dates.start.spotbieHour = time_hr
+
+      this.info_object = event_object
+      
+      console.log("InfoObject", this.info_object)
+
+    } else
+      console.log("getEventsSearchCallback Error: ", httpResponse)
+
+    this.loading = false
+
+  }
+
   ngOnInit(){
 
     this.loading = true
 
-    this.infoObjectImageUrl = this.info_object.image_url
     this.bgColor = localStorage.getItem('spotbie_backgroundColor')
     this.isLoggedIn = localStorage.getItem('spotbie_loggedIn')
 
-    switch(this.info_object.type_of_info_object){
-      case 'yelp_business':
-        this.urlApi = YELP_BUSINESS_DETAILS_API + this.info_object.id
-        break
-      case 'ticketmaster_event':
-        this.loading = false
-        return
+    if(this.info_object !== undefined){
+      
+      this.infoObjectImageUrl = this.info_object.image_url
+
+      switch(this.info_object.type_of_info_object){
+        case 'yelp_business':
+          this.urlApi = YELP_BUSINESS_DETAILS_API + this.info_object.id
+          break
+        case 'ticketmaster_event':
+          this.loading = false
+          this.infoObjectLink = `https://spotbie.com/event/${this.info_object.id}`
+          return
+      }
+
+    } else {
+
+      if(this.router.url.indexOf('retail') > -1 || this.router.url.indexOf('place-to-eat') > -1 ){
+        
+        let infoObjectId = this.activatedRoute.snapshot.paramMap.get('id')
+
+        this.urlApi = YELP_BUSINESS_DETAILS_API + infoObjectId
+
+      }
+
     }
 
     this.pullInfoObject()

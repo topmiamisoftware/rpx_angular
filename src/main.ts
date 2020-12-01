@@ -9,8 +9,10 @@ if (environment.production) {
 }
 
 
-platformBrowserDynamic().bootstrapModule(AppModule)
+document.addEventListener('DOMContentLoaded', () => {
+    platformBrowserDynamic().bootstrapModule(AppModule)
   .catch(err => console.error(err));
+  });
   
 
 //For Cordova Functionality

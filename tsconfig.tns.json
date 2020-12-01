@@ -12,6 +12,7 @@
     }
   },
   "files": [
-    "src/main.tns.ts"
+    "src/main.tns.ts",
+    "src/server.ts"
   ]
 }

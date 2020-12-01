@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { ShareService } from '@ngx-share/core';
 
 @Component({
@@ -17,7 +17,7 @@ export class InfoObjectShareComponent implements OnInit {
   
   public bg_color: string
 
-  public successful_url_copy: boolean = false
+  public successfulUrlCopy: boolean = false
   
   constructor(public share: ShareService) { }
 
@@ -31,16 +31,19 @@ export class InfoObjectShareComponent implements OnInit {
 
   }
 
-  public linkCopy(input_element) {
+  public linkCopy(inputElement) {
     
-    input_element.select();
-    document.execCommand('copy');
-    input_element.setSelectionRange(0, input_element.value.length);
-    this.successful_url_copy = true;
+    inputElement.select()
+    
+    document.execCommand('copy')
+
+    inputElement.setSelectionRange(0, inputElement.value.length)
+    
+    this.successfulUrlCopy = true
 
     setTimeout(function() {
-      this.successful_url_copy = false;
-    }.bind(this), 2500);
+      this.successfulUrlCopy = false
+    }.bind(this), 2500)
 
   }
 

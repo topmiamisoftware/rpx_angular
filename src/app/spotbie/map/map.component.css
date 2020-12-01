@@ -130,7 +130,6 @@
     direction: rtl;
     -webkit-overflow-scrolling: touch;
 }
-
 .spotbie-categories::-webkit-scrollbar{
     height: 10px;
     width: 10px;
@@ -697,7 +696,7 @@ span.spotbie-button{
     }
     .spotbie-categories{
         padding-top: env(safe-area-inset-top);
-        padding-bottom: env(safe-area-inset-bottom);
+        padding-bottom: 90px;
     }    
 }
 @media (max-width: 460px) { 

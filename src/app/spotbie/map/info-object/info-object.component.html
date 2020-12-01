@@ -7,14 +7,14 @@
 <div class="spotbie-overlay-window">
 
     <div class='spotbie-album-media-image-wrapper'
-        *ngIf="info_object.image_url"
+        *ngIf="info_object !== undefined && info_object.image_url"
         [ngStyle]="{'background' : 'url(' + infoObjectImageUrl + ')' } ">
 
         <div class='spotbie-album-media-image-blur'></div> 
 
     </div>
 
-    <div *ngIf="info_object !== null">
+    <div *ngIf="info_object !== null && info_object !== undefined">
 
         <div class='spotbie-info-object-title'>
             {{ info_object.name }}
@@ -127,7 +127,7 @@
     <div class='spotbie-exif-optional'></div>
     <div class='spotbie-ai-items-in-image'></div>
 
-    <div class='spotbie-share-buttons-wrappper'>
+    <div class='spotbie-share-buttons-wrappper' *ngIf="info_object !== undefined">
 
         <button mat-fab class="spotbie-share-button" shareButton="facebook" 
                 [style.backgroundColor]="share.prop.facebook.color" 
@@ -167,10 +167,12 @@
 
     </div>
 
-    <div class='spotbie-copy-link-button' (click)="linkCopy(infoObjectLink)">tap to copy link</div>
+    <div class='spotbie-copy-link-button' (click)="linkCopy(infoObjectShareLink)">tap to copy link</div>
 
-    <div class='spotbie-share-post-link' (click)="linkCopy(infoObjectLink)">
-        <input class='spotbie-input' type='text' [attr.value]="infoObjectLink" readonly #spotbie_share_link/>
+    <div class='spotbie-share-post-link' (click)="linkCopy(infoObjectShareLink)">
+
+        <input class='spotbie-input' type='text' [(value)]="infoObjectLink" readonly #infoObjectShareLink/>
+
     </div>
 
     <div class='spotbie-toast-message animated fadeIn' *ngIf="successful_url_copy">Object link copied.</div>

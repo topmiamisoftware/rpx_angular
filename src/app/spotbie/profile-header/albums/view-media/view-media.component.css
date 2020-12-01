@@ -137,17 +137,13 @@
         width: 92%;
     }
 }
+
 @media (max-width: 560px){
-    .spotbie-close-button{
-        max-width: 80px;
-        padding-top: 10px;
-        padding-bottom: 10px;
-        padding-left: 25px;
-        padding-right: 25px;
-        font-size: 16px;
-        border-radius: 12px;
-    } 
+    .spotbie-album-media-image-wrapper{
+        background-attachment: scroll !important;   
+    }
 }
+
 @media (max-width: 460px) { 
     .spotbie-media-caption{
         font-size: 14px;

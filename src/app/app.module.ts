@@ -26,7 +26,7 @@ import { TokenInterceptor } from './helpers/token-interceptor/token-interceptor.
   ],
   imports: [
     AppRoutingModule,
-    BrowserModule,
+    BrowserModule.withServerTransition({ appId: 'serverApp' }),
     HttpClientModule,
     HomeModule,
     UserHomeModule,

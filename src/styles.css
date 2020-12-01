@@ -739,7 +739,7 @@ a, a:hover, a:active, a:after{
         padding-bottom: env(safe-area-inset-bottom, 20px);
     }
     .spotbie-close-button{
-        top: env(safe-area-inset-top);
+        top: env(safe-area-inset-top, 2%);
         right: 2%;
     }
 }

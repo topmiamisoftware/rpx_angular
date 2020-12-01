@@ -6,6 +6,7 @@ import { LoginGuardServiceService } from './route-services/login-guard-service.s
 import { UserComponent } from './user/user.component'
 import { UserMetaService } from './user/user-meta/user-meta.service'
 import { MetaService, MetaGuard } from '@ngx-meta/core'
+import { InfoObjectComponent } from './spotbie/map/info-object/info-object.component'
 
 let user_service = new UserMetaService()
 
@@ -14,6 +15,9 @@ export const routes: Routes = [
   { path: 'terms', component: TermsComponent },
   { path: 'password', component: ForgotPasswordComponent },
   { path: 'password/reset/:token', component: ForgotPasswordComponent },
+  { path: 'place-to-eat/:name/:id', component: InfoObjectComponent },
+  { path: 'retail/:name/:id', component: InfoObjectComponent },
+  { path: 'event/:name/:id', component: InfoObjectComponent },
   { path: 'user-profile',
     canActivateChild: [MetaGuard],   
     children: [                       

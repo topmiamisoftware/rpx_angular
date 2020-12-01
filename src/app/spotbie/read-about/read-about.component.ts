@@ -4,7 +4,6 @@ import * as spotbieGlboals from '../../globals'
 import * as mobile_js_i from '../../../assets/scripts/mobile_interface.js'
 import { PlatformStatsService } from '../../services/platform-stats.service'
 import { MenuLoggedOutComponent } from '../spotbie-logged-out/menu-logged-out.component'
-import { AdsService } from '../ads/ads.service'
 
 @Component({
   selector: 'app-read-about',
