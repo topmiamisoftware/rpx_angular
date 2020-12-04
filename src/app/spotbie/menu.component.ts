@@ -22,6 +22,7 @@ export class MenuComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+
     // save timezone
     const userTimezone =  Intl.DateTimeFormat().resolvedOptions().timeZone;
     localStorage.setItem('spotbie_userTimeZone', userTimezone);
@@ -30,7 +31,9 @@ export class MenuComponent implements OnInit {
     const cookiedLoggedIn = localStorage.getItem('spotbie_loggedIn');
 
     if (cookiedLoggedIn == '1') this.isLoggedIn = true;
+
   }
 
   ngAfterViewInit() {}
+  
 }

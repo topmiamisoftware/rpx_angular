@@ -1,11 +1,11 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core'
 import { InfoObjectServiceService } from './info-object-service.service'
 import { MyFavoritesService } from '../../my-favorites/my-favorites.service'
-import { DeviceDetectorService } from 'ngx-device-detector'
 import { ShareService } from '@ngx-share/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { DateFormatPipe, TimeFormatPipe } from 'src/app/pipes/date-format.pipe'
 import { SpotbieMetaService } from 'src/app/services/meta/spotbie-meta.service'
+import { setYelpRatingImage } from 'src/app/helpers/info-object-helper'
 
 const YELP_BUSINESS_DETAILS_API = "https://api.yelp.com/v3/businesses/"
 
@@ -168,6 +168,8 @@ export class InfoObjectComponent implements OnInit {
           break          
       }
 
+      this.info_object.rating_image = setYelpRatingImage(this.info_object.rating)
+
       this.spotbieMetaService.setTitle(`${this.info_object.name} - ${this.objectCategories} - ${this.objectDisplayAddress}`)
       this.spotbieMetaService.setDescription(this.infoObjectDescription)
       
@@ -177,8 +179,6 @@ export class InfoObjectComponent implements OnInit {
       
     } else
       console.log('pullInfoObjectCallback', httpResponse)
-
-    console.log("Info Object", this.info_object)
 
   }
 

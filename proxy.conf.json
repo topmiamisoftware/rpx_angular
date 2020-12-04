@@ -8,17 +8,7 @@
         "logLevel": "debug",
         "changeOrigin": true,
         "timeout" : 360000
-    },
-    "/ads/*": {
-        "target": "http://localhost:8001",
-        "secure": false,
-        "pathRewrite": {
-            "^/ads": ""
-        },        
-        "logLevel": "debug",
-        "changeOrigin": true,
-        "timeout" : 360000
-    },    
+    },   
     "/defaults/*": {
         "target": "https://spotbie.com",
         "secure": false,
