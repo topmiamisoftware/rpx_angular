@@ -52,12 +52,12 @@
 
             <table class='spotbie-yelp-rating-table'>
                 <tr>
-                  <td>
+                <td>
                     <div class='spotbie-search-result-rating-img' [ngStyle]="{ 'background' : 'url(' + info_object.rating_image + ')' }"></div>
-                  </td>
-                  <td>
+                </td>
+                <td>
                     <div class='spotbie-search-result-yelp-logo' [ngStyle]="{ 'background' : 'url(assets/images/yelp/yelp_logo.png)' }"></div>
-                  </td>
+                </td>
                 </tr>
             </table>
 
@@ -70,7 +70,7 @@
         <div class='spotbie-info-object-address' *ngIf="info_object.type_of_info_object == 'ticketmaster_event'">
 
             <div class='spotbie-venue-name'>{{ info_object._embedded.venues[0].name }}</div>
-             
+            
             <br/>
             
             {{ info_object._embedded.venues[0].address.line1 }} {{ info_object._embedded.venues[0].city.name }}, {{ info_object._embedded.venues[0].state.stateCode }} {{ info_object._embedded.venues[0].postalCode }}    
@@ -78,7 +78,7 @@
             <div class='spotbie-time-event' *ngIf="info_object.dates.start.localDate">
                 {{ info_object.dates.start.spotbieDate }}
             </div>
-  
+
             <div class='spotbie-price-ranges' *ngIf="info_object.priceRanges !== undefined">
                 Price Ranges ${{ info_object.priceRanges[0].min }} to ${{ info_object.priceRanges[0].max }}
             </div>

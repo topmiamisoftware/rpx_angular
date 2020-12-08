@@ -35,7 +35,7 @@
     "@fortawesome/free-brands-svg-icons": "^5.13.0",
     "@fortawesome/free-solid-svg-icons": "^5.13.0",
     "@ng-toolkit/universal": "^1.1.21",
-    "@nguniversal/express-engine": "^9.0.1",
+    "@nguniversal/express-engine": "^9.1.1",
     "@ngx-meta/core": "^8.0.2",
     "@ngx-share/button": "^7.1.4",
     "@ngx-share/buttons": "^7.1.4",
