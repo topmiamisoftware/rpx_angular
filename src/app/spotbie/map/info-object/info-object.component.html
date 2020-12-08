@@ -4,15 +4,11 @@
     <i class="fa fa-times"></i>
 </div>
 
-<div class="spotbie-overlay-window">
+<div class="spotbie-overlay-window" 
+    *ngIf="info_object !== undefined && info_object.image_url" 
+    [ngStyle]="{'background' : 'url(' + infoObjectImageUrl + ')' }">
 
-    <div class='spotbie-album-media-image-wrapper'
-        *ngIf="info_object !== undefined && info_object.image_url"
-        [ngStyle]="{'background' : 'url(' + infoObjectImageUrl + ')' } ">
-
-        <div class='spotbie-album-media-image-blur'></div> 
-
-    </div>
+    <div class='spotbie-album-media-image-wrapper'></div>
 
     <div *ngIf="info_object !== null && info_object !== undefined">
 

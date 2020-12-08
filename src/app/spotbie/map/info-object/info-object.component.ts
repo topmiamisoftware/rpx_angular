@@ -172,6 +172,7 @@ export class InfoObjectComponent implements OnInit {
 
       this.spotbieMetaService.setTitle(`${this.info_object.name} - ${this.objectCategories} - ${this.objectDisplayAddress}`)
       this.spotbieMetaService.setDescription(this.infoObjectDescription)
+      this.spotbieMetaService.setImage(this.infoObjectImageUrl)
       
       this.loading = false
       

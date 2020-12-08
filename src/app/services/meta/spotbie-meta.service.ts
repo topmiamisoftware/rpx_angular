@@ -25,6 +25,8 @@ export class SpotbieMetaService {
   public setImage(imageUrl: string): void{
 
     this.metaService.setTag("image", imageUrl)
+    this.metaService.setTag("og:image", imageUrl)
+    this.metaService.setTag("twitter:image", imageUrl)
 
   }  
 
