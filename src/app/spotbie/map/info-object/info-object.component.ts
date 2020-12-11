@@ -6,6 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router'
 import { DateFormatPipe, TimeFormatPipe } from 'src/app/pipes/date-format.pipe'
 import { SpotbieMetaService } from 'src/app/services/meta/spotbie-meta.service'
 import { setYelpRatingImage } from 'src/app/helpers/info-object-helper'
+import { shareNative } from 'src/app/helpers/cordova/sharesheet'
 
 const YELP_BUSINESS_DETAILS_API = "https://api.yelp.com/v3/businesses/"
 
@@ -37,8 +38,6 @@ export class InfoObjectComponent implements OnInit {
 
   public isLoggedIn: string
 
-  public shareInfoObject: any = { open: false }
-
   public infoObjectLink: string
   public infoObjectDescription: string
   public infoObjectTitle: string
@@ -62,7 +61,7 @@ export class InfoObjectComponent implements OnInit {
       this.router.navigate(['/home'])
     else
       this.closeWindow.emit(null)
-    
+
   }
 
   private pullInfoObject(): void{
@@ -325,10 +324,6 @@ export class InfoObjectComponent implements OnInit {
 
   }
 
-  public shareIt(){
-    this.shareInfoObject.open = true
-  }
-
   public getEventCallback (httpResponse: any): void {
 
     if(httpResponse.success){      
@@ -412,6 +407,8 @@ export class InfoObjectComponent implements OnInit {
     }
 
     this.pullInfoObject()
+
+    
 
   }
 

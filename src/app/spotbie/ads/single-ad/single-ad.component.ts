@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AdsService } from '../ads.service';
+import { response } from 'express';
 
 @Component({
   selector: 'app-single-ad',
@@ -9,6 +10,10 @@ import { AdsService } from '../ads.service';
 export class SingleAdComponent implements OnInit {
 
   public ad: any = {}
+
+  public link: string
+
+  public displayAd: boolean = false
 
   constructor(private adsService: AdsService) { }
 
@@ -25,10 +30,22 @@ export class SingleAdComponent implements OnInit {
   public getSingleAdCallback(resp: any){
 
     if(resp.success){
-        this.ad.content = resp.ad.link
+
+      this.link = resp.ad.link.match(/href="([^"]*)/)[1]
+      this.ad.content = resp.ad.link.replace('target="_blank"', '')
+      this.ad.content = this.ad.content.replace(this.link, '')
+      
+      this.displayAd = true
+
     } else {
       console.log("getSingleAdCallback", resp)
     }
+
+  }
+
+  public openAd(): void{
+
+    window.open(this.link, "_system")
 
   }
 
