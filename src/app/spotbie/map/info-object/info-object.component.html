@@ -115,7 +115,7 @@
 
         <div class='spotbie-button spotbie-add-to-favorites' (click)="goToTicket()" *ngIf="info_object.type_of_info_object == 'ticketmaster_event'">Buy Tickets</div>
 
-        <div class='spotbie-share-buttons-wrappper' *ngIf="info_object !== undefined">
+        <div class='spotbie-share-buttons-wrappper' *ngIf="info_object !== undefined && !thisIsCordova">
 
             <button mat-fab class="spotbie-share-button" shareButton="facebook" 
                     [style.backgroundColor]="share.prop.facebook.color" 
@@ -154,7 +154,11 @@
             </button>
     
         </div>
-    
+        
+        <div class='spotbie-share-buttons-wrappper' *ngIf="thisIsCordova">
+            <i class="fa fa-share" aria-hidden="true" (click)="shareThisNative()"></i>
+        </div>
+
         <div class='spotbie-copy-link-button' (click)="linkCopy(infoObjectShareLink)">tap to copy link</div>
     
         <div class='spotbie-share-post-link' (click)="linkCopy(infoObjectShareLink)">

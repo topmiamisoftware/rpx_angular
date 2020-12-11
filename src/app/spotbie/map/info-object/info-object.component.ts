@@ -48,6 +48,8 @@ export class InfoObjectComponent implements OnInit {
 
   public objectDisplayAddress: string
 
+  public thisIsCordova: boolean = false
+
   constructor(private infoObjectService: InfoObjectServiceService,
               private myFavoritesService: MyFavoritesService,
               public share: ShareService,
@@ -373,6 +375,17 @@ export class InfoObjectComponent implements OnInit {
 
   }
 
+  public shareThisNative(){
+    
+    let message = this.infoObjectDescription
+    let subject = `${this.info_object.name} - ${this.objectCategories} - ${this.objectDisplayAddress}`
+    let url = this.infoObjectLink
+    let chooserTitle = "Pick an App!"
+
+    shareNative(message, subject, url, chooserTitle)
+
+  }
+
   ngOnInit(){
 
     this.loading = true
@@ -408,7 +421,12 @@ export class InfoObjectComponent implements OnInit {
 
     this.pullInfoObject()
 
-    
+    let thisIsCordova = localStorage.getItem('thisIsCordova')
+    if(thisIsCordova == '1'){
+      this.thisIsCordova = true
+    } else {
+      this.thisIsCordova = false
+    }
 
   }
 

@@ -40,7 +40,19 @@
 
     <!--<script type="text/javascript" src="cordova.js"></script>-->
 
-    <!--window.open = cordova.InAppBrowser.open;-->
+    <!--Comment this out on Cordova
+    <script>
+
+      localStorage.setItem('thisIsCordova', '1');
+      
+      document.addEventListener("deviceready", onDeviceReady, false);
+
+      function onDeviceReady() {
+        window.open = cordova.InAppBrowser.open;
+      }
+
+    </script>
+    -->
 
   </head>
 

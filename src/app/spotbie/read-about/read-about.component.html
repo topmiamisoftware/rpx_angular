@@ -20,7 +20,7 @@
 
             </div>                        
 
-            <table class="AppsRx" *ngIf="!is_android && !is_iphone">
+            <table class="AppsRx" *ngIf="!isCordova">
                 <tbody>
                     <tr>
                         <td (click)="appOpen(0)">

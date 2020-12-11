@@ -65,6 +65,8 @@ export class ReadAboutComponent implements OnInit {
 
     public spotbie_version: string = spotbieGlboals.VERSION;
 
+    public isCordova: boolean = false
+
     constructor(private platformStatsService: PlatformStatsService,
                 private host: MenuLoggedOutComponent) { }
     
@@ -205,11 +207,17 @@ export class ReadAboutComponent implements OnInit {
     ngOnInit() {
 
         this.loading = true
+
+        let thisIsCordova = localStorage.getItem('thisIsCordova')
+        if(thisIsCordova == '1'){
+          this.isCordova = true
+        } else {
+          this.isCordova = false
+        }
+
     }
 
     ngAfterViewInit() {
-        this.is_android = mobile_js_i.android_i
-        this.is_iphone = mobile_js_i.iphone_i
         this.getTotalUsers()
     }
 }

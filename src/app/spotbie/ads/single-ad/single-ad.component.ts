@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AdsService } from '../ads.service';
-import { response } from 'express';
+import { externalBrowserOpen } from 'src/app/helpers/cordova/web-intent'
 
 @Component({
   selector: 'app-single-ad',
@@ -38,6 +38,8 @@ export class SingleAdComponent implements OnInit {
       this.ad.content = this.ad.content.replace('<a', '<div')
       this.ad.content = this.ad.content.replace('</a>', '</div>')
       
+      this.ad.content = this.link
+
       this.displayAd = true
 
     } else {
@@ -49,7 +51,7 @@ export class SingleAdComponent implements OnInit {
   public openAd(): void{
     
     console.log("openAd", this.link)
-    window.open(this.link, "_system")
+    externalBrowserOpen(this.link)
 
   }
 
