@@ -24,7 +24,7 @@ import { environment } from '../environments/environment';
 @NgModule({
   declarations: [
     AppComponent,
-    UrlSanitizerPipe,
+    UrlSanitizerPipe
   ],
   imports: [
     AppRoutingModule,
