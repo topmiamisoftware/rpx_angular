@@ -34,6 +34,9 @@ export class SingleAdComponent implements OnInit {
       this.link = resp.ad.link.match(/href="([^"]*)/)[1]
       this.ad.content = resp.ad.link.replace('target="_blank"', '')
       this.ad.content = this.ad.content.replace(this.link, '')
+      this.ad.content = this.ad.content.replace('href', '')
+      this.ad.content = this.ad.content.replace('<a', '<div')
+      this.ad.content = this.ad.content.replace('</a>', '</div>')
       
       this.displayAd = true
 
@@ -44,7 +47,8 @@ export class SingleAdComponent implements OnInit {
   }
 
   public openAd(): void{
-
+    
+    console.log("openAd", this.link)
     window.open(this.link, "_system")
 
   }
