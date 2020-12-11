@@ -17,6 +17,8 @@ import { MetaModule } from '@ngx-meta/core';
 import { HelperModule } from './helpers/helper.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TokenInterceptor } from './helpers/token-interceptor/token-interceptor.service';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 
 @NgModule({
@@ -33,7 +35,8 @@ import { TokenInterceptor } from './helpers/token-interceptor/token-interceptor.
     UserModule,
     HelperModule,
     MetaModule.forRoot(),
-    BrowserAnimationsModule  
+    BrowserAnimationsModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })  
   ],  
   providers: [
     DeviceDetectorService,

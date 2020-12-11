@@ -4,13 +4,10 @@
     <i class="fa fa-times"></i>
 </div>
 
-<div class="spotbie-overlay-window" 
-    *ngIf="info_object !== undefined && info_object.image_url" 
-    [ngStyle]="{'background' : 'url(' + infoObjectImageUrl + ')' }">
+<div class="spotbie-overlay-window" [ngStyle]="{'background' : 'url(' + infoObjectImageUrl + ')' }">
 
-    <div class='spotbie-album-media-image-wrapper'></div>
-
-    <div *ngIf="info_object !== null && info_object !== undefined">
+    <div class='spotbie-album-media-image-wrapper' 
+            *ngIf="info_object !== null && info_object !== undefined">
 
         <div class='spotbie-info-object-title'>
             {{ info_object.name }}
@@ -118,58 +115,58 @@
 
         <div class='spotbie-button spotbie-add-to-favorites' (click)="goToTicket()" *ngIf="info_object.type_of_info_object == 'ticketmaster_event'">Buy Tickets</div>
 
+        <div class='spotbie-share-buttons-wrappper' *ngIf="info_object !== undefined">
+
+            <button mat-fab class="spotbie-share-button" shareButton="facebook" 
+                    [style.backgroundColor]="share.prop.facebook.color" 
+                    [url]="infoObjectLink"
+                    [title]="info_object.name"
+                    [description]="infoObjectDescription">     
+                <ngx-fa name="facebook" style="color:white;"></ngx-fa>
+            </button>
+    
+            <button mat-fab class="spotbie-share-button" shareButton="twitter" [style.backgroundColor]="share.prop.twitter.color"
+                    [url]="infoObjectLink"
+                    [title]="info_object.name"
+                    [description]="infoObjectDescription">    
+                <ngx-fa name="twitter" style="color:white;"></ngx-fa>
+            </button>
+    
+            <button mat-fab class="spotbie-share-button" shareButton="linkedin" [style.backgroundColor]="share.prop.linkedin.color"
+                    [url]="infoObjectLink"
+                    [title]="info_object.name"
+                    [description]="infoObjectDescription">     
+                <ngx-fa name="linkedin" style="color:white;"></ngx-fa>
+            </button>
+    
+            <button mat-fab class="spotbie-share-button" shareButton="reddit" [style.backgroundColor]="share.prop.reddit.color"
+                    [url]="infoObjectLink"
+                    [title]="info_object.name"
+                    [description]="infoObjectDescription">   
+                <ngx-fa name="reddit" style="color:white;"></ngx-fa>
+            </button> 
+    
+            <button mat-fab class="spotbie-share-button" shareButton="pinterest" [style.backgroundColor]="share.prop.pinterest.color"
+                    [url]="infoObjectLink"
+                    [title]="info_object.name"
+                    [description]="infoObjectDescription">     
+                <ngx-fa name="pinterest" style="color:white;"></ngx-fa>
+            </button>
+    
+        </div>
+    
+        <div class='spotbie-copy-link-button' (click)="linkCopy(infoObjectShareLink)">tap to copy link</div>
+    
+        <div class='spotbie-share-post-link' (click)="linkCopy(infoObjectShareLink)">
+    
+            <input class='spotbie-input' type='text' [(value)]="infoObjectLink" readonly #infoObjectShareLink/>
+    
+        </div>
+
     </div>
 
     <div class='spotbie-exif-optional'></div>
     <div class='spotbie-ai-items-in-image'></div>
-
-    <div class='spotbie-share-buttons-wrappper' *ngIf="info_object !== undefined">
-
-        <button mat-fab class="spotbie-share-button" shareButton="facebook" 
-                [style.backgroundColor]="share.prop.facebook.color" 
-                [url]="infoObjectLink"
-                [title]="info_object.name"
-                [description]="infoObjectDescription">     
-            <ngx-fa name="facebook" style="color:white;"></ngx-fa>
-        </button>
-
-        <button mat-fab class="spotbie-share-button" shareButton="twitter" [style.backgroundColor]="share.prop.twitter.color"
-                [url]="infoObjectLink"
-                [title]="info_object.name"
-                [description]="infoObjectDescription">    
-            <ngx-fa name="twitter" style="color:white;"></ngx-fa>
-        </button>
-
-        <button mat-fab class="spotbie-share-button" shareButton="linkedin" [style.backgroundColor]="share.prop.linkedin.color"
-                [url]="infoObjectLink"
-                [title]="info_object.name"
-                [description]="infoObjectDescription">     
-            <ngx-fa name="linkedin" style="color:white;"></ngx-fa>
-        </button>
-
-        <button mat-fab class="spotbie-share-button" shareButton="reddit" [style.backgroundColor]="share.prop.reddit.color"
-                [url]="infoObjectLink"
-                [title]="info_object.name"
-                [description]="infoObjectDescription">   
-            <ngx-fa name="reddit" style="color:white;"></ngx-fa>
-        </button> 
-
-        <button mat-fab class="spotbie-share-button" shareButton="pinterest" [style.backgroundColor]="share.prop.pinterest.color"
-                [url]="infoObjectLink"
-                [title]="info_object.name"
-                [description]="infoObjectDescription">     
-            <ngx-fa name="pinterest" style="color:white;"></ngx-fa>
-        </button>
-
-    </div>
-
-    <div class='spotbie-copy-link-button' (click)="linkCopy(infoObjectShareLink)">tap to copy link</div>
-
-    <div class='spotbie-share-post-link' (click)="linkCopy(infoObjectShareLink)">
-
-        <input class='spotbie-input' type='text' [(value)]="infoObjectLink" readonly #infoObjectShareLink/>
-
-    </div>
 
     <div class='spotbie-toast-message animated fadeIn' *ngIf="successful_url_copy">Object link copied.</div>
 

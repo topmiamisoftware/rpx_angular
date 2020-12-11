@@ -159,6 +159,11 @@
 }
 .spotbie-album-media-image-wrapper{
     background-color: rgba(0,0,0,.63);
+    padding-bottom: 40px;
+    overflow-y: scroll !important;
+}
+.spotbie-overlay-window{
+    overflow:  hidden !important;
 }
 @media (max-width: 1583px) { 
 
@@ -195,6 +200,19 @@
         font-size: 18px;
         max-width: 90%;
         letter-spacing: 1px;
+    }
+    .spotbie-overlay-window{
+        padding-top: env(safe-area-inset-top, 20px);
+        padding-bottom: 50px !important;
+        background-attachment: scroll !important;  
+    }
+    .spotbie-share-post-link{
+        margin-bottom: 50px !important;
+    }
+    .spotbie-album-media-image-wrapper{
+        padding-top: env(safe-area-inset-top, 20px);
+        background-attachment: scroll !important;   
+        padding-bottom: 50px !important;
     }
 }
 @media (max-width: 460px) { 
