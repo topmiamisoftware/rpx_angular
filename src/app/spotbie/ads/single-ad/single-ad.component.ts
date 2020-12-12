@@ -48,7 +48,6 @@ export class SingleAdComponent implements OnInit {
 
   public openAd(): void{
     
-    console.log("openAd", this.link)
     externalBrowserOpen(this.link)
 
   }

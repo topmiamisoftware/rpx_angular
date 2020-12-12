@@ -700,7 +700,7 @@ export class MapComponent implements OnInit {
 
   public getEventsSearchCallback (httpResponse: any): void {
     
-    console.log("event_object", httpResponse)
+    //console.log("event_object", httpResponse)
 
     if(httpResponse.success){      
 

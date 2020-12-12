@@ -8,13 +8,14 @@ import { SpotbieMetaService } from 'src/app/services/meta/spotbie-meta.service'
 import { setYelpRatingImage } from 'src/app/helpers/info-object-helper'
 import { shareNative } from 'src/app/helpers/cordova/sharesheet'
 import { isCordova } from 'src/app/helpers/cordova/cordova-variables'
+import { externalBrowserOpen } from 'src/app/helpers/cordova/web-intent'
 
 const YELP_BUSINESS_DETAILS_API = "https://api.yelp.com/v3/businesses/"
 
 @Component({
   selector: 'app-info-object',
   templateUrl: './info-object.component.html',
-  styleUrls: [ './info-object-share/info-object-share.component.css', './info-object.component.css']
+  styleUrls: ['./info-object.component.css']
 })
 export class InfoObjectComponent implements OnInit {
 
@@ -165,9 +166,7 @@ export class InfoObjectComponent implements OnInit {
           break
         case 'shopping':
           this.infoObjectDescription = `I really recommend you go shopping at ${this.info_object.name}!`
-          break
-        case 'events':
-          break          
+          break        
       }
 
       this.info_object.rating_image = setYelpRatingImage(this.info_object.rating)
@@ -245,7 +244,7 @@ export class InfoObjectComponent implements OnInit {
   }
 
   public goToTicket(): void{
-    window.open(this.info_object.url, "_blank")
+    externalBrowserOpen(this.info_object.url)
   }
 
   public addFavorite(): void{
@@ -349,13 +348,8 @@ export class InfoObjectComponent implements OnInit {
       event_object.icon = event_object.images[0].url
 
       event_object.image_url = event_object.images[8].url
-      this.infoObjectImageUrl = event_object.image_url
 
       event_object.type_of_info_object = "ticketmaster_event"
-
-      this.infoObjectDescription = `Let's go to ${event_object.name}!`
-
-      this.infoObjectLink = `https://spotbie.com/event/${this.activatedRoute.snapshot.paramMap.get('id')}`
 
       let dt_obj = new Date(event_object.dates.start.localDate)
 
@@ -367,7 +361,9 @@ export class InfoObjectComponent implements OnInit {
 
       this.info_object = event_object
       
-      console.log("InfoObject", this.info_object)
+      this.setEventMetaData()
+
+      //console.log("EventObject", this.info_object)
 
     } else
       console.log("getEventsSearchCallback Error: ", httpResponse)
@@ -387,6 +383,19 @@ export class InfoObjectComponent implements OnInit {
 
   }
 
+  public setEventMetaData(){
+  
+    let alias = this.info_object.name.toLowerCase().replace(/ /g,'-').replace(/[-]+/g, '-').replace(/[^\w-]+/g,'')
+    this.infoObjectLink = `https://spotbie.com/event/${alias}/${this.info_object.id}`
+    this.infoObjectImageUrl = this.info_object.image_url
+    this.infoObjectDescription = `Hey! Let's go to ${this.info_object.name} together. It's at ${this.info_object._embedded.venues[0].name} located in ${this.info_object._embedded.venues[0].address.line1}, ${this.info_object._embedded.venues[0].city.name} ${this.info_object._embedded.venues[0].postalCode}. Prices range from $${this.info_object.priceRanges[0].min} to $${this.info_object.priceRanges[0].min}`
+
+    this.spotbieMetaService.setTitle(`${this.info_object.name} at ${this.info_object._embedded.venues[0].name}`)
+    this.spotbieMetaService.setDescription(this.infoObjectDescription)
+    this.spotbieMetaService.setImage(this.infoObjectImageUrl)
+
+  }
+
   ngOnInit(){
 
     this.loading = true
@@ -395,6 +404,8 @@ export class InfoObjectComponent implements OnInit {
     this.isLoggedIn = localStorage.getItem('spotbie_loggedIn')
     
     this.isCordova = isCordova()
+
+    console.log("EventObject", this.info_object)
 
     if(this.info_object !== undefined){
       
@@ -405,8 +416,8 @@ export class InfoObjectComponent implements OnInit {
           this.urlApi = YELP_BUSINESS_DETAILS_API + this.info_object.id
           break
         case 'ticketmaster_event':
+          this.setEventMetaData()
           this.loading = false
-          this.infoObjectLink = `https://spotbie.com/event/${this.info_object.id}`
           return
       }
 
@@ -421,7 +432,7 @@ export class InfoObjectComponent implements OnInit {
       }
 
     }
-
+    
     this.pullInfoObject()
 
   }
