@@ -37,8 +37,6 @@ export class SingleAdComponent implements OnInit {
       this.ad.content = this.ad.content.replace('href', '')
       this.ad.content = this.ad.content.replace('<a', '<div')
       this.ad.content = this.ad.content.replace('</a>', '</div>')
-      
-      this.ad.content = this.link
 
       this.displayAd = true
 
