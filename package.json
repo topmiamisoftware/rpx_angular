@@ -14,7 +14,8 @@
     "build:ssr": "ng build --prod && ng run spotbie:server:production",
     "prerender": "ng run spotbie:prerender",
     "build:android": "ng build --prod --base-href . --output-path ~/Desktop/spotbie/spotbie_android/www/",
-    "build:ios": "ng build --prod --base-href . --output-path ~/Desktop/spotbie/spotbie_ios/www/"
+    "build:ios": "ng build --prod --base-href . --output-path ~/Desktop/spotbie/spotbie_ios/www/",
+    "deploy:server": "node deploy"
   },
   "private": true,
   "dependencies": {
@@ -78,6 +79,7 @@
     "@types/swiper": "^4.4.9",
     "agm-overlays": "^2.0.0",
     "codelyzer": "^5.1.2",
+    "ftp-deploy": "^2.3.8",
     "jasmine-core": "~3.4.0",
     "jasmine-spec-reporter": "~4.2.1",
     "karma": "^5.1.0",
