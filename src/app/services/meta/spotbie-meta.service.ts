@@ -12,6 +12,7 @@ export class SpotbieMetaService {
 
     this.metaService.setTitle(title)
     this.metaService.setTag("twitter:title", title)
+    this.metaService.setTag("og:title", title)
 
   }
 
@@ -19,6 +20,7 @@ export class SpotbieMetaService {
 
     this.metaService.setTag("description", description)
     this.metaService.setTag("twitter:description", description)
+    this.metaService.setTag("og:description", description)
 
   }
 
