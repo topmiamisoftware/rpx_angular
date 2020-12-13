@@ -162,16 +162,18 @@ export class InfoObjectComponent implements OnInit {
 
       switch(this.info_object.type_of_info_object_category){
         case 'food':
+          this.infoObjectTitle = `${this.info_object.name} - ${this.objectCategories} - ${this.objectDisplayAddress}`
           this.infoObjectDescription = `Let's go eat at ${this.info_object.name}. I know you'll enjoy some of these categories ${this.objectCategories}. They are located at ${this.objectDisplayAddress}.`
           break
         case 'shopping':
+          this.infoObjectTitle = `${this.info_object.name} - ${this.objectCategories} - ${this.objectDisplayAddress}`
           this.infoObjectDescription = `I really recommend you go shopping at ${this.info_object.name}!`
           break        
       }
 
       this.info_object.rating_image = setYelpRatingImage(this.info_object.rating)
 
-      this.spotbieMetaService.setTitle(`${this.info_object.name} - ${this.objectCategories} - ${this.objectDisplayAddress}`)
+      this.spotbieMetaService.setTitle(this.infoObjectTitle)
       this.spotbieMetaService.setDescription(this.infoObjectDescription)
       this.spotbieMetaService.setImage(this.infoObjectImageUrl)
       
@@ -375,7 +377,7 @@ export class InfoObjectComponent implements OnInit {
   public shareThisNative(){
     
     let message = this.infoObjectDescription
-    let subject = `${this.info_object.name} - ${this.objectCategories} - ${this.objectDisplayAddress}`
+    let subject = this.infoObjectTitle
     let url = this.infoObjectLink
     let chooserTitle = "Pick an App!"
 
@@ -386,11 +388,14 @@ export class InfoObjectComponent implements OnInit {
   public setEventMetaData(){
   
     let alias = this.info_object.name.toLowerCase().replace(/ /g,'-').replace(/[-]+/g, '-').replace(/[^\w-]+/g,'')
+    let title = `${this.info_object.name} at ${this.info_object._embedded.venues[0].name}`
+
     this.infoObjectLink = `https://spotbie.com/event/${alias}/${this.info_object.id}`
     this.infoObjectImageUrl = this.info_object.image_url
     this.infoObjectDescription = `Hey! Let's go to ${this.info_object.name} together. It's at ${this.info_object._embedded.venues[0].name} located in ${this.info_object._embedded.venues[0].address.line1}, ${this.info_object._embedded.venues[0].city.name} ${this.info_object._embedded.venues[0].postalCode}. Prices range from $${this.info_object.priceRanges[0].min} to $${this.info_object.priceRanges[0].min}`
+    this.infoObjectTitle = title
 
-    this.spotbieMetaService.setTitle(`${this.info_object.name} at ${this.info_object._embedded.venues[0].name}`)
+    this.spotbieMetaService.setTitle(title)
     this.spotbieMetaService.setDescription(this.infoObjectDescription)
     this.spotbieMetaService.setImage(this.infoObjectImageUrl)
 
