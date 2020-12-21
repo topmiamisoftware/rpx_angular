@@ -7,7 +7,7 @@
         [cpDialogDisplay]="'popup'"      
         [cpOKButton]="true"
         [cpOKButtonText]="'Select Color'"
-        [cpOKButtonClass]="'spotbie-color-picker-ok spotbie-button'"      
+        [cpOKButtonClass]="'spotbie-color-picker-ok sb-button'"      
         [(colorPicker)]="picked_color"
         [cpCloseClickOutside]="false"
         [cpSaveClickOutside]="false"
@@ -17,7 +17,7 @@
         (colorPickerSelect)="confirmColorPick(picked_color)"
         [style.background]="picked_color" />      
 
-        <div class="spotbie-close-button" (click)="closeWindow()">
+        <div class="sb-closeButton" (click)="closeWindow()">
           <i class="fa fa-times"></i>
       </div>
 

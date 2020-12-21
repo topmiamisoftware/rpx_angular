@@ -7,12 +7,14 @@ import { UserComponent } from './user/user.component'
 import { UserMetaService } from './user/user-meta/user-meta.service'
 import { MetaService, MetaGuard } from '@ngx-meta/core'
 import { InfoObjectComponent } from './spotbie/map/info-object/info-object.component'
+import { BugsComponent } from './bugs/bugs.component'
 
 let user_service = new UserMetaService()
 
 export const routes: Routes = [
   { path: 'home',  loadChildren: './home/home.module#HomeModule'},
   { path: 'terms', component: TermsComponent },
+  { path: 'bugs', component: BugsComponent },
   { path: 'password', component: ForgotPasswordComponent },
   { path: 'password/reset/:token', component: ForgotPasswordComponent },
   { path: 'place-to-eat/:name/:id', component: InfoObjectComponent },

@@ -144,10 +144,10 @@
             <table class="spotbie-confirm-box-table">
                 <tr>
                     <td (click)="confirmAlbumDelete()">
-                        <div class='spotbie-button'>Delete Album</div>
+                        <div class='sb-button'>Delete Album</div>
                     </td>
                     <td (click)="declineAlbumDelete()">
-                        <div class='spotbie-button'>Cancel</div>
+                        <div class='sb-button'>Cancel</div>
                     </td>
                 </tr>
             </table>
@@ -155,7 +155,7 @@
 
     </div>
 
-    <div class="spotbie-close-button" (click)="closeWindow()">
+    <div class="sb-closeButton" (click)="closeWindow()">
         <i class="fa fa-times"></i>
     </div>
 
@@ -206,7 +206,7 @@
 
             <div class='spotbie-album-media-upload-title' #albumMediaFileInfoMessage>{{ album_media_uploaded_msg }}</div>
 
-            <button class='spotbie-button'>Save Album</button>
+            <button class='sb-button'>Save Album</button>
 
             <table class='spotbie-settings-table'>                     
         
@@ -232,7 +232,7 @@
                             <div #spotbie_settings_issues class="spotbie-input-info"></div>          
                         </ng-template>                        
                         
-                        <input class="spotbie-input" (click)="$event.target.select()" formControlName="spotbie_album_name" type="text" placeholder="Album Name" maxlength="35" />
+                        <input class="sb-input" (click)="$event.target.select()" formControlName="spotbie_album_name" type="text" placeholder="Album Name" maxlength="35" />
 
                     </td>
                 </tr>
@@ -253,7 +253,7 @@
                         <ng-template #album_description_normal>
                             <div #spotbie_settings_issues class="spotbie-input-info"></div>          
                         </ng-template>                        
-                        <textarea class="spotbie-input-textarea spotbie-input"
+                        <textarea class="spotbie-input-textarea sb-input"
                                     formControlName="spotbie_album_description" type="text" 
                                     placeholder="Album Description" maxlength="350"></textarea>
                     </td>
@@ -283,7 +283,7 @@
 
         </form>
 
-        <div class='spotbie-close-button' (click)="toggleAlbumMakerForm()">
+        <div class='sb-closeButton' (click)="toggleAlbumMakerForm()">
             <i class="fa fa-times"></i>
         </div>
 
@@ -371,10 +371,10 @@
             <table class="spotbie-confirm-box-table">
                 <tr>
                     <td (click)="confirmAlbumDelete()">
-                        <div class='spotbie-button'>Delete Album</div>
+                        <div class='sb-button'>Delete Album</div>
                     </td>
                     <td (click)="declineAlbumDelete()">
-                        <div class='spotbie-button'>Cancel</div>
+                        <div class='sb-button'>Cancel</div>
                     </td>
                 </tr>
             </table>
@@ -382,7 +382,7 @@
 
     </div>
 
-    <div class="spotbie-close-button" (click)="closeWindow()"><i class="fa fa-times"></i></div>
+    <div class="sb-closeButton" (click)="closeWindow()"><i class="fa fa-times"></i></div>
 
 </div>
 

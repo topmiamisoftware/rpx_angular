@@ -19,12 +19,15 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TokenInterceptor } from './helpers/token-interceptor/token-interceptor.service';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
-
+import { TermsComponent } from './terms/terms.component';
+import { BugsComponent } from './bugs/bugs.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    UrlSanitizerPipe
+    UrlSanitizerPipe,
+    TermsComponent,
+    BugsComponent
   ],
   imports: [
     AppRoutingModule,

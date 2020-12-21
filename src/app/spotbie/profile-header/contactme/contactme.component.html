@@ -3,7 +3,7 @@
 
 <div class='spotbie-overlay-window'>
 
-    <div class='spotbie-close-button' (click)="closeWindow()">
+    <div class='sb-closeButton' (click)="closeWindow()">
         <i class="fa fa-times"></i>
     </div>
 
@@ -26,7 +26,7 @@
                             </div>                                                  
                         </div>     
 
-                        <input class='spotbie-input' formControlName="facebook" placeholder="Facebook" (click)="$event.target.select()" maxlength="130" />       
+                        <input class='sb-input' formControlName="facebook" placeholder="Facebook" (click)="$event.target.select()" maxlength="130" />       
 
                     </td>
                 </tr>
@@ -40,7 +40,7 @@
                                 Instagram can only be 130 characters or less in length.
                             </div>                                             
                         </div>                                         
-                        <input class='spotbie-input' formControlName="instagram" placeholder="Instagram" (click)="$event.target.select()" maxlength="130" />                        
+                        <input class='sb-input' formControlName="instagram" placeholder="Instagram" (click)="$event.target.select()" maxlength="130" />                        
                     </td>
                 </tr>
                 <tr>
@@ -53,7 +53,7 @@
                                 Twitter can only be 130 characters or less in length.
                             </div>                                                 
                         </div>                                          
-                        <input class='spotbie-input' formControlName="twitter" placeholder="Twitter" (click)="$event.target.select()" maxlength="130" />                        
+                        <input class='sb-input' formControlName="twitter" placeholder="Twitter" (click)="$event.target.select()" maxlength="130" />                        
                     </td>
                 </tr>
                 <tr>
@@ -67,7 +67,7 @@
                             </div>                                                 
                         </div>                         
                 
-                        <input class='spotbie-input' formControlName="whatsapp" placeholder="WhatsApp" (click)="$event.target.select()" maxlength="130" />                        
+                        <input class='sb-input' formControlName="whatsapp" placeholder="WhatsApp" (click)="$event.target.select()" maxlength="130" />                        
                     </td>
                 </tr>
                 <tr>
@@ -80,12 +80,12 @@
                                 Snapchat can only be 130 characters or less in length.
                             </div>                                                  
                         </div>                                             
-                        <input class='spotbie-input' formControlName="snapchat" placeholder="Snapchat" (click)="$event.target.select()" maxlength="130" />                        
+                        <input class='sb-input' formControlName="snapchat" placeholder="Snapchat" (click)="$event.target.select()" maxlength="130" />                        
                     </td>
                 </tr>                
             </table>
 
-            <div class='spotbie-button spotbie-button-mini' (click)="saveContactMe()" *ngIf="this.publicProfileInfo === undefined">Save ContactMe</div>            
+            <div class='sb-button sb-button-mini' (click)="saveContactMe()" *ngIf="this.publicProfileInfo === undefined">Save ContactMe</div>            
 
         </form>
 

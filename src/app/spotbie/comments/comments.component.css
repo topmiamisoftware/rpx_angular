@@ -5,10 +5,10 @@
     font-size: 24px;
     color: white;
 }
-.spotbie-textarea::placeholder{
+textarea::placeholder{
     color: grey;
 }
-.spotbie-textarea{
+textarea{
     border: 1px solid white;
     color: white;
     text-align: left;
@@ -22,7 +22,7 @@
     min-height: 70px;
     resize: vertical;
 }
-.spotbie-button{
+.sb-button{
     font-size: 18px;
     letter-spacing: 2px;
     background-color: rgba(0, 0, 0, 0.65)
@@ -126,7 +126,7 @@
      
 }
 @media (max-width: 460px) { 
-    .spotbie-textarea{
+    textarea{
         font-size: 14px;
         padding: 4%;
         width: 90%;
@@ -134,7 +134,7 @@
         max-width: 90%;   
         border: 1px solid #abaaaa96;     
     }
-    .spotbie-button{
+    .sb-button{
         width: 250px;
         min-width: 250px;
         max-width: 250px;

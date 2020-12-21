@@ -24,17 +24,17 @@
 
     <div class='spotbie-friend-action-buttons'>
 
-        <div class='spotbie-button' [routerLink]="['/user-profile/' + around_me_user.username]">View Profile</div>
+        <div class='sb-button' [routerLink]="['/user-profile/' + around_me_user.username]">View Profile</div>
 
-        <div class='spotbie-button' (click)="unfriend()">Unfriend</div>
+        <div class='sb-button' (click)="unfriend()">Unfriend</div>
 
-        <div class='spotbie-button' (click)="blockUser()">Block</div>
+        <div class='sb-button' (click)="blockUser()">Block</div>
 
-        <div class='spotbie-button' (click)="reportReasonsWindow()">Report</div>
+        <div class='sb-button' (click)="reportReasonsWindow()">Report</div>
 
     </div>
 
-    <div class="spotbie-close-button" (click)="closeActionsx()"><i class="fa fa-times"></i></div>
+    <div class="sb-closeButton" (click)="closeActionsx()"><i class="fa fa-times"></i></div>
 
     <div class="spotbie-successful-action-wrapper" *ngIf="successful_action">
         <div class="spotbie-successful-action-title">

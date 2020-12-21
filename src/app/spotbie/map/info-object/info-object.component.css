@@ -16,7 +16,7 @@
     margin-bottom: 30px;
     cursor: pointer;
 }
-.spotbie-input{
+.sb-input{
     width: 550px;
     min-width: 550px;
     max-width: 550px;
@@ -144,7 +144,7 @@
     top: 50%;
     transform: translateY(-50%);
 }
-.spotbie-close-button{
+.sb-closeButton{
     z-index: 9999999;
 }
 .spotbie-info-object-transactions{
@@ -274,7 +274,7 @@
     margin-bottom: 20px;
     cursor: pointer;
 }
-.spotbie-button{
+.sb-button{
     background-color: rgba(0,0,0,.5);
 }
 .spotbie-add-to-favorites{
@@ -352,7 +352,7 @@
         background-attachment: scroll !important;   
         padding-bottom: 50px !important;
     }
-    .spotbie-input{
+    .sb-input{
         width: 92%;
         min-width: 92%;
         max-width: 92%;        

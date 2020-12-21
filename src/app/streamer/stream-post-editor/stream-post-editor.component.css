@@ -23,7 +23,7 @@
     cursor: pointer;
     border-radius: 10px;
 }
-.spotbie-textarea{
+textarea{
     width: 100%;
     min-width: 100%;
     max-width: 100%;

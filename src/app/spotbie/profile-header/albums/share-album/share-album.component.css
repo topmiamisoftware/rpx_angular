@@ -20,7 +20,7 @@
     margin-bottom: 30px;
     cursor: pointer;
 }
-.spotbie-input{
+.sb-input{
     width: 550px;
     min-width: 550px;
     max-width: 550px;
@@ -101,7 +101,7 @@
     background-color: rgba(0,0,0,.7);
 }
 @media (max-width: 560px){
-    .spotbie-close-button{
+    .sb-closeButton{
         max-width: 80px;
         padding-top: 10px;
         padding-bottom: 10px;
@@ -112,7 +112,7 @@
     } 
 }
 @media (max-width: 460px) { 
-    .spotbie-input{
+    .sb-input{
         width: 80%;
         min-width: 80%;
         max-width: 80%;        

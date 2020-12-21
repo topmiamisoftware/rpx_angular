@@ -1,6 +1,6 @@
 <app-loading-screen *ngIf="loading"></app-loading-screen>
 
-<div class="spotbie-close-button" (click)="closeWindow()">
+<div class="sb-closeButton" (click)="closeWindow()">
   <i class="fa fa-times"></i>
 </div>
 
@@ -39,7 +39,7 @@
       </div>
     </ng-template>
 
-    <input class="spotbie-input" id="spotbieLoginUsername" formControlName="spotbieUsername" type="text" placeholder="Username or E-mail" autocomplete="username"/>
+    <input class="sb-input" id="spotbieLoginUsername" formControlName="spotbieUsername" type="text" placeholder="Username or E-mail" autocomplete="username"/>
 
     <div *ngIf="submitted && f.spotbiePassword.errors else password_normal" class="spotbie-invalid-feedback animated shake">
               
@@ -55,7 +55,7 @@
       </div>
     </ng-template>
 
-    <input class="spotbie-input" id="spotbieLoginPassword" formControlName="spotbiePassword" type="password" placeholder="Password" autocomplete="password"/>
+    <input class="sb-input" id="spotbieLoginPassword" formControlName="spotbiePassword" type="password" placeholder="Password" autocomplete="password"/>
 
     <table class="spotbie-toggle" (click)="toggleRememberMe()">
 
@@ -68,7 +68,7 @@
 
     </table>
     
-    <button class="spotbie-button spotbie-padding">
+    <button class="sb-button spotbie-padding">
       Log-In
     </button>
 

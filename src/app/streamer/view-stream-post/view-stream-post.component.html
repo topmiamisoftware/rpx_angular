@@ -47,12 +47,12 @@
     <div class='spotbie-copy-link-button' (click)="linkCopy(spotbie_share_link)">tap to copy link</div>
 
     <div class='spotbie-share-post-link' (click)="linkCopy(spotbie_share_link)">
-        <input class='spotbie-input' type='text' [attr.value]="stream_post.stream_link" readonly #spotbie_share_link/>
+        <input class='sb-input' type='text' [attr.value]="stream_post.stream_link" readonly #spotbie_share_link/>
     </div>
 
     <table class="spotbie-bottom-button-bar">
         <tr>
-            <td class="spotbie-button spotbie-td-button" (click)="closeWindowX()">close</td>
+            <td class="sb-button spotbie-td-button" (click)="closeWindowX()">close</td>
         </tr>
     </table>
     

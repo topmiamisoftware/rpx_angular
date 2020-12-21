@@ -1,6 +1,6 @@
 @import '~@ctrl/ngx-emoji-mart/picker.css';
 
-.spotbie-button{
+.sb-button{
     text-align: center;
     background-color: rgba(0,0,0,.23);
     margin-top: unset;
@@ -262,7 +262,7 @@
     .spotbie-stream-poster-info-text{
         display: none;
     }  
-    .spotbie-button {
+    .sb-button {
         font-size: 20px;
     }
 }
@@ -284,7 +284,7 @@
     .spotbie-stream-poster-extra-media-option i {
         font-size: 23px;
     }
-    .spotbie-button {
+    .sb-button {
         font-size: 18px;
         margin-top: 20px;
         width: 150px;

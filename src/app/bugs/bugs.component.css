@@ -1,0 +1,84 @@
+h2, h3, p, li {
+
+    color: black
+
+}
+
+h1, a {
+
+    color: #4a8b00
+
+}
+
+h1, p {
+
+    text-align: center
+
+}
+
+.sb-mainWrapper {
+
+    background-color: rgba(255, 255, 255, .9)
+
+}
+
+.sb-backgroundImg {
+
+    background: url(/assets/images/background.png)
+
+}
+
+.termsWrapper{
+    
+    position: relative;
+    margin: 0 auto;
+    width: 96%;
+    min-width: 96%;
+    max-width: 96%
+
+}
+
+/**WIDTH MEDIA QUERIES */
+@media (max-width: 1300px) { 
+
+}
+@media (max-width: 1200px) {   
+   
+}
+@media (max-width: 1024px) { 
+
+}
+@media (max-width: 900px) { 
+
+}
+@media (max-width: 768px) { 
+
+}
+@media (max-width: 700px) { 
+
+}
+@media (max-width: 600px) { 
+
+}
+@media (max-width: 560px) { 
+     
+}
+@media (max-width: 460px) { 
+
+}
+@media (max-width: 420px) { 
+               
+}
+@media (max-width: 360px) { 
+    
+}
+
+@media (max-width: 320px) {
+
+}
+@media (max-width: 220px) { 
+
+}
+@media (max-width: 120px) { 
+
+}

@@ -1,6 +1,6 @@
 <app-loading-screen *ngIf="loading"></app-loading-screen>
 
-<div class="spotbie-close-button" (click)="closeWindowX()">
+<div class="sb-closeButton" (click)="closeWindowX()">
     <i class="fa fa-times"></i>
 </div>
 
@@ -106,14 +106,14 @@
     
         <div class='spotbie-info-object-transactions'> {{ info_object.friendly_transactions }} </div>
 
-        <div class='spotbie-button spotbie-add-to-favorites' (click)="addFavorite()" *ngIf="info_object.type_of_info_object != 'ticketmaster_event' && showFavorites">
+        <div class='sb-button spotbie-add-to-favorites' (click)="addFavorite()" *ngIf="info_object.type_of_info_object != 'ticketmaster_event' && showFavorites">
             Add to Favorites
             <i class='fa fa-star'></i>
         </div>
 
-        <div class='spotbie-button spotbie-add-to-favorites' (click)="removeFavorite()" *ngIf="info_object.type_of_info_object != 'ticketmaster_event' && !showFavorites">Remove Favorite</div>
+        <div class='sb-button spotbie-add-to-favorites' (click)="removeFavorite()" *ngIf="info_object.type_of_info_object != 'ticketmaster_event' && !showFavorites">Remove Favorite</div>
 
-        <div class='spotbie-button spotbie-add-to-favorites' (click)="goToTicket()" *ngIf="info_object.type_of_info_object == 'ticketmaster_event'">Buy Tickets</div>
+        <div class='sb-button spotbie-add-to-favorites' (click)="goToTicket()" *ngIf="info_object.type_of_info_object == 'ticketmaster_event'">Buy Tickets</div>
 
         <div class='spotbie-share-buttons-wrappper' *ngIf="info_object !== undefined && !isCordova">
 
@@ -163,7 +163,7 @@
     
         <div class='spotbie-share-post-link' (click)="linkCopy(infoObjectShareLink)">
     
-            <input class='spotbie-input' type='text' [(value)]="infoObjectLink" readonly #infoObjectShareLink/>
+            <input class='sb-input' type='text' [(value)]="infoObjectLink" readonly #infoObjectShareLink/>
     
         </div>
 

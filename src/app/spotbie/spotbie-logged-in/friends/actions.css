@@ -33,7 +33,7 @@
     text-align: center;
     color: white;
 }
-.spotbie-button{
+.sb-button{
     margin-left: 5px;
     margin-right: 5px;
     background-color:#4a4a4a;
@@ -45,11 +45,11 @@
     min-width: 800px;
     max-width: 800px;
 }
-.spotbie-friend-action-buttons .spotbie-button{
+.spotbie-friend-action-buttons .sb-button{
     position: relative;
     display: inline-block;
 }
-.spotbie-close-button{
+.sb-closeButton{
     z-index: 999999;
 }
 .spotbie-successful-action-wrapper{
@@ -155,7 +155,7 @@
         min-width: 95%;
         max-width: 95%;
     }
-    .spotbie-button{
+    .sb-button{
         width: 95%;
         min-width: 95%;
         max-width: 95%;
@@ -163,7 +163,7 @@
     }
 }
 @media (max-width: 560px) { 
-    .spotbie-friend-action-buttons .spotbie-button{
+    .spotbie-friend-action-buttons .sb-button{
         display: block;
     }  
 }

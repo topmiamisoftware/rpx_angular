@@ -24,21 +24,21 @@
 
     <div class='spotbie-friend-action-buttons'>
 
-        <div class='spotbie-button' *ngIf="relationship == 1" (click)="unfriend()">Unfriend</div>
+        <div class='sb-button' *ngIf="relationship == 1" (click)="unfriend()">Unfriend</div>
 
-        <div class='spotbie-button' *ngIf="relationship == 0" (click)="cancelRequest()">Cancel Request</div> 
+        <div class='sb-button' *ngIf="relationship == 0" (click)="cancelRequest()">Cancel Request</div> 
 
-        <div class='spotbie-button' *ngIf="relationship == null || relationship == 2" (click)="addFriend()">Add Friend</div> 
+        <div class='sb-button' *ngIf="relationship == null || relationship == 2" (click)="addFriend()">Add Friend</div> 
 
-        <div class='spotbie-button' *ngIf="relationship == null || relationship == 1 || relationship == 0" (click)="blockUser()">Block</div>
+        <div class='sb-button' *ngIf="relationship == null || relationship == 1 || relationship == 0" (click)="blockUser()">Block</div>
 
-        <div class='spotbie-button' *ngIf="relationship == 2" (click)="unblockUser()">Unblock</div>
+        <div class='sb-button' *ngIf="relationship == 2" (click)="unblockUser()">Unblock</div>
 
-        <div class='spotbie-button' (click)="reportReasonsWindow()">Report</div>
+        <div class='sb-button' (click)="reportReasonsWindow()">Report</div>
 
     </div>
 
-    <div class="spotbie-close-button" (click)="closeActionsx()">close</div>
+    <div class="sb-closeButton" (click)="closeActionsx()">close</div>
 
     <div class="spotbie-successful-action-wrapper" *ngIf="successful_action">
         <div class="spotbie-successful-action-title">

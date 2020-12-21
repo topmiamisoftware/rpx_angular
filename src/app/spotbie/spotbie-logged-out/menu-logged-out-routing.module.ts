@@ -7,7 +7,6 @@ import { LastLoggedComponent } from 'src/app/spotbie/spotbie-logged-out/last-log
 import { SignUpComponent } from 'src/app/spotbie/spotbie-logged-out/sign-up/sign-up.component'
 import { ForgotPasswordComponent } from 'src/app/spotbie/spotbie-logged-out/forgot-password/forgot-password.component'
 import { ReadAboutComponent } from 'src/app/spotbie/read-about/read-about.component'
-import { TermsComponent } from 'src/app/terms/terms.component'
 import { FeaturesComponent } from 'src/app/spotbie/features/features.component'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { HttpClientModule } from '@angular/common/http'
@@ -25,8 +24,7 @@ export const options : Partial<IConfig> | (() => Partial<IConfig>) = null
     SignUpComponent,
     ForgotPasswordComponent,
     ReadAboutComponent,
-    TermsComponent,
-    FeaturesComponent
+    FeaturesComponent,
   ],
   imports: [
     CommonModule,

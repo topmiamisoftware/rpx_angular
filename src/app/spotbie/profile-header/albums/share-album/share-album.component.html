@@ -60,10 +60,10 @@
     <div class='spotbie-copy-link-button' (click)="linkCopy(spotbie_share_link)">tap to copy link</div>
 
     <div class='spotbie-share-post-link' (click)="linkCopy(spotbie_share_link)">
-        <input class='spotbie-input' type='text' [attr.value]="album_link" readonly #spotbie_share_link/>
+        <input class='sb-input' type='text' [attr.value]="album_link" readonly #spotbie_share_link/>
     </div>
 
-    <div class="spotbie-close-button" (click)="closeWindow()"><i class="fa fa-times"></i></div>
+    <div class="sb-closeButton" (click)="closeWindow()"><i class="fa fa-times"></i></div>
 
     <div class='spotbie-toast-message animated fadeIn' *ngIf="successful_url_copy">Album link copied.</div>
 

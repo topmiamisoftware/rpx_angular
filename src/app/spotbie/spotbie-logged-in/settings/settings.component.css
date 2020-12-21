@@ -22,7 +22,7 @@
     padding-top: 20px;
     padding-bottom: 20px;
 }
-.spotbie-button{
+.sb-button{
     cursor: pointer;
     background-color: transparent;
     margin-top: 20px;
@@ -30,7 +30,7 @@
     min-width: 100%;
     max-width: 100%;      
 }
-.spotbie-button-mini {
+.sb-button-mini {
     margin-top: 20px;
     font-size: 18px;
     background-color: rgba(0,0,0,.23);
@@ -98,10 +98,10 @@
 .agm-map-container-inner{
     margin: 0 auto !important;
 }
-.spotbie-input{
+.sb-input{
     min-width: 500px;
 }
-.spotbie-textarea{
+textarea{
     height: 300px;
     min-height: 300px;
     max-height : 300px;
@@ -201,7 +201,7 @@
     }
 }
 @media (max-width: 460px) {
-    .spotbie-input{
+    .sb-input{
         min-width: 90%;
     }
     .spotbie-input-info{
@@ -223,7 +223,7 @@
         font-size: 16px;
         padding: unset;
     }
-    .spotbie-button{
+    .sb-button{
         font-size: 20px;            
     }
     .spotbie-save-settings-button {

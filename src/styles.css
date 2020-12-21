@@ -1,17 +1,30 @@
-@font-face{
+/*
+*   Welcome to the SpotBie main stylesheet.
+*   Prefix all classes with "sb-"
+*      
+*
+*/
+
+@font-face {
+
     font-family: sitka-italic;
     src: url(/assets/fonts/Fluent_SitkaSmall-Italic.ttf);
     font-display: swap;
+
 }
 
-html{
+html {
+
     position: relative;
     font-size: 19px;
     cursor: default; 
     color: white;
     height: unset !important;
+
 }
-body{
+
+body {
+
     position: relative;
     max-width: 100%;
     margin: 0 auto;
@@ -21,6 +34,59 @@ body{
     overflow-x : hidden;
     height: unset !important; 
     font-family: 'Josefin Sans', sans-serif;
+
+}
+
+textarea {
+
+    position: relative;
+    display: block;
+    margin: 0 auto;
+    min-width: 450px;
+    max-width: 450px;
+    height: 240px;
+    min-height: 240px;
+    resize: vertical;
+    max-height: 650px;    
+    padding-top: 11px;
+    padding-bottom: 11px;
+    padding-left: 10px;
+    padding-right: 10px;        
+    color: white;
+    border: none;
+    background-color: rgba(0,0,0,.23);
+    font-size: 25px;
+    border-radius: 15px;
+
+}
+
+textarea:active {
+
+    outline: none;
+
+}
+
+.sb-mainWrapper {
+
+    position: relative;
+    margin: 0 auto;
+    min-width: 1200px;
+    max-width: 1200px;
+    padding-top: 140px;
+    padding-bottom: 140px;
+    padding-left: 20px;
+    padding-right: 20px;    
+
+}
+
+.sb-backgroundImg{
+    position: fixed;
+    top: 0%;
+    bottom: 0%;
+    left: 0%;
+    right: 0%;
+    /*background: url(/assets/images/background.png);*/
+    background-position: center !important;
 }
 
 .spotbie-bottom-button-bar{
@@ -182,7 +248,7 @@ a, a:hover, a:active, a:after{
     border-radius: 99%;
     box-shadow: inset 2px 2px 6px #ffffff0f;
 }
-.spotbie-close-button{
+.sb-closeButton{
     position: fixed;
     display: block;
     top: 1%;
@@ -216,7 +282,7 @@ a, a:hover, a:active, a:after{
     -webkit-overflow-scrolling: touch;
 }
 
-.spotbie-input{
+.sb-input{
     position: relative;
     display: block;
     margin: 0 auto;
@@ -295,31 +361,9 @@ a, a:hover, a:active, a:after{
     padding-bottom: 13px;
     text-align: center;
 }
-.spotbie-textarea{
-    position: relative;
-    display: block;
-    margin: 0 auto;
-    width: 90%;
-    min-width: 90%;
-    max-width: 90%;
-    height: 240px;
-    min-height: 240px;
-    resize: vertical;
-    max-height: 650px;    
-    padding-top: 11px;
-    padding-bottom: 11px;
-    padding-left: 10px;
-    padding-right: 10px;        
-    color: white;
-    border: none;
-    background-color: rgba(0,0,0,.23);
-    font-size: 25px;
-    border-radius: 15px;
-}
-.spotbie-textarea:active{
-    outline : none;
-}
-.spotbie-button{
+
+
+.sb-button{
     display: block;
     margin: 0 auto;
     width: 300px;
@@ -458,7 +502,7 @@ a, a:hover, a:active, a:after{
     z-index: 9999999999;
     text-align: center;
 }
-.spotbie-button-mini{
+.sb-button-mini{
     margin-top: 20px;
     font-size: 18px;
     background-color: rgba(0,0,0,.23);
@@ -628,7 +672,7 @@ a, a:hover, a:active, a:after{
     min-width: 50%;
     max-width: 50%;
 }
-.spotbie-confirm-box-table td .spotbie-button{
+.spotbie-confirm-box-table td .sb-button{
     font-size: 16px;
     width: 100%;
     min-width: 100%;
@@ -680,7 +724,6 @@ a, a:hover, a:active, a:after{
 .mat-accent .mat-slider-thumb {
     background-color: white;
 }
-
 .spotbie-ad-wrapper a, 
 .spotbie-ad-wrapper img, 
 .spotbie-ad-wrapper div{
@@ -695,6 +738,11 @@ a, a:hover, a:active, a:after{
 }
 @media (max-width: 1200px) {   
 
+    .sb-mainWrapper{
+        min-width: 95%;
+        max-width: 95%;
+    }
+    
 }
 @media (max-width: 1024px) { 
     .spotbie-paragraph{
@@ -738,7 +786,7 @@ a, a:hover, a:active, a:after{
         padding-top: env(safe-area-inset-top, 20px);
         padding-bottom: env(safe-area-inset-bottom, 20px);
     }
-    .spotbie-close-button{
+    .sb-closeButton{
         top: env(safe-area-inset-top, 2%);
         right: 2%;
     }
@@ -747,6 +795,7 @@ a, a:hover, a:active, a:after{
 
 }
 @media (max-width: 600px) { 
+
     .spotbie-el-fixed-bottom{
         width: 90%;
         min-width: 90%;
@@ -755,30 +804,61 @@ a, a:hover, a:active, a:after{
         padding-bottom: 15px;
         font-size: 26px;              
     }
+
 }
-@media (max-width: 560px) { 
-    .spotbie-close-button{
+@media (max-width: 560px) {
+
+    .sb-mainWrapper{
+
+        min-width: 90%;
+        max-width: 90%
+
+    }
+
+    .sb-closeButton{
+
         max-width: 50px;
         font-size: 16px;        
-        right: 2%;
+        right: 2%
+
     }
-    .spotbie-button {
+
+    .sb-button {
+
         width: 260px;
         min-width: 260px;
         max-width: 260px;
         font-size: 16px;
         padding-top: 10px !important;
-        padding-bottom: 10px !important;        
+        padding-bottom: 10px !important;   
+
     }
+
 }
 @media (max-width: 460px) { 
-    html{
-        font-size: 17px;
+
+    html {
+
+        font-size: 17px
+    
     } 
-    .spotbie-toast-input-box{
-        border-radius: 0px;
+
+    textarea {
+
+        width: 90%;
+        min-width:  90%;
+        max-width: 90%;
+        font-size: 18px;
+
     }
-    .spotbie-input {
+
+    .spotbie-toast-input-box {
+
+        border-radius: 0px
+
+    }
+
+    .sb-input {
         font-size: 20px;
         border-radius: 12px;
         padding-left: 5px;

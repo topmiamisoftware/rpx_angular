@@ -36,7 +36,7 @@
 
                 <tr>
                     <td>
-                        <input class="spotbie-input" (click)="$event.target.select()" formControlName="spotbie_username" type="text" value="username" maxlength="35" />
+                        <input class="sb-input" (click)="$event.target.select()" formControlName="spotbie_username" type="text" value="username" maxlength="35" />
                     </td>
                 </tr>
 
@@ -60,7 +60,7 @@
 
                 <tr>
                     <td>
-                        <input class="spotbie-input" (click)="$event.target.select()" formControlName="spotbie_first_name" type="text" value="name" maxlength="72" />
+                        <input class="sb-input" (click)="$event.target.select()" formControlName="spotbie_first_name" type="text" value="name" maxlength="72" />
                     </td>
                 </tr> 
                 
@@ -84,7 +84,7 @@
 
                 <tr>
                     <td>
-                        <input class="spotbie-input" (click)="$event.target.select()" formControlName="spotbie_last_name" type="text" value="name" maxlength="72" />
+                        <input class="sb-input" (click)="$event.target.select()" formControlName="spotbie_last_name" type="text" value="name" maxlength="72" />
                     </td>
                 </tr> 
 
@@ -104,7 +104,7 @@
 
                 <tr>
                     <td>
-                        <input class="spotbie-input" (click)="$event.target.select()" formControlName="spotbie_email" type="text" value="email" maxlength="135"/>
+                        <input class="sb-input" (click)="$event.target.select()" formControlName="spotbie_email" type="text" value="email" maxlength="135"/>
                     </td>
                 </tr> 
                 
@@ -126,7 +126,7 @@
 
                 <tr>
                     <td>                                  
-                        <input class='spotbie-input' type='tel' mask="(000) 000-0000" 
+                        <input class='sb-input' type='tel' mask="(000) 000-0000" 
                             autocomplete="tel" placeholder='(555) 555-5555' formControlName="spotbie_phone_number"/>
                     </td>
                 </tr>
@@ -148,7 +148,7 @@
                 <tr>
                     <td>
                         <input (click)="changeAccType()" 
-                                class="spotbie-input spotbie-clickable-field" 
+                                class="sb-input spotbie-clickable-field" 
                                 formControlName="spotbie_acc_type" 
                                 type="text"
                                 readonly="readonly" />
@@ -172,7 +172,7 @@
 
                 <tr *ngIf="account_type_category == 'Personal'">
                     <td>
-                        <input (click)="changeAnimal()" (click)="$event.target.select()" class="spotbie-input spotbie-clickable-field" formControlName="spotbie_animal" type="text" value="animal" />
+                        <input (click)="changeAnimal()" (click)="$event.target.select()" class="sb-input spotbie-clickable-field" formControlName="spotbie_animal" type="text" value="animal" />
                     </td>
                 </tr>
                 <!-- End Of Personal Accounts information -->
@@ -218,7 +218,7 @@
 
                 <tr *ngIf="account_type_category == 'Business'">
                     <td>
-                        <input class="spotbie-input spotbie-search-map-input"
+                        <input class="sb-input spotbie-search-map-input"
                                 (click)="$event.target.select()"
                                 autocorrect="off" 
                                 autocapitalize="off" 
@@ -230,7 +230,7 @@
                                 
                                 <div class='spotbie-search-map-button' (click)="searchMaps()">Search Address</div>
 
-                        <input class="spotbie-input" type="hidden" formControlName ="spotbie_origin" />                
+                        <input class="sb-input" type="hidden" formControlName ="spotbie_origin" />                
 
                         <div class='spotbie-place-picker'>
                             <div class='spotbie-place' *ngFor="let prediction of address_results"  (click)="focusPlace(prediction);">
@@ -314,7 +314,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td class='spotbie-button spotbie-save-settings-button' (click)="saveSettings()">
+                    <td class='sb-button spotbie-save-settings-button' (click)="saveSettings()">
                         Save Settings
                     </td> 
                 </tr>
@@ -363,7 +363,7 @@
         
                     <tr>
                         <td>
-                            <input class="spotbie-input" (click)="$event.target.select()" formControlName="spotbie_password" type="password" value="password" autocomplete="false"/>
+                            <input class="sb-input" (click)="$event.target.select()" formControlName="spotbie_password" type="password" value="password" autocomplete="false"/>
                         </td>
                     </tr>
             
@@ -383,12 +383,12 @@
         
                     <tr>
                         <td>
-                            <input class="spotbie-input" (click)="$event.target.select()" formControlName="spotbie_confirm_password" type="password" value="newpassword" autocomplete="false" />
+                            <input class="sb-input" (click)="$event.target.select()" formControlName="spotbie_confirm_password" type="password" value="newpassword" autocomplete="false" />
                         </td>
                     </tr>
             
                     <tr>
-                        <td class='spotbie-button' (click)="savePassword()">
+                        <td class='sb-button' (click)="savePassword()">
                             Save New Password
                         </td>
                     </tr>
@@ -397,7 +397,7 @@
         
             <div class="spotbie-overlay-window" *ngIf="save_password">
                 
-                <div class="spotbie-close-button" (click)="cancelPasswordSet()">
+                <div class="sb-closeButton" (click)="cancelPasswordSet()">
                     <i class="fa fa-times"></i>
                 </div>
 
@@ -422,9 +422,9 @@
                         <tr>
                             <td>
 
-                                <input class="spotbie-input" (click)="$event.target.select()" type="password" formControlName="spotbie_current_password" value="123456789" autocomplete="false">        
+                                <input class="sb-input" (click)="$event.target.select()" type="password" formControlName="spotbie_current_password" value="123456789" autocomplete="false">        
                             
-                                <div class="spotbie-button spotbie-button-mini" (click)="completeSavePassword()">
+                                <div class="sb-button sb-button-mini" (click)="completeSavePassword()">
                                     Complete Change
                                 </div>
                                 
@@ -445,7 +445,7 @@
         
         <table class="spotbie-settings-table" id="spotbie-deactivate-table">
             <tr>
-                <td class='spotbie-button' style="margin-top: 0px;" (click)="startDeactivateAccount()">
+                <td class='sb-button' style="margin-top: 0px;" (click)="startDeactivateAccount()">
                     Deactivate Account
                 </td>
             </tr>
@@ -455,7 +455,7 @@
     
             <div class="spotbie-toast-input-overlay">
     
-                <div class="spotbie-button spotbie-button-mini" (click)="cancelDeactivateAccount()">
+                <div class="sb-button sb-button-mini" (click)="cancelDeactivateAccount()">
                     <i class="fa fa-times"></i>
                 </div>
         
@@ -476,9 +476,9 @@
                         </div>
                     </ng-template>  
         
-                    <input class="spotbie-input" (click)="$event.target.select()" type="password" formControlName="spotbie_deactivation_password" autocomplete="false">
+                    <input class="sb-input" (click)="$event.target.select()" type="password" formControlName="spotbie_deactivation_password" autocomplete="false">
         
-                    <div class="spotbie-button spotbie-button-mini" (click)="deactivateAccount()">
+                    <div class="sb-button sb-button-mini" (click)="deactivateAccount()">
                         Deactivate Account
                     </div>
         
@@ -489,7 +489,7 @@
         </form>
     </div>
 
-    <div class="spotbie-close-button" (click)="closeWindow()">
+    <div class="sb-closeButton" (click)="closeWindow()">
         <i class="fa fa-times"></i>
     </div>
 
@@ -504,7 +504,7 @@
             </table>            
         </div>
 
-        <div class="spotbie-close-button" (click)="closeAnimals()">
+        <div class="sb-closeButton" (click)="closeAnimals()">
             <i class="fa fa-times"></i>
         </div>
 

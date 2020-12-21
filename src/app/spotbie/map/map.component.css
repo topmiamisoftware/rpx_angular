@@ -332,11 +332,11 @@
     margin-top: 20px;
     margin-bottom: 15px;
 }
-.spotbie-next-previous-table-big .spotbie-button-cell{
+.spotbie-next-previous-table-big .sb-button-cell{
     display: table-cell;
     font-size: 16px;
 }
-span.spotbie-button{
+span.sb-button{
     position: relative;
     display: inline-block;
     font-size: 16px;
@@ -347,10 +347,10 @@ span.spotbie-button{
     width: 150px;
     min-width: 162px;
 }
-.spotbie-button{
+.sb-button{
     background-color: rgba(0,0,0,.23);
 }
-.spotbie-button-prompt{
+.sb-button-prompt{
     background-color: #8BC34A;
 }
 .spotbie-profile-right-username{
@@ -678,7 +678,7 @@ span.spotbie-button{
     .spotbie-search-results-title{
         text-align: center;
     }  
-    span.spotbie-button{
+    span.sb-button{
         max-width: 46%;
         width: 46%;
         min-width: 46%;

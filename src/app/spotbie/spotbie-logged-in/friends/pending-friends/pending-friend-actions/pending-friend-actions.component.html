@@ -24,18 +24,18 @@
 
     <div class='spotbie-friend-action-buttons'>
 
-        <div class='spotbie-button' (click)="viewProfile()">View Profile</div>
+        <div class='sb-button' (click)="viewProfile()">View Profile</div>
 
-        <div class='spotbie-button' (click)="cancelRequest()" *ngIf="peer.made_by == my_id">Cancel Request</div>
-        <div class='spotbie-button' (click)="acceptRequest()" *ngIf="peer.made_by != my_id">Accept Request</div>
+        <div class='sb-button' (click)="cancelRequest()" *ngIf="peer.made_by == my_id">Cancel Request</div>
+        <div class='sb-button' (click)="acceptRequest()" *ngIf="peer.made_by != my_id">Accept Request</div>
 
-        <div class='spotbie-button' (click)="blockUser()">Block</div>
+        <div class='sb-button' (click)="blockUser()">Block</div>
 
-        <div class='spotbie-button' (click)="reportReasonsWindow()">Report</div>
+        <div class='sb-button' (click)="reportReasonsWindow()">Report</div>
 
     </div>
 
-    <div class="spotbie-close-button" (click)="closeWindow()"><i class="fa fa-times"></i></div>
+    <div class="sb-closeButton" (click)="closeWindow()"><i class="fa fa-times"></i></div>
 
     <div class="spotbie-successful-action-wrapper" *ngIf="successful_action">
         <div class="spotbie-successful-action-title">

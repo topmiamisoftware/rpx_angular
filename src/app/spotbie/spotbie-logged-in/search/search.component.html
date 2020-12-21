@@ -3,7 +3,7 @@
 <div class='spotbie-search-app-holder'>
 
     <div class='spotbie-search-bar-holder'>
-        <input type='text' (keyup)="searchSpotbie($event)" class='spotbie-input spotbie-search-bar' placeholder='Search SpotBie' #spotbie_search_bar />
+        <input type='text' (keyup)="searchSpotbie($event)" class='sb-input spotbie-search-bar' placeholder='Search SpotBie' #spotbie_search_bar />
         <img class='spotbie-search-glass' src='../../assets/images/search.png' *ngIf="search_up" />
     </div>
 
@@ -22,7 +22,7 @@
 
         </div>
 
-        <div class='spotbie-button spotbie-load-more-search-results' 
+        <div class='sb-button spotbie-load-more-search-results' 
         (click)="loadMoreSearch()"
         *ngIf="load_more_search_results">load more</div>
     </div>

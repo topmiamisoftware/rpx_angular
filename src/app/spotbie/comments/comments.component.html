@@ -20,12 +20,12 @@
             <emoji-mart *ngIf="emoji_picker_open" title="Pick your emoji…" emoji="point_up"></emoji-mart>
         </div>    
 
-        <textarea class='spotbie-input spotbie-textarea'
+        <textarea class='sb-input'
                     maxlength="360"                    
                     formControlName="spotbie_comment_text" 
                     placeholder="Enter your comment..."></textarea>        
 
-        <button class='spotbie-button' [ngStyle]="comments_config.styling.submit_button">Upload Comment</button>
+        <button class='sb-button' [ngStyle]="comments_config.styling.submit_button">Upload Comment</button>
 
     </form>
 
@@ -62,7 +62,7 @@
 
 </div>
 
-<div class='spotbie-button spotbie-load-more-button' (click)="pullComments()" *ngIf="load_more">Load More</div>
+<div class='sb-button spotbie-load-more-button' (click)="pullComments()" *ngIf="load_more">Load More</div>
 
 <app-toast-helper [helper_config]="toast_helper_config" 
                 *ngIf="toast_helper"

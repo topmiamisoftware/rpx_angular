@@ -195,7 +195,7 @@
     padding-top: 10px;
     padding-bottom: 10px;
 }
-.spotbie-input{
+.sb-input{
     font-size: 20px;
     width: 100%;
     min-width: 100%;
@@ -285,7 +285,7 @@
     font-size: 38px;
     cursor: pointer;
 }
-.spotbie-button{
+.sb-button{
     margin-top: 0px;
     margin-bottom: 40px;
     background-color: rgba(148, 148, 148, 0.83);
@@ -293,7 +293,7 @@
 .spotbie-album-media-upload-input{
     display: none;
 }
-.spotbie-close-button {
+.sb-closeButton {
     position: fixed;
 }
 .spotbie-stream-poster-album-media-option{
@@ -429,7 +429,7 @@
     .spotbie-toggle{
         margin-bottom: 80px;
     }
-    .spotbie-button {
+    .sb-button {
         width: 180px;
         min-width: 180px;
         max-width: 180px;
@@ -447,7 +447,7 @@
         min-width: 105px;
         max-width: 105px;
     }
-    .spotbie-input{
+    .sb-input{
         font-size: 18px;
         width: 94%;
         min-width: 94%;
@@ -491,7 +491,7 @@
     .spotbie-album-plus{
         margin-top: 4px;
     } 
-    .spotbie-input{
+    .sb-input{
         font-size: 18px;
     }
     .spotbie-input-textarea{
@@ -499,7 +499,7 @@
         min-height: 220px;
         max-height: 220px;        
     }
-    .spotbie-button{
+    .sb-button{
         font-size: 20px;
     }
     .spotbie-album-media {

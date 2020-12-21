@@ -123,7 +123,7 @@
 
 
 <div class='spotbie-category-search-yelp animated slideInUp' *ngIf="catsUp">
-  <input type='text' class='spotbie-searchbar spotbie-input' placeholder="{{ search_categories_placeholder }}" (keyup)="searchSpotBie($event)" />
+  <input type='text' class='spotbie-searchbar sb-input' placeholder="{{ search_categories_placeholder }}" (keyup)="searchSpotBie($event)" />
   <div class='spotbie-close-categories' (click)="closeCategories()" *ngIf="catsUp">close</div>
 </div>
 
@@ -243,11 +243,11 @@
 
       <span *ngIf="search_category !== 'events'">Showing {{ loadedTotalResults }} results within {{ maxDistance }} miles. </span>
   
-      <span class='spotbie-button' (click)="loadMoreResults(0)" *ngIf="allPages > 1">
+      <span class='sb-button' (click)="loadMoreResults(0)" *ngIf="allPages > 1">
         Previous
       </span>   
 
-      <span class='spotbie-button' (click)="loadMoreResults(1)" *ngIf="allPages > 1">
+      <span class='sb-button' (click)="loadMoreResults(1)" *ngIf="allPages > 1">
         Next
       </span>
   
@@ -339,11 +339,11 @@
 
     <div>
 
-      <span class='spotbie-button' (click)="loadMoreResults(0)" *ngIf="allPages > 1">
+      <span class='sb-button' (click)="loadMoreResults(0)" *ngIf="allPages > 1">
         Previous
       </span>   
   
-      <span class='spotbie-button' (click)="loadMoreResults(1)" *ngIf="allPages > 1">
+      <span class='sb-button' (click)="loadMoreResults(1)" *ngIf="allPages > 1">
         Next
       </span>
   
@@ -387,7 +387,7 @@
     {{coming_soon_ov_text}}
   </div>    
 
-  <div class="spotbie-close-button" (click)="closeCmS()">close</div>
+  <div class="sb-closeButton" (click)="closeCmS()">close</div>
 
 </div>
 

@@ -5,10 +5,10 @@
     text-align: left;
     z-index: 9999998;
 }
-.spotbie-close-button{
+.sb-closeButton{
     z-index: 9999999;
 }
-.spotbie-input{
+.sb-input{
     width: 450px;
     min-width: 450px;
     max-width: 450px;
@@ -209,7 +209,7 @@ p{
     font-size: 18px;
     border-radius: 20px;
 }
-.spotbie-button {
+.sb-button {
     width: 200px;
     min-width: 200px;
     max-width: 200px;
@@ -290,7 +290,7 @@ p{
     h2{
         font-size: 16px;   
     }
-    .spotbie-button{
+    .sb-button{
         font-size: 17px;
     }
     .spotbie-flash-card{

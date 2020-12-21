@@ -4,7 +4,7 @@
     max-width: 90%;
     width: 90%;
 }
-.spotbie-input{  
+.sb-input{  
     width: 450px;
     min-width: 450px;
     max-width: 450px;
@@ -15,7 +15,7 @@
     background-color: rgba(0,0,0,.23);
     border: 1px solid #3c3c3c;
 }
-.spotbie-input::placeholder{
+.sb-input::placeholder{
     color: #8BC34A !important;
 }
 .spotbie-overlay-window{
@@ -27,7 +27,7 @@
     max-width: 102%;
     z-index: 9999998;      
 }
-.spotbie-close-button{
+.sb-closeButton{
     z-index: 9999999;
 }
 .spotbie-log-in-picture{
@@ -65,7 +65,7 @@
     min-width: 210px;
     max-width: 210px;    
 }
-.spotbie-button{
+.sb-button{
     margin-bottom: unset !important;
 }
 .spotbie-overlay-window{
@@ -115,7 +115,7 @@
         min-height: 250px;
         max-height: 250px;    
     } 
-    .spotbie-input{
+    .sb-input{
         width: 85%;
         min-width: 85%;
         max-width: 85%;
@@ -131,7 +131,7 @@
     .spotbie-input-info{
         font-size: 16px;
     }
-    .spotbie-button{
+    .sb-button{
         width: 75%;
         min-width: 75%;
         max-width: 75%;

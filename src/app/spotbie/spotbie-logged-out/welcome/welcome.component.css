@@ -61,7 +61,7 @@ p{
 .spotbie-overlay-window{
     background-color: rgba(0, 0, 0, .9);
 }
-.spotbie-button {
+.sb-button {
     width: 200px;
     min-width: 200px;
     max-width: 200px;
@@ -127,7 +127,7 @@ p{
     h2{
         font-size: 16px;   
     }
-    .spotbie-button{
+    .sb-button{
         font-size: 17px;
     }
     .spotbie-flash-card{

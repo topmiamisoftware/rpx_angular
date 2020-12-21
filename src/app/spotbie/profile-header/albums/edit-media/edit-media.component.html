@@ -42,21 +42,21 @@
                             {{ album_item_updated_msg }}
                         </div>          
                     </ng-template>                        
-                    <textarea class="spotbie-input-textarea spotbie-input" 
+                    <textarea class="spotbie-input-textarea sb-input" 
                                 formControlName="item_caption" type="text" 
                                 placeholder="Item Caption" maxlength="300"></textarea>
                 </td>
             </tr>
         </table>
         
-        <button class='spotbie-button'>Save Caption</button>
+        <button class='sb-button'>Save Caption</button>
 
     </form>
 
     <div class='spotbie-exif-optional'></div>
     <div class='spotbie-ai-items-in-image'></div>
 
-    <div class="spotbie-close-button" (click)="closeWindow()"><i class="fa fa-times"></i></div>
+    <div class="sb-closeButton" (click)="closeWindow()"><i class="fa fa-times"></i></div>
 
     <div class='spotbie-toast-message animated fadeIn' *ngIf="successful_update">Album Item Updated.</div>
 

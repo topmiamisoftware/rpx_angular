@@ -23,16 +23,16 @@
     <div class='spotbie-friend-actions-username'>{{ blocked_user.user.username }}</div>
 
     <div class='spotbie-friend-action-buttons'>
-        <div class='spotbie-button' [routerLink]="['/user-profile/' + blocked_user.user.username]">View Profile</div>
+        <div class='sb-button' [routerLink]="['/user-profile/' + blocked_user.user.username]">View Profile</div>
 
-        <div class='spotbie-button' (click)="unblockUser()">Unblock</div>
+        <div class='sb-button' (click)="unblockUser()">Unblock</div>
 
-        <div class='spotbie-button' (click)="friendUser()">Befriend</div>
+        <div class='sb-button' (click)="friendUser()">Befriend</div>
 
-        <div class='spotbie-button' (click)="reportReasonsWindow()">Report</div>
+        <div class='sb-button' (click)="reportReasonsWindow()">Report</div>
     </div>   
 
-    <div class="spotbie-close-button" (click)="closeWindow()"><i class="fa fa-times"></i></div>
+    <div class="sb-closeButton" (click)="closeWindow()"><i class="fa fa-times"></i></div>
 
     <div class="spotbie-successful-action-wrapper" *ngIf="successful_action">
         <div class="spotbie-successful-action-title">

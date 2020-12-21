@@ -156,10 +156,10 @@
                 </div>
             </ng-template>        
 
-            <textarea class='spotbie-textarea' formControlName="spotbie_profile_description" maxlength="360"></textarea>
+            <textarea formControlName="spotbie_profile_description" maxlength="360"></textarea>
 
-            <div class='spotbie-button spotbie-button-mini' (click)="setDescription()">Save Description</div>
-            <div class='spotbie-button spotbie-button-mini' (click)="cancelDescription()">Cancel</div>
+            <div class='sb-button sb-button-mini' (click)="setDescription()">Save Description</div>
+            <div class='sb-button sb-button-mini' (click)="cancelDescription()">Cancel</div>
 
         </form>
 
@@ -192,7 +192,7 @@
                 </div>
             </div>
 
-            <div class='spotbie-button spotbie-button-mini' (click)="cancelBackground()">close</div>
+            <div class='sb-button sb-button-mini' (click)="cancelBackground()">close</div>
 
         </form>
 
@@ -226,7 +226,7 @@
                 </div>
             </div>
 
-            <div class='spotbie-button spotbie-button-mini' (click)="cancelDefault()">Cancel</div>
+            <div class='sb-button sb-button-mini' (click)="cancelDefault()">Cancel</div>
 
         </form>
 

@@ -23,7 +23,7 @@
 
         </div>        
 
-        <div class='spotbie-load-more-button spotbie-button' *ngIf="no_chat_heads" (click)="addFriends()">
+        <div class='spotbie-load-more-button sb-button' *ngIf="no_chat_heads" (click)="addFriends()">
             You have no one to chat with.<br/>
             Start by adding some friends.
         </div>
@@ -72,7 +72,7 @@
     
             </div>
     
-            <div class='spotbie-load-more-button spotbie-button' *ngIf="load_more_msgs" (click)="loadMoreMsgs()">Load More</div>
+            <div class='spotbie-load-more-button sb-button' *ngIf="load_more_msgs" (click)="loadMoreMsgs()">Load More</div>
     
             <div class='spotbie-no-notis-box' *ngIf='all_msgs_list.length === 0'>
                 <div>
@@ -94,6 +94,6 @@
         
     </div>
 
-    <div class="spotbie-close-button" (click)="closeWindowX()">close</div>
+    <div class="sb-closeButton" (click)="closeWindowX()">close</div>
 
 </div>
