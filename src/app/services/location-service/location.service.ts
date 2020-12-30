@@ -4,9 +4,9 @@ import * as spotbieGlobals from '../../globals'
 
 const USER_LOCATION_API = spotbieGlobals.API + 'api/map.service.php'
 
-const SEARCH_BUSINESS_API = 'https://www.spotbie.com/api/yelp.php'
+const SEARCH_BUSINESS_API = 'https://spotbie.com/api/yelp.php'
 
-const SEARCH_EVENTS_API = 'https://www.spotbie.com/api/yelp.php'
+const SEARCH_EVENTS_API = 'https://spotbie.com/api/yelp.php'
 
 const HTTP_OPTIONS = {
   withCredentials : true,

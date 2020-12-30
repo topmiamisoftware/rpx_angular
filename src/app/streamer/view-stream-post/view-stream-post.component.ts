@@ -52,7 +52,7 @@ export class ViewStreamPostComponent implements OnInit {
 
   ngOnInit() {    
 
-    this.stream_post.stream_link = 'https://www.spotbie.com/user-profile/' + this.stream_post.stream_by.username + '/' + this.stream_post.stream_post_id
+    this.stream_post.stream_link = 'https://spotbie.com/user-profile/' + this.stream_post.stream_by.username + '/' + this.stream_post.stream_post_id
     this.stream_post_description = this.stream_post.stream_content
     this.stream_post_title = "Post by " + this.stream_post.stream_by.username + " on " + this.stream_post.dated
     

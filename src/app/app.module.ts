@@ -1,4 +1,4 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, BrowserTransferStateModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -21,6 +21,8 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { TermsComponent } from './terms/terms.component';
 import { BugsComponent } from './bugs/bugs.component';
+import { TransferHttpCacheModule } from '@nguniversal/common'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -30,8 +32,12 @@ import { BugsComponent } from './bugs/bugs.component';
     BugsComponent
   ],
   imports: [
+    FormsModule, 
+    ReactiveFormsModule,        
     AppRoutingModule,
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
+    BrowserTransferStateModule,
+    TransferHttpCacheModule,
     HttpClientModule,
     HomeModule,
     UserHomeModule,

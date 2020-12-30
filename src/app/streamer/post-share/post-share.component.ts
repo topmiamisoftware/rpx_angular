@@ -54,7 +54,7 @@ export class PostShareComponent implements OnInit {
     this.bg_color = localStorage.getItem("spotbie_backgroundColor")
 
     // console.log("Stream to share: ", this.stream_post)
-    this.stream_post.stream_link = 'https://www.spotbie.com/user-profile/' + this.stream_post.stream_by.username + '/posts/' + this.stream_post.stream_post_id
+    this.stream_post.stream_link = 'https://spotbie.com/user-profile/' + this.stream_post.stream_by.username + '/posts/' + this.stream_post.stream_post_id
     this.stream_post_description = "Post by " + this.stream_post.stream_by.username + " on " + this.stream_post.dated + ": " + this.stream_post.stream_content
     this.stream_post_title = "Post by " + this.stream_post.stream_by.username + " on " + this.stream_post.dated
   

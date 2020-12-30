@@ -1,13 +1,37 @@
 <div class='sb-backgroundImg'></div>
 
-<div class="sb-mainWrapper">
+<div class="sb-mainWrapper" *ngIf="showSubmitBug">
 
     <h1>Submitting Bugs</h1>
 
     <p>Want to report bugs in our platform? You can do so here.</p>
     
-    <textarea placeholder="Bug details..."></textarea>
+    <form [formGroup]="bugsForm">
+
+        <div *ngIf="submitted && f.description.errors else descriptionNormal" class="spotbie-invalid-feedback">                   
+            <div *ngIf="f.description.errors.maxlength">
+                Your profile description can only be 500 characters long.
+            </div>                       
+        </div> 
+
+        <ng-template #descriptionNormal>
+            <div class="spotbie-toast-info spotbie-description-info" #spotbie_description_info>
+                Change your profile description.
+            </div>
+        </ng-template>        
+
+        <textarea formControlName="description" placeholder="Bug details..." maxlength="500"></textarea>
+
+    </form>
     
-    <div class="sb-button">Send</div>
+    <div class="sb-button" (click)="insertBug()">Send</div>
+
+</div>
+
+<div class="sb-mainWrapper" *ngIf="success">
+
+    <h1>Bug was Submitted!</h1>
+
+    <p>Your bug report was sent successfully. Thank you.</p>
 
 </div>

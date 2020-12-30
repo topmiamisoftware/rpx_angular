@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { BugsService } from './bugs.service';
 
 @Component({
   selector: 'app-bugs',
@@ -7,9 +9,57 @@ import { Component, OnInit } from '@angular/core';
 })
 export class BugsComponent implements OnInit {
 
-  constructor() { }
+  public success: boolean = false
+
+  public submitted: boolean = false
+
+  public bugsForm: FormGroup
+
+  public showSubmitBug: boolean = true
+
+  constructor(private formBuilder: FormBuilder, private bugsService: BugsService) {}
+
+  get f() { return this.bugsForm.controls }
+  get description() {return this.bugsForm.get('description').value }
+
+  public initForm(){
+
+    const description_validators = [Validators.maxLength(500), Validators.required]
+
+    this.bugsForm = this.formBuilder.group({
+      description: ['', description_validators]
+    })
+
+  }
+
+  public insertBug(): void{
+    
+    const bugsObj = {
+      description: this.description
+    }
+
+    this.bugsService.insertBug(bugsObj).subscribe(
+      resp => {
+        this.insertBugCallback(resp)
+      }
+    )
+
+  }
+
+  public insertBugCallback(resp: any): void{
+
+    if(resp.success){
+
+      this.success = true
+      this.showSubmitBug = false
+
+    } else 
+      console.log("insertBugCallback", resp)
+
+  }
 
   ngOnInit(): void {
+    this.initForm()
   }
 
 }
