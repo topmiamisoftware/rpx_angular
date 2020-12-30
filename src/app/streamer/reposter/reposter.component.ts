@@ -5,7 +5,7 @@ import { HttpHeaders, HttpClient } from '@angular/common/http'
 import { HttpResponse } from '../../models/http-reponse'
 import { StreamPostComponent } from '../stream-post/stream-post.component'
 
-const SETTINGS_API = spotbieGlobals.API + 'api/streamer.service.php'
+const SETTINGS_API = spotbieGlobals.API + 'api2/streamer.service.php'
 
 const HTTP_OPTIONS = {
   withCredentials: true,

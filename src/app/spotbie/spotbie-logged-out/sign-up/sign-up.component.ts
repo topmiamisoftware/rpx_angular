@@ -85,14 +85,17 @@ export class SignUpComponent implements OnInit {
 
   public initSignUp(): void {
 
+    this.loading = true
+
     // will be used when the user hits the submit button
     this.submitted = true
     this.vc_spotbie_sign_up_box_inner.nativeElement.scrollTo(0, 0)
 
+    this.signUpFormx.updateValueAndValidity()
+
     // stop here if form is invalid
     if (this.signUpFormx.invalid) {
 
-        this.loading = false
         this.signing_up = false
 
         if (this.signUpFormx.get('spotbieUsername').invalid)
@@ -130,14 +133,26 @@ export class SignUpComponent implements OnInit {
         else
           document.getElementById('user_pass_confirm').style.border = 'unset'
 
+        this.loading = false
+
         return
 
+    } else {
+      document.getElementById('spotbie_username').style.border = 'unset'
+      document.getElementById('user_first_name').style.border = 'unset'
+      document.getElementById('user_last_name').style.border = 'unset'
+      document.getElementById('user_phone').style.border = 'unset'
+      document.getElementById('user_email').style.border = 'unset'
+      document.getElementById('user_pass').style.border = 'unset'
+      document.getElementById('user_pass_confirm').style.border = 'unset'
     }
 
-    if (this.signing_up) return
+    if (this.signing_up){
+      this.loading = false
+      return
+    }
 
     this.signing_up = true
-    this.loading = true
 
     const username = this.spotbieUsername
     const user_first_name = this.spotbieFirstName
@@ -188,11 +203,11 @@ export class SignUpComponent implements OnInit {
         sign_up_instructions.className = 'signUpBoxInstructions'
         sign_up_instructions.innerHTML = 'Welcome to SpotBie!'
   
-        this.loading = false
         this.router.navigate(['/user_home'])
 
       }
 
+      this.loading = false
       this.signing_up = false
 
   }
@@ -200,6 +215,7 @@ export class SignUpComponent implements OnInit {
   public signUpError<T>(operation = 'operation', result?: T) {
 
     this.signing_up = false
+    this.loading = false
 
     return (error: any): Observable<T> => {
 
@@ -211,14 +227,12 @@ export class SignUpComponent implements OnInit {
 
       let sign_up_instructions = this.spotbieSignUpIssues.nativeElement
 
-      sign_up_instructions.className = 'signUpBoxInstructions spotbie-error-red animated shake'
+      sign_up_instructions.className = 'signUpBoxInstructions spotbie-error-red'
       sign_up_instructions.style.display = 'none'
 
       sign_up_instructions.innerHTML = "There was an error signing-up."
 
       const error_list = error.error.errors
-
-      console.log("Error List", error_list)
 
       if(error_list.username){
 
@@ -256,10 +270,10 @@ export class SignUpComponent implements OnInit {
       } else
         document.getElementById('user_last_name').style.border = 'unset'
 
-      if(error_list.email){
+      if(error_list.phone_number){
 
         let errors: {[k: string]: any} = {};
-        error_list.email.forEach(error => {
+        error_list.phone_number.forEach(error => {
           errors[error] = true
         })            
         this.signUpFormx.get('spotbiePhone').setErrors(errors)
@@ -268,10 +282,10 @@ export class SignUpComponent implements OnInit {
       } else
         document.getElementById('user_phone').style.border = 'unset'
 
-      if(error_list.phone_number){
+      if(error_list.email){
 
         let errors: {[k: string]: any} = {};
-        error_list.phone_number.forEach(error => {
+        error_list.email.forEach(error => {
           errors[error] = true
         })          
         this.signUpFormx.get('spotbieEmail').setErrors(errors)

@@ -12,7 +12,7 @@
 
             <div class='displayTableName'>
 
-                <div *ngIf="submitted && f.spotbieUsername.errors else username_normal" class="signUpBoxInstructions animated shake">
+                <div *ngIf="submitted && f.spotbieUsername.errors else username_normal" class="signUpBoxInstructions spotbie-error-red">
 
                     <div *ngIf="f.spotbieUsername.errors.required || f.spotbieUsername.errors.emptyUsername">
                         Username required.
@@ -46,7 +46,7 @@
 
             <div class='displayTableName'>
 
-                <div *ngIf="submitted && f.spotbieFirstName.errors else first_name_normal" class="signUpBoxInstructions animated shake">
+                <div *ngIf="submitted && f.spotbieFirstName.errors else first_name_normal" class="signUpBoxInstructions spotbie-error-red">
 
                     <div *ngIf="f.spotbieFirstName.errors.required">
                         Please enter your first name.
@@ -72,7 +72,7 @@
 
             <div class='displayTableName'>
 
-                <div *ngIf="submitted && f.spotbieLastName.errors else last_name_normal" class="signUpBoxInstructions animated shake">
+                <div *ngIf="submitted && f.spotbieLastName.errors else last_name_normal" class="signUpBoxInstructions spotbie-error-red">
 
                     <div *ngIf="f.spotbieLastName.errors.required">
                         Please enter your last name.
@@ -98,7 +98,7 @@
 
             <div class='displayTableName'>
 
-                <div *ngIf="submitted && f.spotbieEmail.errors else email_normal" class="signUpBoxInstructions animated shake">
+                <div *ngIf="submitted && f.spotbieEmail.errors else email_normal" class="signUpBoxInstructions spotbie-error-red">
 
                     <div *ngIf="f.spotbieEmail.errors.required">
                         Please enter your e-mail.
@@ -128,7 +128,7 @@
 
             <div class='displayTableName'>
 
-                <div *ngIf="submitted && f.spotbiePassword.errors else password_normal" class="signUpBoxInstructions animated shake">
+                <div *ngIf="submitted && f.spotbiePassword.errors else password_normal" class="signUpBoxInstructions spotbie-error-red">
                         
                     <div *ngIf="f.spotbiePassword.errors.required">
                         Please provide a password.
@@ -166,7 +166,7 @@
 
             <div class='displayTableName' style="margin-bottom: 20px;">
 
-                <div *ngIf="submitted && f.spotbieConfirm.errors else confirm_password_normal" class="signUpBoxInstructions animated shake">
+                <div *ngIf="submitted && f.spotbieConfirm.errors else confirm_password_normal" class="signUpBoxInstructions spotbie-error-red">
 
                     <div *ngIf="f.spotbieConfirm.errors.mustMatch">
                         Your passwords must match.
@@ -190,7 +190,7 @@
             
             <div class='displayTableName'>
 
-                <div *ngIf="submitted && f.spotbiePhone.errors else phone_normal" class="signUpBoxInstructions animated shake">
+                <div *ngIf="submitted && f.spotbiePhone.errors else phone_normal" class="signUpBoxInstructions spotbie-error-red">
 
                 <div *ngIf="f.spotbiePhone.errors.required">
                     Please enter your phone number.

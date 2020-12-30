@@ -3,7 +3,7 @@ import { HttpResponse } from '../models/http-reponse';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import * as spotbieGlobals from '../globals';
 
-const STREAM_API = spotbieGlobals.API + 'api/streamer.service.php';
+const STREAM_API = spotbieGlobals.API + 'api2/streamer.service.php';
 
 const HTTP_OPTIONS = {
   headers: new HttpHeaders({ 'Content-Type' : 'application/json' })

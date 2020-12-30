@@ -8,17 +8,11 @@
     
     <form [formGroup]="bugsForm">
 
-        <div *ngIf="submitted && f.description.errors else descriptionNormal" class="spotbie-invalid-feedback">                   
+        <div *ngIf="submitted && f.description.errors" class="spotbie-invalid-feedback">                   
             <div *ngIf="f.description.errors.maxlength">
                 Your profile description can only be 500 characters long.
             </div>                       
         </div> 
-
-        <ng-template #descriptionNormal>
-            <div class="spotbie-toast-info spotbie-description-info" #spotbie_description_info>
-                Change your profile description.
-            </div>
-        </ng-template>        
 
         <textarea formControlName="description" placeholder="Bug details..." maxlength="500"></textarea>
 

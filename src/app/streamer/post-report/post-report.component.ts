@@ -3,10 +3,8 @@ import { StreamPost } from '../streamer-models/stream-post'
 import * as spotbieGlobals from '../../globals'
 import { HttpHeaders, HttpClient } from '@angular/common/http'
 import { HttpResponse } from '../../models/http-reponse'
-import { DomSanitizer } from '@angular/platform-browser'
-import { StreamPostComponent } from '../stream-post/stream-post.component'
 
-const STREAMER_API = spotbieGlobals.API + 'api/streamer.service.php'
+const STREAMER_API = spotbieGlobals.API + 'api2/streamer.service.php'
 
 const HTTP_OPTIONS = {
   withCredentials : true,
