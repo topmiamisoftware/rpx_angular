@@ -4,7 +4,7 @@
     width: 100%;
     min-width: 100%;
     max-width: 100%;
-    margin-top: 64px;
+    margin-top: 0px;
     background-color: rgba(0,0,0,.23);
     background-position: center !important;
     background-repeat: no-repeat !important;
@@ -326,7 +326,7 @@ textarea{
         min-height: 25px;
         max-height: 25px;
         font-size: 26px;
-    } 
+    }
 }
 @media (max-width: 420px) { 
     .spotbie-profile-image-options{
@@ -370,9 +370,6 @@ textarea{
         padding-top: 10px;
         padding-left: 10px;
         padding-right: 10px;
-    } 
-    .spotbie-profile-title{
-        display: none;  
     }                          
 }
 @media (max-width: 360px) {
