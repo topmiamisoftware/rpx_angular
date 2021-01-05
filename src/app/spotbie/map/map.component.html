@@ -357,23 +357,26 @@
 
 </div>
 
-<div class='spotbie-profile-slide-right animated slideInRight' 
-      *ngIf="sliderRight" 
-      ngHammer="{ event : 'swipe', direction : 'right'}"
-      (eventTriggered)="closeMarkerOverlay()"
-      [ngStyle]="{ 'background-color' : currentMarker.bg_color }">
+<div class="spotbie-overlay-window" *ngIf="sliderRight"  [ngStyle]="{'background-color' : 'rgba(0,0,0,.53)' }">
 
-  <div class='spotbie-profile-right-username'>{{ currentMarker.username }}</div>
+  <div class="sb-closeButton" (click)="closeMarkerOverlay()"><i class="fa fa-times"></i></div>
 
-  <div class='spotbie-profile-right-user-default' 
-    *ngIf="currentMarker.default_picture | defaultImage as userBackgroundImage"
-    [ngStyle]="{ 'background' : 'url(' + userBackgroundImage + ')' }"></div>
+  <div class='spotbie-profile-pop animated flipInX' 
+        ngHammer="{ event : 'swipe', direction : 'up'}"
+        (eventTriggered)="closeMarkerOverlay()"
+        [ngStyle]="{ 'background-color' : currentMarker.bg_color }">
+
+    <div class='spotbie-profile-right-username'>{{ currentMarker.username }}</div>
+
+    <div class='spotbie-profile-right-user-default' 
+      *ngIf="currentMarker.default_picture | defaultImage as userBackgroundImage"
+      [ngStyle]="{ 'background' : 'url(' + userBackgroundImage + ')' }"></div>
 
     <div class="spotbie-profile-right-visit-profile" (click)="viewProfile(currentMarker.username)">View Profile</div>
 
     <div class="spotbie-bar-profile-description" *ngIf="exe_desc !== false">{{ currentMarker.description }}</div>
 
-  <div class='spotbie-profile-right-close-slider' (click)="closeMarkerOverlay()">close</div>
+  </div>
 
 </div>
 
@@ -387,7 +390,7 @@
     {{coming_soon_ov_text}}
   </div>    
 
-  <div class="sb-closeButton" (click)="closeCmS()">close</div>
+  <div class="sb-closeButton" (click)="closeCmS()"><i class="fa fa-times"></i></div>
 
 </div>
 

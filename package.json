@@ -44,6 +44,8 @@
     "@ngx-share/button": "^7.1.4",
     "@ngx-share/buttons": "^7.1.4",
     "@ngx-share/core": "^7.1.4",
+    "@tensorflow-models/coco-ssd": "^2.2.1",
+    "@tensorflow/tfjs": "^2.8.2",
     "bootstrap": "^4.5.3",
     "core-js": "^3.6.4",
     "emoji-mart": "^3.0.0",

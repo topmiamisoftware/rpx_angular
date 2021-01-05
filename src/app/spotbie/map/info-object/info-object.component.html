@@ -9,14 +9,14 @@
     <div class='spotbie-album-media-image-wrapper' 
             *ngIf="info_object !== null && info_object !== undefined">
 
-        <div class='spotbie-info-object-title'>
+        <div class='spotbie-info-object-title' (click)="visitInfoObjectPage()">
             {{ info_object.name }}
             <span class='spotbie-search-result-price' *ngIf="info_object.price_on == '1'">({{ info_object.price }})</span>
         </div>
 
         <div class='spotbie-info-object-image' [ngStyle]="{ 'background' : 'url(' + infoObjectImageUrl + ')'}"></div>
     
-        <div *ngIf="infoObject !== null && infoObject.hours !== undefined">
+        <div *ngIf="infoObject !== null && infoObject.hours !== undefined" (click)="visitInfoObjectPage()">
 
             <div class='spotbie-info-object-open' *ngIf="!infoObject.isOpenNow">
                 CLOSED <span class='fa fa-circle spotbie-is-closed'></span>
@@ -45,7 +45,7 @@
 
         </div>
 
-        <div class='spotbie-info-object-rating' *ngIf="info_object.type_of_info_object == 'yelp_business'">
+        <div class='spotbie-info-object-rating' *ngIf="info_object.type_of_info_object == 'yelp_business'" (click)="visitInfoObjectPage()">
 
             <table class='spotbie-yelp-rating-table'>
                 <tr>
@@ -60,7 +60,7 @@
 
         </div>
         
-        <div class='spotbie-review-count' *ngIf="info_object.type_of_info_object == 'yelp_business'">
+        <div class='spotbie-review-count' *ngIf="info_object.type_of_info_object == 'yelp_business'" (click)="visitInfoObjectPage()">
             Based on {{ info_object.review_count }} Reviews
         </div>
         
@@ -93,7 +93,7 @@
             </div>
 
             <i class="fa fa-map-marker" aria-hidden="true" (click)="openWithGoogleMaps()"></i>
-            
+
             <div class='spotbie-distance'>Start Navigation</div>
 
             <div class='spotbie-info-object-address' *ngIf="info_object.type_of_info_object == 'yelp_business'" (click)="openWithGoogleMaps()">

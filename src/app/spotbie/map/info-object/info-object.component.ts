@@ -401,6 +401,14 @@ export class InfoObjectComponent implements OnInit {
 
   }
 
+  public visitInfoObjectPage(){
+
+    if(this.info_object.type_of_info_object == 'yelp_business'){
+      window.open(`${this.info_object.url}`)
+    }
+
+  }
+
   ngOnInit(){
 
     this.loading = true
@@ -409,8 +417,6 @@ export class InfoObjectComponent implements OnInit {
     this.isLoggedIn = localStorage.getItem('spotbie_loggedIn')
     
     this.isCordova = isCordova()
-
-    console.log("EventObject", this.info_object)
 
     if(this.info_object !== undefined){
       

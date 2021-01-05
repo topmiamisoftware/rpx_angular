@@ -8,7 +8,7 @@
 @font-face {
 
     font-family: sitka-italic;
-    src: url(/assets/fonts/Fluent_SitkaSmall-Italic.ttf);
+    src: url(../src/assets/fonts/Fluent_SitkaSmall-Italic.ttf);
     font-display: swap;
 
 }

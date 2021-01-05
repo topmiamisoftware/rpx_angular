@@ -189,6 +189,7 @@
     font-size: 25px;
     margin-top: 25px;
     margin-bottom: 25px;
+    cursor: pointer;
 }
 .spotbie-info-object-image-list{
     position: relative;
