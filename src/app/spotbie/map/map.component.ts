@@ -164,6 +164,8 @@ export class MapComponent implements OnInit {
 
   public locationPrompt: boolean = false
 
+  public showNoResultsBox: boolean = false
+
   constructor(private locationService: LocationService,
               private deviceService: DeviceDetectorService,
               private router: Router,
@@ -267,13 +269,17 @@ export class MapComponent implements OnInit {
 
       this.maxDistance = evt.value
 
-      let results = this.searchResultsOriginal.filter((search_result) => {
-        return search_result.distance < this.maxDistance
-      })
-  
-      this.loadedTotalResults = results.length
-  
-      this.searchResults = results
+      if(this.showNoResultsBox){
+        this.apiSearch(this.search_keyword)
+      } else {
+        let results = this.searchResultsOriginal.filter((search_result) => {
+          return search_result.distance < this.maxDistance
+        })
+    
+        this.loadedTotalResults = results.length
+    
+        this.searchResults = results
+      }
 
     }.bind(this), 500)
 
@@ -477,7 +483,7 @@ export class MapComponent implements OnInit {
 
     switch(this.search_category){
       case 'events':
-        api_url = 'size=20&latlong=' + this.lat + ',' + this.lng + '&classificationName=' + keyword + '&radius=45'      
+        api_url = 'size=2&latlong=' + this.lat + ',' + this.lng + '&classificationName=' + keyword + '&radius=45'      
         break
       case 'food':
       case 'shopping':
@@ -700,9 +706,18 @@ export class MapComponent implements OnInit {
 
   public getEventsSearchCallback (httpResponse: any): void {
     
-    //console.log("event_object", httpResponse)
+    this.loading = false
 
     if(httpResponse.success){      
+
+      this.totalResults = httpResponse.data.page.totalElements
+
+      if(this.totalResults == 0){
+        this.showNoResultsBox = true
+        return  
+      } else {
+        this.showNoResultsBox = false
+      }
 
       this.cleanCategory()
 
@@ -784,17 +799,25 @@ export class MapComponent implements OnInit {
   public getBusinessesSearchCallback(httpResponse: any): void {    
 
     this.loading = false
+    this.maxDistanceCap = 25
 
     if(httpResponse.success){
+
+      this.totalResults = httpResponse.data.total
+
+      if(this.totalResults == 0){
+        this.showNoResultsBox = true
+        return  
+      } else {
+        this.showNoResultsBox = false
+      }
 
       window.scrollTo(0,0)
 
       this.cleanCategory()
 
       this.showSearchResults = true
-      this.catsUp = false
-      
-      this.totalResults = httpResponse.data.total
+      this.catsUp = false      
 
       let places_results = httpResponse.data
 
@@ -881,7 +904,7 @@ export class MapComponent implements OnInit {
     this.searchResults = results  
     this.loadedTotalResults = this.searchResults.length
     
-    this.allPages = Math.ceil(this.loadedTotalResults / this.itemsPerPage)
+    this.allPages = Math.ceil(this.totalResults / this.itemsPerPage)
 
     if(this.allPages == 0) this.allPages = 1
 
@@ -894,8 +917,6 @@ export class MapComponent implements OnInit {
     if(this.loadedTotalResults > (this.around_me_search_page * this.itemsPerPage)){
       this.show_next_page_button = true        
     }
-
-
 
   }
 

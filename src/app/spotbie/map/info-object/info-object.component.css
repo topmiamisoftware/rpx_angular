@@ -179,6 +179,9 @@
     margin-top: 20px;
     font-size: 46px;
 }
+.fa-globe{
+    font-size: 46px;
+}
 .fa-share{
     margin-top: 20px;
     font-size: 46px;
@@ -189,7 +192,6 @@
     font-size: 25px;
     margin-top: 25px;
     margin-bottom: 25px;
-    cursor: pointer;
 }
 .spotbie-info-object-image-list{
     position: relative;

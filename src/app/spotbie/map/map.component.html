@@ -357,6 +357,18 @@
 
 </div>
 
+<div class='spotbie-search-results no-results' *ngIf="showNoResultsBox">
+  
+  <div class='spotbie-no-results' style="text-align: center;">No Results Available for "{{ search_keyword }}" within {{ maxDistance }} miles.</div>
+
+  <div class='spotbie-search-results-title'>
+    Max Distance  <mat-slider min="0" max="{{ maxDistanceCap }}" step="1" value="{{ maxDistance }}"
+                            (change)="updateDistance($event)"></mat-slider>
+    {{ maxDistance }} miles.                            
+  </div>
+
+</div>
+
 <div class="spotbie-overlay-window" *ngIf="sliderRight"  [ngStyle]="{'background-color' : 'rgba(0,0,0,.53)' }">
 
   <div class="sb-closeButton" (click)="closeMarkerOverlay()"><i class="fa fa-times"></i></div>

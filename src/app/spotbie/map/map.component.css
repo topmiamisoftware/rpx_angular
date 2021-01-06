@@ -308,6 +308,13 @@
     background-color: rgba(0,0,0,.73);
     margin-top: 5px;
 }
+.no-results{
+    padding-top: 25px;
+    padding-bottom: 25px;
+}
+.spotbie-search-results.no-results .spotbie-search-results-title{
+    text-align: center;
+}
 .spotbie-search-result-wrapper{
     position: relative;
     margin: 0 auto;
@@ -642,10 +649,17 @@ span.sb-button{
         max-height: 450px;              
     }
     .spotbie-profile-pop{
-        top: 14%;
-        width: 88%;
-        min-width: 88%;
-        max-width: 88%;
+        position: absolute;
+        height: 100%;
+        min-height: 100%;
+        top: 0%;
+        bottom: 0%; 
+        width: 96%;
+        min-width: 96%;
+        max-width: 96%;
+        padding: 2%;
+        border-radius: 0px;
+        z-index:-1;
     }    
 }
 @media (max-width: 560px) { 
