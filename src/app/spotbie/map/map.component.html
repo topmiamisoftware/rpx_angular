@@ -369,9 +369,9 @@
 
 </div>
 
-<div class="spotbie-overlay-window" *ngIf="sliderRight"  [ngStyle]="{'background-color' : 'rgba(0,0,0,.53)' }">
+<div class="sb-closeButton" (click)="closeMarkerOverlay()" *ngIf="sliderRight"><i class="fa fa-times"></i></div>
 
-  <div class="sb-closeButton" (click)="closeMarkerOverlay()"><i class="fa fa-times"></i></div>
+<div class="spotbie-overlay-window" *ngIf="sliderRight"  [ngStyle]="{'background-color' : 'rgba(0,0,0,.53)' }">
 
   <div class='spotbie-profile-pop animated flipInX' 
         ngHammer="{ event : 'swipe', direction : 'up'}"

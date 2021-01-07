@@ -660,6 +660,7 @@ span.sb-button{
         padding: 2%;
         border-radius: 0px;
         z-index:-1;
+        padding-top: env(safe-area-inset-top);
     }    
 }
 @media (max-width: 560px) { 
