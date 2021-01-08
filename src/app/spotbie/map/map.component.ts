@@ -168,7 +168,6 @@ export class MapComponent implements OnInit {
 
   constructor(private locationService: LocationService,
               private deviceService: DeviceDetectorService,
-              private router: Router,
               private webOptionsService: ColorsService,
               private mapIconPipe: MapObjectIconPipe) { }
 
@@ -960,11 +959,6 @@ export class MapComponent implements OnInit {
 
   public closeMarkerOverlay(): void {
     this.sliderRight = false
-  }
-
-  public viewProfile(exe_username: string): void {
-    if(exe_username == 'User is a Ghost') return
-    this.router.navigate(['/user-profile/' + exe_username])
   }
   
   public saveUserLocation(): void {

@@ -20,7 +20,8 @@ import { LocationSaverComponent } from '../location-saver/location-saver.compone
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { MyPlacesComponent } from '../location-saver/my-places/my-places.component'
 import { WelcomeComponent } from '../spotbie-logged-out/welcome/welcome.component'
-import { ShareModule } from '@ngx-share/core'
+import { ShareModule } from '@ngx-share/core';
+import { UserInfoObjectComponent } from './user-info-object/user-info-object.component'
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { ShareModule } from '@ngx-share/core'
     MyFavoritesComponent,
     InfoObjectComponent,
     MyPlacesComponent,
-    WelcomeComponent
+    WelcomeComponent,
+    UserInfoObjectComponent
   ],
   imports: [
     AgmOverlays,
