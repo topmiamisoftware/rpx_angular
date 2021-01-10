@@ -565,6 +565,57 @@ span.sb-button{
     background-color: rgba(0,0,0,.25);
     border-radius: 20px;
 }
+.map-prompt-mobile{
+    position: absolute;
+    top: 0px;
+    width: 100%;
+    min-width: 100%;
+    bottom: 0px;
+    height: 100%;
+    min-height: 100%;
+    background-color: rgba(0,0,0,.83);
+    z-index: 2;
+}
+
+.map-prompt-mobile .title{
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 41%;
+    transform: translateY(-41%);
+    text-align: center;
+    margin: 0 auto;
+    z-index: 1;
+    font-size: 25px;
+    pointer-events: none;
+    font-family: sitka-italic;
+    letter-spacing: 0px;
+    line-height: 31px;
+}
+.map-prompt-mobile .sb-button{
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 60%;
+    transform: translateY(-60%);
+}
+.spotbie-map .title{
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    text-align: center;
+    margin: 0 auto;
+    z-index: 1;
+    font-size: 18px;
+    pointer-events: none;
+    font-family: sitka-italic;
+}
+.map-prompt-mobile .sb-button{
+    background-color: #8BC34A;
+    cursor: pointer;
+}
 /**WIDTH MEDIA QUERIES */
 @media (max-width: 1583px) { 
     .spotbie-search-result{

@@ -166,6 +166,13 @@ export class MapComponent implements OnInit {
 
   public showNoResultsBox: boolean = false
 
+  public isCordova: string
+
+  public showMobilePrompt: boolean = false
+  public showMobilePrompt2: boolean = false
+
+  public firstTimeShowingMap: boolean = true
+
   constructor(private locationService: LocationService,
               private deviceService: DeviceDetectorService,
               private webOptionsService: ColorsService,
@@ -181,13 +188,13 @@ export class MapComponent implements OnInit {
     this.rad_1 = this.rad_11
     this.surrounding_object_list = []
 
-    if (window.navigator.geolocation) { window.navigator.geolocation.getCurrentPosition(this.showPosition.bind(this)) }
+    this.drawPosition()
 
   }
   
   private peopleSearch() {
     this.surrounding_object_list = []
-    if (window.navigator.geolocation) { window.navigator.geolocation.getCurrentPosition(this.showPosition.bind(this)) }
+    this.drawPosition()
   }
 
   public distanceSortAsc(a, b) {
@@ -933,10 +940,16 @@ export class MapComponent implements OnInit {
     this.ogLat = position.coords.latitude
     this.ogLng = position.coords.longitude
 
+    if(this.firstTimeShowingMap){
+      this.firstTimeShowingMap = false
+      this.drawPosition()
+    }
+
+  }
+
+  public drawPosition(){
     this.iconUrl = this.mapIconPipe.transform(this.user_default_image)
-
     this.saveUserLocation()
-
   }
 
   public pullMarker(mapObject: any): void {
@@ -1142,10 +1155,28 @@ export class MapComponent implements OnInit {
 
   }
 
+  public mobileStartLocation(){
+    if ( window.navigator.geolocation) {  
+      window.navigator.geolocation.watchPosition(this.showPosition.bind(this)) 
+    }
+    this.showMobilePrompt = false
+    this.showMobilePrompt2 = true
+  }
+
   public startLocation(){
 
-    if (window.navigator.geolocation) { window.navigator.geolocation.getCurrentPosition(this.showPosition.bind(this)) }
+    if(this.isCordova == '1'){
 
+      this.showMobilePrompt = true
+
+    } else {
+
+      if ( window.navigator.geolocation) {  
+        window.navigator.geolocation.watchPosition(this.showPosition.bind(this)) 
+      }
+
+    }
+    
     this.web_options_subscriber = this.webOptionsService.getWebOptions().subscribe(web_options =>{
 
       if(web_options.bg_color) this.bg_color = web_options.bg_color
@@ -1167,6 +1198,8 @@ export class MapComponent implements OnInit {
 
   ngAfterViewInit() {
     
+    this.isCordova = localStorage.getItem('isCordova')
+    
     this.isLoggedIn = localStorage.getItem('spotbie_loggedIn')
     this.bg_color = localStorage.getItem('spotbie_backgroundColor')
     this.user_default_image = localStorage.getItem('spotbie_userDefaultImage')
@@ -1182,13 +1215,6 @@ export class MapComponent implements OnInit {
     this.is_iphone = mobile_js_i.iphone_i
     
     this.promptForLocation()
-
-    if(this.is_android){
-      mobile_js_i.accesLocationAndroid()
-    }
-
-
-
 
   }
 }

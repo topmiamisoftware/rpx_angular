@@ -2,7 +2,22 @@
 
 <div class="spotbie-map">
 
-  <agm-map class="spotbie-map" 
+  <div class="map-prompt-mobile" *ngIf="showMobilePrompt">
+    <div class="title">
+      Ready to start exploring?
+    </div>
+    <div class="sb-button" (click)="mobileStartLocation()">
+      Let's Go!
+    </div>
+  </div>
+
+  <div class="title" *ngIf="showMobilePrompt2" (click)="showMobilePrompt2 = false">
+    Touch Map to Begin!
+  </div>
+
+  <agm-map class="spotbie-map"
+            (click)="showMobilePrompt2 = false"
+            (boundsChange)="showMobilePrompt2 = false"
             [gestureHandling]="'greedy'"
             [streetViewControl]="false"
             #spotbie_map

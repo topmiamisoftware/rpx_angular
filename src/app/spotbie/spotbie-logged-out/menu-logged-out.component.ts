@@ -2,6 +2,8 @@ import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angu
 import { Location } from '@angular/common'
 import { Router } from '@angular/router'
 
+import { externalBrowserOpen } from 'src/app/helpers/cordova/web-intent'
+
 @Component({
   selector: 'app-menu-logged-out',
   templateUrl: './menu-logged-out.component.html',
@@ -32,7 +34,7 @@ export class MenuLoggedOutComponent implements OnInit {
   public home_route: boolean = false
 
   public prevScrollpos
-
+  
   constructor(private location: Location,
               private router: Router) { }
 
@@ -41,7 +43,7 @@ export class MenuLoggedOutComponent implements OnInit {
   }
 
   goToBlog(){
-    window.location.assign("https://blog.spotbie.com/")
+    externalBrowserOpen("https://blog.spotbie.com/")
   }
 
   openWindow(window: any) {

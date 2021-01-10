@@ -237,7 +237,8 @@ export class InfoObjectComponent implements OnInit {
       displayAddress = displayAddress + ' ' + element 
     });
 
-    window.open(`http://www.google.com/maps/place/${displayAddress}`)
+    if(confirmNav)
+      externalBrowserOpen(`http://www.google.com/maps/place/${displayAddress}`)
     
   }
 
@@ -404,7 +405,7 @@ export class InfoObjectComponent implements OnInit {
   public visitInfoObjectPage(){
 
     if(this.info_object.type_of_info_object == 'yelp_business'){
-      window.open(`${this.info_object.url}`)
+      externalBrowserOpen(`${this.info_object.url}`)
     }
 
   }
