@@ -63,9 +63,9 @@ export class StreamPosterComponent implements OnInit {
 
   public loading = false
 
-  public is_android: boolean
+  public isAndroid: boolean
 
-  public is_iphone: boolean
+  public isIphone: boolean
 
   public check_stream_text_timeout: any
 
@@ -300,9 +300,9 @@ export class StreamPosterComponent implements OnInit {
 
   public startExtraMediaUploader(): void {
 
-    if(this.is_android){
+    /*if(this.isAndroid){
       mobile_js_i.callFilePermissionsAndroid()
-    } 
+    } */
 
     this.extraMediaInput.nativeElement.click()
 
@@ -418,7 +418,7 @@ export class StreamPosterComponent implements OnInit {
       media_to_remove:  this.to_remove_on_edit
     }
 
-    let promise = new Promise((resolve, reject) =>{
+    let promise = new Promise<void>((resolve, reject) =>{
 
       this.http.post<any>(EXTRA_MEDIA_UPLOAD_API_URL, remove_media_object).subscribe(
         resp => {
@@ -479,8 +479,8 @@ export class StreamPosterComponent implements OnInit {
 
     this.exe_api_key = localStorage.getItem('spotbie_userApiKey')
 
-    this.is_android = mobile_js_i.android_i
-    this.is_iphone = mobile_js_i.iphone_i  
+    this.isAndroid = mobile_js_i.android_i
+    this.isIphone = mobile_js_i.iphone_i  
     
     const stream_post_validators = [Validators.maxLength(5000)]
     

@@ -31,9 +31,9 @@ export class ReadAboutComponent implements OnInit {
 
     public spotbie_users: number
 
-    public is_android: boolean
+    public isAndroid: boolean
 
-    public is_iphone: boolean
+    public isIphone: boolean
 
     private current_slide: number = 0
 

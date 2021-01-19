@@ -3,7 +3,7 @@ import { LocationService } from '../../location-service/location.service'
 import { DeviceDetectorService } from 'ngx-device-detector'
 import { AgmMap, AgmInfoWindow } from '@agm/core'
 import * as mobile_js_i from '../../../assets/scripts/mobile_interface.js'
-import { Router } from '@angular/router'
+import * as cordovaFunctions from '../../helpers/cordova/cordova-variables.js'
 import { MapObjectIconPipe } from '../../pipes/map-object-icon.pipe'
 import * as map_extras from './map_extras/map_extras'
 import { ToastRequest } from 'src/app/helpers/toast-helper/toast-models/toast-request'
@@ -98,9 +98,9 @@ export class MapComponent implements OnInit {
 
   public search_api_url
 
-  public is_android: boolean
+  public isAndroid: boolean = false
 
-  public is_iphone: boolean
+  public isIphone: boolean = false
   
   public coming_soon_ov: boolean = false
 
@@ -1064,6 +1064,7 @@ export class MapComponent implements OnInit {
 
     }
 
+    this.loading = false
     this.createObjectMarker(surrounding_object_list)
     //console.log("Sorrounding Objects: ", surrounding_object_list)
 
@@ -1156,26 +1157,36 @@ export class MapComponent implements OnInit {
   }
 
   public mobileStartLocation(){
-    if ( window.navigator.geolocation) {  
-      window.navigator.geolocation.watchPosition(this.showPosition.bind(this)) 
+  
+    if(this.isCordova && this.isAndroid){
+      this.androidMobileStartLocation() 
+      return     
     }
+  
+    if ( window.navigator.geolocation) window.navigator.geolocation.watchPosition(this.showPosition.bind(this)) 
+  
     this.showMobilePrompt = false
     this.showMobilePrompt2 = true
+  
+  }
+
+  public androidMobileStartLocation(){
+
+    cordovaFunctions.getGeolocation(
+      this.showPosition.bind(this),
+      function(){
+        alert("SpotBie needs your location in to find what's around you.")
+      }      
+    )
+    
+    this.showMobilePrompt = false
+    this.showMobilePrompt2 = false
+
   }
 
   public startLocation(){
 
-    if(this.isCordova == '1'){
-
-      this.showMobilePrompt = true
-
-    } else {
-
-      if ( window.navigator.geolocation) {  
-        window.navigator.geolocation.watchPosition(this.showPosition.bind(this)) 
-      }
-
-    }
+    this.showMobilePrompt = true
     
     this.web_options_subscriber = this.webOptionsService.getWebOptions().subscribe(web_options =>{
 
@@ -1211,8 +1222,8 @@ export class MapComponent implements OnInit {
       this.bg_color = '#353535'
     }
     
-    this.is_android = mobile_js_i.android_i
-    this.is_iphone = mobile_js_i.iphone_i
+    this.isAndroid = mobile_js_i.android_i
+    this.isIphone = mobile_js_i.iphone_i
     
     this.promptForLocation()
 
