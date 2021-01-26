@@ -6,10 +6,14 @@ export const isCordova = function (){
 
 }
 
-var permissions = cordova.plugins.permissions
+if(cordova != undefined){
+    var permissions = cordova.plugins.permissions
+} else {
+    var permissions = null
+}
 
 export const getGeolocation = function(callback, error) {
-    
+        
     const hasPermission = permissions.hasPermission(permissions.ACCESS_FINE_LOCATION)
 
     if(hasPermission){

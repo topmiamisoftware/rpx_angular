@@ -1,10 +1,17 @@
 export var android_i;
 export var iphone_i;
 
-if(device.platform == 'Android'){
-    android_i = true;
-} else if(device.platform == 'Iphone'){
-    iphone_i = true;
+if(device != undefined){
+    
+    if(device.platform == 'Android'){
+        android_i = true;
+    } else if(device.platform == 'Iphone'){
+        iphone_i = true;
+    } else {
+        android_i = false;
+        iphone_i = false; 
+    }
+
 } else {
     android_i = false;
     iphone_i = false;
