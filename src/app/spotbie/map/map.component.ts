@@ -1163,7 +1163,7 @@ export class MapComponent implements OnInit {
       return     
     }
   
-    if ( window.navigator.geolocation) window.navigator.geolocation.watchPosition(this.showPosition.bind(this)) 
+    if ( window.navigator.geolocation) window.navigator.geolocation.getCurrentPosition(this.showPosition.bind(this)) 
   
     this.showMobilePrompt = false
     this.showMobilePrompt2 = true
