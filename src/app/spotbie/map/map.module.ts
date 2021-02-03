@@ -20,8 +20,9 @@ import { LocationSaverComponent } from '../location-saver/location-saver.compone
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { MyPlacesComponent } from '../location-saver/my-places/my-places.component'
 import { WelcomeComponent } from '../spotbie-logged-out/welcome/welcome.component'
-import { ShareModule } from '@ngx-share/core';
+import { ShareModule } from '@ngx-share/core'
 import { UserInfoObjectComponent } from './user-info-object/user-info-object.component'
+import { NgxUsefulSwiperModule } from 'ngx-useful-swiper';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { UserInfoObjectComponent } from './user-info-object/user-info-object.com
     ReactiveFormsModule,
     FormsModule,
     ShareModule,
+    NgxUsefulSwiperModule,
     AgmCoreModule.forRoot({
       apiKey: environment.google_maps_apiKey,
       language: 'en',

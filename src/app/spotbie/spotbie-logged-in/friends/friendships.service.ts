@@ -124,7 +124,7 @@ export class FriendshipsService {
 
   public cancelRequest(peerId: number): Observable<any>{
 
-    const cancelRequestApi = `${FRIENDS_API}/cancel_request`
+    const cancelRequestApi = `${FRIENDS_API}/cancel-request`
     const cancelRequestObj = {
       _method: 'DELETE',
       peer_id: peerId
@@ -138,7 +138,7 @@ export class FriendshipsService {
 
   public checkRelationship(peerId: number): Observable<any>{
 
-    const checkRelationshipApi = `${FRIENDS_API}/check_relationship`
+    const checkRelationshipApi = `${FRIENDS_API}/check-relationship`
 
     const checkRelationshipObj = {
       peer_id: peerId

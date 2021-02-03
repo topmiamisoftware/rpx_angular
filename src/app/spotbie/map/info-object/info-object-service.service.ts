@@ -5,8 +5,8 @@ import { Observable, of } from 'rxjs'
 import * as spotbieGlobals from 'src/app/globals'
 import { catchError, map } from 'rxjs/operators'
 
-const PULL_INFO_API = `${spotbieGlobals.API}pull-info-object`
-const PULL_INFO_EVENT_API = `${spotbieGlobals.API}get-event`
+const PULL_INFO_API = `${spotbieGlobals.API}surroundings/pull-info-object`
+const PULL_INFO_EVENT_API = `${spotbieGlobals.API}surroundings/get-event`
 
 
 @Injectable({

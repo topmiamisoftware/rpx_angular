@@ -29,7 +29,7 @@
                     [album_media_id]="album_media_id"
                     *ngIf="public_profile"></app-profile-header>
 
-<app-read-about class="spotbie-app-read-about" *ngIf="home_route" (spawnCategories)="spawnCategories($event)"></app-read-about>
+<app-read-about class="spotbie-app-read-about" *ngIf="home_route" (spawnCategories)="spawnCategories($event)" (signUp)="openWindow(signUpWindow)"></app-read-about>
 
 <app-log-in *ngIf="logInWindow.open"></app-log-in>
 

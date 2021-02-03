@@ -30,7 +30,7 @@ export const routes: Routes = [
       { path: ':exe_user_name/albums/:album_id/media/:album_media_id', component: UserComponent },
       { path: ':exe_user_name/posts/:stream_post_id', component: UserComponent }
   ]}, 
-  { path: 'user_home', loadChildren: './user-home/user-home.module#UserHomeModule', canActivate: [LoginGuardServiceService] },  
+  { path: 'user-home', loadChildren: './user-home/user-home.module#UserHomeModule', canActivate: [LoginGuardServiceService] },  
   { path: '', redirectTo: '/home', pathMatch: 'full' }
 ]
 

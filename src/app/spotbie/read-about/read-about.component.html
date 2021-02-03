@@ -8,19 +8,19 @@
 
                 <p class="spotbie-desc">
                     
-                    Connecting <span>users</span>,
+                    Connecting <span id="usersSpan" (click)="signUpNow()">users</span>,
 
-                    <span>retail shops</span>,
+                    <span (click)="scrollT()">retail shops</span>,
 
-                    <span>places to eat</span>,
+                    <span (click)="scrollT()">places to eat</span>,
 
-                    and <span>events</span>.
+                    and <span (click)="scrollT()">events</span>.
 
                 </p>
 
             </div>                        
-
-            <table class="AppsRx" *ngIf="!isCordova">
+            
+            <table class="appsDownload" *ngIf="!isCordova">
                 <tbody>
                     <tr>
                         <td (click)="appOpen(0)">
@@ -31,13 +31,13 @@
                         </td>
                     </tr>
                 </tbody>
-            </table>                                
+            </table>                              
 
-            <h2 class="HA spotbieAddPointerCursor" id="places-to-eat">
-                <span class="dfg">Connecting Users to Places to Eat</span>
-            </h2>                                     
+            <p class="QuestionsPar spotbieAddPointerCursor">        
+                <span class='spotbie-search-click' (click)="scrollT()">Search Places to Eat</span>        
+            </p> 
 
-            <picture>
+            <picture (click)="scrollT()">
                 <source srcset='assets/images/home_imgs/webp/providing-you-places-to-eat-around-you.webp' media="(min-width: 881px)" type='image/webp'>
                 <source srcset='assets/images/home_imgs/webp/providing-you-places-to-eat-around-you1x.webp' media="(min-width: 481px)" type='image/webp'>
                 <source srcset='assets/images/home_imgs/webp/providing-you-places-to-eat-around-you2x.webp'  media="(min-width: 415px)" type='image/webp'>
@@ -49,23 +49,16 @@
                         src="assets/images/home_imgs/png/providing-you-places-to-eat-around-you.jpg" 
                         alt="Picture of girl in her twenties enjoying food in a restaurant." />
 
-            </picture>  
-
-            <p class="QuestionsPar spotbieAddPointerCursor">        
-                <span class='spotbie-search-click' (click)="searchFood()">Search Places to Eat</span>        
-            </p>   
-
-            <h2 class="HA spotbieAddPointerCursor" id="events">
-                <span class="dfg">Connecting Users to Events</span>
-            </h2>                                     
-
-            <img class="QuestionsImage" style="margin-top: 0%;"
-                    src="assets/images/home_imgs/jpg/find_events_around.jpg" 
-                    alt="Picture of girl in her twenties enjoying food in a restaurant." />
+            </picture>                                      
 
             <p class="QuestionsPar">                     
-                <span class='spotbie-search-click' (click)="searchEvents()">Search Events</span>
+                <span class='spotbie-search-click' (click)="scrollT()">Search Events</span>
             </p>  
+
+            <img class="QuestionsImage spotbieAddPointerCursor" style="margin-top: 0%;"
+                    src="assets/images/home_imgs/jpg/find_events_around.jpg" 
+                    alt="Picture of girl in her twenties enjoying food in a restaurant."
+                    (click)="scrollT()" />
             
             <!-- <h2 class="HA spotbieAddPointerCursor" (click)="openSlideShow(0);">
                 <span class="dfg">Monetizable Profiles</span>
@@ -117,16 +110,13 @@
             <p class="QuestionsPar spotbieAddPointerCursor" (click)="openSlideShow(2);" id="retail">        
                 We localize media files such as music, graphic design, video games, movies, and text documents for our users.
                 By browsing the map near their location or thousands of miles away, our users are introduced to content based on its exact place of origin.        
-            </p>-->
+            </p>-->                                 
 
-            
-            <h2 class="HA spotbieAddPointerCursor" id="retail">
+            <p class="QuestionsPar spotbieAddPointerCursor">
+                <span class='spotbie-search-click' (click)="scrollT()">Search Retail Shops</span>      
+            </p>                         
 
-                <span class="dfg">Connecting Users to Retail Shops</span>
-
-            </h2>                                        
-
-            <picture>
+            <picture (click)="scrollT()">
 
                 <source srcset='assets/images/home_imgs/webp/providing-you-places-to-shop-around-you.webp' media="(min-width: 415px)" type='image/webp'>
                 <source srcset='assets/images/home_imgs/webp/providing-you-places-to-shop-around-you1x.webp' media="(min-width: 481px)" type='image/webp'>
@@ -142,17 +132,12 @@
 
             </picture>  
 
-            <p class="QuestionsPar spotbieAddPointerCursor">
-                <span class='spotbie-search-click' (click)="searchRetail()">Search Retail Shops</span>      
-            </p>                         
 
-            <h2 class="HA spotbieAddPointerCursor" id="people">
+            <p class="QuestionsPar spotbieAddPointerCursor">        
+                <span class='spotbie-search-click' (click)="signUpNow()">Connecting Users By Location</span>        
+            </p> 
 
-                <span class="dfg">Connecting Users by Location</span>
-
-            </h2>                                          
-            
-            <picture>
+            <picture (click)="signUpNow()">
 
                 <source srcset='assets/images/home_imgs/webp/find-and-make-new-friends.webp' media="(min-width: 415px)" type='image/webp'>
                 <source srcset='assets/images/home_imgs/webp/find-and-make-new-friends1x.webp' media="(min-width: 481px)" type='image/webp'>
@@ -308,8 +293,8 @@
             
             <div class='closeSlideshow' (click)="closeSlideShow();">close</div>
             
-        </div>-->
-        
+        </div>--> 
+
         <div id='loading_screen' *ngIf="loading">
             
             <div class='loading_gif'></div>

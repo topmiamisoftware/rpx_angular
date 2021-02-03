@@ -9,10 +9,10 @@ import { User } from 'src/app/models/user'
 import { ProfileHeaderService } from 'src/app/services/profile-header/profile-header.service'
 import { ColorsService } from '../spotbie-logged-in/background-color/colors.service'
 
-const BACKGROUND_UPLOAD_API_URL = `${spotbieGlobals.API}profile_header/upload_background`
+const BACKGROUND_UPLOAD_API_URL = `${spotbieGlobals.API}profile-header/upload-background`
 const BACKGROUND_MAX_UPLOAD_SIZE = 3e+6
 
-const DEFAULT_UPLOAD_API_URL = `${spotbieGlobals.API}profile_header/upload_default`
+const DEFAULT_UPLOAD_API_URL = `${spotbieGlobals.API}profile-header/upload-default`
 const DEFAULT_MAX_UPLOAD_SIZE = 3e+6
 
 @Component({

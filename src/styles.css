@@ -518,30 +518,7 @@ a, a:hover, a:active, a:after{
     z-index: 999999999999;
     background-color: rgba(0,0,0,.93);
 }
-.spotbie-scroll-top{
-    position: fixed;
-    left: 15px;
-    bottom: 15px;
-    transition: 0.5s;
-    background-color: #0d0d0d;
-    padding: 5px;
-    padding-left: 13px;
-    padding-right: 13px;
-    border-radius: 99%;  
-    transition: 0.5s;
-    z-index: 999999;
-}
-.spotbie-scroll-top:hover{
-    cursor: pointer;
-    background-color: #609329;
-}
-.spotbie-scroll-top i{
-    font-size: 38px;
-    opacity: 0.7;
-}
-.spotbie-scroll-top:hover i{
-    opacity: 1;
-}
+
 .spotbie-arrow-transparent{
     display: none;
 }
@@ -731,7 +708,12 @@ a, a:hover, a:active, a:after{
     min-width: 100% !important;
     max-width: 100%;
 }
-
+.swiper-pagination-bullet-active{
+    background: white !important;
+}
+.swiper-pagination-bullet{
+    background: white !important;
+}
 /**WIDTH MEDIA QUERIES */
 @media (max-width: 1300px) { 
 
@@ -836,7 +818,7 @@ a, a:hover, a:active, a:after{
 
 }
 @media (max-width: 460px) { 
-
+    
     html {
 
         font-size: 17px
@@ -872,13 +854,6 @@ a, a:hover, a:active, a:after{
         width: 100%;
         min-width: 100%;
         max-width: 100%;
-    }
-    .spotbie-scroll-top{
-        padding-top: 6px;
-        padding-bottom: 6px;
-    }
-    .spotbie-scroll-top i {
-        font-size: 22px;
     }
 }
 @media (max-width: 420px) { 

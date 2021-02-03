@@ -222,6 +222,20 @@ p{
     margin-left: 5px;
     margin-right: 5px;
 }
+
+.fa-info{
+    margin-left: 8px;
+    position: relative;
+    font-size: 14px;
+}
+.fa-eye{
+    cursor: pointer;
+    position: absolute;
+    top: 58%;
+    right: 2%;
+    color: #474747;
+}
+
 /**WIDTH MEDIA QUERIES */
 @media (max-width: 1300px) { 
 

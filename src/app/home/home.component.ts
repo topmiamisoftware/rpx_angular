@@ -12,8 +12,6 @@ export class HomeComponent implements OnInit {
 
   public arrowOn: boolean = false;
 
-  @ViewChild('scrollArrow') scrollArrow: ElementRef;
-
   @ViewChild('app_map') app_map: MapComponent
 
   constructor(private router: Router) { }
@@ -27,34 +25,13 @@ export class HomeComponent implements OnInit {
     $('html, body').animate({ scrollTop: 0 }, 'slow')    
   }
 
-  addScrollEvent() {
-
-    $(window).on('scroll', function() {
-
-      const scrollTop = $(window).scrollTop()
-
-      if (scrollTop < 50) {
-        this.scrollArrow.nativeElement.className = 'spotbie-scroll-top spotbie-arrow-transparent'
-        this.arrowOn = false
-      } else if (this.arrowOn == false) {
-        this.arrowOn = true
-        this.scrollArrow.nativeElement.className = 'spotbie-scroll-top'
-      }
-
-    }.bind(this));
-
-  }
-
   async ngOnInit() {
     const isLoggedIn = localStorage.getItem("spotbie_loggedIn")
-    if (isLoggedIn == '1') this.router.navigate(['/user_home'])
+    if (isLoggedIn == '1') this.router.navigate(['/user-home'])
   }
 
   ngAfterViewInit(){
-
-    this.addScrollEvent();
-    document.getElementsByTagName('body')[0].style.backgroundColor = 'transparent !important'
-
+    //document.getElementsByTagName('body')[0].style.backgroundColor = 'transparent !important'
   }
 
 }

@@ -5,7 +5,7 @@ import { Subject, Observable } from 'rxjs'
 import { catchError, tap } from 'rxjs/operators'
 import { handleError } from 'src/app/helpers/error-helper'
 
-const COLORS_API = spotbieGlobals.API + 'web_options'
+const COLORS_API = `${spotbieGlobals.API}web-options`
 
 @Injectable({
   providedIn: 'root'
@@ -49,7 +49,7 @@ export class ColorsService {
 
   public setBgColor(color: string){
 
-    const colors_api = COLORS_API + "/set_bg_color"
+    const colors_api = COLORS_API + "/set-bg-color"
 
     const colors_obj = {
       'color': color

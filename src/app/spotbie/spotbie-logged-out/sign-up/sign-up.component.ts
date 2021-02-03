@@ -11,11 +11,15 @@ import { ValidatePersonName } from '../../../helpers/name.validator'
 import { ValidatePassword } from '../../../helpers/password.validator'
 
 import { SignUpService } from 'src/app/services/spotbie-logged-out/sign-up/sign-up.service'
-import { fromErrorResponse } from 'src/app/helpers/error-helper'
-import { HttpErrorResponse } from '@angular/common/http'
-import { take, catchError } from 'rxjs/operators'
+import { catchError } from 'rxjs/operators'
 import { Observable } from 'rxjs/internal/Observable'
 import { of } from 'rxjs'
+import { EmailConfirmationService } from '../../email-confirmation/email-confirmation.service'
+import { ValidateUniqueEmail } from 'src/app/validators/email-unique.validator'
+import { EmailConfirmationComponent } from '../../email-confirmation/email-confirmation.component'
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog'
+
+import { faEye, faEyeSlash, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-sign-up',
@@ -37,6 +41,10 @@ export class SignUpComponent implements OnInit {
 
   @Input() window_obj
 
+  public faEye = faEye
+  public faInfo = faInfoCircle
+  public faEyeSlash = faEyeSlash
+
   public signUpFormx: FormGroup
 
   public signing_up: boolean = false
@@ -49,9 +57,17 @@ export class SignUpComponent implements OnInit {
 
   public account_perks: boolean = false
 
+  public alreadyConfirmedEmail: string = ''
+  public emailIsConfirmed: boolean = false
+  public emailConfirmation: boolean
+
+  public passwordShow: boolean = false
+
   constructor(private router: Router,
               private sign_up_service: SignUpService,
-              private formBuilder: FormBuilder) { }
+              private formBuilder: FormBuilder,
+              private emailUniqueCheckService: EmailConfirmationService,
+              private matDialog: MatDialog) { }
 
   scrollTo(el: ElementRef): void{
     $('html, body').animate({ scrollTop: $(el).offset().top }, 'slow')
@@ -68,6 +84,70 @@ export class SignUpComponent implements OnInit {
   public closePerks(): void {
       this.account_perks = false
   }
+  
+  public emailChanged(){
+    this.emailIsConfirmed = false
+  }
+
+  public tryEmailConfirmation(): void{
+    
+    this.loading = true
+
+    const emailFormControl = this.signUpFormx.get('spotbieEmail')
+
+    if(emailFormControl.valid &&
+      (this.alreadyConfirmedEmail !== this.spotbieEmail || this.emailIsConfirmed == false)){
+
+      this.emailIsConfirmed = false
+      this.emailConfirmation = true
+
+      const dialogConfig = new MatDialogConfig()
+
+      dialogConfig.autoFocus = true
+      dialogConfig.data = {
+        email : this.spotbieEmail,
+        firstName: this.spotbieFirstName
+      }
+
+      let dialogRef = this.matDialog.open(
+        EmailConfirmationComponent,
+        dialogConfig
+      )
+      
+      dialogRef.componentInstance.emailAddressChange.subscribe(
+        email => {
+          this.signUpFormx.get('spotbieEmail').setValue(email)
+          this.signUpFormx.get('spotbieEmailConfirm').setValue(email)
+        }
+      )
+
+      dialogRef.afterClosed().subscribe(
+        resp => {
+          this.tryEmailConfirmationCb(resp) 
+        }
+      )
+
+    }
+
+  }
+
+  public tryEmailConfirmationCb(resp: any){
+
+    if(resp !== undefined){
+
+      if(resp.emailConfirmed)
+        this.emailIsConfirmed = true
+      else 
+        this.emailIsConfirmed = false
+      
+    } else 
+      this.emailIsConfirmed = false
+  
+    this.alreadyConfirmedEmail = this.spotbieEmail
+
+    this.loading = false
+
+  }
 
   get spotbieUsername() { return this.signUpFormx.get('spotbieUsername').value }
   get spotbieFirstName() { return this.signUpFormx.get('spotbieFirstName').value }
@@ -83,12 +163,25 @@ export class SignUpComponent implements OnInit {
     this.signUpFormx.get(key).setValue(this.signUpFormx.get(key).value.trim())
   }
 
-  public initSignUp(): void {
+  public togglePassword(){
+    this.passwordShow = !this.passwordShow
+  }
 
-    this.loading = true
+  public initSignUp(): void {
 
     // will be used when the user hits the submit button
     this.submitted = true
+
+    if(!this.emailIsConfirmed && 
+          this.signUpFormx.valid){
+
+      this.tryEmailConfirmation()
+      return
+
+    }
+
+    this.loading = true
+
     this.vc_spotbie_sign_up_box_inner.nativeElement.scrollTo(0, 0)
 
     this.signUpFormx.updateValueAndValidity()
@@ -113,11 +206,6 @@ export class SignUpComponent implements OnInit {
         else
           document.getElementById('user_last_name').style.border = 'unset'
 
-        if (this.signUpFormx.get('spotbiePhone').invalid)
-          document.getElementById('user_phone').style.border = '1px solid red'
-        else
-          document.getElementById('user_phone').style.border = 'unset'
-
         if (this.signUpFormx.get('spotbieEmail').invalid)
           document.getElementById('user_email').style.border = '1px solid red'
         else
@@ -138,13 +226,14 @@ export class SignUpComponent implements OnInit {
         return
 
     } else {
+
       document.getElementById('spotbie_username').style.border = 'unset'
       document.getElementById('user_first_name').style.border = 'unset'
       document.getElementById('user_last_name').style.border = 'unset'
-      document.getElementById('user_phone').style.border = 'unset'
       document.getElementById('user_email').style.border = 'unset'
       document.getElementById('user_pass').style.border = 'unset'
       document.getElementById('user_pass_confirm').style.border = 'unset'
+      
     }
 
     if (this.signing_up){
@@ -159,7 +248,6 @@ export class SignUpComponent implements OnInit {
     const user_last_name = this.spotbieLastName
     const password = this.spotbiePassword
     const confirm_password = this.spotbieConfirm
-    const phone_number = this.spotbiePhoneNumber
     const email = this.spotbieEmail
 
     // send to server
@@ -169,8 +257,7 @@ export class SignUpComponent implements OnInit {
         last_name: user_last_name,
         password,
         password_confirmation: confirm_password,
-        email,
-        phone_number
+        email
     }
 
     this.sign_up_service.initRegister(sign_up_obj)
@@ -187,12 +274,14 @@ export class SignUpComponent implements OnInit {
 
   private initSignUpCallback(httpResponse: any) {
       
-      if(httpResponse.message == 'success'){
-        
+      if(httpResponse.message == 'success'){       
+
         let sign_up_instructions = this.spotbieSignUpIssues.nativeElement
 
         const loginResponse = httpResponse
-  
+        
+        console.log("HttpResponse", loginResponse)
+
         // save the user information.
         localStorage.setItem('spotbie_userLogin', loginResponse.user.username)
         localStorage.setItem('spotbie_loggedIn', '1')
@@ -203,7 +292,7 @@ export class SignUpComponent implements OnInit {
         sign_up_instructions.className = 'signUpBoxInstructions'
         sign_up_instructions.innerHTML = 'Welcome to SpotBie!'
   
-        this.router.navigate(['/user_home'])
+        this.router.navigate(['/user-home'])
 
       }
 
@@ -270,18 +359,6 @@ export class SignUpComponent implements OnInit {
       } else
         document.getElementById('user_last_name').style.border = 'unset'
 
-      if(error_list.phone_number){
-
-        let errors: {[k: string]: any} = {};
-        error_list.phone_number.forEach(error => {
-          errors[error] = true
-        })            
-        this.signUpFormx.get('spotbiePhone').setErrors(errors)
-        document.getElementById('user_phone').style.border = '1px solid red' 
-
-      } else
-        document.getElementById('user_phone').style.border = 'unset'
-
       if(error_list.email){
 
         let errors: {[k: string]: any} = {};
@@ -346,12 +423,10 @@ export class SignUpComponent implements OnInit {
     const firstNameValidators = [Validators.required]
     const lastNameValidators = [Validators.required]
     const emailValidators = [Validators.required, Validators.email]
-    const phoneValidators = [Validators.required]
 
     this.signUpFormx = this.formBuilder.group({
         spotbieUsername: ['', usernameValidators],
         spotbieEmail: ['', emailValidators],
-        spotbiePhone: ['', phoneValidators],
         spotbieFirstName: ['', firstNameValidators],
         spotbieLastName: ['', lastNameValidators],
         spotbiePassword: ['', passwordValidators],
@@ -361,16 +436,26 @@ export class SignUpComponent implements OnInit {
                     ValidatePassword('spotbiePassword'),
                     MustMatch('spotbiePassword', 'spotbieConfirm'),
                     ValidatePersonName('spotbieFirstName'),
-                    ValidatePersonName('spotbieLastName')]
+                    ValidatePersonName('spotbieLastName'),]
     })
+
+    this.signUpFormx.setAsyncValidators(
+      ValidateUniqueEmail.valid(
+        this.emailUniqueCheckService, 
+        this.spotbieEmail
+      )
+    )
 
     this.loading = false
 
   }
 
-  ngOnInit() {
+  ngOnInit() {    
     this.loading = true
     this.initSignUpForm()
   }
 
+  ngAfterViewInit(){
+  }
+  
 }

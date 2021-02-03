@@ -16,7 +16,7 @@ export class SignUpService {
 
   public initRegister(register_object: any): Observable<any>{
 
-    let sign_up_api = SIGN_UP_API + '/sign_up'
+    let sign_up_api = SIGN_UP_API + '/sign-up'
 
     return this.http.post<any>(sign_up_api, register_object)
 

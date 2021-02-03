@@ -5,6 +5,7 @@ import { StreamerModule } from '../streamer/streamer.module';
 import { UserComponent } from './user.component';
 import { MenuModule } from '../spotbie/menu.module';
 import { HttpClientModule } from '@angular/common/http';
+import { HelperModule } from '../helpers/helper.module';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { HttpClientModule } from '@angular/common/http';
     BrowserModule,
     StreamerModule,
     HttpClientModule,
-    MenuModule
+    MenuModule,
+    HelperModule
   ],
   exports: [UserComponent]
 })

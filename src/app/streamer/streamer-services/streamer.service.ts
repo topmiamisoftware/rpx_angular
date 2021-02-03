@@ -50,7 +50,7 @@ export class StreamerService {
 
   public getMyStream(streamObj: any): Observable<any>{
 
-    let streamApi = `${STREAM_API}/my_stream?page=${streamObj.page}&user_id=${streamObj.user_id}`
+    let streamApi = `${STREAM_API}/my-stream?page=${streamObj.page}&user_id=${streamObj.user_id}`
 
     return this.http.get<any>(streamApi).pipe(
       catchError(handleError("getMyStream"))
@@ -60,7 +60,7 @@ export class StreamerService {
 
   public getMyGeneralStream(stream_obj: any): Observable<any>{
 
-    let streamApi = `${STREAM_API}/my_general_stream?page=${stream_obj.page}`
+    let streamApi = `${STREAM_API}/my-general-stream?page=${stream_obj.page}`
 
     return this.http.get<any>(streamApi).pipe(
       catchError(handleError("getMyGeneralStream"))

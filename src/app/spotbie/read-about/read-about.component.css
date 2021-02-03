@@ -21,14 +21,14 @@ h2{
 }
 .QuestionsPar{
     position: relative;
-    margin-top: 0;
+    margin-top: 30px;
     margin-bottom: 0;
     font-size: 19px;
     line-height: 24px;
     padding: 25px;
     padding-top: 30px;
     padding-bottom: 30px;               
-    background-color: rgb(255 255 255 / 89%);
+    background-color: rgb(255 255 255 / 68%);
     color: black;
     letter-spacing: 2px;
     line-height: 30px;
@@ -91,8 +91,9 @@ h2{
     background-position: center !important;
     background-repeat: no-repeat !important;
     background-size: contain !important;
+    border-radius: 20px;
 }
-.AppsRx {
+.appsDownload {
     position: relative;
     margin: 0 auto;
     margin-top: 20px;
@@ -485,14 +486,14 @@ closeSlideshow:hover{
     position: relative;
     display: block;
     margin: 0 auto;
-    color: #609329;
+    color: #000;
     margin-top: 0px;
     cursor: pointer;
     text-align: center;
     font-size: 22px;
 }
 .spotbie-search-click:hover{
-    font-size: 28px;
+    text-decoration: underline;
 }
 input{
     outline-color: #609329;
@@ -520,14 +521,14 @@ body{
     src: url(/assets/fonts/Fluent_SitkaSmall-Italic.ttf);
     font-display: swap;
 }
-.AppsRx{
+.appsDownload{
     margin-top: 20px;
     margin-bottom: 20px;
     max-width: 600px;
     width: 600px;
     min-width: 600px;
 }
-.AppsRx td {
+.appsDownload td {
     text-align: center;
     padding: 1.5%;
     width: 50%;
@@ -540,8 +541,9 @@ body{
     background-color: #000 !important;
     cursor: pointer;
 }
-.AppsRx td i{
+.appsDownload td i{
     font-size: 45px;
+    color: white
 }
 .spotbie-banner-wrapper{
     position: relative;
@@ -577,6 +579,9 @@ body{
     color: #8BC34A;
     text-align: center;
     letter-spacing: 0px;
+}
+.spotbie-desc .usersSpan{
+    cursor: none;
 }
 /**WIDTH MEDIA QUERIES */
 @media (max-width: 1300px) { 
@@ -623,12 +628,12 @@ body{
     }
 }
 @media (max-width: 800px) { 
-    .AppsRx {
+    .appsDownload {
         max-width: 450px !important;
         min-width: 450px !important;
         width: 450px !important;
     }
-    .AppsRx td{
+    .appsDownload td{
         padding: 20px;
         padding-top: 25px;
         padding-bottom: 25px;
@@ -692,12 +697,12 @@ body{
        padding-top: 15px !important;
        padding-bottom: 15px !important;
     }
-    .AppsRx {
+    .appsDownload {
         max-width: 75% !important;
         min-width: 75% !important;
         width: 75% !important;
     }
-    .AppsRx td {
+    .appsDownload td {
         padding: 20px;
         padding-top: 25px;
         padding-bottom: 25px;
@@ -748,6 +753,9 @@ body{
 @media (max-width: 600px) {
     .signUpInput{
         font-size: 20px;
+    }
+    .QuestionsImage{
+        border-radius: 0px;
     }
 }
 
@@ -812,7 +820,7 @@ body{
         padding-top: 12px !important;
         padding-bottom: 12px !important;
     }
-    .AppsRx td {
+    .appsDownload td {
         padding-top: 0px;
         padding-bottom: 0px;
     }
@@ -855,12 +863,12 @@ body{
         font-size: 19px !important;
         letter-spacing: 1px;
     }
-    .AppsRx{
+    .appsDownload{
         max-width: 80% !important;
         min-width: 80% !important;
         width: 80% !important;
     }
-    .AppsRx td{
+    .appsDownload td{
         padding: 20px;
         padding-top: 0px;
         padding-bottom: 0px;
@@ -868,7 +876,7 @@ body{
     .dfg{
         font-size: 18px;
     }       
-    .AppsRx td i {
+    .appsDownload td i {
         font-size: 38px;
     }
     .spotbie-search-click{
@@ -921,7 +929,7 @@ body{
     h2 {
         font-size: 19px;
     }
-    .AppsRx td {
+    .appsDownload td {
         padding-top: 0px;
         padding-bottom: 0px;
         border-radius: 20px;

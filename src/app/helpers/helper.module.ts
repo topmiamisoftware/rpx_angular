@@ -5,6 +5,10 @@ import { LoadingScreenComponent } from './loading-helper/loading-screen/loading-
 import { OnScrollDirective } from '../directives/on-scroll.directive';
 import { StopClickPropagationDirective } from '../directives/stop-click-propagation.directive';
 import { SingleAdComponent } from '../spotbie/ads/single-ad/single-ad.component';
+import { ScrollToTopComponent } from './scroll-to-top/scroll-to-top.component';
+import { ErrorHandlerComponent } from './error-handler/error-handler.component';
+import { UsernameDirective } from '../directives/username.directive';
+import { PersonNameDirective } from '../directives/person-name.directive';
 
 @NgModule({
   declarations: [
@@ -12,7 +16,11 @@ import { SingleAdComponent } from '../spotbie/ads/single-ad/single-ad.component'
     LoadingScreenComponent,
     OnScrollDirective,
     StopClickPropagationDirective,
-    SingleAdComponent
+    UsernameDirective,
+    PersonNameDirective,
+    SingleAdComponent,
+    ScrollToTopComponent,
+    ErrorHandlerComponent
   ],
   imports : [CommonModule],
   exports : [
@@ -20,7 +28,11 @@ import { SingleAdComponent } from '../spotbie/ads/single-ad/single-ad.component'
     LoadingScreenComponent,
     OnScrollDirective, 
     StopClickPropagationDirective,
-    SingleAdComponent
+    PersonNameDirective,
+    UsernameDirective,
+    SingleAdComponent,
+    ScrollToTopComponent,
+    ErrorHandlerComponent
   ]
 })
 

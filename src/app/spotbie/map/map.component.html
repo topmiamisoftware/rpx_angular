@@ -1,18 +1,54 @@
 <app-loading-screen *ngIf="loading"></app-loading-screen>
 
 <div class="spotbie-map">
-
+  
   <div class="map-prompt-mobile" *ngIf="showMobilePrompt">
-    <div class="title">
-      Ready to start exploring?
+
+    <div class="sb-filler loggedInFiller" *ngIf="isLoggedIn == '1'"></div>
+
+    <div class="sb-filler"></div>
+    
+    <div class="sb-button" (click)="mobileStartLocation()" *ngIf="isLoggedIn == '1'">
+      Start Location Services
     </div>
-    <div class="sb-button" (click)="mobileStartLocation()">
-      Let's Go!
-    </div>
+
+    <swiper [config]="swiperConfig" *ngIf="isLoggedIn != '1'">
+
+      <div class="swiper-wrapper">
+
+        <div class="swiper-slide" *ngFor="let slide of slideShowSources" [ngStyle]="{ 'background' : 'url(' + slide.imageUrl + ')' }">
+
+          <div class="sb-filler"></div>
+
+          <div class="sb-button" (click)="mobileStartLocation()">
+            {{ slide.text }}
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Add Pagination -->
+      <div class="swiper-pagination"></div>
+
+      <!-- Add Arrows -->
+      <div class="swiper-button-next">
+        <i class="fa fa-angle-right"></i>
+      </div>
+      <div class="swiper-button-prev">
+        <i class="fa fa-angle-left"></i>
+      </div>
+
+    </swiper>
+
   </div>
 
-  <div class="title" *ngIf="showMobilePrompt2" (click)="showMobilePrompt2 = false">
-    Touch Map to Begin!
+  <div class="map-prompt-mobile" *ngIf="showMobilePrompt2">
+
+    <div class="title" (click)="showMobilePrompt2 = false">
+      Touch Map to Begin!
+    </div>
+
   </div>
 
   <agm-map class="spotbie-map"
@@ -99,7 +135,7 @@
 
 <div class="spotbie-map-search-wrapper">
 
-  <table class='spotbie-map-search-by' id="spotbie-search-by">
+  <table class='spotbie-map-search-by' id="spotbie-search-by" *ngIf="locationFound">
 
     <tr>
 

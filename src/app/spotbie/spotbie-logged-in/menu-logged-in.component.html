@@ -2,7 +2,7 @@
 
     <table class="spotbie-menu-logged">
       <tr>
-        <td id="spotbieLogIn" *ngIf="public_profile" [routerLink]="['/user_home']" title="Home">
+        <td id="spotbieLogIn" *ngIf="public_profile" [routerLink]="['/user-home']" title="Home">
           <img style="border-radius:99%;" src="assets/favicon/android-icon-72x72.png" />
         </td>
   
@@ -51,32 +51,32 @@
 
 <div class='spotbie-apps-overlay' *ngIf="apps_overlay">  
 
-    <div class='spotbie-bg-filler'></div>
-  
-    <div class='spotbie-apps-hover-name' #spotbieHoveredApp>{{ hovered_app }}</div>
-  
-    <div class='spotbie-apps-wrapper'>
-  
-      <div class='spotbie-app-icon-wrapper' 
-          title="{{ spotbie_app.app_name }}"
-          *ngFor="let spotbie_app of spotbie_app_list"
-          (click)="openAppFromList(spotbie_app.app_window)">
-        
-        <i class="{{ spotbie_app.icon_class }}" aria-hidden="true"></i>
+  <div class='spotbie-bg-filler'></div>
 
-        <div class='spotbie-app-name'>{{ spotbie_app.app_name }}</div>
+  <div class='spotbie-apps-hover-name' #spotbieHoveredApp>{{ hovered_app }}</div>
 
-      </div>
+  <div class='spotbie-apps-wrapper'>
+
+    <div class='spotbie-app-icon-wrapper' 
+        title="{{ spotbie_app.app_name }}"
+        *ngFor="let spotbie_app of spotbie_app_list"
+        (click)="openAppFromList(spotbie_app.app_window)">
       
+      <i class="{{ spotbie_app.icon_class }}" aria-hidden="true"></i>
+
+      <div class='spotbie-app-name'>{{ spotbie_app.app_name }}</div>
+
     </div>
-  
-    <div class='spotbie-search-in-apps'>
-      <app-search></app-search>
-    </div>
-  
-    <div class="sb-closeButton" (click)="closeApps()">close</div>
-  
+    
   </div>
+
+  <div class='spotbie-search-in-apps'>
+    <app-search></app-search>
+  </div>
+
+  <div class="sb-closeButton" (click)="closeApps()">close</div>
+
+</div>
 
 <app-map *ngIf="mapApp.open"></app-map>
 

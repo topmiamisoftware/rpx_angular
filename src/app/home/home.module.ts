@@ -7,6 +7,7 @@ import { MenuModule } from '../spotbie/menu.module';
 import { SpotbiePipesModule } from '../spotbie-pipes/spotbie-pipes.module';
 import { MapModule } from '../spotbie/map/map.module';
 import { MapComponent } from '../spotbie/map/map.component';
+import { HelperModule } from '../helpers/helper.module';
 
 const routes : Routes = [
   { path : '', component : HomeComponent }
@@ -22,6 +23,7 @@ const routes : Routes = [
     MenuModule,
     SpotbiePipesModule,
     MapModule,
+    HelperModule,
     RouterModule.forChild(routes)
   ],
   exports : [HomeComponent],

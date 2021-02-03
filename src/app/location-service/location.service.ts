@@ -5,13 +5,10 @@ import * as spotbieGlobals from '../globals';
 import { catchError } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 
-const USER_LOCATION_API = spotbieGlobals.API + 'user_location'
-
-const SEARCH_BUSINESS_API = spotbieGlobals.API + 'search-businesses'
-
-const SEARCH_EVENTS_API = spotbieGlobals.API + 'search-events'
-
-const GET_CLASSIFICATIONS = spotbieGlobals.API + 'get-classifications'
+const USER_LOCATION_API   = `${spotbieGlobals.API}user-location`
+const SEARCH_BUSINESS_API = `${spotbieGlobals.API}surroundings/search-businesses`
+const SEARCH_EVENTS_API   = `${spotbieGlobals.API}surroundings/search-events`
+const GET_CLASSIFICATIONS = `${spotbieGlobals.API}surroundings/get-classifications`
 
 @Injectable({
   providedIn: 'root'
@@ -52,7 +49,7 @@ export class LocationService {
 
   public saveCurrentLocation(saveLocationObj: any) {
 
-    const locationApi = `${USER_LOCATION_API}/save_current_location`;
+    const locationApi = `${USER_LOCATION_API}/save-current-location`;
 
     return this.http.post<any>(locationApi, saveLocationObj).pipe(
       catchError(handleError("saveCurrentLocation Error"))
@@ -62,7 +59,7 @@ export class LocationService {
 
   public retrieveSurroudings(retrieve_surroundings_obj: any){
 
-    let location_api = USER_LOCATION_API + '/retrieve_surroundings';
+    let location_api = `${USER_LOCATION_API}/retrieve-surroundings`;
 
     return this.http.post<any>(location_api, retrieve_surroundings_obj).pipe(
       catchError(handleError("retrieveSurroudings Error"))

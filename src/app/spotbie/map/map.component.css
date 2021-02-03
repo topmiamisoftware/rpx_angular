@@ -490,7 +490,7 @@ span.sb-button{
     font-weight: bold;
 }
 #spotbie_me_search{
-    background: url(../../../assets/images/spot.png);
+    background: url(/assets/images/spot.png);
 }
 #spotbie_people_search{
     background: url(../../../assets/images/find_people.png);
@@ -499,7 +499,7 @@ span.sb-button{
     background: url(../../../assets/images/multimedia.png);
 }
 #spotbie_events_search{
-    background: url(../../../assets/images/map_bar_icons/events.png);
+    background: url(/assets/images/map_bar_icons/events.png);
 }
 #spotbie_retail_search{
     background: url(../../../assets/images/shop.png);
@@ -573,49 +573,68 @@ span.sb-button{
     bottom: 0px;
     height: 100%;
     min-height: 100%;
-    background-color: rgba(0,0,0,.83);
+    background-color: rgb(255 255 255 / 59%);
     z-index: 2;
+    background-color: rgba(0,0,0,.83);
 }
-
-.map-prompt-mobile .title{
+.map-prompt-mobile .sb-filler{
     position: absolute;
-    left: 0;
-    right: 0;
-    top: 41%;
-    transform: translateY(-41%);
-    text-align: center;
-    margin: 0 auto;
-    z-index: 1;
-    font-size: 25px;
-    pointer-events: none;
-    font-family: sitka-italic;
-    letter-spacing: 0px;
-    line-height: 31px;
+    top: 0px;
+    width: 100%;
+    min-width: 100%;
+    bottom: 0px;
+    height: 100%;
+    min-height: 100%;
+    background-color: rgba(0,0,0,.83);
+}
+swiper{
+  min-height: 100%;
+  height: 100%;
+  width: 100%;
+}
+.swiper-slide{
+    background-position: center !important;
+    background-size: cover !important;
 }
 .map-prompt-mobile .sb-button{
     position: absolute;
+    background-color: #7ebd34;
+    cursor: pointer;    
     left: 0;
     right: 0;
-    top: 60%;
-    transform: translateY(-60%);
+    top: 48%;
+    transform: translateY(-48%);
 }
-.spotbie-map .title{
+.map-prompt-mobile .title{
     position: absolute;
+    cursor: pointer;    
     left: 0;
     right: 0;
     top: 50%;
     transform: translateY(-50%);
     text-align: center;
-    margin: 0 auto;
-    z-index: 1;
-    font-size: 18px;
-    pointer-events: none;
-    font-family: sitka-italic;
 }
-.map-prompt-mobile .sb-button{
-    background-color: #8BC34A;
-    cursor: pointer;
+.map-prompt-mobile .sb-button:hover,
+.map-prompt-mobile .sb-button:focus{
+    animation: 1s;
+    box-shadow: 0px 0px 42px rgb(221 221 221 / 25%);
 }
+.swiper-button-prev,
+.swiper-button-next{
+    color:white;
+    background-image: unset;
+} 
+.fa-angle-right,
+.fa-angle-left{
+    font-size: 65px;
+}
+
+.loggedInFiller{
+    background: url(../../../assets/images/spotbie-the-new-social-network.jpg);
+    background-position: center !important;
+    background-size: cover !important;    
+}
+
 /**WIDTH MEDIA QUERIES */
 @media (max-width: 1583px) { 
     .spotbie-search-result{
@@ -677,10 +696,6 @@ span.sb-button{
         top: -42px;
         left: 14px;
         right: unset;        
-    }     
-    .spotbie-map-search-by{
-        top: 3px;
-        margin-bottom: 10px;
     }
     .spotbie-map-search-by td{
         padding-top: 10px;
@@ -711,6 +726,17 @@ span.sb-button{
         padding: 2%;
         border-radius: 0px;
         padding-top: env(safe-area-inset-top);
+    }    
+    .map-prompt-mobile .sb-button{
+        top: 43%;
+        transform: translateY(-43%);
+    }    
+    .fa-angle-right{
+        padding-left: 10px;
+    }
+    .fa-angle-right,
+    .fa-angle-left{
+        font-size: 50px;
     }    
 }
 @media (max-width: 560px) { 

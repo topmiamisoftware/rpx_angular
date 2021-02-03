@@ -5,7 +5,7 @@ import { catchError } from 'rxjs/operators';
 import { handleError } from 'src/app/helpers/error-helper';
 import { Observable } from 'rxjs';
 
-const PROFILE_HEADER_API = `${spotbieGlobals.API}profile_header`
+const PROFILE_HEADER_API = `${spotbieGlobals.API}profile-header`
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +16,7 @@ export class ProfileHeaderService {
 
   public myProfileHeader(): Observable<any>{
 
-    let myProfileHeaderApi = `${PROFILE_HEADER_API}/my_profile_header`
+    let myProfileHeaderApi = `${PROFILE_HEADER_API}/my-profile-header`
 
     return this.http.post(myProfileHeaderApi, null).pipe(
       catchError(handleError("myProfileHeader"))
@@ -26,7 +26,7 @@ export class ProfileHeaderService {
 
   public setDefault(newProfileImage: string): Observable<any>{
     
-    let setDefault = `${PROFILE_HEADER_API}/set_default`
+    let setDefault = `${PROFILE_HEADER_API}/set-default`
 
     const new_def_obj = { 
       _method: 'PATCH', 
@@ -41,7 +41,7 @@ export class ProfileHeaderService {
   
   public deleteDefault(defaultPicture: string): Observable<any>{
     
-    let deleteDefault = `${PROFILE_HEADER_API}/delete_default`
+    let deleteDefault = `${PROFILE_HEADER_API}/delete-default`
 
     const newDefObj = { 
       _method: 'DELETE', 
@@ -56,7 +56,7 @@ export class ProfileHeaderService {
 
   public setDescription(description: string): Observable<any>{
 
-    let setDescription = `${PROFILE_HEADER_API}/set_description`
+    let setDescription = `${PROFILE_HEADER_API}/set-description`
 
     const newDefObj = { 
       _method: 'PATCH', 

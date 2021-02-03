@@ -13,7 +13,7 @@ const readFile = util.promisify(fs.readFile);
 console.log('\nRunning post-build tasks');
 
 // our version.json will be in the dist folder
-const versionFilePath = path.join(__dirname + '/../dist/spotbie/version.json');
+const versionFilePath = path.join(__dirname + '/../dist/spotbie/browser/version.json');
 
 let mainHash = '';
 let mainBundleFile = '';
@@ -22,7 +22,7 @@ let mainBundleFile = '';
 let mainBundleRegexp = /^main.?([a-z0-9]*)?(\.bundle)?.js$/;
 
 // read the dist folder files and find the one we're looking for
-readDir(path.join(__dirname, '../dist/spotbie/'))
+readDir(path.join(__dirname, '../dist/spotbie/browser/'))
   .then(files => {
     mainBundleFile = files.find(f => mainBundleRegexp.test(f));
 
@@ -49,7 +49,7 @@ readDir(path.join(__dirname, '../dist/spotbie/'))
     console.log(`Replacing hash in the ${mainBundleFile}`);
 
     // replace hash placeholder in our main.js file so the code knows it's current hash
-    const mainFilepath = path.join(__dirname, '../dist/spotbie/', mainBundleFile);
+    const mainFilepath = path.join(__dirname, '../dist/spotbie/browser/', mainBundleFile);
     return readFile(mainFilepath, 'utf8')
       .then(mainFileData => {
         const replacedFile = mainFileData.replace('{{POST_BUILD_ENTERS_HASH_HERE}}', mainHash);

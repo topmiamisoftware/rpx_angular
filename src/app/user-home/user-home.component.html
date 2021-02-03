@@ -1,16 +1,9 @@
 <div class="spotbie-main-holder" id="spotbieMainHolder">
 
-    <div class="spotbie-map-bg-filler" [ngStyle]="{ 'background' : 'url('+bg_image+')' }"></div>
-
     <app-menu-logged-in (userBackgroundEvent)="setcurrentUserBgImage($event)"></app-menu-logged-in>
 
 </div>
 
 <app-streamer *ngIf="userId == '1'"></app-streamer>
 
-<div class="spotbie-scroll-top spotbie-arrow-transparent" 
-        (click)="scrollTop()"
-        *ngIf="!loggedIn"
-        #scrollArrow>
-    <i class="fa fa-angle-double-up" aria-hidden="true"></i>
-</div>
+<app-scroll-to-top *ngIf="!loggedIn"></app-scroll-to-top>

@@ -32,7 +32,7 @@ export class AlbumService {
      
   public deleteAllUnused(album_id: number): Observable<any> {
 
-    const delete_all_unused_api = `${ALBUM_ITEMS_API}/delete_all_unused`
+    const delete_all_unused_api = `${ALBUM_ITEMS_API}/delete-all-unused`
 
     const settings_object = {
       _method : 'delete',
@@ -47,7 +47,7 @@ export class AlbumService {
   
   public likeAlbumItem(album_id: number, album_media_id: number): Observable<any>{
 
-    let album_api = `${ALBUM_LIKES_API}/like_album_item`
+    let album_api = `${ALBUM_LIKES_API}/like-album-item`
 
     const album_media_like_object = {
       album_id,

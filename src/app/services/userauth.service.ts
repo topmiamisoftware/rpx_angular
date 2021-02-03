@@ -28,7 +28,7 @@ export class UserauthService {
 
     let check_login_object = {}
 
-    let loginApi = `${USER_API}/check_user_auth`
+    let loginApi = `${USER_API}/check-user-auth`
 
     return new Promise((resolve, reject) => {
 

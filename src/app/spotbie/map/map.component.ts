@@ -12,8 +12,17 @@ import { MatSliderChange } from '@angular/material/slider'
 import { Subscription } from 'rxjs'
 import { ColorsService } from '../spotbie-logged-in/background-color/colors.service'
 import { metersToMiles, setYelpRatingImage } from 'src/app/helpers/info-object-helper'
+import { SwiperOptions } from 'swiper'
 
 const YELP_BUSINESS_SEARCH_API = 'https://api.yelp.com/v3/businesses/search'
+
+const SLIDE_SHOW_SOURCES = [
+  "../../../assets/spotbie-the-new-social-network.jpg",
+  "../../../assets/images/home_imgs/png/providing-you-places-to-eat-around-you.jpg",
+  "../../../assets/images/home_imgs/jpg/find_events_around.jpg",
+  "../../../assets/images/home_imgs/png/providing-you-places-to-shop-around-you.jpg",
+  "../../../assets/images/home_imgs/png/find-and-make-new-friends.jpg",
+];
 
 @Component({
   selector: 'app-map',
@@ -172,6 +181,24 @@ export class MapComponent implements OnInit {
   public showMobilePrompt2: boolean = false
 
   public firstTimeShowingMap: boolean = true
+
+  public slideShowSources = [
+    { imageUrl: "../../../assets/images/spotbie-the-new-social-network.jpg", text: "Start Exploring"},
+    { imageUrl: "../../../assets/images/home_imgs/png/providing-you-places-to-eat-around-you.jpg", text: "Places to Eat"},
+    { imageUrl: "../../../assets/images/home_imgs/jpg/find_events_around.jpg", text: "Events Near You"},
+    { imageUrl: "../../../assets/images/home_imgs/png/providing-you-places-to-shop-around-you.jpg", text: "Retail Shops"},
+    { imageUrl: "../../../assets/images/home_imgs/png/find-and-make-new-friends.jpg", text: "Users Around You"}
+  ];
+
+  public swiperConfig: SwiperOptions = {
+    pagination: { el: '.swiper-pagination', clickable: true },
+    loop: true,
+    navigation: {
+      nextEl: '.swiper-button-next',
+      prevEl: '.swiper-button-prev'
+    },
+    spaceBetween: 0
+  }
 
   constructor(private locationService: LocationService,
               private deviceService: DeviceDetectorService,
@@ -932,7 +959,7 @@ export class MapComponent implements OnInit {
   }
 
   public showPosition(position: any ): void {
-
+    
     this.locationFound = true
 
     this.lat = position.coords.latitude
@@ -1183,7 +1210,7 @@ export class MapComponent implements OnInit {
     this.showMobilePrompt2 = false
 
   }
-
+  
   public startLocation(){
 
     this.showMobilePrompt = true

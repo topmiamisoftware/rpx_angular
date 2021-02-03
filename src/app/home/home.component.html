@@ -6,10 +6,6 @@
 
     <app-menu-logged-out class="spotbie-app-menu" (spawnCategoriesOut)="spawnCategories($event)"></app-menu-logged-out>
 
-    <div class="spotbie-scroll-top spotbie-arrow-transparent" 
-        (click)="scrollTop()"
-        #scrollArrow>
-        <i class="fa fa-angle-double-up" aria-hidden="true"></i>
-    </div>
-    
+    <app-scroll-to-top></app-scroll-to-top>
+
 </div>

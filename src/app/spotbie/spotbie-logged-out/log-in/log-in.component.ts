@@ -80,9 +80,12 @@ export class LogInComponent implements OnInit {
 
   private loginCallback(loginResponse: any): void{
 
-    let login_status = loginResponse.message
+    if(loginResponse === undefined){
+      this.spotbieLogInIssues.nativeElement.innerHTML = "Invalid username or password."
+      this.loading = false
+    }
 
-    console.log("loginCallback", loginResponse)
+    let login_status = loginResponse.message
 
     if(login_status == 'success' || login_status == 'confirm'){
 
@@ -103,7 +106,7 @@ export class LogInComponent implements OnInit {
 
       }
       
-      window.location.reload()
+      this.router.navigate(['/user-home'])
 
     } else {
 

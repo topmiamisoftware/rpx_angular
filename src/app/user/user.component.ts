@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
-import * as $ from 'jquery'
 import * as spotbieGlobals from '../globals'
 import { MetaService } from '@ngx-meta/core'
 import { HttpClient } from '@angular/common/http'
@@ -31,8 +30,6 @@ export class UserComponent implements OnInit {
   public album_media_id: string
 
   public public_profile_info = {}
-
-  @ViewChild('scrollArrow') scrollArrow: ElementRef
 
   public awake_apps: boolean  = false
 
@@ -100,28 +97,6 @@ export class UserComponent implements OnInit {
         
   }
 
-  public scrollTop(): void{
-    $('html, body').animate({ scrollTop: 0 }, 'slow')
-  }
-
-  private addScrollEvent(): void {
-
-    const _this = this
-
-    $(window).on('scroll', function() {
-      // do your things like logging the Y-axis
-      const scrollTop = $(window).scrollTop()
-      if (scrollTop < 50) {
-        _this.scrollArrow.nativeElement.className = 'spotbie-scroll-top spotbie-arrow-transparent'
-        _this.arrowOn = false
-      } else if (_this.arrowOn == false) {
-        _this.arrowOn = true
-        _this.scrollArrow.nativeElement.className = 'spotbie-scroll-top'
-      }
-    })
-
-  }
-
   async ngOnInit() {
 
     this.exe_user_name = this.activatedRoute.snapshot.paramMap.get('exe_user_name')
@@ -142,7 +117,6 @@ export class UserComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    this.addScrollEvent()
   }
 
 }

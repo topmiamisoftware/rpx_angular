@@ -1,0 +1,35 @@
+.spotbie-scroll-top{
+    position: fixed;
+    left: 15px;
+    bottom: 15px;
+    transition: 0.5s;
+    background-color: #0d0d0d;
+    padding: 5px;
+    padding-left: 13px;
+    padding-right: 13px;
+    border-radius: 99%;  
+    transition: 0.5s;
+    z-index: 999999;
+}
+.spotbie-scroll-top:hover{
+    cursor: pointer;
+    background-color: #609329;
+}
+.spotbie-scroll-top i{
+    font-size: 38px;
+    opacity: 0.7;
+}
+.spotbie-scroll-top:hover i{
+    opacity: 1;
+}
+
+@media (max-width: 460px) { 
+
+    .spotbie-scroll-top{
+        padding-top: 6px;
+        padding-bottom: 6px;
+    }
+    .spotbie-scroll-top i {
+        font-size: 22px;
+    }
+}

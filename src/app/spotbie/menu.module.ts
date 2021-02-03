@@ -5,9 +5,11 @@ import { MenuComponent } from './menu.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MenuLoggedOutRoutingModule } from './spotbie-logged-out/menu-logged-out-routing.module';
 import { MenuLoggedInRoutingModule } from './spotbie-logged-in/menu-logged-in-routing.module';
+import { EmailConfirmationComponent } from './email-confirmation/email-confirmation.component';
 @NgModule({
   declarations: [
-    MenuComponent
+    MenuComponent,
+    EmailConfirmationComponent
   ],
   imports: [
     CommonModule,
@@ -18,7 +20,8 @@ import { MenuLoggedInRoutingModule } from './spotbie-logged-in/menu-logged-in-ro
     ReactiveFormsModule,    
   ],
   exports : [
-    MenuComponent
+    MenuComponent,
+    EmailConfirmationComponent
   ]
 })
 export class MenuModule { }

@@ -6,7 +6,7 @@ import { Observable } from 'rxjs'
 import { catchError } from 'rxjs/operators'
 import { handleError } from '../helpers/error-helper'
 
-const PUBLIC_STATS_API = spotbieGlobals.API + 'public_stats/total_users'
+const PUBLIC_STATS_API = spotbieGlobals.API + 'public-stats/total-users'
 
 @Injectable({
   providedIn: 'root'

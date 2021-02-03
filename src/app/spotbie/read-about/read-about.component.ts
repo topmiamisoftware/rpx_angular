@@ -21,6 +21,8 @@ export class ReadAboutComponent implements OnInit {
 
     @Output() spawnCategories = new EventEmitter()
 
+    @Output() signUp = new EventEmitter()
+
     public account_perks: boolean = false
 
     public slideshow: boolean = false
@@ -99,8 +101,8 @@ export class ReadAboutComponent implements OnInit {
         this.spawnCategories.emit('food');
     }
 
-    public signUp(): void{
-        this.host.signUpWindow.open = true
+    public signUpNow(){
+        this.signUp.emit()
     }
 
     public slidePrev(): void {

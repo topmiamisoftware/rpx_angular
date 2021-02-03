@@ -132,7 +132,7 @@ export class MenuLoggedInComponent implements OnInit {
   private logOutCallback(logOutResponse : any): void{
 
     if(logOutResponse.success)
-      window.location.reload()
+      this.router.navigate(['/home'])
     else
       console.log("Log Out Error : ", logOutResponse)
 
@@ -160,7 +160,7 @@ export class MenuLoggedInComponent implements OnInit {
     //console.log("The public menu is : ", this.public_profile_info)
     const activatedRoute = this.location.path()
 
-    if(activatedRoute == '/user_home'){
+    if(activatedRoute == '/user-home'){
 
       this.webOptionsService.callWebOptionsApi().subscribe(
         resp =>{
