@@ -43,8 +43,6 @@
       var device = undefined
     </script>
 
-    <!--
-
     <script type="text/javascript" src="cordova.js"></script>
     
     <script>
@@ -54,13 +52,12 @@
       document.addEventListener("deviceready", onDeviceReady, false);
 
       function onDeviceReady() {
-        window.open = cordova.InAppBrowser.open;
-        var permissions = cordova.plugins.permissions;
+        window.open = cordova.InAppBrowser.open; 
+        window.open('http://10.0.0.134:4200', '_self')      
+        //var permissions = cordova.plugins.permissions;//comment this out on ios
       }
-
+Í
     </script>
-
-    -->
 
   </head>
 

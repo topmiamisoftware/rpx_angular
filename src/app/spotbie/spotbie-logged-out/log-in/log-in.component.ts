@@ -3,8 +3,9 @@ import {FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { UserauthService } from '../../../services/userauth.service'
 import { HttpResponse } from '../../../models/http-reponse'
 import { Router } from '@angular/router'
-import * as spotbieGlobals from '../../../globals'
 import { MenuLoggedOutComponent } from '../menu-logged-out.component'
+
+declare var wkWebView: any
 
 @Component({
   selector: 'app-log-in',
@@ -87,6 +88,8 @@ export class LogInComponent implements OnInit {
 
     let login_status = loginResponse.message
 
+    console.log("loginStatus", login_status)
+
     if(login_status == 'success' || login_status == 'confirm'){
 
       localStorage.setItem('spotbie_userLogin', loginResponse.user.username)
@@ -106,8 +109,10 @@ export class LogInComponent implements OnInit {
 
       }
       
+      console.log("spotbie_userId", localStorage.getItem('spotbie_userId'))
+      wkWebView.injectCookie('https://api.spotbie.com/')
+      
       this.router.navigate(['/user-home'])
-
     } else {
 
       if (login_status == 'invalid_cred') {

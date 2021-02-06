@@ -490,7 +490,7 @@ span.sb-button{
     font-weight: bold;
 }
 #spotbie_me_search{
-    background: url(/assets/images/spot.png);
+    background: url(../../../assets/images/spot.png);
 }
 #spotbie_people_search{
     background: url(../../../assets/images/find_people.png);
@@ -499,7 +499,7 @@ span.sb-button{
     background: url(../../../assets/images/multimedia.png);
 }
 #spotbie_events_search{
-    background: url(/assets/images/map_bar_icons/events.png);
+    background: url(../../../assets/images/map_bar_icons/events.png);
 }
 #spotbie_retail_search{
     background: url(../../../assets/images/shop.png);

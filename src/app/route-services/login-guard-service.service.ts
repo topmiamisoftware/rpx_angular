@@ -13,7 +13,9 @@ export class LoginGuardServiceService {
     async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {  
 
       const response = await this.userAuthService.checkIfLoggedIn()  
-  
+      
+      console.log("CAn activate", response.message)
+
       if (response.message == '1') {
 
         return true

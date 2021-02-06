@@ -17,11 +17,11 @@ import { SwiperOptions } from 'swiper'
 const YELP_BUSINESS_SEARCH_API = 'https://api.yelp.com/v3/businesses/search'
 
 const SLIDE_SHOW_SOURCES = [
-  "../../../assets/spotbie-the-new-social-network.jpg",
-  "../../../assets/images/home_imgs/png/providing-you-places-to-eat-around-you.jpg",
-  "../../../assets/images/home_imgs/jpg/find_events_around.jpg",
-  "../../../assets/images/home_imgs/png/providing-you-places-to-shop-around-you.jpg",
-  "../../../assets/images/home_imgs/png/find-and-make-new-friends.jpg",
+  "assets/spotbie-the-new-social-network.jpg",
+  "assets/images/home_imgs/png/providing-you-places-to-eat-around-you.jpg",
+  "assets/images/home_imgs/jpg/find_events_around.jpg",
+  "assets/images/home_imgs/png/providing-you-places-to-shop-around-you.jpg",
+  "assets/images/home_imgs/png/find-and-make-new-friends.jpg",
 ];
 
 @Component({
@@ -183,11 +183,11 @@ export class MapComponent implements OnInit {
   public firstTimeShowingMap: boolean = true
 
   public slideShowSources = [
-    { imageUrl: "../../../assets/images/spotbie-the-new-social-network.jpg", text: "Start Exploring"},
-    { imageUrl: "../../../assets/images/home_imgs/png/providing-you-places-to-eat-around-you.jpg", text: "Places to Eat"},
-    { imageUrl: "../../../assets/images/home_imgs/jpg/find_events_around.jpg", text: "Events Near You"},
-    { imageUrl: "../../../assets/images/home_imgs/png/providing-you-places-to-shop-around-you.jpg", text: "Retail Shops"},
-    { imageUrl: "../../../assets/images/home_imgs/png/find-and-make-new-friends.jpg", text: "Users Around You"}
+    { imageUrl: "assets/images/spotbie-the-new-social-network.jpg", text: "Start Exploring"},
+    { imageUrl: "assets/images/home_imgs/png/providing-you-places-to-eat-around-you.jpg", text: "Places to Eat"},
+    { imageUrl: "assets/images/home_imgs/jpg/find_events_around.jpg", text: "Events Near You"},
+    { imageUrl: "assets/images/home_imgs/png/providing-you-places-to-shop-around-you.jpg", text: "Retail Shops"},
+    { imageUrl: "assets/images/home_imgs/png/find-and-make-new-friends.jpg", text: "Users Around You"}
   ];
 
   public swiperConfig: SwiperOptions = {

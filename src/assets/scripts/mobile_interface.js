@@ -1,7 +1,6 @@
 export var android_i = false;
 export var iphone_i = false;
 
-/*
 if(device != undefined){
     
     if(device.platform == 'Android'){
@@ -16,7 +15,7 @@ if(device != undefined){
 } else {
     android_i = false;
     iphone_i = false;
-}*/
+}
 
 /*
 export function callFilePermissionsAndroid(){
