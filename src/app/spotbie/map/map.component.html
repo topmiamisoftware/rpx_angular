@@ -43,10 +43,10 @@
 
   </div>
 
-  <div class="map-prompt-mobile" *ngIf="showMobilePrompt2">
+  <div class="map-prompt-mobile" *ngIf="showMobilePrompt2" (click)="mobilePrompt2Toggle()">
 
-    <div class="title" (click)="showMobilePrompt2 = false">
-      Touch Map to Begin.
+    <div class="title" (click)="mobilePrompt2Toggle()">
+      Tap Here to Begin.
     </div>
 
   </div>

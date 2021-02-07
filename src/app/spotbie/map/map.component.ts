@@ -1183,9 +1183,16 @@ export class MapComponent implements OnInit {
 
   }
 
+  public mobilePrompt2Toggle(){
+
+    this.loading = true
+    this.showMobilePrompt2 = false
+
+  }
+
   public mobileStartLocation(){
     
-    if ( window.navigator.geolocation) window.navigator.geolocation.getCurrentPosition(this.showPosition.bind(this)) 
+    if (window.navigator.geolocation) window.navigator.geolocation.getCurrentPosition(this.showPosition.bind(this)) 
   
     this.showMobilePrompt = false
     this.showMobilePrompt2 = true
