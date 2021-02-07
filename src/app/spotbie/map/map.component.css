@@ -613,6 +613,7 @@ swiper{
     top: 50%;
     transform: translateY(-50%);
     text-align: center;
+    font-family: sitka-italic;
 }
 .map-prompt-mobile .sb-button:hover,
 .map-prompt-mobile .sb-button:focus{

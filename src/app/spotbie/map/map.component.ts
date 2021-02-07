@@ -1185,11 +1185,6 @@ export class MapComponent implements OnInit {
 
   public mobileStartLocation(){
   
-    if(this.isCordova && this.isAndroid){
-      this.androidMobileStartLocation() 
-      return     
-    }
-  
     if ( window.navigator.geolocation) window.navigator.geolocation.getCurrentPosition(this.showPosition.bind(this)) 
   
     this.showMobilePrompt = false
