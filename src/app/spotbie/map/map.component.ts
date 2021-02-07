@@ -1193,9 +1193,7 @@ export class MapComponent implements OnInit {
     if ( window.navigator.geolocation) window.navigator.geolocation.getCurrentPosition(this.showPosition.bind(this)) 
   
     this.showMobilePrompt = false
-    
-    if(this.isCordova == '1')
-      this.showMobilePrompt2 = true
+    this.showMobilePrompt2 = true
   
   }
 
