@@ -1185,8 +1185,6 @@ export class MapComponent implements OnInit {
 
   public mobileStartLocation(){
     
-    this.loading = true
-
     if ( window.navigator.geolocation) window.navigator.geolocation.getCurrentPosition(this.showPosition.bind(this)) 
   
     this.showMobilePrompt = false
