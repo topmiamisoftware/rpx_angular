@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import * as $ from 'jquery';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MapComponent } from '../spotbie/map/map.component';
 
 @Component({
@@ -14,7 +14,7 @@ export class HomeComponent implements OnInit {
 
   @ViewChild('app_map') app_map: MapComponent
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private route: ActivatedRoute) { }
 
   public spawnCategories(category: string): void{
     this.app_map.spawnCategories(category)
@@ -26,12 +26,25 @@ export class HomeComponent implements OnInit {
   }
 
   async ngOnInit() {
+
     const isLoggedIn = localStorage.getItem("spotbie_loggedIn")
+  
     if (isLoggedIn == '1') this.router.navigate(['/user-home'])
+
+    let entry
+
+    this.route.queryParams.subscribe(params => {
+      entry = params['entry']
+    });
+
+    if(entry == 'cordova')
+      localStorage.setItem('isCordova', '1')
+    
+
   }
 
   ngAfterViewInit(){
-    //document.getElementsByTagName('body')[0].style.backgroundColor = 'transparent !important'
+    //document.getElementsByTagName('body')[0].style.backgroundColor = 'transparent !important'    
   }
 
 }

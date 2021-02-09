@@ -109,10 +109,8 @@ export class LogInComponent implements OnInit {
 
       }
       
-      console.log("spotbie_userId", localStorage.getItem('spotbie_userId'))
-      wkWebView.injectCookie('https://api.spotbie.com/')
-      
-      this.router.navigate(['/user-home'])
+      window.location.reload()
+
     } else {
 
       if (login_status == 'invalid_cred') {

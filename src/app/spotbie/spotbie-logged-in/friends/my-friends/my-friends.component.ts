@@ -40,7 +40,7 @@ export class MyFriendsComponent implements OnInit {
 
     this.loading = true
 
-    const show_friends_api = `${FRIENDS_API}/show_friends`
+    const show_friends_api = `${FRIENDS_API}/show-friends`
 
     const friendsObj = {
       page: this.page

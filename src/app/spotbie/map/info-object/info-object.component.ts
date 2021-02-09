@@ -7,7 +7,6 @@ import { DateFormatPipe, TimeFormatPipe } from 'src/app/pipes/date-format.pipe'
 import { SpotbieMetaService } from 'src/app/services/meta/spotbie-meta.service'
 import { setYelpRatingImage } from 'src/app/helpers/info-object-helper'
 import { shareNative } from 'src/app/helpers/cordova/sharesheet'
-import { isCordova } from 'src/app/helpers/cordova/cordova-variables'
 import { externalBrowserOpen } from 'src/app/helpers/cordova/web-intent'
 
 const YELP_BUSINESS_DETAILS_API = "https://api.yelp.com/v3/businesses/"
@@ -417,7 +416,13 @@ export class InfoObjectComponent implements OnInit {
     this.bgColor = localStorage.getItem('spotbie_backgroundColor')
     this.isLoggedIn = localStorage.getItem('spotbie_loggedIn')
     
-    this.isCordova = isCordova()
+
+    let isCordova = localStorage.getItem('isCordova')
+
+    if(isCordova == '1')
+      this.isCordova = true
+    else
+      this.isCordova = false
 
     if(this.info_object !== undefined){
       

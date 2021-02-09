@@ -7,9 +7,10 @@ h1,a{
 .termsWrapper{
     position: relative;
     margin: 0 auto;
-    width: 96%;
-    min-width: 96%;
-    max-width: 96%;
+    width: 94%;
+    min-width: 94%;
+    max-width: 94%;
+    word-wrap: break-word;
 }
 /**WIDTH MEDIA QUERIES */
 @media (max-width: 1300px) { 
@@ -31,7 +32,16 @@ h1,a{
 
 }
 @media (max-width: 600px) { 
-
+    h1{
+        font-size: 28px;
+    }
+    h1{
+        font-size: 23px;
+    }    
+    .termsWrapper{
+        padding-top: env(safe-area-inset-top);
+        padding-bottom: env(safe-area-inset-bottom);
+    }
 }
 @media (max-width: 560px) { 
      

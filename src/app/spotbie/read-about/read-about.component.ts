@@ -210,8 +210,10 @@ export class ReadAboutComponent implements OnInit {
 
         this.loading = true
 
-        this.isCordova = isCordova()
+        let isCordova = localStorage.getItem('isCordova')
 
+        if(isCordova == '1') this.isCordova = true
+        
     }
 
     ngAfterViewInit() {

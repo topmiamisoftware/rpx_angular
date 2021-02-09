@@ -131,9 +131,9 @@ export class MenuLoggedInComponent implements OnInit {
   
   private logOutCallback(logOutResponse : any): void{
 
-    if(logOutResponse.success)
-      this.router.navigate(['/home'])
-    else
+    if(logOutResponse.success){
+      window.location.reload()
+    } else
       console.log("Log Out Error : ", logOutResponse)
 
   }
