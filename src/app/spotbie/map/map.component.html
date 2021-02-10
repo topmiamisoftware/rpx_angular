@@ -52,8 +52,8 @@
   </div>
 
   <agm-map class="spotbie-map"
-            (click)="showMobilePrompt2 = false"
-            (boundsChange)="showMobilePrompt2 = false"
+            (click)="mobilePrompt2ToggleOff()"
+            (boundsChange)="mobilePrompt2ToggleOff()"
             [gestureHandling]="'greedy'"
             [streetViewControl]="false"
             #spotbie_map
