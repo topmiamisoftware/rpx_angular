@@ -59,6 +59,16 @@ export class UserauthService {
 
   }
 
+  public closeBrowser(): Observable<any> {
+
+    const logOutApi = `${USER_API}/close-browser`
+
+    return this.http.post<any>(logOutApi, null).pipe(
+      tap( resp => { this.logOutCallback(resp) })
+    )
+
+  }
+
   private logOutCallback(logOutResponse: any): void {
 
       if(logOutResponse.success){
@@ -85,10 +95,10 @@ export class UserauthService {
     this.userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone
 
     const params = {
-      'login' : this.userLogin,
-      'password' : this.userPassword,
-      'remember_me_opt' : this.userRememberMe,
-      'timezone' : this.userTimezone
+      'login': this.userLogin,
+      'password': this.userPassword,
+      'remember_me_opt': this.userRememberMe,
+      'timezone': this.userTimezone
     }
 
     const logInApi = `${USER_API}/login`

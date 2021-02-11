@@ -30,17 +30,7 @@ export class HomeComponent implements OnInit {
     const isLoggedIn = localStorage.getItem("spotbie_loggedIn")
   
     if (isLoggedIn == '1') this.router.navigate(['/user-home'])
-
-    let entry
-
-    this.route.queryParams.subscribe(params => {
-      entry = params['entry']
-    });
-
-    if(entry == 'cordova')
-      localStorage.setItem('isCordova', '1')
     
-
   }
 
   ngAfterViewInit(){

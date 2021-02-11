@@ -81,16 +81,12 @@ export class LogInComponent implements OnInit {
 
   private loginCallback(loginResponse: any): void{
 
-    console.log("Login cb", loginResponse)
-
     if(loginResponse === undefined){
       this.spotbieLogInIssues.nativeElement.innerHTML = "Invalid username or password."
       this.loading = false
     }
 
     let login_status = loginResponse.message
-
-    console.log("loginStatus", login_status)
 
     if(login_status == 'success' || login_status == 'confirm'){
 
@@ -102,9 +98,7 @@ export class LogInComponent implements OnInit {
 
       localStorage.setItem('spotbie_userId', loginResponse.user.id)
 
-      localStorage.setItem('spotbie_sid', loginResponse.session)
-
-      console.log('Session', loginResponse.session)
+      localStorage.setItem('spotbie_token', loginResponse.token_info.original.access_token)
 
       localStorage.setItem('spotbie_userDefaultImage', loginResponse.spotbie_user.default_picture)
 

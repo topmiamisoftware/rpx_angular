@@ -8,9 +8,22 @@ export class TokenInterceptor implements HttpInterceptor {
   
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-    const modifiedReq = req.clone({
-      withCredentials: true
-    });
+    let token = localStorage.getItem('spotbie_token')
+
+    let modifiedReq
+
+    if(token !== '' && token !== null && token !== 'null'){
+      modifiedReq = req.clone({
+        withCredentials: true,
+        setHeaders: {
+          'Authorization' : `Bearer ${token}`
+        }
+      });
+    } else {
+      modifiedReq = req.clone({
+        withCredentials: true,
+      });
+    }
     
     return next.handle(modifiedReq);
 
