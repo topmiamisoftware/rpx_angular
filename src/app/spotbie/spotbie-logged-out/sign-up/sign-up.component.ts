@@ -235,14 +235,7 @@ export class SignUpComponent implements OnInit {
       document.getElementById('user_pass_confirm').style.border = 'unset'
       
     }
-
-    if (this.signing_up){
-      this.loading = false
-      return
-    }
-
-    this.signing_up = true
-
+    
     const username = this.spotbieUsername
     const user_first_name = this.spotbieFirstName
     const user_last_name = this.spotbieLastName
@@ -279,8 +272,6 @@ export class SignUpComponent implements OnInit {
         let sign_up_instructions = this.spotbieSignUpIssues.nativeElement
 
         const loginResponse = httpResponse
-        
-        console.log("HttpResponse", loginResponse)
 
         // save the user information.
         localStorage.setItem('spotbie_userLogin', loginResponse.user.username)
@@ -288,7 +279,8 @@ export class SignUpComponent implements OnInit {
         localStorage.setItem('spotbie_rememberMe', '0')
         localStorage.setItem('spotbie_userId', loginResponse.user.id)
         localStorage.setItem('spotbie_userDefaultImage', loginResponse.spotbie_user.default_picture)
-  
+        localStorage.setItem('spotbie_token', loginResponse.tokenInfo.original.access_token)
+
         sign_up_instructions.className = 'signUpBoxInstructions'
         sign_up_instructions.innerHTML = 'Welcome to SpotBie!'
   
