@@ -38,13 +38,16 @@
       gtag('config', 'UA-58927609-6');
     </script>
 
-    <script>
+    <!-- comment this out for cordova -->
+    <!--<script>
       var device = undefined
       var cordova = undefined
-    </script>
+    </script>-->
 
-    <!--<script type="text/javascript" src="cordova.js"></script>
+    <!-- comment this out for web -->
+    <script type="text/javascript" src="cordova.js"></script>
     
+    <!-- comment this out for web -->
     <script>
       
       localStorage.setItem('isCordova', '1');
@@ -53,11 +56,10 @@
 
       function onDeviceReady() {
         window.open = cordova.InAppBrowser.open;
-        window.open('https://spotbie.com/home?entry=cordova', '_self')
-        //var permissions = cordova.plugins.permissions;//comment this out on ios
+        var permissions = cordova.plugins.permissions;//comment this out on ios
       }
 
-    </script>-->
+    </script>
 
   </head>
 

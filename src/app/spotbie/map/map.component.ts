@@ -967,6 +967,8 @@ export class MapComponent implements OnInit {
     this.ogLat = position.coords.latitude
     this.ogLng = position.coords.longitude
 
+    this.spotbie_map.triggerResize(true)
+
     if(this.firstTimeShowingMap){
       this.firstTimeShowingMap = false
       this.drawPosition()
@@ -1092,6 +1094,7 @@ export class MapComponent implements OnInit {
     }
 
     this.loading = false
+    this.showMobilePrompt2 = false
     this.createObjectMarker(surrounding_object_list)
     //console.log("Sorrounding Objects: ", surrounding_object_list)
 
@@ -1185,7 +1188,7 @@ export class MapComponent implements OnInit {
 
   public mobilePrompt2Toggle(){
 
-    this.loading = true
+    this.loading = false
     this.showMobilePrompt2 = false
 
   }
@@ -1199,10 +1202,20 @@ export class MapComponent implements OnInit {
 
   public mobileStartLocation(){
     
-    if (window.navigator.geolocation) window.navigator.geolocation.getCurrentPosition(this.showPosition.bind(this)) 
-  
-    this.showMobilePrompt = false
-    this.showMobilePrompt2 = true
+    if(this.isAndroid){
+
+      this.androidMobileStartLocation()
+    
+    } else {
+
+      if (window.navigator.geolocation) window.navigator.geolocation.getCurrentPosition(this.showPosition.bind(this)) 
+
+      this.showMobilePrompt = false
+      this.showMobilePrompt2 = true
+
+    }
+
+
   
   }
 
@@ -1216,10 +1229,21 @@ export class MapComponent implements OnInit {
     )
     
     this.showMobilePrompt = false
-    this.showMobilePrompt2 = false
+    this.showMobilePrompt2 = true
+
+    this.spotbie_map.triggerResize(true)
 
   }
   
+  public toggleAndroidMapStart(){
+
+    if(this.showMobilePrompt2){
+      this.showMobilePrompt2 = false
+      this.loading = true
+    }
+
+  }
+
   public startLocation(){
 
     this.showMobilePrompt = true

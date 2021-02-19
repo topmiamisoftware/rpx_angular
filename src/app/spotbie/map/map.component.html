@@ -43,18 +43,16 @@
 
   </div>
 
-  <div class="map-prompt-mobile" *ngIf="showMobilePrompt2" (click)="mobilePrompt2Toggle()">
+  <div class="map-prompt-mobile" style="pointer-events: none;" *ngIf="showMobilePrompt2">
 
-    <div class="title" (click)="mobilePrompt2Toggle()">
-      Tap Here to Begin.
+    <div class="title">
+      Double Tap to Start.
     </div>
 
   </div>
 
   <agm-map class="spotbie-map"
-            (click)="mobilePrompt2ToggleOff()"
-            (boundsChange)="mobilePrompt2ToggleOff()"
-            [gestureHandling]="'greedy'"
+            (click)="toggleAndroidMapStart()"
             [streetViewControl]="false"
             #spotbie_map
             [latitude]="lat" 
