@@ -60,6 +60,8 @@ export class MenuLoggedOutComponent implements OnInit {
   }
 
   home(){
+    document.getElementsByTagName('body')[0].style.backgroundColor = 'transparent' 
+    document.getElementsByTagName('html')[0].style.backgroundColor = 'transparent' 
     this.router.navigate(['/home'])
   }
 

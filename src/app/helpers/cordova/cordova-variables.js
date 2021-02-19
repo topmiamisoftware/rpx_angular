@@ -6,7 +6,8 @@ export const isCordova = function (){
 
 }
 
-/*if(cordova != undefined){
+/*Uncomment this in android
+if(cordova != undefined){
     var permissions = cordova.plugins.permissions
 } else {
     var permissions = null

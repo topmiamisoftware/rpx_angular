@@ -1,8 +1,8 @@
 export var android_i = false;
 export var iphone_i = false;
 
-
-/*if(device != undefined){
+/* Uncomment this for cordova builds
+if(device != undefined){
     
     if(device.platform == 'Android'){
         android_i = true;

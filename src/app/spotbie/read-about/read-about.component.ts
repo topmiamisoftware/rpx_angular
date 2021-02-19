@@ -189,7 +189,8 @@ export class ReadAboutComponent implements OnInit {
         }
     }
 
-    public scrollT() : void{
+    public scrollT(category: string) : void{
+        this.spawnCategories.emit(category)
         window.scrollTo(0, 0)
     }
 

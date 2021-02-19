@@ -32,9 +32,5 @@ export class HomeComponent implements OnInit {
     if (isLoggedIn == '1') this.router.navigate(['/user-home'])
     
   }
-
-  ngAfterViewInit(){
-    //document.getElementsByTagName('body')[0].style.backgroundColor = 'transparent !important'    
-  }
-
+  
 }

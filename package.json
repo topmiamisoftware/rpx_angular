@@ -13,7 +13,7 @@
     "serve:ssr": "node dist/spotbie/server/main.js",
     "build:ssr": "ng build --prod && ng run spotbie:server:production && npm run post-build",
     "prerender": "ng run spotbie:prerender",
-    "build:android": "ng build --prod --base-href . --output-path ~/Desktop/spotbie/spotbie_android/www",
+    "build:android": "ng build --prod --base-href . --output-path /home/spotbie/Desktop/spotbie/spotbie_android/www/",
     "build:ios": "ng build --prod --base-href . --output-path ~/Desktop/spotbie/spotbie_ios/www/",
     "deploy:server": "node deploy"
   },

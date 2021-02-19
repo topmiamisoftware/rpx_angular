@@ -550,6 +550,11 @@ export class MapComponent implements OnInit {
 
   public spawnCategories(category: string): void {
 
+    if(!this.locationFound){
+      this.mobileStartLocation()
+      return
+    }
+
     this.show_search_box = true
 
     if(category == this.search_category){
@@ -571,7 +576,7 @@ export class MapComponent implements OnInit {
         break
       case 'shopping':
         this.search_api_url = YELP_BUSINESS_SEARCH_API
-        this.search_categories_placeholder = 'Search Shop Spots...'
+        this.search_categories_placeholder = 'Search Retail Spots...'
         this.categories = this.shopping_categories
         break
       case 'events':
@@ -651,7 +656,7 @@ export class MapComponent implements OnInit {
   
         this.locationService.getEvents(search_obj).subscribe(
           resp => {
-            this.getEvents.getEventsSearchCallback(resp)
+            this.getEventsSearchCallback(resp)
           }
         )
 
@@ -671,7 +676,7 @@ export class MapComponent implements OnInit {
 
       }
 
-    }.bind(this, search_term), 3000)
+    }.bind(this, search_term), 1500)
 
 
   }
@@ -967,6 +972,8 @@ export class MapComponent implements OnInit {
     this.ogLat = position.coords.latitude
     this.ogLng = position.coords.longitude
 
+    this.spotbie_map.triggerResize(true)
+
     if(this.firstTimeShowingMap){
       this.firstTimeShowingMap = false
       this.drawPosition()
@@ -1092,6 +1099,7 @@ export class MapComponent implements OnInit {
     }
 
     this.loading = false
+    this.showMobilePrompt2 = false
     this.createObjectMarker(surrounding_object_list)
     //console.log("Sorrounding Objects: ", surrounding_object_list)
 
@@ -1169,9 +1177,9 @@ export class MapComponent implements OnInit {
 
     if (locationPrompted == '1') {
       this.startLocation() 
-     } else {
+    } else {
       this.locationPrompt = true
-     } 
+    } 
 
   }
 
@@ -1185,7 +1193,7 @@ export class MapComponent implements OnInit {
 
   public mobilePrompt2Toggle(){
 
-    this.loading = true
+    this.loading = false
     this.showMobilePrompt2 = false
 
   }
@@ -1199,10 +1207,18 @@ export class MapComponent implements OnInit {
 
   public mobileStartLocation(){
     
-    if (window.navigator.geolocation) window.navigator.geolocation.getCurrentPosition(this.showPosition.bind(this)) 
-  
-    this.showMobilePrompt = false
-    this.showMobilePrompt2 = true
+    if(this.isAndroid){
+
+      this.androidMobileStartLocation()
+    
+    } else {
+
+      if (window.navigator.geolocation) window.navigator.geolocation.getCurrentPosition(this.showPosition.bind(this)) 
+
+      this.showMobilePrompt = false
+      this.showMobilePrompt2 = false
+
+    }
   
   }
 
@@ -1216,10 +1232,21 @@ export class MapComponent implements OnInit {
     )
     
     this.showMobilePrompt = false
-    this.showMobilePrompt2 = false
+    this.showMobilePrompt2 = true
+
+    this.spotbie_map.triggerResize(true)
 
   }
   
+  public toggleAndroidMapStart(){
+
+    if(this.showMobilePrompt2){
+      this.showMobilePrompt2 = false
+      this.loading = true
+    }
+
+  }
+
   public startLocation(){
 
     this.showMobilePrompt = true

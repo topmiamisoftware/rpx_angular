@@ -13,8 +13,6 @@ export class LoginGuardServiceService {
     async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {  
 
       const response = await this.userAuthService.checkIfLoggedIn()  
-      
-      console.log("CAn activate", response.message)
 
       if (response.message == '1') {
 
@@ -23,6 +21,7 @@ export class LoginGuardServiceService {
       } else {
 
         let loggedOutFavorites = localStorage.getItem('spotbie_currentFavorites')
+        let isCordova = localStorage.getItem('isCordova')
 
         localStorage.clear()
         
@@ -32,6 +31,10 @@ export class LoginGuardServiceService {
         localStorage.setItem('spotbie_loggedIn', '0')
         localStorage.setItem('spotbie_rememberMe', '0')
         localStorage.setItem('spotbie_rememberMeToken', null)      
+
+        localStorage.setItem('isCordova', isCordova)      
+
+        window.document.body.style.backgroundColor = 'unset'
 
         this.router.navigate(['/home'], {
           queryParams: {

@@ -105,7 +105,7 @@ export class SignUpComponent implements OnInit {
 
       dialogConfig.autoFocus = true
       dialogConfig.data = {
-        email : this.spotbieEmail,
+        email: this.spotbieEmail,
         firstName: this.spotbieFirstName
       }
 
@@ -283,12 +283,12 @@ export class SignUpComponent implements OnInit {
 
         sign_up_instructions.className = 'signUpBoxInstructions'
         sign_up_instructions.innerHTML = 'Welcome to SpotBie!'
-  
+
         this.router.navigate(['/user-home'])
 
-      }
-
-      this.loading = false
+      } else
+        this.loading = false
+      
       this.signing_up = false
 
   }

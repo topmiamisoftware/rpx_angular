@@ -4,6 +4,17 @@
 *      
 *
 */
+html
+{
+  -webkit-tap-highlight-color:transparent;
+}
+div, table, i, td{
+    user-select: none;
+    -webkit-user-select: none; /* Chrome/Safari */ 
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+ */    
+}
+
 
 @font-face {
 
@@ -246,7 +257,7 @@ a, a:hover, a:active, a:after{
     max-height: 50px;
     background-color: white;
     border-radius: 99%;
-    box-shadow: inset 2px 2px 6px #ffffff0f;
+    box-shadow: inset 2px 2px 6px #ffffff80;
 }
 .sb-closeButton{
     position: fixed;

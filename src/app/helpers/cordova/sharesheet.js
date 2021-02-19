@@ -12,11 +12,8 @@ export const shareNative = function (message, subject, url, chooserTitle){
     var options = {
         message: message, // not supported on some apps (Facebook, Instagram)
         subject: subject, // fi. for email
-        files: ['', ''], // an array of filenames either locally or remotely
         url:  url,
         chooserTitle: chooserTitle, // Android only, you can override the default share sheet title
-        appPackageName: 'com.spotbie.app', // Android only, you can provide id of the App you want to share with
-        iPadCoordinates: '0,0,0,0' //IOS only iPadCoordinates for where the popover should be point.  Format with x,y,width,height
     };
 
     window.plugins.socialsharing.shareWithOptions(options, onSuccess, onError);

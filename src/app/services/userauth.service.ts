@@ -75,6 +75,8 @@ export class UserauthService {
 
         let loggedOutFavorites = localStorage.getItem('spotbie_currentFavorites')
 
+        let thisIsCordova = localStorage.getItem('isCordova')
+
         localStorage.clear()
         
         localStorage.setItem('spotbie_currentFavorites', loggedOutFavorites)
@@ -85,6 +87,8 @@ export class UserauthService {
         localStorage.setItem('spotbie_userApiKey', null)
         localStorage.setItem('spotbie_rememberMe', '0')
         localStorage.setItem('spotbie_rememberMeToken', null)
+        
+        localStorage.setItem('isCordova', thisIsCordova)
 
       }
 

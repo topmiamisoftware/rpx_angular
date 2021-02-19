@@ -576,6 +576,7 @@ span.sb-button{
     background-color: rgb(255 255 255 / 59%);
     z-index: 2;
     background-color: rgba(0,0,0,.83);
+    font-display: unset !important; 
 }
 .map-prompt-mobile .sb-filler{
     position: absolute;

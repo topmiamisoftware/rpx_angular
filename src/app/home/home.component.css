@@ -5,3 +5,20 @@
 .sb-backgroundImg {
     background: url(../../assets/images/background.png)
 }
+
+.spotbie-menu-page-padding-top-not-logged{
+    padding-top: 76px;
+    margin-top: env(safe-area-inset-top);
+}
+
+@media (max-width: 560px) { 
+    .spotbie-menu-page-padding-top-not-logged{
+        padding-top: 66px;
+    }
+}
+
+@media (max-width: 360px) {
+    .spotbie-menu-page-padding-top-not-logged{
+        padding-top: 52px; 
+    } 
+}
