@@ -16,7 +16,7 @@ if(device != undefined){
 } else {
     android_i = false;
     iphone_i = false;
-}*/
+}
 
 /*
 export function callFilePermissionsAndroid(){

@@ -11,7 +11,7 @@ if(cordova != undefined){
     var permissions = cordova.plugins.permissions
 } else {
     var permissions = null
-}*/
+}
 
 export const getGeolocation = function(callback, error) {
         
@@ -29,4 +29,4 @@ export const getGeolocation = function(callback, error) {
         )
     }
 
-}
+}*/
