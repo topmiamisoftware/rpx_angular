@@ -12,11 +12,5 @@ if (environment.production) {
 document.addEventListener('DOMContentLoaded', () => {
     platformBrowserDynamic().bootstrapModule(AppModule)
   .catch(err => console.error(err));
-  });
+});
   
-
-//For Cordova Functionality
-let onDeviceReady = () => {
-  platformBrowserDynamic().bootstrapModule(AppModule);
-};
-document.addEventListener('deviceready', onDeviceReady, false);

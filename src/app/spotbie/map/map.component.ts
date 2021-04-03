@@ -2,8 +2,6 @@ import { Component, OnInit, ViewChild } from '@angular/core'
 import { LocationService } from '../../location-service/location.service'
 import { DeviceDetectorService } from 'ngx-device-detector'
 import { AgmMap, AgmInfoWindow } from '@agm/core'
-import * as mobile_js_i from '../../../assets/scripts/mobile_interface.js'
-import * as cordovaFunctions from '../../helpers/cordova/cordova-variables.js'
 import { MapObjectIconPipe } from '../../pipes/map-object-icon.pipe'
 import * as map_extras from './map_extras/map_extras'
 import { ToastRequest } from 'src/app/helpers/toast-helper/toast-models/toast-request'
@@ -877,8 +875,14 @@ export class MapComponent implements OnInit {
   private populateYelpResults(data: any): void{
 
     let results = data.businesses
-    
+
+    let i = 0
+    let resultsToRemove = []
+
     results.forEach(business => {
+
+      if(business.id == 'a4LjewExxqm72UJC1-Ct_Q')
+        resultsToRemove.push(i)
 
       business.rating_image = setYelpRatingImage(business.rating)
       business.type_of_info_object = this.type_of_info_object
@@ -922,7 +926,14 @@ export class MapComponent implements OnInit {
 
       business.icon = business.image_url
 
+      i++
+
     })
+
+    for(let y = 0; y < resultsToRemove.length; y++){
+      console.log("result to remove",results[resultsToRemove[y]])
+      results.splice(resultsToRemove[y], 1)      
+    }
 
     this.searchResultsOriginal = results
 
@@ -978,6 +989,9 @@ export class MapComponent implements OnInit {
       this.firstTimeShowingMap = false
       this.drawPosition()
     }
+
+    this.showMobilePrompt2 = false
+
 
   }
 
@@ -1207,46 +1221,11 @@ export class MapComponent implements OnInit {
 
   public mobileStartLocation(){
     
-    if(this.isAndroid){
+    if (window.navigator.geolocation) window.navigator.geolocation.getCurrentPosition(this.showPosition.bind(this)) 
 
-      this.androidMobileStartLocation()
-    
-    } else {
-
-      if (window.navigator.geolocation) window.navigator.geolocation.getCurrentPosition(this.showPosition.bind(this)) 
-
-      this.showMobilePrompt = false
-      this.showMobilePrompt2 = true
-
-    }
-
-
-  
-  }
-
-  public androidMobileStartLocation(){
-
-    cordovaFunctions.getGeolocation(
-      this.showPosition.bind(this),
-      function(){
-        alert("SpotBie needs your location in to find what's around you.")
-      }      
-    )
-    
     this.showMobilePrompt = false
     this.showMobilePrompt2 = true
-
-    this.spotbie_map.triggerResize(true)
-
-  }
   
-  public toggleAndroidMapStart(){
-
-    if(this.showMobilePrompt2){
-      this.showMobilePrompt2 = false
-      this.loading = true
-    }
-
   }
 
   public startLocation(){
@@ -1286,9 +1265,6 @@ export class MapComponent implements OnInit {
       this.spotbie_username = 'Guest'      
       this.bg_color = '#353535'
     }
-    
-    this.isAndroid = mobile_js_i.android_i
-    this.isIphone = mobile_js_i.iphone_i
     
     this.promptForLocation()
 

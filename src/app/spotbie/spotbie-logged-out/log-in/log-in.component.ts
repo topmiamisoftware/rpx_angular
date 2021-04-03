@@ -5,8 +5,6 @@ import { HttpResponse } from '../../../models/http-reponse'
 import { Router } from '@angular/router'
 import { MenuLoggedOutComponent } from '../menu-logged-out.component'
 
-declare var wkWebView: any
-
 @Component({
   selector: 'app-log-in',
   templateUrl: './log-in.component.html',
