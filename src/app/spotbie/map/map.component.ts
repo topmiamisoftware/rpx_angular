@@ -931,7 +931,6 @@ export class MapComponent implements OnInit {
     })
 
     for(let y = 0; y < resultsToRemove.length; y++){
-      console.log("result to remove",results[resultsToRemove[y]])
       results.splice(resultsToRemove[y], 1)      
     }
 

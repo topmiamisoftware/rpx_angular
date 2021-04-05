@@ -4,7 +4,7 @@ import { FormGroup, Validators, FormBuilder } from '@angular/forms'
 import * as spotbieGlobals from '../../../globals'
 import { HttpClient } from '@angular/common/http'
 
-const CONTACT_ME_API = spotbieGlobals.API + 'contact_me'
+const CONTACT_ME_API = spotbieGlobals.API + 'contact-me'
 
 @Component({
   selector: 'app-contactme',

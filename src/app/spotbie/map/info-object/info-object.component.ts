@@ -117,7 +117,7 @@ export class InfoObjectComponent implements OnInit {
 
     //console.log("pullInfoObjectCallback", httpResponse)
 
-    //console.log("Info Object", this.info_object)
+    console.log("Info Object", this.info_object)
 
     if (httpResponse.success) {
 
@@ -263,7 +263,8 @@ export class InfoObjectComponent implements OnInit {
       name: name,
       description: null,
       loc_x: locX,
-      loc_y: locY
+      loc_y: locY,
+      type_of_info_object_category: this.info_object.type_of_info_object_category
     }
 
     if(this.isLoggedIn == '1'){

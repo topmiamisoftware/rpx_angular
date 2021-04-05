@@ -5,7 +5,7 @@ import { catchError } from 'rxjs/operators';
 import { handleError } from 'src/app/helpers/error-helper';
 import * as spotbieGlobals from '../../globals'
 
-const GET_FAVORITES_LOGGED_IN_API = `${spotbieGlobals.API}my-favorites`
+const GET_FAVORITES_LOGGED_IN_API = `${spotbieGlobals.API}my-favorites/index`
 const SAVE_FAVORITES_API = `${spotbieGlobals.API}my-favorites/save-favorite`
 const REMOVE_FAVORITES_API = `${spotbieGlobals.API}my-favorites/remove-favorite`
 const IS_A_FAVORITE_API = `${spotbieGlobals.API}my-favorites/is-a-favorite`

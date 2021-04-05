@@ -121,13 +121,14 @@ export class MyFavoritesComponent implements OnInit {
 
   }
 
-  public populateFavoriteCallback(resp: any, favorite: any){
+  public populateFavoriteCallback(resp: any, myFavorite: any){
     
     if(resp.success){
 
-      favorite = resp.data
+      let favorite = resp.data
 
       favorite.type_of_info_object = 'yelp_business'
+      favorite.type_of_info_object_category = myFavorite.type_of_info_object_category
 
       favorite.rating_image = setYelpRatingImage(favorite.rating)
 
@@ -169,7 +170,7 @@ export class MyFavoritesComponent implements OnInit {
       this.favoriteItems.push(favorite)
 
     } else {
-      console.log("populateFavoriteCallback", favorite)
+      console.log("populateFavoriteCallback", myFavorite)
       console.log("populateFavoriteCallback", resp)
     }
 

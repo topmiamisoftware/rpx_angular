@@ -211,7 +211,6 @@ export class LogInComponent implements OnInit {
 
     this.current_login_photo = 'assets/images/user.png'
       
-
     this.initLogInForm()
 
     const remember_me = localStorage.getItem('spotbie_rememberMe')

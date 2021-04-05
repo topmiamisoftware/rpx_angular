@@ -10,10 +10,10 @@ import { ProfileHeaderService } from 'src/app/services/profile-header/profile-he
 import { ColorsService } from '../spotbie-logged-in/background-color/colors.service'
 
 const BACKGROUND_UPLOAD_API_URL = `${spotbieGlobals.API}profile-header/upload-background`
-const BACKGROUND_MAX_UPLOAD_SIZE = 3e+6
+const BACKGROUND_MAX_UPLOAD_SIZE = 25e+6
 
 const DEFAULT_UPLOAD_API_URL = `${spotbieGlobals.API}profile-header/upload-default`
-const DEFAULT_MAX_UPLOAD_SIZE = 3e+6
+const DEFAULT_MAX_UPLOAD_SIZE = 25e+6
 
 @Component({
   selector: 'app-profile-header',
@@ -219,7 +219,8 @@ export class ProfileHeaderComponent implements OnInit {
       upload_size += file_to_upload.size
 
       if (upload_size > BACKGROUND_MAX_UPLOAD_SIZE) {
-        this.background_media_message = 'Max upload size is 3MB.'
+        this.background_media_message = 'Max upload size is 25MB.'
+        this.loading = false
         return
       }
 
@@ -374,7 +375,8 @@ export class ProfileHeaderComponent implements OnInit {
       upload_size += default_picture.size
 
       if (upload_size > DEFAULT_MAX_UPLOAD_SIZE) {
-        this.default_media_message = 'Max upload size is 3MB.'
+        this.default_media_message = 'Max upload size is 25MB.'
+        this.loading = false
         return
       }
 
