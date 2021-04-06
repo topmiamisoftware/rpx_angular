@@ -96,7 +96,7 @@ export class LogInComponent implements OnInit {
 
       localStorage.setItem('spotbie_userId', loginResponse.user.id)
 
-      localStorage.setItem('spotbie_token', loginResponse.token_info.original.access_token)
+      localStorage.setItem('spotbiecom_session', loginResponse.token_info.original.access_token)
 
       localStorage.setItem('spotbie_userDefaultImage', loginResponse.spotbie_user.default_picture)
 

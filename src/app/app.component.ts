@@ -20,6 +20,7 @@ export class AppComponent {
     this.versionCheckService.initVersionCheck(environment.versionCheckURL);
   }
   
+  /*
   @HostListener('window:beforeunload')
   onBeforeUnload() {
     
@@ -36,7 +37,7 @@ export class AppComponent {
     
     this.userAuthService.closeBrowser().subscribe();
 
-  }
+  }*/
 
   public dismissToast() : void{
     dismissToast()

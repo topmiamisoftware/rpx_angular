@@ -279,7 +279,7 @@ export class SignUpComponent implements OnInit {
         localStorage.setItem('spotbie_rememberMe', '0')
         localStorage.setItem('spotbie_userId', loginResponse.user.id)
         localStorage.setItem('spotbie_userDefaultImage', loginResponse.spotbie_user.default_picture)
-        localStorage.setItem('spotbie_token', loginResponse.tokenInfo.original.access_token)
+        localStorage.setItem('spotbiecom_session', loginResponse.tokenInfo.original.access_token)
 
         sign_up_instructions.className = 'signUpBoxInstructions'
         sign_up_instructions.innerHTML = 'Welcome to SpotBie!'
