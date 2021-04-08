@@ -27,7 +27,7 @@
     "@angular/compiler": "^12.0.0-next.8",
     "@angular/core": "^12.0.0-next.8",
     "@angular/forms": "^12.0.0-next.8",
-    "@angular/material": "^9.2.1",
+    "@angular/material": "^11.2.8",
     "@angular/platform-browser": "^12.0.0-next.8",
     "@angular/platform-browser-dynamic": "^12.0.0-next.8",
     "@angular/platform-server": "^12.0.0-next.8",
