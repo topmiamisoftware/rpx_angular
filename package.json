@@ -11,7 +11,7 @@
     "e2e": "ng e2e",
     "dev:ssr": "ng run spotbie:serve-ssr",
     "serve:ssr": "node dist/spotbie/server/main.js",
-    "build:ssr": "ng build --prod && ng run spotbie:server:production && npm run post-build",
+    "build:ssr": "ng build --prod --output-hashing=all && ng run spotbie:server:production",
     "prerender": "ng run spotbie:prerender",
     "build:android": "ng build --prod --base-href . --output-path /home/spotbie/Desktop/spotbie/spotbie_android/www/",
     "build:ios": "ng build --prod --base-href . --output-path ~/Desktop/spotbie/spotbie_ios/www/",
@@ -73,7 +73,7 @@
     "zone.js": "~0.10.2"
   },
   "devDependencies": {
-    "@angular/cli": "^9.0.3",
+    "@angular/cli": "^11.2.8",
     "@angular/compiler-cli": "^9.0.2",
     "@angular/language-service": "^9.0.2",
     "@nguniversal/builders": "^9.0.1",
