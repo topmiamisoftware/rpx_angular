@@ -66,7 +66,7 @@
     "ngx-hammer": "^1.1.8",
     "ngx-mask": "^8.1.7",
     "ngx-useful-swiper": "^8.0.1",
-    "rxjs": "^6.5.4",
+    "rxjs": "^6.6.7",
     "swiper": "^4.5.1",
     "tslib": "^1.10.0",
     "yelp-fusion": "^3.0.0",
