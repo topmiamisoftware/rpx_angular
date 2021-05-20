@@ -276,9 +276,9 @@ export const MAP_STYLES = [
   'Sports Bar', 'Steaks', 'Sushi', 'Tapas', 'Thai', 'Vegan Friendly', 'Vegetarian']
 
   export const SHOPPING_CATEGORIES = ['Adult', 'Antiques', 'Art Galleries', 'Arts & Crafts', 'Auction Houses', 'Baby Gear', 'Battery Stores',
-  'Bespoke Clothing', 'Books, Mags, Music & Video', 'Brewing Supplies', 'Bridal', 'Cannabis Dispensaries', 'Computers', 'Cosmetics & Beauty Supply', 'Customized Merchandise',
+  'Bespoke Clothing', 'Books, Mags, Music & Video', 'Brewing Supplies', 'Bridal', 'Cannabis Dispensaries', 'Clothing', 'Computers', 'Cosmetics & Beauty Supply', 'Customized Merchandise',
   'Department Stores', 'Discount Stores', 'Drones', 'Drugstores', 'Duty-Free Shops', 'Electronics', 'Eyeware & Opticians', 'Farming Equipment',
-  'Fashion', 'Fireworks', 'Fitness/Exercise Equipment', 'Flea Markets', 'Flowers & Gifts', 'Gemstones & Minerals', 'Gold Buyers', 'Guns & Ammo',
+  'Fashion', 'Fireworks', 'Fitness/Exercise Equipment', 'Flea Markets', 'Flowers & Gifts', 'Gemstones & Minerals', 'Gold Buyers', 'Groceries', 'Guns & Ammo',
   'Head Shops', 'High Fidelity Audio Equipment', 'Hobby Shops', 'Home & Garden', 'Horse Equipment Shops', 'Jewelry', 'Knitting Supplies', 'Livestock Feed & Supply',
   'Luggage', 'Medical Supplies', 'Military Surplus', 'Mobile Phone Accessories', 'Mobile Phones', 'Motorcycle Gear', 'Musical Instruments & Teachers',
   'Office Equipment', 'Outlet Stores', 'Packing Supplies', 'Pawn Shops', 'Perfume', 'Photography Stores & Services', 'Pool & Billiards',

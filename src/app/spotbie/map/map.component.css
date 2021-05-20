@@ -499,7 +499,7 @@ span.sb-button{
     background: url(../../../assets/images/multimedia.png);
 }
 #spotbie_events_search{
-    background: url(../../../assets/images/map_bar_icons/events.png);
+    background: url(../../../assets/images/map_bar_icons/events_new.png);
 }
 #spotbie_retail_search{
     background: url(../../../assets/images/shop.png);
@@ -512,10 +512,6 @@ span.sb-button{
 }
 #spotbie_place_search{
     background: url(../../../assets/images/map_icon.png);
-}
-.spotbie-is-closed{
-    margin-top: 5px;
-    text-align: center;
 }
 .agm_infowindow_color{
     color: black;

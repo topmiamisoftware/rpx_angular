@@ -52,7 +52,7 @@ export class MapComponent implements OnInit {
   private rad_11 = null
   private rad_1 = null
   
-  public surrounding_object_list = new Array()
+  public surroundingObjectList = new Array()
 
   public sliderRight: boolean = false
 
@@ -85,13 +85,13 @@ export class MapComponent implements OnInit {
 
   public show_search_box: boolean
 
-  public search_categories_placeholder: string
+  public searchCategoriesPlaceHolder: string
 
   public sorting_order: string = 'asc'
 
-  private finder_search_timeout
+  private finderSearchTimeout
 
-  public search_category: string
+  public searchCategory: string
  
   public previousSeachCategory: string
 
@@ -103,7 +103,7 @@ export class MapComponent implements OnInit {
 
   public no_results = false
 
-  public search_api_url
+  public searchApiUrl
 
   public isAndroid: boolean = false
 
@@ -173,12 +173,15 @@ export class MapComponent implements OnInit {
 
   public showNoResultsBox: boolean = false
 
-  public isCordova: string
-
   public showMobilePrompt: boolean = false
   public showMobilePrompt2: boolean = false
 
   public firstTimeShowingMap: boolean = true
+
+  public showOpened: boolean = false
+  private showOpenedParam: string
+
+  public showingOpenedStatus: string = 'Show Opened and Closed'
 
   public slideShowSources = [
     { imageUrl: "assets/images/spotbie-the-new-social-network.jpg", text: "Start Exploring"},
@@ -198,6 +201,11 @@ export class MapComponent implements OnInit {
     spaceBetween: 0
   }
 
+  public eventDateParam: string
+  public sortEventDate: string = 'none'
+
+  public sortAc: number
+
   constructor(private locationService: LocationService,
               private deviceService: DeviceDetectorService,
               private webOptionsService: ColorsService,
@@ -211,14 +219,14 @@ export class MapComponent implements OnInit {
     this.n2_x = 0
     this.n3_x = 7
     this.rad_1 = this.rad_11
-    this.surrounding_object_list = []
+    this.surroundingObjectList = []
 
     this.drawPosition()
 
   }
   
   private peopleSearch() {
-    this.surrounding_object_list = []
+    this.surroundingObjectList = []
     this.drawPosition()
   }
 
@@ -292,6 +300,69 @@ export class MapComponent implements OnInit {
     })
   }
 
+  public eventsToday() {
+    
+    this.sortEventDate = 'today'
+
+    let startTime = new Date().toISOString().slice(0, 11)
+    startTime = `${startTime}00:00:00Z` 
+    
+    let endTime = new Date()
+    endTime.setDate(endTime.getDate() + 1)
+
+    let newEndTime = endTime.toISOString().slice(0, 11)
+    newEndTime = `${newEndTime}00:00:00Z`
+    
+    this.eventDateParam = `startEndDateTime=${startTime},${newEndTime}`
+    this.apiSearch(this.search_keyword)
+    
+  }
+
+  public eventsThisWeekend() {
+
+    this.sortEventDate = 'weekend'
+
+    let startTime = this.nextWeekdayDate(new Date(), 5)
+
+    let newStartTime = startTime.toISOString().slice(0, 11)
+    newStartTime = `${newStartTime}00:00:00Z`
+    
+    let endTime = this.nextWeekdayDate(new Date(), 1)
+
+    let newEndTime = endTime.toISOString().slice(0, 11)
+    newEndTime = `${newEndTime}00:00:00Z`
+    
+    this.eventDateParam = `startEndDateTime=${newStartTime},${newEndTime}`
+
+    console.log("eventsThisWeekend", this.eventDateParam)
+
+    this.apiSearch(this.search_keyword)
+
+  }
+
+  public nextWeekdayDate(date, dayInWeek) {
+    let ret = new Date(date||new Date())
+    ret.setDate(ret.getDate() + (dayInWeek - 1 - ret.getDay() + 7) % 7 + 1)
+    return ret
+  }
+
+  public showOpen(){
+
+    this.showOpened = !this.showOpened
+
+    if(!this.showOpened){
+      this.showingOpenedStatus = 'Show Opened and Closed' 
+      this.showOpenedParam = `open_now=true`  
+    } else {
+      this.showingOpenedStatus = 'Show Opened' 
+      let unixTime = Math.floor(Date.now() / 1000)
+      this.showOpenedParam = `open_at=${unixTime}`  
+    }
+
+    this.apiSearch(this.search_keyword)
+
+  }
+
   public updateDistance(evt: MatSliderChange): void{
     
     clearTimeout(this.update_distance_timeout)
@@ -301,8 +372,11 @@ export class MapComponent implements OnInit {
       this.maxDistance = evt.value
 
       if(this.showNoResultsBox){
+
         this.apiSearch(this.search_keyword)
+
       } else {
+
         let results = this.searchResultsOriginal.filter((search_result) => {
           return search_result.distance < this.maxDistance
         })
@@ -310,6 +384,7 @@ export class MapComponent implements OnInit {
         this.loadedTotalResults = results.length
     
         this.searchResults = results
+
       }
 
     }.bind(this), 500)
@@ -317,6 +392,8 @@ export class MapComponent implements OnInit {
   }
 
   public sortBy(ac: number) {
+
+    this.sortAc = ac
 
     switch(ac){
       case 0:
@@ -339,21 +416,24 @@ export class MapComponent implements OnInit {
         break 
       case 6:
         this.sort_by_txt = "Reservations"
-        break                                                            
+        break
+      case 7:
+        this.sort_by_txt = "Events Today"
+        break 
+      case 8:
+        this.sort_by_txt = "Events This Weekend"
+        break                                                                    
     }
 
-    if (ac != 4 && ac != 5 && ac != 6) {
+    if (ac != 4 && ac != 5 && ac != 6 && ac != 7 && ac != 8) {
 
-      if (this.sorting_order == 'desc') {
+      if (this.sorting_order == 'desc')
         this.sorting_order = 'asc'
-      } else {
+      else
         this.sorting_order = 'desc'
-      }
 
     }
     
-    //console.log("Search Results ", this.searchResults)
-
     switch (ac) {
       case 0:
         // sort by distance
@@ -383,6 +463,14 @@ export class MapComponent implements OnInit {
         // sort by reservation
         this.reservationSort()
         break
+      case 7:
+        // sort events by today
+        this.eventsToday()
+        break
+      case 8:
+        // sort by this weekend
+        this.eventsThisWeekend()
+        break                  
     }
 
   }
@@ -493,7 +581,7 @@ export class MapComponent implements OnInit {
     classification.show_sub = !classification.show_sub 
   }
 
-  public apiSearch(keyword: string) {
+  public apiSearch(keyword: string, resetEventSorter: boolean = false) {
 
     // console.log("category ", category)
 
@@ -502,46 +590,58 @@ export class MapComponent implements OnInit {
     keyword = encodeURIComponent(keyword)
 
     if(this.search_keyword !== keyword){
+
       this.totalResults = 0
       this.allPages = 0
       this.current_offset = 0
       this.around_me_search_page = 1
       this.searchResults = []
+
     }
 
+    if(resetEventSorter){
+      this.eventDateParam = undefined
+      this.sortEventDate = 'none'
+    }
+    
     let api_url: string
     let search_obj: any
 
-    switch(this.search_category){
+    switch(this.searchCategory){
+
       case 'events':
-        api_url = 'size=2&latlong=' + this.lat + ',' + this.lng + '&classificationName=' + keyword + '&radius=45'      
+        api_url = `size=2&latlong=${this.lat},${this.lng}&classificationName=${keyword}&radius=45&${this.eventDateParam}`      
         break
+
       case 'food':
       case 'shopping':
-        api_url = this.search_api_url + '?latitude=' + this.lat + '&longitude=' + this.lng + '&term=' + keyword + '&categories=' + keyword + 
-        '&radius=40000&sort_by=rating&limit=50&offset=' + this.current_offset 
+        api_url = `${this.searchApiUrl}?latitude=${this.lat}&longitude=${this.lng}&term=${keyword}&categories=${keyword}&${this.showOpenedParam}&radius=40000&sort_by=rating&limit=50&offset=${this.current_offset}` 
+
     }
 
     search_obj = {
       config_url: api_url
     }
     
-    switch(this.search_category){
-      case "events":
+    switch(this.searchCategory){
+
+      case 'events':
         this.locationService.getEvents(search_obj).subscribe(
           resp => {
             this.getEventsSearchCallback(resp)
           }
         )
         break
-      case "food":
-      case "shopping":
+
+      case 'food':
+      case 'shopping':
         this.locationService.getBusinesses(search_obj).subscribe(
           resp => {
             this.getBusinessesSearchCallback(resp)
           }
-        )        
+        )    
         break
+
     }
 
   }
@@ -555,31 +655,31 @@ export class MapComponent implements OnInit {
 
     this.show_search_box = true
 
-    if(category == this.search_category){
+    if(category == this.searchCategory){
       this.catsUp = true
       return
     }
 
     this.loading = true
 
-    if(this.search_category !== undefined) this.previousSeachCategory = this.search_category
+    if(this.searchCategory !== undefined) this.previousSeachCategory = this.searchCategory
 
-    this.search_category = category
+    this.searchCategory = category
 
     switch (category) {
       case 'food':
-        this.search_api_url = YELP_BUSINESS_SEARCH_API
-        this.search_categories_placeholder = 'Search Food Spots...'
+        this.searchApiUrl = YELP_BUSINESS_SEARCH_API
+        this.searchCategoriesPlaceHolder = 'Search Places to Eat...'
         this.categories = this.food_categories   
         break
       case 'shopping':
-        this.search_api_url = YELP_BUSINESS_SEARCH_API
-        this.search_categories_placeholder = 'Search Retail Spots...'
+        this.searchApiUrl = YELP_BUSINESS_SEARCH_API
+        this.searchCategoriesPlaceHolder = 'Search Shopping...'
         this.categories = this.shopping_categories
         break
       case 'events':
         this.event_categories = []
-        this.search_categories_placeholder = 'Search Events Nearby...' 
+        this.searchCategoriesPlaceHolder = 'Search Events...' 
         this.categories = this.event_categories
         this.classificationSearch()
         return
@@ -592,16 +692,12 @@ export class MapComponent implements OnInit {
 
   public cleanCategory(){
 
-    if(this.search_category !== this.previousSeachCategory){
+    if(this.searchCategory !== this.previousSeachCategory){
 
       this.searchResults = []
 
-      switch (this.search_category) {
+      switch (this.searchCategory) {
         case 'food':
-          this.type_of_info_object = "yelp_business"             
-          this.maxDistanceCap = 25
-          this.itemsPerPage = 50
-          break
         case 'shopping':
           this.type_of_info_object = "yelp_business"                          
           this.maxDistanceCap = 25
@@ -629,22 +725,20 @@ export class MapComponent implements OnInit {
   }
 
   public searchSpotBie(evt: any): void {
-    
-    // console.log("category ", category)
 
     this.search_keyword = evt.target.value
 
     const search_term = encodeURIComponent(evt.target.value)
 
-    clearTimeout(this.finder_search_timeout)
+    clearTimeout(this.finderSearchTimeout)
 
-    this.finder_search_timeout = setTimeout(function() {
+    this.finderSearchTimeout = setTimeout(function() {
 
       this.loading = true
 
       let api_url: string
 
-      if (this.search_category == 'events') {
+      if (this.searchCategory == 'events') {
         
         api_url = `size=20&latlong=${this.lat},${this.lng}&keyword=${search_term}&radius=45`
 
@@ -660,7 +754,7 @@ export class MapComponent implements OnInit {
 
       } else {
 
-        api_url = `${this.search_api_url}?latitude=${this.lat}&longitude=${this.lng}&term=${search_term}&categories=${this.search_category}&radius=40000&sort_by=distance&limit=50&offset=${this.current_offset}`
+        api_url = `${this.searchApiUrl}?latitude=${this.lat}&longitude=${this.lng}&term=${search_term}&${this.showOpenedParam}&radius=40000&sort_by=best_match&limit=50&offset=${this.current_offset}`
 
         const search_obj = {
           config_url: api_url
@@ -675,7 +769,6 @@ export class MapComponent implements OnInit {
       }
 
     }.bind(this, search_term), 1500)
-
 
   }
 
@@ -723,13 +816,17 @@ export class MapComponent implements OnInit {
   }
 
   public formatPhoneNumber(phoneNumberString) {
+
     const cleaned = ('' + phoneNumberString).replace(/\D/g, '')
     const match = cleaned.match(/^(1|)?(\d{3})(\d{3})(\d{4})$/)
+
     if (match) {
       const intlCode = (match[1] ? '+1 ': '')
       return [intlCode, '(', match[2], ') ', match[3], '-', match[4]].join('')
     }
+    
     return null
+
   }
 
   public openSearchResult(search_result){
@@ -744,29 +841,32 @@ export class MapComponent implements OnInit {
     
     this.loading = false
 
+    //console.log("TicketMaster Events", httpResponse)
+
     if(httpResponse.success){      
 
       this.totalResults = httpResponse.data.page.totalElements
 
-      if(this.totalResults == 0){
+      let event_object = httpResponse.data
+
+      if(this.totalResults == 0 || event_object._embedded === undefined){
+
         this.showNoResultsBox = true
+        this.loading = false
+        this.searchResults = []
         return  
+
       } else {
+      
         this.showNoResultsBox = false
+        this.sortEventDate = 'none'
+      
       }
 
       this.cleanCategory()
 
       window.scrollTo(0,0)
       
-      let event_object = httpResponse.data
-      
-      if(event_object._embedded === undefined){
-        this.toastHelper = true
-        this.loading = false
-        return
-      }
-
       this.showSearchResults = true
       this.catsUp = false  
       this.loading = false
@@ -791,8 +891,8 @@ export class MapComponent implements OnInit {
 
         event_object_list[i].icon = event_object_list[i].images[0].url
 
-        event_object_list[i].image_url = event_object_list[i].images[8].url
-        
+        event_object_list[i].image_url = this.ticketMasterLargestImage(event_object_list[i].images)
+
         event_object_list[i].type_of_info_object = "ticketmaster_event"
 
         let dt_obj = new Date(event_object_list[i].dates.start.localDate)
@@ -807,7 +907,10 @@ export class MapComponent implements OnInit {
 
       }
 
-      this.searchCategorySorter = this.search_category
+      this.sorting_order = 'desc'
+      this.sortBy(0)
+
+      this.searchCategorySorter = this.searchCategory
 
       this.searchResultsSubtitle = 'Events'
    
@@ -829,6 +932,20 @@ export class MapComponent implements OnInit {
       console.log("getEventsSearchCallback Error: ", httpResponse)
 
     this.loading = false
+
+  }
+
+  public ticketMasterLargestImage(imageList: any){
+
+    let largestDimension = Math.max.apply(Math, imageList.map( 
+      (image) => { return image.width; }
+    ))
+    
+    let largestImage = imageList.find(
+      (image) => { return image.width == largestDimension }
+    )
+
+    return largestImage.url
 
   }
 
@@ -861,7 +978,7 @@ export class MapComponent implements OnInit {
 
       this.spotbie_user_marker_info_window.open()
 
-      this.searchCategorySorter = this.search_category
+      this.searchCategorySorter = this.searchCategory
 
       this.displaySurroundingObjectList = false
 
@@ -886,7 +1003,7 @@ export class MapComponent implements OnInit {
 
       business.rating_image = setYelpRatingImage(business.rating)
       business.type_of_info_object = this.type_of_info_object
-      business.type_of_info_object_category = this.search_category
+      business.type_of_info_object_category = this.searchCategory
 
       if (business.is_closed)
         business.is_closed_msg = 'Closed'
@@ -940,7 +1057,7 @@ export class MapComponent implements OnInit {
       return searchResult.distance < this.maxDistance
     })
 
-    switch(this.search_category){
+    switch(this.searchCategory){
       case 'food':
         this.searchResultsSubtitle = 'Spots'
         break
@@ -962,15 +1079,17 @@ export class MapComponent implements OnInit {
       this.allPages = 20
     }
 
-    if(this.loadedTotalResults > (this.around_me_search_page * this.itemsPerPage)){
+    if(this.loadedTotalResults > (this.around_me_search_page * this.itemsPerPage))
       this.show_next_page_button = true        
-    }
+    
 
   }
 
   public pullSearchMarker(infoObject: any): void {
+
     this.infoObjectWindow.open = true
     this.infoObject = infoObject
+
   }
 
   public showPosition(position: any ): void {
@@ -1079,9 +1198,9 @@ export class MapComponent implements OnInit {
 
   public retrieveSurroudingsCallback(resp: any){
     
-    const surrounding_object_list = resp.surrounding_object_list
+    const surroundingObjectList = resp.surrounding_object_list
 
-    const total_objects = surrounding_object_list.length
+    const total_objects = surroundingObjectList.length
 
     if (total_objects === undefined) return
 
@@ -1091,35 +1210,35 @@ export class MapComponent implements OnInit {
 
       i++
 
-      const coords = this.getNewCoords(surrounding_object_list[k].loc_x, surrounding_object_list[k].loc_y, i, total_objects)
-      surrounding_object_list[k].loc_x = coords.lat
-      surrounding_object_list[k].loc_y = coords.lng
+      const coords = this.getNewCoords(surroundingObjectList[k].loc_x, surroundingObjectList[k].loc_y, i, total_objects)
+      surroundingObjectList[k].loc_x = coords.lat
+      surroundingObjectList[k].loc_y = coords.lng
       
-      if(surrounding_object_list[k].ghost_mode == 1){
+      if(surroundingObjectList[k].ghost_mode == 1){
 
-        surrounding_object_list[k].default_picture = "assets/images/ghost_white.jpg"
-        surrounding_object_list[k].username = "User is a Ghost"
-        surrounding_object_list[k].description = "This user is a ghost. Ghost Users are not able to be befriended and their profiles remain hidden. Who is this person then? Well... maybe you'll get to find out if they befriend you. Ghost Users normally have less friends than non-Ghost Users due to their profile's low visibility."
+        surroundingObjectList[k].default_picture = "assets/images/ghost_white.jpg"
+        surroundingObjectList[k].username = "User is a Ghost"
+        surroundingObjectList[k].description = "This user is a ghost. Ghost Users are not able to be befriended and their profiles remain hidden. Who is this person then? Well... maybe you'll get to find out if they befriend you. Ghost Users normally have less friends than non-Ghost Users due to their profile's low visibility."
 
       } else {
 
-        surrounding_object_list[k].description = unescape(surrounding_object_list[k].description)
+        surroundingObjectList[k].description = unescape(surroundingObjectList[k].description)
 
       }
 
-      surrounding_object_list[k].map_icon = this.mapIconPipe.transform(surrounding_object_list[k].default_picture)
+      surroundingObjectList[k].map_icon = this.mapIconPipe.transform(surroundingObjectList[k].default_picture)
 
     }
 
     this.loading = false
     this.showMobilePrompt2 = false
-    this.createObjectMarker(surrounding_object_list)
-    //console.log("Sorrounding Objects: ", surrounding_object_list)
+    this.createObjectMarker(surroundingObjectList)
+    //console.log("Sorrounding Objects: ", surroundingObjectList)
 
   }
 
-  public createObjectMarker(surrounding_object_list): void {
-    this.surrounding_object_list = surrounding_object_list
+  public createObjectMarker(surroundingObjectList): void {
+    this.surroundingObjectList = surroundingObjectList
   }
 
   public getNewCoords(x, y, i, f): any {
@@ -1251,8 +1370,6 @@ export class MapComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    
-    this.isCordova = localStorage.getItem('isCordova')
     
     this.isLoggedIn = localStorage.getItem('spotbie_loggedIn')
     this.bg_color = localStorage.getItem('spotbie_backgroundColor')

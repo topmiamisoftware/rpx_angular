@@ -8,8 +8,13 @@ import { SpotbieMetaService } from 'src/app/services/meta/spotbie-meta.service'
 import { setYelpRatingImage } from 'src/app/helpers/info-object-helper'
 import { shareNative } from 'src/app/helpers/cordova/sharesheet'
 import { externalBrowserOpen } from 'src/app/helpers/cordova/web-intent'
+import { spotbieMetaDescription, spotbieMetaTitle, spotbieMetaImage } from 'src/app/constants/spotbie'
 
 const YELP_BUSINESS_DETAILS_API = "https://api.yelp.com/v3/businesses/"
+
+const SPOTBIE_META_DESCRIPTION = spotbieMetaDescription
+const SPOTBIE_META_TITLE = spotbieMetaTitle
+const SPOTBIE_META_IMAGE = spotbieMetaImage
 
 @Component({
   selector: 'app-info-object',
@@ -34,6 +39,7 @@ export class InfoObjectComponent implements OnInit {
   public infoObject: any = null
 
   public infoObjectImageUrl: string
+  private infoObjectCategory: string
 
   public showFavorites: boolean = true
 
@@ -49,8 +55,6 @@ export class InfoObjectComponent implements OnInit {
 
   public objectDisplayAddress: string
 
-  public isCordova: boolean = false
-
   constructor(private infoObjectService: InfoObjectServiceService,
               private myFavoritesService: MyFavoritesService,
               public share: ShareService,
@@ -60,10 +64,19 @@ export class InfoObjectComponent implements OnInit {
 
   public closeWindowX(): void {
 
-    if(this.router.url.indexOf('event') > -1 || this.router.url.indexOf('place-to-eat') > -1 || this.router.url.indexOf('retail') > -1)
+    if(this.router.url.indexOf('event') > -1 || this.router.url.indexOf('place-to-eat') > -1 || this.router.url.indexOf('shopping') > -1){
+
       this.router.navigate(['/home'])
-    else
+   
+    } else {
+
       this.closeWindow.emit(null)
+      this.spotbieMetaService.setTitle(SPOTBIE_META_TITLE)
+      this.spotbieMetaService.setDescription(SPOTBIE_META_DESCRIPTION)
+      this.spotbieMetaService.setImage(SPOTBIE_META_IMAGE)
+
+    }
+      
 
   }
 
@@ -115,37 +128,31 @@ export class InfoObjectComponent implements OnInit {
 
   private pullInfoObjectCallback(httpResponse: any): void{
 
-    //console.log("pullInfoObjectCallback", httpResponse)
-
-    console.log("Info Object", this.info_object)
-
     if (httpResponse.success) {
 
-      this.infoObject = httpResponse.data
-
-      if(this.info_object === undefined)
-        this.info_object = this.infoObject
+      this.info_object = httpResponse.data
+      this.info_object.type_of_info_object_category = this.infoObjectCategory
 
       this.infoObjectImageUrl = this.info_object.image_url
 
       if(this.router.url.indexOf('place-to-eat') > -1 || this.info_object.type_of_info_object_category == 'food'){
         this.info_object.type_of_info_object = 'yelp_business'
         this.info_object.type_of_info_object_category = 'food'
-        this.infoObjectLink = `https://spotbie.com/place-to-eat/${this.info_object.alias}/${this.infoObject.id}`
+        this.infoObjectLink = `https://spotbie.com/place-to-eat/${this.info_object.alias}/${this.info_object.id}`
       }
       
-      if(this.router.url.indexOf('retail') > -1 || this.info_object.type_of_info_object_category == 'shopping'){
+      if(this.router.url.indexOf('shopping') > -1 || this.info_object.type_of_info_object_category == 'shopping'){
         this.info_object.type_of_info_object = 'yelp_business'
         this.info_object.type_of_info_object_category = 'shopping'
-        this.infoObjectLink = `https://spotbie.com/retail/${this.info_object.alias}/${this.infoObject.id}`
+        this.infoObjectLink = `https://spotbie.com/shopping/${this.info_object.alias}/${this.info_object.id}`
       }
 
-      if(this.infoObject.hours !== undefined){
+      if(this.info_object.hours !== undefined){
 
-        this.infoObject.hours.forEach(hours => {
+        this.info_object.hours.forEach(hours => {
           
           if(hours.hours_type == "REGULAR")
-            this.infoObject.isOpenNow = hours.is_open_now
+            this.info_object.isOpenNow = hours.is_open_now
 
         })
 
@@ -178,7 +185,7 @@ export class InfoObjectComponent implements OnInit {
       
       this.loading = false
       
-      this.isInMyFavorites(this.infoObject.id, 'yelp')
+      this.isInMyFavorites(this.info_object.id, 'yelp')
       
     } else
       console.log('pullInfoObjectCallback', httpResponse)
@@ -232,7 +239,7 @@ export class InfoObjectComponent implements OnInit {
     
     let displayAddress = ''
 
-    this.infoObject.location.display_address.forEach(element => {
+    this.info_object.location.display_address.forEach(element => {
       displayAddress = displayAddress + ' ' + element 
     });
 
@@ -253,10 +260,10 @@ export class InfoObjectComponent implements OnInit {
 
     this.loading = true
 
-    const yelpId = this.infoObject.id
-    const name = this.infoObject.name
-    const locX = this.infoObject.coordinates.latitude
-    const locY = this.infoObject.coordinates.longitude
+    const yelpId = this.info_object.id
+    const name = this.info_object.name
+    const locX = this.info_object.coordinates.latitude
+    const locY = this.info_object.coordinates.longitude
 
     const favoriteObj = {
       third_party_id: yelpId,
@@ -298,7 +305,7 @@ export class InfoObjectComponent implements OnInit {
 
     this.loading = true
 
-    const yelpId = this.infoObject.id
+    const yelpId = this.info_object.id
 
     if(this.isLoggedIn == '1'){
 
@@ -406,6 +413,8 @@ export class InfoObjectComponent implements OnInit {
 
     if(this.info_object.type_of_info_object == 'yelp_business'){
       externalBrowserOpen(`${this.info_object.url}`)
+    } else if(this.info_object.type_of_info_object == 'ticketmaster_event'){
+      this.goToTicket()
     }
 
   }
@@ -416,18 +425,11 @@ export class InfoObjectComponent implements OnInit {
 
     this.bgColor = localStorage.getItem('spotbie_backgroundColor')
     this.isLoggedIn = localStorage.getItem('spotbie_loggedIn')
-    
-
-    let isCordova = localStorage.getItem('isCordova')
-
-    if(isCordova == '1')
-      this.isCordova = true
-    else
-      this.isCordova = false
 
     if(this.info_object !== undefined){
       
       this.infoObjectImageUrl = this.info_object.image_url
+      this.infoObjectCategory = this.info_object.type_of_info_object_category
 
       switch(this.info_object.type_of_info_object){
         case 'yelp_business':
@@ -441,7 +443,7 @@ export class InfoObjectComponent implements OnInit {
 
     } else {
 
-      if(this.router.url.indexOf('retail') > -1 || this.router.url.indexOf('place-to-eat') > -1 ){
+      if(this.router.url.indexOf('shopping') > -1 || this.router.url.indexOf('place-to-eat') > -1 ){
         
         let infoObjectId = this.activatedRoute.snapshot.paramMap.get('id')
 

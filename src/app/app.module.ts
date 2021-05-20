@@ -13,7 +13,6 @@ import { UserModule } from './user/user.module';
 import { UrlSanitizerPipe } from './pipes/url-sanitizer.pipe';
 
 import { VersionCheckService } from './services/version-check.service';
-import { MetaModule } from '@ngx-meta/core';
 import { HelperModule } from './helpers/helper.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { TokenInterceptor } from './helpers/token-interceptor/token-interceptor.service';
@@ -43,7 +42,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     UserHomeModule,
     UserModule,
     HelperModule,
-    MetaModule.forRoot(),
     BrowserAnimationsModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })  
   ],  

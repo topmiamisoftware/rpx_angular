@@ -725,6 +725,14 @@ a, a:hover, a:active, a:after{
 .swiper-pagination-bullet{
     background: white !important;
 }
+
+.spotbie-is-open{
+    color: green;
+}
+.spotbie-is-closed{
+    color: red;
+}
+
 /**WIDTH MEDIA QUERIES */
 @media (max-width: 1300px) { 
 

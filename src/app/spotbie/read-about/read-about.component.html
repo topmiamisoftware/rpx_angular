@@ -10,7 +10,7 @@
                     
                     Connecting <span id="usersSpan" (click)="signUpNow()">users</span>,
 
-                    <span (click)="scrollT('shopping')">retail shops</span>,
+                    <span (click)="scrollT('shopping')">shopping</span>,
 
                     <span (click)="scrollT('food')">places to eat</span>,
 
@@ -20,7 +20,7 @@
 
             </div>                        
             
-            <table class="appsDownload" *ngIf="!isCordova">
+            <table class="appsDownload">
                 <tbody>
                     <tr>
                         <td (click)="appOpen(0)">
@@ -118,7 +118,7 @@
             </p>-->                                 
 
             <p class="QuestionsPar spotbieAddPointerCursor">
-                <span class='spotbie-search-click' (click)="scrollT('shopping')">Search Retail Shops</span>      
+                <span class='spotbie-search-click' (click)="scrollT('shopping')">Search Shopping</span>      
             </p>                         
 
             <picture (click)="scrollT('shopping')">

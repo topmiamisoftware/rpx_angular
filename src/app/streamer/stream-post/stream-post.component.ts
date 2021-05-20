@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core'
 import { StreamPost } from '../streamer-models/stream-post'
 import { ShareService } from '@ngx-share/core'
-import { MetaService } from '@ngx-meta/core'
 import { StreamerService } from '../streamer-services/streamer.service'
 import { HttpResponse } from 'src/app/models/http-reponse'
 
@@ -78,7 +77,6 @@ export class StreamPostComponent implements OnInit {
   public loading_default: string = "assets/images/spotbie_loading_default.png"
 
   constructor(public share: ShareService,
-              private readonly meta: MetaService,
               private _streamer_service: StreamerService) { }
   
   public updateStreamPosted(stream_post: StreamPost){

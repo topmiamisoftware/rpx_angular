@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, Input } from '@angular/core'
 import { HttpClient, HttpEventType } from '@angular/common/http'
-import { Swiper } from 'swiper/dist/js/swiper.esm.js'
+import { Swiper } from 'swiper/swiper.esm.js'
 import * as spotbieGlobals from '../../globals'
 import { Validators, FormGroup, FormBuilder } from '@angular/forms'
 import { SanitizePipe } from '../../pipes/sanitize.pipe'

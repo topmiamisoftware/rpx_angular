@@ -4,7 +4,6 @@ import { videoEmbedCheck } from '../../helpers/video-check'
 import { StreamerComponent } from '../streamer.component'
 import { ShareService } from '@ngx-share/core'
 import { DomSanitizer } from '@angular/platform-browser'
-import { MetaService } from '@ngx-meta/core'
 
 @Component({
   selector: 'app-view-stream-post',
@@ -30,8 +29,7 @@ export class ViewStreamPostComponent implements OnInit {
   public stream_post_title : string
 
   constructor(private host : StreamerComponent,
-              public share : ShareService,
-              private readonly meta : MetaService) { }
+              public share : ShareService) { }
 
   public closeWindowX() : void {
     this.closeWindow.emit(this.window_object)
@@ -56,6 +54,7 @@ export class ViewStreamPostComponent implements OnInit {
     this.stream_post_description = this.stream_post.stream_content
     this.stream_post_title = "Post by " + this.stream_post.stream_by.username + " on " + this.stream_post.dated
     
+    /*
     this.meta.setTag('og:url', this.stream_post.stream_link)
 
     this.meta.setTitle(this.stream_post_title)
@@ -65,7 +64,7 @@ export class ViewStreamPostComponent implements OnInit {
     this.meta.setTag('description', this.stream_post_description)
     this.meta.setTag('twitter:description', this.stream_post_title)    
     this.meta.setTag('og:description', this.stream_post_description)
-    
+    */
   }
 
   async ngAfterViewInit(){

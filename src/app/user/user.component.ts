@@ -1,7 +1,6 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core'
+import { Component, OnInit } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
 import * as spotbieGlobals from '../globals'
-import { MetaService } from '@ngx-meta/core'
 import { HttpClient } from '@angular/common/http'
 
 const INFO_API = spotbieGlobals.API
@@ -36,8 +35,7 @@ export class UserComponent implements OnInit {
   public loggedIn: boolean = false
 
   constructor(private activatedRoute: ActivatedRoute,
-              private http: HttpClient,
-              private readonly meta: MetaService) { }
+              private http: HttpClient) { }
 
   private getUser(): void{
 
@@ -70,10 +68,10 @@ export class UserComponent implements OnInit {
       
       this.bg_image = httpResponse.web_options.spotmee_bg
 
-      this.meta.setTag('og:image', this.bg_image)
+      /*this.meta.setTag('og:image', this.bg_image)
       this.meta.setTag('twitter:image', this.bg_image)      
       this.meta.setTag('twitter:card', 'summary_large_image')
-      
+      */
     } else {
       console.log('User Info Error ', httpResponse)
       return

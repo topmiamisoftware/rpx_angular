@@ -6,7 +6,7 @@ import { StreamPosterComponent } from './stream-poster/stream-poster.component';
 import { DeletePostComponent } from './delete-post/delete-post.component';
 import { StreamerComponent } from './streamer.component';
 
-import { LazyLoadImageModule, scrollPreset, LazyLoadImageDirective } from 'ng-lazyload-image'; 
+import { LazyLoadImageModule, LazyLoadImageDirective } from 'ng-lazyload-image'; 
 import { PostReportComponent } from './post-report/post-report.component';
 import { PostShareComponent } from './post-share/post-share.component';
 import { ExtraMediaUploadPipe } from '../pipes/extra-media-upload.pipe';
@@ -47,9 +47,7 @@ import { HelperModule } from '../helpers/helper.module';
     FormsModule,
     NgxFontAwesomeModule,
     HelperModule,
-    LazyLoadImageModule.forRoot({
-      preset: scrollPreset // <-- tell LazyLoadImage that you want to use scrollPreset
-    }),
+    LazyLoadImageModule,
     CommentsModule    
   ],
   exports : [StreamerComponent]

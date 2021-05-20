@@ -3,6 +3,12 @@ import { VersionCheckService } from './services/version-check.service';
 import { environment } from 'src/environments/environment.prod';
 import { dismissToast } from './helpers/error-helper';
 import { UserauthService } from './services/userauth.service';
+import { SpotbieMetaService } from './services/meta/spotbie-meta.service';
+import { spotbieMetaDescription, spotbieMetaTitle, spotbieMetaImage } from 'src/app/constants/spotbie'
+
+const SPOTBIE_META_DESCRIPTION = spotbieMetaDescription
+const SPOTBIE_META_TITLE = spotbieMetaTitle
+const SPOTBIE_META_IMAGE = spotbieMetaImage
 
 @Component({
   selector: 'app-root',
@@ -13,7 +19,9 @@ export class AppComponent {
   
   title = 'spotbie';
 
-  constructor(private versionCheckService : VersionCheckService, private userAuthService: UserauthService) {}
+  constructor(private versionCheckService : VersionCheckService, 
+              private userAuthService: UserauthService,
+              private spotbieMetaService: SpotbieMetaService) {}
   
   @HostListener('window:load', [])
   onWindowLoaded() {
@@ -45,6 +53,10 @@ export class AppComponent {
 
   ngOnInit(){
     
+    this.spotbieMetaService.setTitle(SPOTBIE_META_TITLE)
+    this.spotbieMetaService.setDescription(SPOTBIE_META_DESCRIPTION)
+    this.spotbieMetaService.setImage(SPOTBIE_META_IMAGE)
+
   }
 
 }

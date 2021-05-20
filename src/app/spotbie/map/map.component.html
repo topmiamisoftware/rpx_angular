@@ -32,12 +32,8 @@
       <div class="swiper-pagination"></div>
 
       <!-- Add Arrows -->
-      <div class="swiper-button-next">
-        <i class="fa fa-angle-right"></i>
-      </div>
-      <div class="swiper-button-prev">
-        <i class="fa fa-angle-left"></i>
-      </div>
+      <div class="swiper-button-next"></div>
+      <div class="swiper-button-prev"></div>
 
     </swiper>
 
@@ -87,7 +83,7 @@
 
     <div *ngIf="displaySurroundingObjectList">
 
-      <agm-overlay *ngFor="let mapObject of surrounding_object_list"                  
+      <agm-overlay *ngFor="let mapObject of surroundingObjectList"                  
                     [latitude]="mapObject.loc_x"
                     [longitude]="mapObject.loc_y">
 
@@ -171,11 +167,21 @@
 
 
 <div class='spotbie-category-search-yelp animated slideInUp' *ngIf="catsUp">
-  <input type='text' class='spotbie-searchbar sb-input' placeholder="{{ search_categories_placeholder }}" (keyup)="searchSpotBie($event)" />
-  <div class='spotbie-close-categories' (click)="closeCategories()" *ngIf="catsUp">close</div>
+
+  <input type='text' 
+          class='spotbie-searchbar sb-input' 
+          placeholder="{{ searchCategoriesPlaceHolder }}" 
+          (keyup)="searchSpotBie($event)" />
+
+  <div class='spotbie-close-categories' 
+        (click)="closeCategories()" 
+        *ngIf="catsUp">
+    close
+  </div>
+
 </div>
 
-<div class='spotbie-categories animated slideInRight' *ngIf="catsUp && search_category != 'events'" [ngStyle]="{ 'background-color' : bg_color }">
+<div class='spotbie-categories animated slideInRight' *ngIf="catsUp && searchCategory != 'events'" [ngStyle]="{ 'background-color' : bg_color }">
 
   <div class='spotbie-single-cat' *ngFor="let category of categories" (click)="apiSearch(category)">
     {{ category }}
@@ -183,7 +189,7 @@
 
 </div>
 
-<div class='spotbie-categories animated slideInRight' *ngIf="catsUp && search_category == 'events'" [ngStyle]="{ 'background-color' : bg_color }">
+<div class='spotbie-categories animated slideInRight' *ngIf="catsUp && searchCategory == 'events'" [ngStyle]="{ 'background-color' : bg_color }">
 
   <div class='spotbie-single-cat' *ngFor="let category of categories" (click)="showEventSub(category)">
     
@@ -201,7 +207,7 @@
 
     <div class='spotbie-sub-cat-wrapper' *ngIf="category.show_sub && category.segment !== undefined">
 
-      <div class='spotbie-sub-cat' *ngFor="let sub_cat_type of category.segment._embedded.genres" (click)="apiSearch(sub_cat_type.name)" [SpotBieStopClickPropagation]>
+      <div class='spotbie-sub-cat' *ngFor="let sub_cat_type of category.segment._embedded.genres" (click)="apiSearch(sub_cat_type.name, true)" [SpotBieStopClickPropagation]>
         
         {{ sub_cat_type.name }}
 
@@ -257,7 +263,11 @@
       <td (click)="sortBy(3)" title="Sory By Pricing"><img src='assets/images/money.png' /></td>
       <td (click)="sortBy(4)" title="Offers Delivery"><img src='assets/images/bag.png' /></td>
       <td (click)="sortBy(5)" title="Offers Pick-Up"><img src='assets/images/arm.png' /></td>
-      <td (click)="sortBy(6)" [ngStyle]="{ 'border-right' : 'unset' }" title="Offers Reservations"><img src='assets/images/hotel.png' /></td>
+      <td (click)="sortBy(6)" title="Offers Reservations"><img src='assets/images/hotel.png' /></td>
+      <td (click)="showOpen()" title="Opened or Closed" [ngStyle]="{ 'border-right' : 'unset' }">
+        <span class='fa fa-circle spotbie-is-open' [ngStyle]="{ 'margin-right' : '5px' }"></span>
+        <span class='fa fa-circle spotbie-is-closed' *ngIf="showOpened == false"></span>
+      </td>
     </tr>    
   </table>
 
@@ -268,6 +278,10 @@
       <td (click)="sortBy(1)" title="Sort By Rating"><img src='assets/images/star.png' /></td>
       <td (click)="sortBy(2)" title="Sort By Reviews"><img src='assets/images/review.png' /></td>
       <td (click)="sortBy(3)" [ngStyle]="{ 'border-right' : 'unset' }"  title="Sory By Pricing"><img src='assets/images/money.png' /></td>
+      <td (click)="showOpen()" title="Opened or Closed" [ngStyle]="{ 'border-right' : 'unset' }">
+        <span class='fa fa-circle spotbie-is-open' [ngStyle]="{ 'margin-right' : '5px' }"></span>
+        <span class='fa fa-circle spotbie-is-closed' *ngIf="showOpened == false"></span>
+      </td>      
     </tr>    
   </table>
 
@@ -275,21 +289,31 @@
     <tr>
       <td (click)="hideSearchResults()" title="Hide Results"><img src='assets/images/eye.png' /></td>
       <td (click)="sortBy(0)" title="Sort By Distance"><img src='assets/images/road.png' /></td>
-      <td (click)="sortBy(3)" [ngStyle]="{ 'border-right' : 'unset' }"  title="Sory By Pricing"><img src='assets/images/money.png' /></td>
+      <td (click)="sortBy(3)" title="Sort By Pricing"><img src='assets/images/money.png' /></td>
+      <td (click)="sortBy(7)" title="Events Today">Today</td>
+      <td (click)="sortBy(8)" title="Events This Weekend" [ngStyle]="{ 'border-right' : 'unset' }">This Weekend</td>
     </tr>    
   </table>
 
   <div class='spotbie-search-results-title spotbie-sorting'>
 
-    Sorted by {{ sort_by_txt }} ({{ sorting_order }})
+    Sorted by {{ sort_by_txt }} 
+    <span *ngIf="sortAc != 4 && sortAc != 5 && sortAc != 6 && sortAc != 7 && sortAc != 8">({{ sorting_order }})</span>
+    <span (click)="showOpen()" *ngIf="searchCategorySorter != 'events'"> - {{ showingOpenedStatus }}</span>
+
+    <ng-template *ngIf="searchCategorySorter != 'events'">
+      <span class='fa fa-circle spotbie-is-open' [ngStyle]="{ 'margin-left' : '5px' }"></span>
+      <span class='fa fa-circle spotbie-is-closed' *ngIf="showOpened == false" [ngStyle]="{ 'margin-left' : '5px' }"></span>
+    </ng-template>
 
   </div>
+  
 
-  <div class='spotbie-search-result-wrapper'>
+  <div class='spotbie-search-result-wrapper' *ngIf="showSearchResults">
 
     <div class='spotbie-search-results-title'>
 
-      <span *ngIf="search_category !== 'events'">Showing {{ loadedTotalResults }} results within {{ maxDistance }} miles. </span>
+      <span *ngIf="searchCategory !== 'events'">Showing {{ loadedTotalResults }} results within {{ maxDistance }} miles. </span>
   
       <span class='sb-button' (click)="loadMoreResults(0)" *ngIf="allPages > 1">
         Previous
@@ -382,7 +406,7 @@
       </table>
   
       <div class='spotbie-search-result-transactions' *ngIf="search_result.transactions_on == '1'">{{ search_result.friendly_transactions }}</div>
-  
+
     </div>
 
     <div>
@@ -407,7 +431,10 @@
 
 <div class='spotbie-search-results no-results' *ngIf="showNoResultsBox">
   
-  <div class='spotbie-no-results' style="text-align: center;">No Results Available for "{{ search_keyword }}" within {{ maxDistance }} miles.</div>
+  <div class='spotbie-no-results' style="text-align: center;" *ngIf="sortEventDate == 'none'">No results available for "{{ search_keyword }}" within {{ maxDistance }} miles.</div>
+  <div class='spotbie-no-results' style="text-align: center;" *ngIf="sortEventDate == 'today'">No results today available for "{{ search_keyword }}" within {{ maxDistance }} miles.</div>
+  <div class='spotbie-no-results' style="text-align: center;" *ngIf="sortEventDate == 'weekend'">No results this weekend available for "{{ search_keyword }}" within {{ maxDistance }} miles.</div>
+
 
   <div class='spotbie-search-results-title'>
     Max Distance  <mat-slider min="0" max="{{ maxDistanceCap }}" step="1" value="{{ maxDistance }}"

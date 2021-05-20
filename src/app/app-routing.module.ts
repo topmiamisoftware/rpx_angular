@@ -1,11 +1,10 @@
 import { NgModule } from '@angular/core'
-import { Routes, RouterModule } from '@angular/router'
+import { Routes, RouterModule, ExtraOptions } from '@angular/router'
 import { TermsComponent } from './terms/terms.component'
 import { ForgotPasswordComponent } from './spotbie/spotbie-logged-out/forgot-password/forgot-password.component'
 import { LoginGuardServiceService } from './route-services/login-guard-service.service'
 import { UserComponent } from './user/user.component'
 import { UserMetaService } from './user/user-meta/user-meta.service'
-import { MetaService, MetaGuard } from '@ngx-meta/core'
 import { InfoObjectComponent } from './spotbie/map/info-object/info-object.component'
 import { BugsComponent } from './bugs/bugs.component'
 
@@ -18,10 +17,9 @@ export const routes: Routes = [
   { path: 'password', component: ForgotPasswordComponent },
   { path: 'password/reset/:token', component: ForgotPasswordComponent },
   { path: 'place-to-eat/:name/:id', component: InfoObjectComponent },
-  { path: 'retail/:name/:id', component: InfoObjectComponent },
+  { path: 'shopping/:name/:id', component: InfoObjectComponent },
   { path: 'event/:name/:id', component: InfoObjectComponent },
-  { path: 'user-profile',
-    canActivateChild: [MetaGuard],   
+  { path: 'user-profile',  
     children: [                       
       { path: ':exe_user_name', component: UserComponent,
         data: user_service.getUserProfileMeta(),      
@@ -34,9 +32,14 @@ export const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' }
 ]
 
+const routerOptions: ExtraOptions = {
+  scrollPositionRestoration: 'enabled',
+  anchorScrolling: 'enabled',
+  scrollOffset: [0, 64],
+};
+
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule],
-  providers: [MetaService]
+  imports: [RouterModule.forRoot(routes, routerOptions)],
+  exports: [RouterModule]
 })
 export class AppRoutingModule { }

@@ -16,13 +16,13 @@
 
         <div class='spotbie-info-object-image' [ngStyle]="{ 'background' : 'url(' + infoObjectImageUrl + ')'}"></div>
     
-        <div *ngIf="infoObject !== null && infoObject.hours !== undefined">
+        <div *ngIf="info_object !== null && info_object.hours !== undefined">
 
-            <div class='spotbie-info-object-open' *ngIf="!infoObject.isOpenNow">
+            <div class='spotbie-info-object-open' *ngIf="!info_object.isOpenNow">
                 CLOSED <span class='fa fa-circle spotbie-is-closed'></span>
             </div>
             
-            <div class='spotbie-info-object-open' *ngIf="infoObject.isOpenNow">
+            <div class='spotbie-info-object-open' *ngIf="info_object.isOpenNow">
                 OPEN <span class='fa fa-circle spotbie-is-open'></span>
             </div>
 
@@ -117,7 +117,7 @@
 
         <div class='sb-button spotbie-add-to-favorites' (click)="goToTicket()" *ngIf="info_object.type_of_info_object == 'ticketmaster_event'">Buy Tickets</div>
 
-        <div class='spotbie-share-buttons-wrappper' *ngIf="info_object !== undefined && !isCordova">
+        <div class='spotbie-share-buttons-wrappper' *ngIf="info_object !== undefined">
 
             <button mat-fab class="spotbie-share-button" shareButton="facebook" 
                     [style.backgroundColor]="share.prop.facebook.color" 

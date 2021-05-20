@@ -3,7 +3,6 @@ import * as $ from 'jquery'
 import * as spotbieGlboals from '../../globals'
 import { PlatformStatsService } from '../../services/platform-stats.service'
 import { MenuLoggedOutComponent } from '../spotbie-logged-out/menu-logged-out.component'
-import { isCordova } from 'src/app/helpers/cordova/cordova-variables'
 
 @Component({
   selector: 'app-read-about',
@@ -66,8 +65,6 @@ export class ReadAboutComponent implements OnInit {
     public loading: boolean = false
 
     public spotbie_version: string = spotbieGlboals.VERSION;
-
-    public isCordova: boolean = false
 
     constructor(private platformStatsService: PlatformStatsService,
                 private host: MenuLoggedOutComponent) { }
@@ -210,10 +207,6 @@ export class ReadAboutComponent implements OnInit {
     ngOnInit() {
 
         this.loading = true
-
-        let isCordova = localStorage.getItem('isCordova')
-
-        if(isCordova == '1') this.isCordova = true
         
     }
 

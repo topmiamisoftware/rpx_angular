@@ -29,14 +29,13 @@
               "src/styles.css",
               "./node_modules/@ctrl/ngx-emoji-mart/picker.css",
               "src/assets/styles/animates.css",
-              "./node_modules/swiper/dist/css/swiper.css",
-              "./node_modules/font-awesome/css/font-awesome.css"
+              "./node_modules/font-awesome/css/font-awesome.css",
+              "./node_modules/swiper/swiper-bundle.css"
             ],
             "scripts": [
               "src/assets/scripts/mobile_interface.js",
               "src/assets/scripts/picturefill.min.js"
-            ],
-            "es5BrowserSupport": true
+            ]
           },
           "configurations": {
             "production": {
@@ -97,7 +96,7 @@
           "options": {
             "main": "src/test.ts",
             "polyfills": "src/polyfills.ts",
-            "tsConfig": "src/tsconfig.spec.json",
+            "tsConfig": "tsconfig.spec.json",
             "karmaConfig": "src/karma.conf.js",
             "styles": [
               "src/styles.css"
