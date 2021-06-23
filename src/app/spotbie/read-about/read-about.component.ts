@@ -76,7 +76,7 @@ export class ReadAboutComponent implements OnInit {
                 window.open('https://play.google.com/store/apps/details?id=com.exentriks.spotmee.spotmee&hl=en_US', '_blank')
                 break
             case 1:
-                window.open('https://apps.apple.com/us/app/spotbie/id1439327004?app=itunes&ign-mpt=uo%3D4', '_blank')
+                window.open('https://apps.apple.com/us/app/spotbie/id1439327004', '_blank')
                 break                                
         }
 

@@ -10,7 +10,6 @@ export class UserInfoObjectComponent implements OnInit {
 
   @Input() currentMarker
 
-
   @Output() close = new EventEmitter
 
   constructor(private router: Router) { }

@@ -8,7 +8,7 @@
     padding-bottom: 10px;
     border-radius: 99%;
     transition: 0.5s;
-    z-index: 999999;
+    z-index: 99;
 }
 .spotbie-notifications:hover{
     cursor: pointer;

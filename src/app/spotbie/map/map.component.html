@@ -243,13 +243,13 @@
   </table>-->
 
   <div class='spotbie-search-results-title' *ngIf="type_of_info_object == 'yelp_business'">
-    Max Distance  <mat-slider min="0" max="25" step="1" value="{{ maxDistance }}"
+    Max Distance  <mat-slider min="1" max="25" step="1" value="{{ maxDistance }}"
                             (change)="updateDistance($event)"></mat-slider>
     {{ maxDistance }} miles.                            
   </div>
 
   <div class='spotbie-search-results-title' *ngIf="type_of_info_object == 'ticketmaster_events'">
-    Max Distance  <mat-slider min="0" max="50" step="1" value="{{ maxDistance }}"
+    Max Distance  <mat-slider min="1" max="50" step="1" value="{{ maxDistance }}"
                             (change)="updateDistance($event)"></mat-slider>
     {{ maxDistance }} miles.                            
   </div>

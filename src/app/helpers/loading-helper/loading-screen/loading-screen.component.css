@@ -5,7 +5,7 @@
     left: 0;
     right: 0;
     background-color: rgba(0, 0, 0, 0.85);
-    z-index: 99999999998;
+    z-index: 99;
     text-align: center;
 }
 .spotbie-loading-gif{

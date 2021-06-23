@@ -3,10 +3,10 @@
     background-position: center;
     background-color: rgb(21 21 21);
     text-align: left;
-    z-index: 9999998;
+    z-index: 99;
 }
 .sb-closeButton{
-    z-index: 9999999;
+    z-index: 99;
 }
 .sb-input{
     width: 450px;

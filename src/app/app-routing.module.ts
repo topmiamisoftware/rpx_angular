@@ -11,7 +11,7 @@ import { BugsComponent } from './bugs/bugs.component'
 let user_service = new UserMetaService()
 
 export const routes: Routes = [
-  { path: 'home',  loadChildren: './home/home.module#HomeModule'},
+  { path: 'home',  loadChildren: () => import('./home/home.module').then(m => m.HomeModule) },
   { path: 'terms', component: TermsComponent },
   { path: 'bugs', component: BugsComponent },
   { path: 'password', component: ForgotPasswordComponent },
@@ -28,7 +28,7 @@ export const routes: Routes = [
       { path: ':exe_user_name/albums/:album_id/media/:album_media_id', component: UserComponent },
       { path: ':exe_user_name/posts/:stream_post_id', component: UserComponent }
   ]}, 
-  { path: 'user-home', loadChildren: './user-home/user-home.module#UserHomeModule', canActivate: [LoginGuardServiceService] },  
+  { path: 'user-home', loadChildren: () => import('./user-home/user-home.module').then(m => m.UserHomeModule), canActivate: [LoginGuardServiceService] },  
   { path: '', redirectTo: '/home', pathMatch: 'full' }
 ]
 

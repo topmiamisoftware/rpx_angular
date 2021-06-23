@@ -47,7 +47,7 @@
     min-width: 100%;
     max-width: 100%;
     background-color: rgba(0, 0, 0, 0.72);
-    z-index: 99999999;
+    z-index: 99;
 }
 .spotbie-stream-post-likes-holder{
    position: relative;

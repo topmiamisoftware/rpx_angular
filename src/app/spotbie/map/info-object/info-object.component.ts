@@ -135,6 +135,8 @@ export class InfoObjectComponent implements OnInit {
 
       this.infoObjectImageUrl = this.info_object.image_url
 
+      console.log("infoObjectImageUrl", this.infoObjectImageUrl)
+
       if(this.router.url.indexOf('place-to-eat') > -1 || this.info_object.type_of_info_object_category == 'food'){
         this.info_object.type_of_info_object = 'yelp_business'
         this.info_object.type_of_info_object_category = 'food'

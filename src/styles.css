@@ -96,7 +96,7 @@ textarea:active {
     bottom: 0%;
     left: 0%;
     right: 0%;
-    /*background: url(/assets/images/background.png);*/
+    background: url(assets/images/background.png);
     background-position: center !important;
 }
 
@@ -267,7 +267,7 @@ a, a:hover, a:active, a:after{
     padding: 10px;
     padding-top: 6px;
     padding-bottom: 6px;
-    z-index: 1000;
+    z-index: 99;
     text-align: center;
     cursor: pointer;
     color: #FFF;
@@ -285,7 +285,7 @@ a, a:hover, a:active, a:after{
     top: 0;
     bottom: 0;
     margin: 0 auto;  
-    z-index: 99999999;
+    z-index: 99;
     overflow-y: scroll;
     background-color: rgba(0, 0, 0,.88);    
     padding-top: 20px;
@@ -426,7 +426,7 @@ a, a:hover, a:active, a:after{
     left: 0;
     right: 0;
     background-color: rgba(0, 0, 0, 0.85);
-    z-index: 99999999998;
+    z-index: 99;
     text-align: center;
 }
 .spotbie-loading-gif{
@@ -449,7 +449,7 @@ a, a:hover, a:active, a:after{
     left: 0;
     right: 0;
     background-color: inherit !important;
-    z-index: 99999999999;
+    z-index: 99;
     text-align: center;
     overflow-y: scroll;    
 }
@@ -497,7 +497,7 @@ a, a:hover, a:active, a:after{
     min-width: 100%;
     max-width: 100%;
     background-color: rgba(0,0,0,.82);
-    z-index: 99999999999;
+    z-index: 99;
     overflow-y: scroll;
 }
 .spotbie-toast-input-box{
@@ -510,7 +510,7 @@ a, a:hover, a:active, a:after{
     margin: 0 auto;
     max-width: 750px;
     border-radius: 20px;
-    z-index: 9999999999;
+    z-index: 99;
     text-align: center;
 }
 .sb-button-mini{
@@ -526,7 +526,7 @@ a, a:hover, a:active, a:after{
     height: 100%;
     top: 0;
     bottom: 0;
-    z-index: 999999999999;
+    z-index: 99;
     background-color: rgba(0,0,0,.93);
 }
 

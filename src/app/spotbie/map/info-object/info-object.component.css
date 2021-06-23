@@ -134,7 +134,7 @@
 
 .spotbie-overlay-window{
     padding-bottom: 100px;
-    z-index: 9999998;
+    z-index: 99;
     background-position: center !important;
     background-repeat: no-repeat !important;
     background-size: cover !important;    
@@ -145,7 +145,7 @@
     transform: translateY(-50%);
 }
 .sb-closeButton{
-    z-index: 9999999;
+    z-index: 99;
 }
 .spotbie-info-object-transactions{
     position: relative;

@@ -10,9 +10,9 @@
                     
                     Connecting <span id="usersSpan" (click)="signUpNow()">users</span>,
 
-                    <span (click)="scrollT('shopping')">shopping</span>,
-
                     <span (click)="scrollT('food')">places to eat</span>,
+
+                    <span (click)="scrollT('shopping')">shopping</span>,
 
                     and <span (click)="scrollT('events')">events</span>.
 
@@ -24,10 +24,14 @@
                 <tbody>
                     <tr>
                         <td (click)="appOpen(0)">
-                            <i class="fa fa-android" aria-hidden="true"></i>
+                            <img class="QuestionsImage spotbieAddPointerCursor" style="margin-top: 0%;"
+                                    src="assets/images/home_imgs/png/play_store.png" 
+                                    alt="Download SpotBie on the Play Store" />                            
                         </td>
                         <td (click)="appOpen(1)">
-                            <i class="fa fa-apple" aria-hidden="true"></i>
+                            <img class="QuestionsImage spotbieAddPointerCursor" style="margin-top: 0%;"
+                                    src="assets/images/home_imgs/png/apple_store.png" 
+                                    alt="Download SpotBie on the App Store" />
                         </td>
                     </tr>
                 </tbody>
@@ -53,6 +57,26 @@
 
             <!--<app-single-ad></app-single-ad>-->
 
+            <p class="QuestionsPar spotbieAddPointerCursor">
+                <span class='spotbie-search-click' (click)="scrollT('shopping')">Search Shopping</span>      
+            </p>                         
+
+            <picture (click)="scrollT('shopping')">
+
+                <source srcset='assets/images/home_imgs/webp/providing-you-places-to-shop-around-you.webp' media="(min-width: 415px)" type='image/webp'>
+                <source srcset='assets/images/home_imgs/webp/providing-you-places-to-shop-around-you1x.webp' media="(min-width: 481px)" type='image/webp'>
+                <source srcset='assets/images/home_imgs/webp/providing-you-places-to-shop-around-you2x.webp'  media="(min-width: 415px)" type='image/webp'>
+                <source srcset='assets/images/home_imgs/webp/providing-you-places-to-shop-around-you3x.webp' media="(min-width: 1px)" type='image/webp'>
+                <source srcset='assets/images/home_imgs/jxr/providing-you-places-to-shop-around-you.jxr' type='image/vnd.ms-photo'>
+                <source srcset='assets/images/home_imgs/jp2/providing-you-places-to-shop-around-you.jp2' type='image/jp2'>
+
+                <img class="QuestionsImage spotbieAddPointerCursor" 
+                    style="margin-top: 0%;"
+                    src="assets/images/home_imgs/png/providing-you-places-to-shop-around-you.jpg" 
+                    alt="Picture of two women shopping in a mall." />
+
+            </picture>  
+
             <p class="QuestionsPar">                     
                 <span class='spotbie-search-click' (click)="scrollT('events')">Search Events</span>
             </p>  
@@ -64,7 +88,7 @@
             
             <!--<app-single-ad></app-single-ad>-->
 
-
+            
             <!-- <h2 class="HA spotbieAddPointerCursor" (click)="openSlideShow(0);">
                 <span class="dfg">Monetizable Profiles</span>
             </h2>                                                
@@ -116,26 +140,6 @@
                 We localize media files such as music, graphic design, video games, movies, and text documents for our users.
                 By browsing the map near their location or thousands of miles away, our users are introduced to content based on its exact place of origin.        
             </p>-->                                 
-
-            <p class="QuestionsPar spotbieAddPointerCursor">
-                <span class='spotbie-search-click' (click)="scrollT('shopping')">Search Shopping</span>      
-            </p>                         
-
-            <picture (click)="scrollT('shopping')">
-
-                <source srcset='assets/images/home_imgs/webp/providing-you-places-to-shop-around-you.webp' media="(min-width: 415px)" type='image/webp'>
-                <source srcset='assets/images/home_imgs/webp/providing-you-places-to-shop-around-you1x.webp' media="(min-width: 481px)" type='image/webp'>
-                <source srcset='assets/images/home_imgs/webp/providing-you-places-to-shop-around-you2x.webp'  media="(min-width: 415px)" type='image/webp'>
-                <source srcset='assets/images/home_imgs/webp/providing-you-places-to-shop-around-you3x.webp' media="(min-width: 1px)" type='image/webp'>
-                <source srcset='assets/images/home_imgs/jxr/providing-you-places-to-shop-around-you.jxr' type='image/vnd.ms-photo'>
-                <source srcset='assets/images/home_imgs/jp2/providing-you-places-to-shop-around-you.jp2' type='image/jp2'>
-
-                <img class="QuestionsImage spotbieAddPointerCursor" 
-                    style="margin-top: 0%;"
-                    src="assets/images/home_imgs/png/providing-you-places-to-shop-around-you.jpg" 
-                    alt="Picture of two women shopping in a mall." />
-
-            </picture>  
 
             <!--<app-single-ad></app-single-ad>-->
 

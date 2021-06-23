@@ -53,7 +53,7 @@
     width: 450px;
     min-width: 450px;
     max-width: 450px;
-    z-index: 9999999;
+    z-index: 98;
     padding: 20px;
     border-radius: 15px;
 }
@@ -85,7 +85,7 @@
     width: 450px;
     padding-top: 5px;
     padding-bottom: 5px;
-    z-index: 99999998;
+    z-index: 98;
 }
 .spotbie-search-result-transactions{
     margin-top: 10px;
@@ -103,7 +103,7 @@
     position: absolute;
     top: 11px;
     right: -70px;
-    z-index: 9999999;
+    z-index: 99;
     padding: 8px;
     padding-left: 10px;
     padding-right: 10px;
@@ -127,7 +127,7 @@
 }
 .spotbie-categories{
     position: fixed;
-    z-index: 9999998;
+    z-index: 97;
     min-width: 250px;
     max-width: 250px;
     width: 250px;
@@ -486,33 +486,17 @@ span.sb-button{
     color: white;
     background-color: rgb(2 2 2 / 74%);
     border-radius: 10px;
-    z-index: 9999997;
+    z-index: 90;
     font-weight: bold;
 }
+
 #spotbie_me_search{
-    background: url(../../../assets/images/spot.png);
-}
-#spotbie_people_search{
-    background: url(../../../assets/images/find_people.png);
-}
-#spotbie_media_search{
-    background: url(../../../assets/images/multimedia.png);
+    background: url(./assets/images/spot.png);
 }
 #spotbie_events_search{
-    background: url(../../../assets/images/map_bar_icons/events_new.png);
+    background: url(./assets/images/events_new.png);
 }
-#spotbie_retail_search{
-    background: url(../../../assets/images/shop.png);
-}
-#spotbie_food_search{
-    background: url(../../../assets/images/food.png);
-}
-#spotbie_artist_search{
-    background: url(../../../assets/images/full_star.png);
-}
-#spotbie_place_search{
-    background: url(../../../assets/images/map_icon.png);
-}
+
 .agm_infowindow_color{
     color: black;
     font-size: 18px;
@@ -543,7 +527,7 @@ span.sb-button{
     right: 15px;
     cursor: pointer;
     font-size: 18px;
-    z-index: 99;
+    z-index: 90;
 }
 .spotbie-pull-from{
     position: relative;
@@ -721,9 +705,9 @@ swiper{
         width: 96%;
         min-width: 96%;
         max-width: 96%;
-        padding: 2%;
         border-radius: 0px;
-        padding-top: env(safe-area-inset-top);
+        padding: env(safe-area-inset-top) 2% 2%;
+        padding-top: 2%;
     }    
     .map-prompt-mobile .sb-button{
         top: 43%;

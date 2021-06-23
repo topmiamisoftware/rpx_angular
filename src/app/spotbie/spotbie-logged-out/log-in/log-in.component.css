@@ -25,10 +25,10 @@
     width: 102%;
     min-width: 102%;
     max-width: 102%;
-    z-index: 9999998;      
+    z-index: 99;      
 }
 .sb-closeButton{
-    z-index: 9999999;
+    z-index: 99;
 }
 .spotbie-log-in-picture{
     position: absolute;

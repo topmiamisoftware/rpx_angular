@@ -1,9 +1,6 @@
 .spotbie-main-holder{
-    z-index: 99999;
+    z-index: 99;
     padding-top: 60px;
-}
-.sb-backgroundImg {
-    background: url(../../assets/images/background.png)
 }
 
 .spotbie-menu-page-padding-top-not-logged{

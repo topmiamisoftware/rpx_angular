@@ -121,7 +121,7 @@ h2{
     color: #ffffff !important;
     font-size: 22px;
     border-radius: 10px;
-    z-index: 999;
+    z-index: 99;
     cursor: pointer;
     box-shadow: #bdff71 1px 1px 10px inset;     
 }
@@ -201,7 +201,7 @@ a:hover,a:active,a,a:after{
     height: 100%;
     min-width: 100%;
     width: 100%;        
-    z-index: 999999999999;
+    z-index: 99;
     transition: all 1s;
     -webkit-overflow-scrolling: touch;
 }
@@ -229,7 +229,7 @@ a:hover,a:active,a,a:after{
     min-width: 100%;
     width: 100%;
     background-color: rgba(0,0,0,.53);
-    z-index: 99999999999999999999999999999;
+    z-index: 99;
 }
 .successBoxPage{
     position: fixed;
@@ -280,7 +280,7 @@ a:hover,a:active,a,a:after{
     min-width: 100%;
     width: 100%;
     background-color: rgba(0,0,0,.53);
-    z-index: 99999999999999999999999999999;
+    z-index: 99;
 }            
 .superBoxPerks{
     position: fixed;
@@ -316,7 +316,7 @@ a:hover,a:active,a,a:after{
     min-width: 100%;
     width: 100%;
     background-color: rgba(0,0,0,.92);
-    z-index: 9999999;                
+    z-index: 99;                
 }
 .featuresSlideshow{
     position: fixed;
@@ -324,13 +324,13 @@ a:hover,a:active,a,a:after{
     top: 10px;
     left: 10px;
     background-color: rgba(0, 0, 0, 0.78);
-    z-index: 998;
+    z-index: 98;
     padding: 5px;
     padding-left: 6px;
     padding-right: 12px;
     border-radius: 10px;
     cursor: pointer;
-    z-index: 999;
+    z-index: 99;
 }
 .featuresSlideshow:hover{
     background-color: rgba(0, 0, 0, 0.5);
@@ -452,7 +452,7 @@ closeSlideshow:hover{
     min-width: 100%;
     width: 100%;
     background-color: rgba(0,0,0,.92);
-    z-index: 9999999999999998;
+    z-index: 99;
 }
 .loading_gif{
     position: absolute;
@@ -509,7 +509,6 @@ body{
 ::-webkit-scrollbar-thumb{
     background: transparent;
 }
-
 ::-webkit-scrollbar-corner{
     background: transparent;
 }
@@ -538,7 +537,6 @@ body{
     background-position: center !important;
     background-repeat: no-repeat !important;
     background-size: contain !important;
-    background-color: #000 !important;
     cursor: pointer;
 }
 .appsDownload td i{
@@ -557,7 +555,7 @@ body{
     left: 0%;
     right: 0%;
     background-color: rgba(0,0,0,.23) !important;
-    z-index: 9999999999999999;
+    z-index: 99;
 }
 .grec {
     position: relative;
@@ -566,7 +564,7 @@ body{
     margin: 0 auto;
     margin-top: 39px;
     max-width: 301px;
-    z-index: 9999999999999999;
+    z-index: 99;
 }
 .spotbie-version{
     position: relative;
@@ -820,10 +818,6 @@ body{
         padding-top: 12px !important;
         padding-bottom: 12px !important;
     }
-    .appsDownload td {
-        padding-top: 0px;
-        padding-bottom: 0px;
-    }
     h2 {
         font-size: 19px !important;
     }
@@ -869,7 +863,7 @@ body{
         width: 80% !important;
     }
     .appsDownload td{
-        padding: 20px;
+        padding: 5px;
         padding-top: 0px;
         padding-bottom: 0px;
     }
