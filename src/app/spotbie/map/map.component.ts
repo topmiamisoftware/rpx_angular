@@ -1085,7 +1085,7 @@ export class MapComponent implements OnInit {
 
   public drawPosition(){
 
-    this.iconUrl = this.mapIconPipe.transform(this.user_default_image)
+    this.iconUrl = 'assets/images/guest-spotbie-user-01.svg'
     this.saveUserLocation()
 
   }

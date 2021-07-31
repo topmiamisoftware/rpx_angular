@@ -23,6 +23,12 @@ import { BugsComponent } from './bugs/bugs.component'
 import { TransferHttpCacheModule } from '@nguniversal/common'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 
+import { SocialAuthServiceConfig, SocialLoginModule } from 'angularx-social-login';
+import {
+  GoogleLoginProvider,
+  FacebookLoginProvider
+} from 'angularx-social-login'
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -43,9 +49,28 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms'
     UserModule,
     HelperModule,
     BrowserAnimationsModule,
+    SocialLoginModule,
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })  
   ],  
   providers: [
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        autoLogin: false,
+        providers: [
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider(
+              '1054707215391-hsev2vpin6abf6rp3b3ibd0nnuuracou.apps.googleusercontent.com'
+            )
+          },
+          {
+            id: FacebookLoginProvider.PROVIDER_ID,
+            provider: new FacebookLoginProvider('555919295437570')
+          }
+        ]
+      } as SocialAuthServiceConfig,
+    },      
     DeviceDetectorService,
     VersionCheckService,
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
