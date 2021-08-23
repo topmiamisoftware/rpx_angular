@@ -19,18 +19,19 @@ import { ValidateUniqueEmail } from 'src/app/validators/email-unique.validator'
 import { EmailConfirmationComponent } from '../../email-confirmation/email-confirmation.component'
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog'
 
-import { faEye, faEyeSlash, faInfoCircle } from '@fortawesome/free-solid-svg-icons';
+import { faEye, faEyeSlash, faInfoCircle } from '@fortawesome/free-solid-svg-icons'
+import { UserauthService } from 'src/app/services/userauth.service'
 
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
-  styleUrls: ['./sign-up.component.css', '../../read-about/read-about.component.css']
+  styleUrls: ['./sign-up.component.css', '../menu-logged-out.component.css', '../../menu.component.css']
 })
 export class SignUpComponent implements OnInit {
 
   @ViewChild('spotbie_register_info') spotbie_register_info
 
-  @ViewChild('vc_spotbie_sign_up_box_inner') vc_spotbie_sign_up_box_inner
+  //@ViewChild('vc_spotbie_sign_up_box_inner') vc_spotbie_sign_up_box_inner
   @ViewChild('vc_spotbie_sign_up_box') vc_spotbie_sign_up_box
 
   @ViewChild('vc_account_perks_box') vc_account_perks_box
@@ -38,6 +39,8 @@ export class SignUpComponent implements OnInit {
   @ViewChild('spotbieSignUpIssues') spotbieSignUpIssues
 
   @Output() closeWindow = new EventEmitter()
+
+  @Output() logInEvent = new EventEmitter()
 
   @Input() window_obj
 
@@ -63,14 +66,95 @@ export class SignUpComponent implements OnInit {
 
   public passwordShow: boolean = false
 
+  public rememberMeToken: string
+
   constructor(private router: Router,
               private sign_up_service: SignUpService,
               private formBuilder: FormBuilder,
               private emailUniqueCheckService: EmailConfirmationService,
-              private matDialog: MatDialog) { }
+              private matDialog: MatDialog,
+              private userAuthService: UserauthService) { }
 
   scrollTo(el: ElementRef): void{
     $('html, body').animate({ scrollTop: $(el).offset().top }, 'slow')
+  }
+
+  public signInWithGoogle(): void {
+    this.loading = true
+    this.userAuthService.signInWithGoogle(this.loginCallback.bind(this))
+  }
+
+  public signInWithFB(): void {    
+    this.loading = true
+    this.userAuthService.signInWithFB(this.loginCallback.bind(this))
+  }
+
+  private loginCallback(loginResponse: any): void{
+
+    if(loginResponse.error == 'popup_closed_by_user'){
+      this.loading = false
+      return
+    }
+
+    if(loginResponse === undefined){
+      this.signUpFormx.setErrors(null)
+      this.spotbieSignUpIssues.nativeElement.innerHTML = "Invalid username or password."
+      this.loading = false
+    }
+
+    let login_status = loginResponse.message
+
+    if(login_status == 'success' || login_status == 'confirm'){
+
+      localStorage.setItem('spotbie_userLogin', loginResponse.user.username)
+
+      localStorage.setItem('spotbie_loggedIn', '1')
+      
+      localStorage.setItem('spotbie_rememberMe', this.userAuthService.userRememberMe)
+
+      localStorage.setItem('spotbie_userId', loginResponse.user.id)
+
+      localStorage.setItem('spotbiecom_session', loginResponse.token_info.original.access_token)
+
+      console.log(loginResponse.spotbie_user.default_picture)
+
+      localStorage.setItem('spotbie_userDefaultImage', loginResponse.spotbie_user.default_picture)
+
+      if (this.userAuthService.userRememberMe == '1'){
+
+        this.rememberMeToken = loginResponse.remember_me_token
+        localStorage.setItem('spotbie_rememberMeToken', this.rememberMeToken)
+
+      }
+      
+      this.router.navigate(['/user-home'])
+
+    } else {
+
+      if (login_status == 'invalid_cred' || login_status == 'social_media_account' || login_status == 'spotbie_account') {
+  
+        if(login_status == 'invalid_cred')      
+          this.spotbieSignUpIssues.nativeElement.innerHTML = "Invalid username or password."   
+        else if(login_status == 'social_media_account')
+          this.spotbieSignUpIssues.nativeElement.innerHTML = "You signed up with social media."
+        else if(login_status == 'spotbie_account')
+          this.spotbieSignUpIssues.nativeElement.innerHTML = "You signed up with an email address."
+
+        this.spotbieSignUpIssues.nativeElement.className = 'spotbie-invalid-feedback spotbie-text-gradient spotbie-error text-uppercase'
+        this.spotbieSignUpIssues.nativeElement.style.display = 'block'
+  
+        localStorage.setItem('spotbie_userId', null)
+        localStorage.setItem('spotbie_loggedIn', '0')
+        localStorage.setItem('spotbie_userApiKey', null)
+        localStorage.setItem('spotbie_rememberMe', '0')
+        localStorage.setItem('spotbie_rememberMeToken', null)
+  
+      } 
+
+    }
+
+    this.loading = false
+
   }
 
   public closeWindowX(): void {
@@ -105,8 +189,7 @@ export class SignUpComponent implements OnInit {
 
       dialogConfig.autoFocus = true
       dialogConfig.data = {
-        email: this.spotbieEmail,
-        firstName: this.spotbieFirstName
+        email : this.spotbieEmail
       }
 
       let dialogRef = this.matDialog.open(
@@ -150,12 +233,8 @@ export class SignUpComponent implements OnInit {
   }
 
   get spotbieUsername() { return this.signUpFormx.get('spotbieUsername').value }
-  get spotbieFirstName() { return this.signUpFormx.get('spotbieFirstName').value }
-  get spotbieLastName() { return this.signUpFormx.get('spotbieLastName').value }
-  get spotbiePhoneNumber() { return this.signUpFormx.get('spotbiePhone').value }
   get spotbieEmail() { return this.signUpFormx.get('spotbieEmail').value }
   get spotbiePassword() { return this.signUpFormx.get('spotbiePassword').value }
-  get spotbieConfirm() { return this.signUpFormx.get('spotbieConfirm').value }
 
   get f() { return this.signUpFormx.controls }
 
@@ -182,7 +261,7 @@ export class SignUpComponent implements OnInit {
 
     this.loading = true
 
-    this.vc_spotbie_sign_up_box_inner.nativeElement.scrollTo(0, 0)
+    this.spotbieSignUpIssues.nativeElement.scrollTo(0, 0)
 
     this.signUpFormx.updateValueAndValidity()
 
@@ -190,21 +269,6 @@ export class SignUpComponent implements OnInit {
     if (this.signUpFormx.invalid) {
 
         this.signing_up = false
-
-        if (this.signUpFormx.get('spotbieUsername').invalid)
-          document.getElementById('spotbie_username').style.border = '1px solid red'
-        else
-          document.getElementById('spotbie_username').style.border = 'unset'
-
-        if (this.signUpFormx.get('spotbieFirstName').invalid)
-          document.getElementById('user_first_name').style.border = '1px solid red'
-        else
-          document.getElementById('user_first_name').style.border = 'unset'
-
-        if (this.signUpFormx.get('spotbieLastName').invalid)
-          document.getElementById('user_last_name').style.border = '1px solid red'
-        else
-          document.getElementById('user_last_name').style.border = 'unset'
 
         if (this.signUpFormx.get('spotbieEmail').invalid)
           document.getElementById('user_email').style.border = '1px solid red'
@@ -216,11 +280,6 @@ export class SignUpComponent implements OnInit {
         else
           document.getElementById('user_pass').style.border = 'unset'
 
-        if (this.signUpFormx.get('spotbieConfirm').invalid)
-          document.getElementById('user_pass_confirm').style.border = '1px solid red'
-        else
-          document.getElementById('user_pass_confirm').style.border = 'unset'
-
         this.loading = false
 
         return
@@ -228,28 +287,19 @@ export class SignUpComponent implements OnInit {
     } else {
 
       document.getElementById('spotbie_username').style.border = 'unset'
-      document.getElementById('user_first_name').style.border = 'unset'
-      document.getElementById('user_last_name').style.border = 'unset'
       document.getElementById('user_email').style.border = 'unset'
       document.getElementById('user_pass').style.border = 'unset'
-      document.getElementById('user_pass_confirm').style.border = 'unset'
       
     }
     
     const username = this.spotbieUsername
-    const user_first_name = this.spotbieFirstName
-    const user_last_name = this.spotbieLastName
     const password = this.spotbiePassword
-    const confirm_password = this.spotbieConfirm
     const email = this.spotbieEmail
 
     // send to server
     const sign_up_obj = {
         username,
-        first_name: user_first_name,
-        last_name: user_last_name,
         password,
-        password_confirmation: confirm_password,
         email
     }
 
@@ -279,16 +329,15 @@ export class SignUpComponent implements OnInit {
         localStorage.setItem('spotbie_rememberMe', '0')
         localStorage.setItem('spotbie_userId', loginResponse.user.id)
         localStorage.setItem('spotbie_userDefaultImage', loginResponse.spotbie_user.default_picture)
-        localStorage.setItem('spotbiecom_session', loginResponse.tokenInfo.original.access_token)
+        localStorage.setItem('spotbie_token', loginResponse.tokenInfo.original.access_token)
 
-        sign_up_instructions.className = 'signUpBoxInstructions'
         sign_up_instructions.innerHTML = 'Welcome to SpotBie!'
-
+  
         this.router.navigate(['/user-home'])
 
-      } else
-        this.loading = false
-      
+      }
+
+      this.loading = false
       this.signing_up = false
 
   }
@@ -327,29 +376,6 @@ export class SignUpComponent implements OnInit {
       } else
         document.getElementById('spotbie_username').style.border = 'unset'
 
-      if(error_list.first_name){
-
-        let errors: {[k: string]: any} = {};
-        error_list.first_name.forEach(error => {
-          errors[error] = true
-        })        
-        this.signUpFormx.get('spotbieFirstName').setErrors(errors)
-        document.getElementById('user_first_name').style.border = '1px solid red' 
-
-      } else
-        document.getElementById('user_first_name').style.border = 'unset'
-
-      if(error_list.last_name){
-
-        let errors: {[k: string]: any} = {};
-        error_list.last_name.forEach(error => {
-          errors[error] = true
-        })                
-        this.signUpFormx.get('spotbieLastName').setErrors(errors)
-        document.getElementById('user_last_name').style.border = '1px solid red' 
-
-      } else
-        document.getElementById('user_last_name').style.border = 'unset'
 
       if(error_list.email){
 
@@ -375,18 +401,6 @@ export class SignUpComponent implements OnInit {
       } else
         document.getElementById('user_pass').style.border = 'unset'
 
-      if(error_list.password_confirmation){
-
-        let errors: {[k: string]: any} = {};
-        error_list.password_confirmation.forEach(error => {
-          error[error] = true
-        })          
-        this.signUpFormx.get('spotbieConfirm').setErrors(errors)
-        document.getElementById('user_pass_confirm').style.border = '1px solid red' 
-        
-      } else
-        document.getElementById('user_pass_confirm').style.border = 'unset'
-
       this.signing_up = false
 
       setTimeout(function() {
@@ -398,6 +412,11 @@ export class SignUpComponent implements OnInit {
 
     }
 
+  }
+
+  public logIn(){
+    this.logInEvent.emit()
+    this.closeWindowX()
   }
 
   public finishSignUp() {
@@ -412,23 +431,15 @@ export class SignUpComponent implements OnInit {
     // will set validators for form and take care of animations
     const usernameValidators = [Validators.required]
     const passwordValidators = [Validators.required]
-    const firstNameValidators = [Validators.required]
-    const lastNameValidators = [Validators.required]
     const emailValidators = [Validators.required, Validators.email]
 
     this.signUpFormx = this.formBuilder.group({
         spotbieUsername: ['', usernameValidators],
         spotbieEmail: ['', emailValidators],
-        spotbieFirstName: ['', firstNameValidators],
-        spotbieLastName: ['', lastNameValidators],
-        spotbiePassword: ['', passwordValidators],
-        spotbieConfirm: ['', passwordValidators]
+        spotbiePassword: ['', passwordValidators]
     }, {
         validators: [ValidateUsername('spotbieUsername'),
-                    ValidatePassword('spotbiePassword'),
-                    MustMatch('spotbiePassword', 'spotbieConfirm'),
-                    ValidatePersonName('spotbieFirstName'),
-                    ValidatePersonName('spotbieLastName'),]
+                    ValidatePassword('spotbiePassword')]
     })
 
     this.signUpFormx.setAsyncValidators(

@@ -36,31 +36,22 @@
     width: 100%;
     min-width: 100%;
     max-width: 100%;
-    background-color: #252525;
+    background-color: #121111eb;
     cursor: pointer;
     table-layout: fixed;
     text-align: center;
 }
 .spotbie-menu td{
-    width: 25%;
-    min-width: 25%;
-    max-width: 25%;
-    border-radius: 10px;
-    background-color: rgba(0, 0, 0, 0.33);
     padding-top: 10px;
     padding-bottom: 10px;
     vertical-align: middle;
 }
-.spotbie-menu img{
-    position: relative;
-    margin: 0 auto;
-    display: block;
-    width: 40px;
-    min-width: 40px;
-    max-width: 40px;
-    height: 40px;
-    min-height: 40px;
-    max-height: 40px;
+.spotbie-header-mini-logo{
+    position: relative;  
+    float: left;
+    height: 30px;
+    min-height: 30px;
+    max-height: 30px;
 }
 .spotbie-menu-logged{
     position: relative;
@@ -101,11 +92,14 @@
     min-width: 100%;
     max-width: 100%;
     z-index: 96;
+    background-color: #332f3e;
 }
-.spotbie-menu-fixed-logged-out td:nth-of-type(1){
-    max-width: 15%;
-    width: 15%;
-    max-width: 15%;
+.spotbie-menu-fixed-logged-out td{
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    font-size: 20px;
 }
 .spotbie-menu-fixed{
     position: fixed !important;
@@ -119,14 +113,9 @@
     z-index: 98;
     overflow-x: scroll;
     overflow-y: hidden;
-    transition: top 0.3s;
 }
 .spotbie-menu-page-padding-top{
     padding-top: 60px;
-}
-.spotbie-menu-page-padding-top-not-logged{
-    padding-top: 76px;
-    margin-top: env(safe-area-inset-top);
 }
 .spotbie-apps-overlay{
     position: fixed;
@@ -200,7 +189,7 @@
 .spotbie-mini-logo{
     position: relative;
     display: block;
-    margin: 0 auto;
+    margin-left: 20px;
     border-radius: 99%;
 }
 .spotbie-menu-logged img{
@@ -220,6 +209,161 @@
     display: block;
     padding: 5px;
     font-size: 40px;
+}
+.spotbie-slider-menu{
+    position: fixed;
+    top: 0px;
+    bottom: 0px;
+    width: 450px;
+    min-width: 450px;
+    z-index: 95;
+    padding-left: 10px;
+    padding-right: 10px;
+    background: linear-gradient(90deg, #64e56f, #35a99f );
+    font-size: 1rem;
+    text-transform: uppercase;
+    color: #32303e;
+    min-height: 100vh;
+}
+.spotbie-slider-menu-background{
+    position: fixed;
+    top: 0px;
+    bottom: 0px;    
+    z-index: 94;
+    min-height: 100vh;
+    min-width: 100%;
+    width: 100%;
+    background-color: #000000c2;
+}
+.spotbie-slider-menu td{   
+    vertical-align: middle;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.spotbie-slider-menu td div{
+    padding-left: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px; 
+    border-bottom: 1px solid #32303e;      
+}
+.spotbie-slider-menu td div:hover{
+    cursor: pointer;
+    transition: 500ms;
+    background-color:#32303e;
+    color: white;
+}
+.sb-menu-nav{
+    max-width: 60px;
+    min-width: 60px;
+    width: 60px;
+    color: white;
+    text-align: left;
+}
+
+.sb-fb-logIn-btn{
+    background: #4385f5;
+    border: 1px solid #4385f5
+}
+
+.sb-fb-logIn-btn:hover {
+    background-color: #2c6ad4;
+    border-color: #2c6ad4
+}
+
+.sb-google-logIn-btn{
+    background: #db4c3e;
+    border: 1px solid #db4c3e
+}
+.sb-google-logIn-btn:hover {
+    background: #bd4033;
+    border-color: #bd4033
+}
+
+.sb-google-logIn-btn i{
+    margin-left: 10px;
+}
+
+.spotbie-text-link{
+    font-size: 15px;
+}
+
+.sb-inputWithIconWrapper{
+    position: relative;
+    margin: 0 auto;
+    min-width: 440px;
+    margin-bottom: 15px;
+    border-spacing: 0px;
+    table-layout: fixed;
+    background: linear-gradient(45deg,#64e56f, #35a99f );
+}
+.spotbie-forgot-your-pass{
+    max-width: 440px;
+    text-align: right;
+}
+.sb-inputWithIconWrapper .fa.fa-user,
+.sb-inputWithIconWrapper .fa.fa-envelope,
+.sb-inputWithIconWrapper .fa.fa-lock{
+    font-size: 25px;
+}
+.sb-iconInInputWrapper{
+    background: linear-gradient(45deg,#64e56f, #35a99f);
+    vertical-align: middle;
+    min-width: 50px;
+    color: white;
+}
+.sb-inputWithIconWrapper .sb-input{
+    margin-top: 0px;
+    margin-bottom: 0px;
+    min-width: 100%;
+    width: 100%;
+    border: 1px solid #64e56f;
+    text-align: left;
+    padding-left: 3%;
+}
+.spotie-login-terms{
+    font-size: 13px !important;
+    margin-top: 40px;
+    margin-bottom: 0px;
+    max-width: 90%;
+}
+
+.sb-button{
+    margin-bottom: unset !important;
+    margin-top: 10px;
+}
+.spotbie-overlay-window{
+    background-position: center;
+    background-color: #32303e;
+    width: 102%;
+    min-width: 102%;
+    max-width: 102%;
+    z-index: 95;      
+}
+
+.sb-login-top-padding{
+    padding-top: 120px;
+}
+.spotbie-menu-fixed-logged-out span{
+    font-size: .8rem;
+    padding: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    color: white;
+    border-right: 1px solid #01a79d;
+    cursor: pointer
+}
+.spotbie-menu-fixed-logged-out span:hover{
+    color: #e5e5e5;
+}
+.sb-loginTop{
+    min-width: 150px;
+    width: 150px;
+    border: unset !important;
+    padding-left: 40px!important;
+    padding-right: 40px!important;
+    background: linear-gradient(90deg, #64e56f, #35a99f );
+    color: #32303e !important;
+    border-radius: 5px;
 }
 /**WIDTH MEDIA QUERIES */
 @media (max-width: 1300px) { 
@@ -246,17 +390,33 @@
     .spotbie-menu-fixed-logged-out{
         padding-top: env(safe-area-inset-top, 20px);   
     } 
+    .spotbie-forgot-your-pass{
+        max-width: 440px;
+    }       
 }
-@media (max-width: 700px) { 
-
+@media (max-width: 650px) { 
+    .spotbie-header-mini-logo{
+        float: right;
+    }
+    .sb-menu-nav{
+        padding-left: 0px;
+        padding-right: 0px;
+        text-align: left;
+    }   
+    .sb-login-top-padding{
+        padding-top: 40px;
+    }
 }
 @media (max-width: 600px) { 
-
+    .spotbie-slider-menu{
+        max-width: 350px;
+        min-width: 300px;
+    }
+    .sb-inputWithIconWrapper{
+        min-width: 100%;
+    }      
 }
-@media (max-width: 560px) { 
-    .spotbie-menu-page-padding-top-not-logged{
-        padding-top: 66px;
-    }    
+@media (max-width: 560px) {   
     .spotbie-menu-logged td{
         min-width: 105px;
         width: 105px;
@@ -290,7 +450,14 @@
     }
     #spotbieBackgroundColor{
         padding-top: 15px;
-    }       
+    }   
+    .spotbie-overlay-window{
+        padding-top: 30px;
+        padding-bottom: 0px;
+    }
+    .spotbie-slider-menu td{   
+        font-size: 18px;
+    }
 }
 @media (max-width: 460px) { 
     .spotbie-apps-wrapper{
@@ -311,24 +478,19 @@
         height: 30px;
         max-height: 30px;        
     }
-    .spotbie-menu img{
-        width: 30px;
-        min-width: 30px;
-        max-width: 30px;
-        height: 30px;
-        min-height: 30px;
-        max-height: 30px;        
-    }
     .spotbie-menu{
         max-width: 100%;
         width: 100%;
         min-width: 100%;
     }
     .spotbie-menu td{
-        padding-top: 16px;
-        padding-bottom: 12px;
-        background-color: rgba(0, 0, 0, 0.07);
+        padding-top: 18px;
+        padding-bottom: 16px;
         border-radius: 6px;  
+    }
+    .spotbie-slider-menu{
+        max-width: 300px;
+        min-width: 300px;
     }
 }
 @media (max-width: 420px) { 
@@ -354,9 +516,21 @@
         height: 30px;
         min-height: 30px;
         max-height: 30px;        
-    }                
+    } 
+    .spotie-login-terms{
+        font-size: 11px !important;
+    }        
+    .spotbie-text-link{
+        font-size: 11px !important;
+    } 
+    .spotbie-forgot-your-pass{
+        max-width: 90%;
+    }                        
 }
 @media (max-width: 360px) { 
+    .sb-button {
+        font-size: 13px;
+    }    
     .spotbie-color-picker {
         width: 30px;
         min-width: 30px;
@@ -382,10 +556,29 @@
         height: 25px;
         min-height: 25px;
         max-height: 25px;        
-    }
-    .spotbie-menu-page-padding-top-not-logged{
-        padding-top: 52px; 
-    }     
+    } 
+    .spotbie-slider-menu{
+        max-width: 270px;
+        min-width: 270px;
+    }   
+    .spotbie-slider-menu td div{
+        padding-top: 10px;
+        padding-bottom: 10px;         
+    }  
+    .spotbie-text-link{
+        font-size: 11px;
+    }    
+    .sb-inputWithIconWrapper .sb-input{
+        font-size: 16px;
+        padding-top: 12px;
+        padding-bottom: 12px;
+    }   
+    .sb-iconInInputWrapper{
+        padding: 10px;
+    }    
+    .spotie-login-terms{
+        font-size: 11px !important;
+    }        
 }
 
 @media (max-width: 320px) {

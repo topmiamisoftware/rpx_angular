@@ -28,6 +28,7 @@ import {
   GoogleLoginProvider,
   FacebookLoginProvider
 } from 'angularx-social-login'
+import { UserauthService } from './services/userauth.service'
 
 @NgModule({
   declarations: [
@@ -61,7 +62,7 @@ import {
           {
             id: GoogleLoginProvider.PROVIDER_ID,
             provider: new GoogleLoginProvider(
-              '1054707215391-hsev2vpin6abf6rp3b3ibd0nnuuracou.apps.googleusercontent.com'
+              '1054707215391-kpl49vuhak0mpma4cdqesa39tntgs0rb.apps.googleusercontent.com'
             )
           },
           {
@@ -73,6 +74,7 @@ import {
     },      
     DeviceDetectorService,
     VersionCheckService,
+    UserauthService,
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
   ],
   bootstrap: [AppComponent]

@@ -1,27 +1,16 @@
-<div class='spotbie-overlay-window'>
+<div class='container spotbie-overlay-window d-flex align-items-center justify-content-center'>
 
-    <div class='spotbie-welcome-wrapper'>
+    <div style="display: inline-block;">
 
-        <h1>SpotBie</h1>
-    
-        <h2>
-            The World Is Yours
-            <strong class='sep-two'></strong>
-        </h2>
-        
-        <div class='spotbie-flash-card animated flipInX' [ngStyle]="whichCard(0)">
+        <img src="assets/images/logo_spotbie_green.svg" />
 
-            <h3>
-                Welcome to SpotBie
-            </h3>
+        <p class="mt-5 pl-4 pr-4 spotbie-text-gradient text-uppercase">
+            Connecting  places to eat, retail shops, events, and users.
+        </p>
 
-            <p>
-                SpotBie uses your location to find nearby users, shopping, places to eat, and events.
-            </p>
-
-            <div class='sb-button' (click)="switchCard()">Let's Go!</div>
-
-        </div>
+        <button class='btn sb-button' (click)="switchCard()">
+            <span>GET STARTED</span>
+        </button>
 
     </div>
 

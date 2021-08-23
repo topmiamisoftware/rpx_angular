@@ -45,6 +45,8 @@ import { MessagingChatComponent } from './messaging/messaging-chat/messaging-cha
 import { MapModule } from '../map/map.module'
 
 import { FriendsModule } from './friends/friends.module'
+import { ChooseAccountTypeComponent } from './choose-account-type/choose-account-type.component'
+import { SettingsModule } from './settings/settings.module'
 
 export const options : Partial<IConfig> | (() => Partial<IConfig>) = null;
 
@@ -65,10 +67,10 @@ export const options : Partial<IConfig> | (() => Partial<IConfig>) = null;
     MsgNotificationsComponent,    
     NotificationsComponent,
     PairingComponent,   
-    SearchComponent,
-    SettingsComponent,   
+    SearchComponent,  
     StreamNotificationsComponent,    
     TagNotificationsComponent,
+    ChooseAccountTypeComponent
   ],
   imports: [  
     CommonModule,
@@ -82,6 +84,7 @@ export const options : Partial<IConfig> | (() => Partial<IConfig>) = null;
     HelperModule,
     MapModule,
     FriendsModule,
+    SettingsModule,
     NgxMaskModule.forRoot(options)
   ],
   providers: [

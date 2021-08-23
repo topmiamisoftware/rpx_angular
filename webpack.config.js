@@ -230,7 +230,6 @@ module.exports = env => {
                             loader: "nativescript-dev-webpack/android-app-components-loader",
                             options: { modules: appComponents }
                         },
-
                         {
                             loader: "nativescript-dev-webpack/bundle-config-loader",
                             options: {
@@ -286,7 +285,7 @@ module.exports = env => {
                 // Removing this will cause deprecation warnings to appear.
                 {
                     test: /[\/\\]@angular[\/\\]core[\/\\].+\.js$/,
-                    parser: { system: true },
+                    parser: { system: true, amd: false },
                 },
             ],
         },

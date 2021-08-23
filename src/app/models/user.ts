@@ -1,4 +1,5 @@
 import { SpotbieUser } from './spotbieuser'
+import { PlaceToEat } from './place-to-eat'
 
 export class User {
 
@@ -54,6 +55,8 @@ export class User {
     public spotbie_origin_description: any
 
     public spotbie_user: SpotbieUser
+
+    public placeToEat: PlaceToEat
 
     constructor(user_object?: any){
 

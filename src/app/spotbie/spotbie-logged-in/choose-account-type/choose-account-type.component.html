@@ -1,0 +1,62 @@
+<div class='spotbie-overlay-window'>
+
+    <div class='container'>
+
+        <div class='' *ngIf="accountTypeScreen">
+
+            <div class='text-uppercase'>
+                Choose your account type.
+            </div>
+    
+            <input type='' class='' value='ModelName' />
+            
+            <button class='sb-button text-uppercase' (click)="next()">Next</button>
+
+        </div>
+
+        <div class='' *ngIf="accountModelNameScreen">
+
+            <form [formGroup]="accountTypeForm" (ngSubmit)="saveUserType()">
+
+                <div class='text-uppercase'>
+                    Great, let's set up your Place to Eat!
+                </div>
+
+                <table class='spotbie-settings-table'>
+                    
+                    <div *ngIf="submitted && f.spotbie_username.errors else username_normal" class="spotbie-invalid-feedback animated shake">
+                
+                        <div *ngIf="f.spotbie_username.errors.required">
+                            You must enter a username!
+                        </div>
+    
+                        <div *ngIf="f.spotbie_username.errors.maxlength || f.spotbie_username.errors.wrongLength">
+                            Your username cannot be longer than 15 characters.
+                        </div> 
+                        
+                        <div *ngIf="f.spotbie_username.errors.illegalChars">
+                            Must only contain letters, numbers, and underscores.
+                        </div> 
+                        
+                    </div> 
+                    
+                    <ng-template #username_normal>
+                        <div #spotbie_settings_issues class="spotbie-input-info">
+                            Change your username?
+                        </div>          
+                    </ng-template>
+    
+                    <tr>
+                        <td>
+                            <input class="sb-input" (click)="$event.target.select()" formControlName="spotbie_username" type="text" value="username" maxlength="35" />
+                        </td>
+                    </tr>
+
+                </table>
+            </form>
+     
+        </div>
+
+    </div>
+
+</div>

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild }      from '@angular/core'
+import { Component, Input, OnInit, ViewChild }      from '@angular/core'
 import { MatSliderChange }                   from '@angular/material/slider'
 
 import { AgmMap, AgmInfoWindow }             from '@agm/core'
@@ -41,6 +41,8 @@ export class MapComponent implements OnInit {
   @ViewChild('spotbie_map') spotbie_map: AgmMap
 
   @ViewChild('spotbie_user_marker_info_window') spotbie_user_marker_info_window: AgmInfoWindow
+
+  @Input() spotType: any
 
   public isLoggedIn: string
   public iconUrl:  string
@@ -95,8 +97,8 @@ export class MapComponent implements OnInit {
   public coming_soon_ov: boolean = false
   public loading: boolean = false
   public toastHelper: boolean = false
-  public displaySurroundingObjectList: boolean = true
-  public locationPrompt: boolean = false
+  public displaySurroundingObjectList: boolean = false
+  public locationPrompt: boolean = true
   public showNoResultsBox: boolean = false
   public showMobilePrompt: boolean = false
   public showMobilePrompt2: boolean = false
@@ -105,8 +107,6 @@ export class MapComponent implements OnInit {
   public no_results: boolean = false
 
   public current_search_type = '0'
-
-
   
   public surroundingObjectList = new Array()
   public searchResults = new Array()
@@ -115,13 +115,6 @@ export class MapComponent implements OnInit {
   public food_categories = map_extras.FOOD_CATEGORIES
   public shopping_categories = map_extras.SHOPPING_CATEGORIES
   public map_styles = map_extras.MAP_STYLES
-  public slideShowSources = [
-    { imageUrl: "assets/images/spotbie-the-new-social-network.jpg", text: "Start Exploring"},
-    { imageUrl: "assets/images/home_imgs/png/providing-you-places-to-eat-around-you.jpg", text: "Places to Eat"},
-    { imageUrl: "assets/images/home_imgs/jpg/find_events_around.jpg", text: "Events Near You"},
-    { imageUrl: "assets/images/home_imgs/png/providing-you-places-to-shop-around-you.jpg", text: "Retail Shops"},
-    { imageUrl: "assets/images/home_imgs/png/find-and-make-new-friends.jpg", text: "Users Around You"}
-  ]
 
   public infoObject: any
   public infoObjectWindow: any = { open: false }
@@ -164,11 +157,19 @@ export class MapComponent implements OnInit {
 
   public web_options_subscriber: Subscription
 
+  public placesToEat: boolean = false
+  public eventsNearYou: boolean = false
+  public reatailShop: boolean = false
+  public usersAroundYou: boolean = false
+
+  public isDesktop: boolean = false
+  public isTablet: boolean = false
+  public isMobile: boolean = false
+
   constructor(private locationService: LocationService,
               private deviceService: DeviceDetectorService,
               private webOptionsService: ColorsService,
               private mapIconPipe: MapObjectIconPipe) { }
-  
   
   /** 
    * Will close current search results, save the current user's location, and draw the user's position
@@ -186,6 +187,22 @@ export class MapComponent implements OnInit {
 
     this.drawPosition()
 
+  }
+
+  public togglePlacesToEatInfo(){
+    this.placesToEat = !this.placesToEat
+  }
+
+  public toggleEventsInfo(){
+    this.eventsNearYou = !this.eventsNearYou
+  }
+
+  public toggleReailShopsInfo(){
+    this.reatailShop = !this.reatailShop
+  }
+
+  public toggleUsersAroundYouInfo(){
+    this.usersAroundYou = !this.usersAroundYou
   }
 
   public priceSortDesc(a, b) {
@@ -601,13 +618,16 @@ export class MapComponent implements OnInit {
 
   }
 
+  public openWelcome(){
+    this.showMobilePrompt = true
+  }
+
   public spawnCategories(category: string): void {
 
     if(!this.locationFound){
-
       this.mobileStartLocation()
-      return
-    
+    } else if(this.showMobilePrompt){
+        this.showMobilePrompt = false
     }
 
     this.show_search_box = true
@@ -615,6 +635,7 @@ export class MapComponent implements OnInit {
     if(category == this.searchCategory){
 
       this.catsUp = true
+      this.showSearchResults = true
       return
 
     }
@@ -622,6 +643,11 @@ export class MapComponent implements OnInit {
     this.loading = true
 
     if(this.searchCategory !== undefined) this.previousSeachCategory = this.searchCategory
+
+    if(category == 'users'){
+      this.spotMe()
+      return
+    }
 
     this.searchCategory = category
 
@@ -806,6 +832,24 @@ export class MapComponent implements OnInit {
 
   public dismissToast(evt: Event){
     this.toastHelper = false
+  }
+
+  public getMapWrapperClass(){
+    
+    if(this.showSearchResults)
+      return 'spotbie-map sb-map-results-open'
+    else
+      return 'spotbie-map'
+
+  }
+
+  public getMapClass(){
+    
+    if(this.showSearchResults)
+      return 'spotbie-agm-map sb-map-results-open'
+    else
+      return 'spotbie-agm-map'
+
   }
 
   public getEventsSearchCallback (httpResponse: any): void {
@@ -1084,10 +1128,8 @@ export class MapComponent implements OnInit {
   }
 
   public drawPosition(){
-
-    this.iconUrl = 'assets/images/guest-spotbie-user-01.svg'
+    this.iconUrl = this.user_default_image
     this.saveUserLocation()
-
   }
 
   public pullMarker(mapObject: any): void {
@@ -1095,6 +1137,13 @@ export class MapComponent implements OnInit {
     this.currentMarker = mapObject
     this.sliderRight = true
 
+  }
+
+  public getSingleCatClass(i){
+    if(i % 2 == 0)
+      return 'spotbie-single-cat'
+    else 
+      return 'spotbie-single-cat single-cat-light'
   }
 
   public selfMarker(): void {
@@ -1193,7 +1242,7 @@ export class MapComponent implements OnInit {
 
         surroundingObjectList[k].default_picture = "assets/images/ghost_white.jpg"
         surroundingObjectList[k].username = "User is a Ghost"
-        surroundingObjectList[k].description = "This user is a ghost. Ghost Users are not able to be befriended and their profiles remain hidden. Who is this person then? Well... maybe you'll get to find out if they befriend you. Ghost Users normally have less friends than non-Ghost Users due to their profile's low visibility."
+        surroundingObjectList[k].description = "This user is a ghost. Ghost Users are not able to be befriended and their profiles remain hidden."
 
       } else
         surroundingObjectList[k].description = unescape(surroundingObjectList[k].description)
@@ -1205,6 +1254,33 @@ export class MapComponent implements OnInit {
     this.loading = false
     this.showMobilePrompt2 = false
     this.createObjectMarker(surroundingObjectList)
+
+  }
+
+  public getMapPromptMobileClass(){
+
+    if(this.isMobile)
+      return 'map-prompt-mobile align-items-center justify-content-center'
+    else
+      return 'map-prompt-mobile align-items-center sb-scroll-y'
+
+  }
+
+  public getMapPromptMobileInnerWrapperClassOne(){
+    
+    if(this.isMobile)
+      return 'map-prompt-v-align mt-5'
+    
+  }
+
+  public getMapPromptMobileInnerWrapperClassTwo(){
+
+    if(this.isMobile){
+
+      return { 'display': 'table-cell',
+               'vertical-align': 'middle' }
+
+    }
 
   }
 
@@ -1265,6 +1341,7 @@ export class MapComponent implements OnInit {
 
   public closeSearchResults(){
     this.closeCategories()
+    this.showSearchResults = false
     this.displaySurroundingObjectList = true
     this.show_search_box = false
   }
@@ -1279,18 +1356,24 @@ export class MapComponent implements OnInit {
 
     let locationPrompted = localStorage.getItem('spotbie_locationPrompted');
 
+    this.locationPrompt = false
+
     if (locationPrompted == '1') {
       this.startLocation() 
     } else {
       this.locationPrompt = true
-    } 
+    }
+
+    if(this.isDesktop){
+      this.acceptLocationPrompt()
+    }
 
   }
 
   public acceptLocationPrompt(){
 
     this.locationPrompt = false
-    localStorage.setItem('spotbie_locationPrompted', '1')
+    localStorage.setItem('spotbie_locationPrompted', '0')
     this.startLocation()
 
   }
@@ -1332,12 +1415,16 @@ export class MapComponent implements OnInit {
 
   ngOnInit() {
 
-    if (this.deviceService.isDesktop || this.deviceService.isTablet)
+    this.isDesktop = this.deviceService.isDesktop()
+    this.isTablet = this.deviceService.isTablet()
+    this.isMobile = this.deviceService.isMobile()
+
+    if (this.isDesktop || this.isTablet)
       this.rad_11 =  0.00002
     else
       this.rad_11 =  0.000014
     
-    this.rad_1 = this.rad_11
+    this.rad_1 = this.rad_11    
 
   }
 
@@ -1346,10 +1433,10 @@ export class MapComponent implements OnInit {
     this.isLoggedIn = localStorage.getItem('spotbie_loggedIn')
     this.bg_color = localStorage.getItem('spotbie_backgroundColor')
     this.user_default_image = localStorage.getItem('spotbie_userDefaultImage')
-    this.spotbie_username = localStorage.getItem('spotbie_userLogin')
+    this.spotbie_username = localStorage.getItem('spotbie_userLogin')    
 
     if(this.isLoggedIn !== '1'){
-      this.user_default_image = 'https://api.spotbie.com/defaults/user.png'
+      this.user_default_image = 'assets/images/guest-spotbie-user-01.svg'
       this.spotbie_username = 'Guest'      
       this.bg_color = '#353535'
     }

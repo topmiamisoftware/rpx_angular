@@ -4,6 +4,9 @@ import { Location } from '@angular/common'
 import { UserauthService } from 'src/app/services/userauth.service'
 import { Subscription } from 'rxjs'
 import { ColorsService } from './background-color/colors.service'
+import { MapComponent } from '../map/map.component'
+import { DeviceDetectorService } from 'ngx-device-detector'
+import { externalBrowserOpen } from 'src/app/helpers/cordova/web-intent'
 
 @Component({
   selector: 'app-menu-logged-in',
@@ -20,8 +23,10 @@ export class MenuLoggedInComponent implements OnInit {
   public public_profile: boolean = false
 
   @Output() userBackgroundEvent = new EventEmitter()
-  
+
   @ViewChild('spotbieMainMenu') spotbieMainMenu: ElementRef
+  
+  @ViewChild('spotbieMap') spotbieMap: MapComponent  
   
   public spotbieFontColor: string = 'white'
   public spotbieBackgroundColor: string = ''
@@ -45,6 +50,7 @@ export class MenuLoggedInComponent implements OnInit {
   public myPlacesWindow = { open : false }
   public pairingWindow =  { open : false }
   public settingsWindow =  { open : false }
+  public chooseAccountTypeWindow = { open: false } 
 
   public home_route: boolean = true
 
@@ -71,11 +77,20 @@ export class MenuLoggedInComponent implements OnInit {
     //{ app_name : 'Missing People', icon_class : 'fa fa-exclamation-triangle', app_window : this.missingWindow}
     // { app_name : "Food", icon_image : "../../assets/images/food.png", app_window : this.foodWindow}
   )
+  
+  public menuActive: boolean = false
+  
+  public spotType: string
+  
+  public isMobile: boolean
+  public isDesktop: boolean
+  public isTablet: boolean
 
   constructor(private router : Router,
               private location : Location,
               private userAuthService : UserauthService,
-              private webOptionsService : ColorsService) { 
+              private webOptionsService : ColorsService,
+              private deviceService: DeviceDetectorService) { 
 
     this.web_options_subscriber = this.webOptionsService.getWebOptions().subscribe(web_options =>{
 
@@ -89,6 +104,28 @@ export class MenuLoggedInComponent implements OnInit {
 
   }
 
+  home(){
+    this.spotbieMap.openWelcome()
+  }
+
+  slideMenu(){    
+
+    if(this.settingsWindow.open)
+      this.settingsWindow.open = false
+    else if(this.friendsWindow.open)
+      this.friendsWindow.open = false
+    else if(this.myPlacesWindow.open)    
+      this.myPlacesWindow.open = false
+    else
+      this.menuActive = !this.menuActive
+  }
+
+  getMenuStyle(){
+    if(this.menuActive == false){
+      return {'background-color' : 'transparent'};
+    }
+  }
+
   private setWebOptions(http_response: any) : void{
 
       document.getElementsByTagName('body')[0].style.backgroundColor =  this.spotbieBackgroundColor
@@ -98,7 +135,7 @@ export class MenuLoggedInComponent implements OnInit {
   }
 
   public openWindow(window : any) : void {
-    window.open = true
+    window.open = !window.open
   }
 
   public closeWindow(window : any) : void {
@@ -152,16 +189,40 @@ export class MenuLoggedInComponent implements OnInit {
       this.spotbieMainMenu.nativeElement.style.top = '-' + this.spotbieMainMenu.nativeElement.offsetHeight + 'px'
     }
     this.prevScrollpos = currentScrollPos    
-  }*/
+  }*/ 
+
+  public spawnCategories(category: string): void{
+    if(!this.isDesktop) this.slideMenu()
+    this.spotbieMap.spawnCategories(category)
+  }
+
+  goToBlog(){
+    externalBrowserOpen("https://blog.spotbie.com/")
+  }
+
+  usersAroundYou(){
+    this.spotbieMap.mobileStartLocation()
+  }
 
   ngOnInit() : void {
     
+    this.isMobile = this.deviceService.isMobile()
+    this.isDesktop = this.deviceService.isDesktop()
+    this.isTablet = this.deviceService.isTablet()
+
     let pickedColor : string
 
     //console.log("The public menu is : ", this.public_profile_info)
     const activatedRoute = this.location.path()
 
+    let userType = localStorage.getItem('spotbie_userType')
+
+    if(this.isMobile || this.isTablet) this.slideMenu()
+
     if(activatedRoute == '/user-home'){
+
+      //Check if the user type is set and open the chooseAccountType window if not.
+      if(userType == '0') this.settingsWindow.open = true
 
       this.webOptionsService.callWebOptionsApi().subscribe(
         resp =>{
@@ -189,6 +250,7 @@ export class MenuLoggedInComponent implements OnInit {
     //window.addEventListener('scroll', this.scroll, true)
     
   }
+
   /*ngOnDestroy(){
     window.removeEventListener('scroll', this.scroll, true)
   }*/

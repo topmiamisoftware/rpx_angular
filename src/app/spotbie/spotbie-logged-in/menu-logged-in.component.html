@@ -1,55 +1,112 @@
-<div class="spotbie-el-100 spotbie-menu-fixed" id="spotbieMainMenu" #spotbieMainMenu>
+<table class="spotbie-el-100
+              spotbie-menu
+              spotbie-menu-fixed-logged-out"
+        #spotbieMainMenu>
+  <tr>  
 
-    <table class="spotbie-menu-logged">
-      <tr>
-        <td id="spotbieLogIn" *ngIf="public_profile" [routerLink]="['/user-home']" title="Home">
-          <img style="border-radius:99%;" src="assets/favicon/android-icon-72x72.png" />
-        </td>
+    <td class="sb-menu-nav" (click)="slideMenu()" *ngIf="isMobile">
+      <i class="fa fa-bars" *ngIf="!menuActive"></i>
+      <i class="fa fa-times" *ngIf="menuActive"></i>
+    </td>  
   
-        <td (click)="openWindow(settingsWindow)" *ngIf="!public_profile" title="Open Apps">
-          <img style="border-radius:99%;" src="assets/favicon/android-icon-72x72.png" />
-        </td>
-  
-        <!--<td (click)="openWindow(messagingWindow)" title="Messages">
-          <i class="fa fa-envelope" aria-hidden="true"></i>
-        </td>-->
-  
-        <td (click)="openWindow(friendsWindow)" title="Friends">
-          <i class="fa fa-users" aria-hidden="true"></i>
-        </td>
-    
-        <!--<td id="spotbieSignUp" (click)="openWindow(settingsWindow)" title="Settings">
-          <i class="fa fa-cog" aria-hidden="true"></i>   
-        </td>-->
-    
-        <td id="spotbieLogIn" (click)="logOut()" title="Log Out">
-          <i class="fa fa-power-off" aria-hidden="true"></i>
-        </td> 
-  
-        <td id="spotbieBackgroundColor"
-          *ngIf="!public_profile"
-          (click)="openWindow(backgroundColorWindow)"
-          title="Background Color">
-          <div class="spotbie-color-picker"
-                [ngStyle]="{ 'background-color' : spotbieBackgroundColor }"></div>      
-        </td>
-  
-        <td id="spotbieBackgroundColor"
-          *ngIf="public_profile"
-          title="Background Color">
-          <div class="spotbie-color-picker"
-                [ngStyle]="{ 'background-color' : spotbieBackgroundColor }"></div>      
-        </td>
-  
-      </tr>
-    
-    </table>
-  
+    <td style="width: 25%;">
+      <img class="spotbie-header-mini-logo" src="assets/images/spotbie_logo_header.svg" />
+    </td>    
+
+    <td *ngIf="isDesktop" class="sb-desktopNavBar" style="text-align: right;">
+
+      <span (click)="home()">
+        HOME
+      </span>
+
+      <span (click)="openWindow(friendsWindow)">
+        FRIENDS
+      </span>
+
+      <span (click)="spawnCategories('food')">
+        PLACES TO EAT
+      </span>
+
+      <span (click)="spawnCategories('shopping')">
+        SHOPPING
+      </span>
+
+      <span (click)="spawnCategories('events')">
+        EVENTS
+      </span>
+
+      <span (click)="spawnCategories('users')">
+        USERS
+      </span>
+
+      <span (click)="openWindow(settingsWindow)">
+        SETTINGS
+      </span>
+
+      <span (click)="goToBlog()">
+        BLOG
+      </span>
+
+      <span (click)="logOut()">
+        LOG OUT
+      </span>
+
+    </td>     
+  </tr>
+</table>
+
+<div class="spotbie-slider-menu-background" *ngIf="menuActive">
+
+  <table class="spotbie-slider-menu
+                animated slideInLeft" #spotbieMainMenu *ngIf="menuActive">
+
+    <tr><td>
+
+      <div (click)="home()">
+        HOME
+      </div>
+
+      <div (click)="openWindow(friendsWindow)">
+        FRIENDS
+      </div>
+
+      <div (click)="spawnCategories('food')">
+        PLACES TO EAT <i class="fa fa-angle-right"></i>
+      </div>
+
+      <div (click)="spawnCategories('shopping')">
+        SHOPPING <i class="fa fa-angle-right"></i>
+      </div>
+
+      <div (click)="spawnCategories('events')">
+        EVENTS <i class="fa fa-angle-right"></i>
+      </div>
+
+      <div (click)="spawnCategories('users')">
+        USERS <i class="fa fa-angle-right"></i>
+      </div>
+
+      <div (click)="openWindow(settingsWindow)">
+        SETTINGS
+      </div>
+
+      <div (click)="logOut()">
+        LOG OUT
+      </div>
+
+      <div (click)="goToBlog()">
+        BLOG
+      </div>
+
+    </td></tr>
+
+  </table>
+
 </div>
 
 <div class="spotbie-menu-page-padding-top-not-logged"></div>
 
-<div class='spotbie-apps-overlay' *ngIf="apps_overlay">  
+<!--<div class='spotbie-apps-overlay' *ngIf="apps_overlay">  
 
   <div class='spotbie-bg-filler'></div>
 
@@ -76,9 +133,9 @@
 
   <div class="sb-closeButton" (click)="closeApps()">close</div>
 
-</div>
+</div>-->
 
-<app-map *ngIf="mapApp.open"></app-map>
+<app-map *ngIf="mapApp.open" #spotbieMap></app-map>
 
 <app-profile-header *ngIf="bg_image_ready"
                     [album_id]="album_id"
@@ -90,7 +147,7 @@
 
 <!--<app-pairing *ngIf="locationPairingWindow.open"></app-pairing>-->
 
-<app-background-color *ngIf="backgroundColorWindow.open"></app-background-color>
+<!--<app-background-color *ngIf="backgroundColorWindow.open"></app-background-color>-->
 
 <!--<app-matcher *ngIf="matcherWindow.open"></app-matcher>-->
 

@@ -1,18 +1,23 @@
 import { Component, OnInit, ViewChild } from '@angular/core'
-import {FormGroup, FormBuilder, Validators } from '@angular/forms'
+import { FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { UserauthService } from '../../../services/userauth.service'
 import { HttpResponse } from '../../../models/http-reponse'
 import { Router } from '@angular/router'
 import { MenuLoggedOutComponent } from '../menu-logged-out.component'
 
+import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
+
 @Component({
   selector: 'app-log-in',
   templateUrl: './log-in.component.html',
-  styleUrls: ['./log-in.component.css']
+  styleUrls: ['./log-in.component.css', '../../menu.component.css']
 })
 export class LogInComponent implements OnInit {
 
   @ViewChild('spotbieLogInIssues') spotbieLogInIssues
+
+  public faEye = faEye
+  public faEyeSlash = faEyeSlash
 
   public loading: boolean = false
 
@@ -40,10 +45,26 @@ export class LogInComponent implements OnInit {
 
   public forgotPasswordWindow = { open : false }
 
+  public passwordShow: boolean = false
+
   constructor(private host: MenuLoggedOutComponent = null,
               private formBuilder: FormBuilder,
               private userAuthService: UserauthService,
               private router: Router) { }
+
+  public signInWithGoogle(): void {
+    this.loading = true
+    this.userAuthService.signInWithGoogle(this.loginCallback.bind(this))
+  }
+
+  public signInWithFB(): void {    
+    this.loading = true
+    this.userAuthService.signInWithFB(this.loginCallback.bind(this))
+  }
+
+  public togglePassword(){
+    this.passwordShow = !this.passwordShow
+  }
 
   public toggleRememberMe(): void{
 
@@ -68,7 +89,7 @@ export class LogInComponent implements OnInit {
   }
 
   public loginUser(){
-
+    
     this.userAuthService.initLogin().subscribe(
       resp =>{
         this.loginCallback(resp)    
@@ -79,7 +100,13 @@ export class LogInComponent implements OnInit {
 
   private loginCallback(loginResponse: any): void{
 
+    if(loginResponse.error == 'popup_closed_by_user'){
+      this.loading = false
+      return
+    }
+
     if(loginResponse === undefined){
+      this.logInForm.setErrors(null)
       this.spotbieLogInIssues.nativeElement.innerHTML = "Invalid username or password."
       this.loading = false
     }
@@ -98,6 +125,8 @@ export class LogInComponent implements OnInit {
 
       localStorage.setItem('spotbiecom_session', loginResponse.token_info.original.access_token)
 
+      localStorage.setItem('spotbie_userType', loginResponse.spotbie_user.user_type)
+
       localStorage.setItem('spotbie_userDefaultImage', loginResponse.spotbie_user.default_picture)
 
       if (this.userAuthService.userRememberMe == '1'){
@@ -111,13 +140,17 @@ export class LogInComponent implements OnInit {
 
     } else {
 
-      if (login_status == 'invalid_cred') {
+      if (login_status == 'invalid_cred' || login_status == 'social_media_account' || login_status == 'spotbie_account') {
   
-        this.spotbieLogInIssues.nativeElement.style.display = 'none'
-        this.spotbieLogInIssues.nativeElement.innerHTML = "Invalid username or password."
-        this.spotbieLogInIssues.nativeElement.className = 'spotbie-input-info animated shake'
-  
-        setTimeout(function() { this.spotbieLogInIssues.nativeElement.style.display = 'block' }.bind(this), 40)
+        if(login_status == 'invalid_cred')      
+          this.spotbieLogInIssues.nativeElement.innerHTML = "Invalid username or password."   
+        else if(login_status == 'social_media_account')
+          this.spotbieLogInIssues.nativeElement.innerHTML = "You signed up with social media."
+        else if(login_status == 'spotbie_account')
+          this.spotbieLogInIssues.nativeElement.innerHTML = "You signed up with an email address."
+
+        this.spotbieLogInIssues.nativeElement.className = 'spotbie-invalid-feedback spotbie-text-gradient spotbie-error text-uppercase'
+        this.spotbieLogInIssues.nativeElement.style.display = 'block'
   
         localStorage.setItem('spotbie_userId', null)
         localStorage.setItem('spotbie_loggedIn', '0')
@@ -199,6 +232,11 @@ export class LogInComponent implements OnInit {
 
   public openWindow(window: any): void{
     window.open = true
+  }
+
+  public signUp(){
+    this.host.openWindow(this.host.signUpWindow)
+    this.host.closeWindow(this.host.logInWindow)
   }
 
   ngOnInit() {

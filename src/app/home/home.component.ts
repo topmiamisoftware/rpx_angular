@@ -21,6 +21,11 @@ export class HomeComponent implements OnInit {
     this.scrollTop()
   }
 
+  public openWelcome(){
+    this.app_map.openWelcome()
+    this.scrollTop()
+  }
+
   scrollTop() {
     $('html, body').animate({ scrollTop: 0 }, 'slow')    
   }

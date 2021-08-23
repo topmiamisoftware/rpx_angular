@@ -1,41 +1,163 @@
 <app-loading-screen *ngIf="loading"></app-loading-screen>
 
-<div class="spotbie-map">
+<div [ngClass]="getMapWrapperClass()">
   
-  <div class="map-prompt-mobile" *ngIf="showMobilePrompt">
+  <div [ngClass]="getMapPromptMobileClass()" *ngIf="showMobilePrompt">
 
-    <div class="sb-filler loggedInFiller" *ngIf="isLoggedIn == '1'"></div>
+    <div [ngClass]="getMapPromptMobileInnerWrapperClassOne()">
 
-    <div class="sb-filler"></div>
-    
-    <div class="sb-button" (click)="mobileStartLocation()" *ngIf="isLoggedIn == '1'">
-      Start Location Services
-    </div>
+      <div [ngStyle]="getMapPromptMobileInnerWrapperClassTwo()">
 
-    <swiper [config]="swiperConfig" *ngIf="isLoggedIn != '1'">
+      <div class="sb-top-headerImg" src="assets/images/spotbie-miami.jpg"></div>
+      
+      <h5 class="text-uppercase">CONNECTING USERS, PLACES TO EAT, SHOPPING, AND EVENTS.</h5>
+      
+      <button class="sb-button sb-getStarted" (click)="spawnCategories('food')">
+        <span>GET STARTED</span>
+      </button>
 
-      <div class="swiper-wrapper">
-
-        <div class="swiper-slide" *ngFor="let slide of slideShowSources" [ngStyle]="{ 'background' : 'url(' + slide.imageUrl + ')' }">
-
-          <div class="sb-filler"></div>
-
-          <div class="sb-button" (click)="mobileStartLocation()">
-            {{ slide.text }}
-          </div>
-
+      <img class="sb-logo-withStreet mt-4 mb-4" src="assets/images/spotbie-miami-find-places-to-eat.png" />
+      
+      <h4 class="text-uppercase">SPOTBIE COMMUNITY</h4>
+      
+      <p>
+        Welcome to the SpotBie community. Find places to eat, events around you, shopping, and users around you. By signing up,
+        users are able to gain rewards from our spotbie community members. These rewards include discounts, free drinks, exclusive event merchandise, and more.
+        Join now and be part of something fun and worthwile.
+      </p>
+      
+      <div class="sb-homePageIconsTable mt-4 mb-4">
+        <div>
+          <img src="assets/images/home_imgs/find-places-to-eat.svg" />
+          PLACES TO EAT
         </div>
+        <div>
+          <img src="assets/images/home_imgs/find-places-for-shopping.svg" />
+          SHOPPING
+        </div>                
+        <div>
+          <img src="assets/images/home_imgs/find-events.svg" />
+          EVENTS
+        </div>        
+        <div>
+          <img src="assets/images/home_imgs/find-users.svg" />
+          USERS
+        </div>
+      </div>
+
+      <img class="mb-4 sb-readImage spotbieAddPointerCursor" style="margin-top: 0%;"
+            src="assets/images/home_imgs/jpg/spotbie-miami-places-to-eat.jpg" 
+            alt="Picture of girl in her twenties enjoying food in a restaurant." />
+            
+      <img class='sb-greenIcon' src='assets/images/home_imgs/spotbie-green-icon.svg' />            
+
+      <h4 class="text-uppercase" (click)="togglePlacesToEatInfo()">
+        PLACES TO EAT
+      </h4>
+
+      <p class="mt-2 mb-2">
+
+        <!--<img class='sb-whiteIconBg' src='assets/images/home_imgs/spotbie-white-icon.svg' />-->
+
+        Are you looking for <b>places to eat</b>? 
+        Let SpotBie help you find the best <b>places to eat around you</b>. 
+        SpotBie uses GPS technology to help you find <b>places to eat near you</b>. 
+        We show you <b>restaurants around you</b> from YELP and display them neatly in a map 
+        sorted by the best reviews, prices, distances from you, delivery, reservations, or eat in. 
+        With SpotBie, you get to look for <b>restaurants around you</b> by choosing the category you are 
+        feeling hungry for that day.
+
+      </p>      
+
+      <button class="sb-button sb-getStarted mt-4 mb-5" (click)="spawnCategories('food')">
+        <span>GET STARTED</span>
+      </button>
+
+      <img class="mb-4 sb-readImage spotbieAddPointerCursor" style="margin-top: 0%;"
+            src="assets/images/home_imgs/jpg/spotbie-miami-events.jpg" 
+            alt="Image of event marquee above entrance of theatre."/>  
+      
+      <img class='sb-greenIcon' src='assets/images/home_imgs/spotbie-green-icon.svg' />
+
+      <h4 class="text-uppercase" (click)="toggleEventsInfo()">
+        EVENTS NEAR YOU
+      </h4>
+
+      <p class="mt-2 mb-2">
+
+        <!--<img class='sb-whiteIconBg' src='assets/images/home_imgs/spotbie-white-icon.svg' />-->
+
+        Are you looking for <b>events around you</b>? 
+        Let SpotBie help you find the best events around you. 
+        SpotBie uses GPS technology to help you find events near you. 
+        We show you <b>events around you</b> from TicketMaster and display them neatly in a map sorted by prices and distances from you. 
+        With SpotBie, you get to look for <b>events around you</b> by choosing the category you feel like vibing to today, tonight, or this week. 
+        SpotBie also makes it easier to share events near you with other people through social media or using your devices native sharing functions (text messages, etc.)
+        
+      </p>      
+
+      <button class="sb-button sb-getStarted mt-4 mb-5" (click)="spawnCategories('events')">
+        <span>GET STARTED</span>
+      </button>
+      
+      <img class="mb-4 sb-readImage spotbieAddPointerCursor" 
+            style="margin-top: 0%;"
+            src="assets/images/home_imgs/jpg/spotbie-miami-shopping.jpg" 
+            alt="Picture of two women shopping in a mall."/>
+
+      <img class='sb-greenIcon' src='assets/images/home_imgs/spotbie-green-icon.svg' />
+
+      <h4 class="text-uppercase" (click)="toggleReailShopsInfo()">
+        SHOPPING
+      </h4>
+
+      <p class="mt-2 mb-2">
+
+        <!--<img class='sb-whiteIconBg' src='assets/images/home_imgs/spotbie-white-icon.svg' />-->
+
+        Let SpotBie help you find the best places to shop with our <b>shopping around you feature</b>. 
+        SpotBie's <b>shopping around you feature</b> uses GPS technology to help you find the best places to shop near you. 
+        SpotBie shows shops around you from YELP and display them neatly in a map sorted by the best reviews, ratings, prices, and distances from you. 
+        With SpotBie, you get to look for shops around you by choosing the category you are looking for. 
+        The <b>shopping around you feature</b> also makes it easier to share places to eat with other people through social media or using your devices native sharing functions (text messages, etc.)
+
+      </p>      
+
+      <button class="sb-button sb-getStarted mt-4 mb-5" (click)="spawnCategories('shopping')">
+        <span>GET STARTED</span>
+      </button>  
+
+      <img class="mb-4 sb-readImage spotbieAddPointerCursor"
+            style="margin-top: 0%;"
+            src="assets/images/home_imgs/jpg/spotbie-miami-find-new-friends.jpg" 
+            alt="Picture of group of friends in a circle playing cards at the beach." />
+
+      <img class='sb-greenIcon' src='assets/images/home_imgs/spotbie-green-icon.svg' />
+            
+      <h4 class="text-uppercase" (click)="toggleUsersAroundYouInfo()">
+        USERS AROUND YOU
+      </h4>  
+
+      <p class="mt-2 mb-2">
+
+        <!--<img class='sb-whiteIconBg' src='assets/images/home_imgs/spotbie-white-icon.svg' />-->
+
+        SpotBie allows you to easily find other members around you. Wherever you are, you will be able to add your friends and see who else is enjoying the places to eat, the events, and the retails shops
+        you enjoy. We all have something in common and SpotBie helps users find those similarities.
+        
+      </p>      
+
+      <button class="sb-button sb-getStarted mt-4 mb-5" (click)="mobileStartLocation()">
+        <span>GET STARTED</span>
+      </button>
 
       </div>
 
-      <!-- Add Pagination -->
-      <div class="swiper-pagination"></div>
+    </div>
 
-      <!-- Add Arrows -->
-      <div class="swiper-button-next"></div>
-      <div class="swiper-button-prev"></div>
-
-    </swiper>
+    <div class="sb-footer mt-5">
+      <img class="mt-2 mb-2" src="assets/images/home_imgs/logo_spotbie-02.svg" />
+    </div>
 
   </div>
 
@@ -47,13 +169,13 @@
 
   </div>
 
-  <agm-map class="spotbie-map"
+  <agm-map  [ngClass]="getMapClass()"
             [streetViewControl]="false"
             #spotbie_map
             [latitude]="lat" 
             [longitude]="lng"
             [styles]="map_styles"
-            [zoom]="32"
+            [zoom]="20"
             [fitBounds]="true">
 
     <agm-overlay [latitude]="lat" [longitude]="lng" *ngIf="locationFound">
@@ -126,7 +248,7 @@
 
 <app-info-object [info_object]="infoObject" (closeWindow)="infoObjectWindow.open = false" *ngIf="infoObjectWindow.open"></app-info-object>
 
-<div class="spotbie-map-search-wrapper">
+<!--<div class="spotbie-map-search-wrapper">
 
   <table class='spotbie-map-search-by' id="spotbie-search-by" *ngIf="locationFound">
 
@@ -154,7 +276,7 @@
 
       <!--<td (click)="placeSearch()" title="My Places">
         <div id='spotbie_place_search'></div>
-      </td>-->
+      </td>-/->
 
       <td (click)="myFavorites()" title="My Favorites">
         <i class="fa fa-star" aria-hidden="true"></i>
@@ -163,7 +285,7 @@
     </tr>
   </table>
   
-</div>
+</div>-->
 
 
 <div class='spotbie-category-search-yelp animated slideInUp' *ngIf="catsUp">
@@ -181,17 +303,17 @@
 
 </div>
 
-<div class='spotbie-categories animated slideInRight' *ngIf="catsUp && searchCategory != 'events'" [ngStyle]="{ 'background-color' : bg_color }">
+<div class='spotbie-categories animated slideInRight' *ngIf="catsUp && searchCategory != 'events'">
 
-  <div class='spotbie-single-cat' *ngFor="let category of categories" (click)="apiSearch(category)">
+  <div *ngFor="let category of categories; let i = index" [ngClass]="getSingleCatClass(i)" (click)="apiSearch(category)">
     {{ category }}
   </div>
 
 </div>
 
-<div class='spotbie-categories animated slideInRight' *ngIf="catsUp && searchCategory == 'events'" [ngStyle]="{ 'background-color' : bg_color }">
+<div class='spotbie-categories animated slideInRight' *ngIf="catsUp && searchCategory == 'events'">
 
-  <div class='spotbie-single-cat' *ngFor="let category of categories" (click)="showEventSub(category)">
+  <div [ngClass]="getSingleCatClass(i)" *ngFor="let category of categories; let i = index" (click)="showEventSub(category)">
     
     {{ category.name }}
 
@@ -242,7 +364,7 @@
     </tr>
   </table>-->
 
-  <div class='spotbie-search-results-title' *ngIf="type_of_info_object == 'yelp_business'">
+  <div class='spotbie-search-results-title text-uppercase' *ngIf="type_of_info_object == 'yelp_business'">
     Max Distance  <mat-slider min="1" max="25" step="1" value="{{ maxDistance }}"
                             (change)="updateDistance($event)"></mat-slider>
     {{ maxDistance }} miles.                            
@@ -295,7 +417,7 @@
     </tr>    
   </table>
 
-  <div class='spotbie-search-results-title spotbie-sorting'>
+  <div class='spotbie-search-results-title spotbie-sorting text-uppercase'>
 
     Sorted by {{ sort_by_txt }} 
     <span *ngIf="sortAc != 4 && sortAc != 5 && sortAc != 6 && sortAc != 7 && sortAc != 8">({{ sorting_order }})</span>
@@ -311,15 +433,15 @@
 
   <div class='spotbie-search-result-wrapper' *ngIf="showSearchResults">
 
-    <div class='spotbie-search-results-title'>
+    <div class='spotbie-search-results-title text-uppercase'>
 
       <span *ngIf="searchCategory !== 'events'">Showing {{ loadedTotalResults }} results within {{ maxDistance }} miles. </span>
   
-      <span class='sb-button' (click)="loadMoreResults(0)" *ngIf="allPages > 1">
+      <span class='sb-button sb-page-button text-uppercase' (click)="loadMoreResults(0)" *ngIf="allPages > 1">
         Previous
       </span>   
 
-      <span class='sb-button' (click)="loadMoreResults(1)" *ngIf="allPages > 1">
+      <span class='sb-button sb-page-button text-uppercase' (click)="loadMoreResults(1)" *ngIf="allPages > 1">
         Next
       </span>
   
@@ -331,14 +453,6 @@
 
     <div class='spotbie-search-result' *ngFor='let search_result of searchResults' (click)="pullSearchMarker(search_result)">
       
-      <div class='spotbie-search-result-title' >
-        
-        {{ search_result.name }} 
-        
-        <span class='spotbie-search-result-price' *ngIf="search_result.price_on == '1'">({{ search_result.price }})</span>
-
-      </div>
-      
       <table class='spotbie-search-result-table'>
         <tr>
           
@@ -347,6 +461,14 @@
           </td>
           
           <td *ngIf="type_of_info_object == 'yelp_business'">
+
+            <div class='spotbie-search-result-title' >
+        
+              {{ search_result.name }} 
+              
+              <span class='spotbie-search-result-price' *ngIf="search_result.price_on == '1'">({{ search_result.price }})</span>
+      
+            </div>
 
             <table class='spotbie-yelp-rating-table'>
               <tr>
@@ -411,15 +533,15 @@
 
     <div>
 
-      <span class='sb-button' (click)="loadMoreResults(0)" *ngIf="allPages > 1">
+      <span class='sb-button sb-page-button text-uppercase' (click)="loadMoreResults(0)" *ngIf="allPages > 1">
         Previous
       </span>   
   
-      <span class='sb-button' (click)="loadMoreResults(1)" *ngIf="allPages > 1">
+      <span class='sb-button sb-page-button text-uppercase' (click)="loadMoreResults(1)" *ngIf="allPages > 1">
         Next
       </span>
   
-      <div class='spotbie-search-results-title' style="text-align: center;">
+      <div class='spotbie-search-results-title text-uppercase' style="text-align: center;">
           {{ around_me_search_page }} / {{ allPages }}
       </div>
 
@@ -435,8 +557,7 @@
   <div class='spotbie-no-results' style="text-align: center;" *ngIf="sortEventDate == 'today'">No results today available for "{{ search_keyword }}" within {{ maxDistance }} miles.</div>
   <div class='spotbie-no-results' style="text-align: center;" *ngIf="sortEventDate == 'weekend'">No results this weekend available for "{{ search_keyword }}" within {{ maxDistance }} miles.</div>
 
-
-  <div class='spotbie-search-results-title'>
+  <div class='spotbie-search-results-title text-uppercase'>
     Max Distance  <mat-slider min="0" max="{{ maxDistanceCap }}" step="1" value="{{ maxDistance }}"
                             (change)="updateDistance($event)"></mat-slider>
     {{ maxDistance }} miles.                            
@@ -460,7 +581,7 @@
 
 </div>
 
-<app-welcome *ngIf="locationPrompt" (locationPrompted)="acceptLocationPrompt()"></app-welcome>
+<app-welcome *ngIf="locationPrompt && !isDesktop" (locationPrompted)="acceptLocationPrompt()"></app-welcome>
 
 <app-my-favorites *ngIf='myFavoritesWindow.open' (closeWindow)="myFavoritesWindow.open = false"></app-my-favorites>
 

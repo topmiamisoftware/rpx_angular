@@ -1,16 +1,19 @@
 import { Component, OnInit, ViewChild, NgZone } from '@angular/core'
-import { HttpResponse } from '../../../models/http-reponse'
 import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms'
 import * as spotbieGlobals from '../../../globals'
-import { HttpHeaders, HttpClient } from '@angular/common/http'
+import { HttpClient } from '@angular/common/http'
 import { User } from '../../../models/user'
-import { MapsAPILoader, MouseEvent } from '@agm/core'
+import { AgmMap, MapsAPILoader, MouseEvent } from '@agm/core'
 import { ValidatePassword } from '../../../helpers/password.validator'
 import { MustMatch } from '../../../helpers/must-match.validator'
 import { MenuLoggedInComponent } from '../menu-logged-in.component'
 import { ValidateUsername } from 'src/app/helpers/username.validator'
 import { ValidatePersonName } from 'src/app/helpers/name.validator'
 import { UserauthService } from 'src/app/services/userauth.service'
+
+import * as map_extras from 'src/app/spotbie/map/map_extras/map_extras'
+import { environment } from 'src/environments/environment'
+import { PlaceToEat } from 'src/app/models/place-to-eat'
 
 const SETTINGS_API = spotbieGlobals.API + '/settings.service.php'
 
@@ -31,6 +34,10 @@ export class SettingsComponent implements OnInit {
 
   @ViewChild('addressSearch') addressSearch
 
+  @ViewChild('userAccountTypeNormalScroll') userAccountTypeNormalScroll
+
+  @ViewChild('spotbie_map') spotbie_map: AgmMap
+
   public bg_color: string
 
   public lat: number
@@ -48,7 +55,10 @@ export class SettingsComponent implements OnInit {
   public privacy_help = { help_text: 'Setting your privacy to OFF will allow users who ARE NOT your friends to view your profile (includes posts, albums, and contact info). Setting your privacy to ON will only allow users who are your friends to view your profile. If your privacy mode is set to ON, users who are not your friends will be able to send your friend requests and view partial profile info(includes most recent profile picture, username, and your full name.)'}
   public ghost_mode_help = { help_text: 'Setting Ghost Mode to OFF will allow users who ARE NOT your friends to spot on you the Spotbie Map as yourself. If you set Ghost Mode to ON, users who are NOT your friends will identify you on the map as GHOST, while users who ARE your friends will identify you as yourself.'}
 
-  public settings_form: FormGroup
+  public settingsForm: FormGroup
+  public placeToEatSettingsForm: FormGroup
+
+  public originPhoto: string = null
 
   public password_form: FormGroup
 
@@ -58,67 +68,41 @@ export class SettingsComponent implements OnInit {
   public account_deactivation = false
   public deactivation_submitted = false
 
-  public loading = false
+  public loading = true
 
-  public animal_list = new Array(
-    { animal_name: 'Alligator', animal_img: '../../assets/images/animals/alligator.png'},
-    { animal_name: 'Bunny', animal_img: '../../assets/images/animals/bunny.png'},
-    { animal_name: 'Cat', animal_img: '../../assets/images/animals/cat.png'},
-    { animal_name: 'Cheetah', animal_img: '../../assets/images/animals/cheetah.png'},
-    { animal_name: 'Dragon', animal_img: '../../assets/images/animals/dragon.png'},
-    { animal_name: 'Elephant', animal_img: '../../assets/images/animals/elephant.png'},
-    { animal_name: 'Fox', animal_img: '../../assets/images/animals/fox.png'},
-    { animal_name: 'Giraffe', animal_img: '../../assets/images/animals/giraffe.png'},
-    { animal_name: 'Honey Bee', animal_img: '../../assets/images/animals/honey_bee.png'},
-    { animal_name: 'Iguana', animal_img: '../../assets/images/animals/iguana.png'},
-    { animal_name: 'Jaguar', animal_img: '../../assets/images/animals/jaguar.png'},
-    { animal_name: 'Koala', animal_img: '../../assets/images/animals/koala.png'},
-    { animal_name: 'Lion', animal_img: '../../assets/images/animals/lion.png'},
-    { animal_name: 'Manta Ray', animal_img: '../../assets/images/animals/manta_ray.png'},
-    { animal_name: 'Nighthawk', animal_img: '../../assets/images/animals/nighthawk.png'},
-    { animal_name: 'Ostrich', animal_img: '../../assets/images/animals/ostrich.png'},
-    { animal_name: 'Panda', animal_img: '../../assets/images/animals/panda.png'},
-    { animal_name: 'Parrot', animal_img: '../../assets/images/animals/parrot.png'},
-    { animal_name: 'Phoenix', animal_img: '../../assets/images/animals/phoenix.png'},
-    { animal_name: 'Poison Dart Frog', animal_img: '../../assets/images/animals/poison_dart_frog.png'},
-    { animal_name: 'Quagga', animal_img: '../../assets/images/animals/quagga.png'},
-    { animal_name: 'Raven', animal_img: '../../assets/images/animals/raven.png'},
-    { animal_name: 'Rhino', animal_img: '../../assets/images/animals/rhino.png'},
-    { animal_name: 'Sea Turtle', animal_img: '../../assets/images/animals/sea_turtle.png'},
-    { animal_name: 'Sloth', animal_img: '../../assets/images/animals/sloth.png'},
-    { animal_name: 'Tiger', animal_img: '../../assets/images/animals/tiger.png'},
-    { animal_name: 'Uakari', animal_img: '../../assets/images/animals/uakari.png'},
-    { animal_name: 'Vampire Bat', animal_img: '../../assets/images/animals/vampire_bat.png'},
-    { animal_name: 'Weasel', animal_img: '../../assets/images/animals/weasel.png'},
-    { animal_name: 'Whale Shark', animal_img: '../../assets/images/animals/whale_shark.png'},
-    { animal_name: 'Xerus', animal_img: '../../assets/images/animals/xerus.png'},
-    { animal_name: 'Yak', animal_img: '../../assets/images/animals/yak.png'},
-    { animal_name: 'Zebra Shark', animal_img: '../../assets/images/animals/zebra_shark.png'}
-  )
-
-  public chosen_animal: any
-  public load_animals = false
-
-  private exe_api_key: string
-
-  public account_type_list = ['Personal', 'Content Creator']
-  public chosen_account_type: string
-  public load_account_types = false
+  public accountTypeList = ['PERSONAL', 'PLACE TO EAT']
+  public chosen_account_type: number
+  public loadAccountTypes = false
 
   public account_type_category: string
 
   public help_text = ''
 
   public user: User
-
+  
   public submitted = false
 
   public adSettingsWindow = {open: false}
 
   public geoCoder: any
   public address: any
-  //public address_results: google.maps.places.QueryAutocompletePrediction[]
+  public address_results: any
   public password_submitted: boolean = false
+  
+  public settingsFormInitiated: boolean = false
+  
+  public map_styles = map_extras.MAP_STYLES
+
+  public locationPrompt: boolean = true
+  public showNoResultsBox: boolean = false
+  public showMobilePrompt: boolean = false
+  public showMobilePrompt2: boolean = false
+
+  public placeSettingsFormUp: boolean = false
+
+  public place: any 
+
+  public claimBusiness: boolean = false
 
   constructor(private host: MenuLoggedInComponent,
               private http: HttpClient,
@@ -143,26 +127,34 @@ export class SettingsComponent implements OnInit {
   private populateSettings(settings_response: any) {
 
     if (settings_response.message == 'success') {
-
+      
       this.user = settings_response.user
       this.user.spotbie_user = settings_response.spotbie_user
 
-      this.settings_form.get('spotbie_username').setValue(this.user.username)
-      this.settings_form.get('spotbie_first_name').setValue(this.user.spotbie_user.first_name)
-      this.settings_form.get('spotbie_last_name').setValue(this.user.spotbie_user.last_name)
-      this.settings_form.get('spotbie_email').setValue(this.user.email)
-      this.settings_form.get('spotbie_phone_number').setValue(this.user.spotbie_user.phone_number)
-      //this.settings_form.get('spotbie_acc_type').setValue(this.user.exe_user_type)
+      if(this.user.spotbie_user.user_type == 0 && !this.settingsFormInitiated){
+        //User type has not been set, so we must prompt the user for it.
+        this.loadAccountTypes = true        
+      }
+
+      if(!this.settingsFormInitiated){
+        this.chosen_account_type = this.user.spotbie_user.user_type
+        this.account_type_category = 'PERSONAL'        
+      }
+
+      this.settingsFormInitiated = true 
+
+      this.settingsForm.get('spotbie_username').setValue(this.user.username)
+      this.settingsForm.get('spotbie_first_name').setValue(this.user.spotbie_user.first_name)
+      this.settingsForm.get('spotbie_last_name').setValue(this.user.spotbie_user.last_name)
+      this.settingsForm.get('spotbie_email').setValue(this.user.email)
+      this.settingsForm.get('spotbie_phone_number').setValue(this.user.spotbie_user.phone_number)
+      this.settingsForm.get('spotbie_acc_type').setValue(this.account_type_category)
 
       this.password_form.get('spotbie_password').setValue('userpassword')
       this.password_form.get('spotbie_confirm_password').setValue('123456789')
 
-      //this.chosen_account_type = this.user.exe_user_type
-
-      this.account_type_category = 'Personal'
-      this.settings_form.get('spotbie_animal').setValue(this.user.spotbie_user.animal)
-      this.settings_form.get('spotbie_privacy').setValue(this.user.spotbie_user.privacy)
-      this.settings_form.get('spotbie_ghost_mode').setValue(this.user.spotbie_user.ghost_mode)
+      this.settingsForm.get('spotbie_privacy').setValue(this.user.spotbie_user.privacy)
+      this.settingsForm.get('spotbie_ghost_mode').setValue(this.user.spotbie_user.ghost_mode)
 
       if (this.user.spotbie_user.privacy == true) {
         this.privacy_state = 'ON'
@@ -180,24 +172,40 @@ export class SettingsComponent implements OnInit {
         this.ghost_light_color = 'red'
       }
 
-      /*if (this.chosen_account_type == 'Personal' || this.chosen_account_type == 'Content Creator') {
+      if (this.chosen_account_type == 1 && settings_response.place_to_eat !== null) {
 
+        this.user.placeToEat.loc_x = settings_response.place_to_eat.loc_x
+        this.user.placeToEat.loc_y = settings_response.place_to_eat.loc_y
 
-      } else {
+        this.user.placeToEat.description = settings_response.place_to_eat.description
+        this.user.placeToEat.address = settings_response.place_to_eat.address
 
-        this.user.spotbie_origin = settings_response.responseObject.place_attributes.place_coords
-        this.user.spotbie_origin_description = settings_response.responseObject.place_attributes.place_description
-        this.user.spotbie_place_address = settings_response.responseObject.place_attributes.place_address
+      }
 
-        this.account_type_category = 'Business'
-        this.initSettingsForm('business')
-
-      }*/
-
+      
     } else
       console.log('Settings Error: ', settings_response)
 
     this.loading = false
+
+  }
+
+  private claimThisBusiness(){
+    
+  } 
+
+  private getMyBusinesses(){
+
+    /*let url = `https://mybusiness.googleapis.com/v4/accounts/${ACCOUNT_ID}/locations/${loc._id}`
+    let options = {
+      Authorization: `OAuth ${ACCESS_TOKEN}`
+    }
+    
+    this.http.get(url, options).subscribe(
+      (resp) => {
+
+      }
+    )*/
 
   }
 
@@ -208,57 +216,71 @@ export class SettingsComponent implements OnInit {
   searchMaps() {
     //console.log('searching')
     // this function will search for an address
-    /*
+    
     const inputAddress = this.addressSearch.nativeElement
 
     const service = new google.maps.places.AutocompleteService()
 
-    const _this = this
-
-    service.getQueryPredictions({ input: inputAddress.value }, function(predictions, status) {
+    service.getQueryPredictions({ 
+      input: inputAddress.value,
+      componentRestrictions: { country: "us" },
+      types: ['establishment']
+    }, (predictions, status) => {
 
       if (status != google.maps.places.PlacesServiceStatus.OK) {
         return
       }
 
-      _this.ngZone.run(() => { // <== added
-        _this.address_results = predictions
+      this.ngZone.run(() => {
+        this.address_results = predictions
       })
 
     })
-    */
+    
   }
 
-  focusPlace(place) {
+  public focusPlace(place) {
 
-    // console.log("Prediction", place)
-    this.geoCoder.geocode({placeId: place.place_id}, function(results, status) {
+    this.ngZone.run(() => {
 
-      if (status !== 'OK') {
-        return
-      }
+      this.loading = true
+      this.locationFound = false
+      this.place = place
+      this.getPlaceDetails()
+    
+    })
+    
+  }
 
-      this.ngZone.run(() => { // <== added
-        this.locationFound = false
-        this.lat = +results[0].geometry.location.lat()
-        this.lng = +results[0].geometry.location.lng()
-        this.settings_form.get('spotbie_origin').setValue(this.lat + ',' + this.lng)
-        this.locationFound = true
-      }).bind(this)
+  public getPlaceDetails(){
 
-      // console.log("Lat and lng " + _this.lat + "," + _this.lng )
-      // console.log(results[0].geometry.location.lat)
+    const request = {
+      placeId: this.place.place_id,
+      fields: ["name", "photo", "geometry"],
+    };
 
-      // Set the position of the marker using the place ID and location.
-      // this.place = {placeId: place.place_id, location: results[0].geometry.location}
+    const map = document.getElementById('spotbieMapG')
+    const service = new google.maps.places.PlacesService(map)    
+
+    service.getDetails(request, (place, status) => {          
+
+      this.lat = place.geometry.location.lat()
+      this.lng = place.geometry.location.lng()
+
+      this.placeToEatSettingsForm.get('spotbieOrigin').setValue(this.lat + ',' + this.lng)
+      
+      this.placeToEatSettingsForm.get('originTitle').setValue(place.name)
+      this.originPhoto = place.photos[0].getUrl()
+
+      this.locationFound = true
+      this.claimBusiness = true
+      this.loading = false
 
     })
-
   }
 
   mapsAutocomplete() {
 
-    /*
     this.mapsAPILoader.load().then(() => {
 
       this.geoCoder = new google.maps.Geocoder
@@ -266,18 +288,21 @@ export class SettingsComponent implements OnInit {
       const inputAddress = this.addressSearch.nativeElement
 
       const autocomplete = new google.maps.places.Autocomplete(inputAddress, {
-        types: ['address']
+        componentRestrictions: { country: "us" },
+        types: ['establishment']
       })
 
       autocomplete.addListener('place_changed', () => {
+
         this.ngZone.run(() => {
+
+          console.log("place_changed")
+
           // get the place result
-          const place: google.maps.places.PlaceResult = autocomplete.getPlace()
+          const place: any = autocomplete.getPlace()
 
           // verify result
-          if (place.geometry === undefined || place.geometry === null) {
-            return
-          }
+          if (place.geometry === undefined || place.geometry === null) return
 
           // set latitude, longitude and zoom
           this.lat = place.geometry.location.lat()
@@ -285,12 +310,61 @@ export class SettingsComponent implements OnInit {
           this.zoom = 18
 
         })
+
       })
 
     })
-    */
    
   }
+
+
+  public promptForLocation(){
+
+    let locationPrompted = localStorage.getItem('spotbie_locationPrompted');
+
+    this.locationPrompt = false
+
+    if (locationPrompted == '1')
+      this.startLocation() 
+    else
+      this.locationPrompt = true
+    
+  }
+
+  public acceptLocationPrompt(){
+
+    this.locationPrompt = false
+    localStorage.setItem('spotbie_locationPrompted', '0')
+    this.startLocation()
+
+  }
+
+  public mobilePrompt2Toggle(){
+
+    this.loading = false
+    this.showMobilePrompt2 = false
+
+  }
+
+  public mobilePrompt2ToggleOff(){
+
+    this.loading = false
+    this.showMobilePrompt2 = false
+
+  }
+
+  public mobileStartLocation(){
+    
+    this.setCurrentLocation()
+
+    this.showMobilePrompt = false
+    this.showMobilePrompt2 = true
+  
+  }
+
+  public startLocation(){
+    this.showMobilePrompt = true
+  }  
 
   // Get Current Location Coordinates
   private setCurrentLocation() {
@@ -299,6 +373,7 @@ export class SettingsComponent implements OnInit {
         this.lat = position.coords.latitude
         this.lng = position.coords.longitude
         this.zoom = 18
+        this.locationFound = true
         this.getAddress(this.lat, this.lng)
       })
     }
@@ -319,8 +394,8 @@ export class SettingsComponent implements OnInit {
         if (results[0]) {
           this.zoom = 18
           this.address = results[0].formatted_address
-          this.settings_form.get('spotbie_place_address').setValue(this.address)
-          this.settings_form.get('spotbie_origin').setValue(this.lat + ',' + this.lng)
+          this.placeToEatSettingsForm.get('originAddress').setValue(this.address)
+          this.placeToEatSettingsForm.get('spotbieOrigin').setValue(this.lat + ',' + this.lng)
         } else {
           window.alert('No results found')
         }
@@ -332,11 +407,14 @@ export class SettingsComponent implements OnInit {
 
   }
 
-  showPosition(lat, lng) {
+  showPosition(position: any) {
 
     this.locationFound = true
-    this.lat = lat
-    this.lng = lng
+
+    this.lat = position.coords.latitude
+    this.lng = position.coords.longitude
+
+    this.showMobilePrompt2 = false
 
   }
 
@@ -437,34 +515,58 @@ export class SettingsComponent implements OnInit {
     this.save_password = false
   }
 
-  public changeAnimal() {
-    this.load_animals = true
-  }
-
-  public selectAnimal(animal) {
-    this.chosen_animal = animal
-    this.settings_form.get('spotbie_animal').setValue(animal.animal_name)
-    this.load_animals = false
-  }
-
   public changeAccType() {
-    this.load_account_types = true
+    this.loadAccountTypes = true
   }
 
   public selectAccountType(account_type: string) {
 
-    this.settings_form.get('spotbie_acc_type').setValue(account_type)
-    this.chosen_account_type = account_type
+    this.account_type_category = account_type
 
-    this.user.exe_user_type = 'Content Creator'
+    switch(this.account_type_category){
+      case 'PERSONAL':
+        this.chosen_account_type = 4
+        break
+      case 'PLACE TO EAT':
+        this.chosen_account_type = 1
+        break
+      case 'EVENTS':
+        this.chosen_account_type = 2
+        break
+      case 'RETAIL SHOP':
+        this.chosen_account_type = 3
+        break
+    }
 
-    /*if (this.chosen_account_type == 'Personal' || this.chosen_account_type == 'Content Creator') {
-      this.initSettingsForm('basic')
-    } else {
-      this.initSettingsForm('business')
-    }*/
+    this.settingsForm.get('spotbie_acc_type').setValue(this.account_type_category)
 
-    this.load_account_types = false
+    switch(this.chosen_account_type){
+
+      case 0://unset account type
+      case 4://personal account
+        this.initSettingsForm('personal')
+        break
+
+      case 1://place to eat account
+        this.initSettingsForm('place_to_eat')
+        this.userAccountTypeNormalScroll.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' })
+        this.promptForLocation()
+        break
+
+      case 2://events account type
+        this.initSettingsForm('personal')
+        break
+
+      case 3://shopping account type
+        this.initSettingsForm('personal')
+        break
+
+      default:
+        this.initSettingsForm('personal')
+
+    }
+
+    this.loadAccountTypes = false    
 
   }
 
@@ -482,16 +584,15 @@ export class SettingsComponent implements OnInit {
 
     switch (action) {
 
-      case 'basic':
+      case 'personal':
 
-        this.settings_form = this.formBuilder.group({
+        this.settingsForm = this.formBuilder.group({
           spotbie_username: ['', username_validators],
           spotbie_first_name: ['', first_name_validators],
           spotbie_last_name: ['', last_name_validators],
           spotbie_email: ['', email_validators],
           spotbie_phone_number: ['', phone_validators],
           spotbie_acc_type: [],
-          spotbie_animal: [],
           spotbie_ghost_mode: [],
           spotbie_privacy: []
         }, {
@@ -508,55 +609,48 @@ export class SettingsComponent implements OnInit {
                     MustMatch('spotbie_password', 'spotbie_confirm_password')]
         })
 
+        this.fetchCurrentSettings()               
+
+        break
+
+      case 'place_to_eat':
+
+        const originTitleValidators = [Validators.required]
+        const originAddressValidators = [Validators.required]
+        const originValidators = [Validators.required]
+        const originDescriptionValidators = [Validators.required]
+
+        this.placeToEatSettingsForm = this.formBuilder.group({
+          originAddress: ['', originAddressValidators],
+          originTitle: ['', originTitleValidators],
+          originDescription: ['', originDescriptionValidators],
+          spotbieOrigin: ['', originValidators]
+        })
+
+        if(this.user.placeToEat !== undefined){
+
+          this.placeToEatSettingsForm.get('originAddress').setValue(this.user.placeToEat.address)
+          
+          this.placeToEatSettingsForm.get('spotbieOrigin').setValue(`${this.user.placeToEat.loc_x},${this.user.placeToEat.loc_y}`)          
+          this.showPosition([this.user.placeToEat.loc_x, this.user.placeToEat.loc_y])
+          
+          this.placeToEatSettingsForm.get('originDescription').setValue(this.user.placeToEat.description)
+          this.placeToEatSettingsForm.get('originTitle').setValue(this.user.placeToEat.name)
+
+        } else {
+
+          this.placeToEatSettingsForm.get('originAddress').setValue('SEARCH FOR LOCATION')
+          this.placeToEatSettingsForm.get('spotbieOrigin').setValue( this.lat + ',' + this.lng)
+          this.placeToEatSettingsForm.get('originDescription').setValue(`Enter your ${this.account_type_category} description`)          
+          this.placeToEatSettingsForm.get('originTitle').setValue('My Place To Eat')
+
+        }        
+
+        this.placeSettingsFormUp = true
+
+        this.account_type_category = 'PLACE TO EAT'
+
         this.fetchCurrentSettings()
-
-        break
-
-      case 'personal':
-
-        this.settings_form.get('spotbie_animal').setValue(this.user.exe_animal)
-        this.account_type_category = 'Personal'
-        this.settings_form.get('spotbie_privacy').setValue(this.user.privacy)
-        this.settings_form.get('spotbie_ghost_mode').setValue(this.user.ghost)
-
-        break
-
-      case 'business':
-
-        const spotbie_place_address_validators = [Validators.required]
-        const spotbie_origin_validators = [Validators.required]
-        const spotbie_origin_description_validators = [Validators.required]
-
-        this.settings_form.addControl('spotbie_place_address', new FormControl('', spotbie_place_address_validators))
-
-        if (this.user.spotbie_place_address != null) {
-          this.settings_form.get('spotbie_place_address').setValue(this.user.spotbie_place_address)
-        } else {
-          this.settings_form.get('spotbie_place_address').setValue('search for location')
-        }
-
-        this.settings_form.addControl('spotbie_origin', new FormControl('', spotbie_origin_validators))
-
-        if (this.user.spotbie_origin != null) {
-          this.settings_form.get('spotbie_origin').setValue(this.user.spotbie_origin)
-          const coords = this.user.spotbie_origin.split(',')
-          const lat = +coords[0]
-          const lng = +coords[1]
-          this.showPosition(lat, lng)
-        } else {
-          this.settings_form.get('spotbie_origin').setValue( this.lat + ',' + this.lng)
-        }
-
-
-        this.settings_form.addControl('spotbie_origin_description', new FormControl('', spotbie_origin_description_validators))
-
-        if (this.user.spotbie_origin_description != null) {
-          this.settings_form.get('spotbie_origin_description').setValue(this.user.spotbie_origin_description)
-        } else {
-          this.settings_form.get('spotbie_origin_description').setValue('Enter your ' + this.chosen_account_type +  ' description.')
-        }
-
-        this.account_type_category = 'Business'
 
         setTimeout(function() {
           this.mapsAutocomplete() 
@@ -566,19 +660,16 @@ export class SettingsComponent implements OnInit {
     }
   }
 
-  get username() { return this.settings_form.get('spotbie_username').value }
-  get first_name() { return this.settings_form.get('spotbie_first_name').value }
-  get last_name() { return this.settings_form.get('spotbie_last_name').value }
-  get email() { return this.settings_form.get('spotbie_email').value }
-  get spotbie_phone_number() { return this.settings_form.get('spotbie_phone_number').value }
-  //get account_type() { return this.settings_form.get('spotbie_acc_type').value }
-  get animal() { return this.settings_form.get('spotbie_animal').value }
-  get spotbie_place_address() {return this.settings_form.get('spotbie_place_address').value }
-  get spotbie_origin() { return this.settings_form.get('spotbie_origin').value }
-  get spotbie_origin_description() { return this.settings_form.get('spotbie_origin_description').value }
-  get spotbie_ghost_mode() {return this.settings_form.get('spotbie_ghost_mode').value }
-  get spotbie_privacy() {return this.settings_form.get('spotbie_privacy').value }
-  get f() { return this.settings_form.controls }
+  get username() { return this.settingsForm.get('spotbie_username').value }
+  get first_name() { return this.settingsForm.get('spotbie_first_name').value }
+  get last_name() { return this.settingsForm.get('spotbie_last_name').value }
+  get email() { return this.settingsForm.get('spotbie_email').value }
+  get spotbie_phone_number() { return this.settingsForm.get('spotbie_phone_number').value }
+  get account_type() { return this.settingsForm.get('spotbie_acc_type').value }
+  
+  get spotbie_ghost_mode() {return this.settingsForm.get('spotbie_ghost_mode').value }
+  get spotbie_privacy() {return this.settingsForm.get('spotbie_privacy').value }
+  get f() { return this.settingsForm.controls }
 
   get password() { return this.password_form.get('spotbie_password').value }
   get confirm_password() { return this.password_form.get('spotbie_confirm_password').value }
@@ -588,14 +679,50 @@ export class SettingsComponent implements OnInit {
   get deactivation_password() { return this.deactivation_form.get('spotbie_deactivation_password').value }
   get h() { return this.deactivation_form.controls }
 
+
+  get originAddress() {return this.placeToEatSettingsForm.get('originAddress').value }
+  get spotbieOrigin() { return this.placeToEatSettingsForm.get('spotbieOrigin').value }
+  get originTitle() { return this.placeToEatSettingsForm.get('originTitle').value }
+  get originDescription() { return this.placeToEatSettingsForm.get('originDescription').value }
+  get i() { return this.placeToEatSettingsForm.controls }
+
+  public savePlaceSettings(){
+
+    this.loading = true
+    this.submitted = true
+
+    if (this.placeToEatSettingsForm.invalid) {
+
+      this.loading = false
+      this.spotbieSettingsInfoText.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      
+      return
+
+    }
+
+    this.user.placeToEat = new PlaceToEat()
+
+    this.user.placeToEat.address = this.originAddress
+    this.user.placeToEat.loc_x = this.lat
+    this.user.placeToEat.loc_y = this.lng
+    this.user.placeToEat.description = this.originDescription
+
+    this.userAuthService.savePlaceSettings(this.user).subscribe( 
+      resp => {
+        this.saveSettingsCallback(resp)
+      }
+    )
+
+  }
+
   public saveSettings() {
 
     this.loading = true
     this.submitted = true
 
-    if (this.settings_form.invalid) {
+    if (this.settingsForm.invalid) {
 
-      console.log("", this.settings_form)
+      console.log("", this.settingsForm)
 
       this.loading = false
       this.spotbieSettingsInfoText.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' })
@@ -608,15 +735,10 @@ export class SettingsComponent implements OnInit {
     this.user.exe_user_first_name = this.first_name
     this.user.exe_user_last_name = this.last_name
     this.user.email = this.email
-    //this.user.exe_user_type = this.account_type
-    this.user.ph = this.spotbie_phone_number;
+    this.user.exe_user_type = this.account_type_category
+    this.user.ph = this.spotbie_phone_number
 
-    if (this.account_type_category == 'Business') {
-      this.user.spotbie_place_address = this.spotbie_place_address
-      this.user.spotbie_origin = this.spotbie_origin
-      this.user.spotbie_origin_description = this.spotbie_origin_description
-    } else {
-      this.user.exe_animal = this.animal
+    if (this.account_type_category !== 'PLACE TO EAT') {
       this.user.ghost = this.spotbie_ghost_mode
       this.user.privacy = this.spotbie_privacy
     }
@@ -631,6 +753,7 @@ export class SettingsComponent implements OnInit {
   private saveSettingsCallback(resp: any) {
     
     this.loading = false
+    this.placeSettingsFormUp = false 
 
     if (resp.success) {
 
@@ -714,7 +837,9 @@ export class SettingsComponent implements OnInit {
   }
 
   public toggleGhostMode() {
+
     let ghost_mode: number
+
     if (this.spotbie_ghost_mode == 1) {
       this.ghost_mode_state = 'OFF'
       ghost_mode = 0
@@ -722,11 +847,15 @@ export class SettingsComponent implements OnInit {
       this.ghost_mode_state = 'ON'
       ghost_mode = 1
     }
-    this.settings_form.get('spotbie_ghost_mode').setValue(ghost_mode)
+
+    this.settingsForm.get('spotbie_ghost_mode').setValue(ghost_mode)
+
   }
 
   public togglePrivacy() {
+
     let spotbie_privacy: number
+
     if (this.spotbie_privacy == 1) {
       this.privacy_state = 'OFF'
       spotbie_privacy = 0
@@ -734,7 +863,9 @@ export class SettingsComponent implements OnInit {
       this.privacy_state = 'ON'
       spotbie_privacy = 1
     }
-    this.settings_form.get('spotbie_privacy').setValue(spotbie_privacy)
+
+    this.settingsForm.get('spotbie_privacy').setValue(spotbie_privacy)
+
   }
 
   public toggleHelp(help_object) {
@@ -749,15 +880,13 @@ export class SettingsComponent implements OnInit {
     this.host.settingsWindow.open = false
   }
 
-  public closeAnimals(){
-    this.load_animals = false
-  }
-
   ngOnInit() {
+
     this.loading = true
-    this.exe_api_key = localStorage.getItem('spotbie_userApiKey')
+
     this.bg_color = localStorage.getItem('spotbie_backgroundColor')
-    this.initSettingsForm('basic')
+    this.initSettingsForm('personal')
+    
   }
 
 }

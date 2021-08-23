@@ -1,27 +1,101 @@
 <table class="spotbie-el-100
               spotbie-menu
-              spotbie-menu-fixed-logged-out" #spotbieMainMenu>
-  <tr>
+              spotbie-menu-fixed-logged-out"        
+        #spotbieMainMenu>
+  <tr>    
+  
+    <td class="sb-menu-nav" (click)="slideMenu()" *ngIf="isMobile">
+      <i class="fa fa-bars" *ngIf="!menuActive"></i>
+      <i class="fa fa-times" *ngIf="menuActive"></i>
+    </td>  
+  
+    <td style="width: 25%;">
+      <img class="spotbie-header-mini-logo" (click)="home()" src="assets/images/spotbie_logo_header.svg" />
+    </td>   
     
-    <td (click)="home()">
-      <img class='spotbie-mini-logo' src="assets/favicon/android-icon-72x72.png" />
-    </td>     
+    <td *ngIf="isDesktop" class="sb-desktopNavBar" style="text-align: right;">
+      
+      <span (click)="home()">
+        HOME
+      </span>
+      
+      <span (click)="spawnCategories('food', false)">
+        PLACES TO EAT
+      </span>
 
-    <td (click)="openWindow(logInWindow)">
-      Log-In
-    </td>
+      <span (click)="spawnCategories('shopping', false)">
+        SHOPPPING
+      </span>
 
-    <td (click)="openWindow(signUpWindow)">
-      Sign-Up
-    </td>
+      <span (click)="spawnCategories('events', false)">
+        EVENTS
+      </span>
 
-    <td (click)="goToBlog()">
-      Our Blog
+      <span (click)="spawnCategories('users', false)">
+        USERS
+      </span>
+
+      <span (click)="goToBlog()">
+        BLOG
+      </span>
+
+      <span style="border: unset;" (click)="signUp()">
+        SIGN UP
+      </span>
+
+      <span class="sb-loginTop" (click)="logIn()">
+        LOGIN
+      </span>
+
     </td>
 
   </tr>
-
 </table>
+
+<div class="spotbie-slider-menu-background" *ngIf="menuActive">
+
+  <table class="spotbie-slider-menu
+                animated slideInLeft" #spotbieMainMenu *ngIf="menuActive">
+
+    <tr><td>
+      
+      <div (click)="home()">
+        HOME
+      </div>
+      
+      <div (click)="spawnCategories('food')">
+        PLACES TO EAT <i class="fa fa-angle-right"></i>
+      </div>
+
+      <div (click)="spawnCategories('shopping')">
+        SHOPPING <i class="fa fa-angle-right"></i>
+      </div>
+
+      <div (click)="spawnCategories('events')">
+        EVENTS <i class="fa fa-angle-right"></i>
+      </div>
+
+      <div (click)="spawnCategories('users')">
+        USERS AROUND YOU <i class="fa fa-angle-right"></i>
+      </div>
+
+      <div (click)="openWindow(signUpWindow)">
+        SIGN UP
+      </div>
+
+      <div (click)="openWindow(logInWindow)">
+        LOGIN
+      </div>
+
+      <div (click)="goToBlog()">
+        BLOG
+      </div>
+
+    </td></tr>
+
+  </table>
+
+</div>
 
 <app-profile-header [publicProfileInfo]="public_profile_info"
                     [current_user_bg]="spotbieBackgroundImage"
@@ -29,10 +103,10 @@
                     [album_media_id]="album_media_id"
                     *ngIf="public_profile"></app-profile-header>
 
-<app-read-about class="spotbie-app-read-about" *ngIf="home_route" (spawnCategories)="spawnCategories($event)" (signUp)="openWindow(signUpWindow)"></app-read-about>
+<!--<app-read-about class="spotbie-app-read-about" *ngIf="home_route" (spawnCategories)="spawnCategories($event)" (signUp)="openWindow(signUpWindow)"></app-read-about>-->
 
-<app-log-in *ngIf="logInWindow.open"></app-log-in>
+<app-log-in *ngIf="logInWindow.open" (openWindow)="openWindow($event)" (closeWindow)="closeWindow($event)"></app-log-in>
 
-<app-sign-up *ngIf="signUpWindow.open" [window_obj]="signUpWindow" (closeWindow)="closeWindow($event)"></app-sign-up>
+<app-sign-up *ngIf="signUpWindow.open" [window_obj]="signUpWindow" (closeWindow)="closeWindow($event)" (logInEvent)="logIn()"></app-sign-up>
 
 <app-features *ngIf="featuresWindow.open"></app-features>

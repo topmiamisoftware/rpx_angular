@@ -1,18 +1,16 @@
-<app-loading-screen *ngIf="loading"></app-loading-screen>
+<div class='spotbie-overlay-window' [ngStyle]="{ 'background-color' : bg_color }">    
 
-<div class='spotbie-overlay-window' [ngStyle]="{ 'background-color' : bg_color }">
-    
-    <div class='spotbie-info-text' #spotbieSettingsInfoText>
-        Change your settings.
-    </div>
+    <app-loading-screen *ngIf="loading"></app-loading-screen>
 
     <div class='spotbie-block'>
 
-        <form [formGroup]="settings_form">
+        <div #spotbieSettingsInfoText></div>
+
+        <form [formGroup]="settingsForm" *ngIf="settingsFormInitiated">
 
             <table class='spotbie-settings-table'>
                 
-                <div *ngIf="submitted && f.spotbie_username.errors else username_normal" class="spotbie-invalid-feedback animated shake">
+                <div *ngIf="submitted && f.spotbie_username.errors else username_normal" class="spotbie-input-info  spotbie-text-gradient spotbie-error">
             
                     <div *ngIf="f.spotbie_username.errors.required">
                         You must enter a username!
@@ -29,8 +27,8 @@
                 </div> 
                 
                 <ng-template #username_normal>
-                    <div #spotbie_settings_issues class="spotbie-input-info">
-                    Change your username?
+                    <div #spotbie_settings_issues class="spotbie-input-info spotbie-text-gradient text-uppercase">
+                        Change your username
                     </div>          
                 </ng-template>
 
@@ -40,7 +38,7 @@
                     </td>
                 </tr>
 
-                <div *ngIf="submitted && f.spotbie_first_name.errors else user_first_name_normal" class="spotbie-invalid-feedback animated shake">
+                <div *ngIf="submitted && f.spotbie_first_name.errors else user_first_name_normal" class="spotbie-input-info text-uppercase spotbie-text-gradient spotbie-error">
             
                     <div *ngIf="f.spotbie_first_name.errors.required">
                         Please identify yourself!
@@ -53,8 +51,8 @@
                 </div> 
                 
                 <ng-template #user_first_name_normal>
-                    <label class="spotbie-input-info">
-                    What is your first name?
+                    <label class="spotbie-input-info spotbie-text-gradient text-uppercase">
+                        What is your first name?
                     </label>
                 </ng-template>
 
@@ -64,7 +62,7 @@
                     </td>
                 </tr> 
                 
-                <div *ngIf="submitted && f.spotbie_last_name.errors else user_last_name_normal" class="spotbie-invalid-feedback animated shake">
+                <div *ngIf="submitted && f.spotbie_last_name.errors else user_last_name_normal" class="spotbie-input-info  animated shake">
             
                     <div *ngIf="f.spotbie_last_name.errors.required">
                         Please identify yourself!
@@ -77,8 +75,8 @@
                 </div> 
                 
                 <ng-template #user_last_name_normal>
-                    <label class="spotbie-input-info">
-                    What is your last name?
+                    <label class="spotbie-input-info spotbie-text-gradient text-uppercase">
+                        What is your last name?
                     </label>
                 </ng-template>
 
@@ -88,7 +86,7 @@
                     </td>
                 </tr> 
 
-                <div *ngIf="submitted && f.spotbie_email.errors else user_email_normal" class="spotbie-invalid-feedback animated shake">
+                <div *ngIf="submitted && f.spotbie_email.errors else user_email_normal" class="spotbie-input-info  animated shake">
             
                     <div *ngIf="f.spotbie_email.errors.required">
                         Please enter your e-mail, it will be used if you lose your password.
@@ -97,8 +95,8 @@
                 </div> 
                 
                 <ng-template #user_email_normal>
-                    <div class="spotbie-input-info">
-                    Used for password recovery.
+                    <div class="spotbie-input-info spotbie-text-gradient text-uppercase">
+                        what is your email?
                     </div>
                 </ng-template>
 
@@ -108,7 +106,7 @@
                     </td>
                 </tr> 
                 
-                <div *ngIf="submitted && f.spotbie_phone_number.errors else phone_normal" class="signUpBoxInstructions animated shake">
+                <div *ngIf="submitted && f.spotbie_phone_number.errors else phone_normal" class="spotbie-input-info  text-uppercase spotbie-text-gradient spotbie-error">
 
                     <div *ngIf="f.spotbie_phone_number.errors.required">
                         Please enter your phone number.
@@ -118,8 +116,8 @@
 
                 <ng-template #phone_normal>
 
-                    <div class="spotbie-input-info">
-                        Phone number.
+                    <div class="spotbie-input-info spotbie-text-gradient text-uppercase">
+                        Phone number
                     </div>
 
                 </ng-template>
@@ -131,7 +129,7 @@
                     </td>
                 </tr>
 
-                <!--<div *ngIf="submitted && f.spotbie_acc_type.errors else user_account_type_normal" class="spotbie-invalid-feedback animated shake">
+                <div *ngIf="submitted && f.spotbie_acc_type.errors else user_account_type_normal" class="spotbie-input-info  spotbie-text-gradient spotbie-error">
             
                     <div *ngIf="f.spotbie_acc_type.errors.required">
                         You must choose an account type!
@@ -140,138 +138,31 @@
                 </div> 
                 
                 <ng-template #user_account_type_normal>
-                    <div class="spotbie-input-info">
-                    Choose an account type.
+                    <div class="spotbie-input-info spotbie-text-gradient text-uppercase">
+                        Choose an account type
                     </div>
                 </ng-template>
 
                 <tr>
                     <td>
+                        <div #userAccountTypeNormalScroll></div>
                         <input (click)="changeAccType()" 
-                                class="sb-input spotbie-clickable-field" 
+                                class="sb-input spotbie-clickable-field mb-5" 
                                 formControlName="spotbie_acc_type" 
                                 type="text"
                                 readonly="readonly" />
                     </td>
-                </tr> -->
-                
-                <!-- Personal Accounts information -->
-                <div *ngIf="submitted && f.spotbie_animal.errors else user_animal_normal" class="spotbie-invalid-feedback animated shake">
-            
-                    <div *ngIf="f.spotbie_animal.errors.required">
-                        You must choose a favorite animal!
-                    </div>
-            
-                </div> 
-                
-                <ng-template #user_animal_normal>
-                    <div class="spotbie-input-info" *ngIf="account_type_category == 'Personal'">
-                    What is your favorite animal?
-                    </div>
-                </ng-template>        
-
-                <tr *ngIf="account_type_category == 'Personal'">
-                    <td>
-                        <input (click)="changeAnimal()" (click)="$event.target.select()" class="sb-input spotbie-clickable-field" formControlName="spotbie_animal" type="text" value="animal" />
-                    </td>
                 </tr>
-                <!-- End Of Personal Accounts information -->
-
-                <!-- Locale Accounts information 
-                <div *ngIf="account_type_category == 'Business'">
-                    <div *ngIf="submitted && f.spotbie_origin.errors else spotbie_origin_normal" class="spotbie-invalid-feedback animated shake">
-            
-                        <div *ngIf="f.spotbie_origin.errors.required">
-                            You must choose a place of origin!
-                        </div>
-                
-                    </div> 
-                </div>
-                
-                <!--<ng-template #spotbie_origin_normal>
-                    <div class="spotbie-input-info" *ngIf="account_type_category == 'Business'" >
-                        Where is your {{ chosen_account_type }} located?
-                    </div>
-                </ng-template>-->
-
-                <!--<tr *ngIf="account_type_category == 'Business'">
-                    <td>
-                        <div class='spotbie-map'>
-                            <agm-map class="spotbie-map" 
-                                [latitude]="lat" 
-                                [longitude]="lng"
-                                [zoom]="zoom">
-                                <agm-marker [latitude]="lat" 
-                                            [longitude]="lng"
-                                            [markerDraggable]="true"                                     
-                                            (dragEnd)="markerDragEnd($event)"
-                                            *ngIf="locationFound">
-                                </agm-marker>
-                            </agm-map>
-                        </div>
-                    </td>
-                </tr>
-
-                <div class="spotbie-input-info" *ngIf="account_type_category == 'Business'" >
-                    Drag the marker or use the search bar.
-                </div>
-
-                <tr *ngIf="account_type_category == 'Business'">
-                    <td>
-                        <input class="sb-input spotbie-search-map-input"
-                                (click)="$event.target.select()"
-                                autocorrect="off" 
-                                autocapitalize="off" 
-                                spellcheck="off" 
-                                type="text"
-                                formControlName ="spotbie_place_address" 
-                                maxlength="72"
-                                #addressSearch />
-                                
-                                <div class='spotbie-search-map-button' (click)="searchMaps()">Search Address</div>
-
-                        <input class="sb-input" type="hidden" formControlName ="spotbie_origin" />                
-
-                        <div class='spotbie-place-picker'>
-                            <div class='spotbie-place' *ngFor="let prediction of address_results"  (click)="focusPlace(prediction);">
-                                {{ prediction.description }}
-                            </div>
-                        </div>
-
-                    </td>
-                </tr>
-                
-                <div *ngIf="submitted && f.spotbie_origin_description.errors else spotbie_origin_description_normal" class="spotbie-invalid-feedback animated shake">
-            
-                    <div *ngIf="f.spotbie_origin_description.errors.required">
-                        You must enter a description!
-                    </div>
-            
-                </div> 
-                
-                <ng-template #spotbie_origin_description_normal>
-                    <div class="spotbie-input-info" *ngIf="account_type_category == 'Business'">
-                        Enter a description for your {{ chosen_account_type }}.
-                    </div>
-                </ng-template>
-
-                <tr *ngIf="account_type_category == 'Business'">
-                    <td>
-                        <textarea class='spotbie-textarea' (click)="$event.target.select()" formControlName ="spotbie_origin_description" maxlength="365"></textarea>
-                    </td>
-                </tr> --> 
-
-                <!-- End of Business Account information -->
 
                 <!-- Privacy and Ghost Mode Block : disable if account is not personal -->
-                <tr *ngIf="account_type_category == 'Personal' || account_type_category == 'Content Creator'">
+                <tr *ngIf="account_type_category !== 'PLACE TO EAT'">
                     <td>
                         <table class="spotbie-toggle">
 
                             <tr>
                                 <input type="hidden" formControlName="spotbie_ghost_mode" />
 
-                                <td class="spotbie-toggle-info-text" id="spotbieGhostText" (click)="toggleGhostMode()">
+                                <td class="spotbie-toggle-info-text spotbie-text-gradient text-uppercase" id="spotbieGhostText" (click)="toggleGhostMode()">
                                     <img class="spotbie-settings-ghost-icon" src="../../assets/images/ghost.png">
                                     Ghost Mode <span>{{ghost_mode_state}}</span>
                                 </td>
@@ -286,14 +177,14 @@
                     </td>
                 </tr>
 
-                <tr *ngIf="account_type_category == 'Personal' || account_type_category == 'Content Creator'">
+                <tr *ngIf="account_type_category !== 'PLACE TO EAT'">
                     <td>
                         <table class="spotbie-toggle">
 
                             <tr>
                                 <input type="hidden" formControlName="spotbie_privacy" />
 
-                                <td class="spotbie-toggle-info-text" id="spotbiePrivacyText" (click)="togglePrivacy()">
+                                <td class="spotbie-toggle-info-text spotbie-text-gradient text-uppercase" id="spotbiePrivacyText" (click)="togglePrivacy()">
                                     Privacy <span>{{privacy_state}}</span>
                                 </td>
                         
@@ -306,6 +197,7 @@
                     </td>
                 </tr>
                 <!-- End of Privacy and Ghost Mode Block  -->   
+
                 <tr>
                     <td>
                         <div class="spotbie-help-text" *ngIf="help_text.length > 0">
@@ -313,17 +205,201 @@
                         </div>                
                     </td>
                 </tr>
+
                 <tr>
-                    <td class='sb-button spotbie-save-settings-button' (click)="saveSettings()">
+                    <td class='sb-button spotbie-save-settings-button text-uppercase mb-5' (click)="saveSettings()">
                         Save Settings
                     </td> 
                 </tr>
+
             </table>
-        
+
         </form>
+
+        <div class='spotbie-overlay-window' *ngIf="placeSettingsFormUp">
+
+            <form [formGroup]="placeToEatSettingsForm">
+            
+                <table class='spotbie-settings-table'>
+    
+                    <!-- Locale Accounts information-->
+                    <div *ngIf="account_type_category == 'PLACE TO EAT'">
+                        <div *ngIf="submitted && i.spotbie_origin.errors else spotbie_origin_normal" class="spotbie-input-info spotbie-text-gradient spotbie-error">
+                
+                            <div *ngIf="i.spotbie_origin.errors.required">
+                                You must choose a place of origin!
+                            </div>
+                    
+                        </div> 
+                    </div>
+                    
+                    <ng-template #spotbie_origin_normal>
+                        <div class="spotbie-input-info spotbie-text-gradient text-uppercase text-center" *ngIf="account_type_category == 'PLACE TO EAT'" >
+                            Where is your {{ account_type_category }} located?
+                        </div>
+                    </ng-template>
+    
+                    <tr *ngIf="account_type_category == 'PLACE TO EAT'">
+                        
+                        <td>
+
+                            <button class="sb-button sb-getStarted mb-3" (click)="getMyBusinesses()" *ngIf="!locationFound">
+                                <span>GET STARTED</span>
+                            </button>   
+    
+                            <div class='spotbie-map'>                   
+    
+                                <agm-map [streetViewControl]="false"
+                                        id="spotbieMapG"
+                                        *ngIf="locationFound"
+                                        #spotbie_map
+                                        [latitude]="lat" 
+                                        [longitude]="lng"
+                                        [styles]="map_styles"
+                                        [zoom]="18">
+    
+                                    <agm-marker [latitude]="lat" 
+                                                [longitude]="lng"
+                                                [markerDraggable]="true"                                     
+                                                (dragEnd)="markerDragEnd($event)"
+                                                *ngIf="locationFound"
+                                                [agmFitBounds]="true">
+    
+                                        <agm-info-window #spotbie_user_marker_info_window [isOpen]="claimBusiness">
+                                            <table class='spotbie-place-result'>
+                                                <tr>
+                                                    <td *ngIf="originTile !== null">
+                                                        {{ originTitle }}
+                                                    </td>                            
+                                                </tr>
+                                            </table>                                              
+                                        </agm-info-window>      
+    
+                                    </agm-marker>
+    
+                                </agm-map>
+                                
+                                <div class="map-prompt-mobile" (click)="mobileStartLocation()" *ngIf="!locationFound">
+    
+                                    <div class="title spotbie-text-gradient text-uppercase">
+                                        Tap To Start
+                                    </div>
+                                
+                                </div>
+
+                            </div>
+                        
+                        </td>
+
+                    </tr>
+                    
+                    <div class='spotbie-input-info spotbie-text-gradient text-uppercase text-center mt-5 mb-3' 
+                         *ngIf='claimBusiness'>
+                        {{ originTitle }}
+                    </div>
+
+                    <img class='sb-business-img' *ngIf='claimBusiness' src="{{originPhoto}}" />
+
+                    <div class='sb-button text-uppercase mb-5' (click)="claimThisBusiness()" *ngIf="claimBusiness">
+                        Verify
+                    </div>
+                
+                    <div class="spotbie-input-info spotbie-text-gradient text-uppercase text-center" *ngIf="chosen_account_type == 1 && locationFound" >
+                        Drag marker or use search bar
+                    </div>
+    
+                    <tr *ngIf="account_type_category == 'PLACE TO EAT' && locationFound">
+                        <td>
+                            
+                            <input class="sb-input spotbie-search-map-input"
+                                    (click)="$event.target.select()"
+                                    autocorrect="off" 
+                                    autocapitalize="off" 
+                                    spellcheck="off" 
+                                    type="text"
+                                    formControlName="originAddress" 
+                                    maxlength="72"
+                                    #addressSearch />
+                                    
+                                    <div class='sb-button text-uppercase' (click)="searchMaps()">Search Address</div>
+    
+                            <input class="sb-input" type="hidden" formControlName="spotbieOrigin" />                
+    
+                            <div class='spotbie-place-picker'>
+                                <div class='spotbie-place' *ngFor="let prediction of address_results"  (click)="focusPlace(prediction);">
+                                    <span class='spotbie-text-gradient text-uppercase'>{{ prediction.description }}</span>
+                                </div>
+                            </div>
+    
+                        </td>
+                    </tr>
+                    
+                    <div *ngIf="submitted && i.originTitle.errors else originTitleNormal" class="spotbie-input-info  text-uppercase spotbie-text-gradient spotbie-error">
+    
+                        <div *ngIf="i.originTitle.errors.required">
+                            Please enter your {{ account_type_category }} title.
+                        </div>                                                
+    
+                    </div>        
+    
+                    <ng-template #originTitleNormal>
+    
+                        <div class="spotbie-input-info spotbie-text-gradient text-center text-uppercase" *ngIf="account_type_category == 'PLACE TO EAT' && locationFound">
+                            {{ account_type_category }} title
+                        </div>
+    
+                    </ng-template>
+    
+                    <tr *ngIf="account_type_category == 'PLACE TO EAT' && locationFound">
+                        <td>                                  
+                            <input class='sb-input text-uppercase' type='text' placeholder='TITLE' formControlName="originTitle"/>
+                        </td>
+                    </tr>
+    
+                    <div *ngIf="submitted && i.originDescription.errors else spotbie_origin_description_normal" 
+                            class="spotbie-input-info spotbie-text-gradient spotbie-error text-uppercase">
+                
+                        <div *ngIf="i.originDescription.errors.required">
+                            You must enter a description!
+                        </div>
+                
+                    </div> 
+                    
+                    <ng-template #spotbie_origin_description_normal>
+                        <div class="spotbie-input-info spotbie-text-gradient text-uppercase text-center mb-3" *ngIf="account_type_category == 'PLACE TO EAT' && locationFound">
+                            {{ account_type_category }} description
+                        </div>
+                    </ng-template>
+    
+                    <tr *ngIf="account_type_category == 'PLACE TO EAT' && locationFound">
+    
+                        <td style="background-color: rgba(0,0,0,.23); padding-top: 0px; padding-bottom: 0px;">
+    
+                            <textarea class='spotbie-textarea spotbie-text-gradient' 
+                                        (click)="$event.target.select()" 
+                                        formControlName="originDescription" 
+                                        maxlength="365"
+                                        style="margin: 0 auto;"></textarea>
+    
+                        </td>
+    
+                    </tr> 
+    
+                    <tr *ngIf="account_type_category == 'PLACE TO EAT' && locationFound">
+                        <td class='sb-button spotbie-save-settings-button text-uppercase mb-5' (click)="savePlaceSettings()">
+                            Save Place Settings
+                        </td> 
+                    </tr>
+
+                </table>
+            
+            </form>
+
+        </div>
+
     </div>
 
-    <div class='spotbie-block'>
+    <div class='spotbie-block mb-0' *ngIf="settingsFormInitiated">
 
         <form [formGroup]="password_form">
 
@@ -331,7 +407,7 @@
 
                     <!-- Change Password Block -->
             
-                    <div *ngIf="password_submitted && g.spotbie_password.errors else spotbie_password_normal" class="spotbie-invalid-feedback animated shake">    
+                    <div *ngIf="password_submitted && g.spotbie_password.errors else spotbie_password_normal" class="spotbie-input-info  spotbie-text-gradient spotbie-error">    
                 
                         <div *ngIf="g.spotbie_password.errors.required">
                             Please provide a password.
@@ -356,8 +432,8 @@
                     </div> 
                     
                     <ng-template #spotbie_password_normal>
-                        <div class="spotbie-input-info" #spotbie_password_change_info_text>
-                            Change your password?
+                        <div class="spotbie-input-info spotbie-text-gradient text-uppercase" #spotbie_password_change_info_text>
+                            Change your password
                         </div>
                     </ng-template>            
         
@@ -367,17 +443,17 @@
                         </td>
                     </tr>
             
-                    <div *ngIf="password_submitted && g.spotbie_confirm_password.errors else spotbie_confirm_password_normal" class="spotbie-invalid-feedback animated shake">
+                    <div *ngIf="password_submitted && g.spotbie_confirm_password.errors else spotbie_confirm_password_normal" class="spotbie-input-info  spotbie-text-gradient spotbie-error">
             
                         <div *ngIf="g.spotbie_confirm_password.errors.required">
-                            Please confirm your password.
+                            Please confirm your password
                         </div>            
                         
                     </div> 
         
                     <ng-template #spotbie_confirm_password_normal>
-                        <div class="spotbie-input-info">
-                            Confirm your new password.
+                        <div class="spotbie-input-info spotbie-text-gradient text-uppercase">
+                            Confirm your new password
                         </div>
                     </ng-template>  
         
@@ -388,7 +464,7 @@
                     </tr>
             
                     <tr>
-                        <td class='sb-button' (click)="savePassword()">
+                        <td class='sb-button text-uppercase mb-5' (click)="savePassword()">
                             Save New Password
                         </td>
                     </tr>
@@ -405,7 +481,7 @@
                     
                     <table class='spotbie-settings-table'>
 
-                        <div *ngIf="password_submitted && g.spotbie_current_password.errors else spotbie_current_password_normal" class="spotbie-invalid-feedback animated shake">
+                        <div *ngIf="password_submitted && g.spotbie_current_password.errors else spotbie_current_password_normal" class="spotbie-input-info  spotbie-text-gradient spotbie-error">
         
                             <div *ngIf="g.spotbie_current_password.errors.required">
                                 Please enter your current password.
@@ -414,7 +490,7 @@
                         </div> 
             
                         <ng-template #spotbie_current_password_normal>
-                            <div class="spotbie-input-info" #current_password_info>
+                            <div class="spotbie-input-info spotbie-text-gradient text-uppercase" #current_password_info>
                                 To complete the change, enter your CURRENT password.
                             </div>
                         </ng-template>
@@ -443,9 +519,9 @@
 
     <div class='spotbie-block'>
         
-        <table class="spotbie-settings-table" id="spotbie-deactivate-table">
+        <table class="spotbie-settings-table" id="spotbie-deactivate-table" *ngIf="settingsFormInitiated">
             <tr>
-                <td class='sb-button' style="margin-top: 0px;" (click)="startDeactivateAccount()">
+                <td class='spotbie-text-gradient text-uppercase mb-5' style="margin-top: 0px;" (click)="startDeactivateAccount()">
                     Deactivate Account
                 </td>
             </tr>
@@ -461,7 +537,7 @@
         
                 <div class="spotbie-toast-input-box" [ngStyle]="{ 'background-color' : bg_color }">
                     
-                    <div *ngIf="deactivation_submitted && h.spotbie_deactivation_password.errors else spotbie_deactivate_normal" class="spotbie-invalid-feedback animated shake">
+                    <div *ngIf="deactivation_submitted && h.spotbie_deactivation_password.errors else spotbie_deactivate_normal" class="spotbie-input-info  spotbie-text-gradient spotbie-error">
         
                         <div *ngIf="h.spotbie_deactivation_password.errors.required">
                             Please enter your current password.
@@ -470,7 +546,7 @@
                     </div> 
         
                     <ng-template #spotbie_deactivate_normal>
-                        <div class="spotbie-toast-info spotbie-deactivation-info" #spotbie_deactivation_info>
+                        <div class="spotbie-toast-info spotbie-text-gradient spotbie-deactivation-info" #spotbie_deactivation_info>
                             If you choose to deactivate your account, your information will remain in our system but it will be locked and no one will be able to access it. In this way, you will be able to restore 
                             all your data if you ever feel like coming back. Enter your password to deactivate your account.
                         </div>
@@ -478,7 +554,7 @@
         
                     <input class="sb-input" (click)="$event.target.select()" type="password" formControlName="spotbie_deactivation_password" autocomplete="false">
         
-                    <div class="sb-button sb-button-mini" (click)="deactivateAccount()">
+                    <div class="sb-button sb-button-mini text-uppercase" (click)="deactivateAccount()">
                         Deactivate Account
                     </div>
         
@@ -493,33 +569,28 @@
         <i class="fa fa-times"></i>
     </div>
 
-    <div class="spotbie-select-menu" *ngIf="load_animals">
-        
-        <div class="spotbie-select-menu-option" *ngFor="let animal of animal_list" (click)="selectAnimal(animal)">
-            <table class="spotbie-select-table">
-                <tr>
-                    <td class='spotbie-select-table-img' [ngStyle]="{'background' : 'url('+animal.animal_img+')'}"></td>
-                    <td class='spotbie-select-table-text'>{{ animal.animal_name }}</td>
-                </tr>
-            </table>            
-        </div>
+    <div class='sb-vertical-align-wrapper' *ngIf="loadAccountTypes">
+        <div class="spotbie-select-menu" style="display: table-cell; vertical-align: middle;">            
+            <div>
 
-        <div class="sb-closeButton" (click)="closeAnimals()">
-            <i class="fa fa-times"></i>
-        </div>
+                <div class="spotbie-input-info spotbie-text-gradient text-uppercase text-center mb-4">
+                    choose your account type
+                </div>
 
+                <div class="spotbie-select-menu-option" *ngFor="let account_type of accountTypeList" (click)="selectAccountType(account_type)">
+                    
+                    <table class="spotbie-select-table">
+                        <tr>
+                            <td class='spotbie-select-table-text spotbie-text-link text-center text-uppercase'>{{ account_type }}</td>
+                        </tr>
+                    </table>  
+
+                </div>
+                
+            </div>
+        </div>  
     </div>
-
-    <div class="spotbie-select-menu" *ngIf="load_account_types">
-        <div class="spotbie-select-menu-option" *ngFor="let account_type of account_type_list" (click)="selectAccountType(account_type)">
-            <table class="spotbie-select-table">
-                <tr>
-                    <td class='spotbie-select-table-text' style="text-align: center;">{{ account_type }}</td>
-                </tr>
-            </table>            
-        </div>
-    </div>    
-
+  
     <app-ads-main *ngIf="adSettingsWindow.open"></app-ads-main>
 
 </div>

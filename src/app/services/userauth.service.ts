@@ -8,6 +8,9 @@ import { catchError, tap } from 'rxjs/operators'
 import { handleError } from '../helpers/error-helper'
 import { User } from '../models/user'
 
+import { SocialAuthService } from "angularx-social-login";
+import { FacebookLoginProvider, GoogleLoginProvider } from "angularx-social-login";
+
 const USER_API = spotbieGlobals.API + 'user'
 
 @Injectable({
@@ -22,7 +25,8 @@ export class UserauthService {
   public userTimezone: string
 
   constructor(private http: HttpClient,
-              private router: Router) { }
+              private router: Router,
+              private socialAuthService: SocialAuthService) { }
 
   public async checkIfLoggedIn(): Promise<any>{
 
@@ -123,6 +127,25 @@ export class UserauthService {
 
   }
 
+  public savePlaceSettings(user: User): Observable<any>{
+
+    const saveSettingsApi = `${USER_API}/update_place`
+
+    const saveSettingsObj = {
+      _method: 'PUT',
+      origin_description: user.placeToEat.description,
+      origin_address: user.placeToEat.address,
+      origin_title: user.placeToEat.name,
+      origin_x: user.placeToEat.loc_x,
+      origin_y: user.placeToEat.loc_y
+    }
+
+    return this.http.post<any>(saveSettingsApi, saveSettingsObj).pipe(
+      catchError(handleError("saveSettings"))
+    ) 
+
+  }
+
   public saveSettings(user: User): Observable<any>{
 
     const saveSettingsApi = `${USER_API}/update`
@@ -136,7 +159,12 @@ export class UserauthService {
       phone_number: user.ph,
       ghost_mode: user.ghost,
       privacy: user.privacy,
-      animal: user.exe_animal
+      account_type: user.exe_user_type,
+      origin_description: user.placeToEat.description,
+      origin_address: user.placeToEat.address,
+      origin_title: user.placeToEat.name,
+      origin_x: user.placeToEat.loc_x,
+      origin_y: user.placeToEat.loc_y
     }
 
     return this.http.post<any>(saveSettingsApi, saveSettingsObj).pipe(
@@ -204,6 +232,99 @@ export class UserauthService {
 
     return this.http.post<any>(resetPasswordApi, passResetObj).pipe(
       catchError(handleError("deactivateAccount"))
+    ) 
+
+  }
+
+  public signInWithGoogle(loginCallBack): void {    
+
+    this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).catch(
+      (error) => {
+        loginCallBack(error)
+      }
+    );
+    
+    this.socialAuthService.authState.subscribe((user) => {
+
+      this.userLogin = user.email
+      this.userPassword = null 
+      this.userRememberMe = '1'
+
+      this.saveCurrentGoogleProfile(user).subscribe(
+        resp => {
+          console.log("resp", resp)
+          loginCallBack(resp)
+        }
+      )
+    
+    })
+
+  }
+
+  public saveCurrentGoogleProfile(userObj: any): Observable<any>{
+
+    const googleLoginApi = `${USER_API}/google-login`
+
+    const googleLoginObj = {
+      userID: userObj.id,
+      firstName: userObj.firstName,
+      lastName: userObj.lastName,
+      email: userObj.email,
+      photoUrl: userObj.photoUrl,
+      remember_me: this.userRememberMe
+    }
+
+    return this.http.post<any>(googleLoginApi, googleLoginObj).pipe(
+      catchError(handleError("signInWithGoogle"))
+    ) 
+
+  }
+
+  public signInWithFB(loginCallBack) {
+    
+    const fbLoginOptions = {
+      scope: 'email,public_profile,user_friends',
+      return_scopes: true,
+      enable_profile_selector: true
+    }; // https://developers.facebook.com/docs/reference/javascript/FB.login/v2.11
+
+    this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID, fbLoginOptions).catch(
+      (error) => {
+        loginCallBack(error)
+      }
+    )
+    
+    this.socialAuthService.authState.subscribe( (user) => {
+
+      this.userLogin = user.email
+      this.userPassword = null 
+      this.userRememberMe = '1'
+      
+      this.saveCurrentFbProfile(user).subscribe(
+        (resp) => {
+          loginCallBack(resp)
+        }
+      )
+
+    });
+
+  }
+
+  public saveCurrentFbProfile(userObj: any): Observable<any> {
+
+    const fbLoginApi = `${USER_API}/fb-login`
+    
+    const facebookLoginObj = {
+      userID: userObj.id,
+      firstName: userObj.firstName,
+      lastName: userObj.lastName,
+      email: userObj.email,
+      photoUrl: userObj.photoUrl,
+      remember_me: this.userRememberMe
+    }
+
+    return this.http.post<any>(fbLoginApi, facebookLoginObj).pipe(
+      catchError(handleError("signInWithFB"))
     ) 
 
   }

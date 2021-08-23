@@ -1,89 +1,125 @@
-<div class="spotbie-overlay-window">
+<app-loading-screen *ngIf="loading"></app-loading-screen>
 
-  <div class="sb-closeButton" (click)="closeWindow()">
-    <i class="fa fa-times"></i>
-  </div>
+<div class="spotbie-overlay-window container">
 
-  <div class="spotbie-no-repeat-bg-contain
-              spotbie-margin
-              spotbie-log-in-picture"
-        [ngStyle]="{'background' : 'url('+ current_login_photo +')'}">        
-
-  </div>
-
-  <img class="spotbie-log-in-picture-inside" [src]="current_login_photo" />
+  <div class="sb-login-top-padding mt-2"></div>
 
   <form [formGroup]="logInForm" (ngSubmit)="initLogIn()">
 
-    <div *ngIf="submitted && f.spotbieUsername.errors else username_normal" class="spotbie-invalid-feedback animated shake">
+    <div *ngIf="submitted && f.spotbieUsername.errors else username_normal" class="spotbie-invalid-feedback text-uppercase spotbie-text-gradient spotbie-error">
                 
       <div *ngIf="f.spotbieUsername.errors.required || f.spotbieUsername.errors.emptyUsername">
-        Username or e-mail required.
+        USERNAME OR E-MAIL REQUIRED.
       </div>
 
       <div *ngIf="f.spotbieUsername.errors.wrongLength">
-        Username must be between 5 and 15 characters.
+        USERNAME MUST BE BETWEEN 5 AND 15 CHARACTERS.
       </div>     
 
       <div *ngIf="f.spotbieUsername.errors.illegalChars">
-        Username must only contain letters, numbers, and underscores.
+        USERNAME MUST ONLY CONTAIN LETTERS, NUMBERS, AND UNDERSCORES.
       </div>
       
     </div> 
 
     <ng-template #username_normal>
-      <div #spotbieLogInIssues class="spotbie-input-info">
-        Enter your log-in...
+      <div #spotbieLogInIssues class="spotbie-invalid-feedback text-uppercase spotbie-text-gradient spotbie-error">
       </div>
     </ng-template>
 
-    <input class="sb-input" id="spotbieLoginUsername" formControlName="spotbieUsername" type="text" placeholder="Username or E-mail" autocomplete="username"/>
+    <table class="sb-inputWithIconWrapper">
 
-    <div *ngIf="submitted && f.spotbiePassword.errors else password_normal" class="spotbie-invalid-feedback animated shake">
+      <td class="sb-iconInInputWrapper">
+        <i class="fa fa-envelope"></i>
+      </td>
+
+      <td>
+        <input class="sb-input" id="spotbieLoginUsername" formControlName="spotbieUsername" type="text" placeholder="USERNAME/EMAIL" autocomplete="username"/>
+      </td>
+
+    </table>
+
+    <div *ngIf="submitted && f.spotbiePassword.errors else password_normal" class="spotbie-invalid-feedback spotbie-text-gradient spotbie-error">
               
       <div *ngIf="f.spotbiePassword.errors.required">
-        Password is required.
+        PASSWORD IS REQUIRED.
       </div>   
       
     </div>
 
     <ng-template #password_normal>
-      <div class="spotbie-input-info">
-        Now enter your password!
-      </div>
+      <div class="spotbie-input-info spotbie-invalid-feedback spotbie-text-gradient"></div>
     </ng-template>
+    
+    <table class="sb-inputWithIconWrapper">
 
-    <input class="sb-input" id="spotbieLoginPassword" formControlName="spotbiePassword" type="password" placeholder="Password" autocomplete="password"/>
+      <td class="sb-iconInInputWrapper">
+        <i class="fa fa-lock"></i>
+      </td>
 
-    <table class="spotbie-toggle" (click)="toggleRememberMe()">
-
-      <tr>
-        <td class="spotbie-toggle-info-text" id="spotbieRememberMeText">Remember Me</td>
-
-        <td class="spotbie-toggle-light" id="spotbieRememberMeLight" [ngStyle]="{'background-color' : rememberMeLight }"></td>
-
-      </tr>
+      <td>
+        <input class='sb-input' 
+                [type]="!passwordShow ? 'password' : 'text'"  
+                formControlName="spotbiePassword" 
+                id='spotbieLoginPassword' 
+                autocomplete="password" 
+                placeholder='PASSWORD'/>        
+        <fa-icon class='fa-eye' [icon]="faEye" (click)="togglePassword()" *ngIf="!passwordShow"></fa-icon> 
+        <fa-icon class='fa-eye' [icon]="faEyeSlash" (click)="togglePassword()" *ngIf="passwordShow"></fa-icon>          
+      </td>
 
     </table>
-    
-    <button class="sb-button spotbie-padding">
-      Log-In
+
+    <div class="spotbie-rel-div
+                spotbie-forgot-your-pass
+                spotbie-text-link"
+                (click)="openWindow(forgotPasswordWindow)">
+      FORGOT YOUR PASSWORD?
+    </div>
+
+    <!--<table class="spotbie-toggle" (click)="toggleRememberMe()">
+
+      <tr>
+        <td class="spotbie-toggle-info-text spotbie-gradient-link" id="spotbieRememberMeText">REMEMBER ME</td>
+
+        <td class="spotbie-toggle-light" id="spotbieRememberMeLight" [ngStyle]="{'background-color' : rememberMeLight }"></td>
+      </tr>
+
+    </table>-->
+
+    <input id="spotbieRememberMe" type="hidden" [value]="rememberMeState" />
+
+    <button class="btn sb-button spotbie-padding">
+      LOGIN
     </button>
+
+    <p class="spotbie-rel-div
+          spotbie-padding
+          spotie-login-terms
+          spotbie-text-link"
+          (click)="openWindow(forgotPasswordWindow)">
+      BY LOGGING IN, YOU ARE AGREEING TO <a [routerLink]="['/terms']">OUR TERMS & PRIVACY POLICY.</a>
+    </p>
 
   </form>
 
-  <input id="spotbieRememberMe" type="hidden" [value]="rememberMeState" />
+  <button class="btn sb-button sb-fb-logIn-btn spotbie-padding" (click)="signInWithFB()">
+    LOGIN WITH FACEBOOK <!--<i class="fa fa-facebook"></i>-->
+  </button>
+
+  <button class="btn sb-button sb-google-logIn-btn spotbie-padding" (click)="signInWithGoogle()">
+    LOGIN WITH GOOGLE <!--<i class="fa fa-google-plus"></i>-->
+  </button>
 
   <div class="spotbie-rel-div
-      spotbie-margin
       spotbie-padding
-      spotbie-link"
-      (click)="openWindow(forgotPasswordWindow)">
-        Forgot Password?
+      spotbie-text-link"
+      (click)="signUp()">
+        NOT A MEMBER? SIGN UP NOW.
   </div>
+
+  <div class="sb-logo"></div>
 
 </div>
 
 <app-forgot-password *ngIf="forgotPasswordWindow.open" (closeWindow)="forgotPasswordWindow.open = false"></app-forgot-password>
-
-<app-loading-screen *ngIf="loading"></app-loading-screen>

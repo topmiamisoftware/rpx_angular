@@ -3,6 +3,7 @@ import { Location } from '@angular/common'
 import { Router } from '@angular/router'
 
 import { externalBrowserOpen } from 'src/app/helpers/cordova/web-intent'
+import { DeviceDetectorService } from 'ngx-device-detector'
 
 @Component({
   selector: 'app-menu-logged-out',
@@ -19,6 +20,7 @@ export class MenuLoggedOutComponent implements OnInit {
   @ViewChild('spotbieMainMenu') spotbieMainMenu
 
   @Output() spawnCategoriesOut = new EventEmitter()
+  @Output() openWelcome = new EventEmitter()
 
   public spotbieFontColor = 'white'
   public spotbieBackgroundColor = ''
@@ -35,10 +37,18 @@ export class MenuLoggedOutComponent implements OnInit {
 
   public prevScrollpos
   
-  constructor(private location: Location,
-              private router: Router) { }
+  public menuActive: boolean = false
 
-  public spawnCategories(type: any): void{
+  public isMobile: boolean
+  public isDesktop: boolean
+  public isTablet: boolean
+
+  constructor(private location: Location,
+              private router: Router,
+              private deviceService: DeviceDetectorService) { }
+
+  public spawnCategories(type: any, slideMenu: boolean = true): void{
+    if(slideMenu) this.slideMenu()
     this.spawnCategoriesOut.emit(type)
   }
 
@@ -47,11 +57,40 @@ export class MenuLoggedOutComponent implements OnInit {
   }
 
   openWindow(window: any) {
-    window.open = true
+    window.open = !window.open
   }
 
   closeWindow(window) {
     window.open = false
+  }
+
+  signUp(){
+    this.logInWindow.open = false
+    this.signUpWindow.open = !this.signUpWindow.open    
+  }
+
+  logIn(){
+    this.signUpWindow.open = false
+    this.logInWindow.open = !this.logInWindow.open 
+  }
+
+  slideMenu(){    
+
+    if(this.logInWindow.open)
+      this.logInWindow.open = false
+    else if(this.signUpWindow.open)
+      this.signUpWindow.open = false
+    else if(this.featuresWindow.open)    
+      this.featuresWindow.open = false
+    else
+      this.menuActive = !this.menuActive
+
+  }
+
+  getMenuStyle(){
+    if(this.menuActive == false){
+      return {'background-color' : 'transparent'};
+    }
   }
 
   scrollTo(el: string) {
@@ -60,9 +99,7 @@ export class MenuLoggedOutComponent implements OnInit {
   }
 
   home(){
-    document.getElementsByTagName('body')[0].style.backgroundColor = 'transparent' 
-    document.getElementsByTagName('html')[0].style.backgroundColor = 'transparent' 
-    this.router.navigate(['/home'])
+    this.openWelcome.emit()
   }
 
   /*scroll = (event): void => {
@@ -94,11 +131,17 @@ export class MenuLoggedOutComponent implements OnInit {
         && logged_in !== '1'){
       this.logInWindow.open = true
     }
-
+    
     if(this.public_profile_info !== undefined) this.public_profile = true
     
     this.prevScrollpos = window.pageYOffset
+    
+    this.isMobile = this.deviceService.isMobile()
+    this.isDesktop = this.deviceService.isDesktop()
+    this.isTablet = this.deviceService.isTablet()
+    
     //window.addEventListener('scroll', this.scroll, true)
+
   }
   /*ngOnDestroy(){
     window.removeEventListener('scroll', this.scroll, true)
