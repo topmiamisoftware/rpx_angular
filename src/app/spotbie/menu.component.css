@@ -53,6 +53,37 @@
     min-height: 30px;
     max-height: 30px;
 }
+span.sb-loyalty-points{
+    font-size: 1rem !important;
+    color: #fff !important;
+    margin-left: 20px;
+    cursor: pointer !important;
+    border-right: unset !important;
+    border-left: 1px solid #01a79d;
+}
+img.sb-loyalty-points{
+    width: 25px;
+    min-width: 25px;
+    max-width: 25px;
+    cursor: pointer;
+}
+img.sb-loyalty-points:hover{
+    width: 28px;
+    min-width: 28px;
+    max-width: 28px;    
+}
+img.sb-qr{
+    margin-left: 20px;
+    width: 25px;
+    min-width: 25px;
+    max-width: 25px;
+    cursor: pointer;
+}  
+img.sb-qr:hover{
+    width: 28px;
+    min-width: 28px;
+    max-width: 28px;    
+}
 .spotbie-menu-logged{
     position: relative;
     margin: 0 auto;

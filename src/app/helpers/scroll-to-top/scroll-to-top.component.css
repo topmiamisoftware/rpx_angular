@@ -3,7 +3,7 @@
     left: 15px;
     bottom: 15px;
     transition: 0.5s;
-    background-color: #0d0d0d;
+    background: linear-gradient(90deg,#35a99f,#64e56f);
     padding: 5px;
     padding-left: 13px;
     padding-right: 13px;
@@ -13,11 +13,11 @@
 }
 .spotbie-scroll-top:hover{
     cursor: pointer;
-    background-color: #609329;
 }
 .spotbie-scroll-top i{
     font-size: 38px;
     opacity: 0.7;
+    color: white;
 }
 .spotbie-scroll-top:hover i{
     opacity: 1;

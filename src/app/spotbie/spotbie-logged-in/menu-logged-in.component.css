@@ -11,3 +11,9 @@
     max-height: 15px;
     white-space: nowrap;
 }
+.sb-desktopNavBar{
+    cursor: default;
+}
+.sb-userName{
+    text-transform: uppercase;
+}

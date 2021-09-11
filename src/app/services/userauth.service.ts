@@ -12,6 +12,9 @@ import { SocialAuthService } from "angularx-social-login";
 import { FacebookLoginProvider, GoogleLoginProvider } from "angularx-social-login";
 
 const USER_API = spotbieGlobals.API + 'user'
+const PLACE_TO_EAT_API = spotbieGlobals.API + 'place-to-eat'
+
+const LOYATLY_POINTS_API = spotbieGlobals.API+'loyalty-points'
 
 @Injectable({
   providedIn: 'root'
@@ -49,6 +52,14 @@ export class UserauthService {
       
   }
 
+  public getOAuthBearer(){
+    return this.socialAuthService.authState.subscribe(
+      (user) => {
+        console.log("user", user)
+      }
+    )
+  }
+
   private reRouteFromSpotBie(){
     this.router.navigate(['/home'])
   }
@@ -79,8 +90,6 @@ export class UserauthService {
 
         let loggedOutFavorites = localStorage.getItem('spotbie_currentFavorites')
 
-        let thisIsCordova = localStorage.getItem('isCordova')
-
         localStorage.clear()
         
         localStorage.setItem('spotbie_currentFavorites', loggedOutFavorites)
@@ -91,9 +100,7 @@ export class UserauthService {
         localStorage.setItem('spotbie_userApiKey', null)
         localStorage.setItem('spotbie_rememberMe', '0')
         localStorage.setItem('spotbie_rememberMeToken', null)
-        
-        localStorage.setItem('isCordova', thisIsCordova)
-
+      
       }
 
   }
@@ -127,44 +134,43 @@ export class UserauthService {
 
   }
 
-  public savePlaceSettings(user: User): Observable<any>{
-
-    const saveSettingsApi = `${USER_API}/update_place`
-
-    const saveSettingsObj = {
-      _method: 'PUT',
-      origin_description: user.placeToEat.description,
-      origin_address: user.placeToEat.address,
-      origin_title: user.placeToEat.name,
-      origin_x: user.placeToEat.loc_x,
-      origin_y: user.placeToEat.loc_y
-    }
-
-    return this.http.post<any>(saveSettingsApi, saveSettingsObj).pipe(
-      catchError(handleError("saveSettings"))
-    ) 
-
-  }
-
   public saveSettings(user: User): Observable<any>{
 
     const saveSettingsApi = `${USER_API}/update`
 
-    const saveSettingsObj = {
-      _method: 'PUT',
-      username: user.username,
-      email: user.email,
-      first_name: user.exe_user_first_name,
-      last_name: user.exe_user_last_name,
-      phone_number: user.ph,
-      ghost_mode: user.ghost,
-      privacy: user.privacy,
-      account_type: user.exe_user_type,
-      origin_description: user.placeToEat.description,
-      origin_address: user.placeToEat.address,
-      origin_title: user.placeToEat.name,
-      origin_x: user.placeToEat.loc_x,
-      origin_y: user.placeToEat.loc_y
+    let saveSettingsObj
+
+    if(user.placeToEat === undefined){
+      saveSettingsObj = {
+        _method: 'PUT',
+        username: user.username,
+        email: user.email,
+        first_name: user.exe_user_first_name,
+        last_name: user.exe_user_last_name,
+        phone_number: user.ph,
+        ghost_mode: user.ghost,
+        privacy: user.privacy,
+        account_type: user.spotbie_user.user_type
+      }
+    } else {
+
+      saveSettingsObj = {
+        _method: 'PUT',
+        username: user.username,
+        email: user.email,
+        first_name: user.exe_user_first_name,
+        last_name: user.exe_user_last_name,
+        phone_number: user.ph,
+        ghost_mode: user.ghost,
+        privacy: user.privacy,
+        account_type: user.spotbie_user.user_type,
+        origin_description: user.placeToEat.description,
+        origin_address: user.placeToEat.address,
+        origin_title: user.placeToEat.name,
+        origin_x: user.placeToEat.loc_x,
+        origin_y: user.placeToEat.loc_y
+      }
+
     }
 
     return this.http.post<any>(saveSettingsApi, saveSettingsObj).pipe(
@@ -237,8 +243,14 @@ export class UserauthService {
   }
 
   public signInWithGoogle(loginCallBack): void {    
+    
+    const gLoginOptions = {
+      scope: 'https://www.googleapis.com/auth/business.manage https://www.googleapis.com/auth/plus.business.manage',
+      return_scopes: true,
+      enable_profile_selector: true      
+    }
 
-    this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).catch(
+    this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID, gLoginOptions).catch(
       (error) => {
         loginCallBack(error)
       }
@@ -250,9 +262,12 @@ export class UserauthService {
       this.userPassword = null 
       this.userRememberMe = '1'
 
+      localStorage.setItem('spotbiecom_social_id', user.id)
+      localStorage.setItem('spotbiecom_social_session', user.authToken)
+      localStorage.setItem('spotbiecom_social_id_session', user.idToken)
+
       this.saveCurrentGoogleProfile(user).subscribe(
         resp => {
-          console.log("resp", resp)
           loginCallBack(resp)
         }
       )
@@ -300,6 +315,9 @@ export class UserauthService {
       this.userPassword = null 
       this.userRememberMe = '1'
       
+      localStorage.setItem('spotbiecom_social_session', user.authToken)
+      localStorage.setItem('spotbiecom_social_id_session', user.idToken)
+
       this.saveCurrentFbProfile(user).subscribe(
         (resp) => {
           loginCallBack(resp)
@@ -325,6 +343,36 @@ export class UserauthService {
 
     return this.http.post<any>(fbLoginApi, facebookLoginObj).pipe(
       catchError(handleError("signInWithFB"))
+    ) 
+
+  }
+
+  public verifyBusiness(businessInfo: any): Observable<any>{
+
+    let apiUrl
+
+    switch(businessInfo.accountType){
+      case 1:
+        apiUrl = `${PLACE_TO_EAT_API}/verify`
+        break
+      default:
+        return
+    }
+    
+    const businessInfoObj = {
+      name: businessInfo.name,
+      description: businessInfo.description,
+      address: businessInfo.address,
+      photo: businessInfo.photo,
+      loc_x: businessInfo.loc_x,
+      loc_y: businessInfo.loc_y,
+      passkey: businessInfo.passkey
+    }
+
+    console.log("businessInfoObj", businessInfoObj)
+
+    return this.http.post<any>(apiUrl, businessInfoObj).pipe(
+      catchError(handleError("verifyBusiness"))
     ) 
 
   }

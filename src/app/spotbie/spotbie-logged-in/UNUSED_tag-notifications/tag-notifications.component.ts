@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '../../../models/http-reponse';
 import * as spotbieGlobals from '../../../globals';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
-import { NotificationsComponent } from '../notifications/notifications.component';
+import { NotificationsComponent } from '../UNUSED_notifications/notifications.component';
 
 const NOTIFICATIONS_API = spotbieGlobals.API + "api/notifications.service.php";
 
@@ -11,11 +11,11 @@ const HTTP_OPTIONS = {
   headers: new HttpHeaders({ 'Content-Type' : 'application/json' })
 };
 @Component({
-  selector: 'app-stream-notifications',
-  templateUrl: './stream-notifications.component.html',
-  styleUrls: ['./stream-notifications.component.css']
+  selector: 'app-tag-notifications',
+  templateUrl: './tag-notifications.component.html',
+  styleUrls: ['./tag-notifications.component.css']
 })
-export class StreamNotificationsComponent implements OnInit {
+export class TagNotificationsComponent implements OnInit {
 
   private exe_api_key : string;
   public exe_user_id : string;
@@ -44,19 +44,20 @@ export class StreamNotificationsComponent implements OnInit {
     this.loading=true;
     this.fetchStreamNotifications();
   }
-  fetchStreamNotifications(){    
+  fetchStreamNotifications(){
+    this.loading = true;  
     let _this = this;
-    let notifications_object = { exe_api_key : this.exe_api_key, exe_nots_action : "getStreamNotifications", exe_nots_ite : this.notifications_ite };
+    let notifications_object = { exe_api_key : this.exe_api_key, exe_nots_action : "getTagsNotifications", exe_nots_ite : this.notifications_ite };
     this.http.post<HttpResponse>(NOTIFICATIONS_API, notifications_object, HTTP_OPTIONS)
       .subscribe( resp => {
-          // console.log("Settings Response", resp);
+          //console.log("Settings Response", resp);
           let notifications_response = new HttpResponse ({
           status : resp.status,
           message : resp.message,
           full_message : resp.full_message,
           responseObject : resp.responseObject
         });
-          _this.populateNotifications(notifications_response);
+        _this.populateNotifications(notifications_response);
       },
         error => {
           console.log("Stream Notifications Error : ", error);     
@@ -66,7 +67,7 @@ export class StreamNotificationsComponent implements OnInit {
     if(notifications_response.status == "200"){
       let notifications_list = notifications_response.responseObject; 
       notifications_list.forEach(notification => { 
-        notification.text = notification.user_info.exe_username  + " posted on your stream : " + unescape(notification.msg);
+        notification.text = notification.user_info.exe_username  + " tagged you in their post : " + unescape(notification.msg);
         this.notis_list.push(notification);
       });      
       if(notifications_list.length > 6){
@@ -78,9 +79,9 @@ export class StreamNotificationsComponent implements OnInit {
       }
       if(this.notis_list.length == 0){
         this.no_notis = true;
-      }        
+      }
       this.loading = false;
-      // console.log("your loaded friend notifications are : ", notifications_list);         
+      //console.log("your loaded friend notifications are : ", notifications_list);         
     } else {
       console.log("Stream Notifications Error : ", notifications_response.httpResponse);
     }

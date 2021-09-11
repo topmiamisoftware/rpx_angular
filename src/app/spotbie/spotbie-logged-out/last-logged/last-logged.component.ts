@@ -21,7 +21,6 @@ export class LastLoggedComponent implements OnInit {
   constructor(private host : LogInComponent) {}
 
   public closeWindow() : void {
-    this.host.lastLoggedWindow.open = false;
   }
 
   public fetchUserToLogin(user : User) : void{

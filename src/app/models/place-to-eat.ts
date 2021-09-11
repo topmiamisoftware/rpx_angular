@@ -3,6 +3,7 @@ export class PlaceToEat {
     public id: number = null
     public user_id: number = null
     public name: string = null
+    public photo: string = null
     public description: string = null
     public address: string = null
     public loc_x: number = null

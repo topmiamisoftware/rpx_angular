@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild, NgZone } from '@angular/core'
 import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms'
 import * as spotbieGlobals from '../../../globals'
-import { HttpClient } from '@angular/common/http'
 import { User } from '../../../models/user'
 import { AgmMap, MapsAPILoader, MouseEvent } from '@agm/core'
 import { ValidatePassword } from '../../../helpers/password.validator'
@@ -11,11 +10,18 @@ import { ValidateUsername } from 'src/app/helpers/username.validator'
 import { ValidatePersonName } from 'src/app/helpers/name.validator'
 import { UserauthService } from 'src/app/services/userauth.service'
 
+import * as calendly from '../../../helpers/calendly/calendlyHelper'
 import * as map_extras from 'src/app/spotbie/map/map_extras/map_extras'
-import { environment } from 'src/environments/environment'
+
 import { PlaceToEat } from 'src/app/models/place-to-eat'
+import { Route } from '@angular/router'
+import { HttpClient, HttpEventType } from '@angular/common/http'
 
 const SETTINGS_API = spotbieGlobals.API + '/settings.service.php'
+
+const PLACE_TO_EAT_API = spotbieGlobals.API + 'place-to-eat'
+
+const PLACE_TO_EAT_MEDIA_MAX_UPLOAD_SIZE = 25e+6
 
 declare const google: any
 
@@ -38,6 +44,11 @@ export class SettingsComponent implements OnInit {
 
   @ViewChild('spotbie_map') spotbie_map: AgmMap
 
+  @ViewChild('spotbieSettingsWindow') spotbieSettingsWindow
+
+  @ViewChild('placeToEatMediaUploadInfo') placeToEatMediaUploadInfo
+  @ViewChild('placeToEatMediaInput') placeToEatMediaInput
+
   public bg_color: string
 
   public lat: number
@@ -58,7 +69,7 @@ export class SettingsComponent implements OnInit {
   public settingsForm: FormGroup
   public placeToEatSettingsForm: FormGroup
 
-  public originPhoto: string = null
+  public originPhoto: string = '../../assets/images/home_imgs/find-places-to-eat.svg'
 
   public password_form: FormGroup
 
@@ -68,7 +79,7 @@ export class SettingsComponent implements OnInit {
   public account_deactivation = false
   public deactivation_submitted = false
 
-  public loading = true
+  public loading = false
 
   public accountTypeList = ['PERSONAL', 'PLACE TO EAT']
   public chosen_account_type: number
@@ -80,7 +91,8 @@ export class SettingsComponent implements OnInit {
 
   public user: User
   
-  public submitted = false
+  public submitted: boolean = false
+  public placeFormSubmitted: boolean = false
 
   public adSettingsWindow = {open: false}
 
@@ -104,6 +116,22 @@ export class SettingsComponent implements OnInit {
 
   public claimBusiness: boolean = false
 
+  public passKeyVerificationFormUp: boolean = false
+  public passKeyVerificationForm: FormGroup
+  public passKeyVerificationSubmitted: boolean = false
+
+  public placeToEatVerified: boolean = false
+
+  public placeToEatMediaMessage: string
+  public placeToEatMediaUploadProgress: number = 0
+
+  public customPatterns = { 
+                            '0': { pattern: new RegExp('\[0-9\]')},
+                            'A': { pattern: new RegExp('\[A-Z\]')}
+                          }
+    
+  public calendlyUp: boolean = false
+
   constructor(private host: MenuLoggedInComponent,
               private http: HttpClient,
               private formBuilder: FormBuilder,
@@ -124,7 +152,13 @@ export class SettingsComponent implements OnInit {
 
   }
 
+  public cancelPlaceSettings(){
+    this.placeSettingsFormUp = false
+  }
+
   private populateSettings(settings_response: any) {
+
+    //console.log("SettingsResponse", settings_response)
 
     if (settings_response.message == 'success') {
       
@@ -138,7 +172,15 @@ export class SettingsComponent implements OnInit {
 
       if(!this.settingsFormInitiated){
         this.chosen_account_type = this.user.spotbie_user.user_type
-        this.account_type_category = 'PERSONAL'        
+              
+        switch(this.chosen_account_type){
+          case 1:          
+            this.account_type_category = 'PLACE TO EAT' 
+            break
+          case 4:
+            this.account_type_category = 'PERSONAL'
+            break
+        }
       }
 
       this.settingsFormInitiated = true 
@@ -174,14 +216,18 @@ export class SettingsComponent implements OnInit {
 
       if (this.chosen_account_type == 1 && settings_response.place_to_eat !== null) {
 
+        this.user.placeToEat = new PlaceToEat()
+        
         this.user.placeToEat.loc_x = settings_response.place_to_eat.loc_x
         this.user.placeToEat.loc_y = settings_response.place_to_eat.loc_y
-
+        this.user.placeToEat.name = settings_response.place_to_eat.name
         this.user.placeToEat.description = settings_response.place_to_eat.description
         this.user.placeToEat.address = settings_response.place_to_eat.address
+        this.user.placeToEat.photo = settings_response.place_to_eat.photo
 
-      }
+        this.originPhoto = this.user.placeToEat.photo 
 
+      }      
       
     } else
       console.log('Settings Error: ', settings_response)
@@ -190,27 +236,128 @@ export class SettingsComponent implements OnInit {
 
   }
 
-  private claimThisBusiness(){
+  get passKey() {return this.passKeyVerificationForm.get('passKey').value }
+  get j() { return this.passKeyVerificationForm.controls }
+
+  public startBusinessVerification(){    
+
+    this.loading = true
+    this.placeFormSubmitted = true
+
+    if (this.placeToEatSettingsForm.invalid) {
+
+      this.loading = false
+      this.spotbieSettingsInfoText.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      
+      return
+
+    }
+
+    const passKeyValidators = [Validators.required, Validators.minLength(6)]
+
+    this.passKeyVerificationForm = this.formBuilder.group({
+      passKey: ['', passKeyValidators]
+    })
+
+    this.passKeyVerificationFormUp = true
+    this.loading = false
+
     
+  }
+
+  public closePassKey(){
+    this.passKeyVerificationForm = null
+    this.passKeyVerificationFormUp = false
+  }
+
+  public calendly(){
+    
+    this.calendlyUp = !this.calendlyUp
+
+    if(this.calendlyUp) calendly.spawnCalendly(this.originTitle, this.originAddress)
+
+  }
+
+  public claimThisBusiness(){   
+
+    this.loading = true
+    this.passKeyVerificationSubmitted = true
+
+    if(this.passKeyVerificationForm.invalid){
+      this.loading = false
+      return
+    }
+
+    let businessInfo = {
+      accountType: this.chosen_account_type,
+      name: this.originTitle,
+      description: this.originDescription,
+      address: this.originAddress,
+      photo: this.originPhoto,
+      loc_x: this.lat,
+      loc_y: this.lng,
+      passkey: this.passKey
+    }
+
+    this.userAuthService.verifyBusiness(businessInfo).subscribe(
+      (resp) => {
+        this.claimThisBusinessCB(resp)
+      }
+    )
+
+  } 
+
+  private claimThisBusinessCB(resp: any){
+
+    console.log("claimThisBusinessCB", resp)
+
+    if(resp.message == 'passkey_mismatch'){
+      
+      this.passKeyVerificationForm.get('passKey').setErrors({'invalid': true})
+
+    } else if(resp.message == 'success'){
+
+      this.passKeyVerificationSubmitted = false
+      this.passKeyVerificationForm = null
+      this.passKeyVerificationFormUp = false      
+
+      localStorage.setItem('spotbie_userType', this.chosen_account_type.toString())
+
+      this.placeToEatVerified = true
+
+    }
+
+    this.loading = false 
+
+  }
+
+  public claimWithGoogle(){
+
+    let businessInfo = {
+      accountType: this.chosen_account_type
+    }
+
+    this.userAuthService.verifyBusiness(businessInfo).subscribe(
+      (resp) => {
+        this.claimThisBusinessCB(resp)
+      }
+    )
+
   } 
 
   private getMyBusinesses(){
-
-    /*let url = `https://mybusiness.googleapis.com/v4/accounts/${ACCOUNT_ID}/locations/${loc._id}`
-    let options = {
-      Authorization: `OAuth ${ACCESS_TOKEN}`
-    }
-    
-    this.http.get(url, options).subscribe(
-      (resp) => {
-
-      }
-    )*/
 
   }
 
   openWindow(window: any){
     window.open = true
+  }
+
+  public searchMapsKeyDown(evt){
+    
+    if(evt.key == 'Enter')
+      this.searchMaps()
+
   }
 
   searchMaps() {
@@ -241,9 +388,10 @@ export class SettingsComponent implements OnInit {
 
   public focusPlace(place) {
 
-    this.ngZone.run(() => {
+    this.loading = true
 
-      this.loading = true
+    this.ngZone.run(() => {
+      
       this.locationFound = false
       this.place = place
       this.getPlaceDetails()
@@ -270,13 +418,99 @@ export class SettingsComponent implements OnInit {
       this.placeToEatSettingsForm.get('spotbieOrigin').setValue(this.lat + ',' + this.lng)
       
       this.placeToEatSettingsForm.get('originTitle').setValue(place.name)
-      this.originPhoto = place.photos[0].getUrl()
+      
+      if(place.photos)
+        this.originPhoto = place.photos[0].getUrl()
+      else
+        this.originPhoto = '../../assets/images/home_imgs/find-places-to-eat.svg'
 
       this.locationFound = true
       this.claimBusiness = true
       this.loading = false
 
     })
+
+    //Clear Address/Place Predictions
+    this.address_results = []
+
+  }
+
+  public getBusinessImgStyle(){
+
+    if(this.originPhoto === null) return
+
+    if(this.originPhoto.includes('home_imgs'))
+      return {'width': '150px', 'max-width': '150px', 'min-width': '150px'}
+    else
+      return {'width': '450px', 'max-width': '450px', 'min-width': '450px'}
+    
+  }
+
+  public startRewardMediaUploader(): void{
+    this.placeToEatMediaInput.nativeElement.click()
+  }
+
+  public uploadMedia(files): void {
+
+    const file_list_length = files.length
+
+    if (file_list_length === 0) {
+      this.placeToEatMediaMessage = 'You must upload at least one file.'
+      return
+    } else if (file_list_length > 1) {
+      this.placeToEatMediaMessage = 'Upload only one background image.'
+      return
+    }
+
+    this.loading = true
+
+    const formData = new FormData()
+    
+    let file_to_upload
+    let upload_size = 0
+
+    for (let i = 0; i < file_list_length; i++) {
+
+      file_to_upload = files[i] as File
+
+      upload_size += file_to_upload.size
+
+      if (upload_size > PLACE_TO_EAT_MEDIA_MAX_UPLOAD_SIZE) {
+        this.placeToEatMediaMessage = 'Max upload size is 25MB.'
+        this.loading = false
+        return
+      }
+
+      formData.append('background_picture', file_to_upload, file_to_upload.name)
+
+    }
+    
+    let endPoint = `${PLACE_TO_EAT_API}/upload-photo`
+
+    this.http.post(endPoint, formData, {reportProgress: true, observe: 'events'}).subscribe(event => {
+
+      if (event.type === HttpEventType.UploadProgress)
+        this.placeToEatMediaUploadProgress = Math.round(100 * event.loaded / event.total)
+      else if (event.type === HttpEventType.Response)
+        this.placeToEatMediaUploadFinished(event.body)
+
+    })
+
+    return
+
+  }
+
+  private placeToEatMediaUploadFinished(httpResponse: any): void {
+
+    console.log('placeToEatMediaUploadFinished', httpResponse)
+
+    if (httpResponse.success)
+      this.originPhoto = httpResponse.background_picture
+    else
+      console.log('placeToEatMediaUploadFinished', httpResponse)
+    
+    this.loading = false
+
   }
 
   mapsAutocomplete() {
@@ -356,7 +590,7 @@ export class SettingsComponent implements OnInit {
   public mobileStartLocation(){
     
     this.setCurrentLocation()
-
+    this.getMyBusinesses()
     this.showMobilePrompt = false
     this.showMobilePrompt2 = true
   
@@ -573,11 +807,11 @@ export class SettingsComponent implements OnInit {
   private initSettingsForm(action: string) {
 
     // will set validators for form and take care of animations
-    const username_validators = [Validators.required, Validators.maxLength(15)]
+    const username_validators = [Validators.required, Validators.maxLength(135)]
     const first_name_validators = [Validators.required, Validators.maxLength(72)]
     const last_name_validators = [Validators.required, Validators.maxLength(72)]
     const email_validators = [Validators.email, Validators.required, Validators.maxLength(135)]
-    const phone_validators = [Validators.required]
+    const phone_validators = []
 
     const password_validators = [Validators.required]
     const password_confirm_validators = [Validators.required]
@@ -618,7 +852,7 @@ export class SettingsComponent implements OnInit {
         const originTitleValidators = [Validators.required]
         const originAddressValidators = [Validators.required]
         const originValidators = [Validators.required]
-        const originDescriptionValidators = [Validators.required]
+        const originDescriptionValidators = [Validators.required, Validators.maxLength(350), Validators.minLength(100)]
 
         this.placeToEatSettingsForm = this.formBuilder.group({
           originAddress: ['', originAddressValidators],
@@ -631,9 +865,16 @@ export class SettingsComponent implements OnInit {
 
           this.placeToEatSettingsForm.get('originAddress').setValue(this.user.placeToEat.address)
           
-          this.placeToEatSettingsForm.get('spotbieOrigin').setValue(`${this.user.placeToEat.loc_x},${this.user.placeToEat.loc_y}`)          
-          this.showPosition([this.user.placeToEat.loc_x, this.user.placeToEat.loc_y])
-          
+          this.placeToEatSettingsForm.get('spotbieOrigin').setValue(`${this.user.placeToEat.loc_x},${this.user.placeToEat.loc_y}`)    
+
+          let position = {
+            coords : { latitude : this.user.placeToEat.loc_x, longitude : this.user.placeToEat.loc_y }
+          }
+
+          console.log("this.user.placeToEat.photo", this.user.placeToEat.photo)
+
+          this.showPosition(position)
+          this.originPhoto = this.user.placeToEat.photo
           this.placeToEatSettingsForm.get('originDescription').setValue(this.user.placeToEat.description)
           this.placeToEatSettingsForm.get('originTitle').setValue(this.user.placeToEat.name)
 
@@ -641,8 +882,6 @@ export class SettingsComponent implements OnInit {
 
           this.placeToEatSettingsForm.get('originAddress').setValue('SEARCH FOR LOCATION')
           this.placeToEatSettingsForm.get('spotbieOrigin').setValue( this.lat + ',' + this.lng)
-          this.placeToEatSettingsForm.get('originDescription').setValue(`Enter your ${this.account_type_category} description`)          
-          this.placeToEatSettingsForm.get('originTitle').setValue('My Place To Eat')
 
         }        
 
@@ -679,41 +918,11 @@ export class SettingsComponent implements OnInit {
   get deactivation_password() { return this.deactivation_form.get('spotbie_deactivation_password').value }
   get h() { return this.deactivation_form.controls }
 
-
   get originAddress() {return this.placeToEatSettingsForm.get('originAddress').value }
   get spotbieOrigin() { return this.placeToEatSettingsForm.get('spotbieOrigin').value }
   get originTitle() { return this.placeToEatSettingsForm.get('originTitle').value }
   get originDescription() { return this.placeToEatSettingsForm.get('originDescription').value }
   get i() { return this.placeToEatSettingsForm.controls }
-
-  public savePlaceSettings(){
-
-    this.loading = true
-    this.submitted = true
-
-    if (this.placeToEatSettingsForm.invalid) {
-
-      this.loading = false
-      this.spotbieSettingsInfoText.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' })
-      
-      return
-
-    }
-
-    this.user.placeToEat = new PlaceToEat()
-
-    this.user.placeToEat.address = this.originAddress
-    this.user.placeToEat.loc_x = this.lat
-    this.user.placeToEat.loc_y = this.lng
-    this.user.placeToEat.description = this.originDescription
-
-    this.userAuthService.savePlaceSettings(this.user).subscribe( 
-      resp => {
-        this.saveSettingsCallback(resp)
-      }
-    )
-
-  }
 
   public saveSettings() {
 
@@ -721,8 +930,6 @@ export class SettingsComponent implements OnInit {
     this.submitted = true
 
     if (this.settingsForm.invalid) {
-
-      console.log("", this.settingsForm)
 
       this.loading = false
       this.spotbieSettingsInfoText.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' })
@@ -735,8 +942,8 @@ export class SettingsComponent implements OnInit {
     this.user.exe_user_first_name = this.first_name
     this.user.exe_user_last_name = this.last_name
     this.user.email = this.email
-    this.user.exe_user_type = this.account_type_category
     this.user.ph = this.spotbie_phone_number
+    this.user.spotbie_user.user_type = this.chosen_account_type
 
     if (this.account_type_category !== 'PLACE TO EAT') {
       this.user.ghost = this.spotbie_ghost_mode
@@ -757,9 +964,14 @@ export class SettingsComponent implements OnInit {
 
     if (resp.success) {
 
-      this.spotbieSettingsInfoText.nativeElement.innerHTML = 'Your settings were saved.'
-        
-      this.spotbieSettingsInfoText.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      console.log("saved settings", resp)
+
+      this.spotbieSettingsInfoText.nativeElement.innerHTML = `Your settings were saved <i class='fa fa-check' style="color: #64e56f;"></i>`
+
+      this.spotbieSettingsWindow.nativeElement.scrollTo(0,0)
+
+      localStorage.setItem('spotbie_userLogin', resp.user.username)
+      localStorage.setItem('spotbie_userType', resp.user.spotbie_user.user_type)
 
     } else
       console.log('Failed Save Settings: ', resp)
@@ -883,8 +1095,6 @@ export class SettingsComponent implements OnInit {
   ngOnInit() {
 
     this.loading = true
-
-    this.bg_color = localStorage.getItem('spotbie_backgroundColor')
     this.initSettingsForm('personal')
     
   }

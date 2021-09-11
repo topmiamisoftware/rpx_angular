@@ -12,12 +12,14 @@ export class TokenInterceptor implements HttpInterceptor {
     let modifiedReq
 
     if(token !== '' && token !== null && token !== 'null'){
+      
       modifiedReq = req.clone({
         withCredentials: true,
         setHeaders: {
           'Authorization' : `Bearer ${token}`
         }
       });
+
     } else {
       modifiedReq = req.clone({
         withCredentials: true,

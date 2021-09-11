@@ -38,5 +38,11 @@
         "secure": false,
         "logLevel": "debug",
         "changeOrigin": true
-    }                  
+    },
+    "/albums/*": {
+        "target": "https://spotbie.com",
+        "secure": false,
+        "logLevel": "debug",
+        "changeOrigin": true
+    }            
 }

@@ -18,7 +18,7 @@
     background-attachment: fixed;
     background-size: cover;
     text-align: center;    
-    z-index: 95;
+    z-index: 99;
 }
 .spotbie-select-menu{
     overflow-y: hidden !important;
@@ -31,7 +31,6 @@
     max-width: 950px;
     padding: 20px;
     border-radius: 20px;
-    margin-bottom: 20px;
     border-bottom: 1px solid #535353;
 }
 .spotbie-settings-table td{
@@ -48,9 +47,6 @@
     width: 350px;
     min-width: unset;
     max-width: 350px;     
-}
-.sb-business-img{
-    max-width: 450px;
 }
 .sb-button-mini {
     margin-top: 20px;
@@ -147,8 +143,8 @@ agm-map{
 }
 .map-prompt-mobile .title{
     position: absolute;
-    width: 100%;
-    min-width: 100%;
+    left: 0;
+    right: 0;    
     transform: translateY(-50%);
     top: 50%;
     text-align: center;
@@ -187,8 +183,7 @@ textarea{
     width: 100%;
     min-width: 100%;
     background-color: rgba(0,0,0,.23);
-    padding-top: 10px;
-    padding-bottom: 10px;
+    padding: 10px;
     cursor: pointer;
 }
 .spotbie-search-map-button{
@@ -218,7 +213,83 @@ textarea{
     min-width: 500px;
     text-align: left;
 }
-
+.spotbie-search-map-input{
+    display: inline-block!important;
+}
+.sb-origin-address-input{
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+}
+.sb-search-icon{
+    display: inline-block!important;
+    max-width: 50px;
+    padding-top: 20px;
+    text-align: center;
+    padding: 0px !important;
+    padding-top: 11px !important;
+    padding-bottom: 11px !important;
+    border-radius: 8px !important;
+    border-top-left-radius: 0px !important;
+    border-bottom-left-radius: 0px !important;
+}
+.sb-passKeyWrapper{
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    min-height: 100%;
+    height: 100%;
+}
+.calendly-inline-widget{
+    min-width: 90vw;
+    width: 90vw;
+    max-width: 90vw;
+    height: 70vh;
+    min-height: 70vh;
+    max-height: 70vh;
+    overflow-x: hidden;
+}
+.sb-freeDemo{
+    background: -webkit-linear-gradient(90deg, #35a99f, #64e56f);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    cursor: pointer;
+}
+.sb-verificationCheck i{
+    font-size: 2rem;
+    color: #35a99f;
+}
+.spotbie-background-upload-input{
+    display: none;
+}
+.spotbie-upload-new-background-holder{
+    position: relative;
+    margin: 0 auto;
+    width: 650px;
+    min-width: 650px;
+    max-width: 650px;
+    height: 400px;
+    min-height: 400px;
+    max-height: 400px;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    background-size: contain !important;
+    cursor: pointer; 
+    border-radius: 27px;
+    border: 1px solid #eee;
+}
+.spotbie-click-or-drag-upload{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    padding-top: 20px;
+    padding-bottom: 20px;
+    width: 100%;
+    min-width: 100%;
+    text-align: center;
+    background-color: #000000e0;
+    font-size: 20px;
+    letter-spacing: 4px;
+}
 /**WIDTH MEDIA QUERIES */
 @media (max-width: 1300px) { 
 

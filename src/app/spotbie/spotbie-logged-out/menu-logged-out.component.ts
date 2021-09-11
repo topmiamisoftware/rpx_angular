@@ -88,9 +88,10 @@ export class MenuLoggedOutComponent implements OnInit {
   }
 
   getMenuStyle(){
-    if(this.menuActive == false){
-      return {'background-color' : 'transparent'};
-    }
+
+    if(this.menuActive == false)
+      return {'background-color' : 'transparent'}
+
   }
 
   scrollTo(el: string) {

@@ -41,8 +41,6 @@ export class LogInComponent implements OnInit {
 
   public loginResponse: HttpResponse
 
-  public lastLoggedWindow = { open : false }  
-
   public forgotPasswordWindow = { open : false }
 
   public passwordShow: boolean = false
@@ -105,6 +103,8 @@ export class LogInComponent implements OnInit {
       return
     }
 
+    console.log("response", loginResponse)
+
     if(loginResponse === undefined){
       this.logInForm.setErrors(null)
       this.spotbieLogInIssues.nativeElement.innerHTML = "Invalid username or password."
@@ -140,12 +140,14 @@ export class LogInComponent implements OnInit {
 
     } else {
 
-      if (login_status == 'invalid_cred' || login_status == 'social_media_account' || login_status == 'spotbie_account') {
+      if (login_status == 'invalid_cred' || login_status == 'spotbie_google_account' || login_status == 'spotbie_fb_account' || login_status == 'spotbie_account') {
   
         if(login_status == 'invalid_cred')      
           this.spotbieLogInIssues.nativeElement.innerHTML = "Invalid username or password."   
-        else if(login_status == 'social_media_account')
-          this.spotbieLogInIssues.nativeElement.innerHTML = "You signed up with social media."
+        else if(login_status == 'spotbie_google_account')
+          this.spotbieLogInIssues.nativeElement.innerHTML = "You signed up with google."
+        else if(login_status == 'spotbie_fb_account')
+          this.spotbieLogInIssues.nativeElement.innerHTML = "You signed up with facebook."          
         else if(login_status == 'spotbie_account')
           this.spotbieLogInIssues.nativeElement.innerHTML = "You signed up with an email address."
 

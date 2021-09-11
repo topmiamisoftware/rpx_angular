@@ -5,9 +5,7 @@ import * as $ from 'jquery'
 
 import { Validators, FormGroup, FormBuilder } from '@angular/forms'
 
-import { MustMatch } from '../../../helpers/must-match.validator'
 import { ValidateUsername } from '../../../helpers/username.validator'
-import { ValidatePersonName } from '../../../helpers/name.validator'
 import { ValidatePassword } from '../../../helpers/password.validator'
 
 import { SignUpService } from 'src/app/services/spotbie-logged-out/sign-up/sign-up.service'
@@ -116,7 +114,7 @@ export class SignUpComponent implements OnInit {
 
       localStorage.setItem('spotbiecom_session', loginResponse.token_info.original.access_token)
 
-      console.log(loginResponse.spotbie_user.default_picture)
+      localStorage.setItem('spotbiecom_session', loginResponse.user.original.access_token)
 
       localStorage.setItem('spotbie_userDefaultImage', loginResponse.spotbie_user.default_picture)
 

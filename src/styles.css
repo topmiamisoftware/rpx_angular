@@ -32,7 +32,6 @@ div, table, i, td{
 }
 
 @font-face {
-
     font-family: Gotham-Book;
     src: url(assets/fonts/Gotham-Book.ttf);
     font-display: swap;
@@ -40,13 +39,10 @@ div, table, i, td{
 }
 
 @font-face {
-
     font-family: Gotham-Black;
     src: url(assets/fonts/Gotham-Black.ttf);
     font-display: swap;
-
 }
-
 
 .gm-style-iw-c{
     background: linear-gradient(#64e56f, #35a99f);  
@@ -66,17 +62,14 @@ html {
 }
 
 body {
-
     position: relative;
     max-width: 100%;
     margin: 0 auto;
-    padding-bottom: 5px;
     background-color: black !important;
     color: white;
     overflow-x : hidden;
     height: unset !important; 
     font-family: Gotham-Book !important;
-
 }
 
 textarea {
@@ -144,16 +137,16 @@ div:active, div:focus{
 ::-webkit-scrollbar{
     height: 10px;
     width: 10px;
-    background: black;
+    background: #332f3e;
 }
 ::-webkit-scrollbar-thumb{
-    background: rgb(52, 52, 52);
+    background: linear-gradient(90deg,#35a99f,#64e56f);
 }
 ::-webkit-scrollbar-corner{
-    background: rgb(52, 52, 52);
+    background: linear-gradient(90deg,#35a99f,#64e56f);
 }
 ::-webkit-scrollbar-button{
-    background-color: rgb(52, 52, 52);
+    background: linear-gradient(90deg,#35a99f,#64e56f);
 }
 .spotbie-h1{
     position: relative;
@@ -348,7 +341,7 @@ a, a:hover, a:active, a:after{
     position: relative;
     display: block;
     margin: 0 auto;
-    font-size: 25px;
+    font-size: 1rem;
     color: black;
     padding-left: 10px;
     padding-right: 10px;
@@ -465,9 +458,9 @@ hr{
 .spotbie-help-text{
     position: relative;
     margin: 0 auto;
-    width: 500px;
-    min-width: 500px;
-    max-width: 500px; 
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%; 
     padding: 20px;
     margin-top: 20px;
     margin-bottom: 20px;
@@ -484,26 +477,6 @@ hr{
     text-align: center;
     margin-top: 40px;
 }
-.spotbie-loading-screen{
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    background-color: rgba(0, 0, 0, 0.85);
-    z-index: 99;
-    text-align: center;
-}
-.spotbie-loading-gif{
-    display: block;
-    left: 0;
-    right: 0;
-    margin: 0 auto;
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 38px;
-}
 .spotbie-main-holder{
     position: relative;
 }
@@ -515,7 +488,7 @@ hr{
     bottom: 0;
     left: -1%;
     right: 0;
-    background-color: rgb(16, 16, 16);
+    background-color: #332f3e;
     text-align: center;  
     z-index: 98;
     text-align: center;
@@ -575,7 +548,7 @@ hr{
     width: 100%;
     min-width: 100%;
     max-width: 100%;
-    background-color: rgba(0,0,0,.82);
+    background-color: rgb(51, 47, 62);
     z-index: 99;
     overflow-y: scroll;
 }
@@ -824,6 +797,27 @@ hr{
     width: 100%;
     max-width: 100%;
     background-color: #101010;
+}
+
+.sb-greyStreetBg{
+    background-image: url(src/assets/images/backgrounds-spotbie-02-desktop.jpg) !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    background-position: center !important;
+}
+
+.mat-form-field.mat-focused.mat-warn .mat-select-arrow, .mat-form-field .mat-select.mat-select-invalid .mat-select-arrow {
+    color: #64e56f;
+}
+.mat-form-field-type-mat-select:not(.mat-form-field-disabled) .mat-form-field-flex {
+    text-align: left;
+    background: white;
+}
+.mat-form-field.mat-form-field-invalid .mat-form-field-ripple, .mat-form-field.mat-form-field-invalid .mat-form-field-ripple.mat-accent {
+    background-color: #64e56f;
+}
+.mat-form-field-type-mat-native-select.mat-focused:not(.mat-form-field-invalid).mat-warn .mat-form-field-infix:after, .mat-form-field.mat-form-field-invalid .mat-form-field-label, .mat-form-field.mat-form-field-invalid .mat-form-field-label.mat-accent, .mat-form-field.mat-form-field-invalid .mat-form-field-label .mat-form-field-required-marker {
+    color: #332f3e;
 }
 /**WIDTH MEDIA QUERIES */
 @media (max-width: 1300px) { 

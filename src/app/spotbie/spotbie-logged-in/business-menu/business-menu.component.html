@@ -1,0 +1,17 @@
+<h4 class="spotbie-text-gradient text-center text-uppercase pt-5 mb-5">YOUR SPOTBIE LOYALTY MENU</h4>
+
+<p class="spotbie-text-gradient mt-4">
+    These are the rewards that your business will offer to the spotbie community.
+</p>
+
+<div class='sb-menuItemWrapper mb-5'>
+
+    <div class='sb-addMenuItem' (click)="addItem()">
+        <h6 class="spotbie-text-gradient">+ ADD REWARD</h6>
+    </div>
+
+</div>
+
+<app-reward-creator *ngIf="itemCreator" 
+            [userLoyaltyPoints]="userLoyaltyPoints" 
+            [userPointToDollarRatio]="userPointToDollarRatio"></app-reward-creator>

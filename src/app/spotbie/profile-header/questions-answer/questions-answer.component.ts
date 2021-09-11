@@ -3,7 +3,7 @@ import * as spotbieGlobals from '../../../globals';
 import { HttpResponse } from '../../../models/http-reponse';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { FriendshipsService } from '../../spotbie-logged-in/friends/friendships.service';
+import { FriendshipsService } from '../../spotbie-logged-in/UNUSED_friends/friendships.service';
 
 const PROFILE_HEADER_API = spotbieGlobals.API + "api/settings.service.php";
 

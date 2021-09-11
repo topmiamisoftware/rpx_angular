@@ -5,86 +5,54 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 
 import { DeviceDetectorService } from 'ngx-device-detector'
 
-import { BackgroundColorComponent } from './background-color/background-color.component'
-
-import { MissingPeopleComponent } from './missing-people/missing-people.component'
-
-import { NotificationsComponent } from './notifications/notifications.component'
-import { StreamNotificationsComponent } from './stream-notifications/stream-notifications.component'
-
-import { SettingsComponent } from './settings/settings.component'
-
-import { MessagingComponent } from './messaging/messaging.component'
-import { PairingComponent } from './pairing/pairing.component'
-
-import { MsgNotificationsComponent } from './msg-notifications/msg-notifications.component'
-
-import { TagNotificationsComponent } from './tag-notifications/tag-notifications.component'
-import { AllNotificationsComponent } from './all-notifications/all-notifications.component'
-
-import { MediaPlayerMainComponent } from './media_player/media-player-main/media-player-main.component'
-import { MediaPlayerContentComponent } from './media_player/media-player-content/media-player-content.component'
-import { MediaPlayerMapComponent } from './media_player/media-player-map/media-player-map.component'
-import { MediaPlayerStreamComponent } from './media_player/media-player-stream/media-player-stream.component'
-
 import { SearchComponent } from './search/search.component'
-
-import { DriverModeComponent } from './driver-mode/driver-mode.component'
-import { MatcherComponent } from './matcher/matcher.component'
 
 import { HttpClientModule } from '@angular/common/http'
 import { MenuLoggedInComponent } from './menu-logged-in.component'
-import { ProfileHeaderModule } from 'src/app/spotbie/profile-header/profile-header.module'
 import { SpotbiePipesModule } from 'src/app/spotbie-pipes/spotbie-pipes.module'
 import { RouterModule } from '@angular/router'
 import { ColorPickerModule } from 'ngx-color-picker'
 import { NgxMaskModule, IConfig } from 'ngx-mask'
 
 import { HelperModule } from 'src/app/helpers/helper.module'
-import { MessagingChatComponent } from './messaging/messaging-chat/messaging-chat.component'
 import { MapModule } from '../map/map.module'
 
-import { FriendsModule } from './friends/friends.module'
 import { ChooseAccountTypeComponent } from './choose-account-type/choose-account-type.component'
 import { SettingsModule } from './settings/settings.module'
+import { QrComponent } from './qr/qr.component'
+import { LoyaltyPointsComponent } from './loyalty-points/loyalty-points.component'
+import { BusinessMenuComponent } from './business-menu/business-menu.component'
+import { RewardCreatorComponent } from './business-menu/reward-creator/reward-creator.component'
+import {MatSelectModule} from '@angular/material/select';
+import { MatFormFieldModule } from '@angular/material/form-field'
+import { RewardComponent } from './business-menu/reward/reward.component'
 
 export const options : Partial<IConfig> | (() => Partial<IConfig>) = null;
 
 @NgModule({
-  declarations: [
-    AllNotificationsComponent,    
-    BackgroundColorComponent,
-    DriverModeComponent,
-    MatcherComponent,    
-    MediaPlayerMainComponent,
-    MediaPlayerContentComponent,
-    MediaPlayerMapComponent,
-    MediaPlayerStreamComponent,    
-    MenuLoggedInComponent,
-    MessagingComponent,
-    MessagingChatComponent,    
-    MissingPeopleComponent,
-    MsgNotificationsComponent,    
-    NotificationsComponent,
-    PairingComponent,   
-    SearchComponent,  
-    StreamNotificationsComponent,    
-    TagNotificationsComponent,
-    ChooseAccountTypeComponent
+  declarations: [ 
+    MenuLoggedInComponent,   
+    SearchComponent,     
+    ChooseAccountTypeComponent,
+    QrComponent,
+    LoyaltyPointsComponent,
+    BusinessMenuComponent,
+    RewardComponent,
+    RewardCreatorComponent,    
   ],
   imports: [  
     CommonModule,
     FormsModule, 
     ReactiveFormsModule,
     HttpClientModule,
-    ProfileHeaderModule,
     SpotbiePipesModule,
     ColorPickerModule,
     RouterModule,
     HelperModule,
     MapModule,
-    FriendsModule,
     SettingsModule,
+    MatSelectModule,
+    MatFormFieldModule,
     NgxMaskModule.forRoot(options)
   ],
   providers: [

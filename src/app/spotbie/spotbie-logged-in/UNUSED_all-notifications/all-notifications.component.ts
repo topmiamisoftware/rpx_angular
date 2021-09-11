@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '../../../models/http-reponse';
 import * as spotbieGlobals from '../../../globals';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
-import { NotificationsComponent } from '../notifications/notifications.component';
+import { NotificationsComponent } from '../UNUSED_notifications/notifications.component';
 
 const NOTIFICATIONS_API = spotbieGlobals.API + "api/notifications.service.php";
 
@@ -11,11 +11,11 @@ const HTTP_OPTIONS = {
   headers: new HttpHeaders({ 'Content-Type' : 'application/json' })
 };
 @Component({
-  selector: 'app-tag-notifications',
-  templateUrl: './tag-notifications.component.html',
-  styleUrls: ['./tag-notifications.component.css']
+  selector: 'app-all-notifications',
+  templateUrl: './all-notifications.component.html',
+  styleUrls: ['./all-notifications.component.css']
 })
-export class TagNotificationsComponent implements OnInit {
+export class AllNotificationsComponent implements OnInit {
 
   private exe_api_key : string;
   public exe_user_id : string;
@@ -32,22 +32,24 @@ export class TagNotificationsComponent implements OnInit {
 
   constructor(private http : HttpClient,
               private host : NotificationsComponent) { }
+
   notificationStyle(notification){
     if(notification.noti_read == '0'){
       return { 'background-color' : 'rgba(0,0,0,.83)'};
     }
   }
+  
   openNotification(notification){
     
   }
   loadMoreNotifications(){
     this.loading=true;
-    this.fetchStreamNotifications();
+    this.fetchAllNotifications();
   }
-  fetchStreamNotifications(){
-    this.loading = true;  
+  fetchAllNotifications(){
+    this.loading = true;    
     let _this = this;
-    let notifications_object = { exe_api_key : this.exe_api_key, exe_nots_action : "getTagsNotifications", exe_nots_ite : this.notifications_ite };
+    let notifications_object = { exe_api_key : this.exe_api_key, exe_nots_action : "getAllNotifications", exe_nots_ite : this.notifications_ite };
     this.http.post<HttpResponse>(NOTIFICATIONS_API, notifications_object, HTTP_OPTIONS)
       .subscribe( resp => {
           //console.log("Settings Response", resp);
@@ -66,8 +68,35 @@ export class TagNotificationsComponent implements OnInit {
   populateNotifications(notifications_response : HttpResponse){
     if(notifications_response.status == "200"){
       let notifications_list = notifications_response.responseObject; 
-      notifications_list.forEach(notification => { 
-        notification.text = notification.user_info.exe_username  + " tagged you in their post : " + unescape(notification.msg);
+      notifications_list.forEach(notification => {
+        switch(notification.relation){
+          case "friend_req":
+            //User must accept friend request
+            notification.text = notification.user_info.exe_username + " has sent you a friendship request.";
+            break;
+          case "accepted_friend":
+            //User has accepted friend request
+            if(this.exe_user_id == notification.made_by){
+              notification.text = notification.user_info.exe_username  + " has accepted your friendship request.";
+            } else {
+              notification.text = "You have accepted " + notification.user_info.exe_username  + "'s friend request.";
+            }
+            break;
+          case "now_friends":
+            //Users both aware that they are friends
+            notification.text = "You and " + notification.user_info.exe_username  + " are now friends.";
+            break;
+          case 'msg':
+            notification.text = notification.user_info.exe_username  + " : " + unescape(notification.msg);
+            break;
+          case 'stream_post':
+            //get the stream post content
+            notification.text = notification.user_info.exe_username  + " posted on your stream : " + unescape(notification.msg);
+            break;
+          case 'stream_user_tag':
+            notification.text = notification.user_info.exe_username  + " tagged you in their post : " + unescape(notification.msg);
+            break;
+        }
         this.notis_list.push(notification);
       });      
       if(notifications_list.length > 6){
@@ -79,17 +108,17 @@ export class TagNotificationsComponent implements OnInit {
       }
       if(this.notis_list.length == 0){
         this.no_notis = true;
-      }
+      }        
       this.loading = false;
-      //console.log("your loaded friend notifications are : ", notifications_list);         
+      //console.log("your loaded all notifications are : ", notifications_list);         
     } else {
-      console.log("Stream Notifications Error : ", notifications_response.httpResponse);
+      console.log("All Notifications Error : ", notifications_response.httpResponse);
     }
   } 
   ngOnInit() {
     this.loading = true;
     this.exe_api_key = localStorage.getItem("spotbie_userApiKey");
     this.exe_user_id = localStorage.getItem("spotbie_userId");
-    this.fetchStreamNotifications();
+    this.fetchAllNotifications();
   }
 }

@@ -7,7 +7,7 @@ import { SanitizePipe } from '../../pipes/sanitize.pipe'
 import { Subscription } from 'rxjs'
 import { User } from 'src/app/models/user'
 import { ProfileHeaderService } from 'src/app/services/profile-header/profile-header.service'
-import { ColorsService } from '../spotbie-logged-in/background-color/colors.service'
+import { ColorsService } from '../spotbie-logged-in/UNUSED_background-color/colors.service'
 
 const BACKGROUND_UPLOAD_API_URL = `${spotbieGlobals.API}profile-header/upload-background`
 const BACKGROUND_MAX_UPLOAD_SIZE = 25e+6
@@ -480,6 +480,9 @@ export class ProfileHeaderComponent implements OnInit {
 
   public cancelDefault():void {
     this.upload_default = false
+
+
+    
   }
 
   public changeProfilePicture():void {

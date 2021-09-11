@@ -498,9 +498,6 @@ closeSlideshow:hover{
 input{
     outline-color: #609329;
 }
-body{
-    margin: 0 auto;
-}
 ::-webkit-scrollbar{
     height: 1px;
     width: 1px;

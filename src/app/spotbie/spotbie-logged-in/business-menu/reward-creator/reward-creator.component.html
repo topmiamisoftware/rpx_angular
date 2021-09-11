@@ -1,0 +1,163 @@
+<app-loading-screen *ngIf="loading"></app-loading-screen>
+
+<div class="spotbie-overlay-window">
+
+    <div class='sb-rewardCreatorWrapper'>
+
+        <h6 class="spotbie-text-gradient text-uppercase text-center mt-2">Loyalty Points This Month</h6>
+        
+        <h5 class="spotbie-text-gradient text-uppercase text-center mt-4 mb-4" style="font-size: 1.5rem;">
+            {{ userLoyaltyPoints | number:'1.0':'en-US' }}
+        </h5>
+
+        <h4 class="spotbie-text-gradient text-center text-uppercase pt-3 mb-5">LOYALTY MENU ITEM CREATOR</h4>
+
+        <form [formGroup]="rewardCreatorForm" *ngIf="rewardCreatorFormUp">
+
+            <div *ngIf="rewardFormSubmitted && f.rewardValue.errors else rewardTypeTemplate" 
+                    class="spotbie-input-info mt-4 mb-4 spotbie-text-gradient spotbie-error">
+            
+                <div *ngIf="f.rewardValue.errors.required">
+                    You must pick a reward type!
+                </div>
+                
+            </div> 
+            
+            <ng-template #rewardTypeTemplate>
+
+                <div class="spotbie-input-info spotbie-text-gradient text-uppercase mt-4 mb-4">
+                    Pick a Reward Type
+                </div>     
+
+            </ng-template>
+
+            <mat-form-field class="sb-input text-uppercase" appearance="fill">
+
+                <mat-label>Reward Type</mat-label>
+
+                <mat-select formControlName="rewardValue" (selectionChange)="rewardTypeChange()">
+
+                  <mat-option *ngFor="let rewardTypeName of rewardTypeList" [value]="rewardTypeName">{{rewardTypeName}}</mat-option>
+
+                </mat-select>
+                
+            </mat-form-field>
+
+            <div *ngIf="rewardFormSubmitted && f.rewardValue.errors else rewardValueNormalTemplate" 
+                    class="spotbie-input-info mt-4 mb-4 spotbie-text-gradient spotbie-error">
+            
+                <div *ngIf="f.rewardValue.errors.required">
+                    You must enter a value!
+                </div>
+                
+            </div> 
+            
+            <ng-template #rewardValueNormalTemplate>
+
+                <div class="spotbie-input-info spotbie-text-gradient text-uppercase mt-4 mb-4">
+                    How many Loyalty points is this reward worth?
+                </div>     
+
+            </ng-template>
+
+            <input class="sb-input" 
+                    (click)="$event.target.select()" 
+                    (keyup)="calculateDollarValue()"
+                    formControlName="rewardValue" 
+                    type="text" 
+                    placeholder="0" 
+                    maxlength="6"
+                    thousandSeparator="," 
+                    mask="separator.0" />  
+
+            <div *ngIf="rewardFormSubmitted && f.rewardName.errors else rewardNameNormalTemplate" 
+                    class="spotbie-input-info mt-4 mb-4 spotbie-text-gradient spotbie-error">
+    
+                <div *ngIf="f.rewardName.errors.required">
+                    Enter the name of your reward.
+                </div>
+
+                <div *ngIf="f.rewardName.errors.maxlength">
+                    Reward name must be less than 50 characters.
+                </div>
+
+            </div> 
+            
+            <ng-template #rewardNameNormalTemplate>
+
+                <div class="spotbie-input-info spotbie-text-gradient text-uppercase mt-4 mb-4">
+                    What would you like to name this reward?
+                </div>     
+
+            </ng-template>
+
+            <input class="sb-input" 
+                    (click)="$event.target.select()"
+                    formControlName="rewardName" 
+                    type="text"
+                    maxlength="50" /> 
+
+            <div *ngIf="rewardFormSubmitted && f.rewardDescription.errors else rewardDescriptionNormalTemplate" 
+                    class="spotbie-input-info mt-4 mb-4 spotbie-text-gradient spotbie-error">
+
+                <div *ngIf="f.rewardDescription.errors.required">
+                    Enter the description of your reward.
+                </div>
+
+                <div *ngIf="f.rewardDescription.errors.minlength">
+                    Minimum length for reward description is 50.
+                </div>
+
+                <div *ngIf="f.rewardDescription.errors.maxlength">
+                    Max length for reward description is 250.
+                </div>
+                
+            </div> 
+            
+            <ng-template #rewardDescriptionNormalTemplate>
+
+                <div class="spotbie-input-info spotbie-text-gradient text-uppercase mt-4 mb-4">
+                    Briefly describe your reward.
+                </div>     
+
+            </ng-template>
+
+            <textarea class='spotbie-textarea spotbie-text-gradient' 
+                        (click)="$event.target.select()" 
+                        formControlName="rewardDescription" 
+                        maxlength="150"
+                        style="margin: 0 auto;"></textarea>
+
+        </form>
+
+        <form>
+            
+            <h6 class="spotbie-text-gradient text-uppercase mt-5 mb-4" #rewardMediaUploadnfo>
+                {{ rewardMediaMessage }}
+            </h6>
+            
+            <input type="file" 
+                class='spotbie-background-upload-input' 
+                #rewardMediaInput 
+                (change)="uploadMedia(rewardMediaInput.files)" 
+                accept="image/jpeg, image/gif, image/png"
+                multiple=false >
+
+            <div class='spotbie-upload-new-background-holder' 
+                [ngStyle]="{ 'background' : 'url(' + rewardUploadImage + ')' }"
+                (click)="startRewardMediaUploader()"
+                #spotbieRewardUploader>
+                <div class='spotbie-click-or-drag-upload'>
+                    <span class="spotbie-text-gradient text-uppercase">tap or drag to upload</span>
+                </div>
+            </div>
+
+        </form>
+
+        <div class='sb-button text-uppercase mt-4' (click)="saveReward()">
+            SAVE
+        </div>    
+
+    </div>
+    
+</div>

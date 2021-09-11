@@ -1,3 +1,9 @@
+<!-- 
+    READ ME PLEASE
+    Author: Franco Petitfour
+    Note: Please don't delete any of the comments in this file. We will need it for another project, thanks.
+-->
+
 <table class="spotbie-el-100
               spotbie-menu
               spotbie-menu-fixed-logged-out"
@@ -9,8 +15,17 @@
       <i class="fa fa-times" *ngIf="menuActive"></i>
     </td>  
   
-    <td style="width: 25%;">
+    <td style="width: 35%;">
+      
       <img class="spotbie-header-mini-logo" src="assets/images/spotbie_logo_header.svg" />
+
+      <span class='sb-loyalty-points' (click)="toggleLoyaltyPoints()" >{{ userLoyaltyPoints | number:'1.0':'en-US' }}</span>
+      
+      <img class='sb-loyalty-points' (click)="toggleLoyaltyPoints()"  src="assets/images/spotbie-loyalty-points.svg" />
+      <img class='sb-qr' (click)="openQRScanner()"   src="assets/images/spotbie-qr.svg" /> 
+      
+      <span class='sb-userName' (click)="openWindow(settingsWindow)" *ngIf="userName !== null">Welcome, {{ userName }}</span>         
+    
     </td>    
 
     <td *ngIf="isDesktop" class="sb-desktopNavBar" style="text-align: right;">
@@ -19,25 +34,21 @@
         HOME
       </span>
 
-      <span (click)="openWindow(friendsWindow)">
-        FRIENDS
-      </span>
-
       <span (click)="spawnCategories('food')">
         PLACES TO EAT
       </span>
 
-      <span (click)="spawnCategories('shopping')">
+      <span (click)="spawnCategories('shopping')"> 
         SHOPPING
       </span>
 
-      <span (click)="spawnCategories('events')">
+      <span (click)="spawnCategories('events')" >
         EVENTS
       </span>
 
-      <span (click)="spawnCategories('users')">
+      <!--<span (click)="spawnCategories('users')" >
         USERS
-      </span>
+      </span>-->
 
       <span (click)="openWindow(settingsWindow)">
         SETTINGS
@@ -58,16 +69,12 @@
 <div class="spotbie-slider-menu-background" *ngIf="menuActive">
 
   <table class="spotbie-slider-menu
-                animated slideInLeft" #spotbieMainMenu *ngIf="menuActive">
+                animated slideInLeft" #spotbieMainMenu>
 
     <tr><td>
 
       <div (click)="home()">
         HOME
-      </div>
-
-      <div (click)="openWindow(friendsWindow)">
-        FRIENDS
       </div>
 
       <div (click)="spawnCategories('food')">
@@ -82,9 +89,9 @@
         EVENTS <i class="fa fa-angle-right"></i>
       </div>
 
-      <div (click)="spawnCategories('users')">
+      <!--<div (click)="spawnCategories('users')">
         USERS <i class="fa fa-angle-right"></i>
-      </div>
+      </div>-->
 
       <div (click)="openWindow(settingsWindow)">
         SETTINGS
@@ -135,13 +142,17 @@
 
 </div>-->
 
+<app-loyalty-points (closeWindow)="toggleLoyaltyPoints()" *ngIf="LoyaltyPointsApp.open" #spotbieLoyaltyPoints></app-loyalty-points>
+
 <app-map *ngIf="mapApp.open" #spotbieMap></app-map>
 
-<app-profile-header *ngIf="bg_image_ready"
+<app-settings *ngIf="settingsWindow.open"></app-settings>
+
+<!--<app-profile-header *ngIf="bg_image_ready"
                     [album_id]="album_id"
                     [album_media_id]="album_media_id"                    
                     [publicProfileInfo]="public_profile_info" 
-                    [current_user_bg]="spotbieBackgroundImage"></app-profile-header>
+                    [current_user_bg]="spotbieBackgroundImage"></app-profile-header>-->
 
 <!--<app-notifications></app-notifications>-->
 
@@ -157,10 +168,8 @@
 
 <!--<app-media-player-main *ngIf="mediaPlayerWindow.open"></app-media-player-main>-->
 
-<app-friends *ngIf="friendsWindow.open" [window_obj]="friendsWindow" (closeWindow)="closeWindow($event)"></app-friends>
+<!--<app-friends *ngIf="friendsWindow.open" [window_obj]="friendsWindow" (closeWindow)="closeWindow($event)"></app-friends>-->
 
-<app-my-places *ngIf="myPlacesWindow.open"></app-my-places>
-
-<app-settings *ngIf="settingsWindow.open"></app-settings>
+<!--<app-my-places *ngIf="myPlacesWindow.open"></app-my-places>-->
 
 <!--<app-messaging *ngIf="messagingWindow.open"></app-messaging>-->

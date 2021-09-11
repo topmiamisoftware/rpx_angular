@@ -1,7 +1,7 @@
 import { Component, OnInit} from '@angular/core'
 import * as spotbieGlobals from '../../../../globals'
 import { HttpHeaders, HttpClient, HttpResponse } from '@angular/common/http'
-import { NotificationsComponent } from '../../notifications/notifications.component'
+import { NotificationsComponent } from '../notifications.component'
 import { Router } from '@angular/router'
 
 const NOTIFICATIONS_API = spotbieGlobals.API + 'api/notifications.service.php'

@@ -3,10 +3,11 @@ import { Router } from '@angular/router'
 import { Location } from '@angular/common'
 import { UserauthService } from 'src/app/services/userauth.service'
 import { Subscription } from 'rxjs'
-import { ColorsService } from './background-color/colors.service'
+import { ColorsService } from './UNUSED_background-color/colors.service'
 import { MapComponent } from '../map/map.component'
 import { DeviceDetectorService } from 'ngx-device-detector'
 import { externalBrowserOpen } from 'src/app/helpers/cordova/web-intent'
+import { LoyaltyPointsService } from 'src/app/services/loyalty-points/loyalty-points.service'
 
 @Component({
   selector: 'app-menu-logged-in',
@@ -15,12 +16,12 @@ import { externalBrowserOpen } from 'src/app/helpers/cordova/web-intent'
 })
 export class MenuLoggedInComponent implements OnInit {
 
-  @Input() public_profile_info: any
+  //@Input() public_profile_info: any
 
-  @Input() album_id: string
-  @Input() album_media_id: string
+  //@Input() album_id: string
+  //@Input() album_media_id: string
 
-  public public_profile: boolean = false
+  //public public_profile: boolean = false
 
   @Output() userBackgroundEvent = new EventEmitter()
 
@@ -28,27 +29,28 @@ export class MenuLoggedInComponent implements OnInit {
   
   @ViewChild('spotbieMap') spotbieMap: MapComponent  
   
-  public spotbieFontColor: string = 'white'
-  public spotbieBackgroundColor: string = ''
+  //public spotbieFontColor: string = 'white'
+  //public spotbieBackgroundColor: string = ''
   public spotbieBackgroundImage: string
-  public privateSpotbieBackgroundColor: string = ''
+  //public privateSpotbieBackgroundColor: string = ''
 
-  public backgroundColorWindow = { open : false }
-  public drivingWindow = { open : false }
+  //public backgroundColorWindow = { open : false }
+  //public drivingWindow = { open : false }
   
   public foodWindow = { open : false }
-  public friendsWindow = { open : false }
-  public groupWindow =  { open : false }
-  public locationPairingWindow =  { open : false }
-  public locationSaverWindow =  { open : false }
-  public matcherWindow =  { open : false }
+  //public friendsWindow = { open : false }
+  //public groupWindow =  { open : false }
+  //public locationPairingWindow =  { open : false }
+  //public locationSaverWindow =  { open : false }
+  //public matcherWindow =  { open : false }
   public mapApp = { open : false }
-  public memosWindow =  { open : false }
-  public mediaPlayerWindow = { open : false }
-  public messagingWindow =  { open : false }
-  public missingWindow = { open : false }
-  public myPlacesWindow = { open : false }
-  public pairingWindow =  { open : false }
+  public LoyaltyPointsApp = { open : false }
+  //public memosWindow =  { open : false }
+  //public mediaPlayerWindow = { open : false }
+  //public messagingWindow =  { open : false }
+  //public missingWindow = { open : false }
+  //public myPlacesWindow = { open : false }
+  //public pairingWindow =  { open : false }
   public settingsWindow =  { open : false }
   public chooseAccountTypeWindow = { open: false } 
 
@@ -64,8 +66,8 @@ export class MenuLoggedInComponent implements OnInit {
   public web_options_subscriber: Subscription
 
   public spotbie_app_list = new Array(
-    { app_name : 'Messages', icon_class : 'fa fa-envelope', app_window : this.messagingWindow},
-    { app_name : 'Friends', icon_class : 'fa fa-user', app_window : this.friendsWindow},
+    //{ app_name : 'Messages', icon_class : 'fa fa-envelope', app_window : this.messagingWindow},
+    //{ app_name : 'Friends', icon_class : 'fa fa-user', app_window : this.friendsWindow},
     { app_name : 'Settings', icon_class : 'fa fa-cog', app_window : this.settingsWindow},
     // { app_name : "Groups", icon_class : "../../assets/images/groups.png", app_window : this.groupWindow},
     //{ app_name : 'Location Pairing', icon_class : 'fa fa-street-view', app_window : this.locationPairingWindow},
@@ -86,21 +88,25 @@ export class MenuLoggedInComponent implements OnInit {
   public isDesktop: boolean
   public isTablet: boolean
 
+  public userType: string
+
+  public userLoyaltyPoints: number = 0
+
+  public userName: string = null
+
   constructor(private router : Router,
               private location : Location,
               private userAuthService : UserauthService,
-              private webOptionsService : ColorsService,
-              private deviceService: DeviceDetectorService) { 
+              private deviceService: DeviceDetectorService,
+              private loyaltyPointsService: LoyaltyPointsService) {}
 
-    this.web_options_subscriber = this.webOptionsService.getWebOptions().subscribe(web_options =>{
+  public toggleLoyaltyPoints(){
+    
+    this.LoyaltyPointsApp.open = !this.LoyaltyPointsApp.open
 
-      if(web_options){
-        this.spotbieBackgroundColor = web_options.bg_color      
-        this.spotbieBackgroundImage = web_options.spotmee_bg
-        this.mapApp.open = true 
-      }
+  }
 
-    })
+  public openQRScanner(){
 
   }
 
@@ -112,10 +118,10 @@ export class MenuLoggedInComponent implements OnInit {
 
     if(this.settingsWindow.open)
       this.settingsWindow.open = false
-    else if(this.friendsWindow.open)
-      this.friendsWindow.open = false
-    else if(this.myPlacesWindow.open)    
-      this.myPlacesWindow.open = false
+    //else if(this.friendsWindow.open)
+      //this.friendsWindow.open = false
+    //else if(this.myPlacesWindow.open)    
+      //this.myPlacesWindow.open = false
     else
       this.menuActive = !this.menuActive
   }
@@ -128,7 +134,7 @@ export class MenuLoggedInComponent implements OnInit {
 
   private setWebOptions(http_response: any) : void{
 
-      document.getElementsByTagName('body')[0].style.backgroundColor =  this.spotbieBackgroundColor
+      //document.getElementsByTagName('body')[0].style.backgroundColor =  this.spotbieBackgroundColor
       this.userBackgroundEvent.emit({ user_bg :  this.spotbieBackgroundImage })
       this.bg_image_ready = true      
 
@@ -152,9 +158,11 @@ export class MenuLoggedInComponent implements OnInit {
   }
 
   public closeApps(): void {
-
     this.apps_overlay = false
+  }
 
+  public toggleHelp(): void{
+    
   }
 
   public logOut() : void {
@@ -204,6 +212,18 @@ export class MenuLoggedInComponent implements OnInit {
     this.spotbieMap.mobileStartLocation()
   }
 
+  public fetchLoyaltyPoints(): void{
+
+    this.loyaltyPointsService.fetchLoyaltyPoints().subscribe(
+      resp => {
+        if(resp.message == 'success'){
+          this.userLoyaltyPoints = resp.total_loyalty_points
+        }
+      }
+    )
+
+  }
+
   ngOnInit() : void {
     
     this.isMobile = this.deviceService.isMobile()
@@ -216,6 +236,7 @@ export class MenuLoggedInComponent implements OnInit {
     const activatedRoute = this.location.path()
 
     let userType = localStorage.getItem('spotbie_userType')
+    this.userType = userType
 
     if(this.isMobile || this.isTablet) this.slideMenu()
 
@@ -224,31 +245,26 @@ export class MenuLoggedInComponent implements OnInit {
       //Check if the user type is set and open the chooseAccountType window if not.
       if(userType == '0') this.settingsWindow.open = true
 
-      this.webOptionsService.callWebOptionsApi().subscribe(
-        resp =>{
-          this.setWebOptions(resp)
-        }
-      )
-
     }
 
-    if (this.public_profile_info !== undefined) {
+    this.userName = localStorage.getItem('spotbie_userLogin')
+
+    /*if (this.public_profile_info !== undefined) {
       this.public_profile = true
-      pickedColor = this.public_profile_info.web_options.bg_color
       this.spotbieBackgroundImage = this.public_profile_info.web_options.spotmee_bg
       this.bg_image_ready = true
-    } else
-      pickedColor = this.spotbieBackgroundColor
-  
-    if (pickedColor != '') {
-      this.spotbieBackgroundColor = pickedColor
-    } else {
-      this.spotbieBackgroundColor = '#181818'
-    }
-    
+    }*/
+
+
+    this.fetchLoyaltyPoints()
+
     //this.prevScrollpos = window.pageYOffset
     //window.addEventListener('scroll', this.scroll, true)
     
+  }
+
+  ngAfterViewInit(){
+    this.mapApp.open = true 
   }
 
   /*ngOnDestroy(){

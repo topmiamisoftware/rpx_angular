@@ -21,8 +21,8 @@
       <h4 class="text-uppercase">SPOTBIE COMMUNITY</h4>
       
       <p>
-        Welcome to the SpotBie community. Find places to eat, events around you, shopping, and users around you. By signing up,
-        users are able to gain rewards from our spotbie community members. These rewards include discounts, free drinks, exclusive event merchandise, and more.
+        Welcome to the SpotBie community. Find places to eat, events, and shopping around you. By signing up,
+        users are able to gain loyalty points from our spotbie community members. These rewards include discounts, free drinks/food, exclusive event merchandise, and more.
         Join now and be part of something fun and worthwile.
       </p>
       
@@ -32,17 +32,17 @@
           PLACES TO EAT
         </div>
         <div>
-          <img src="assets/images/home_imgs/find-places-for-shopping.svg" />
-          SHOPPING
-        </div>                
-        <div>
           <img src="assets/images/home_imgs/find-events.svg" />
           EVENTS
         </div>        
         <div>
+          <img src="assets/images/home_imgs/find-places-for-shopping.svg" />
+          SHOPPING
+        </div>                        
+        <!--<div>
           <img src="assets/images/home_imgs/find-users.svg" />
           USERS
-        </div>
+        </div>-->
       </div>
 
       <img class="mb-4 sb-readImage spotbieAddPointerCursor" style="margin-top: 0%;"
@@ -134,13 +134,13 @@
 
       <img class='sb-greenIcon' src='assets/images/home_imgs/spotbie-green-icon.svg' />
             
-      <h4 class="text-uppercase" (click)="toggleUsersAroundYouInfo()">
+      <!--<h4 class="text-uppercase" (click)="toggleUsersAroundYouInfo()">
         USERS AROUND YOU
       </h4>  
 
       <p class="mt-2 mb-2">
 
-        <!--<img class='sb-whiteIconBg' src='assets/images/home_imgs/spotbie-white-icon.svg' />-->
+        <!--<img class='sb-whiteIconBg' src='assets/images/home_imgs/spotbie-white-icon.svg' />-
 
         SpotBie allows you to easily find other members around you. Wherever you are, you will be able to add your friends and see who else is enjoying the places to eat, the events, and the retails shops
         you enjoy. We all have something in common and SpotBie helps users find those similarities.
@@ -149,7 +149,7 @@
 
       <button class="sb-button sb-getStarted mt-4 mb-5" (click)="mobileStartLocation()">
         <span>GET STARTED</span>
-      </button>
+      </button>-->
 
       </div>
 
@@ -175,7 +175,7 @@
             [latitude]="lat" 
             [longitude]="lng"
             [styles]="map_styles"
-            [zoom]="20"
+            [zoom]="18"
             [fitBounds]="true">
 
     <agm-overlay [latitude]="lat" [longitude]="lng" *ngIf="locationFound">
@@ -370,52 +370,59 @@
     {{ maxDistance }} miles.                            
   </div>
 
-  <div class='spotbie-search-results-title' *ngIf="type_of_info_object == 'ticketmaster_events'">
+  <div class='spotbie-search-results-title text-uppercase' *ngIf="type_of_info_object == 'ticketmaster_events'">
     Max Distance  <mat-slider min="1" max="50" step="1" value="{{ maxDistance }}"
                             (change)="updateDistance($event)"></mat-slider>
     {{ maxDistance }} miles.                            
   </div>
 
-  <table class='spotbie-controls-search-results' *ngIf="searchCategorySorter == 'food'">
-    <tr>
-      <td (click)="hideSearchResults()" title="Hide Results"><img src='assets/images/eye.png' /></td>
-      <td (click)="sortBy(0)" title="Sort By Distance"><img src='assets/images/road.png' /></td>
-      <td (click)="sortBy(1)" title="Sort By Rating"><img src='assets/images/star.png' /></td>
-      <td (click)="sortBy(2)" title="Sort By Reviews"><img src='assets/images/review.png' /></td>
-      <td (click)="sortBy(3)" title="Sory By Pricing"><img src='assets/images/money.png' /></td>
-      <td (click)="sortBy(4)" title="Offers Delivery"><img src='assets/images/bag.png' /></td>
-      <td (click)="sortBy(5)" title="Offers Pick-Up"><img src='assets/images/arm.png' /></td>
-      <td (click)="sortBy(6)" title="Offers Reservations"><img src='assets/images/hotel.png' /></td>
-      <td (click)="showOpen()" title="Opened or Closed" [ngStyle]="{ 'border-right' : 'unset' }">
-        <span class='fa fa-circle spotbie-is-open' [ngStyle]="{ 'margin-right' : '5px' }"></span>
-        <span class='fa fa-circle spotbie-is-closed' *ngIf="showOpened == false"></span>
-      </td>
-    </tr>    
-  </table>
+  <div class='spotbie-search-results-title'>
 
-  <table class='spotbie-controls-search-results' *ngIf="searchCategorySorter == 'shopping'">
-    <tr>
-      <td (click)="hideSearchResults()" title="Hide Results"><img src='assets/images/eye.png' /></td>
-      <td (click)="sortBy(0)" title="Sort By Distance"><img src='assets/images/road.png' /></td>
-      <td (click)="sortBy(1)" title="Sort By Rating"><img src='assets/images/star.png' /></td>
-      <td (click)="sortBy(2)" title="Sort By Reviews"><img src='assets/images/review.png' /></td>
-      <td (click)="sortBy(3)" [ngStyle]="{ 'border-right' : 'unset' }"  title="Sory By Pricing"><img src='assets/images/money.png' /></td>
-      <td (click)="showOpen()" title="Opened or Closed" [ngStyle]="{ 'border-right' : 'unset' }">
-        <span class='fa fa-circle spotbie-is-open' [ngStyle]="{ 'margin-right' : '5px' }"></span>
-        <span class='fa fa-circle spotbie-is-closed' *ngIf="showOpened == false"></span>
-      </td>      
-    </tr>    
-  </table>
+    <table class='spotbie-controls-search-results' *ngIf="searchCategorySorter == 'food'">
+      <tr>
+        <td (click)="sortBy(0)" title="Sort By Distance"><img src='assets/images/road.png' /></td>
+        <td (click)="sortBy(1)" title="Sort By Rating"><img src='assets/images/star.png' /></td>
+        <td (click)="sortBy(2)" title="Sort By Reviews"><img src='assets/images/review.png' /></td>
+        <td (click)="sortBy(3)" title="Sory By Pricing"><img src='assets/images/money.png' /></td>
+        <td (click)="sortBy(4)" title="Offers Delivery"><img src='assets/images/bag.png' /></td>
+        <td (click)="sortBy(5)" title="Offers Pick-Up"><img src='assets/images/arm.png' /></td>
+        <td (click)="sortBy(6)" title="Offers Reservations"><img src='assets/images/hotel.png' /></td>
+      </tr>    
+    </table>
 
-  <table class='spotbie-controls-search-results' *ngIf="searchCategorySorter == 'events'">
-    <tr>
-      <td (click)="hideSearchResults()" title="Hide Results"><img src='assets/images/eye.png' /></td>
-      <td (click)="sortBy(0)" title="Sort By Distance"><img src='assets/images/road.png' /></td>
-      <td (click)="sortBy(3)" title="Sort By Pricing"><img src='assets/images/money.png' /></td>
-      <td (click)="sortBy(7)" title="Events Today">Today</td>
-      <td (click)="sortBy(8)" title="Events This Weekend" [ngStyle]="{ 'border-right' : 'unset' }">This Weekend</td>
-    </tr>    
-  </table>
+    <table class='spotbie-controls-search-results' (click)="showOpen()" title="Opened or Closed" [ngStyle]="{ 'border-right' : 'unset' }" *ngIf="searchCategorySorter == 'food'">
+      <td><span class='fa fa-circle spotbie-is-open'></span></td>
+      <td *ngIf="showOpened == false"><span class='fa fa-circle spotbie-is-closed'></span></td>
+      <td *ngIf="showOpened == true">OPEN</td>
+      <td *ngIf="showOpened == false">OPEN/CLOSED</td>
+    </table>
+  
+    <table class='spotbie-controls-search-results' *ngIf="searchCategorySorter == 'shopping'">
+      <tr>
+        <td (click)="sortBy(0)" title="Sort By Distance"><img src='assets/images/road.png' /></td>
+        <td (click)="sortBy(1)" title="Sort By Rating"><img src='assets/images/star.png' /></td>
+        <td (click)="sortBy(2)" title="Sort By Reviews"><img src='assets/images/review.png' /></td>
+        <td (click)="sortBy(3)" [ngStyle]="{ 'border-right' : 'unset' }"  title="Sory By Pricing"><img src='assets/images/money.png' /></td>     
+      </tr>    
+    </table>
+    <table (click)="showOpen()" title="Opened or Closed" [ngStyle]="{ 'border-right' : 'unset' }" *ngIf="searchCategorySorter == 'shopping'">
+      <td><span class='fa fa-circle spotbie-is-open'></span></td>
+      <td *ngIf="showOpened == false"><span class='fa fa-circle spotbie-is-closed'></span></td>
+      <td *ngIf="showOpened == true">OPEN</td>
+      <td *ngIf="showOpened == false">OPEN/CLOSED</td>
+    </table>   
+    
+    <table class='spotbie-controls-search-results' *ngIf="searchCategorySorter == 'events'">
+      <tr>
+        <td (click)="hideSearchResults()" title="Hide Results"><img src='assets/images/eye.png' /></td>
+        <td (click)="sortBy(0)" title="Sort By Distance"><img src='assets/images/road.png' /></td>
+        <td (click)="sortBy(3)" title="Sort By Pricing"><img src='assets/images/money.png' /></td>
+        <td (click)="sortBy(7)" title="Events Today">Today</td>
+        <td (click)="sortBy(8)" title="Events This Weekend" [ngStyle]="{ 'border-right' : 'unset' }">This Weekend</td>
+      </tr>    
+    </table>
+
+  </div>
 
   <div class='spotbie-search-results-title spotbie-sorting text-uppercase'>
 

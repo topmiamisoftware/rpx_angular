@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FriendshipsService } from '../../spotbie-logged-in/friends/friendships.service';
+import { FriendshipsService } from '../../spotbie-logged-in/UNUSED_friends/friendships.service';
 
 @Component({
   selector: 'app-friend-actions',

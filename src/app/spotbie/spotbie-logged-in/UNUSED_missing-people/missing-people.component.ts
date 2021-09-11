@@ -13,7 +13,7 @@ export class MissingPeopleComponent implements OnInit {
   constructor(private host : MenuLoggedInComponent) { }
 
   closeWindow(){
-    this.host.missingWindow.open = false;
+    //this.host.missingWindow.open = false;
   }
 
   ngOnInit() {

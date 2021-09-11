@@ -14,7 +14,7 @@ import { MapObjectIconPipe }                 from 'src/app/pipes/map-object-icon
 import { DeviceDetectorService }             from 'ngx-device-detector'
 import { SwiperOptions }                     from 'swiper'
 
-import { ColorsService }                     from '../spotbie-logged-in/background-color/colors.service'
+import { ColorsService }                     from '../spotbie-logged-in/UNUSED_background-color/colors.service'
 import { LocationService }                   from '../../location-service/location.service'
 
 import * as map_extras                       from './map_extras/map_extras'
@@ -67,7 +67,7 @@ export class MapComponent implements OnInit {
   public searchApiUrl: string
   
 
-  public map_zoom: number = 32
+  public map_zoom: number = 18
   public lat:   number
   public lng:   number
   public ogLat: number
