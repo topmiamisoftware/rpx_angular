@@ -12,7 +12,6 @@
     background-color: transparent;
 }
 .spotbie-overlay-window{
-    padding-top: 90px;
     padding-bottom: 100px;
     background: #332f3e;
     background-attachment: fixed;
@@ -232,13 +231,6 @@ textarea{
     border-top-left-radius: 0px !important;
     border-bottom-left-radius: 0px !important;
 }
-.sb-passKeyWrapper{
-    display: flex;
-    align-content: center;
-    justify-content: center;
-    min-height: 100%;
-    height: 100%;
-}
 .calendly-inline-widget{
     min-width: 90vw;
     width: 90vw;
@@ -247,16 +239,6 @@ textarea{
     min-height: 70vh;
     max-height: 70vh;
     overflow-x: hidden;
-}
-.sb-freeDemo{
-    background: -webkit-linear-gradient(90deg, #35a99f, #64e56f);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    cursor: pointer;
-}
-.sb-verificationCheck i{
-    font-size: 2rem;
-    color: #35a99f;
 }
 .spotbie-background-upload-input{
     display: none;

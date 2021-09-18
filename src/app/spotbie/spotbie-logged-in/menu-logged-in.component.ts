@@ -16,41 +16,22 @@ import { LoyaltyPointsService } from 'src/app/services/loyalty-points/loyalty-po
 })
 export class MenuLoggedInComponent implements OnInit {
 
-  //@Input() public_profile_info: any
-
-  //@Input() album_id: string
-  //@Input() album_media_id: string
-
-  //public public_profile: boolean = false
-
   @Output() userBackgroundEvent = new EventEmitter()
 
   @ViewChild('spotbieMainMenu') spotbieMainMenu: ElementRef
   
   @ViewChild('spotbieMap') spotbieMap: MapComponent  
   
-  //public spotbieFontColor: string = 'white'
-  //public spotbieBackgroundColor: string = ''
   public spotbieBackgroundImage: string
-  //public privateSpotbieBackgroundColor: string = ''
 
-  //public backgroundColorWindow = { open : false }
-  //public drivingWindow = { open : false }
   
   public foodWindow = { open : false }
-  //public friendsWindow = { open : false }
-  //public groupWindow =  { open : false }
-  //public locationPairingWindow =  { open : false }
-  //public locationSaverWindow =  { open : false }
-  //public matcherWindow =  { open : false }
+
   public mapApp = { open : false }
   public LoyaltyPointsApp = { open : false }
-  //public memosWindow =  { open : false }
-  //public mediaPlayerWindow = { open : false }
-  //public messagingWindow =  { open : false }
-  //public missingWindow = { open : false }
-  //public myPlacesWindow = { open : false }
-  //public pairingWindow =  { open : false }
+  
+  public businessMenuApp = { open: false }
+
   public settingsWindow =  { open : false }
   public chooseAccountTypeWindow = { open: false } 
 
@@ -66,18 +47,7 @@ export class MenuLoggedInComponent implements OnInit {
   public web_options_subscriber: Subscription
 
   public spotbie_app_list = new Array(
-    //{ app_name : 'Messages', icon_class : 'fa fa-envelope', app_window : this.messagingWindow},
-    //{ app_name : 'Friends', icon_class : 'fa fa-user', app_window : this.friendsWindow},
-    { app_name : 'Settings', icon_class : 'fa fa-cog', app_window : this.settingsWindow},
-    // { app_name : "Groups", icon_class : "../../assets/images/groups.png", app_window : this.groupWindow},
-    //{ app_name : 'Location Pairing', icon_class : 'fa fa-street-view', app_window : this.locationPairingWindow},
-    // { app_name : "Media", icon_class : "../../assets/images/multimedia.png", app_window : this.mediaPlayerWindow},
-    //{ app_name : 'Location Saver', icon_class : 'fa fa-map-pin', app_window : this.locationSaverWindow},
-    // { app_name : "Memos", icon_class : "../../assets/images/memo.png", app_window : this.memosWindow},
-    //{ app_name : 'Matcher', icon_class : 'fa fa-heartbeat', app_window : this.matcherWindow},
-    //{ app_name : 'Drive Mode', icon_class : 'fa fa-car', app_window : this.drivingWindow},
-    //{ app_name : 'Missing People', icon_class : 'fa fa-exclamation-triangle', app_window : this.missingWindow}
-    // { app_name : "Food", icon_image : "../../assets/images/food.png", app_window : this.foodWindow}
+    { app_name : 'Settings', icon_class : 'fa fa-cog', app_window : this.settingsWindow}
   )
   
   public menuActive: boolean = false
@@ -94,6 +64,8 @@ export class MenuLoggedInComponent implements OnInit {
 
   public userName: string = null
 
+  public qrCode: boolean = false
+
   constructor(private router : Router,
               private location : Location,
               private userAuthService : UserauthService,
@@ -106,11 +78,12 @@ export class MenuLoggedInComponent implements OnInit {
 
   }
 
-  public openQRScanner(){
-
+  public toggleQRScanner(){
+    this.qrCode = !this.qrCode
   }
 
   home(){
+    this.spotbieMap.closeCategories()
     this.spotbieMap.openWelcome()
   }
 
@@ -118,10 +91,6 @@ export class MenuLoggedInComponent implements OnInit {
 
     if(this.settingsWindow.open)
       this.settingsWindow.open = false
-    //else if(this.friendsWindow.open)
-      //this.friendsWindow.open = false
-    //else if(this.myPlacesWindow.open)    
-      //this.myPlacesWindow.open = false
     else
       this.menuActive = !this.menuActive
   }
@@ -130,14 +99,6 @@ export class MenuLoggedInComponent implements OnInit {
     if(this.menuActive == false){
       return {'background-color' : 'transparent'};
     }
-  }
-
-  private setWebOptions(http_response: any) : void{
-
-      //document.getElementsByTagName('body')[0].style.backgroundColor =  this.spotbieBackgroundColor
-      this.userBackgroundEvent.emit({ user_bg :  this.spotbieBackgroundImage })
-      this.bg_image_ready = true      
-
   }
 
   public openWindow(window : any) : void {
@@ -188,17 +149,6 @@ export class MenuLoggedInComponent implements OnInit {
     window.open = true
   }
 
-  /*scroll = (event): void => {
-    let prevScrollpos =  this.prevScrollpos
-    let currentScrollPos = window.pageYOffset
-    if (prevScrollpos > currentScrollPos) {
-      this.spotbieMainMenu.nativeElement.style.top = "0px"
-    } else {
-      this.spotbieMainMenu.nativeElement.style.top = '-' + this.spotbieMainMenu.nativeElement.offsetHeight + 'px'
-    }
-    this.prevScrollpos = currentScrollPos    
-  }*/ 
-
   public spawnCategories(category: string): void{
     if(!this.isDesktop) this.slideMenu()
     this.spotbieMap.spawnCategories(category)
@@ -213,16 +163,24 @@ export class MenuLoggedInComponent implements OnInit {
   }
 
   public fetchLoyaltyPoints(): void{
-
     this.loyaltyPointsService.fetchLoyaltyPoints().subscribe(
       resp => {
-        if(resp.message == 'success'){
-          this.userLoyaltyPoints = resp.total_loyalty_points
-        }
+
+        if(resp.success)
+          this.userLoyaltyPoints = resp.loyalty_points.balance
+        
+
       }
     )
-
   }
+
+  public openBusinessMenu(){
+    this.businessMenuApp.open = true
+  }
+
+  public closeBusinessMenu(){
+    this.businessMenuApp.open = false
+  } 
 
   ngOnInit() : void {
     
@@ -232,7 +190,6 @@ export class MenuLoggedInComponent implements OnInit {
 
     let pickedColor : string
 
-    //console.log("The public menu is : ", this.public_profile_info)
     const activatedRoute = this.location.path()
 
     let userType = localStorage.getItem('spotbie_userType')
@@ -249,25 +206,13 @@ export class MenuLoggedInComponent implements OnInit {
 
     this.userName = localStorage.getItem('spotbie_userLogin')
 
-    /*if (this.public_profile_info !== undefined) {
-      this.public_profile = true
-      this.spotbieBackgroundImage = this.public_profile_info.web_options.spotmee_bg
-      this.bg_image_ready = true
-    }*/
-
 
     this.fetchLoyaltyPoints()
 
-    //this.prevScrollpos = window.pageYOffset
-    //window.addEventListener('scroll', this.scroll, true)
-    
   }
 
   ngAfterViewInit(){
     this.mapApp.open = true 
   }
-
-  /*ngOnDestroy(){
-    window.removeEventListener('scroll', this.scroll, true)
-  }*/
+  
 }

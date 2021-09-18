@@ -1,6 +1,6 @@
 <app-loading-screen *ngIf="loading"></app-loading-screen>
 
-<div class='spotbie-overlay-window' #spotbieSettingsWindow>    
+<div class='spotbie-overlay-window pb-2 pt-4' #spotbieSettingsWindow>    
     
     <div class='spotbie-block'>
 
@@ -381,7 +381,9 @@
                             {{ account_type_category }} description
                         </div>
                     </ng-template>
-    
+                    
+
+
                     <tr *ngIf="account_type_category == 'PLACE TO EAT' && locationFound">
     
                         <td style="background-color: rgba(0,0,0,.23); padding-top: 0px; padding-bottom: 0px;">
@@ -391,6 +393,8 @@
                                         formControlName="originDescription" 
                                         maxlength="350"
                                         style="margin: 0 auto;"></textarea>
+
+                            <div class='spotbie-text-gradient text-uppercase mt-2 mb-2'>{{ originDescription.length }} / 350</div>
     
                         </td>
     
@@ -415,7 +419,7 @@
 
         <div class='spotbie-overlay-window' *ngIf="placeToEatVerified" (click)="closeWindow()">
 
-            <div class='sb-passKeyWrapper' style="display: grid; align-content: center;">
+            <div class='sb-v-wrapper' style="display: grid; align-content: center;">
                 
                 <h4 class="spotbie-text-gradient text-uppercase">YOUR VERIFICATION WAS SUCCESSFUL</h4>
 
@@ -431,7 +435,7 @@
 
         <div class='spotbie-overlay-window' style="background-color: rgba(0,0,0,.95);" *ngIf="passKeyVerificationFormUp">
 
-            <div class='sb-passKeyWrapper' style="display: grid; align-content: center;">            
+            <div class='sb-v-wrapper' style="display: grid; align-content: center;">            
 
                 <form [formGroup]="passKeyVerificationForm">
             
@@ -480,9 +484,9 @@
                         
                         <tr>
                             <td> 
-                                <div class='spotbie-text-gradient text-center text-uppercase mt-4'>
+                                <div class='sb-text-light-green-gradient text-center text-uppercase mt-4'>
                                     Don't have one? Book 
-                                    <span class='sb-freeDemo' (click)="calendly()">free demo with SpotBie here.</span>
+                                    <span class='sb-text-light-green-gradient' (click)="calendly()">free demo with SpotBie here.</span>
                                 </div>
                             </td>
                         </tr>
@@ -510,7 +514,7 @@
 
         <div class='spotbie-overlay-window' style="background-color: rgba(0,0,0,.95);" *ngIf="calendlyUp">
 
-            <div class='sb-passKeyWrapper' style="display: grid; align-content: center;">  
+            <div class='sb-v-wrapper' style="display: grid; align-content: center;">  
                  
                 <!-- Calendly inline widget begin -->
                 <div id="calendlyEl" class="calendly-inline-widget"></div>                

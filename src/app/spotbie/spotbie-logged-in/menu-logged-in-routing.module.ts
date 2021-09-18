@@ -10,7 +10,7 @@ import { SearchComponent } from './search/search.component'
 import { HttpClientModule } from '@angular/common/http'
 import { MenuLoggedInComponent } from './menu-logged-in.component'
 import { SpotbiePipesModule } from 'src/app/spotbie-pipes/spotbie-pipes.module'
-import { RouterModule } from '@angular/router'
+import { ActivatedRouteSnapshot, RouterModule } from '@angular/router'
 import { ColorPickerModule } from 'ngx-color-picker'
 import { NgxMaskModule, IConfig } from 'ngx-mask'
 
@@ -26,6 +26,9 @@ import { RewardCreatorComponent } from './business-menu/reward-creator/reward-cr
 import {MatSelectModule} from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field'
 import { RewardComponent } from './business-menu/reward/reward.component'
+
+import { NgxQRCodeModule } from '@techiediaries/ngx-qrcode';
+import { ZXingScannerModule } from '@zxing/ngx-scanner'
 
 export const options : Partial<IConfig> | (() => Partial<IConfig>) = null;
 
@@ -53,6 +56,9 @@ export const options : Partial<IConfig> | (() => Partial<IConfig>) = null;
     SettingsModule,
     MatSelectModule,
     MatFormFieldModule,
+    RouterModule,
+    NgxQRCodeModule,
+    ZXingScannerModule,
     NgxMaskModule.forRoot(options)
   ],
   providers: [

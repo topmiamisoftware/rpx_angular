@@ -28,10 +28,19 @@ export class LoyaltyPointsService {
 
   }      
   
-  
-  public saveLoyaltyPoint(businessLoyaltyPointsObj): Observable<any>{
+  public saveLoyaltyPoint(businessLoyaltyPointsObj: any): Observable<any>{
 
     let apiUrl = `${LOYATLY_POINTS_API}/store`
+
+    return this.http.post<any>(apiUrl, businessLoyaltyPointsObj).pipe(
+      catchError(handleError("saveLoyaltyPoint"))
+    ) 
+
+  }
+
+  public addLoyaltyPoints(businessLoyaltyPointsObj: any): Observable<any>{
+
+    let apiUrl = `${LOYATLY_POINTS_API}/add`
 
     return this.http.post<any>(apiUrl, businessLoyaltyPointsObj).pipe(
       catchError(handleError("saveLoyaltyPoint"))

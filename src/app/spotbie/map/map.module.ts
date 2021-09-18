@@ -22,6 +22,7 @@ import { MyPlacesComponent } from '../location-saver/my-places/my-places.compone
 import { WelcomeComponent } from '../spotbie-logged-out/welcome/welcome.component'
 import { ShareModule } from '@ngx-share/core'
 import { UserInfoObjectComponent } from './user-info-object/user-info-object.component'
+import { RouterModule } from '@angular/router'
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { UserInfoObjectComponent } from './user-info-object/user-info-object.com
     ReactiveFormsModule,
     FormsModule,
     ShareModule,
+    RouterModule,
     AgmCoreModule.forRoot({
       apiKey: environment.google_maps_apiKey,
       language: 'en',

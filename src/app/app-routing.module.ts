@@ -7,15 +7,19 @@ import { UserComponent } from './user/user.component'
 import { UserMetaService } from './user/user-meta/user-meta.service'
 import { InfoObjectComponent } from './spotbie/map/info-object/info-object.component'
 import { BugsComponent } from './bugs/bugs.component'
+import { LoyaltyPointsComponent } from './spotbie/spotbie-logged-in/loyalty-points/loyalty-points.component'
+import { BusinessMenuComponent } from './spotbie/spotbie-logged-in/business-menu/business-menu.component'
 
 let user_service = new UserMetaService()
 
 export const routes: Routes = [
-  { path: 'home',  loadChildren: () => import('./home/home.module').then(m => m.HomeModule) },
+  { path: 'home', loadChildren: () => import('./home/home.module').then(m => m.HomeModule) },
   { path: 'terms', component: TermsComponent },
   { path: 'bugs', component: BugsComponent },
   { path: 'password', component: ForgotPasswordComponent },
   { path: 'password/reset/:token', component: ForgotPasswordComponent },
+  { path: 'business-menu/:userHash/:qrCode', component: BusinessMenuComponent},
+  { path: 'loyalty-points/scan/:userHash/:qrCode/:totalSpent/:loyaltyPointReward', component: LoyaltyPointsComponent },
   { path: 'place-to-eat/:name/:id', component: InfoObjectComponent },
   { path: 'shopping/:name/:id', component: InfoObjectComponent },
   { path: 'event/:name/:id', component: InfoObjectComponent },

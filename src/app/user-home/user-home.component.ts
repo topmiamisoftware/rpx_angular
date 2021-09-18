@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core'
+import { Component, OnInit } from '@angular/core'
 import { UserauthService } from '../services/userauth.service'
 
 @Component({
@@ -16,7 +16,7 @@ export class UserHomeComponent implements OnInit {
 
   public loggedIn: boolean = false
 
-  constructor(private userAuthService: UserauthService) { }
+  constructor(private userAuthService: UserauthService){}
 
   setcurrentUserBgImage(evt: any) {
     this.bg_image = evt.user_bg

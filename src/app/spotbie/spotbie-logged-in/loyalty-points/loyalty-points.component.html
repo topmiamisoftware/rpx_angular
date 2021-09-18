@@ -7,7 +7,13 @@
         <h4 class="spotbie-text-gradient text-center text-uppercase mt-4 mb-5">SPOTBIE LOYALTY POINTS</h4>
 
         <p class="mb-4" (click)="initBusinessLoyaltyPoints()">   
+
             <span class='sb-loyalty-points'>{{ userLoyaltyPoints | number:'1.0':'en-US' }}</span>
+
+            <span class="sb-added-loyalty-points sb-text-light-green-gradient animated fadeOutUp" 
+                    *ngIf="newUserLoyaltyPoints !== null"
+                    #newBalanceLoyaltyPoints>+{{ newUserLoyaltyPoints | number:'1.0':'en-US' }}</span>
+
             <img class='sb-loyalty-points' src="../assets/images/spotbie-loyalty-points.svg" />            
         </p>    
 
@@ -87,7 +93,7 @@
             
             </form>               
             
-            <p class="spotbie-text-gradient text-uppercase mt-4" *ngIf="monthlyDollarValueCalculated">
+            <p class="spotbie-text-gradient text-uppercase mt-4" style="font-size: .8rem !important;" *ngIf="monthlyDollarValueCalculated">
                 monthly dollar value ${{ businessPointsDollarValue | number:'1.0':'en-US' }}
             </p>
 
@@ -120,8 +126,8 @@
 
         </div>
 
-        <app-business-menu [loyaltyPoints]="userLoyaltyPoints"></app-business-menu>
-
+        <app-business-menu [loyaltyPoints]="userLoyaltyPoints" (closeWindowEvt)="closeThis()"></app-business-menu>
+        
     </div>
     
     <div class="sb-closeButton" (click)="closeBusinessLoyaltyPoints()">

@@ -133,7 +133,7 @@ export class UserauthService {
     )  
 
   }
-
+  
   public saveSettings(user: User): Observable<any>{
 
     const saveSettingsApi = `${USER_API}/update`

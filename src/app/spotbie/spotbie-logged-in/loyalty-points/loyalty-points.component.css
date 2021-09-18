@@ -52,3 +52,24 @@ p{
     margin: 0 auto;
     max-width: 650px;
 }
+.sb-loyalty-points.sb-text-light-green-gradient{
+    position: absolute;
+    left: 0;
+    right: 0;
+    z-index: 99;
+    letter-spacing: unset;
+    line-height: unset;
+}
+.sb-loyalty-points-new{
+    font-size: 2.5rem;
+    line-height: 2.5rem;
+}
+.sb-added-loyalty-points{
+    position: absolute;
+    margin: 0 auto;
+    left: 0;
+    right: 0;
+    font-size: 3.5rem;
+    line-height: 3.5rem;
+    z-index: 999;
+}

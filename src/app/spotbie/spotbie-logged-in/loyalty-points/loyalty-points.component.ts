@@ -1,5 +1,7 @@
 import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { animateLoyaltyPoints } from 'src/app/helpers/animations/frequent.animations';
 import { LoyaltyPointsService } from 'src/app/services/loyalty-points/loyalty-points.service';
 
 @Component({
@@ -10,6 +12,8 @@ import { LoyaltyPointsService } from 'src/app/services/loyalty-points/loyalty-po
 export class LoyaltyPointsComponent implements OnInit {
 
   @Output() closeWindow = new EventEmitter
+
+  @ViewChild('newBalanceLoyaltyPoints') newBalanceLoyaltyPoints
 
   @ViewChild('businessLoyaltyPointsInfo') businessLoyaltyPointsInfo 
 
@@ -33,8 +37,26 @@ export class LoyaltyPointsComponent implements OnInit {
 
   public helpEnabled: boolean = false
 
-  constructor(private loyaltyPointsService : LoyaltyPointsService,
-              private formBuilder: FormBuilder){}
+  public qrCodeLink: string = null
+  public userHash: string = null
+  public loyaltyPointReward: number = null
+  public totalSpent: number = null
+
+  public newUserLoyaltyPoints: number = null
+
+  public userType: string = null
+
+  constructor(private loyaltyPointsService: LoyaltyPointsService,
+              private formBuilder: FormBuilder,
+              private router: Router,
+              route: ActivatedRoute){
+
+                if(this.router.url.indexOf('scan') > -1)                
+                  this.qrCodeLink = route.snapshot.params.qrCode
+                  this.loyaltyPointReward = route.snapshot.params.loyaltyPointReward
+                  this.totalSpent = route.snapshot.params.totalSpent
+                  this.userHash = route.snapshot.params.userHash
+              }
 
   public fetchLoyaltyPoints(){    
 
@@ -43,9 +65,11 @@ export class LoyaltyPointsComponent implements OnInit {
       resp => {
 
         if(resp.success){
+          
           this.userLoyaltyPoints = resp.loyalty_points.balance    
           this.userResetBalance = resp.loyalty_points.reset_balance 
           this.userPointToDollarRatio = resp.loyalty_points.loyalty_point_dollar_percent_value
+
         }       
 
       }
@@ -66,8 +90,12 @@ export class LoyaltyPointsComponent implements OnInit {
   get businessCoinPercentage() {return this.businessLoyaltyPointsForm.get('businessCoinPercentage').value }
   get f() { return this.businessLoyaltyPointsForm.controls }
 
-  public initBusinessLoyaltyPoints(){
-    
+  public initBusinessLoyaltyPoints(){    
+
+    if(this.userType === '4'){
+      return
+    }
+
     this.businessLoyaltyPointsOpen = true
     
     const coinValidators = [Validators.required]
@@ -78,8 +106,11 @@ export class LoyaltyPointsComponent implements OnInit {
       businessCoinPercentage: ['', businessCoinPercentageValidators], 
     })
 
-    this.businessLoyaltyPointsForm.get('businessLoyaltyPoints').setValue(this.userResetBalance)
-    this.businessLoyaltyPointsForm.get('businessCoinPercentage').setValue(this.userPointToDollarRatio)
+    if(this.userLoyaltyPoints > 0 && this.userResetBalance > 0){
+      this.businessLoyaltyPointsForm.get('businessLoyaltyPoints').setValue(this.userResetBalance)
+      this.businessLoyaltyPointsForm.get('businessCoinPercentage').setValue(this.userPointToDollarRatio)
+      this.calculateDollarValue()       
+    }
 
     this.businessLoyaltyPointsFormUp = true    
     this.loading = false
@@ -114,6 +145,7 @@ export class LoyaltyPointsComponent implements OnInit {
     if(resp.success){
       this.loading = false
       this.businessLoyaltyPointsInfo.nativeElement.innerHTML = "Your loyalty point monthly budget was updated <i class='fa fa-check'></i>"
+      location.reload()
     }
 
   }
@@ -138,24 +170,68 @@ export class LoyaltyPointsComponent implements OnInit {
     this.monthlyDollarValueCalculated = false
     this.businessPointsDollarValue = '0'
     this.businessLoyaltyPointsForm = null
-    this.businessLoyaltyPointsFormUp = false
+    this.businessLoyaltyPointsFormUp = false    
 
   }
 
   public closeThis(){
-    this.closeWindow.emit()
+    
+    if(this.router.url.indexOf('scan') > -1){
+      this.router.navigate(['/user-home'])
+    } else {
+      this.closeWindow.emit()
+    }
+
   }
 
   public toggleHelp(){
     this.helpEnabled = !this.helpEnabled
   }
 
-  ngOnInit(): void {
+  public addLoyaltyPoints(){
+
+    this.loading = true
+
+    let addPointsObj: any = {
+      qr_code_link: this.qrCodeLink,
+      user_hash: this.userHash,
+      totalSpent: this.totalSpent,
+      loyaltyPointReward: this.loyaltyPointReward
+    }
+    
+    this.loyaltyPointsService.addLoyaltyPoints(addPointsObj).subscribe(
+      resp => {   
+        //console.log("resp", resp)   
+        this.addLoyaltyPointsCb(resp)      
+      }
+    )
+
+  }
+
+  public addLoyaltyPointsCb(resp: any){
+
+    //console.log("addLoyaltyPointsCb", resp)
+
+    if(resp.success){      
+
+      this.userLoyaltyPoints = resp.newBalance
+      this.newUserLoyaltyPoints = this.loyaltyPointReward
+
+    }
 
     this.loading = false
 
+  }
+
+  ngOnInit(): void {
+
+    this.userType = localStorage.getItem('spotbie_userType')
+
+    this.loading = false
+    
     this.fetchLoyaltyPoints()
 
+    if(this.qrCodeLink !== null) this.addLoyaltyPoints()
 
   }
 

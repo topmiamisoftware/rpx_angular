@@ -1,7 +1,7 @@
 <!-- 
     READ ME PLEASE
     Author: Franco Petitfour
-    Note: Please don't delete any of the comments in this file. We will need it for another project, thanks.
+    Note: Please don't delete any of the comments (& COMMENTED CODE) in this file. We will need it for another project, thanks.
 -->
 
 <table class="spotbie-el-100
@@ -15,15 +15,20 @@
       <i class="fa fa-times" *ngIf="menuActive"></i>
     </td>  
   
-    <td style="width: 35%;">
+    <td style="width: 45%;">
       
-      <img class="spotbie-header-mini-logo" src="assets/images/spotbie_logo_header.svg" />
+      <img class="spotbie-header-mini-logo" src="assets/images/spotbie_logo_header.svg"  (click)="home()" />
 
       <span class='sb-loyalty-points' (click)="toggleLoyaltyPoints()" >{{ userLoyaltyPoints | number:'1.0':'en-US' }}</span>
       
       <img class='sb-loyalty-points' (click)="toggleLoyaltyPoints()"  src="assets/images/spotbie-loyalty-points.svg" />
-      <img class='sb-qr' (click)="openQRScanner()"   src="assets/images/spotbie-qr.svg" /> 
+
+      <img class='sb-qr' (click)="toggleQRScanner()"  src="assets/images/spotbie-qr.svg" /> 
       
+      <div *ngIf="this.userType == '1'" class="sb-businessMenu">
+        <i class='sb-qr fa fa-bars' (click)="openBusinessMenu()"></i>
+      </div>
+
       <span class='sb-userName' (click)="openWindow(settingsWindow)" *ngIf="userName !== null">Welcome, {{ userName }}</span>         
     
     </td>    
@@ -113,6 +118,8 @@
 
 <div class="spotbie-menu-page-padding-top-not-logged"></div>
 
+<!-- PLEASE DO NOT DELETE THE CODE BELOW, WE WILL NEED IT FOR SOMETHING ELSE -->
+
 <!--<div class='spotbie-apps-overlay' *ngIf="apps_overlay">  
 
   <div class='spotbie-bg-filler'></div>
@@ -144,9 +151,17 @@
 
 <app-loyalty-points (closeWindow)="toggleLoyaltyPoints()" *ngIf="LoyaltyPointsApp.open" #spotbieLoyaltyPoints></app-loyalty-points>
 
+<div class='spotbie-overlay-window' *ngIf="businessMenuApp.open">
+  <app-business-menu (closeWindowEvt)="closeBusinessMenu()" class="mt-4"></app-business-menu>
+</div>
+
+<app-qr (closeThisEvt)="toggleQRScanner()" *ngIf="qrCode"></app-qr>
+
 <app-map *ngIf="mapApp.open" #spotbieMap></app-map>
 
 <app-settings *ngIf="settingsWindow.open"></app-settings>
+
+<!-- PLEASE DO NOT DELETE THE CODE BELOW, WE WILL NEED IT FOR SOMETHING ELSE -->
 
 <!--<app-profile-header *ngIf="bg_image_ready"
                     [album_id]="album_id"

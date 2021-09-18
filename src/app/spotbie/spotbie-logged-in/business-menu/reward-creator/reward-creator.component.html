@@ -2,6 +2,8 @@
 
 <div class="spotbie-overlay-window">
 
+    <div #spbTopAnchor></div>
+
     <div class='sb-rewardCreatorWrapper'>
 
         <h6 class="spotbie-text-gradient text-uppercase text-center mt-2">Loyalty Points This Month</h6>
@@ -9,15 +11,17 @@
         <h5 class="spotbie-text-gradient text-uppercase text-center mt-4 mb-4" style="font-size: 1.5rem;">
             {{ userLoyaltyPoints | number:'1.0':'en-US' }}
         </h5>
-
+        
         <h4 class="spotbie-text-gradient text-center text-uppercase pt-3 mb-5">LOYALTY MENU ITEM CREATOR</h4>
 
         <form [formGroup]="rewardCreatorForm" *ngIf="rewardCreatorFormUp">
 
-            <div *ngIf="rewardFormSubmitted && f.rewardValue.errors else rewardTypeTemplate" 
-                    class="spotbie-input-info mt-4 mb-4 spotbie-text-gradient spotbie-error">
+            <div class='spotbie-text-gradient text-uppercase text-center' #spbInputInfo></div>
+
+            <div *ngIf="rewardFormSubmitted && f.rewardType.errors else rewardTypeTemplate" 
+                    class="spotbie-input-info mt-4 mb-4 text-uppercase spotbie-text-gradient spotbie-error">
             
-                <div *ngIf="f.rewardValue.errors.required">
+                <div *ngIf="f.rewardType.errors.required">
                     You must pick a reward type!
                 </div>
                 
@@ -34,22 +38,22 @@
             <mat-form-field class="sb-input text-uppercase" appearance="fill">
 
                 <mat-label>Reward Type</mat-label>
+                
+                <mat-select formControlName="rewardType" (selectionChange)="rewardTypeChange()">
 
-                <mat-select formControlName="rewardValue" (selectionChange)="rewardTypeChange()">
-
-                  <mat-option *ngFor="let rewardTypeName of rewardTypeList" [value]="rewardTypeName">{{rewardTypeName}}</mat-option>
+                  <mat-option *ngFor="let rewardTypeName of rewardTypeList; let i = index;" [value]="i">{{rewardTypeName}}</mat-option>
 
                 </mat-select>
                 
             </mat-form-field>
 
             <div *ngIf="rewardFormSubmitted && f.rewardValue.errors else rewardValueNormalTemplate" 
-                    class="spotbie-input-info mt-4 mb-4 spotbie-text-gradient spotbie-error">
+                    class="spotbie-input-info mt-2 mb-4 text-uppercase spotbie-text-gradient spotbie-error">
             
                 <div *ngIf="f.rewardValue.errors.required">
-                    You must enter a value!
-                </div>
-                
+                    How many Loyalty points is this reward worth?
+                </div>                           
+
             </div> 
             
             <ng-template #rewardValueNormalTemplate>
@@ -65,13 +69,19 @@
                     (keyup)="calculateDollarValue()"
                     formControlName="rewardValue" 
                     type="text" 
-                    placeholder="0" 
+                    placeholder="250" 
                     maxlength="6"
                     thousandSeparator="," 
                     mask="separator.0" />  
+            
+            <h6 class='mt-3 mb-3 spotbie-text-gradient text-uppercase' 
+                style="font-size: .8rem !important;" 
+                *ngIf="dollarValueCalculated && businessPointsDollarValue">
+                ${{ businessPointsDollarValue }} dollar value
+            </h6>
 
             <div *ngIf="rewardFormSubmitted && f.rewardName.errors else rewardNameNormalTemplate" 
-                    class="spotbie-input-info mt-4 mb-4 spotbie-text-gradient spotbie-error">
+                    class="spotbie-input-info mt-4 mb-4 text-uppercase spotbie-text-gradient spotbie-error">
     
                 <div *ngIf="f.rewardName.errors.required">
                     Enter the name of your reward.
@@ -95,10 +105,11 @@
                     (click)="$event.target.select()"
                     formControlName="rewardName" 
                     type="text"
+                    placeholder="My Reward"
                     maxlength="50" /> 
 
             <div *ngIf="rewardFormSubmitted && f.rewardDescription.errors else rewardDescriptionNormalTemplate" 
-                    class="spotbie-input-info mt-4 mb-4 spotbie-text-gradient spotbie-error">
+                    class="spotbie-input-info mt-4 mb-4 text-uppercase spotbie-text-gradient spotbie-error">
 
                 <div *ngIf="f.rewardDescription.errors.required">
                     Enter the description of your reward.
@@ -122,34 +133,54 @@
 
             </ng-template>
 
-            <textarea class='spotbie-textarea spotbie-text-gradient' 
+            <textarea class='spotbie-textarea spotbie-text-gradient mb-2' 
                         (click)="$event.target.select()" 
                         formControlName="rewardDescription" 
                         maxlength="150"
+                        placeholder="Reward Description"
                         style="margin: 0 auto;"></textarea>
+
+            <span class='spotbie-text-gradient text-uppercase'>{{ rewardDescription.length }} / 150</span>
+
+            <input type="hidden" formControlName="rewardImage" />
 
         </form>
 
-        <form>
+        <form *ngIf="rewardType == 0">                    
+
+            <div *ngIf="rewardFormSubmitted && f.rewardImage.errors else rewardMediaUploadInfoTemplate" 
+                    class="spotbie-input-info mt-4 mb-4 text-uppercase spotbie-text-gradient spotbie-error">
+
+                <div *ngIf="f.rewardImage.errors.required">
+                    Please upload an image for your reward.
+                </div>
+                
+            </div> 
             
-            <h6 class="spotbie-text-gradient text-uppercase mt-5 mb-4" #rewardMediaUploadnfo>
-                {{ rewardMediaMessage }}
-            </h6>
-            
+            <ng-template #rewardMediaUploadInfoTemplate>
+
+                <div class="spotbie-input-info spotbie-text-gradient text-uppercase mt-4 mb-4" #rewardMediaUploadInfo>
+                    {{ rewardMediaMessage }}
+                </div>     
+
+            </ng-template>
+
             <input type="file" 
-                class='spotbie-background-upload-input' 
-                #rewardMediaInput 
-                (change)="uploadMedia(rewardMediaInput.files)" 
-                accept="image/jpeg, image/gif, image/png"
-                multiple=false >
+                    class='spotbie-background-upload-input' 
+                    #rewardMediaInput 
+                    (change)="uploadMedia(rewardMediaInput.files)" 
+                    accept="image/jpeg, image/gif, image/png"
+                    multiple=false />
 
             <div class='spotbie-upload-new-background-holder' 
-                [ngStyle]="{ 'background' : 'url(' + rewardUploadImage + ')' }"
-                (click)="startRewardMediaUploader()"
-                #spotbieRewardUploader>
+                    [ngStyle]="{ 'background' : 'url(' + rewardUploadImage + ')' }"
+                    (click)="startRewardMediaUploader()"
+                    #spotbieRewardUploader>
+
                 <div class='spotbie-click-or-drag-upload'>
                     <span class="spotbie-text-gradient text-uppercase">tap or drag to upload</span>
                 </div>
+
             </div>
 
         </form>
@@ -158,6 +189,47 @@
             SAVE
         </div>    
 
+        <div class='mt-3 mb-5 sb-deleteMe' *ngIf="reward !== null && reward !== undefined" (click)="deleteMe()">
+            <i class='fa fa-trash'></i>
+            <span class="spotbie-text-gradient">DELETE ME</span>
+        </div>
+
     </div>
     
+    <div class="sb-closeButton" (click)="closeThis()">
+        <i class="fa fa-times"></i>
+    </div>
+
+</div>
+
+<div class='spotbie-overlay-window' *ngIf="rewardCreated">
+
+    <div class='sb-v-wrapper' style="display: grid; align-content: center;">
+        
+        <h4 class="spotbie-text-gradient text-uppercase">YOUR REWARD UPLOAD WAS SUCCESSFUL</h4>
+
+        <div class="sb-verificationCheck mt-4 mb-4">
+            <i class="fa fa-check"></i>
+        </div>
+
+        <h4 class="spotbie-text-gradient text-uppercase">YOU ARE READY TO START</h4>
+
+    </div>
+
+</div>
+
+<div class='spotbie-overlay-window' *ngIf="rewardDeleted">
+
+    <div class='sb-v-wrapper' style="display: grid; align-content: center;">
+        
+        <h4 class="spotbie-text-gradient text-uppercase">YOUR REWARD WAS DELETED</h4>
+
+        <div class="sb-verificationCheck mt-4 mb-4">
+            <i class="fa fa-check"></i>
+        </div>
+
+        <h4 class="spotbie-text-gradient text-uppercase">CLICK TO CONTINUE</h4>
+
+    </div>
+
 </div>

@@ -53,6 +53,18 @@
     min-height: 30px;
     max-height: 30px;
 }
+.sb-businessMenu{
+    display: inline-block;
+    margin-left: 20px;
+    color: #01a79d;
+    cursor: pointer;
+    line-height: 20px;
+    font-size: 27px;
+    vertical-align: middle;
+}
+.sb-businessMenu:hover{
+    font-size: 29px; 
+}
 span.sb-loyalty-points{
     font-size: 1rem !important;
     color: #fff !important;

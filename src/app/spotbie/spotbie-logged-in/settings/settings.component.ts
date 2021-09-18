@@ -33,6 +33,7 @@ declare const google: any
 export class SettingsComponent implements OnInit {
 
   @ViewChild('spotbieSettingsInfoText') spotbieSettingsInfoText
+
   @ViewChild('spotbie_password_change_info_text') spotbiePasswordInfoText
   @ViewChild('current_password_info') spotbieCurrentPasswordInfoText
 
@@ -247,7 +248,7 @@ export class SettingsComponent implements OnInit {
     if (this.placeToEatSettingsForm.invalid) {
 
       this.loading = false
-      this.spotbieSettingsInfoText.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      this.spotbieSettingsWindow.nativeElement.scrollTo(0,0)
       
       return
 
@@ -735,7 +736,7 @@ export class SettingsComponent implements OnInit {
           
       }
 
-      this.spotbieSettingsInfoText.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      this.spotbieSettingsWindow.nativeElement.scrollTo(0,0)
 
     } else
       console.log(resp)
@@ -932,7 +933,7 @@ export class SettingsComponent implements OnInit {
     if (this.settingsForm.invalid) {
 
       this.loading = false
-      this.spotbieSettingsInfoText.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      this.spotbieSettingsWindow.nativeElement.scrollTo(0,0)
       
       return
 
@@ -964,9 +965,11 @@ export class SettingsComponent implements OnInit {
 
     if (resp.success) {
 
-      console.log("saved settings", resp)
-
-      this.spotbieSettingsInfoText.nativeElement.innerHTML = `Your settings were saved <i class='fa fa-check' style="color: #64e56f;"></i>`
+      this.spotbieSettingsInfoText.nativeElement.innerHTML = `
+        <span class='sb-text-light-green-gradient'>
+          Your settings were saved <i class='fa fa-check' style="color: #64e56f;"></i>        
+        </span>
+      `
 
       this.spotbieSettingsWindow.nativeElement.scrollTo(0,0)
 

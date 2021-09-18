@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, EventEmitter, Output, ɵConsole, HostListener, Input } from '@angular/core'
 import { HttpClient, HttpHeaders, HttpEventType } from '@angular/common/http'
 import * as spotbieGlobals from '../../globals'
-import { StreamerService } from '../../streamer/streamer-services/streamer.service'
+import { StreamerService } from '../streamer-services/streamer.service'
 import { DomSanitizer } from '@angular/platform-browser'
 import * as mobile_js_i from '../../../assets/scripts/mobile_interface.js'
 import { videoEmbedCheck } from '../../helpers/video-check'

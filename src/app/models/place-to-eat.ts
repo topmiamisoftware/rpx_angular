@@ -10,5 +10,6 @@ export class PlaceToEat {
     public loc_y: number = null
     public created_at: string = null
     public updated_at: string = null
+    public qr_code_link: string = null
 
 }

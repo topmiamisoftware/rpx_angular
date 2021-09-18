@@ -11,6 +11,9 @@
     max-height: 15px;
     white-space: nowrap;
 }
+.spotbie-overlay-window{
+    z-index: 999;
+}
 .sb-desktopNavBar{
     cursor: default;
 }

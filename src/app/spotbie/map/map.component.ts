@@ -170,7 +170,7 @@ export class MapComponent implements OnInit {
               private deviceService: DeviceDetectorService,
               private webOptionsService: ColorsService,
               private mapIconPipe: MapObjectIconPipe) { }
-  
+
   /** 
    * Will close current search results, save the current user's location, and draw the user's position
    * in the map.
@@ -657,7 +657,7 @@ export class MapComponent implements OnInit {
 
         this.searchApiUrl = YELP_BUSINESS_SEARCH_API
         this.searchCategoriesPlaceHolder = 'Search Places to Eat...'
-        this.categories = this.food_categories   
+        this.categories = this.food_categories
         break
 
       case 'shopping':
@@ -737,6 +737,8 @@ export class MapComponent implements OnInit {
 
       if (this.searchCategory == 'events') {
         
+        //Used for loading events from ticketmaster API
+
         api_url = `size=20&latlong=${this.lat},${this.lng}&keyword=${search_term}&radius=45`
 
         const search_obj = {
@@ -750,6 +752,8 @@ export class MapComponent implements OnInit {
         )
 
       } else {
+
+        //Used for loading places to eat and shopping from yelp
 
         api_url = `${this.searchApiUrl}?latitude=${this.lat}&longitude=${this.lng}&term=${search_term}&${this.showOpenedParam}&radius=40000&sort_by=best_match&limit=50&offset=${this.current_offset}`
 
