@@ -66,7 +66,6 @@ export class MapComponent implements OnInit {
   public showingOpenedStatus: string = 'Show Opened and Closed'
   public searchApiUrl: string
   
-
   public map_zoom: number = 18
   public lat:   number
   public lng:   number
@@ -165,6 +164,8 @@ export class MapComponent implements OnInit {
   public isDesktop: boolean = false
   public isTablet: boolean = false
   public isMobile: boolean = false
+
+  public loadingText: string = null
 
   constructor(private locationService: LocationService,
               private deviceService: DeviceDetectorService,
@@ -640,8 +641,6 @@ export class MapComponent implements OnInit {
 
     }
 
-    this.loading = true
-
     if(this.searchCategory !== undefined) this.previousSeachCategory = this.searchCategory
 
     if(category == 'users'){
@@ -678,7 +677,6 @@ export class MapComponent implements OnInit {
     }
 
     this.catsUp = true
-    this.loading = false
 
   }
 
@@ -1110,6 +1108,10 @@ export class MapComponent implements OnInit {
 
   }
 
+  /**
+   * Fucntion gets called when the navigator's GPS system has found the user's location.
+   * @param position
+   */
   public showPosition(position: any ): void {
     
     this.locationFound = true
@@ -1127,7 +1129,7 @@ export class MapComponent implements OnInit {
     }
 
     this.showMobilePrompt2 = false
-
+    //this.loading = false
 
   }
 
@@ -1382,22 +1384,11 @@ export class MapComponent implements OnInit {
 
   }
 
-  public mobilePrompt2Toggle(){
-
-    this.loading = false
-    this.showMobilePrompt2 = false
-
-  }
-
-  public mobilePrompt2ToggleOff(){
-
-    this.loading = false
-    this.showMobilePrompt2 = false
-
-  }
-
   public mobileStartLocation(){
     
+    this.loading = true 
+    this.loadingText = " finding user position"
+
     if (window.navigator.geolocation) window.navigator.geolocation.getCurrentPosition(this.showPosition.bind(this)) 
 
     this.showMobilePrompt = false

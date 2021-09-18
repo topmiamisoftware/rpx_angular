@@ -17,6 +17,11 @@
             <img class='sb-loyalty-points' src="../assets/images/spotbie-loyalty-points.svg" />            
         </p>    
 
+        <div class='spotbie-text-gradient mt-4 mb-4' 
+                style="cursor: pointer;"
+                *ngIf="userType !== '4'"
+                (click)="resetMyBalance()">RESET BALANCE <i class='fa fa-refresh'></i></div>
+
         <div class='sb-button text-uppercase' (click)="closeThis()">
             CLOSE
         </div>

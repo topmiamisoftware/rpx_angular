@@ -871,9 +871,23 @@ p.sb-helpInfo{
 }
 
 /**WIDTH MEDIA QUERIES */
+@media (max-width: 1440px) {
+    
+    .spotbie-full-qrCode{
+        border-radius: 20px;
+        min-width: 400px;
+        width: 400px;
+        min-height: 400px;
+        height: 400px;
+        box-shadow: 0 15px 60px -15px #198754, 0 20px 15px -20px #64e56f; 
+    }
+
+}
+
 @media (max-width: 1300px) { 
 
 }
+
 @media (max-width: 1200px) {   
 
     .sb-mainWrapper{

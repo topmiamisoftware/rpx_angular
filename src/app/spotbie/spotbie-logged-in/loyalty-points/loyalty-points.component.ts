@@ -223,6 +223,13 @@ export class LoyaltyPointsComponent implements OnInit {
 
   }
 
+  /**
+   * Will reset the user's loyalty point balance to their current reset value.
+   */
+  public resetMyBalance(): void{
+
+  }
+
   ngOnInit(): void {
 
     this.userType = localStorage.getItem('spotbie_userType')

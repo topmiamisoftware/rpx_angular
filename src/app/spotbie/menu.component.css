@@ -408,9 +408,13 @@ img.sb-qr:hover{
     color: #32303e !important;
     border-radius: 5px;
 }
-/**WIDTH MEDIA QUERIES */
-@media (max-width: 1300px) { 
 
+/**WIDTH MEDIA QUERIES */
+@media (max-width: 1600px) { 
+    .sb-userName,
+    .spotbie-menu-fixed-logged-out span{
+        font-size: .6rem;
+    }
 }
 @media (max-width: 1200px) {   
     .spotbie-menu-fixed-logged-out,

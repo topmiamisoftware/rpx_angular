@@ -1,4 +1,4 @@
-<app-loading-screen *ngIf="loading"></app-loading-screen>
+<app-loading-screen *ngIf="loading" text="loadingText"></app-loading-screen>
 
 <div [ngClass]="getMapWrapperClass()">
   
@@ -163,10 +163,9 @@
 
   </div>
 
-  <div class="map-prompt-mobile" style="pointer-events: none;" *ngIf="showMobilePrompt2">
+  <div class="map-prompt-mobile pe-none" *ngIf="showMobilePrompt2">
 
-    <div class="title">
-      Double Tap to Start.
+    <div class="spotbie-text-gradient text-uppercase title" id="doubleTapThis">
     </div>
 
   </div>
@@ -177,7 +176,7 @@
             [latitude]="lat" 
             [longitude]="lng"
             [styles]="map_styles"
-            [zoom]="18"
+            [zoom]="25"
             [fitBounds]="true">
 
     <agm-overlay [latitude]="lat" [longitude]="lng" *ngIf="locationFound">
@@ -199,7 +198,7 @@
 
         <agm-info-window #spotbie_user_marker_info_window [isOpen]="true">
           
-          <div class='agm_infowindow_color'>{{ spotbie_username }}</div>
+          <div class='agm_infowindow_color spotbie-text-gradient'>{{ spotbie_username }}</div>
           
         </agm-info-window>
 
@@ -407,6 +406,7 @@
         <td (click)="sortBy(3)" [ngStyle]="{ 'border-right' : 'unset' }"  title="Sory By Pricing"><img src='assets/images/money.png' /></td>     
       </tr>    
     </table>
+
     <table (click)="showOpen()" title="Opened or Closed" [ngStyle]="{ 'border-right' : 'unset' }" *ngIf="searchCategorySorter == 'shopping'">
       <td><span class='fa fa-circle spotbie-is-open'></span></td>
       <td *ngIf="showOpened == false"><span class='fa fa-circle spotbie-is-closed'></span></td>

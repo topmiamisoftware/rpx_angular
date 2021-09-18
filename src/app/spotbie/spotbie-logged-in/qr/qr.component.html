@@ -6,18 +6,11 @@
 
 <div class='spotbie-overlay-window' *ngIf="isBusiness">
     
-    <div class='sb-v-wrapper' style="display: grid; align-content: center;">
-
-        <h5 *ngIf="rewardPrompted" class="spotbie-text-gradient text-center text-uppercase pt-5 mb-3">GIFT THEM LOYALTY POINTS</h5>
-
-        <ngx-qrcode [elementType]="qrType" 
-                    [value]="placeToEat.qr_code_link"
-                    width="450"
-                    cssClass="spotbie-full-qrCode mt-4 mb-4"
-                    colorDark="#000"
-                    colorLight="#64e56f"
-                    errorCorrectionLevel="H"
-                    *ngIf="rewardPrompted"></ngx-qrcode>
+    <div class='sb-v-wrapper' style="display: grid; align-content: center;" *ngIf="!rewardPrompted">
+        
+        <h5 class="spotbie-text-gradient text-center text-uppercase mt-5 mb-3">
+            AWARD YOUR LOYALTY POINTS
+        </h5>
 
         <form [formGroup]="businessLoyaltyPointsForm" *ngIf="businessLoyaltyPointsFormUp">
 
@@ -45,24 +38,43 @@
                 maxlength="7"
                 thousandSeparator="," 
                 mask="separator.0" />
-
         </form>
+
+        <button class='sb-button text-uppercase mt-4' (click)="calculateLoyaltyPointValue()">
+            AWARD
+        </button>
+
+    </div>
+
+    <div class='sb-v-wrapper' style="display: block; align-content: center;" *ngIf="rewardPrompted">
+
+        <h5 *ngIf="rewardPrompted" class="spotbie-text-gradient text-center text-uppercase mt-5 mb-3">LET USER SCAN FOR REWARD</h5>
+
+        <ngx-qrcode [elementType]="qrType" 
+                    [value]="placeToEat.qr_code_link"
+                    width="450"
+                    cssClass="spotbie-full-qrCode mt-4 mb-4"
+                    colorDark="#000"
+                    colorLight="#64e56f"
+                    errorCorrectionLevel="H"></ngx-qrcode>
     
-        <p class="spotbie-text-gradient text-center mt-4 text-uppercase" *ngIf="rewardPrompted">
+        <p class="spotbie-text-gradient text-center mt-4 text-uppercase">
             Total Points <span class='sb-text-light-green-gradient'>{{ loyaltyPointReward | number:'1.0':'en-US' }}</span>
         </p>
 
-        <p class="spotbie-text-gradient text-center mt-3 text-uppercase" *ngIf="rewardPrompted">
+        <p class="spotbie-text-gradient text-center mt-3 text-uppercase">
             Dollar Value <span class='sb-text-light-green-gradient'>${{ loyaltyPointRewardDollarValue | number:'1.0':'en-US' }}</span>
         </p>
 
-        <p class="spotbie-text-gradient text-center mt-3 text-uppercase">Please only allow customers to scan this once per table or order.</p>
+        <p class="spotbie-text-gradient text-center mt-3 text-uppercase">CUSTOMERS scan once per table or order</p>
 
         <button class='sb-button text-uppercase mt-4' (click)="closeQr()">close</button>
 
         <div class="sb-closeButton" (click)="closeQr()">
             <i class="fa fa-times"></i>
         </div>
+        
+        <div class='pb-5'></div>
 
     </div>
 
@@ -95,10 +107,12 @@
         <h5 class="spotbie-text-gradient text-center text-uppercase pt-5 mb-5">SCAN AND EARN LOYALTY POINTS</h5>
 
         <div class="spotbie-full-qrCode scanner mt-4 mb-4">
+
             <zxing-scanner (scanSuccess)="scanSuccessHandler($event)"
                            (scanError)="scanErrorHandler($event)"
                            (scanFailure)="scanFailureHandler($event)"             
                            [formats]="['QR_CODE', 'EAN_13', 'CODE_128', 'DATA_MATRIX']"></zxing-scanner>
+                           
         </div>
 
         <p class="sb-helpInfo spotbie-text-gradient text-center mt-5 text-uppercase">

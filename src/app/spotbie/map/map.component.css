@@ -659,7 +659,7 @@ span.sb-button{
 .sb-footer p{
     color: #332f3e !important;
     cursor: pointer;
-    font-size: 1rem !important;
+    font-size: .6rem !important;
 }
 .sb-logo-withStreet{
     position: relative;
@@ -727,10 +727,9 @@ swiper{
     cursor: pointer;    
     left: 0;
     right: 0;
-    top: 50%;
-    transform: translateY(-50%);
+    top: 20%;
+    transform: translateY(-20%);
     text-align: center;
-    font-family: sitka-italic;
 }
 .map-prompt-mobile .sb-button:hover,
 .map-prompt-mobile .sb-button:focus{
@@ -799,6 +798,11 @@ swiper{
 }
 .sb-mapWrapper{
     overflow-y: scroll;
+}
+#doubleTapThis{
+    position: relative;
+    margin: 0 auto;
+    color: white;
 }
 /**WIDTH MEDIA QUERIES */
 @media (max-width: 1583px) { 
