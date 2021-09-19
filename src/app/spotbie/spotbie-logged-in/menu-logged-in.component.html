@@ -35,19 +35,19 @@
 
     <td *ngIf="isDesktop" class="sb-desktopNavBar" style="text-align: right;">
 
-      <span (click)="home()">
+      <span (click)="home()" *ngIf="this.userType === '4'">
         HOME
       </span>
 
-      <span (click)="spawnCategories('food')">
+      <span (click)="spawnCategories('food')" *ngIf="this.userType === '4'">
         PLACES TO EAT
       </span>
 
-      <span (click)="spawnCategories('shopping')"> 
+      <span (click)="spawnCategories('shopping')" *ngIf="this.userType === '4'"> 
         SHOPPING
       </span>
 
-      <span (click)="spawnCategories('events')" >
+      <span (click)="spawnCategories('events')" *ngIf="this.userType === '4'">
         EVENTS
       </span>
 
@@ -57,10 +57,6 @@
 
       <span (click)="openWindow(settingsWindow)">
         SETTINGS
-      </span>
-
-      <span (click)="goToBlog()">
-        BLOG
       </span>
 
       <span (click)="logOut()">

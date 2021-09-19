@@ -176,7 +176,7 @@
             [latitude]="lat" 
             [longitude]="lng"
             [styles]="map_styles"
-            [zoom]="25"
+            [zoom]="30"
             [fitBounds]="true">
 
     <agm-overlay [latitude]="lat" [longitude]="lng" *ngIf="locationFound">
@@ -198,7 +198,7 @@
 
         <agm-info-window #spotbie_user_marker_info_window [isOpen]="true">
           
-          <div class='agm_infowindow_color spotbie-text-gradient'>{{ spotbie_username }}</div>
+          <div class='agm_infowindow_color'>{{ spotbie_username }}</div>
           
         </agm-info-window>
 
