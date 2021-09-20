@@ -28,7 +28,7 @@ import { MatFormFieldModule } from '@angular/material/form-field'
 import { RewardComponent } from './business-menu/reward/reward.component'
 
 import { NgxQRCodeModule } from '@techiediaries/ngx-qrcode';
-import { ZXingScannerModule } from '@zxing/ngx-scanner'
+//import { ZXingScannerModule } from '@zxing/ngx-scanner'
 
 export const options : Partial<IConfig> | (() => Partial<IConfig>) = null;
 
@@ -58,7 +58,7 @@ export const options : Partial<IConfig> | (() => Partial<IConfig>) = null;
     MatFormFieldModule,
     RouterModule,
     NgxQRCodeModule,
-    ZXingScannerModule,
+    //ZXingScannerModule,
     NgxMaskModule.forRoot(options)
   ],
   providers: [
