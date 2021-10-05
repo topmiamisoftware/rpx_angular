@@ -52,6 +52,10 @@
 }
 .spotbie-overlay-window{
     padding-bottom: 80px;
+    background: url('../../../../assets/images/home_imgs/jpg/spotbie-login-background.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
 }
 .spotbie-help-text{
     margin-top: 30px;
@@ -112,7 +116,17 @@
         height: 250px;
         min-height: 250px;
         max-height: 250px;    
-    }                 
+    }     
+    .sb-logo{
+        max-width: 175px;
+        width: 175px;
+        min-width: 175px;
+        max-height: 55px;
+        min-height: 55px;        
+    }  
+    .spotbie-overlay-window{
+        padding-bottom: 100px !important;
+    }          
 }
 @media (max-width: 420px) { 
           

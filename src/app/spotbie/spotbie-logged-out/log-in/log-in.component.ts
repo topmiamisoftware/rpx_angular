@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core'
+import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core'
 import { FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { UserauthService } from '../../../services/userauth.service'
 import { HttpResponse } from '../../../models/http-reponse'
@@ -13,7 +13,7 @@ import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
   styleUrls: ['./log-in.component.css', '../../menu.component.css']
 })
 export class LogInComponent implements OnInit {
-
+ 
   @ViewChild('spotbieLogInIssues') spotbieLogInIssues
 
   public faEye = faEye
@@ -45,6 +45,8 @@ export class LogInComponent implements OnInit {
 
   public passwordShow: boolean = false
 
+  public business: boolean = false
+
   constructor(private host: MenuLoggedOutComponent = null,
               private formBuilder: FormBuilder,
               private userAuthService: UserauthService,
@@ -52,12 +54,12 @@ export class LogInComponent implements OnInit {
 
   public signInWithGoogle(): void {
     this.loading = true
-    this.userAuthService.signInWithGoogle(this.loginCallback.bind(this))
+    this.userAuthService.signInWithGoogle(this.loginCallback.bind(this), this.router.url)
   }
 
   public signInWithFB(): void {    
     this.loading = true
-    this.userAuthService.signInWithFB(this.loginCallback.bind(this))
+    this.userAuthService.signInWithFB(this.loginCallback.bind(this), this.router.url)
   }
 
   public togglePassword(){
@@ -228,7 +230,7 @@ export class LogInComponent implements OnInit {
   get password() { return this.logInForm.get('spotbiePassword').value }
   get f() { return this.logInForm.controls }
 
-  public closeWindow() {
+  public closeWindow(){
     this.host.closeWindow(this.host.logInWindow)
   }
 
@@ -241,6 +243,14 @@ export class LogInComponent implements OnInit {
     this.host.closeWindow(this.host.logInWindow)
   }
 
+  public usersHome(){
+    this.router.navigate(['/home'])
+  }
+
+  public businessHome(){
+    this.router.navigate(['/business'])
+  }
+
   ngOnInit() {
 
     this.loading = true
@@ -250,7 +260,9 @@ export class LogInComponent implements OnInit {
     this.bg_color = '#181818'
 
     this.current_login_photo = 'assets/images/user.png'
-      
+
+    this.router.url === '/business' ? this.business = true : this.business = false
+
     this.initLogInForm()
 
     const remember_me = localStorage.getItem('spotbie_rememberMe')

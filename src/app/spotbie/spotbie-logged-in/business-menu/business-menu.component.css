@@ -72,3 +72,35 @@
     padding-bottom: 5px;
     text-transform: uppercase;
 }
+
+@media (max-width: 1024px){
+    .sb-menuItemWrapper{
+        width: 96%;
+        min-width: 96%;
+        max-width: 96%;
+    }
+}
+@media (max-width: 460px) { 
+    h4{
+        font-size: 1rem;        
+    }
+    #sp-loyaltyMenuTitle{
+        margin-bottom: 20px !important;
+    }
+    p{
+        font-size:.8rem;
+    }
+    .sb-menuItem,
+    .sb-addMenuItem{
+        max-width: 48%;
+        width: 48%;
+        min-width: 48%;
+        height: 48vw;
+        min-height: 48vw;
+        max-height: 48vw;
+        font-size: .8rem;
+    }
+    .sb-addMenuItem h6{
+        font-size: .6rem;
+    }
+}

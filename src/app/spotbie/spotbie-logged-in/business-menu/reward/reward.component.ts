@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { PlaceToEatItem } from 'src/app/models/place-to-eat-item';
+import { Reward } from 'src/app/models/reward';
 
 @Component({
   selector: 'app-reward',
@@ -8,7 +8,7 @@ import { PlaceToEatItem } from 'src/app/models/place-to-eat-item';
 })
 export class RewardComponent implements OnInit {
 
-  @Input('reward') reward: PlaceToEatItem
+  @Input('reward') reward: Reward
 
   public loading: boolean = false
 

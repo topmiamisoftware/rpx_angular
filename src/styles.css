@@ -68,6 +68,7 @@ body {
     background-color: black !important;
     color: white;
     overflow-x : hidden;
+    overflow-y: hidden;
     height: unset !important; 
     font-family: Gotham-Book !important;
 }
@@ -99,6 +100,12 @@ textarea:active {
 
     outline: none;
 
+}
+.cursor-pointer{
+    cursor: pointer
+}
+.no-cursor{
+    cursor: default;
 }
 .sb-scroll-y{
     overflow-y: scroll;
@@ -260,19 +267,19 @@ a, a:hover, a:active, a:after{
     margin-bottom: 30px;
 }
 .spotbie-gradient-link{
-    background: -webkit-linear-gradient(45deg,#eee,#a7a1a1, #eee);
+    background: -webkit-linear-gradient(45deg,#eee,#ffffff, #eee);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 .spotbie-text-link{
-    background: -webkit-linear-gradient(45deg,#eee,#a7a1a1, #eee);
+    background: -webkit-linear-gradient(45deg,#eee,#ffffff, #eee);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     cursor: pointer;
     letter-spacing: 2px;
 }
 .spotbie-text-gradient{
-    background: -webkit-linear-gradient(45deg,#eee,#a7a1a1, #eee);
+    background: -webkit-linear-gradient(45deg,#eee,#ffffff, #eee);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     letter-spacing: 2px;

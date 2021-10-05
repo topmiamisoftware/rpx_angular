@@ -150,8 +150,10 @@ export class MenuLoggedInComponent implements OnInit {
   }
 
   public spawnCategories(category: string): void{
+
     if(!this.isDesktop) this.slideMenu()
     this.spotbieMap.spawnCategories(category)
+
   }
 
   goToBlog(){
@@ -162,16 +164,10 @@ export class MenuLoggedInComponent implements OnInit {
     this.spotbieMap.mobileStartLocation()
   }
 
-  public fetchLoyaltyPoints(): void{
-    this.loyaltyPointsService.fetchLoyaltyPoints().subscribe(
-      resp => {
+  public async getLoyaltyPointBalance(){
 
-        if(resp.success)
-          this.userLoyaltyPoints = resp.loyalty_points.balance
-        
+    let resp = await this.loyaltyPointsService.getLoyaltyPointBalance()
 
-      }
-    )
   }
 
   public openBusinessMenu(){
@@ -182,8 +178,27 @@ export class MenuLoggedInComponent implements OnInit {
     this.businessMenuApp.open = false
   } 
 
+  public getPointsWrapperStyle(){
+
+    if(this.isMobile){
+      return { 'width:' : '85%', 'text-align' : 'right' }
+    } else {
+      return { 'width' : '45%' }
+    }
+    
+  }
+
   ngOnInit() : void {
     
+
+     this.loyaltyPointsService.userLoyaltyPoints$.subscribe(
+
+      loyaltyPointsBalance =>{
+        this.userLoyaltyPoints = loyaltyPointsBalance.balance
+      }
+
+    )
+
     this.isMobile = this.deviceService.isMobile()
     this.isDesktop = this.deviceService.isDesktop()
     this.isTablet = this.deviceService.isTablet()
@@ -192,22 +207,11 @@ export class MenuLoggedInComponent implements OnInit {
 
     const activatedRoute = this.location.path()
 
-    let userType = localStorage.getItem('spotbie_userType')
-    this.userType = userType
-
-    if(this.isMobile || this.isTablet) this.slideMenu()
-
-    if(activatedRoute == '/user-home'){
-
-      //Check if the user type is set and open the chooseAccountType window if not.
-      if(userType == '0') this.settingsWindow.open = true
-
-    }
+    this.userType = localStorage.getItem('spotbie_userType')
 
     this.userName = localStorage.getItem('spotbie_userLogin')
 
-
-    this.fetchLoyaltyPoints()
+    this.getLoyaltyPointBalance()
 
   }
 

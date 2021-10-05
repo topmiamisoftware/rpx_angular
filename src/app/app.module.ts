@@ -18,7 +18,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { TokenInterceptor } from './helpers/token-interceptor/token-interceptor.service'
 import { ServiceWorkerModule } from '@angular/service-worker'
 import { environment } from '../environments/environment'
-import { TermsComponent } from './terms/terms.component'
+import { TermsComponent } from './spotbie/terms/terms.component'
 import { BugsComponent } from './bugs/bugs.component'
 import { TransferHttpCacheModule } from '@nguniversal/common'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
@@ -28,7 +28,11 @@ import {
   GoogleLoginProvider,
   FacebookLoginProvider
 } from 'angularx-social-login'
+
 import { UserauthService } from './services/userauth.service'
+
+import { StoreModule } from '@ngrx/store'
+import { loyaltyPointsReducer } from './spotbie/spotbie-logged-in/loyalty-points/loyalty-points.reducer'
 
 @NgModule({
   declarations: [
@@ -50,8 +54,11 @@ import { UserauthService } from './services/userauth.service'
     UserModule,
     HelperModule,
     BrowserAnimationsModule,
-    SocialLoginModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })  
+    SocialLoginModule, 
+    StoreModule.forRoot({ 
+      loyaltyPoints: loyaltyPointsReducer
+    }),       
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }), 
   ],  
   providers: [
     {

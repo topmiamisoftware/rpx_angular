@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { UserHomeComponent } from './user-home.component';
-import { MenuLoggedInRoutingModule } from '../spotbie/spotbie-logged-in/menu-logged-in-routing.module';
+import { MenuLoggedInModule } from '../spotbie/spotbie-logged-in/menu-logged-in.module';
 import { RouterModule, Routes } from '@angular/router';
 import { HelperModule } from '../helpers/helper.module';
 
@@ -16,7 +16,7 @@ const routes : Routes = [
   imports: [
     CommonModule,
     HelperModule,
-    MenuLoggedInRoutingModule,
+    MenuLoggedInModule,
     RouterModule.forChild(routes)
   ],
   exports: [UserHomeComponent]

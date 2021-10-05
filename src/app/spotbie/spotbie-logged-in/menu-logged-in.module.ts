@@ -10,8 +10,7 @@ import { SearchComponent } from './search/search.component'
 import { HttpClientModule } from '@angular/common/http'
 import { MenuLoggedInComponent } from './menu-logged-in.component'
 import { SpotbiePipesModule } from 'src/app/spotbie-pipes/spotbie-pipes.module'
-import { ActivatedRouteSnapshot, RouterModule } from '@angular/router'
-import { ColorPickerModule } from 'ngx-color-picker'
+import { RouterModule } from '@angular/router'
 import { NgxMaskModule, IConfig } from 'ngx-mask'
 
 import { HelperModule } from 'src/app/helpers/helper.module'
@@ -23,12 +22,13 @@ import { QrComponent } from './qr/qr.component'
 import { LoyaltyPointsComponent } from './loyalty-points/loyalty-points.component'
 import { BusinessMenuComponent } from './business-menu/business-menu.component'
 import { RewardCreatorComponent } from './business-menu/reward-creator/reward-creator.component'
-import {MatSelectModule} from '@angular/material/select';
+import { MatSelectModule} from '@angular/material/select';
 import { MatFormFieldModule } from '@angular/material/form-field'
 import { RewardComponent } from './business-menu/reward/reward.component'
 
 import { NgxQRCodeModule } from '@techiediaries/ngx-qrcode';
-//import { ZXingScannerModule } from '@zxing/ngx-scanner'
+import { ZXingScannerModule } from '@zxing/ngx-scanner';
+import { BusinessDashboardComponent } from './business-dashboard/business-dashboard.component'
 
 export const options : Partial<IConfig> | (() => Partial<IConfig>) = null;
 
@@ -41,7 +41,8 @@ export const options : Partial<IConfig> | (() => Partial<IConfig>) = null;
     LoyaltyPointsComponent,
     BusinessMenuComponent,
     RewardComponent,
-    RewardCreatorComponent,    
+    RewardCreatorComponent,
+    BusinessDashboardComponent
   ],
   imports: [  
     CommonModule,
@@ -49,7 +50,6 @@ export const options : Partial<IConfig> | (() => Partial<IConfig>) = null;
     ReactiveFormsModule,
     HttpClientModule,
     SpotbiePipesModule,
-    ColorPickerModule,
     RouterModule,
     HelperModule,
     MapModule,
@@ -58,12 +58,12 @@ export const options : Partial<IConfig> | (() => Partial<IConfig>) = null;
     MatFormFieldModule,
     RouterModule,
     NgxQRCodeModule,
-    //ZXingScannerModule,
-    NgxMaskModule.forRoot(options)
+    ZXingScannerModule,
+    NgxMaskModule.forRoot(options)    
   ],
   providers: [
     DeviceDetectorService
   ],
   exports: [MenuLoggedInComponent] 
 })
-export class MenuLoggedInRoutingModule { }
+export class MenuLoggedInModule { }

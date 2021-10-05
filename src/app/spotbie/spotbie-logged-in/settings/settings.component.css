@@ -21,6 +21,12 @@
 }
 .spotbie-select-menu{
     overflow-y: hidden !important;
+    min-width: 100%;
+    width: 100%;
+    top: 0;
+    bottom: 0;
+    left: 0%;
+    right: 0;    
 }
 .spotbie-settings-table{
     position: relative;
@@ -271,6 +277,14 @@ textarea{
     background-color: #000000e0;
     font-size: 20px;
     letter-spacing: 4px;
+}
+.spotbie-category-pick{
+    width: 100%;
+}
+.spotbie-category-pick input{
+    width: 100%;
+    min-width: 100%;
+    max-width:  100%;
 }
 /**WIDTH MEDIA QUERIES */
 @media (max-width: 1300px) { 

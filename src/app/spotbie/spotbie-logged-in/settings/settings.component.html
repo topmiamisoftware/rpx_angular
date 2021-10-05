@@ -265,9 +265,9 @@
                                 
                                 <div class="map-prompt-mobile" (click)="mobileStartLocation()" *ngIf="!locationFound">
                                     
-                                    <div class="title sb-button sb-getStarted text-uppercase">
+                                    <button class="title sb-button sb-getStarted text-uppercase">
                                         <span>GET STARTED</span>
-                                    </div>
+                                    </button>
                                 
                                 </div>
 
@@ -358,7 +358,53 @@
                             <input class='sb-input text-uppercase' type='text' placeholder='TITLE' formControlName="originTitle"/>
                         </td>
                     </tr>
-    
+                    
+                    <tr *ngIf="account_type_category == 'PLACE TO EAT' && locationFound">
+
+                        <mat-form-field class="spotbie-category-pick" appearance="fill">
+                            
+                            <div class="spotbie-input-info spotbie-text-gradient text-center text-uppercase mt-4 mb-3">
+                                {{ account_type_category }} CATEGORIES
+                            </div>
+
+                            <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+
+                                <mat-option *ngFor="let placeToEatCategory of filteredPlacesToEatCategories | async" [value]="placeToEatCategory">
+                                  {{ placeToEatCategory }}
+                                </mat-option>
+  
+                            </mat-autocomplete>
+
+                            <mat-chip-list #chipList aria-label="Category selection">
+
+                              <mat-chip
+                                class="text-uppercase mt-3"
+                                *ngFor="let category of placesToEatCategories"
+                                [selectable]="selectable"
+                                [removable]="removable"
+                                (removed)="remove(fruit)">
+                                {{ category }}
+
+                                <i matChipRemove *ngIf="removable" class="fa fa-times"></i>
+
+                              </mat-chip>                                                                                                                        
+
+                              <input
+                                class="sb-input mb-4"
+                                placeholder="New category..."
+                                #fruitInput
+                                formControlName="originCategories"
+                                [matAutocomplete]="auto"
+                                [matChipInputFor]="chipList"
+                                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                                (matChipInputTokenEnd)="add($event)">
+
+                            </mat-chip-list>
+                            
+                        </mat-form-field>
+
+                    </tr>
+
                     <div *ngIf="placeFormSubmitted && i.originDescription.errors else spotbie_origin_description_normal" 
                             class="spotbie-input-info mb-3 spotbie-text-gradient text-center spotbie-error text-uppercase">
                 
@@ -380,9 +426,7 @@
                         <div class="spotbie-input-info spotbie-text-gradient text-uppercase text-center mb-3" *ngIf="account_type_category == 'PLACE TO EAT' && locationFound">
                             {{ account_type_category }} description
                         </div>
-                    </ng-template>
-                    
-
+                    </ng-template>            
 
                     <tr *ngIf="account_type_category == 'PLACE TO EAT' && locationFound">
     
@@ -407,8 +451,8 @@
                     </tr> 
 
                     <tr>
-                        <div class='spotbie-text-gradient text-center text-uppercase mt-4 mb-5' 
-                        style="cursor: pointer;" (click)="cancelPlaceSettings()">CANCEL</div>
+                        <button class='spotbie-text-gradient text-center text-uppercase mt-4 mb-5' 
+                        style="cursor: pointer;" (click)="cancelPlaceSettings()">CANCEL</button>
                     </tr>
 
                 </table>
@@ -498,8 +542,8 @@
                                     FINISH
                                 </div>
 
-                                <div class='spotbie-text-gradient text-center text-uppercase mt-4' 
-                                     style="cursor: pointer;" (click)="closePassKey()">CANCEL</div>
+                                <button class='spotbie-text-gradient text-center text-uppercase mt-4' 
+                                     style="cursor: pointer;" (click)="closePassKey()">CANCEL</button>
 
                             </td>
                         </tr>
@@ -684,9 +728,9 @@
                         Deactivate
                     </div>
                     
-                    <div class="spotbie-text-gradient text-center text-uppercase mt-4" (click)="cancelDeactivateAccount()">
+                    <button class="spotbie-text-gradient text-center text-uppercase mt-4" (click)="cancelDeactivateAccount()">
                         CANCEL
-                    </div>
+                    </button>
 
                 </div>
         

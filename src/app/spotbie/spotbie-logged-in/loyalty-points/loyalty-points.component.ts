@@ -1,8 +1,9 @@
-import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { animateLoyaltyPoints } from 'src/app/helpers/animations/frequent.animations';
-import { LoyaltyPointsService } from 'src/app/services/loyalty-points/loyalty-points.service';
+import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core'
+import { FormBuilder, FormGroup, Validators } from '@angular/forms'
+import { ActivatedRoute, Router } from '@angular/router'
+import { AllowedAccountTypes } from 'src/app/helpers/enum/account-type.enum'
+import { LoyaltyPointBalance } from 'src/app/models/loyalty-point-balance'
+import { LoyaltyPointsService } from 'src/app/services/loyalty-points/loyalty-points.service'
 
 @Component({
   selector: 'app-loyalty-points',
@@ -17,11 +18,14 @@ export class LoyaltyPointsComponent implements OnInit {
 
   @ViewChild('businessLoyaltyPointsInfo') businessLoyaltyPointsInfo 
 
-  public loading: boolean = false
+  public eAllowedAccountTypes = AllowedAccountTypes
 
   public userLoyaltyPoints: number = 0
+
+  public loading: boolean = false
+
   public userResetBalance: number = 0
-  public userPointToDollarRatio: number = 0
+  public userPointToDollarRatio: number | string = 0
 
   public businessAccount: boolean = false
 
@@ -32,9 +36,7 @@ export class LoyaltyPointsComponent implements OnInit {
   public businessLoyaltyPointsSubmitted: boolean = false
 
   public monthlyDollarValueCalculated: boolean = false
-
-  public businessPointsDollarValue: string = null
-
+  
   public helpEnabled: boolean = false
 
   public qrCodeLink: string = null
@@ -46,55 +48,51 @@ export class LoyaltyPointsComponent implements OnInit {
 
   public userType: string = null
 
+  public loyaltyPointBalance: LoyaltyPointBalance = new LoyaltyPointBalance()
+
   constructor(private loyaltyPointsService: LoyaltyPointsService,
               private formBuilder: FormBuilder,
               private router: Router,
               route: ActivatedRoute){
+                
+      if(this.router.url.indexOf('scan') > -1){  
 
-                if(this.router.url.indexOf('scan') > -1)                
-                  this.qrCodeLink = route.snapshot.params.qrCode
-                  this.loyaltyPointReward = route.snapshot.params.loyaltyPointReward
-                  this.totalSpent = route.snapshot.params.totalSpent
-                  this.userHash = route.snapshot.params.userHash
-              }
-
-  public fetchLoyaltyPoints(){    
-
-    this.loyaltyPointsService.fetchLoyaltyPoints().subscribe(
-
-      resp => {
-
-        if(resp.success){
-          
-          this.userLoyaltyPoints = resp.loyalty_points.balance    
-          this.userResetBalance = resp.loyalty_points.reset_balance 
-          this.userPointToDollarRatio = resp.loyalty_points.loyalty_point_dollar_percent_value
-
-        }       
+         this.qrCodeLink = route.snapshot.params.qrCode
+         this.loyaltyPointReward = route.snapshot.params.loyaltyPointReward
+         this.totalSpent = route.snapshot.params.totalSpent
+         this.userHash = route.snapshot.params.userHash
 
       }
 
-    )
+  }
+  
+  public async getLoyaltyPointBalance(){    
+    await this.loyaltyPointsService.getLoyaltyPointBalance()
+  }
+  
+  /* TO-DO: Create a function which shows a business's or personal account' past transactions. */
+  public fetchLedger(){}
+
+  /* TO-DO: Create a function which shows a business's or personal account' past expenses. */
+  public fetchExpenses(){}
+
+  public loyaltyPointsClass(){
+
+    if(this.userType == AllowedAccountTypes.PlaceToEat){
+      return 'sb-loyalty-points'
+    } else {
+      return 'sb-loyalty-points no-cursor'
+    }
 
   }
   
-  public fetchLedger(){
-
-  }
-
-  public fetchExpenses(){
-
-  }
-
   get businessLoyaltyPoints() {return this.businessLoyaltyPointsForm.get('businessLoyaltyPoints').value }
   get businessCoinPercentage() {return this.businessLoyaltyPointsForm.get('businessCoinPercentage').value }
   get f() { return this.businessLoyaltyPointsForm.controls }
-
+  
   public initBusinessLoyaltyPoints(){    
 
-    if(this.userType === '4'){
-      return
-    }
+    if(this.userType == AllowedAccountTypes.Personal) return
 
     this.businessLoyaltyPointsOpen = true
     
@@ -106,10 +104,12 @@ export class LoyaltyPointsComponent implements OnInit {
       businessCoinPercentage: ['', businessCoinPercentageValidators], 
     })
 
-    if(this.userLoyaltyPoints > 0 && this.userResetBalance > 0){
-      this.businessLoyaltyPointsForm.get('businessLoyaltyPoints').setValue(this.userResetBalance)
-      this.businessLoyaltyPointsForm.get('businessCoinPercentage').setValue(this.userPointToDollarRatio)
-      this.calculateDollarValue()       
+    if(this.loyaltyPointBalance.balance > 0 && this.loyaltyPointBalance.reset_balance > 0){
+      
+      this.businessLoyaltyPointsForm.get('businessLoyaltyPoints').setValue(this.loyaltyPointBalance.reset_balance)
+      this.businessLoyaltyPointsForm.get('businessCoinPercentage').setValue(this.loyaltyPointBalance.loyalty_point_dollar_percent_value)
+      this.calculateDollarValue()  
+
     }
 
     this.businessLoyaltyPointsFormUp = true    
@@ -156,9 +156,9 @@ export class LoyaltyPointsComponent implements OnInit {
     let pointPercentage = this.businessCoinPercentage
     
     if(pointPercentage == 0)
-      this.businessPointsDollarValue = '0'
+      this.userPointToDollarRatio = 0
     else
-      this.businessPointsDollarValue = (monthlyPoints * (pointPercentage / 100)).toFixed(2)
+      this.userPointToDollarRatio = (monthlyPoints * (pointPercentage / 100)).toFixed(2)
     
     this.monthlyDollarValueCalculated = true
 
@@ -168,7 +168,6 @@ export class LoyaltyPointsComponent implements OnInit {
 
     this.businessLoyaltyPointsOpen = false
     this.monthlyDollarValueCalculated = false
-    this.businessPointsDollarValue = '0'
     this.businessLoyaltyPointsForm = null
     this.businessLoyaltyPointsFormUp = false    
 
@@ -188,7 +187,7 @@ export class LoyaltyPointsComponent implements OnInit {
     this.helpEnabled = !this.helpEnabled
   }
 
-  public addLoyaltyPoints(){
+  public async addLoyaltyPoints(){
 
     this.loading = true
 
@@ -199,25 +198,16 @@ export class LoyaltyPointsComponent implements OnInit {
       loyaltyPointReward: this.loyaltyPointReward
     }
     
-    this.loyaltyPointsService.addLoyaltyPoints(addPointsObj).subscribe(
-      resp => {   
-        //console.log("resp", resp)   
-        this.addLoyaltyPointsCb(resp)      
-      }
-    )
+    let resp = await this.loyaltyPointsService.addLoyaltyPoints(addPointsObj)
 
+    this.addLoyaltyPointsCb(resp)     
+    
   }
 
   public addLoyaltyPointsCb(resp: any){
 
-    //console.log("addLoyaltyPointsCb", resp)
-
-    if(resp.success){      
-
-      this.userLoyaltyPoints = resp.newBalance
+    if(resp.success)
       this.newUserLoyaltyPoints = this.loyaltyPointReward
-
-    }
 
     this.loading = false
 
@@ -226,17 +216,27 @@ export class LoyaltyPointsComponent implements OnInit {
   /**
    * Will reset the user's loyalty point balance to their current reset value.
    */
-  public resetMyBalance(): void{
+  public async resetMyBalance(){
+
+    let confirm = window.confirm(`Are you sure you want to reset your balance to ${ this.userResetBalance}?`)
+
+    if(confirm) await this.loyaltyPointsService.resetMyBalance()
 
   }
 
   ngOnInit(): void {
 
+    this.loyaltyPointsService.userLoyaltyPoints$.subscribe(
+      loyaltyPointBalance => {
+        this.loyaltyPointBalance = loyaltyPointBalance       
+      }
+    )
+
     this.userType = localStorage.getItem('spotbie_userType')
 
     this.loading = false
     
-    this.fetchLoyaltyPoints()
+    this.getLoyaltyPointBalance()
 
     if(this.qrCodeLink !== null) this.addLoyaltyPoints()
 

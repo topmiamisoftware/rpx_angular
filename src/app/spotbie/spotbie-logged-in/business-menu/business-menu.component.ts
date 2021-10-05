@@ -1,7 +1,9 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
-import { PlaceToEat } from 'src/app/models/place-to-eat'
-import { PlaceToEatItem } from 'src/app/models/place-to-eat-item'
+import { AllowedAccountTypes } from 'src/app/helpers/enum/account-type.enum'
+import { LoyaltyPointBalance } from 'src/app/models/loyalty-point-balance'
+import { Business } from 'src/app/models/business'
+import { Reward } from 'src/app/models/reward'
 import { LoyaltyPointsService } from 'src/app/services/loyalty-points/loyalty-points.service'
 import { BusinessMenuServiceService } from 'src/app/services/spotbie-logged-in/business-menu/business-menu-service.service'
 
@@ -34,6 +36,8 @@ export class BusinessMenuComponent implements OnInit {
 
   public placeToEat: PlaceToEat = new PlaceToEat()
 
+  public loyaltyPointsBalance: LoyaltyPointBalance
+
   constructor(private loyaltyPointsService: LoyaltyPointsService,
               private businessMenuService: BusinessMenuServiceService,
               private router: Router,
@@ -46,22 +50,12 @@ export class BusinessMenuComponent implements OnInit {
 
   }
 
-  public fetchLoyaltyPoints(){    
+  public getLoyaltyPointBalance(){    
 
-    this.loyaltyPointsService.fetchLoyaltyPoints().subscribe(
-
-      resp => {
-
-        console.log("resp", resp)
-
-        if(resp.success){
-          this.userLoyaltyPoints = resp.loyalty_points.balance    
-          this.userResetBalance = resp.loyalty_points.reset_balance 
-          this.userPointToDollarRatio = resp.loyalty_points.loyalty_point_dollar_percent_value
-        }       
-
+    this.loyaltyPointsService.userLoyaltyPoints$.subscribe(
+      loyaltyPointsBalance => {
+        this.loyaltyPointsBalance = loyaltyPointsBalance
       }
-
     )
 
   }
@@ -79,6 +73,7 @@ export class BusinessMenuComponent implements OnInit {
 
     this.businessMenuService.fetchRewards(fetchRewardsReq).subscribe(
       resp => {
+        console.log("Rewards", resp)
         this.fetchRewardsCb(resp)
       }
     )
@@ -91,12 +86,10 @@ export class BusinessMenuComponent implements OnInit {
       
       this.placeToEatRewards = resp.placeToEatRewards
 
-      if(this.userType === '4'){
+      if(this.userType === AllowedAccountTypes.Personal){
         this.userPointToDollarRatio = resp.loyalty_point_dollar_percent_value	
         this.placeToEat.name = resp.placeToEatName
       }
-
-      console.log("resp", resp)
 
     }
 
@@ -143,9 +136,9 @@ export class BusinessMenuComponent implements OnInit {
 
     this.userType = localStorage.getItem('spotbie_userType')
 
-    if(this.userType !== '4'){
+    if(this.userType !== AllowedAccountTypes.Personal){
 
-      this.fetchLoyaltyPoints()
+      this.getLoyaltyPointBalance()
       this.fetchRewards()
 
     } else {

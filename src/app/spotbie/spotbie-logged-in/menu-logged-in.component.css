@@ -14,9 +14,7 @@
 .spotbie-overlay-window{
     z-index: 999;
 }
-.sb-desktopNavBar{
-    cursor: default;
-}
+
 .sb-userName{
     text-transform: uppercase;
 }

@@ -1,3 +1,6 @@
+.spotbie-overlay-window{
+    z-index: 95;
+}
 .spotie-prompt{
     position: absolute;
     left: 0;
@@ -95,6 +98,7 @@
 .spotbie-search-result-transactions{
     margin-top: 10px;
     margin-bottom: 10px;
+    font-size: .6rem;
 }
 .spotbie-searchbar{
     position: relative;
@@ -144,6 +148,7 @@
     direction: rtl;
     -webkit-overflow-scrolling: touch;
     background-color: white;
+    padding-bottom: 150px;
 }
 
 .search-spotbie-categories{
@@ -500,7 +505,7 @@ span.sb-button{
     font-weight: bold;
 }
 #spotbie_me_search{
-    background: url(./assets/images/spot.png);
+    background: url('../../../assets/images/search.png');
 }
 #spotbie_people_search{
     background: url(../../../assets/images/find_people.png);
@@ -509,7 +514,7 @@ span.sb-button{
     background: url(../../../assets/images/multimedia.png);
 }
 #spotbie_events_search{
-    background: url(./assets/images/events_new.png);
+    background: url(../../../assets/images/search.png);
 }
 #spotbie_retail_search{
     background: url(../../../assets/images/shop.png);
@@ -575,73 +580,15 @@ span.sb-button{
     border-radius: 20px;
 }
 .map-prompt-mobile{
-    position: fixed;       
+    position: fixed;
     left: 0px;
-    width: 101%;
-    min-width: 101%;
+    width: 100%;
+    min-width: 100%;
     bottom: 0px;
     height: 100%;
     min-height: 100%;
     z-index: 93;
     background-color: #332f3e;
-}
-.map-prompt-mobile h4{
-    position: relative;
-    margin: 0 auto;
-    width: 80%;
-    min-width: 80%;
-    max-width: 80%;
-    text-align: center;
-    font-weight: normal;
-    padding-top: 15px;
-    padding-bottom: 20px;
-    cursor: pointer;
-    background: -webkit-linear-gradient(45deg,#64e56f,#35a99f);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-.map-prompt-mobile h4::after{
-    position: relative;
-    width: 100%;
-    min-width: 100%;
-    min-height: 1px;
-    height: 1px;
-    background: -webkit-linear-gradient(45deg,#64e56f,#35a99f);
-}
-.map-prompt-mobile h5{
-    position: relative;
-    margin: 0 auto; 
-    min-width: 450px;
-    width: 450px;   
-    max-width: 450px;
-    color: white;
-    text-align: center;
-}
-.map-prompt-mobile img{
-    position: relative;
-    width: 100%;
-    min-width: 100%;
-    z-index: -2;
-}
-.sb-homePageIconsTable{
-    position: relative;
-    margin: 0 auto;
-    max-width: 500px;
-    display: table;
-    table-layout: fixed;
-}
-.sb-homePageIconsTable div{
-    display: table-cell;
-    vertical-align: middle;
-    text-align: center;
-    color: white;
-    width: 25%;
-    min-width: 25%;
-    font-size: .6rem;
-}
-.sb-homePageIconsTable img{
-    max-width: 100px;
-    width: 100px;
 }
 .sb-footer{
     position: relative;
@@ -660,26 +607,6 @@ span.sb-button{
     color: #332f3e !important;
     cursor: pointer;
     font-size: .6rem !important;
-}
-.sb-logo-withStreet{
-    position: relative;
-    display: block;
-    margin: 0 auto;
-    max-width: 300px !important;
-    min-width: 300px !important;
-    width: 300px !important;
-}
-.sb-top-headerImg{
-    position: relative;
-    width: 100%;
-    min-width: 100%;
-    max-width: 100%;
-    height: 650px;
-    min-height: 650px;
-    background: url(assets/images/spotbie-miami.jpg);
-    background-position: center;
-    background-size: cover!important;
-    box-shadow: inset 0px -80px 65px #332f3e;
 }
 .map-prompt-mobile p{
     margin: 0 auto;
@@ -751,51 +678,7 @@ swiper{
     background-position: center !important;
     background-size: cover !important;    
 }
-.sb-readImage{
-    position: relative;
-    top: 3px;                
-    margin: 0 auto;
-    width: 100%;
-    min-width: 100%;
-    max-width: 100%;
-    background-position: center !important;
-    background-repeat: no-repeat !important;
-    background-size: contain !important;
-}
-.sb-getStarted{ 
-    max-width: 220px;
-    padding-top: 5px !important;
-    padding-bottom: 5px !important;
-    font-size: 20px;
-    border-radius: 13px!important;
-    background: -webkit-linear-gradient(45deg,#64e56f,#35a99f);
-    background: linear-gradient(45deg,#64e56f,#35a99f);
-}
-.sb-getStarted span{
-    background: linear-gradient(45deg,#212529,#131313);
-    background: -webkit-linear-gradient(45deg,#212529,#131313);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;   
-}
-.sb-whiteIconBg{
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    width: 350px;
-    min-width: 350px;
-    max-width: 350px;
-}
-.sb-greenIcon{
-    position: relative;
-    display: block;
-    margin-top: -60px;
-    margin-bottom: 60px;
-    max-width: 50px;
-    width: 50px;
-    max-height: 50px;
-    height: 50px;
-    z-index: 1;
-}
+
 .sb-mapWrapper{
     overflow-y: scroll;
 }
@@ -854,11 +737,6 @@ swiper{
         width: 90%;
         max-width: 90%;        
     }
-    .sb-logo-withStreet {
-        max-width: 150px!important;
-        min-width: 150px!important;
-        width: 150px!important;
-    }    
 }
 @media (max-width: 768px) { 
     .spotbie-controls-search-results{

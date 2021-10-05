@@ -1,7 +1,7 @@
 import { HttpClient, HttpEventType } from '@angular/common/http'
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
-import { PlaceToEatItem } from 'src/app/models/place-to-eat-item'
+import { PlaceToEatItem } from 'src/app/models/reward'
 import { RewardCreatorService } from 'src/app/services/spotbie-logged-in/business-menu/reward-creator/reward-creator.service'
 import * as spotbieGlobals from '../../../../globals'
 

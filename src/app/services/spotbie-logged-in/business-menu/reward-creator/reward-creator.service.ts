@@ -1,12 +1,12 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from '@angular/core'
 import * as spotbieGlobals from 'src/app/globals'
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { handleError } from 'src/app/helpers/error-helper';
-import { catchError, tap } from 'rxjs/operators';
-import { PlaceToEatItem } from 'src/app/models/place-to-eat-item';
+import { HttpClient } from '@angular/common/http'
+import { Observable } from 'rxjs'
+import { handleError } from 'src/app/helpers/error-helper'
+import { catchError } from 'rxjs/operators'
+import { Reward } from 'src/app/models/reward'
 
-const PLACE_TO_EAT_REWARD_API = `${spotbieGlobals.API}place-to-eat-item` 
+const REWARD_API = `${spotbieGlobals.API}reward` 
 
 @Injectable({
   providedIn: 'root'
@@ -15,9 +15,9 @@ export class RewardCreatorService {
 
   constructor(private http: HttpClient) {}
 
-  public saveItem(itemObj: PlaceToEatItem): Observable<any>{
+  public saveItem(itemObj: Reward): Observable<any>{
 
-    const placeToEatRewardApi = `${PLACE_TO_EAT_REWARD_API}/create`
+    const placeToEatRewardApi = `${REWARD_API}/create`
 
     const itemObjToSave = {
       name: itemObj.name,    
@@ -33,9 +33,9 @@ export class RewardCreatorService {
 
   }
 
-  public updateItem(itemObj: PlaceToEatItem): Observable<any>{
+  public updateItem(itemObj: Reward): Observable<any>{
 
-    const placeToEatRewardApi = `${PLACE_TO_EAT_REWARD_API}/update`
+    const placeToEatRewardApi = `${REWARD_API}/update`
 
     const itemObjToSave = {
       name: itemObj.name,    
@@ -52,9 +52,9 @@ export class RewardCreatorService {
 
   }
 
-  public deleteMe(itemObj: PlaceToEatItem): Observable<any>{
+  public deleteMe(itemObj: Reward): Observable<any>{
 
-    const placeToEatRewardApi = `${PLACE_TO_EAT_REWARD_API}/delete`
+    const placeToEatRewardApi = `${REWARD_API}/delete`
 
     const itemObjToSave = {
       id: itemObj.id

@@ -1,5 +1,5 @@
 import { SpotbieUser } from './spotbieuser'
-import { PlaceToEat } from './place-to-eat'
+import { Business } from './business'
 
 export class User {
 
@@ -56,12 +56,8 @@ export class User {
 
     public spotbie_user: SpotbieUser
 
-    public placeToEat: PlaceToEat
+    public placeToEat: Business
 
-    constructor(user_object?: any){
-
-
-
-    }
+    constructor(user_object?: any){}
 
 }

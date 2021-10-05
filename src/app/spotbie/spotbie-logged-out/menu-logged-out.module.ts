@@ -4,7 +4,6 @@ import { RouterModule } from '@angular/router'
 import { MenuLoggedOutComponent } from './menu-logged-out.component'
 import { LogInComponent } from 'src/app/spotbie/spotbie-logged-out/log-in/log-in.component'
 import { SignUpComponent } from 'src/app/spotbie/spotbie-logged-out/sign-up/sign-up.component'
-import { ForgotPasswordComponent } from 'src/app/spotbie/spotbie-logged-out/forgot-password/forgot-password.component'
 import { ReadAboutComponent } from 'src/app/spotbie/read-about/read-about.component'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { HttpClientModule } from '@angular/common/http'
@@ -12,6 +11,7 @@ import { NgxMaskModule, IConfig } from 'ngx-mask'
 import { HelperModule } from 'src/app/helpers/helper.module'
 import { MatDialogModule } from '@angular/material/dialog'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
+import { ForgotPasswordModule } from './forgot-password/forgot-password.module'
 
 export const options : Partial<IConfig> | (() => Partial<IConfig>) = null
 
@@ -20,7 +20,6 @@ export const options : Partial<IConfig> | (() => Partial<IConfig>) = null
     MenuLoggedOutComponent,
     LogInComponent,
     SignUpComponent,
-    ForgotPasswordComponent,
     ReadAboutComponent,
   ],
   imports: [
@@ -32,8 +31,9 @@ export const options : Partial<IConfig> | (() => Partial<IConfig>) = null
     HelperModule,
     MatDialogModule,
     FontAwesomeModule,
+    ForgotPasswordModule,
     NgxMaskModule.forRoot(options)
   ],
   exports : [ MenuLoggedOutComponent ],
 })
-export class MenuLoggedOutRoutingModule { }
+export class MenuLoggedOutModule { }

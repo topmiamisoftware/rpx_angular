@@ -6,7 +6,12 @@ export const environment = {
   production: false,
   google_maps_apiKey: 'AIzaSyBg9GGAv2rRn8WQbylRbpF4j6u-9TFxBG8',
   google_places_apiAkey: 'AIzaSyChSn9IE6Dp0Jv8TS013np1b4X1rCsQt_E',
-  apiEndpoint: 'http://localhost:8000/'
+  /**
+   * Enter the IP and PORT you are serving your Laravel App on. 
+   * format: https://192.168.1.65:443/
+   * Laravel App will not work if it's not served on port 443 or SSL.
+   * */
+  apiEndpoint: 'http://localhost:8000/api/' 
 };
 
 /*

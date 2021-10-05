@@ -13,7 +13,7 @@
       <img class="spotbie-header-mini-logo" (click)="home()" src="assets/images/spotbie_logo_header.svg" /> 
     </td>   
     
-    <td *ngIf="isDesktop" class="sb-desktopNavBar" style="text-align: right;">
+    <td *ngIf="isDesktop" class="sb-desktopNavBar" style="text-align: right; cursor: default;">
       
       <span (click)="home()">
         HOME
@@ -34,10 +34,6 @@
       <!--<span (click)="spawnCategories('users', false)">
         USERS
       </span>-->
-
-      <span (click)="goToBlog()">
-        BLOG
-      </span>
 
       <span style="border: unset;" (click)="signUp()">
         SIGN UP
@@ -87,9 +83,9 @@
         LOGIN
       </div>
 
-      <div (click)="goToBlog()">
+      <!--<div (click)="goToBlog()">
         BLOG
-      </div>
+      </div>-->
 
     </td></tr>
 

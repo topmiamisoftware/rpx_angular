@@ -12,9 +12,9 @@ import { SocialAuthService } from "angularx-social-login";
 import { FacebookLoginProvider, GoogleLoginProvider } from "angularx-social-login";
 
 const USER_API = spotbieGlobals.API + 'user'
-const PLACE_TO_EAT_API = spotbieGlobals.API + 'place-to-eat'
 
-const LOYATLY_POINTS_API = spotbieGlobals.API+'loyalty-points'
+const BUSINESS_API = spotbieGlobals.API + 'business'
+
 
 @Injectable({
   providedIn: 'root'
@@ -242,7 +242,7 @@ export class UserauthService {
 
   }
 
-  public signInWithGoogle(loginCallBack): void {    
+  public signInWithGoogle(loginCallBack, route): void {    
     
     const gLoginOptions = {
       scope: 'https://www.googleapis.com/auth/business.manage https://www.googleapis.com/auth/plus.business.manage',
@@ -266,7 +266,7 @@ export class UserauthService {
       localStorage.setItem('spotbiecom_social_session', user.authToken)
       localStorage.setItem('spotbiecom_social_id_session', user.idToken)
 
-      this.saveCurrentGoogleProfile(user).subscribe(
+      this.saveCurrentGoogleProfile(user, route).subscribe(
         resp => {
           loginCallBack(resp)
         }
@@ -276,7 +276,7 @@ export class UserauthService {
 
   }
 
-  public saveCurrentGoogleProfile(userObj: any): Observable<any>{
+  public saveCurrentGoogleProfile(userObj: any, route: string): Observable<any>{
 
     const googleLoginApi = `${USER_API}/google-login`
 
@@ -286,7 +286,8 @@ export class UserauthService {
       lastName: userObj.lastName,
       email: userObj.email,
       photoUrl: userObj.photoUrl,
-      remember_me: this.userRememberMe
+      remember_me: this.userRememberMe,
+      route: route
     }
 
     return this.http.post<any>(googleLoginApi, googleLoginObj).pipe(
@@ -295,7 +296,7 @@ export class UserauthService {
 
   }
 
-  public signInWithFB(loginCallBack) {
+  public signInWithFB(loginCallBack, route: string) {
     
     const fbLoginOptions = {
       scope: 'email,public_profile,user_friends',
@@ -318,7 +319,7 @@ export class UserauthService {
       localStorage.setItem('spotbiecom_social_session', user.authToken)
       localStorage.setItem('spotbiecom_social_id_session', user.idToken)
 
-      this.saveCurrentFbProfile(user).subscribe(
+      this.saveCurrentFbProfile(user, route).subscribe(
         (resp) => {
           loginCallBack(resp)
         }
@@ -328,7 +329,7 @@ export class UserauthService {
 
   }
 
-  public saveCurrentFbProfile(userObj: any): Observable<any> {
+  public saveCurrentFbProfile(userObj: any, route: string): Observable<any> {
 
     const fbLoginApi = `${USER_API}/fb-login`
     
@@ -353,7 +354,7 @@ export class UserauthService {
 
     switch(businessInfo.accountType){
       case 1:
-        apiUrl = `${PLACE_TO_EAT_API}/verify`
+        apiUrl = `${BUSINESS_API}/verify`
         break
       default:
         return

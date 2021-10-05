@@ -4,11 +4,15 @@
 
     <div class="sb-loyalty-points-wrapper">
 
-        <h4 class="spotbie-text-gradient text-center text-uppercase mt-4 mb-5">SPOTBIE LOYALTY POINTS</h4>
+        <h4 id="sp-lpTitle" class="spotbie-text-gradient text-center text-uppercase mt-4 mb-5">SPOTBIE LOYALTY POINTS</h4>
+
+        <span class="mb-5 spotbie-text-gradient" *ngIf="userType !== eAllowedAccountTypes.Personal">
+            Your loyalty points reset on: {{ loyaltyPointBalance.end_of_month | date:'mediumDate' }}
+        </span>
 
         <p class="mb-4" (click)="initBusinessLoyaltyPoints()">   
-
-            <span class='sb-loyalty-points'>{{ userLoyaltyPoints | number:'1.0':'en-US' }}</span>
+            
+            <span [ngClass]="loyaltyPointsClass()">{{ loyaltyPointBalance.balance | number:'1.0':'en-US' }}</span>
 
             <span class="sb-added-loyalty-points sb-text-light-green-gradient animated fadeOutUp" 
                     *ngIf="newUserLoyaltyPoints !== null"
@@ -17,10 +21,10 @@
             <img class='sb-loyalty-points' src="../assets/images/spotbie-loyalty-points.svg" />            
         </p>    
 
-        <div class='spotbie-text-gradient mt-4 mb-4' 
+        <button class='spotbie-text-gradient mt-4 mb-4' 
                 style="cursor: pointer;"
-                *ngIf="userType !== '4'"
-                (click)="resetMyBalance()">RESET BALANCE <i class='fa fa-refresh'></i></div>
+                *ngIf="userType !== eAllowedAccountTypes.Personal"
+                (click)="resetMyBalance()">RESET BALANCE <i class='fa fa-refresh'></i></button>
 
         <div class='sb-button text-uppercase' (click)="closeThis()">
             CLOSE
@@ -40,9 +44,9 @@
 
         <div>
 
-            <h6 #businessLoyaltyPointsInfo class="spotbie-text-gradient text-center text-uppercase mb-5">
+            <div #businessLoyaltyPointsInfo class="spotbie-text-gradient text-center text-uppercase mb-5 mt-5">
                 <h4 class="spotbie-text-gradient text-center text-uppercase">MONTHLY BUDGET</h4>
-            </h6>
+            </div>
 
             <form [formGroup]="businessLoyaltyPointsForm" *ngIf="businessLoyaltyPointsFormUp">
 
@@ -99,7 +103,7 @@
             </form>               
             
             <p class="spotbie-text-gradient text-uppercase mt-4" style="font-size: .8rem !important;" *ngIf="monthlyDollarValueCalculated">
-                monthly dollar value ${{ businessPointsDollarValue | number:'1.0':'en-US' }}
+                monthly dollar value ${{ userPointToDollarRatio | number:'1.0':'en-US' }}
             </p>
 
             <div class='spotbie-text-gradient text-center text-uppercase mt-4' (click)="toggleHelp()" style="cursor: pointer;">
@@ -131,7 +135,7 @@
 
         </div>
 
-        <app-business-menu [loyaltyPoints]="userLoyaltyPoints" (closeWindowEvt)="closeThis()"></app-business-menu>
+        <app-business-menu loyaltyPoints="{{ loyaltyPoints$ | async }}" (closeWindowEvt)="closeThis()"></app-business-menu>
         
     </div>
     

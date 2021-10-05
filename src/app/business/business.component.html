@@ -1,0 +1,15 @@
+<div class='sb-backgroundImg'></div>
+
+<div class="spotbie-main-holder" id="spotbieMainHolder">
+
+    <app-map #app_map business="true" (signUpEvt)="signUp()"></app-map>
+    
+    <app-menu-logged-out #appMenuLoggedOut 
+                        class="spotbie-app-menu" 
+                        (spawnCategoriesOut)="spawnCategories($event)" 
+                        (openWelcome)="openWelcome()">
+    </app-menu-logged-out>
+
+    <div class="spotbie-menu-page-padding-top-not-logged"></div>    
+
+</div>

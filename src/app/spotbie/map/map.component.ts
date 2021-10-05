@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild }      from '@angular/core'
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild }      from '@angular/core'
 import { MatSliderChange }                   from '@angular/material/slider'
 
 import { AgmMap, AgmInfoWindow }             from '@agm/core'
@@ -37,12 +37,16 @@ const SLIDE_SHOW_SOURCES = [
   styleUrls:   ['./map.component.css']
 })
 export class MapComponent implements OnInit {
-
+  
   @ViewChild('spotbie_map') spotbie_map: AgmMap
 
   @ViewChild('spotbie_user_marker_info_window') spotbie_user_marker_info_window: AgmInfoWindow
 
+  @Input() business: boolean = false
+
   @Input() spotType: any
+
+  @Output() signUpEvt = new EventEmitter()
 
   public isLoggedIn: string
   public iconUrl:  string
@@ -625,11 +629,11 @@ export class MapComponent implements OnInit {
 
   public spawnCategories(category: string): void {
 
-    if(!this.locationFound){
+    if(!this.locationFound)
       this.mobileStartLocation()
-    } else if(this.showMobilePrompt){
-        this.showMobilePrompt = false
-    }
+    else if(this.showMobilePrompt)
+      this.showMobilePrompt = false
+    
 
     this.show_search_box = true
 
@@ -1279,17 +1283,6 @@ export class MapComponent implements OnInit {
     
   }
 
-  public getMapPromptMobileInnerWrapperClassTwo(){
-
-    if(this.isMobile){
-
-      return { 'display': 'table-cell',
-               'vertical-align': 'middle' }
-
-    }
-
-  }
-
   public createObjectMarker(surroundingObjectList): void {
     this.surroundingObjectList = surroundingObjectList
   }
@@ -1406,6 +1399,10 @@ export class MapComponent implements OnInit {
 
     })
 
+  }
+
+  public signUp(){
+    this.signUpEvt.emit()
   }
 
   ngOnInit() {

@@ -1,4 +1,4 @@
-export class PlaceToEat {
+export class Business {
 
     public id: number = null
     public user_id: number = null

@@ -23,7 +23,7 @@
             </div> 
             
             <ng-template #total_spent_normal>
-                <div class="spotbie-input-info spotbie-text-gradient text-uppercase mb-4">
+                <div class="spotbie-input-info spotbie-text-gradient text-uppercase pl-2 pr-2 mb-4">
                     What was the total of this bill?
                 </div>          
             </ng-template>
@@ -78,6 +78,10 @@
 
     </div>
 
+    <div class="sb-closeButton" (click)="closeQr()">
+        <i class="fa fa-times"></i>
+    </div>
+
 </div>
 
 <div class='spotbie-overlay-window' *ngIf="rewardPrompt">
@@ -98,6 +102,10 @@
 
     </div>
 
+    <div class="sb-closeButton" (click)="closeQr()">
+        <i class="fa fa-times"></i>
+    </div>
+
 </div>
 
 <div class='spotbie-overlay-window' *ngIf="!isBusiness">    
@@ -108,10 +116,10 @@
 
         <div class="spotbie-full-qrCode scanner mt-4 mb-4">
 
-            <!-- <zxing-scanner (scanSuccess)="scanSuccessHandler($event)"
+            <zxing-scanner (scanSuccess)="scanSuccessHandler($event)"
                            (scanError)="scanErrorHandler($event)"
                            (scanFailure)="scanFailureHandler($event)"             
-                           [formats]="['QR_CODE', 'EAN_13', 'CODE_128', 'DATA_MATRIX']"></zxing-scanner> -->
+                           [formats]="['QR_CODE', 'EAN_13', 'CODE_128', 'DATA_MATRIX']"></zxing-scanner>
                            
         </div>
 

@@ -1,6 +1,8 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { PlaceToEat } from 'src/app/models/place-to-eat';
+import { AllowedAccountTypes } from 'src/app/helpers/enum/account-type.enum';
+import { LoyaltyPointBalance } from 'src/app/models/loyalty-point-balance';
+import { PlaceToEat } from 'src/app/models/business';
 import { LoyaltyPointsService } from 'src/app/services/loyalty-points/loyalty-points.service';
 import { UserauthService } from 'src/app/services/userauth.service';
 
@@ -36,6 +38,8 @@ export class QrComponent implements OnInit {
 
   public qrCodeLink: string = null
 
+  loyaltyPointBalance: LoyaltyPointBalance
+
   constructor(private userAuthService: UserauthService,
               private loyaltyPointsService: LoyaltyPointsService,
               private formBuilder: FormBuilder) { }
@@ -43,27 +47,19 @@ export class QrComponent implements OnInit {
   get totalSpent() {return this.businessLoyaltyPointsForm.get('totalSpent').value }
   get f() { return this.businessLoyaltyPointsForm.controls }
 
-  public calculateLoyaltyPointValue(){
+  public async calculateLoyaltyPointValue(){
 
     clearTimeout(this.promptForRewardTimeout)
 
-    this.loyaltyPointsService.fetchLoyaltyPoints().subscribe(
-      
-      resp => {
+    let percentValue: number = parseFloat(this.loyaltyPointBalance.loyalty_point_dollar_percent_value.toString())
 
-        let percentValue = resp.loyalty_points.loyalty_point_dollar_percent_value
+    this.loyaltyPointReward = this.totalSpent * ((percentValue)/100)
 
-        this.loyaltyPointReward = this.totalSpent * ((percentValue)/100)
+    this.loyaltyPointRewardDollarValue = this.totalSpent * ((percentValue)/100)
+    
+    this.placeToEat.qr_code_link = `https://spotbie.com/loyalty-points/scan/${this.userHash}/${this.qrCodeLink}/${this.totalSpent}/${this.loyaltyPointReward}`
 
-        this.loyaltyPointRewardDollarValue = this.totalSpent * ((percentValue)/100)
-        
-        this.placeToEat.qr_code_link = `https://spotbie.com/loyalty-points/scan/${this.userHash}/${this.qrCodeLink}/${this.totalSpent}/${this.loyaltyPointReward}`
-
-        console.log("QrCodeLink", this.placeToEat.qr_code_link)
-
-      }
-
-    )
+    console.log("QrCodeLink", this.placeToEat.qr_code_link)
 
     this.promptForRewardTimeout = setTimeout(() =>{
 
@@ -102,6 +98,10 @@ export class QrComponent implements OnInit {
 
     this.isBusiness = true
 
+    /**
+      TO-DO IMPORTANT: Need to define state management for this
+    */
+
     this.userAuthService.getSettings().subscribe(
       resp => {        
         console.log("resp", resp)
@@ -122,30 +122,21 @@ export class QrComponent implements OnInit {
 
   }
 
-  public startQrCodeScanner(){
+  public async startQrCodeScanner(){
 
-    this.isBusiness = false
-
-    this.loyaltyPointsService.fetchLoyaltyPoints().subscribe(
-
-      resp => {
-
-        if(resp.success){
-          
-          this.userLoyaltyPoints = resp.loyalty_points.balance
-          
-        }       
-
+    this.loyaltyPointsService.userLoyaltyPoints$.subscribe(
+      loyaltyPointBalance => {
+        this.loyaltyPointBalance = loyaltyPointBalance       
       }
-
     )
     
-    
+    await this.loyaltyPointsService.getLoyaltyPointBalance()
+
+    this.isBusiness = false
 
   }
 
   closeQr(){    
-    console.log("event emitter")
     this.closeThisEvt.emit()
   }
 
@@ -153,7 +144,7 @@ export class QrComponent implements OnInit {
 
     let accountType = localStorage.getItem('spotbie_userType')
 
-    if(accountType === '4'){    
+    if(accountType === AllowedAccountTypes.Personal){    
       this.startQrCodeScanner()
     } else {      
       this.getQrCode()

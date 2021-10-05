@@ -2,14 +2,14 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HomeComponent } from './home.component';
 import { Routes, RouterModule } from '@angular/router';
-import { MenuLoggedOutRoutingModule } from '../spotbie/spotbie-logged-out/menu-logged-out-routing.module';
 import { MenuModule } from '../spotbie/menu.module';
 import { SpotbiePipesModule } from '../spotbie-pipes/spotbie-pipes.module';
 import { MapModule } from '../spotbie/map/map.module';
 import { MapComponent } from '../spotbie/map/map.component';
 import { HelperModule } from '../helpers/helper.module';
+import { MenuLoggedOutModule } from '../spotbie/spotbie-logged-out/menu-logged-out.module';
 
-const routes : Routes = [
+const routes: Routes = [
   { path : '', component : HomeComponent }
 ];
 
@@ -19,7 +19,7 @@ const routes : Routes = [
   ],
   imports: [
     CommonModule,
-    MenuLoggedOutRoutingModule,
+    MenuLoggedOutModule,
     MenuModule,
     SpotbiePipesModule,
     MapModule,

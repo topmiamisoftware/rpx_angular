@@ -270,7 +270,22 @@ p{
     }
     .spotbie-flash-card{
         padding-top: 20px;
-    }          
+    } 
+    .spotbie-log-in-picture{
+        height: 250px;
+        min-height: 250px;
+        max-height: 250px;    
+    }     
+    .sb-logo{
+        max-width: 175px;
+        width: 175px;
+        min-width: 175px;
+        max-height: 55px;
+        min-height: 55px;        
+    }  
+    .spotbie-overlay-window{
+        padding-bottom: 100px !important;
+    }                   
 }
 @media (max-width: 420px) { 
     #sign_up_general_instructions{

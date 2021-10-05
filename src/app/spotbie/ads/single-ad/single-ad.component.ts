@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { AdsService } from '../ads.service';
 import { externalBrowserOpen } from 'src/app/helpers/cordova/web-intent'
 
@@ -8,6 +8,8 @@ import { externalBrowserOpen } from 'src/app/helpers/cordova/web-intent'
   styleUrls: ['./single-ad.component.css']
 })
 export class SingleAdComponent implements OnInit {
+
+  @Input('category') category: string
 
   public ad: any = {}
 
@@ -54,6 +56,7 @@ export class SingleAdComponent implements OnInit {
 
   ngOnInit(): void {
     this.getSingleAdBanner()
+    console.log("Current Category", this.category)
   }
 
 }

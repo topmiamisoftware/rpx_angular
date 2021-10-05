@@ -1,7 +1,7 @@
-export class PlaceToEatItem {
+export class Reward {
 
     public id: number = null
-    public place_to_eat_id: number = null
+    public business_id: number = null
     public type: string = null
     public name: string = null    
     public description: string = null

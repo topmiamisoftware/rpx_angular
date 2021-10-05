@@ -377,9 +377,9 @@ img.sb-qr:hover{
 .spotbie-overlay-window{
     background-position: center;
     background-color: #32303e;
-    width: 102%;
-    min-width: 102%;
-    max-width: 102%;
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
     z-index: 95;      
 }
 
@@ -461,7 +461,15 @@ img.sb-qr:hover{
     }
     .sb-inputWithIconWrapper{
         min-width: 100%;
-    }      
+    } 
+    span.sb-loyalty-points{
+        padding-right: 5px;
+        margin-left: 10px;
+        border-left: unset;
+    }
+    img.sb-qr{
+        margin-left: 15px;
+    }           
 }
 @media (max-width: 560px) {   
     .spotbie-menu-logged td{

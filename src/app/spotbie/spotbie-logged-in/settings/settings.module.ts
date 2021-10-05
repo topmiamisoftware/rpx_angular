@@ -1,18 +1,24 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { SettingsComponent } from './settings.component';
+/* Angular Packages */
+import { NgModule } from '@angular/core'
+import { CommonModule } from '@angular/common'
+import { RouterModule } from '@angular/router'
+import { HttpClientModule } from '@angular/common/http'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 
+/* Angular Material Packages */
+import { MatChipsModule } from '@angular/material/chips'
+import { MatAutocompleteModule } from '@angular/material/autocomplete'
+
+/* 3rd Party Packages */
 import { AgmCoreModule, GoogleMapsAPIWrapper } from '@agm/core'
-
-import { environment } from 'src/environments/environment'
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
-import { HelperModule } from 'src/app/helpers/helper.module';
-
 import { NgxMaskModule, IConfig } from 'ngx-mask'
-import { RouterModule } from '@angular/router';
 
-export const options : Partial<IConfig> | (() => Partial<IConfig>) = null;
+/* SpotBie Imports */
+import { environment } from 'src/environments/environment'
+import { SettingsComponent } from './settings.component'
+import { HelperModule } from 'src/app/helpers/helper.module'
+
+export const options : Partial<IConfig> | (() => Partial<IConfig>) = null
 
 @NgModule({
   declarations: [
@@ -25,6 +31,8 @@ export const options : Partial<IConfig> | (() => Partial<IConfig>) = null;
     HttpClientModule,
     HelperModule,
     RouterModule,
+    MatChipsModule,
+    MatAutocompleteModule,
     AgmCoreModule.forRoot({
       apiKey: environment.google_maps_apiKey,
       language: 'en',

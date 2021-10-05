@@ -15,9 +15,9 @@
       <i class="fa fa-times" *ngIf="menuActive"></i>
     </td>  
   
-    <td style="width: 45%;">
+    <td [ngStyle]="getPointsWrapperStyle()">
       
-      <img class="spotbie-header-mini-logo" src="assets/images/spotbie_logo_header.svg"  (click)="home()" />
+      <img class="spotbie-header-mini-logo" src="assets/images/spotbie_logo_header.svg"  *ngIf="isDesktop" (click)="home()"/>
 
       <span class='sb-loyalty-points' (click)="toggleLoyaltyPoints()" >{{ userLoyaltyPoints | number:'1.0':'en-US' }}</span>
       
@@ -29,15 +29,11 @@
         <i class='sb-qr fa fa-bars' (click)="openBusinessMenu()"></i>
       </div>
 
-      <span class='sb-userName' (click)="openWindow(settingsWindow)" *ngIf="userName !== null">Welcome, {{ userName }}</span>         
+      <span class='sb-userName' (click)="openWindow(settingsWindow)" *ngIf="userName !== null && isDesktop">Welcome, {{ userName }}</span>         
     
     </td>    
 
-    <td *ngIf="isDesktop" class="sb-desktopNavBar" style="text-align: right;">
-
-      <span (click)="home()" *ngIf="this.userType === '4'">
-        HOME
-      </span>
+    <td *ngIf="isDesktop" class="sb-desktopNavBar" style="text-align: right; cursor: default;"> 
 
       <span (click)="spawnCategories('food')" *ngIf="this.userType === '4'">
         PLACES TO EAT
@@ -100,10 +96,6 @@
 
       <div (click)="logOut()">
         LOG OUT
-      </div>
-
-      <div (click)="goToBlog()">
-        BLOG
       </div>
 
     </td></tr>

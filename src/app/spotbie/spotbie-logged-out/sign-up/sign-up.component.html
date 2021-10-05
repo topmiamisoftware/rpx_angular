@@ -5,7 +5,8 @@
     <div class="sb-login-top-padding mt-2"></div>
 
     <p class='spotbie-text-gradient text-uppercase text-center' id="sign_up_general_instructions" #spotbieSignUpIssues>
-        Sign up to earn rewards with spotbie.
+        <span  *ngIf="!business">Sign up to earn rewards with spotbie.</span>
+        <span  *ngIf="business">Sign up to find customers.</span>
     </p>
     
     <form [formGroup]="signUpFormx" (ngSubmit)="initSignUp()">                                               
@@ -295,6 +296,22 @@
       
     </div>-->
 
-    <div class="sb-logo mt-5"></div>
+    <div class="sb-logo mt-3 mb-3"></div>
+
+    <div class="spotbie-rel-div
+    spotbie-padding
+    spotbie-text-link"
+    *ngIf="business"
+    (click)="usersHome()">
+        CLICK HERE FOR NON-BUSINESS USERS
+    </div>
+
+    <div class="spotbie-rel-div
+    spotbie-padding
+    spotbie-text-link"
+    *ngIf="!business"
+    (click)="businessHome()">
+        LOOKING FOR THE BUSINESS PORTAL?
+    </div>
 
 </div>

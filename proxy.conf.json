@@ -1,6 +1,6 @@
 {
     "/api/*": {
-        "target": "http://localhost:8000",
+        "target": "https://192.165.1.65:8000",
         "secure": false,
         "pathRewrite": {
             "^/api": ""
@@ -8,41 +8,5 @@
         "logLevel": "debug",
         "changeOrigin": true,
         "timeout" : 360000
-    },   
-    "/defaults/*": {
-        "target": "https://spotbie.com",
-        "secure": false,
-        "logLevel": "debug",
-        "changeOrigin": true
-    },
-    "/defaults_c/*": {
-        "target": "https://spotbie.com",
-        "secure": false,
-        "logLevel": "debug",
-        "changeOrigin": true
-    },
-    "/bg_images/*": {
-        "target": "https://spotbie.com",
-        "secure": false,
-        "logLevel": "debug",
-        "changeOrigin": true
-    },
-    "/extra-media/*": {
-        "target": "https://spotbie.com",
-        "secure": false,
-        "logLevel": "debug",
-        "changeOrigin": true
-    },
-    "/albums/*": {
-        "target": "https://spotbie.com",
-        "secure": false,
-        "logLevel": "debug",
-        "changeOrigin": true
-    },
-    "/albums/*": {
-        "target": "https://spotbie.com",
-        "secure": false,
-        "logLevel": "debug",
-        "changeOrigin": true
-    }            
+    }   
 }

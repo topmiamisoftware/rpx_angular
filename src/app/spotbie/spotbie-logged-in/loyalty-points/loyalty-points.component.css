@@ -26,7 +26,6 @@ p{
     min-width: 450px;
 }
 .spotbie-overlay-window{
-    padding-top: 90px;
     padding-bottom: 100px;
     background: #332f3e;
     text-align: center;    
@@ -72,4 +71,38 @@ p{
     font-size: 3.5rem;
     line-height: 3.5rem;
     z-index: 999;
+}
+@media (max-width: 650px){
+    .sb-helpBlock{
+        font-size: .8rem;
+        min-width: 92%;
+        width: 92%;
+        max-width: 92%;
+        margin-bottom: 60px;
+    }
+}
+@media (max-width: 460px) { 
+    .sb-input{
+        width: 94%;
+        min-width: 94%;
+        max-width: 94%;
+    }
+    h4{
+        font-size: .8rem;
+        padding: 20px;
+    }
+    .spotbie-input-info {
+        font-size: .8rem;
+        padding: 15px;
+    }
+    span.sb-loyalty-points{
+        font-size: 5rem !important;
+        margin-right: unset;
+    }
+    img.sb-loyalty-points{
+        display: none;
+    }
+    #sp-lpTitle{
+        margin-bottom: 0px !important;
+    }
 }

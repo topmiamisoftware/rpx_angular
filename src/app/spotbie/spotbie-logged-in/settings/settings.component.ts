@@ -1,4 +1,6 @@
-import { Component, OnInit, ViewChild, NgZone } from '@angular/core'
+import {COMMA, ENTER} from '@angular/cdk/keycodes';
+
+import { Component, OnInit, ViewChild, NgZone, ElementRef } from '@angular/core'
 import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms'
 import * as spotbieGlobals from '../../../globals'
 import { User } from '../../../models/user'
@@ -13,11 +15,13 @@ import { UserauthService } from 'src/app/services/userauth.service'
 import * as calendly from '../../../helpers/calendly/calendlyHelper'
 import * as map_extras from 'src/app/spotbie/map/map_extras/map_extras'
 
-import { PlaceToEat } from 'src/app/models/place-to-eat'
-import { Route } from '@angular/router'
+import { PlaceToEat } from 'src/app/models/business'
 import { HttpClient, HttpEventType } from '@angular/common/http'
+import { MatChipInputEvent } from '@angular/material/chips'
+import { map, startWith } from 'rxjs/operators'
 
-const SETTINGS_API = spotbieGlobals.API + '/settings.service.php'
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { Observable } from 'rxjs/internal/Observable';
 
 const PLACE_TO_EAT_API = spotbieGlobals.API + 'place-to-eat'
 
@@ -132,13 +136,57 @@ export class SettingsComponent implements OnInit {
                           }
     
   public calendlyUp: boolean = false
+  
+  public placeToEatCategoryList: Array<string> = map_extras.FOOD_CATEGORIES
+
+  selectable = true
+  removable = true
+  separatorKeysCodes: number[] = [ENTER, COMMA]
+
+  filteredPlacesToEatCategories: Observable<string[]>
+
+  placesToEatCategories: string[] = []
+
+  @ViewChild('fruitInput') fruitInput: ElementRef<HTMLInputElement>;
 
   constructor(private host: MenuLoggedInComponent,
               private http: HttpClient,
               private formBuilder: FormBuilder,
               private mapsAPILoader: MapsAPILoader,
               private ngZone: NgZone,
-              private userAuthService: UserauthService) { }
+              private userAuthService: UserauthService){ }
+
+  add(event: MatChipInputEvent): void {
+    const value = (event.value || '').trim();
+
+    // Add our fruit
+    if (value) {
+      this.placesToEatCategories.push(value);
+    }
+
+    this.placeToEatSettingsForm.get('originCategories').setValue(null)
+
+  }
+
+  remove(fruit: string): void {
+    const index = this.placesToEatCategories.indexOf(fruit);
+
+    if (index >= 0) {
+      this.placesToEatCategories.splice(index, 1);
+    }
+  }
+
+  selected(event: MatAutocompleteSelectedEvent): void {
+    this.placesToEatCategories.push(event.option.viewValue);
+    this.fruitInput.nativeElement.value = '';
+    this.placeToEatSettingsForm.get('originCategories').setValue(null);
+  }
+
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
+
+    return this.placeToEatCategoryList.filter(fruit => fruit.toLowerCase().includes(filterValue));
+  }
 
   private fetchCurrentSettings(): any {
 
@@ -158,8 +206,6 @@ export class SettingsComponent implements OnInit {
   }
 
   private populateSettings(settings_response: any) {
-
-    //console.log("SettingsResponse", settings_response)
 
     if (settings_response.message == 'success') {
       
@@ -297,6 +343,7 @@ export class SettingsComponent implements OnInit {
       photo: this.originPhoto,
       loc_x: this.lat,
       loc_y: this.lng,
+      categories: this.originCategories,
       passkey: this.passKey
     }
 
@@ -854,12 +901,14 @@ export class SettingsComponent implements OnInit {
         const originAddressValidators = [Validators.required]
         const originValidators = [Validators.required]
         const originDescriptionValidators = [Validators.required, Validators.maxLength(350), Validators.minLength(100)]
+        const originCategoriesValidators = [Validators.required]
 
         this.placeToEatSettingsForm = this.formBuilder.group({
           originAddress: ['', originAddressValidators],
           originTitle: ['', originTitleValidators],
           originDescription: ['', originDescriptionValidators],
-          spotbieOrigin: ['', originValidators]
+          spotbieOrigin: ['', originValidators],
+          originCategories: ['', originCategoriesValidators]
         })
 
         if(this.user.placeToEat !== undefined){
@@ -872,19 +921,23 @@ export class SettingsComponent implements OnInit {
             coords : { latitude : this.user.placeToEat.loc_x, longitude : this.user.placeToEat.loc_y }
           }
 
-          console.log("this.user.placeToEat.photo", this.user.placeToEat.photo)
-
           this.showPosition(position)
           this.originPhoto = this.user.placeToEat.photo
           this.placeToEatSettingsForm.get('originDescription').setValue(this.user.placeToEat.description)
           this.placeToEatSettingsForm.get('originTitle').setValue(this.user.placeToEat.name)
-
+          
         } else {
 
           this.placeToEatSettingsForm.get('originAddress').setValue('SEARCH FOR LOCATION')
           this.placeToEatSettingsForm.get('spotbieOrigin').setValue( this.lat + ',' + this.lng)
 
         }        
+
+        //Set the filtered places to eat categories event listener.
+        this.filteredPlacesToEatCategories = this.placeToEatSettingsForm.get('originCategories').valueChanges.pipe(
+          startWith(null),
+          map((fruit: string | null) => fruit ? this._filter(fruit) : this.placeToEatCategoryList.slice())
+        )
 
         this.placeSettingsFormUp = true
 
@@ -923,6 +976,7 @@ export class SettingsComponent implements OnInit {
   get spotbieOrigin() { return this.placeToEatSettingsForm.get('spotbieOrigin').value }
   get originTitle() { return this.placeToEatSettingsForm.get('originTitle').value }
   get originDescription() { return this.placeToEatSettingsForm.get('originDescription').value }
+  get originCategories() { return this.placeToEatSettingsForm.get('originCategories').value }
   get i() { return this.placeToEatSettingsForm.controls }
 
   public saveSettings() {

@@ -66,6 +66,8 @@ export class SignUpComponent implements OnInit {
 
   public rememberMeToken: string
 
+  public business: boolean = false
+
   constructor(private router: Router,
               private sign_up_service: SignUpService,
               private formBuilder: FormBuilder,
@@ -79,12 +81,12 @@ export class SignUpComponent implements OnInit {
 
   public signInWithGoogle(): void {
     this.loading = true
-    this.userAuthService.signInWithGoogle(this.loginCallback.bind(this))
+    this.userAuthService.signInWithGoogle(this.loginCallback.bind(this), this.router.url)
   }
 
   public signInWithFB(): void {    
     this.loading = true
-    this.userAuthService.signInWithFB(this.loginCallback.bind(this))
+    this.userAuthService.signInWithFB(this.loginCallback.bind(this), this.router.url)
   }
 
   private loginCallback(loginResponse: any): void{
@@ -111,8 +113,6 @@ export class SignUpComponent implements OnInit {
       localStorage.setItem('spotbie_rememberMe', this.userAuthService.userRememberMe)
 
       localStorage.setItem('spotbie_userId', loginResponse.user.id)
-
-      localStorage.setItem('spotbiecom_session', loginResponse.token_info.original.access_token)
 
       localStorage.setItem('spotbiecom_session', loginResponse.user.original.access_token)
 
@@ -298,7 +298,8 @@ export class SignUpComponent implements OnInit {
     const sign_up_obj = {
         username,
         password,
-        email
+        email,
+        route: this.router.url
     }
 
     this.sign_up_service.initRegister(sign_up_obj)
@@ -451,9 +452,22 @@ export class SignUpComponent implements OnInit {
 
   }
 
+  public usersHome(){
+    this.router.navigate(['/home'])
+  }
+
+  public businessHome(){
+    this.router.navigate(['/business'])
+  }
+
   ngOnInit() {    
+
     this.loading = true
+
+    this.router.url === '/business' ? this.business = true : this.business = false
+
     this.initSignUpForm()
+
   }
 
   ngAfterViewInit(){

@@ -1,16 +1,18 @@
 h2,h3,p, li{
     color: black;
+    font-family: GothamBook !important;
 }
 h1,a{
     color: #4a8b00;
 }
-.termsWrapper{
-    position: relative;
-    margin: 0 auto;
-    width: 94%;
-    min-width: 94%;
-    max-width: 94%;
-    word-wrap: break-word;
+body{
+    background-color: white !important;
+}
+.spotbie-overlay-window{
+    padding: 50px;
+    background-color: #332f3e;
+    overflow-y: scroll;
+    text-align: left;
 }
 /**WIDTH MEDIA QUERIES */
 @media (max-width: 1300px) { 

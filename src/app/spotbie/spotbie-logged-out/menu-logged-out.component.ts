@@ -48,8 +48,10 @@ export class MenuLoggedOutComponent implements OnInit {
               private deviceService: DeviceDetectorService) { }
 
   public spawnCategories(type: any, slideMenu: boolean = true): void{
+
     if(slideMenu) this.slideMenu()
     this.spawnCategoriesOut.emit(type)
+    
   }
 
   goToBlog(){

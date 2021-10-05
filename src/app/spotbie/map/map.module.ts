@@ -23,6 +23,8 @@ import { WelcomeComponent } from '../spotbie-logged-out/welcome/welcome.componen
 import { ShareModule } from '@ngx-share/core'
 import { UserInfoObjectComponent } from './user-info-object/user-info-object.component'
 import { RouterModule } from '@angular/router'
+import { UserFeaturesComponent } from '../features/user-features/user-features.component'
+import { BusinessFeaturesComponent } from '../features/business-features/business-features.component'
 
 @NgModule({
   declarations: [
@@ -32,7 +34,9 @@ import { RouterModule } from '@angular/router'
     InfoObjectComponent,
     MyPlacesComponent,
     WelcomeComponent,
-    UserInfoObjectComponent
+    UserInfoObjectComponent,
+    BusinessFeaturesComponent,
+    UserFeaturesComponent
   ],
   imports: [
     AgmOverlays,
