@@ -2,7 +2,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AllowedAccountTypes } from 'src/app/helpers/enum/account-type.enum';
 import { LoyaltyPointBalance } from 'src/app/models/loyalty-point-balance';
-import { PlaceToEat } from 'src/app/models/business';
+import { Business } from 'src/app/models/business';
 import { LoyaltyPointsService } from 'src/app/services/loyalty-points/loyalty-points.service';
 import { UserauthService } from 'src/app/services/userauth.service';
 
@@ -15,7 +15,7 @@ export class QrComponent implements OnInit {
 
   @Output() closeThisEvt = new EventEmitter
 
-  public placeToEat = new PlaceToEat()
+  public business = new Business()
 
   public userHash: string = null
 
@@ -57,9 +57,9 @@ export class QrComponent implements OnInit {
 
     this.loyaltyPointRewardDollarValue = this.totalSpent * ((percentValue)/100)
     
-    this.placeToEat.qr_code_link = `https://spotbie.com/loyalty-points/scan/${this.userHash}/${this.qrCodeLink}/${this.totalSpent}/${this.loyaltyPointReward}`
+    this.business.qr_code_link = `https://spotbie.com/loyalty-points/scan/${this.userHash}/${this.qrCodeLink}/${this.totalSpent}/${this.loyaltyPointReward}`
 
-    console.log("QrCodeLink", this.placeToEat.qr_code_link)
+    console.log("QrCodeLink", this.business.qr_code_link)
 
     this.promptForRewardTimeout = setTimeout(() =>{
 
@@ -106,8 +106,8 @@ export class QrComponent implements OnInit {
       resp => {        
         console.log("resp", resp)
         this.userHash = resp.user.hash
-        this.placeToEat.address = resp.place_to_eat.address
-        this.placeToEat.name = resp.place_to_eat.name
+        this.business.address = resp.place_to_eat.address
+        this.business.name = resp.place_to_eat.name
         this.qrCodeLink = resp.place_to_eat.qr_code_link
        }
     )

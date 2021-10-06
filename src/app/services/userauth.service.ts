@@ -140,16 +140,16 @@ export class UserauthService {
 
     let saveSettingsObj
 
-    if(user.placeToEat === undefined){
+    if(user.business === undefined){
       saveSettingsObj = {
         _method: 'PUT',
         username: user.username,
         email: user.email,
-        first_name: user.exe_user_first_name,
-        last_name: user.exe_user_last_name,
-        phone_number: user.ph,
-        ghost_mode: user.ghost,
-        privacy: user.privacy,
+        first_name: user.spotbie_user.first_name,
+        last_name: user.spotbie_user.last_name,
+        phone_number: user.spotbie_user.phone_number,
+        ghost_mode: user.spotbie_user.ghost_mode,
+        privacy: user.spotbie_user.privacy,
         account_type: user.spotbie_user.user_type
       }
     } else {
@@ -158,17 +158,17 @@ export class UserauthService {
         _method: 'PUT',
         username: user.username,
         email: user.email,
-        first_name: user.exe_user_first_name,
-        last_name: user.exe_user_last_name,
-        phone_number: user.ph,
-        ghost_mode: user.ghost,
-        privacy: user.privacy,
+        first_name: user.spotbie_user.first_name,
+        last_name: user.spotbie_user.last_name,
+        phone_number: user.spotbie_user.phone_number,
+        ghost_mode: user.spotbie_user.ghost_mode,
+        privacy: user.spotbie_user.privacy,
         account_type: user.spotbie_user.user_type,
-        origin_description: user.placeToEat.description,
-        origin_address: user.placeToEat.address,
-        origin_title: user.placeToEat.name,
-        origin_x: user.placeToEat.loc_x,
-        origin_y: user.placeToEat.loc_y
+        origin_description: user.business.description,
+        origin_address: user.business.address,
+        origin_title: user.business.name,
+        origin_x: user.business.loc_x,
+        origin_y: user.business.loc_y
       }
 
     }

@@ -12,24 +12,14 @@ import { DateFormatPipe, TimeFormatPipe }    from 'src/app/pipes/date-format.pip
 import { MapObjectIconPipe }                 from 'src/app/pipes/map-object-icon.pipe'
 
 import { DeviceDetectorService }             from 'ngx-device-detector'
-import { SwiperOptions }                     from 'swiper'
 
-import { ColorsService }                     from '../spotbie-logged-in/UNUSED_background-color/colors.service'
-import { LocationService }                   from '../../location-service/location.service'
+import { LocationService }                   from '../../services/location-service/location.service'
 
 import * as map_extras                       from './map_extras/map_extras'
 import * as sorterHelpers                    from 'src/app/helpers/results-sorter.helper'
 
 
 const YELP_BUSINESS_SEARCH_API = 'https://api.yelp.com/v3/businesses/search'
-
-const SLIDE_SHOW_SOURCES = [
-  "assets/spotbie-the-new-social-network.jpg",
-  "assets/images/home_imgs/png/providing-you-places-to-eat-around-you.jpg",
-  "assets/images/home_imgs/jpg/find_events_around.jpg",
-  "assets/images/home_imgs/png/providing-you-places-to-shop-around-you.jpg",
-  "assets/images/home_imgs/png/find-and-make-new-friends.jpg",
-]
 
 @Component({
   selector:    'app-map',
@@ -114,9 +104,11 @@ export class MapComponent implements OnInit {
   public surroundingObjectList = new Array()
   public searchResults = new Array()
   private searchResultsOriginal: Array<any> = []
+
   public event_categories
   public food_categories = map_extras.FOOD_CATEGORIES
   public shopping_categories = map_extras.SHOPPING_CATEGORIES
+
   public map_styles = map_extras.MAP_STYLES
 
   public infoObject: any
@@ -126,7 +118,7 @@ export class MapComponent implements OnInit {
   public myFavoritesWindow = { open : false }
   public update_distance_timeout: any
   private finderSearchTimeout: any
-  public myPlacesWindow = { open : false }
+
   public subCategory: any = {
     food_sub: { open: false},
     media_sub: { open: false},
@@ -148,16 +140,6 @@ export class MapComponent implements OnInit {
     }
   }
 
-  public swiperConfig: SwiperOptions = {
-    pagination: { el: '.swiper-pagination', clickable: true },
-    loop: true,
-    navigation: {
-      nextEl: '.swiper-button-next',
-      prevEl: '.swiper-button-prev'
-    },
-    spaceBetween: 0
-  }
-
   public web_options_subscriber: Subscription
 
   public placesToEat: boolean = false
@@ -173,7 +155,6 @@ export class MapComponent implements OnInit {
 
   constructor(private locationService: LocationService,
               private deviceService: DeviceDetectorService,
-              private webOptionsService: ColorsService,
               private mapIconPipe: MapObjectIconPipe) { }
 
   /** 
@@ -624,7 +605,12 @@ export class MapComponent implements OnInit {
   }
 
   public openWelcome(){
+
+    this.catsUp = false
+    this.show_search_box = false
+    this.showSearchResults = false    
     this.showMobilePrompt = true
+
   }
 
   public spawnCategories(category: string): void {
@@ -646,11 +632,6 @@ export class MapComponent implements OnInit {
     }
 
     if(this.searchCategory !== undefined) this.previousSeachCategory = this.searchCategory
-
-    if(category == 'users'){
-      this.spotMe()
-      return
-    }
 
     this.searchCategory = category
 
@@ -1278,8 +1259,7 @@ export class MapComponent implements OnInit {
 
   public getMapPromptMobileInnerWrapperClassOne(){
     
-    if(this.isMobile)
-      return 'map-prompt-v-align mt-5'
+    if(this.isMobile) return 'map-prompt-v-align mt-5'
     
   }
 
@@ -1316,33 +1296,13 @@ export class MapComponent implements OnInit {
 
   }
 
-  public mediaSearch(action): void {
-    //this.host.mediaPlayerWindow.open = true
-    this.coming_soon_ov = true
-
-    this.coming_soon_ov_title = "SpotBie Media Search Coming Soon"
-    this.coming_soon_ov_text = "SpotBie Media Search will allow users to find uploaded media locally. (Songs, Videos, Books, Etc.)"    
-  }
-
-  public artistSearch(action) {
-    //this.host.mediaPlayerWindow.open = true
-    this.coming_soon_ov = true
-
-    this.coming_soon_ov_title = "SpotBie Content Creator Search Coming Soon"
-    this.coming_soon_ov_text = "SpotBie Content Creator Search will allow users to find content creators locally. (Artists, Producers, Bloggers, Etc.)"    
-  }
-
-  public placeSearch() {
-
-    this.myPlacesWindow.open = true  
-
-  }
-
   public closeSearchResults(){
+
     this.closeCategories()
     this.showSearchResults = false
     this.displaySurroundingObjectList = true
     this.show_search_box = false
+
   }
 
   public myFavorites(): void{
@@ -1357,15 +1317,13 @@ export class MapComponent implements OnInit {
 
     this.locationPrompt = false
 
-    if (locationPrompted == '1') {
+    if (locationPrompted == '1')
       this.startLocation() 
-    } else {
+    else
       this.locationPrompt = true
-    }
+    
 
-    if(this.isDesktop){
-      this.acceptLocationPrompt()
-    }
+    if(this.isDesktop) this.acceptLocationPrompt()
 
   }
 
@@ -1392,12 +1350,6 @@ export class MapComponent implements OnInit {
   public startLocation(){
 
     this.showMobilePrompt = true
-    
-    this.web_options_subscriber = this.webOptionsService.getWebOptions().subscribe(web_options =>{
-
-      if(web_options.bg_color) this.bg_color = web_options.bg_color
-
-    })
 
   }
 

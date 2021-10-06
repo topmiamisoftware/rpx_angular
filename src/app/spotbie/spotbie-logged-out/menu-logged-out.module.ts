@@ -4,7 +4,6 @@ import { RouterModule } from '@angular/router'
 import { MenuLoggedOutComponent } from './menu-logged-out.component'
 import { LogInComponent } from 'src/app/spotbie/spotbie-logged-out/log-in/log-in.component'
 import { SignUpComponent } from 'src/app/spotbie/spotbie-logged-out/sign-up/sign-up.component'
-import { ReadAboutComponent } from 'src/app/spotbie/read-about/read-about.component'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { HttpClientModule } from '@angular/common/http'
 import { NgxMaskModule, IConfig } from 'ngx-mask'
@@ -19,8 +18,7 @@ export const options : Partial<IConfig> | (() => Partial<IConfig>) = null
   declarations: [
     MenuLoggedOutComponent,
     LogInComponent,
-    SignUpComponent,
-    ReadAboutComponent,
+    SignUpComponent
   ],
   imports: [
     CommonModule,

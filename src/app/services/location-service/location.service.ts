@@ -1,21 +1,14 @@
-import { Injectable } from '@angular/core'
-import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http'
-import * as spotbieGlobals from '../../globals'
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { handleError } from '../../helpers/error-helper';
+import * as spotbieGlobals from '../../globals';
+import { catchError } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
-const USER_LOCATION_API = spotbieGlobals.API + 'api/map.service.php'
-
-const SEARCH_BUSINESS_API = 'https://spotbie.com/api/yelp.php'
-
-const SEARCH_EVENTS_API = 'https://spotbie.com/api/yelp.php'
-
-const HTTP_OPTIONS = {
-  withCredentials : true,
-  headers: new HttpHeaders({ 'Content-Type' : 'application/json' })
-}
-
-const HTTP_OPTIONS_2 = {
-  headers: new HttpHeaders({ 'Content-Type' : 'application/json' })
-}
+const USER_LOCATION_API   = `${spotbieGlobals.API}user-location`
+const SEARCH_BUSINESS_API = `${spotbieGlobals.API}surroundings/search-businesses`
+const SEARCH_EVENTS_API   = `${spotbieGlobals.API}surroundings/search-events`
+const GET_CLASSIFICATIONS = `${spotbieGlobals.API}surroundings/get-classifications`
 
 @Injectable({
   providedIn: 'root'
@@ -24,71 +17,53 @@ export class LocationService {
 
   constructor(private http: HttpClient) { }
   
-  public getClassifications(search_obj, callback){
+  public getClassifications(): Observable<any>{
 
-    let chosen_api
-    
-    const search_obj2 = JSON.stringify(search_obj)
+    const getClassificationsApi = `${GET_CLASSIFICATIONS}`
 
-    chosen_api = SEARCH_EVENTS_API
-
-    this.http.post<HttpResponse<any>>(chosen_api, search_obj2, HTTP_OPTIONS_2)
-    .subscribe( resp => {
-        callback(resp)
-    },
-    error => {
-        console.log("Get Classifications Error", error)
-    })
+    return this.http.get<any>(getClassificationsApi).pipe(
+      catchError(handleError("getClassifications"))
+    )
     
   }
 
-  public getEvents(search_obj, callback) {
+  public getEvents(searchObj: any): Observable<any> {
 
-    let chosen_api
-    
-    const search_obj2 = JSON.stringify(search_obj)
+    const getEventsApi = `${SEARCH_EVENTS_API}`
 
-    chosen_api = SEARCH_EVENTS_API
-
-    this.http.post<HttpResponse<any>>(chosen_api, search_obj2, HTTP_OPTIONS_2)
-    .subscribe( resp => {
-      callback(resp)
-    },
-    error => {
-      console.log("Get Events Error", error)
-    })
+    return this.http.post<any>(getEventsApi, searchObj).pipe(
+      catchError(handleError("getEvents"))
+    )
 
   }
 
-  public getBusinesses(search_obj, callback) {
+  public getBusinesses(searchObj: any): Observable<any> {
 
-    let chosen_api
-    
-    const search_obj2 = JSON.stringify(search_obj)
+    const getBusinessesApi = `${SEARCH_BUSINESS_API}`
 
-    chosen_api = SEARCH_BUSINESS_API
-
-    this.http.post<HttpResponse<any>>(chosen_api, search_obj2, HTTP_OPTIONS_2)
-    .subscribe( resp => {
-      callback(resp)
-    },
-    error => {
-        console.log("Get Business Error", error)
-    })
+    return this.http.post<any>(getBusinessesApi, searchObj).pipe(
+      catchError(handleError("getBusinesses"))
+    )
 
   }
 
-  saveCurrentLocation(save_location_obj : any, callback : Function) {
+  public saveCurrentLocation(saveLocationObj: any) {
 
-    let location_api = USER_LOCATION_API
+    const locationApi = `${USER_LOCATION_API}/save-current-location`;
 
-    this.http.post<HttpResponse<any>>(location_api, save_location_obj, HTTP_OPTIONS)
-    .subscribe( resp => {
-      callback(resp)
-    },
-    error => {
-      console.log("Save Current Location Error", error)
-    })
+    return this.http.post<any>(locationApi, saveLocationObj).pipe(
+      catchError(handleError("saveCurrentLocation Error"))
+    )
+
+  }
+
+  public retrieveSurroudings(retrieve_surroundings_obj: any){
+
+    let location_api = `${USER_LOCATION_API}/retrieve-surroundings`;
+
+    return this.http.post<any>(location_api, retrieve_surroundings_obj).pipe(
+      catchError(handleError("retrieveSurroudings Error"))
+    )  
 
   }
 

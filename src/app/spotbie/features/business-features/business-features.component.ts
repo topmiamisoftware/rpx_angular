@@ -14,28 +14,13 @@ export class BusinessFeaturesComponent implements OnInit {
   public isTablet: boolean = false
   public isMobile: boolean = false
 
-  constructor(private deviceService: DeviceDetectorService) { }
+  constructor() { }
 
   public signUp(){
     this.signUpEvent.emit()
   }
 
-  public getWrapperClass(){
-
-    if(this.isMobile){
-
-      return { 'display': 'table-cell',
-               'vertical-align': 'middle' }
-
-    }
-
-  }
-
   ngOnInit(): void {
-
-    this.isDesktop = this.deviceService.isDesktop()
-    this.isTablet = this.deviceService.isTablet()
-    this.isMobile = this.deviceService.isMobile()
 
   }
 

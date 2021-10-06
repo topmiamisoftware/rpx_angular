@@ -1,7 +1,7 @@
 import { HttpClient, HttpEventType } from '@angular/common/http'
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
-import { PlaceToEatItem } from 'src/app/models/reward'
+import { Reward } from 'src/app/models/reward'
 import { RewardCreatorService } from 'src/app/services/spotbie-logged-in/business-menu/reward-creator/reward-creator.service'
 import * as spotbieGlobals from '../../../../globals'
 
@@ -19,7 +19,7 @@ export class RewardCreatorComponent implements OnInit {
   @Input() userPointToDollarRatio: number = 0
   @Input() userLoyaltyPoints: number = 0
 
-  @Input() reward: PlaceToEatItem
+  @Input() reward: Reward
 
   @ViewChild('spbInputInfo') spbInputInfo
   @ViewChild('rewardMediaInput') rewardMediaInput
@@ -122,7 +122,7 @@ export class RewardCreatorComponent implements OnInit {
     this.rewardFormSubmitted = true
     this.spbTopAnchor.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' })
     
-    let itemObj = new PlaceToEatItem()
+    let itemObj = new Reward()
     itemObj.name = this.rewardName   
     itemObj.description = this.rewardDescription
     itemObj.images = this.rewardImage

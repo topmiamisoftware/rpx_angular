@@ -15,7 +15,7 @@ import { UserauthService } from 'src/app/services/userauth.service'
 import * as calendly from '../../../helpers/calendly/calendlyHelper'
 import * as map_extras from 'src/app/spotbie/map/map_extras/map_extras'
 
-import { PlaceToEat } from 'src/app/models/business'
+import { Business } from 'src/app/models/business'
 import { HttpClient, HttpEventType } from '@angular/common/http'
 import { MatChipInputEvent } from '@angular/material/chips'
 import { map, startWith } from 'rxjs/operators'
@@ -137,15 +137,15 @@ export class SettingsComponent implements OnInit {
     
   public calendlyUp: boolean = false
   
-  public placeToEatCategoryList: Array<string> = map_extras.FOOD_CATEGORIES
+  public placeToEatCategoryList: Array<string>
 
-  selectable = true
-  removable = true
-  separatorKeysCodes: number[] = [ENTER, COMMA]
+  public selectable = true
+  public removable = true
+  public separatorKeysCodes: number[] = [ENTER, COMMA]
 
-  filteredPlacesToEatCategories: Observable<string[]>
+  public filteredPlacesToEatCategories: Observable<string[]>
 
-  placesToEatCategories: string[] = []
+  public placesToEatCategories: string[] = []
 
   @ViewChild('fruitInput') fruitInput: ElementRef<HTMLInputElement>;
 
@@ -218,6 +218,7 @@ export class SettingsComponent implements OnInit {
       }
 
       if(!this.settingsFormInitiated){
+
         this.chosen_account_type = this.user.spotbie_user.user_type
               
         switch(this.chosen_account_type){
@@ -228,6 +229,7 @@ export class SettingsComponent implements OnInit {
             this.account_type_category = 'PERSONAL'
             break
         }
+        
       }
 
       this.settingsFormInitiated = true 
@@ -263,16 +265,16 @@ export class SettingsComponent implements OnInit {
 
       if (this.chosen_account_type == 1 && settings_response.place_to_eat !== null) {
 
-        this.user.placeToEat = new PlaceToEat()
+        this.user.business = new Business()
         
-        this.user.placeToEat.loc_x = settings_response.place_to_eat.loc_x
-        this.user.placeToEat.loc_y = settings_response.place_to_eat.loc_y
-        this.user.placeToEat.name = settings_response.place_to_eat.name
-        this.user.placeToEat.description = settings_response.place_to_eat.description
-        this.user.placeToEat.address = settings_response.place_to_eat.address
-        this.user.placeToEat.photo = settings_response.place_to_eat.photo
+        this.user.business.loc_x = settings_response.place_to_eat.loc_x
+        this.user.business.loc_y = settings_response.place_to_eat.loc_y
+        this.user.business.name = settings_response.place_to_eat.name
+        this.user.business.description = settings_response.place_to_eat.description
+        this.user.business.address = settings_response.place_to_eat.address
+        this.user.business.photo = settings_response.place_to_eat.photo
 
-        this.originPhoto = this.user.placeToEat.photo 
+        this.originPhoto = this.user.business.photo 
 
       }      
       
@@ -911,20 +913,20 @@ export class SettingsComponent implements OnInit {
           originCategories: ['', originCategoriesValidators]
         })
 
-        if(this.user.placeToEat !== undefined){
+        if(this.user.business !== undefined){
 
-          this.placeToEatSettingsForm.get('originAddress').setValue(this.user.placeToEat.address)
+          this.placeToEatSettingsForm.get('originAddress').setValue(this.user.business.address)
           
-          this.placeToEatSettingsForm.get('spotbieOrigin').setValue(`${this.user.placeToEat.loc_x},${this.user.placeToEat.loc_y}`)    
+          this.placeToEatSettingsForm.get('spotbieOrigin').setValue(`${this.user.business.loc_x},${this.user.business.loc_y}`)    
 
           let position = {
-            coords : { latitude : this.user.placeToEat.loc_x, longitude : this.user.placeToEat.loc_y }
+            coords : { latitude : this.user.business.loc_x, longitude : this.user.business.loc_y }
           }
 
           this.showPosition(position)
-          this.originPhoto = this.user.placeToEat.photo
-          this.placeToEatSettingsForm.get('originDescription').setValue(this.user.placeToEat.description)
-          this.placeToEatSettingsForm.get('originTitle').setValue(this.user.placeToEat.name)
+          this.originPhoto = this.user.business.photo
+          this.placeToEatSettingsForm.get('originDescription').setValue(this.user.business.description)
+          this.placeToEatSettingsForm.get('originTitle').setValue(this.user.business.name)
           
         } else {
 
@@ -994,15 +996,17 @@ export class SettingsComponent implements OnInit {
     }
 
     this.user.username = this.username
-    this.user.exe_user_first_name = this.first_name
-    this.user.exe_user_last_name = this.last_name
+    this.user.spotbie_user.first_name = this.first_name
+    this.user.spotbie_user.last_name = this.last_name
     this.user.email = this.email
-    this.user.ph = this.spotbie_phone_number
+    this.user.spotbie_user.phone_number = this.spotbie_phone_number
     this.user.spotbie_user.user_type = this.chosen_account_type
 
     if (this.account_type_category !== 'PLACE TO EAT') {
-      this.user.ghost = this.spotbie_ghost_mode
-      this.user.privacy = this.spotbie_privacy
+
+      this.user.spotbie_user.ghost_mode = this.spotbie_ghost_mode
+      this.user.spotbie_user.privacy = this.spotbie_privacy
+
     }
 
     this.userAuthService.saveSettings(this.user).subscribe( 
@@ -1153,7 +1157,7 @@ export class SettingsComponent implements OnInit {
 
     this.loading = true
     this.initSettingsForm('personal')
-    
+
   }
 
 }

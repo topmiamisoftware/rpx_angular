@@ -1,13 +1,14 @@
 import { NgModule } from '@angular/core'
 import { Routes, RouterModule, ExtraOptions } from '@angular/router'
 import { TermsComponent } from './spotbie/terms/terms.component'
-import { LoginGuardServiceService } from './route-services/login-guard-service.service'
+import { LoginGuardServiceService } from './services/route-services/login-guard-service.service'
 import { InfoObjectComponent } from './spotbie/map/info-object/info-object.component'
 import { BugsComponent } from './bugs/bugs.component'
 import { LoyaltyPointsComponent } from './spotbie/spotbie-logged-in/loyalty-points/loyalty-points.component'
 import { BusinessMenuComponent } from './spotbie/spotbie-logged-in/business-menu/business-menu.component'
 
 export const routes: Routes = [
+
   { path: 'home', loadChildren: () => import('./home/home.module').then(m => m.HomeModule) },
   { path: 'business', loadChildren: () => import('./business/business.module').then(m => m.BusinessModule) },
   { path: 'terms', component: TermsComponent },  

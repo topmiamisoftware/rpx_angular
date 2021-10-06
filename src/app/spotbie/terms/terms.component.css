@@ -1,9 +1,13 @@
-h2,h3,p, li{
-    color: black;
-    font-family: GothamBook !important;
+h1,h2,h3,p,li,div{
+    font-family: Gotham-Book !important;
 }
-h1,a{
-    color: #4a8b00;
+h1{
+    line-height: 65px;
+    text-transform: uppercase;
+}
+h2,h3{
+    line-height: 45px;
+    text-transform: uppercase;
 }
 body{
     background-color: white !important;
@@ -14,6 +18,7 @@ body{
     overflow-y: scroll;
     text-align: left;
 }
+
 /**WIDTH MEDIA QUERIES */
 @media (max-width: 1300px) { 
 
@@ -35,9 +40,6 @@ body{
 }
 @media (max-width: 600px) { 
     h1{
-        font-size: 28px;
-    }
-    h1{
         font-size: 23px;
     }    
     .termsWrapper{
@@ -57,7 +59,6 @@ body{
 @media (max-width: 360px) { 
     
 }
-
 @media (max-width: 320px) {
 
 }

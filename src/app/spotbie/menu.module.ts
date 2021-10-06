@@ -1,18 +1,18 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
-import { MenuComponent } from './menu.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { EmailConfirmationComponent } from './email-confirmation/email-confirmation.component';
-import { HelperModule } from '../helpers/helper.module';
-import { RouterModule } from '@angular/router';
-import { MenuLoggedInModule } from './spotbie-logged-in/menu-logged-in.module';
-import { MenuLoggedOutModule } from './spotbie-logged-out/menu-logged-out.module';
+import { NgModule } from '@angular/core'
+import { CommonModule } from '@angular/common'
+import { HttpClientModule } from '@angular/common/http'
+import { MenuComponent } from './menu.component'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
+import { EmailConfirmationComponent } from './email-confirmation/email-confirmation.component'
+import { HelperModule } from '../helpers/helper.module'
+import { RouterModule } from '@angular/router'
+import { MenuLoggedInModule } from './spotbie-logged-in/menu-logged-in.module'
+import { MenuLoggedOutModule } from './spotbie-logged-out/menu-logged-out.module'
 
 @NgModule({
   declarations: [
     MenuComponent,
-    EmailConfirmationComponent,
+    EmailConfirmationComponent
   ],
   imports: [
     CommonModule,

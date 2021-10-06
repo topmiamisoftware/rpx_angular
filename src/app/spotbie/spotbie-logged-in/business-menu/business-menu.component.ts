@@ -26,15 +26,15 @@ export class BusinessMenuComponent implements OnInit {
   public userResetBalance
   public userPointToDollarRatio
 
-  public placeToEatRewards: Array<PlaceToEatItem>
-  public reward: PlaceToEatItem
+  public placeToEatRewards: Array<Reward>
+  public reward: Reward
 
   public qrCodeLink: string = null
   public userHash: string = null
 
   public userType: string = null
 
-  public placeToEat: PlaceToEat = new PlaceToEat()
+  public business: Business = new Business()
 
   public loyaltyPointsBalance: LoyaltyPointBalance
 
@@ -88,7 +88,7 @@ export class BusinessMenuComponent implements OnInit {
 
       if(this.userType === AllowedAccountTypes.Personal){
         this.userPointToDollarRatio = resp.loyalty_point_dollar_percent_value	
-        this.placeToEat.name = resp.placeToEatName
+        this.business.name = resp.placeToEatName
       }
 
     }
@@ -122,7 +122,7 @@ export class BusinessMenuComponent implements OnInit {
 
   }
 
-  public placeToEatTileStyling(reward: PlaceToEatItem)
+  public placeToEatTileStyling(reward: Reward)
   {
 
     if(reward.type == '0')

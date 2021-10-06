@@ -93,14 +93,6 @@
 
 </div>
 
-<app-profile-header [publicProfileInfo]="public_profile_info"
-                    [current_user_bg]="spotbieBackgroundImage"
-                    [album_id]="album_id"
-                    [album_media_id]="album_media_id"
-                    *ngIf="public_profile"></app-profile-header>
-
-<!--<app-read-about class="spotbie-app-read-about" *ngIf="home_route" (spawnCategories)="spawnCategories($event)" (signUp)="openWindow(signUpWindow)"></app-read-about>-->
-
 <app-log-in *ngIf="logInWindow.open" (openWindow)="openWindow($event)" (closeWindow)="closeWindow($event)"></app-log-in>
 
 <app-sign-up *ngIf="signUpWindow.open" [window_obj]="signUpWindow" (closeWindow)="closeWindow($event)" (logInEvent)="logIn()"></app-sign-up>

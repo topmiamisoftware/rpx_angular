@@ -42,7 +42,7 @@ export const options : Partial<IConfig> | (() => Partial<IConfig>) = null;
     BusinessMenuComponent,
     RewardComponent,
     RewardCreatorComponent,
-    BusinessDashboardComponent
+    BusinessDashboardComponent    
   ],
   imports: [  
     CommonModule,
@@ -64,6 +64,8 @@ export const options : Partial<IConfig> | (() => Partial<IConfig>) = null;
   providers: [
     DeviceDetectorService
   ],
-  exports: [MenuLoggedInComponent] 
+  exports: [
+    MenuLoggedInComponent
+  ] 
 })
 export class MenuLoggedInModule { }

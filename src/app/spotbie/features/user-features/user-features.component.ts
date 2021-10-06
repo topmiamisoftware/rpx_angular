@@ -1,5 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { DeviceDetectorService } from 'ngx-device-detector'
+import { Component, EventEmitter, OnInit, Output } from '@angular/core'
 
 @Component({
   selector: 'app-user-features',
@@ -10,31 +9,14 @@ export class UserFeaturesComponent implements OnInit {
 
   @Output() spawnCategoriesEvt = new EventEmitter()
 
-  public isDesktop: boolean = false
-  public isTablet: boolean = false
-  public isMobile: boolean = false
-
-  constructor(private deviceService: DeviceDetectorService) { }
-
-  public getWrapperClass(){
-
-    if(this.isMobile){
-
-      return { 'display': 'table-cell',
-               'vertical-align': 'middle' }
-
-    }
-
-  }
+  constructor() { }
 
   public spawnCategories(evt){
     this.spawnCategoriesEvt.emit(evt)
   }
 
-  ngOnInit(): void {
-    this.isDesktop = this.deviceService.isDesktop()
-    this.isTablet = this.deviceService.isTablet()
-    this.isMobile = this.deviceService.isMobile()    
+  ngOnInit(): void {  
+    console.log("Init UserFeaturesComponent")
   }
 
 }

@@ -590,24 +590,7 @@ span.sb-button{
     z-index: 93;
     background-color: #332f3e;
 }
-.sb-footer{
-    position: relative;
-    width: 100%;
-    min-width: 100%;
-    text-align: center;
-    background: -webkit-linear-gradient(45deg,#64e56f,#35a99f);
-}
-.sb-footer img{
-    width: 120px;
-    min-width: 120px;
-    max-width: 120px;
-    z-index: 1;
-}
-.sb-footer p{
-    color: #332f3e !important;
-    cursor: pointer;
-    font-size: .6rem !important;
-}
+
 .map-prompt-mobile p{
     margin: 0 auto;
     font-size: .8rem;
