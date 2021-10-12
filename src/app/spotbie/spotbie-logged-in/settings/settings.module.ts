@@ -17,12 +17,14 @@ import { NgxMaskModule, IConfig } from 'ngx-mask'
 import { environment } from 'src/environments/environment'
 import { SettingsComponent } from './settings.component'
 import { HelperModule } from 'src/app/helpers/helper.module'
+import { ChooseAccountTypeComponent } from './choose-account-type/choose-account-type.component'
 
 export const options : Partial<IConfig> | (() => Partial<IConfig>) = null
 
 @NgModule({
   declarations: [
-    SettingsComponent
+    SettingsComponent,
+    ChooseAccountTypeComponent
   ],
   imports: [
     CommonModule,

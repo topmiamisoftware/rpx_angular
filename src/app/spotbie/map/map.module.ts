@@ -14,20 +14,18 @@ import { MapComponent } from './map.component'
 import { MapObjectIconPipe } from 'src/app/pipes/map-object-icon.pipe'
 import { HelperModule } from 'src/app/helpers/helper.module'
 import { InfoObjectComponent } from './info-object/info-object.component'
-import { NgxFontAwesomeModule } from 'ngx-font-awesome'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
-import { WelcomeComponent } from '../spotbie-logged-out/welcome/welcome.component'
-import { ShareModule } from '@ngx-share/core'
+import { ShareButtonsModule } from 'ngx-sharebuttons/buttons';
 import { UserInfoObjectComponent } from './user-info-object/user-info-object.component'
 import { RouterModule } from '@angular/router'
 import { BusinessFeaturesComponent } from '../features/business-features/business-features.component'
 import { UserFeaturesComponent } from '../features/user-features/user-features.component'
+import { BusinessDashboardModule } from '../spotbie-logged-in/business-dashboard/business-dashboard.module'
 
 @NgModule({
   declarations: [    
     MapComponent,  
     InfoObjectComponent,
-    WelcomeComponent,
     UserInfoObjectComponent,
     BusinessFeaturesComponent,
     UserFeaturesComponent    
@@ -38,17 +36,19 @@ import { UserFeaturesComponent } from '../features/user-features/user-features.c
     MatSliderModule,
     MatInputModule,
     SpotbiePipesModule,
-    NgxFontAwesomeModule,
     ReactiveFormsModule,
     FormsModule,
-    ShareModule,
+    ShareButtonsModule.withConfig({
+      include: ['facebook', 'twitter', 'linkedin', 'reddit', 'tumblr', 'mix', 'viber', 'messenger','whatsapp']
+    }),
     RouterModule,
     AgmCoreModule.forRoot({
       apiKey: environment.google_maps_apiKey,
       language: 'en',
       libraries: ['geometry', 'places']
     }),     
-    HelperModule
+    HelperModule,
+    BusinessDashboardModule
   ],
   providers: [
     MapObjectIconPipe,

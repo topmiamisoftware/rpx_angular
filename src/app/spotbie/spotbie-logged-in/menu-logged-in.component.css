@@ -12,9 +12,8 @@
     white-space: nowrap;
 }
 .spotbie-overlay-window{
-    z-index: 999;
+    z-index: 97;
 }
-
 .sb-userName{
     text-transform: uppercase;
 }

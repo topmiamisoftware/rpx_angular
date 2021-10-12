@@ -5,7 +5,7 @@ import { LoginGuardServiceService } from './services/route-services/login-guard-
 import { InfoObjectComponent } from './spotbie/map/info-object/info-object.component'
 import { BugsComponent } from './bugs/bugs.component'
 import { LoyaltyPointsComponent } from './spotbie/spotbie-logged-in/loyalty-points/loyalty-points.component'
-import { BusinessMenuComponent } from './spotbie/spotbie-logged-in/business-menu/business-menu.component'
+import { RewardMenuComponent } from './spotbie/spotbie-logged-in/reward-menu/reward-menu.component'
 
 export const routes: Routes = [
 
@@ -14,12 +14,11 @@ export const routes: Routes = [
   { path: 'terms', component: TermsComponent },  
   { path: 'bugs', component: BugsComponent },
 
-  //Please lazy load this.
   { path: 'password', loadChildren: () => import('./spotbie/spotbie-logged-out/forgot-password/forgot-password.module').then(m => m.ForgotPasswordModule ) },
   
   { path: 'user-home', loadChildren: () => import('./user-home/user-home.module').then(m => m.UserHomeModule), canActivate: [LoginGuardServiceService] }, 
 
-  { path: 'business-menu/:userHash/:qrCode', component: BusinessMenuComponent},
+  { path: 'business-menu/:userHash/:qrCode', component: RewardMenuComponent},
   { path: 'loyalty-points/scan/:userHash/:qrCode/:totalSpent/:loyaltyPointReward', component: LoyaltyPointsComponent },
   
   { path: 'place-to-eat/:name/:id', component: InfoObjectComponent },

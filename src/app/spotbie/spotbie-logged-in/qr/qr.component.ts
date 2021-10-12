@@ -1,10 +1,13 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AllowedAccountTypes } from 'src/app/helpers/enum/account-type.enum';
 import { LoyaltyPointBalance } from 'src/app/models/loyalty-point-balance';
 import { Business } from 'src/app/models/business';
 import { LoyaltyPointsService } from 'src/app/services/loyalty-points/loyalty-points.service';
 import { UserauthService } from 'src/app/services/userauth.service';
+import { environment } from 'src/environments/environment';
+
+const QR_CODE_SCAN_BASE_URL = environment.qrCodeScanBaseUrl
 
 @Component({
   selector: 'app-qr',
@@ -13,7 +16,11 @@ import { UserauthService } from 'src/app/services/userauth.service';
 })
 export class QrComponent implements OnInit {
 
+  @Input('fullScreenWindow') fullScreenWindow: boolean = false
+
   @Output() closeThisEvt = new EventEmitter
+
+  @Output() openUserLPBalanceEvt = new EventEmitter
 
   public business = new Business()
 
@@ -38,35 +45,77 @@ export class QrComponent implements OnInit {
 
   public qrCodeLink: string = null
 
-  loyaltyPointBalance: LoyaltyPointBalance
+  public qrCodeBaseUrl: string = QR_CODE_SCAN_BASE_URL
+
+  public loyaltyPointBalance: LoyaltyPointBalance
+
+  public businessLoyaltyPointsSubmitted: boolean = false
 
   constructor(private userAuthService: UserauthService,
               private loyaltyPointsService: LoyaltyPointsService,
               private formBuilder: FormBuilder) { }
   
-  get totalSpent() {return this.businessLoyaltyPointsForm.get('totalSpent').value }
-  get f() { return this.businessLoyaltyPointsForm.controls }
+  public getWindowClass(){
 
-  public async calculateLoyaltyPointValue(){
+    if(this.fullScreenWindow)
+      return 'spotbie-overlay-window'
+    else
+      return ''
 
-    clearTimeout(this.promptForRewardTimeout)
+  }
+
+  public checkForSetLoyaltyPointSettings(){
+    
+    if( this.loyaltyPointBalance.balance == null || 
+        this.loyaltyPointBalance.balance == undefined )
+    {
+      //Open the users Loyalty Points Balance Window
+      this.openUserLPBalanceEvt.emit()
+
+      //Close the window if full-screened
+      if(this.fullScreenWindow) this.closeQr()      
+
+      alert("First set a balance & dollar-to-loyalty point ratio.")
+      return false
+
+    } else
+      return true
+
+  }
+
+  public async startAwardProcess(){
+
+    if(this.businessLoyaltyPointsForm.invalid){
+      this.businessLoyaltyPointsSubmitted = true
+      return
+    }
+
+    let settingsCheck = await this.checkForSetLoyaltyPointSettings()
+
+    if(!settingsCheck)
+      return
+    else
+      this.calculateLoyaltyPointValue()
+
+  }
+
+  public calculateLoyaltyPointValue(){
 
     let percentValue: number = parseFloat(this.loyaltyPointBalance.loyalty_point_dollar_percent_value.toString())
-
-    this.loyaltyPointReward = this.totalSpent * ((percentValue)/100)
-
-    this.loyaltyPointRewardDollarValue = this.totalSpent * ((percentValue)/100)
     
-    this.business.qr_code_link = `https://spotbie.com/loyalty-points/scan/${this.userHash}/${this.qrCodeLink}/${this.totalSpent}/${this.loyaltyPointReward}`
+    this.loyaltyPointRewardDollarValue = this.totalSpent * ( percentValue / 100)
 
-    console.log("QrCodeLink", this.business.qr_code_link)
+    this.loyaltyPointReward 
+    = (
+      this.loyaltyPointRewardDollarValue / 
+      ( this.loyaltyPointBalance.reset_balance * (percentValue / 100) )
+    ) * this.loyaltyPointBalance.reset_balance
+    
+    this.business.qr_code_link 
+    = `${this.qrCodeBaseUrl}/${this.userHash}/${this.business.qr_code_link}/${this.totalSpent}/${this.loyaltyPointReward}`
 
-    this.promptForRewardTimeout = setTimeout(() =>{
-
-      this.rewardPrompt = true
-      this.promptForRewardTimeout = null
-
-    }, 1250)
+    this.rewardPrompt = true
+    this.promptForRewardTimeout = null
     
   }
 
@@ -75,18 +124,16 @@ export class QrComponent implements OnInit {
   }
 
   public scanErrorHandler(event){
-    console.log("scan success", event)
+    console.log("scan error", event)
   }
 
   public scanFailureHandler(event){
-    console.log("scan success", event)
+    console.log("scan failure", event)
   }
 
   public yes(){
-
     this.rewardPrompt = false
     this.rewardPrompted = true
-
   }
 
   public no(){
@@ -94,21 +141,19 @@ export class QrComponent implements OnInit {
     this.rewardPrompted = false
   }
 
+  get totalSpent() { return this.businessLoyaltyPointsForm.get('totalSpent').value }
+  get f() { return this.businessLoyaltyPointsForm.controls }
+
   public getQrCode(){
 
-    this.isBusiness = true
-
-    /**
-      TO-DO IMPORTANT: Need to define state management for this
-    */
+    this.loyaltyPointsService.getLoyaltyPointBalance()
 
     this.userAuthService.getSettings().subscribe(
       resp => {        
-        console.log("resp", resp)
         this.userHash = resp.user.hash
-        this.business.address = resp.place_to_eat.address
-        this.business.name = resp.place_to_eat.name
-        this.qrCodeLink = resp.place_to_eat.qr_code_link
+        this.business.address = resp.business.address
+        this.business.name = resp.business.name
+        this.business.qr_code_link = resp.business.qr_code_link
        }
     )
     
@@ -116,40 +161,40 @@ export class QrComponent implements OnInit {
 
     this.businessLoyaltyPointsForm = this.formBuilder.group({
       totalSpent: ['', totalSpentValidators]
-    })
+    })    
 
     this.businessLoyaltyPointsFormUp = true
 
   }
 
-  public async startQrCodeScanner(){
+  public startQrCodeScanner(){
+    
+    this.loyaltyPointsService.getLoyaltyPointBalance()
+    this.isBusiness = false
+
+  }
+
+  closeQr(){    
+    this.rewardPrompted = false
+  }
+
+  ngOnInit(): void {
 
     this.loyaltyPointsService.userLoyaltyPoints$.subscribe(
       loyaltyPointBalance => {
         this.loyaltyPointBalance = loyaltyPointBalance       
       }
     )
-    
-    await this.loyaltyPointsService.getLoyaltyPointBalance()
-
-    this.isBusiness = false
-
-  }
-
-  closeQr(){    
-    this.closeThisEvt.emit()
-  }
-
-  ngOnInit(): void {
 
     let accountType = localStorage.getItem('spotbie_userType')
 
-    if(accountType === AllowedAccountTypes.Personal){    
+    if(accountType === AllowedAccountTypes.Personal)
       this.startQrCodeScanner()
-    } else {      
-      this.getQrCode()
+    else {
+      this.isBusiness = true
+      this.getQrCode()     
     }
-  
+    
   }
 
 }

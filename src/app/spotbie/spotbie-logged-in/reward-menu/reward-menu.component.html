@@ -1,0 +1,62 @@
+
+
+<div *ngIf="userType !== '4'">
+
+    <h4 id="sp-loyaltyMenuTitle" class="spotbie-text-gradient text-center text-uppercase pt-5 mb-5">SPOTBIE LOYALTY MENU</h4>
+
+    <p class="spotbie-text-gradient text-center mt-4">
+        These are the rewards that your business will offer to the spotbie community.
+    </p>
+    
+    <div class='sb-menuItemWrapper mb-5'>
+    
+        <div class='sb-addMenuItem' 
+                (click)="addItem()" 
+                *ngIf="rewards !== undefined && rewards.length < 8">
+            <h6 class="spotbie-text-gradient">+ ADD REWARD</h6>
+        </div>
+    
+        <div class='sb-menuItem' 
+                *ngFor="let reward of rewards"
+                [ngStyle]="placeToEatTileStyling(reward)"
+                (click)="openReward(reward)">
+            <h6 *ngIf="reward.type == '0'"> {{ reward.name }} </h6>
+            <h6 *ngIf="reward.type == '1'"> ${{ (reward.point_cost * (loyaltyPointsBalance.loyalty_point_dollar_percent_value / 100)) | number:'1.0':'en-US' }} </h6>
+        </div>            
+
+    </div>
+
+    <div class='spotbie-text-gradient text-uppercase' (click)="closeWindow()" *ngIf="fullScreenWindow">CLOSE</div>
+
+</div>
+
+<div *ngIf="userType === '4'">
+
+    <h4 class="spotbie-text-gradient text-center text-uppercase pt-5 mb-5">{{ business.name }} LOYALTY MENU</h4>
+
+    <p class="spotbie-text-gradient text-uppercase text-center mt-4">
+        pick what's yours
+    </p>
+    
+    <div class='sb-menuItemWrapper mb-5'>
+    
+        <div class='sb-menuItem' 
+                *ngFor="let reward of rewards"
+                [ngStyle]="placeToEatTileStyling(reward)">
+            <h6 *ngIf="reward.type == '0'"> {{ reward.name }} </h6>
+            <h6 *ngIf="reward.type == '1'"> 
+                ${{ (reward.point_cost * (loyaltyPointsBalance.loyalty_point_dollar_percent_value / 100)) | number:'1.0':'en-US' }} 
+            </h6>
+        </div>
+    
+    </div>
+    
+    <div class='spotbie-text-gradient text-uppercase cursor-pointer' (click)="closeWindow()" *ngIf="fullScreenWindow">CLOSE</div>
+
+</div>
+
+<app-reward-creator *ngIf="itemCreator" 
+                    (closeRewardCreatorAndRefetchRewardListEvt)="closeRewardCreatorAndRefetchRewardList()"
+                    (closeWindowEvt)="closeWindow()"
+                    (closeThisEvt)="closeRewardCreator()"
+                    [reward]="reward"></app-reward-creator>

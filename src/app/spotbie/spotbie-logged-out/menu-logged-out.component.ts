@@ -19,8 +19,6 @@ export class MenuLoggedOutComponent implements OnInit {
   public logInWindow = { open: false }
   public signUpWindow = { open: false }
 
-  public featuresWindow = { open: false }
-
   public home_route: boolean = false
 
   public prevScrollpos
@@ -69,8 +67,6 @@ export class MenuLoggedOutComponent implements OnInit {
       this.logInWindow.open = false
     else if(this.signUpWindow.open)
       this.signUpWindow.open = false
-    else if(this.featuresWindow.open)    
-      this.featuresWindow.open = false
     else
       this.menuActive = !this.menuActive
 

@@ -1,6 +1,6 @@
 <app-loading-screen *ngIf="loading"></app-loading-screen>
 
-<div class='spotbie-overlay-window pb-2 pt-4' #spotbieSettingsWindow>    
+<div class='spotbie-overlay-window pt-5 pb-5' #spotbieSettingsWindow>    
     
     <div class='spotbie-block'>
 
@@ -62,7 +62,7 @@
                     </td>
                 </tr> 
                 
-                <div *ngIf="submitted && f.spotbie_last_name.errors else user_last_name_normal" class="spotbie-input-info  animated shake">
+                <div *ngIf="submitted && f.spotbie_last_name.errors else user_last_name_normal" class="spotbie-input-info text-uppercase spotbie-text-gradient spotbie-error">
             
                     <div *ngIf="f.spotbie_last_name.errors.required">
                         Please identify yourself!
@@ -139,57 +139,6 @@
                                 formControlName="spotbie_acc_type" 
                                 type="text"
                                 readonly="readonly" />
-                    </td>
-                </tr>
-
-                <!-- Privacy and Ghost Mode Block : disable if account is not personal -->
-                <tr *ngIf="account_type_category !== 'PLACE TO EAT'">
-                    <td>
-                        <table class="spotbie-toggle">
-
-                            <tr>
-                                <input type="hidden" formControlName="spotbie_ghost_mode" />
-
-                                <td class="spotbie-toggle-info-text spotbie-text-gradient text-uppercase" id="spotbieGhostText" (click)="toggleGhostMode()">
-                                    Ghost Mode <span>{{ghost_mode_state}}</span>
-                                </td>
-                                
-                                <td class="spotbie-toggle-light" (click)="toggleGhostMode()" [ngStyle]="getLight(this.spotbie_ghost_mode)"></td>
-                        
-                                <td class="spotbie-toggle-help-switch" (click)="toggleHelp(this.ghost_mode_help)">?</td>
-                    
-                            </tr>
-                        
-                        </table>
-                    </td>
-                </tr>
-
-                <tr *ngIf="account_type_category !== 'PLACE TO EAT'">
-                    <td>
-                        <table class="spotbie-toggle">
-
-                            <tr>
-                                <input type="hidden" formControlName="spotbie_privacy" />
-
-                                <td class="spotbie-toggle-info-text spotbie-text-gradient text-uppercase" id="spotbiePrivacyText" (click)="togglePrivacy()">
-                                    Privacy <span>{{privacy_state}}</span>
-                                </td>
-                        
-                                <td class="spotbie-toggle-light" id="spotbiePrivacyLight" (click)="togglePrivacy()" [ngStyle]="getLight(this.spotbie_privacy)"></td>
-                        
-                                <td class="spotbie-toggle-help-switch" (click)="toggleHelp(this.privacy_help)">?</td>
-                            </tr>
-                        
-                        </table>   
-                    </td>
-                </tr>
-                <!-- End of Privacy and Ghost Mode Block  -->   
-
-                <tr *ngIf="help_text.length > 0">
-                    <td>
-                        <div class="spotbie-help-text spotbie-text-gradient">
-                            {{ help_text }}
-                        </div>                
                     </td>
                 </tr>
 
@@ -392,7 +341,7 @@
                               <input
                                 class="sb-input mb-4"
                                 placeholder="New category..."
-                                #fruitInput
+                                #businessInput
                                 formControlName="originCategories"
                                 [matAutocomplete]="auto"
                                 [matChipInputFor]="chipList"
@@ -451,8 +400,8 @@
                     </tr> 
 
                     <tr>
-                        <button class='spotbie-text-gradient text-center text-uppercase mt-4 mb-5' 
-                        style="cursor: pointer;" (click)="cancelPlaceSettings()">CANCEL</button>
+                        <div class='spotbie-text-gradient text-center text-uppercase mt-4 mb-5' 
+                        style="cursor: pointer;" (click)="cancelPlaceSettings()">CANCEL</div>
                     </tr>
 
                 </table>
@@ -477,7 +426,7 @@
 
         </div>
 
-        <div class='spotbie-overlay-window' style="background-color: rgba(0,0,0,.95);" *ngIf="passKeyVerificationFormUp">
+        <div class='spotbie-overlay-window' *ngIf="passKeyVerificationFormUp">
 
             <div class='sb-v-wrapper' style="display: grid; align-content: center;">            
 
@@ -556,7 +505,7 @@
 
         </div>
 
-        <div class='spotbie-overlay-window' style="background-color: rgba(0,0,0,.95);" *ngIf="calendlyUp">
+        <div class='spotbie-overlay-window' *ngIf="calendlyUp">
 
             <div class='sb-v-wrapper' style="display: grid; align-content: center;">  
                  
@@ -739,10 +688,10 @@
         </form>
     </div>
 
-    <div class="sb-closeButton" (click)="closeWindow()">
-        <i class="fa fa-times"></i>
+    <div class='mt-5 mb-5 cursor-pointer' (click)="closeWindow()">
+        <span class="spotbie-text-gradient">CLOSE</span>
     </div>
-
+    
     <div class='sb-vertical-align-wrapper' *ngIf="loadAccountTypes">
         <div class="spotbie-select-menu" style="display: table-cell; vertical-align: middle;">            
             <div>

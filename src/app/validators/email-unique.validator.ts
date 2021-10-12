@@ -10,7 +10,7 @@ export class ValidateUniqueEmail {
           return checkEmailUniqueService.checkIfEmailUnique(control.value).pipe(
           retryWithBackOff(1000),
           map(res => {
-            if(res === undefined) return null
+            if(res === undefined || res === null) return null
             if(userEmail === control.value || res.is_valid) {
               return null 
             } else { 

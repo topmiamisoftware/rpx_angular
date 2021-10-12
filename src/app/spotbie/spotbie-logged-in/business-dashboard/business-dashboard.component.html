@@ -1,12 +1,27 @@
-<div>
-    
-    <h5 class="text-uppercase">WELCOME TO YOUR BUSINESS DASHBOARD</h5>
+<div class="wrapper">
 
     <!-- Check if user has any pending steps to start using their business -->
     
     <!-- Display an option to use set their Loyaty Points -->
+
+    <div class="sb-dashboardWrapper" #qrCodeAppAnchor>
+        <app-qr [fullScreenWindow]="false" (openUserLPBalanceEvt)="openLoyaltyPoints()" #qrApp></app-qr>
+    </div>    
+
+    <div class="sb-dashboardWrapper" #lpAppAnchor>
+        <app-loyalty-points [fullScreenWindow]="false" #loyaltyPointsApp></app-loyalty-points>
+    </div>
     
-    <app-business-menu></app-business-menu>
+    <div class="sb-dashboardWrapper" #rewardMenuAppAnchor>
+        <app-reward-menu [fullScreenWindow]="false" #rewardMenuApp></app-reward-menu>
+    </div>
 
 </div>
 
+<div class="sb-footer pt-5 pb-5">
+
+    <p [routerLink]="['/terms']">Terms & Privacy Policy</p>
+    <img class="mt-3 mb-3" src="assets/images/home_imgs/logo_spotbie-02.svg" />
+    <p [routerLink]="['/terms']">SpotBie, LLC.&copy; Copyright 2021</p>
+
+</div>

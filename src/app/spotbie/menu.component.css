@@ -73,17 +73,6 @@ span.sb-loyalty-points{
     border-right: unset !important;
     border-left: 1px solid #01a79d;
 }
-img.sb-loyalty-points{
-    width: 25px;
-    min-width: 25px;
-    max-width: 25px;
-    cursor: pointer;
-}
-img.sb-loyalty-points:hover{
-    width: 28px;
-    min-width: 28px;
-    max-width: 28px;    
-}
 img.sb-qr{
     margin-left: 20px;
     width: 25px;
@@ -127,23 +116,6 @@ img.sb-qr:hover{
 .spotbie-our-blog-link:visited{
     font-weight: normal;
 }
-.spotbie-menu-fixed-logged-out{
-    position: fixed !important;
-    top: 0;
-    left: 0;
-    width: 100%;
-    min-width: 100%;
-    max-width: 100%;
-    z-index: 96;
-    background-color: #332f3e;
-}
-.spotbie-menu-fixed-logged-out td{
-    padding-top: 20px;
-    padding-bottom: 20px;
-    padding-left: 20px;
-    padding-right: 20px;
-    font-size: 20px;
-}
 .spotbie-menu-fixed{
     position: fixed !important;
     top: 0;
@@ -153,9 +125,17 @@ img.sb-qr:hover{
     width: 100%;
     min-width: 100%;
     max-width: 100%;
-    z-index: 98;
+    z-index: 99;
     overflow-x: scroll;
     overflow-y: hidden;
+    background-color: #332f3e;
+}
+.spotbie-menu-fixed td{
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    font-size: 20px;
 }
 .spotbie-menu-page-padding-top{
     padding-top: 60px;
@@ -272,7 +252,7 @@ img.sb-qr:hover{
     position: fixed;
     top: 0px;
     bottom: 0px;    
-    z-index: 94;
+    z-index: 96;
     min-height: 100vh;
     min-width: 100%;
     width: 100%;
@@ -386,7 +366,7 @@ img.sb-qr:hover{
 .sb-login-top-padding{
     padding-top: 120px;
 }
-.spotbie-menu-fixed-logged-out span{
+.spotbie-menu-fixed span{
     font-size: .8rem;
     padding: 10px;
     padding-left: 20px;
@@ -395,7 +375,7 @@ img.sb-qr:hover{
     border-right: 1px solid #01a79d;
     cursor: pointer
 }
-.spotbie-menu-fixed-logged-out span:hover{
+.spotbie-menu-fixed span:hover{
     color: #e5e5e5;
 }
 .sb-loginTop{
@@ -412,12 +392,12 @@ img.sb-qr:hover{
 /**WIDTH MEDIA QUERIES */
 @media (max-width: 1600px) { 
     .sb-userName,
-    .spotbie-menu-fixed-logged-out span{
+    .spotbie-menu-fixed span{
         font-size: .6rem;
     }
 }
 @media (max-width: 1200px) {   
-    .spotbie-menu-fixed-logged-out,
+    .spotbie-menu-fixed,
     .spotbie-menu-fixed{
         width: 100%;
         min-width: 100%;
@@ -434,7 +414,7 @@ img.sb-qr:hover{
     .spotbie-menu-logged{
         margin-top: env(safe-area-inset-top, 20px);
     }
-    .spotbie-menu-fixed-logged-out{
+    .spotbie-menu-fixed{
         padding-top: env(safe-area-inset-top, 20px);   
     } 
     .spotbie-forgot-your-pass{
@@ -580,7 +560,12 @@ img.sb-qr:hover{
     } 
     .spotbie-forgot-your-pass{
         max-width: 90%;
-    }                        
+    }  
+    .sb-button {
+        max-width: 90%;
+        width: 90%;
+        min-width: 90%;
+    }                          
 }
 @media (max-width: 360px) { 
     .sb-button {

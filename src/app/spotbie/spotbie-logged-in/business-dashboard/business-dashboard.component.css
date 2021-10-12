@@ -1,0 +1,14 @@
+h3{
+    line-height: 60px;
+}
+.sb-dashboardWrapper{
+    background-color: #27242e;
+    position: relative;
+    display: block;
+    border-bottom: 8px solid #332f3e;
+    padding-top: 100px;
+    padding-bottom: 100px;
+}
+.wrapper{
+    padding-top: 70px;
+}

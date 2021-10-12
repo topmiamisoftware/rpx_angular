@@ -367,7 +367,8 @@ export class UserauthService {
       photo: businessInfo.photo,
       loc_x: businessInfo.loc_x,
       loc_y: businessInfo.loc_y,
-      passkey: businessInfo.passkey
+      passkey: businessInfo.passkey,
+      categories: businessInfo.categories
     }
 
     console.log("businessInfoObj", businessInfoObj)

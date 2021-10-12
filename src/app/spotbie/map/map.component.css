@@ -1,3 +1,5 @@
+@import '~ngx-sharebuttons/themes/default';
+
 .spotbie-overlay-window{
     z-index: 95;
 }
@@ -127,13 +129,12 @@
     cursor: pointer;
     text-align: center;
     margin-bottom: 20px;
-    background-color: rgba(0,0,0,.25);
     border-radius: 10px;
 }
 .spotbie-controls-search-results td{
     border-right: 1px solid white;
-    padding: 10px 10px; 
-    color: white;   
+    padding: 0px 10px; 
+    color: #332f3e;   
 }
 .spotbie-categories{
     position: fixed;
@@ -148,6 +149,7 @@
     direction: rtl;
     -webkit-overflow-scrolling: touch;
     background-color: white;
+    padding-top: 80px;
     padding-bottom: 150px;
 }
 
@@ -362,9 +364,13 @@
     font-size: 16px;
 }
 .sb-page-button {
-    padding-top: 5px !important;
-    padding-bottom: 5px !important;
+    display: inline-block;
+    padding: 20px !important;
+    margin: 5px;
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
     font-size: .8rem !important;
+    background-color: rgba(0,0,0,.15)
 }
 span.sb-button{
     position: relative;
@@ -504,30 +510,7 @@ span.sb-button{
     z-index: 90;
     font-weight: bold;
 }
-#spotbie_me_search{
-    background: url('../../../assets/images/search.png');
-}
-#spotbie_people_search{
-    background: url(../../../assets/images/find_people.png);
-}
-#spotbie_media_search{
-    background: url(../../../assets/images/multimedia.png);
-}
-#spotbie_events_search{
-    background: url(../../../assets/images/search.png);
-}
-#spotbie_retail_search{
-    background: url(../../../assets/images/shop.png);
-}
-#spotbie_food_search{
-    background: url(../../../assets/images/food.png);
-}
-#spotbie_artist_search{
-    background: url(../../../assets/images/full_star.png);
-}
-#spotbie_place_search{
-    background: url(../../../assets/images/map_icon.png);
-}
+
 .gm-style-iw-c{
     background: linear-gradient(#64e56f, #35a99f);  
 }
@@ -551,9 +534,10 @@ span.sb-button{
     background-size: cover !important;
     cursor: pointer;
     z-index: 99;
+    border: 2px solid rgb(22 181 146);
 }
 .spotbie-marker-bg:hover{
-    border: 1px;
+    border: 1px solid rgb(22 181 146);
 }
 .spotbie-close-results{
     position: absolute;
@@ -656,12 +640,6 @@ swiper{
     font-size: 65px;
 }
 
-.loggedInFiller{
-    background: url(../../../assets/images/spotbie-the-new-social-network.jpg);
-    background-position: center !important;
-    background-size: cover !important;    
-}
-
 .sb-mapWrapper{
     overflow-y: scroll;
 }
@@ -669,6 +647,21 @@ swiper{
     position: relative;
     margin: 0 auto;
     color: white;
+}
+.sb-deliverySortImg{
+    width: 17px !important;
+    min-width: 17px !important;
+    max-width: 17px !important;
+}
+.sb-pickUpSortImg{
+    width: 14px !important;
+    min-width: 14px !important;
+    max-width: 14px !important;
+}
+.sb-reservationsSortImg{
+    width: 19px !important;
+    min-width: 19px !important;
+    max-width: 19px !important;
 }
 /**WIDTH MEDIA QUERIES */
 @media (max-width: 1583px) { 
@@ -732,7 +725,7 @@ swiper{
     .sb-top-headerImg {
         height: 250px;
         min-height: 250px;
-        background-position: center!important;
+        background-position: center !important;
         background-size: cover !important;
         background-repeat: no-repeat;       
     }
@@ -741,7 +734,21 @@ swiper{
         width: 103%;
         min-width: 103%;        
     }    
-
+    .sb-deliverySortImg{
+        width: 13px !important;
+        min-width: 13px !important;
+        max-width: 13px !important;
+    }
+    .sb-pickUpSortImg{
+        width: 13px !important;
+        min-width: 13px !important;
+        max-width: 13px !important;
+    }
+    .sb-reservationsSortImg{
+        width: 16px !important;
+        min-width: 16px !important;
+        max-width: 16px !important;
+    }
 }
 @media (max-width: 700px) { 
     .spotbie-map{

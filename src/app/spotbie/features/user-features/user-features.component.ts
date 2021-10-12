@@ -11,12 +11,14 @@ export class UserFeaturesComponent implements OnInit {
 
   constructor() { }
 
-  public spawnCategories(evt){
-    this.spawnCategoriesEvt.emit(evt)
+  public spawnCategories(category: string){
+
+    console.log("spawnCategoriesEvt", category)
+    this.spawnCategoriesEvt.emit({ category: category })
+
   }
 
   ngOnInit(): void {  
-    console.log("Init UserFeaturesComponent")
   }
 
 }

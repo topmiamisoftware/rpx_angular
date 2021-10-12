@@ -1,10 +1,7 @@
 {
     "/api/*": {
-        "target": "https://192.165.1.65:8000",
-        "secure": false,
-        "pathRewrite": {
-            "^/api": ""
-        },        
+        "target": "https://192.165.1.65:8000/api/",
+        "secure": false,       
         "logLevel": "debug",
         "changeOrigin": true,
         "timeout" : 360000

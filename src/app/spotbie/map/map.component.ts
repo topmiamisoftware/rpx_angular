@@ -3,8 +3,6 @@ import { MatSliderChange }                   from '@angular/material/slider'
 
 import { AgmMap, AgmInfoWindow }             from '@agm/core'
 
-import { Subscription }                      from 'rxjs'
-
 import { metersToMiles, setYelpRatingImage } from 'src/app/helpers/info-object-helper'
 import { ToastRequest }                      from 'src/app/helpers/toast-helper/toast-models/toast-request'
 
@@ -17,6 +15,7 @@ import { LocationService }                   from '../../services/location-servi
 
 import * as map_extras                       from './map_extras/map_extras'
 import * as sorterHelpers                    from 'src/app/helpers/results-sorter.helper'
+import { BusinessDashboardComponent } from '../spotbie-logged-in/business-dashboard/business-dashboard.component'
 
 
 const YELP_BUSINESS_SEARCH_API = 'https://api.yelp.com/v3/businesses/search'
@@ -31,6 +30,8 @@ export class MapComponent implements OnInit {
   @ViewChild('spotbie_map') spotbie_map: AgmMap
 
   @ViewChild('spotbie_user_marker_info_window') spotbie_user_marker_info_window: AgmInfoWindow
+
+  @ViewChild('businessDashboard') businessDashboard: BusinessDashboardComponent
 
   @Input() business: boolean = false
 
@@ -60,7 +61,6 @@ export class MapComponent implements OnInit {
   public showingOpenedStatus: string = 'Show Opened and Closed'
   public searchApiUrl: string
   
-  public map_zoom: number = 18
   public lat:   number
   public lng:   number
   public ogLat: number
@@ -79,21 +79,21 @@ export class MapComponent implements OnInit {
   private rad_11 = null
   private rad_1 = null
 
+  public fitBounds: boolean = false
+  public zoom: number = 18
+
   public showSearchResults: boolean
   public show_search_box: boolean
   public show_next_page_button: boolean = false 
   public locationFound: boolean = false
   public sliderRight: boolean = false
   public catsUp: boolean = false
-  public isAndroid: boolean = false
-  public isIphone: boolean = false
   public coming_soon_ov: boolean = false
   public loading: boolean = false
   public toastHelper: boolean = false
   public displaySurroundingObjectList: boolean = false
-  public locationPrompt: boolean = true
   public showNoResultsBox: boolean = false
-  public showMobilePrompt: boolean = false
+  public showMobilePrompt: boolean = true
   public showMobilePrompt2: boolean = false
   public firstTimeShowingMap: boolean = true
   public showOpened: boolean = false
@@ -139,8 +139,6 @@ export class MapComponent implements OnInit {
       acknowledge: this.dismissToast.bind(this)
     }
   }
-
-  public web_options_subscriber: Subscription
 
   public placesToEat: boolean = false
   public eventsNearYou: boolean = false
@@ -613,23 +611,29 @@ export class MapComponent implements OnInit {
 
   }
 
-  public spawnCategories(category: string): void {
+  public spawnCategories(obj: any): void {
+
+    let category = obj.category
+    
+    console.log("Spawn Categories", obj)
 
     if(!this.locationFound)
       this.mobileStartLocation()
     else if(this.showMobilePrompt)
       this.showMobilePrompt = false
     
-
     this.show_search_box = true
+
+    this.fitBounds = false
+
+    if(this.searchResults.length == 0) this.showSearchResults = false
 
     if(category == this.searchCategory){
 
       this.catsUp = true
-      this.showSearchResults = true
       return
 
-    }
+    }    
 
     if(this.searchCategory !== undefined) this.previousSeachCategory = this.searchCategory
 
@@ -692,6 +696,24 @@ export class MapComponent implements OnInit {
       
     }
 
+  }
+
+  public goToQrCode(){
+    //scroll to qr Code
+    this.closeCategories()
+    this.businessDashboard.scrollToQrAppAnchor()
+  }
+
+  public goToLp(){
+    //scroll to loyalty points
+    this.closeCategories()
+    this.businessDashboard.scrollToLpAppAnchor()
+  }
+
+  public goToRewardMenu(){
+    //scroll to reward menu
+    this.closeCategories()
+    this.businessDashboard.scrollToRewardMenuAppAnchor()
   }
 
   public closeCmS(): void{
@@ -955,6 +977,7 @@ export class MapComponent implements OnInit {
 
     this.loading = false
     this.maxDistanceCap = 25
+    this.fitBounds = true
 
     if(httpResponse.success){
 
@@ -1313,23 +1336,12 @@ export class MapComponent implements OnInit {
 
   public promptForLocation(){
 
-    let locationPrompted = localStorage.getItem('spotbie_locationPrompted');
-
-    this.locationPrompt = false
-
-    if (locationPrompted == '1')
-      this.startLocation() 
-    else
-      this.locationPrompt = true
-    
-
     if(this.isDesktop) this.acceptLocationPrompt()
 
   }
 
   public acceptLocationPrompt(){
 
-    this.locationPrompt = false
     localStorage.setItem('spotbie_locationPrompted', '0')
     this.startLocation()
 
@@ -1348,9 +1360,7 @@ export class MapComponent implements OnInit {
   }
 
   public startLocation(){
-
     this.showMobilePrompt = true
-
   }
 
   public signUp(){
@@ -1362,6 +1372,8 @@ export class MapComponent implements OnInit {
     this.isDesktop = this.deviceService.isDesktop()
     this.isTablet = this.deviceService.isTablet()
     this.isMobile = this.deviceService.isMobile()
+
+    console.log("Live my life", this.business)
 
     if (this.isDesktop || this.isTablet)
       this.rad_11 =  0.00002

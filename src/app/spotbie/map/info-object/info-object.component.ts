@@ -128,6 +128,8 @@ export class InfoObjectComponent implements OnInit {
 
   private pullInfoObjectCallback(httpResponse: any): void{
 
+    console.log("info object", this.info_object)
+
     if (httpResponse.success) {
 
       this.info_object = httpResponse.data
@@ -256,6 +258,14 @@ export class InfoObjectComponent implements OnInit {
 
   public goToTicket(): void{
     externalBrowserOpen(this.info_object.url)
+  }
+
+  public getOverlayWindowStyling(){
+    if(this.info_object.spotbie_community){
+      return { 'background-color' : '#332f3e' }
+    } else {
+      return { 'background-color' : 'white' }
+    }
   }
 
   public addFavorite(): void{

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core'
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router'
 import { AllowedAccountTypes } from 'src/app/helpers/enum/account-type.enum'
@@ -11,6 +11,8 @@ import { LoyaltyPointsService } from 'src/app/services/loyalty-points/loyalty-po
   styleUrls: ['./loyalty-points.component.css']
 })
 export class LoyaltyPointsComponent implements OnInit {
+
+  @Input() fullScreenWindow: boolean = true
 
   @Output() closeWindow = new EventEmitter
 
@@ -66,8 +68,19 @@ export class LoyaltyPointsComponent implements OnInit {
 
   }
   
+  public getWindowClass(){
+
+    if(this.fullScreenWindow)
+      return 'spotbie-overlay-window d-flex align-items-center justify-content-center'
+    else
+      return ''
+
+  }
+
   public async getLoyaltyPointBalance(){    
+
     await this.loyaltyPointsService.getLoyaltyPointBalance()
+    
   }
   
   /* TO-DO: Create a function which shows a business's or personal account' past transactions. */
@@ -78,12 +91,11 @@ export class LoyaltyPointsComponent implements OnInit {
 
   public loyaltyPointsClass(){
 
-    if(this.userType == AllowedAccountTypes.PlaceToEat){
-      return 'sb-loyalty-points'
-    } else {
+    if(this.userType == AllowedAccountTypes.PlaceToEat)
+      return 'sb-loyalty-points cursor-pointer'
+    else
       return 'sb-loyalty-points no-cursor'
-    }
-
+    
   }
   
   get businessLoyaltyPoints() {return this.businessLoyaltyPointsForm.get('businessLoyaltyPoints').value }
@@ -108,6 +120,7 @@ export class LoyaltyPointsComponent implements OnInit {
       
       this.businessLoyaltyPointsForm.get('businessLoyaltyPoints').setValue(this.loyaltyPointBalance.reset_balance)
       this.businessLoyaltyPointsForm.get('businessCoinPercentage').setValue(this.loyaltyPointBalance.loyalty_point_dollar_percent_value)
+
       this.calculateDollarValue()  
 
     }
@@ -152,14 +165,14 @@ export class LoyaltyPointsComponent implements OnInit {
 
   public calculateDollarValue(){
 
-    let monthlyPoints = this.businessLoyaltyPoints
-    let pointPercentage = this.businessCoinPercentage
+    let monthlyPoints: number = this.businessLoyaltyPoints 
+    let pointPercentage: number = this.businessCoinPercentage
     
     if(pointPercentage == 0)
       this.userPointToDollarRatio = 0
     else
       this.userPointToDollarRatio = (monthlyPoints * (pointPercentage / 100)).toFixed(2)
-    
+
     this.monthlyDollarValueCalculated = true
 
   }
@@ -175,12 +188,11 @@ export class LoyaltyPointsComponent implements OnInit {
 
   public closeThis(){
     
-    if(this.router.url.indexOf('scan') > -1){
+    if(this.router.url.indexOf('scan') > -1)
       this.router.navigate(['/user-home'])
-    } else {
+    else
       this.closeWindow.emit()
-    }
-
+    
   }
 
   public toggleHelp(){
@@ -218,7 +230,7 @@ export class LoyaltyPointsComponent implements OnInit {
    */
   public async resetMyBalance(){
 
-    let confirm = window.confirm(`Are you sure you want to reset your balance to ${ this.userResetBalance}?`)
+    let confirm = window.confirm(`Are you sure you want to reset your balance to ${ this.loyaltyPointBalance.reset_balance }?`)
 
     if(confirm) await this.loyaltyPointsService.resetMyBalance()
 

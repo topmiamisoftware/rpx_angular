@@ -104,9 +104,7 @@ export class LogInComponent implements OnInit {
       this.loading = false
       return
     }
-
-    console.log("response", loginResponse)
-
+    
     if(loginResponse === undefined){
       this.logInForm.setErrors(null)
       this.spotbieLogInIssues.nativeElement.innerHTML = "Invalid username or password."
@@ -125,11 +123,11 @@ export class LogInComponent implements OnInit {
 
       localStorage.setItem('spotbie_userId', loginResponse.user.id)
 
-      localStorage.setItem('spotbiecom_session', loginResponse.token_info.original.access_token)
+      localStorage.setItem('spotbie_userDefaultImage', loginResponse.spotbie_user.default_picture)
 
       localStorage.setItem('spotbie_userType', loginResponse.spotbie_user.user_type)
 
-      localStorage.setItem('spotbie_userDefaultImage', loginResponse.spotbie_user.default_picture)
+      localStorage.setItem('spotbiecom_session', loginResponse.token_info.original.access_token)
 
       if (this.userAuthService.userRememberMe == '1'){
 

@@ -95,11 +95,8 @@ textarea {
     border-radius: 15px;
 
 }
-
 textarea:active {
-
     outline: none;
-
 }
 .cursor-pointer{
     cursor: pointer
@@ -122,17 +119,28 @@ textarea:active {
     padding-right: 20px;    
 
 }
-
-.sb-backgroundImg{
-    position: fixed;
-    top: 0%;
-    bottom: 0%;
-    left: 0%;
-    right: 0%;
-    /*background: url(/assets/images/background.png);*/
-    background-position: center !important;
+img.sb-loyalty-points{
+    width: 25px;
+    min-width: 25px;
+    max-width: 25px;
+    cursor: pointer;
 }
-
+img.sb-loyalty-points:hover{
+    width: 28px;
+    min-width: 28px;
+    max-width: 28px;    
+}
+.sb-deleteMe{
+    margin: 0 auto;
+    cursor: pointer;
+    font-size: .8rem;
+    max-width: 250px;
+}
+.sb-deleteMe .fa-trash,
+.fa-ban, .fa-hamburger{
+    color: #a7a1a1;
+    display: inline-block;
+}
 .spotbie-bottom-button-bar{
     position: relative;
     margin: 0 auto;
@@ -155,19 +163,7 @@ div:active, div:focus{
 ::-webkit-scrollbar-button{
     background: linear-gradient(90deg,#35a99f,#64e56f);
 }
-.spotbie-h1{
-    position: relative;
-    margin: 0 auto;
-    text-align: center;
-    color: #99cc00;
-    font-size: 50px;
-}
-.spotbie-h2{
-    position: relative;
-    margin: 0 auto;
-    text-align: center;
-    color: #99cc00;  
-}
+
 a, a:hover, a:active, a:after{
     color: #FFF;
     text-decoration: none;
@@ -188,6 +184,7 @@ a, a:hover, a:active, a:after{
 }
 .spotbie-rel-div{
     position: relative;
+    display: inline-block;
     margin: 0 auto;
     margin-top: 20px;
     margin-bottom: 20px;
@@ -292,32 +289,12 @@ a, a:hover, a:active, a:after{
     letter-spacing: 2px;
     line-height: 25px;
 }
-.spotbie-error{
-    background: -webkit-linear-gradient(45deg,#e61d1d,#f70505,#7e0c0c);
+.spotbie-error{    
+    background: -webkit-linear-gradient(45deg,#e61d1d,#f70505,#ff0000);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
-.spotbie-color-label{
-    display: none;
-    position: relative;
-    padding-top: 10px;
-    padding-bottom: 10px;    
-    color: #FFF;
-    font-size: 16px;
-}
-.spotbie-color-picker{
-    position: relative;
-    margin: 0 auto;
-    width:  50px;
-    min-width: 50px;
-    max-width: 50px;
-    height:  50px;
-    min-height: 50px;
-    max-height: 50px;
-    background-color: white;
-    border-radius: 99%;
-    box-shadow: inset 2px 2px 6px #ffffff0f;
-}
+
 .sb-closeButton{
     position: fixed;
     display: block;
@@ -345,12 +322,29 @@ a, a:hover, a:active, a:after{
     margin: 0 auto;  
     z-index: 99;
     overflow-y: scroll;
-    background-color: rgba(0, 0, 0,.88);    
+    background-color: #332f3e;    
     padding-top: 20px;
     padding-bottom: 20px;
     -webkit-overflow-scrolling: touch;
 }
-
+.sb-footer{
+    position: relative;
+    width: 100%;
+    min-width: 100%;
+    text-align: center;
+    background: -webkit-linear-gradient(45deg,#64e56f,#35a99f);
+}
+.sb-footer img{
+    width: 120px;
+    min-width: 120px;
+    max-width: 120px;
+    z-index: 1;
+}
+.sb-footer p{
+    color: #332f3e !important;
+    cursor: pointer;
+    font-size: .6rem !important;
+}
 .sb-input{
     position: relative;
     display: block;
@@ -381,36 +375,6 @@ a, a:hover, a:active, a:after{
     letter-spacing: 3px;
     line-height: 15px;
     font-size: 15px;
-}
-.spotbie-toggle{
-    position: relative;
-    margin: 0 auto;
-    margin-bottom: 20px;
-    width: 300px;
-    min-width: 300px;
-    max-width: 300px;
-    text-align: center;
-    color: white;
-    cursor: pointer;
-    table-layout: fixed;
-    padding-top: 10px;
-    padding-bottom: 20px;
-    border-radius: 20px;
-    font-size: 18px;
-}
-.spotbie-toggle-info-text{
-    text-align: center;
-}
-.spotbie-toggle-light{
-    border-radius: 14px;
-    max-width: 15%;
-    width: 15%;
-    min-width: 15%;
-}
-.spotbie-toggle-help-switch{
-    min-width: 10%; 
-    max-width: 10%; 
-    width: 10%;
 }
 .spotbie-play-button{
     position: absolute;
@@ -596,12 +560,12 @@ hr{
     background-color: rgba(0,0,0,.93);
 }
 .spotbie-is-open{
-    color: green !important;
+    color: #60e271 !important;
 }
 .spotbie-is-closed{
     margin-top: 5px;
     text-align: center;
-    color: red !important;
+    color: #cd635a !important
 }
 .spotbie-arrow-transparent{
     display: none;
@@ -739,33 +703,6 @@ hr{
     min-width: 100%;
     max-width: 100%;    
 }
-.color-picker {
-    display: block;
-    visibility: visible;
-    top: 50% !important;
-    transform: translateY(-50%) !important;
-    left: 0 !important;
-    right: 0 !important;
-    position: fixed;
-    margin: 0 auto !important;
-    background-color: #1b1b1b !important;
-    border: 20px solid #212121 !important;   
-}
-.spotbie-color-picker-ok{
-    position: relative;
-    display: block;
-    margin: 0 auto !important;
-    max-width: 80%;
-    width: 80%;
-    min-width: 80%;
-    font-size: 14px !important;
-    letter-spacing: 2px !important;
-    background-color: rgba(0,0,0,.4);  
-}
-.color-picker .button-area {
-    margin-top: 20px;
-    margin-bottom: 20px;
-}
 .gm-style .gm-style-iw-c{
     overflow: hidden !important;
     padding: 12px !important;
@@ -792,12 +729,7 @@ hr{
     min-width: 100% !important;
     max-width: 100%;
 }
-.swiper-pagination-bullet-active{
-    background: white !important;
-}
-.swiper-pagination-bullet{
-    background: white !important;
-}
+
 .sb-vertical-align-wrapper{
     position: fixed;
     display: table;
@@ -876,7 +808,6 @@ p.sb-helpInfo{
     margin: 0 auto;
     max-width: 450px;
 }
-
 /**WIDTH MEDIA QUERIES */
 @media (max-width: 1440px) {
     
@@ -915,22 +846,7 @@ p.sb-helpInfo{
         max-width: 100%;
     }
 }
-@media (max-width: 900px) { 
-    .spotbie-h1{
-        margin-top: 10px !important;
-        margin-bottom: 10px !important;   
-        font-size: 35px;
-        letter-spacing: 2px;
-    }    
-    .spotbie-h2{
-        display: block;
-        width: 95% !important;
-        min-width: 95% !important;
-        max-width: 95% !important;
-        font-size: 27px;
-        letter-spacing: 2px;
-        line-height: 44px;
-    }    
+@media (max-width: 900px) {     
     .spotbie-img{
         height: unset;
         min-height: unset;
@@ -984,9 +900,9 @@ p.sb-helpInfo{
 
     .sb-button {
 
-        width: 100%;
-        min-width: 100%;
-        max-width: 100%;
+        width: 85%;
+        min-width: 85%;
+        max-width: 85%;
         font-size: 14px;
         padding-top: 15px !important;
         padding-bottom: 15px !important;
@@ -1046,9 +962,9 @@ p.sb-helpInfo{
 }
 @media (max-width: 420px) { 
         .sb-button{
-            width: 90%;
-            min-width: 90%;
-            max-width: 90%;
+            max-width: 65%;
+            width: 65%;
+            min-width: 65%;
             font-size: 1rem !important;
             padding-top: 11px!important;
             padding-bottom: 11px!important;            
@@ -1065,7 +981,7 @@ p.sb-helpInfo{
             max-width: 90%;
             min-width: 90%;
             margin-bottom: 10px;
-        }                      
+        }                 
 }
 @media (max-width: 360px) { 
     .spotbie-select-table-img{
@@ -1088,16 +1004,6 @@ p.sb-helpInfo{
     .spotbie-invalid-feedback{
         font-size: 11px;
     }   
-}
-
-@media (max-width: 320px) {
-
-}
-@media (max-width: 220px) { 
-
-}
-@media (max-width: 120px) { 
-
 }
 
 html, body { height: 100%; }

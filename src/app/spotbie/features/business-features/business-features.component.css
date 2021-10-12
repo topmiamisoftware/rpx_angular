@@ -1,8 +1,8 @@
 .sb-top-headerImg{
     background: url('../../../../assets/images/home_imgs/spotbie-miami.jpg') !important;
-    background-position: center;
+    background-position: center !important;
     background-size: cover !important;
-    background-repeat: no-repeat;    
+    background-repeat: no-repeat !important;    
 }
 h4{
     cursor: default

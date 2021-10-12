@@ -1,3 +1,15 @@
+.spotbie-overlay-window{
+    padding-bottom: 0px;
+    padding-top: 70px;
+    background: url('src/assets/images/qr/spotbie-white-icon.png');
+    background-color: #332f3e;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    overflow:  hidden !important;
+    padding-bottom: 100px;
+    z-index: 99;    
+}
 .spotbie-repost-title{
     position: relative;
     margin: 0 auto;
@@ -102,11 +114,6 @@
     background-attachment: fixed !important;
     text-align: center;
 }
-.spotbie-overlay-window{
-    padding-top: 0px;
-    padding-bottom: 140px;
-    color: white;
-}
 .spotbie-album-media-image-blur{
     position: absolute;
     left: 0;
@@ -133,13 +140,6 @@
     background-position: center !important;
 }
 
-.spotbie-overlay-window{
-    padding-bottom: 100px;
-    z-index: 99;
-    background-position: center !important;
-    background-repeat: no-repeat !important;
-    background-size: cover !important;    
-}
 .spotbie-toast-message{
     position: fixed;
     top: 50%;
@@ -191,7 +191,7 @@
     position: relative;
     margin: 0 auto;
     font-size: 25px;
-    margin-top: 25px;
+    margin-top: 130px;
     margin-bottom: 25px;
 }
 .spotbie-info-object-image-list{
@@ -203,16 +203,15 @@
 .spotbie-info-object-image-thumb{
     position: relative;
     display: inline-block;
-    margin-left: 3px;
-    margin-right: 3px;
-    width: 150px;
-    min-width: 150px;
-    max-width: 150px;
-    height: 150px;
-    min-height: 150px;
+    margin-left: 10px;
+    margin-right: 10px;
+    width: 30%;
+    min-width: 30%;
+    max-width: 30%;
+    height: 30vw;
+    min-height: 30vw;
     background-size: cover !important;
-    background-position: center !important;
-    cursor: pointer;        
+    background-position: center !important;       
 }
 .spotbie-search-result-yelp-logo{
     position: relative;
@@ -283,10 +282,7 @@
 }
 .spotbie-add-to-favorites{
     position: relative;
-    background-color: red;
-}
-.fa-star{
-    color: gold;
+    cursor:  pointer;
 }
 .spotbie-info-object-open {
     margin-top: 30px;
@@ -298,8 +294,24 @@
     padding-bottom: 40px;
     overflow-y: scroll !important;
 }
-.spotbie-overlay-window{
-    overflow:  hidden !important;
+.sb-miniLogoIcon, h1{
+    display: inline-block;
+    margin-bottom: 0px !important;
+}
+.sb-miniLogoIcon{
+    position: relative;
+    max-width: 31px;
+    margin-right: 15px;
+    top: -10px;
+}    
+.sb-titleGreen{
+    background: -webkit-linear-gradient(45deg,#0eb273, #2ddc5b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+.fa-plus{
+    color: white;
+    margin-left: 10px;
 }
 @media (max-width: 1583px) { 
 

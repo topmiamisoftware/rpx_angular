@@ -14,8 +14,6 @@ import { Observable } from 'rxjs/internal/Observable'
 import { of } from 'rxjs'
 import { EmailConfirmationService } from '../../email-confirmation/email-confirmation.service'
 import { ValidateUniqueEmail } from 'src/app/validators/email-unique.validator'
-import { EmailConfirmationComponent } from '../../email-confirmation/email-confirmation.component'
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog'
 
 import { faEye, faEyeSlash, faInfoCircle } from '@fortawesome/free-solid-svg-icons'
 import { UserauthService } from 'src/app/services/userauth.service'
@@ -28,11 +26,6 @@ import { UserauthService } from 'src/app/services/userauth.service'
 export class SignUpComponent implements OnInit {
 
   @ViewChild('spotbie_register_info') spotbie_register_info
-
-  //@ViewChild('vc_spotbie_sign_up_box_inner') vc_spotbie_sign_up_box_inner
-  @ViewChild('vc_spotbie_sign_up_box') vc_spotbie_sign_up_box
-
-  @ViewChild('vc_account_perks_box') vc_account_perks_box
 
   @ViewChild('spotbieSignUpIssues') spotbieSignUpIssues
 
@@ -56,8 +49,6 @@ export class SignUpComponent implements OnInit {
 
   public loading: boolean = false
 
-  public account_perks: boolean = false
-
   public alreadyConfirmedEmail: string = ''
   public emailIsConfirmed: boolean = false
   public emailConfirmation: boolean
@@ -72,7 +63,6 @@ export class SignUpComponent implements OnInit {
               private sign_up_service: SignUpService,
               private formBuilder: FormBuilder,
               private emailUniqueCheckService: EmailConfirmationService,
-              private matDialog: MatDialog,
               private userAuthService: UserauthService) { }
 
   scrollTo(el: ElementRef): void{
@@ -107,18 +97,13 @@ export class SignUpComponent implements OnInit {
     if(login_status == 'success' || login_status == 'confirm'){
 
       localStorage.setItem('spotbie_userLogin', loginResponse.user.username)
-
       localStorage.setItem('spotbie_loggedIn', '1')
-      
       localStorage.setItem('spotbie_rememberMe', this.userAuthService.userRememberMe)
-
       localStorage.setItem('spotbie_userId', loginResponse.user.id)
-
       localStorage.setItem('spotbiecom_session', loginResponse.user.original.access_token)
-
       localStorage.setItem('spotbie_userDefaultImage', loginResponse.spotbie_user.default_picture)
 
-      if (this.userAuthService.userRememberMe == '1'){
+      if( this.userAuthService.userRememberMe == '1' ){
 
         this.rememberMeToken = loginResponse.remember_me_token
         localStorage.setItem('spotbie_rememberMeToken', this.rememberMeToken)
@@ -159,77 +144,6 @@ export class SignUpComponent implements OnInit {
     this.closeWindow.emit(this.window_obj)
   }
 
-  public accountPerks(): void {
-    this.account_perks = true
-  }
-
-  public closePerks(): void {
-      this.account_perks = false
-  }
-  
-  public emailChanged(){
-    this.emailIsConfirmed = false
-  }
-
-  public tryEmailConfirmation(): void{
-    
-    this.loading = true
-
-    const emailFormControl = this.signUpFormx.get('spotbieEmail')
-
-    if(emailFormControl.valid &&
-      (this.alreadyConfirmedEmail !== this.spotbieEmail || this.emailIsConfirmed == false)){
-
-      this.emailIsConfirmed = false
-      this.emailConfirmation = true
-
-      const dialogConfig = new MatDialogConfig()
-
-      dialogConfig.autoFocus = true
-      dialogConfig.data = {
-        email : this.spotbieEmail
-      }
-
-      let dialogRef = this.matDialog.open(
-        EmailConfirmationComponent,
-        dialogConfig
-      )
-      
-      dialogRef.componentInstance.emailAddressChange.subscribe(
-        email => {
-          this.signUpFormx.get('spotbieEmail').setValue(email)
-          this.signUpFormx.get('spotbieEmailConfirm').setValue(email)
-        }
-      )
-
-      dialogRef.afterClosed().subscribe(
-        resp => {
-          this.tryEmailConfirmationCb(resp) 
-        }
-      )
-
-    }
-
-  }
-
-  public tryEmailConfirmationCb(resp: any){
-
-    if(resp !== undefined){
-
-      if(resp.emailConfirmed)
-        this.emailIsConfirmed = true
-      else 
-        this.emailIsConfirmed = false
-      
-    } else 
-      this.emailIsConfirmed = false
-  
-    this.alreadyConfirmedEmail = this.spotbieEmail
-
-    this.loading = false
-
-  }
-
   get spotbieUsername() { return this.signUpFormx.get('spotbieUsername').value }
   get spotbieEmail() { return this.signUpFormx.get('spotbieEmail').value }
   get spotbiePassword() { return this.signUpFormx.get('spotbiePassword').value }
@@ -248,14 +162,6 @@ export class SignUpComponent implements OnInit {
 
     // will be used when the user hits the submit button
     this.submitted = true
-
-    if(!this.emailIsConfirmed && 
-          this.signUpFormx.valid){
-
-      this.tryEmailConfirmation()
-      return
-
-    }
 
     this.loading = true
 
@@ -314,25 +220,30 @@ export class SignUpComponent implements OnInit {
 
   }
 
-  private initSignUpCallback(httpResponse: any) {
+  private initSignUpCallback(resp: any) {
       
-      if(httpResponse.message == 'success'){       
+      if(resp.message == 'success'){       
 
         let sign_up_instructions = this.spotbieSignUpIssues.nativeElement
 
-        const loginResponse = httpResponse
-
         // save the user information.
-        localStorage.setItem('spotbie_userLogin', loginResponse.user.username)
+        localStorage.setItem('spotbie_userLogin', resp.user.username)
+
         localStorage.setItem('spotbie_loggedIn', '1')
+
         localStorage.setItem('spotbie_rememberMe', '0')
-        localStorage.setItem('spotbie_userId', loginResponse.user.id)
-        localStorage.setItem('spotbie_userDefaultImage', loginResponse.spotbie_user.default_picture)
-        localStorage.setItem('spotbie_token', loginResponse.tokenInfo.original.access_token)
+
+        localStorage.setItem('spotbie_userId', resp.user.id)
+        
+        localStorage.setItem('spotbie_userDefaultImage', resp.spotbie_user.default_picture)
+
+        localStorage.setItem('spotbie_userType', resp.spotbie_user.user_type)
+
+        localStorage.setItem('spotbiecom_session', resp.token_info.original.access_token)
 
         sign_up_instructions.innerHTML = 'Welcome to SpotBie!'
   
-        this.router.navigate(['/user-home'])
+        window.location.reload()
 
       }
 
@@ -355,11 +266,7 @@ export class SignUpComponent implements OnInit {
       //this.log(`${operation} failed: ${error.message}`);
 
       let sign_up_instructions = this.spotbieSignUpIssues.nativeElement
-
-      sign_up_instructions.className = 'signUpBoxInstructions spotbie-error-red'
       sign_up_instructions.style.display = 'none'
-
-      sign_up_instructions.innerHTML = "There was an error signing-up."
 
       const error_list = error.error.errors
 
@@ -416,13 +323,6 @@ export class SignUpComponent implements OnInit {
   public logIn(){
     this.logInEvent.emit()
     this.closeWindowX()
-  }
-
-  public finishSignUp() {
-    const signUpBox = document.getElementById('spotbie_sign_up_box')
-    signUpBox.style.display = 'none'
-    const successsignUp = document.getElementById('success_box')
-    successsignUp.style.display = 'none'
   }
 
   public initSignUpForm() {

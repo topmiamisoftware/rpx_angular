@@ -1,7 +1,6 @@
 span.sb-loyalty-points{
-    font-size: 14rem !important;
+    font-size: 10rem !important;
     color: #fff !important;
-    cursor: pointer !important;
     border-right: unset !important;    
     margin-right: .8rem;
 }
@@ -26,22 +25,15 @@ p{
     min-width: 450px;
 }
 .spotbie-overlay-window{
-    padding-bottom: 100px;
     background: #332f3e;
     text-align: center;    
-    z-index: 99;
+    z-index: 97;
 }
 .sb-loyalty-points-wrapper{
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 50%;
-    transform: translateY(-50%);
+    position: relative;
 }
 .sb-budget-wrapper{
-    position: absolute;
-    left: 0;
-    right: 0;
+    position: relative;
 }
 .fa-question-circle{
     margin-right: 5px;
@@ -72,6 +64,7 @@ p{
     line-height: 3.5rem;
     z-index: 999;
 }
+
 @media (max-width: 650px){
     .sb-helpBlock{
         font-size: .8rem;

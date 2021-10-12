@@ -1,6 +1,5 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import * as $ from 'jquery';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import { MapComponent } from '../spotbie/map/map.component';
 
 @Component({
@@ -14,20 +13,22 @@ export class HomeComponent implements OnInit {
 
   @ViewChild('app_map') app_map: MapComponent
 
-  constructor(private router: Router, private route: ActivatedRoute) { }
+  constructor(private router: Router) { }
 
   public spawnCategories(category: string): void{
-    this.app_map.spawnCategories(category)
-    this.scrollTop()
+    
+    let evt: any = { category: category }
+
+    this.app_map.spawnCategories(evt)
+    //this.scrollTop()
+  
   }
 
   public openWelcome(){
+  
     this.app_map.openWelcome()
-    this.scrollTop()
-  }
-
-  scrollTop() {
-    $('html, body').animate({ scrollTop: 0 }, 'slow')    
+    //this.scrollTop()
+  
   }
 
   async ngOnInit() {

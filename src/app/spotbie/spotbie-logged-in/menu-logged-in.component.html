@@ -1,12 +1,6 @@
-<!-- 
-    READ ME PLEASE
-    Author: Franco Petitfour
-    Note: Please don't delete any of the comments (& COMMENTED CODE) in this file. We will need it for another project, thanks.
--->
-
 <table class="spotbie-el-100
               spotbie-menu
-              spotbie-menu-fixed-logged-out"
+              spotbie-menu-fixed"
         #spotbieMainMenu>
   <tr>  
 
@@ -26,10 +20,10 @@
       <img class='sb-qr' (click)="toggleQRScanner()"  src="assets/images/spotbie-qr.svg" /> 
       
       <div *ngIf="this.userType == '1'" class="sb-businessMenu">
-        <i class='sb-qr fa fa-bars' (click)="openBusinessMenu()"></i>
+        <i class='sb-qr fa fa-bars' (click)="toggleRewardMenu()"></i>
       </div>
 
-      <span class='sb-userName' (click)="openWindow(settingsWindow)" *ngIf="userName !== null && isDesktop">Welcome, {{ userName }}</span>         
+      <span class='sb-userName' (click)="openWindow(settingsWindow)" *ngIf="userName !== null && isDesktop">{{ userName }}</span>         
     
     </td>    
 
@@ -47,132 +41,52 @@
         EVENTS
       </span>
 
-      <!--<span (click)="spawnCategories('users')" >
-        USERS
-      </span>-->
-
-      <span (click)="openWindow(settingsWindow)">
-        SETTINGS
-      </span>
-
       <span (click)="logOut()">
         LOG OUT
       </span>
 
     </td>     
   </tr>
+
 </table>
 
 <div class="spotbie-slider-menu-background" *ngIf="menuActive">
 
   <table class="spotbie-slider-menu
                 animated slideInLeft" #spotbieMainMenu>
+    <tr>
+      <td>
 
-    <tr><td>
+        <div (click)="home()">
+          HOME
+        </div>
 
-      <div (click)="home()">
-        HOME
-      </div>
+        <div (click)="spawnCategories('food')">
+          PLACES TO EAT <i class="fa fa-angle-right"></i>
+        </div>
 
-      <div (click)="spawnCategories('food')">
-        PLACES TO EAT <i class="fa fa-angle-right"></i>
-      </div>
+        <div (click)="spawnCategories('shopping')">
+          SHOPPING <i class="fa fa-angle-right"></i>
+        </div>
 
-      <div (click)="spawnCategories('shopping')">
-        SHOPPING <i class="fa fa-angle-right"></i>
-      </div>
+        <div (click)="spawnCategories('events')">
+          EVENTS <i class="fa fa-angle-right"></i>
+        </div>
 
-      <div (click)="spawnCategories('events')">
-        EVENTS <i class="fa fa-angle-right"></i>
-      </div>
+        <div (click)="openWindow(settingsWindow)">
+          SETTINGS
+        </div>
 
-      <!--<div (click)="spawnCategories('users')">
-        USERS <i class="fa fa-angle-right"></i>
-      </div>-->
+        <div (click)="logOut()">
+          LOG OUT
+        </div>
 
-      <div (click)="openWindow(settingsWindow)">
-        SETTINGS
-      </div>
-
-      <div (click)="logOut()">
-        LOG OUT
-      </div>
-
-    </td></tr>
-
+      </td>
+    </tr>
   </table>
 
 </div>
 
-<div class="spotbie-menu-page-padding-top-not-logged"></div>
-
-<!-- PLEASE DO NOT DELETE THE CODE BELOW, WE WILL NEED IT FOR SOMETHING ELSE -->
-
-<!--<div class='spotbie-apps-overlay' *ngIf="apps_overlay">  
-
-  <div class='spotbie-bg-filler'></div>
-
-  <div class='spotbie-apps-hover-name' #spotbieHoveredApp>{{ hovered_app }}</div>
-
-  <div class='spotbie-apps-wrapper'>
-
-    <div class='spotbie-app-icon-wrapper' 
-        title="{{ spotbie_app.app_name }}"
-        *ngFor="let spotbie_app of spotbie_app_list"
-        (click)="openAppFromList(spotbie_app.app_window)">
-      
-      <i class="{{ spotbie_app.icon_class }}" aria-hidden="true"></i>
-
-      <div class='spotbie-app-name'>{{ spotbie_app.app_name }}</div>
-
-    </div>
-    
-  </div>
-
-  <div class='spotbie-search-in-apps'>
-    <app-search></app-search>
-  </div>
-
-  <div class="sb-closeButton" (click)="closeApps()">close</div>
-
-</div>-->
-
-<app-loyalty-points (closeWindow)="toggleLoyaltyPoints()" *ngIf="LoyaltyPointsApp.open" #spotbieLoyaltyPoints></app-loyalty-points>
-
-<div class='spotbie-overlay-window' *ngIf="businessMenuApp.open">
-  <app-business-menu (closeWindowEvt)="closeBusinessMenu()" class="mt-4"></app-business-menu>
-</div>
-
-<app-qr (closeThisEvt)="toggleQRScanner()" *ngIf="qrCode"></app-qr>
-
-<app-map *ngIf="mapApp.open" #spotbieMap></app-map>
+<app-map [business]="business" *ngIf="mapApp.open" #spotbieMap></app-map>
 
 <app-settings *ngIf="settingsWindow.open"></app-settings>
-
-<!-- PLEASE DO NOT DELETE THE CODE BELOW, WE WILL NEED IT FOR SOMETHING ELSE -->
-
-<!--<app-profile-header *ngIf="bg_image_ready"
-                    [album_id]="album_id"
-                    [album_media_id]="album_media_id"                    
-                    [publicProfileInfo]="public_profile_info" 
-                    [current_user_bg]="spotbieBackgroundImage"></app-profile-header>-->
-
-<!--<app-notifications></app-notifications>-->
-
-<!--<app-pairing *ngIf="locationPairingWindow.open"></app-pairing>-->
-
-<!--<app-background-color *ngIf="backgroundColorWindow.open"></app-background-color>-->
-
-<!--<app-matcher *ngIf="matcherWindow.open"></app-matcher>-->
-
-<!--<app-driver-mode *ngIf="drivingWindow.open"></app-driver-mode>-->
-
-<!--<app-missing-people *ngIf="missingWindow.open"></app-missing-people>-->
-
-<!--<app-media-player-main *ngIf="mediaPlayerWindow.open"></app-media-player-main>-->
-
-<!--<app-friends *ngIf="friendsWindow.open" [window_obj]="friendsWindow" (closeWindow)="closeWindow($event)"></app-friends>-->
-
-<!--<app-my-places *ngIf="myPlacesWindow.open"></app-my-places>-->
-
-<!--<app-messaging *ngIf="messagingWindow.open"></app-messaging>-->

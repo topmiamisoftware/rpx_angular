@@ -12,61 +12,55 @@
 <h4 class="text-uppercase">SPOTBIE COMMUNITY</h4>
 
 <p>
+
+    <img class='sb-whiteIconBg' src='assets/images/qr/spotbie-white-icon.png' />
+
     Welcome to the SpotBie community. Find places to eat, events, and shopping around you. By signing up,
     users are able to gain loyalty points from our spotbie community members. These rewards include discounts, free drinks/food, exclusive event merchandise, and more.
     Join now and be part of something fun and worthwile.
+
 </p>
 
 <div class="sb-homePageIconsTable mt-4 mb-4">
     <div>
-    <img src="assets/images/home_imgs/find-places-to-eat.svg" />
-    PLACES TO EAT
+        <img src="assets/images/home_imgs/find-places-to-eat.svg" />
+        <h2>FOOD</h2>
     </div>
     <div>
-    <img src="assets/images/home_imgs/find-events.svg" />
-    EVENTS
+        <img src="assets/images/home_imgs/find-events.svg" />
+        <h2>EVENTS</h2>
     </div>        
     <div>
-    <img src="assets/images/home_imgs/find-places-for-shopping.svg" />
-    SHOPPING
+        <img src="assets/images/home_imgs/find-places-for-shopping.svg" />
+        <h2>SHOPPING</h2>
     </div>                        
-    <!--<div>
-    <img src="assets/images/home_imgs/find-users.svg" />
-    USERS
-    </div>-->
 </div>
-
-<img class="mb-4 sb-readImage spotbieAddPointerCursor" style="margin-top: 0%;"
-        src="assets/images/home_imgs/jpg/spotbie-miami-places-to-eat.jpg" 
-        alt="Picture of girl in her twenties enjoying food in a restaurant." />
         
+<div class="mb-4 sb-readImage cursor-pointer" [ngStyle]="{ 'background' : 'url(assets/images/home_imgs/jpg/spotbie-miami-places-to-eat.jpg)' }"></div>
+
 <img class='sb-greenIcon' src='assets/images/home_imgs/spotbie-green-icon.svg' />            
 
 <h4 class="text-uppercase">
     PLACES TO EAT
 </h4>
 
-<p class="mt-2 mb-2">
+<img class='sb-whiteIconBg right' src='assets/images/qr/spotbie-white-icon.png' />
 
-    <!--<img class='sb-whiteIconBg' src='assets/images/home_imgs/spotbie-white-icon.svg' />-->
-
+<p class="mt-2 mb-2">        
     Are you looking for <b>places to eat</b>? 
     Let SpotBie help you find the best <b>places to eat around you</b>. 
     SpotBie uses GPS technology to help you find <b>places to eat near you</b>. 
     We show you <b>restaurants around you</b> from YELP and display them neatly in a map 
     sorted by the best reviews, prices, distances from you, delivery, reservations, or eat in. 
     With SpotBie, you get to look for <b>restaurants around you</b> by choosing the category you are 
-    feeling hungry for that day.
-
-</p>      
+    feeling hungry for that day.        
+</p>   
 
 <button class="sb-button sb-getStarted mt-4 mb-5" (click)="spawnCategories('food')">
     <span>GET STARTED</span>
 </button>
 
-<img class="mb-4 sb-readImage spotbieAddPointerCursor" style="margin-top: 0%;"
-        src="assets/images/home_imgs/jpg/spotbie-miami-events.jpg" 
-        alt="Image of event marquee above entrance of theatre."/>  
+<div class="mb-4 sb-readImage cursor-pointer" [ngStyle]="{ 'background' : 'url(assets/images/home_imgs/jpg/spotbie-miami-events.jpg)' }"></div>
 
 <img class='sb-greenIcon' src='assets/images/home_imgs/spotbie-green-icon.svg' />
 
@@ -76,7 +70,7 @@
 
 <p class="mt-2 mb-2">
 
-    <!--<img class='sb-whiteIconBg' src='assets/images/home_imgs/spotbie-white-icon.svg' />-->
+    <img class='sb-whiteIconBg' src='assets/images/qr/spotbie-white-icon.png' />
 
     Are you looking for <b>events around you</b>? 
     Let SpotBie help you find the best events around you. 
@@ -91,10 +85,7 @@
     <span>GET STARTED</span>
 </button>
 
-<img class="mb-4 sb-readImage spotbieAddPointerCursor" 
-        style="margin-top: 0%;"
-        src="assets/images/home_imgs/jpg/spotbie-miami-shopping.jpg" 
-        alt="Picture of two women shopping in a mall."/>
+<div class="mb-4 sb-readImage cursor-pointer" [ngStyle]="{ 'background' : 'url(assets/images/home_imgs/jpg/spotbie-miami-shopping.jpg' }"></div>
 
 <img class='sb-greenIcon' src='assets/images/home_imgs/spotbie-green-icon.svg' />
 
@@ -104,7 +95,7 @@
 
 <p class="mt-2 mb-2">
 
-    <!--<img class='sb-whiteIconBg' src='assets/images/home_imgs/spotbie-white-icon.svg' />-->
+    <img class='sb-whiteIconBg right' src='assets/images/qr/spotbie-white-icon.png' />
 
     Let SpotBie help you find the best places to shop with our <b>shopping around you feature</b>. 
     SpotBie's <b>shopping around you feature</b> uses GPS technology to help you find the best places to shop near you. 
@@ -118,31 +109,7 @@
     <span>GET STARTED</span>
 </button>  
 
-<img class="mb-4 sb-readImage spotbieAddPointerCursor"
-        style="margin-top: 0%;"
-        src="assets/images/home_imgs/jpg/spotbie-miami-find-new-friends.jpg" 
-        alt="Picture of group of friends in a circle playing cards at the beach." />
-
-<!--<img class='sb-greenIcon' src='assets/images/home_imgs/spotbie-green-icon.svg' />
-        
-<h4 class="text-uppercase" (click)="toggleUsersAroundYouInfo()">
-    USERS AROUND YOU
-</h4>  
-
-<p class="mt-2 mb-2">
-
-    <img class='sb-whiteIconBg' src='assets/images/home_imgs/spotbie-white-icon.svg' />-
-
-    SpotBie allows you to easily find other members around you. Wherever you are, you will be able to add your friends and see who else is enjoying the places to eat, the events, and the retails shops
-    you enjoy. We all have something in common and SpotBie helps users find those similarities.
-    
-</p>      
-
-<button class="sb-button sb-getStarted mt-4 mb-5" (click)="mobileStartLocation()">
-    <span>GET STARTED</span>
-</button>-->
-
-<app-scroll-to-top></app-scroll-to-top>
+<div class="mb-4 sb-readImage cursor-pointer" [ngStyle]="{ 'background' : 'url(assets/images/home_imgs/jpg/spotbie-miami-find-new-friends.jpg)' }"></div>
 
 <div class="sb-footer pt-5 pb-5">
 

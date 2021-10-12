@@ -7,7 +7,7 @@
   </div>
 
   <div class="sb-login-top-padding"></div>  
-
+  
   <form [formGroup]="logInForm" (ngSubmit)="initLogIn()">
 
     <div *ngIf="submitted && f.spotbieUsername.errors else username_normal" class="spotbie-invalid-feedback text-uppercase spotbie-text-gradient spotbie-error">
@@ -67,9 +67,11 @@
                 formControlName="spotbiePassword" 
                 id='spotbieLoginPassword' 
                 autocomplete="password" 
-                placeholder='PASSWORD'/>        
+                placeholder='PASSWORD'/>  
+
         <fa-icon class='fa-eye' [icon]="faEye" (click)="togglePassword()" *ngIf="!passwordShow"></fa-icon> 
-        <fa-icon class='fa-eye' [icon]="faEyeSlash" (click)="togglePassword()" *ngIf="passwordShow"></fa-icon>          
+        <fa-icon class='fa-eye' [icon]="faEyeSlash" (click)="togglePassword()" *ngIf="passwordShow"></fa-icon> 
+
       </td>
 
     </table>
@@ -108,36 +110,43 @@
   </button>
 
   <div class="spotbie-rel-div
-      spotbie-padding
-      spotbie-text-link"
-      (click)="signUp()">
+              spotbie-padding
+              spotbie-text-link"
+              (click)="signUp()">
         NOT A MEMBER? SIGN UP NOW.
   </div>  
 
   <div class="sb-logo mt-3 mb-3"></div>
 
   <div class="spotbie-rel-div
-  spotbie-padding
-  spotbie-text-link"
-  *ngIf="business"
-  (click)="usersHome()">
+              spotbie-padding
+              spotbie-text-link"
+              *ngIf="business"
+              (click)="usersHome()">
       CLICK HERE FOR NON-BUSINESS USERS
   </div>
 
   <div class="spotbie-rel-div
-  spotbie-padding
-  spotbie-text-link"
-  *ngIf="!business"
-  (click)="businessHome()">
+              spotbie-padding
+              spotbie-text-link"
+              *ngIf="!business"
+              (click)="businessHome()">
       LOOKING FOR THE BUSINESS PORTAL?
   </div>
 
-  <p class="spotbie-rel-div
-  spotbie-padding
-  spotie-login-terms
-  spotbie-text-link">
-    BY LOGGING IN, YOU ARE AGREEING TO <a [routerLink]="['/terms']">OUR TERMS & PRIVACY POLICY.</a>
-  </p>
+  <div></div>
+
+
+  <div class="spotbie-rel-div
+              spotbie-padding
+              spotie-login-terms
+              spotbie-text-link">
+    <span>BY LOGGING IN, YOU ARE AGREEING TO <a [routerLink]="['/terms']">OUR TERMS & PRIVACY POLICY.</a></span>
+  </div>
+
+  <div class='sb-closeButton' (click)="closeWindow()">
+    <i class="fa fa-times"></i>
+  </div>
 
 </div>
 

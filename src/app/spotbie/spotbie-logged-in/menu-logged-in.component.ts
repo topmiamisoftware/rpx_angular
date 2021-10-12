@@ -7,6 +7,8 @@ import { MapComponent } from '../map/map.component'
 import { DeviceDetectorService } from 'ngx-device-detector'
 import { externalBrowserOpen } from 'src/app/helpers/cordova/web-intent'
 import { LoyaltyPointsService } from 'src/app/services/loyalty-points/loyalty-points.service'
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast'
+import { AllowedAccountTypes } from 'src/app/helpers/enum/account-type.enum'
 
 @Component({
   selector: 'app-menu-logged-in',
@@ -22,33 +24,19 @@ export class MenuLoggedInComponent implements OnInit {
   @ViewChild('spotbieMap') spotbieMap: MapComponent  
   
   public spotbieBackgroundImage: string
-
   
   public foodWindow = { open : false }
 
   public mapApp = { open : false }
-  public LoyaltyPointsApp = { open : false }
-  
-  public businessMenuApp = { open: false }
 
   public settingsWindow =  { open : false }
-  public chooseAccountTypeWindow = { open: false } 
 
   public home_route: boolean = true
-
-  public apps_overlay: boolean = false
-  public hovered_app
 
   public prevScrollpos
 
   public bg_image_ready: boolean = false
 
-  public web_options_subscriber: Subscription
-
-  public spotbie_app_list = new Array(
-    { app_name : 'Settings', icon_class : 'fa fa-cog', app_window : this.settingsWindow}
-  )
-  
   public menuActive: boolean = false
   
   public spotType: string
@@ -65,23 +53,38 @@ export class MenuLoggedInComponent implements OnInit {
 
   public qrCode: boolean = false
 
+  public business: boolean = false
+
   constructor(private router : Router,
-              private location : Location,
               private userAuthService : UserauthService,
               private deviceService: DeviceDetectorService,
               private loyaltyPointsService: LoyaltyPointsService) {}
 
   public toggleLoyaltyPoints(){
-    
-    this.LoyaltyPointsApp.open = !this.LoyaltyPointsApp.open
-
+    this.spotbieMap.goToLp()
   }
+
 
   public toggleQRScanner(){
-    this.qrCode = !this.qrCode
+    this.spotbieMap.goToQrCode()
   }
 
-  home(){
+  public toggleRewardMenu(){    
+    this.spotbieMap.goToRewardMenu()
+  }
+
+  public spawnCategories(category: string): void{
+
+    if(!this.isDesktop) this.slideMenu()
+
+    let obj = {
+      category: category
+    }
+    this.spotbieMap.spawnCategories(obj)
+
+  }
+
+  public home(){
     this.spotbieMap.closeCategories()
     this.spotbieMap.openWelcome()
   }
@@ -101,30 +104,12 @@ export class MenuLoggedInComponent implements OnInit {
   }
 
   public openWindow(window : any) : void {
-    window.open = !window.open
+    window.open = true
   }
 
   public closeWindow(window : any) : void {
     window.open = false
   }
-
-  public scrollTo(el : string): void {
-    const element = document.getElementById(el)
-    element.scrollIntoView()
-  }
-
-  public openApps(): void {
-    this.apps_overlay = true
-  }
-
-  public closeApps(): void {
-    this.apps_overlay = false
-  }
-
-  public toggleHelp(): void{
-    
-  }
-
   public logOut() : void {
 
     this.userAuthService.logOut().subscribe(
@@ -144,53 +129,28 @@ export class MenuLoggedInComponent implements OnInit {
 
   }
 
-  openAppFromList(window) {
-    window.open = true
-  }
-
-  public spawnCategories(category: string): void{
-
-    if(!this.isDesktop) this.slideMenu()
-    this.spotbieMap.spawnCategories(category)
-
-  }
-
-  goToBlog(){
-    externalBrowserOpen("https://blog.spotbie.com/")
-  }
-
   usersAroundYou(){
     this.spotbieMap.mobileStartLocation()
   }
 
   public async getLoyaltyPointBalance(){
 
-    let resp = await this.loyaltyPointsService.getLoyaltyPointBalance()
+    await this.loyaltyPointsService.getLoyaltyPointBalance()
 
   }
-
-  public openBusinessMenu(){
-    this.businessMenuApp.open = true
-  }
-
-  public closeBusinessMenu(){
-    this.businessMenuApp.open = false
-  } 
 
   public getPointsWrapperStyle(){
 
-    if(this.isMobile){
+    if(this.isMobile)
       return { 'width:' : '85%', 'text-align' : 'right' }
-    } else {
+    else
       return { 'width' : '45%' }
-    }
     
   }
 
   ngOnInit() : void {
-    
 
-     this.loyaltyPointsService.userLoyaltyPoints$.subscribe(
+    this.loyaltyPointsService.userLoyaltyPoints$.subscribe(
 
       loyaltyPointsBalance =>{
         this.userLoyaltyPoints = loyaltyPointsBalance.balance
@@ -202,11 +162,12 @@ export class MenuLoggedInComponent implements OnInit {
     this.isDesktop = this.deviceService.isDesktop()
     this.isTablet = this.deviceService.isTablet()
 
-    let pickedColor : string
-
-    const activatedRoute = this.location.path()
-
     this.userType = localStorage.getItem('spotbie_userType')
+
+    if(this.userType == AllowedAccountTypes.Personal)
+      this.business = false
+    else
+      this.business = true
 
     this.userName = localStorage.getItem('spotbie_userLogin')
 

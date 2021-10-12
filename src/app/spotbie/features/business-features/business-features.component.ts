@@ -1,5 +1,4 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { DeviceDetectorService } from 'ngx-device-detector';
 
 @Component({
   selector: 'app-business-features',
@@ -9,10 +8,6 @@ import { DeviceDetectorService } from 'ngx-device-detector';
 export class BusinessFeaturesComponent implements OnInit {
 
   @Output() signUpEvent = new EventEmitter()
-
-  public isDesktop: boolean = false
-  public isTablet: boolean = false
-  public isMobile: boolean = false
 
   constructor() { }
 

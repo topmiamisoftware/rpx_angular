@@ -1,6 +1,6 @@
 <table class="spotbie-el-100
               spotbie-menu
-              spotbie-menu-fixed-logged-out"        
+              spotbie-menu-fixed"        
         #spotbieMainMenu>
   <tr>    
   
@@ -30,10 +30,6 @@
       <span (click)="spawnCategories('events', false)">
         EVENTS
       </span>
-
-      <!--<span (click)="spawnCategories('users', false)">
-        USERS
-      </span>-->
 
       <span style="border: unset;" (click)="signUp()">
         SIGN UP
@@ -71,10 +67,6 @@
         EVENTS <i class="fa fa-angle-right"></i>
       </div>
 
-      <!--<div (click)="spawnCategories('users')">
-        USERS AROUND YOU <i class="fa fa-angle-right"></i>
-      </div>-->
-
       <div (click)="openWindow(signUpWindow)">
         SIGN UP
       </div>
@@ -96,5 +88,3 @@
 <app-log-in *ngIf="logInWindow.open" (openWindow)="openWindow($event)" (closeWindow)="closeWindow($event)"></app-log-in>
 
 <app-sign-up *ngIf="signUpWindow.open" [window_obj]="signUpWindow" (closeWindow)="closeWindow($event)" (logInEvent)="logIn()"></app-sign-up>
-
-<app-features *ngIf="featuresWindow.open"></app-features>

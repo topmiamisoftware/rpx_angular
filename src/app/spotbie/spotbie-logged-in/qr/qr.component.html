@@ -1,10 +1,4 @@
-<!-- 
-    READ ME PLEASE
-    Author: Franco Petitfour
-    Note: Please don't delete any of the comments (& COMMENTED CODE) in this file. We will need it for another project, thanks.
--->
-
-<div class='spotbie-overlay-window' *ngIf="isBusiness">
+<div [ngClass]="getWindowClass()" *ngIf="isBusiness">
     
     <div class='sb-v-wrapper' style="display: grid; align-content: center;" *ngIf="!rewardPrompted">
         
@@ -14,7 +8,7 @@
 
         <form [formGroup]="businessLoyaltyPointsForm" *ngIf="businessLoyaltyPointsFormUp">
 
-            <div *ngIf="businessLoyaltyPointsSubmitted && f.totalSpent.errors else total_spent_normal" class="spotbie-input-info spotbie-text-gradient spotbie-error">
+            <div *ngIf="businessLoyaltyPointsSubmitted && f.totalSpent.errors else total_spent_normal" class="spotbie-input-info spotbie-text-gradient text-uppercase spotbie-error mb-3">
         
                 <div *ngIf="f.totalSpent.errors.required">
                     You must enter a value!
@@ -29,26 +23,27 @@
             </ng-template>
 
             <input class="sb-input text-center" 
-                (click)="$event.target.select()" 
-                (keyup)="calculateLoyaltyPointValue()"
-                formControlName="totalSpent" 
-                type="text" 
-                prefix="$"
-                placeholder="$250" 
-                maxlength="7"
-                thousandSeparator="," 
-                mask="separator.0" />
+                    (click)="$event.target.select()" 
+                    (keydown)="checkForSetLoyaltyPointSettings()"
+                    formControlName="totalSpent"
+                    type="text"
+                    prefix="$"
+                    placeholder="$250" 
+                    maxlength="7"
+                    thousandSeparator="," 
+                    mask="separator.0" />
+                                        
         </form>
 
-        <button class='sb-button text-uppercase mt-4' (click)="calculateLoyaltyPointValue()">
-            AWARD
-        </button>
+        <div class='sb-button text-uppercase mt-4' (click)="startAwardProcess()">
+            AWARD<span><i class="fas fa-hamburger"></i></span>
+        </div>        
 
     </div>
 
     <div class='sb-v-wrapper' style="display: block; align-content: center;" *ngIf="rewardPrompted">
 
-        <h5 *ngIf="rewardPrompted" class="spotbie-text-gradient text-center text-uppercase mt-5 mb-3">LET USER SCAN FOR REWARD</h5>
+        <h5 *ngIf="rewardPrompted" class="spotbie-text-gradient text-center text-uppercase mt-2 mb-3">LET USER SCAN FOR REWARD</h5>
 
         <ngx-qrcode [elementType]="qrType" 
                     [value]="business.qr_code_link"
@@ -58,28 +53,23 @@
                     colorLight="#64e56f"
                     errorCorrectionLevel="H"></ngx-qrcode>
     
-        <p class="spotbie-text-gradient text-center mt-4 text-uppercase">
+        <p class="spotbie-text-gradient text-center mt-5 text-uppercase">
             Total Points <span class='sb-text-light-green-gradient'>{{ loyaltyPointReward | number:'1.0':'en-US' }}</span>
         </p>
 
-        <p class="spotbie-text-gradient text-center mt-3 text-uppercase">
+        <p class="spotbie-text-gradient text-center mt-5 text-uppercase">
             Dollar Value <span class='sb-text-light-green-gradient'>${{ loyaltyPointRewardDollarValue | number:'1.0':'en-US' }}</span>
         </p>
 
-        <p class="spotbie-text-gradient text-center mt-3 text-uppercase">CUSTOMERS scan once per table or order</p>
+        <p class="spotbie-text-gradient text-center mt-5 text-uppercase">CUSTOMERS scan once per table or order</p>
 
-        <button class='sb-button text-uppercase mt-4' (click)="closeQr()">close</button>
-
-        <div class="sb-closeButton" (click)="closeQr()">
-            <i class="fa fa-times"></i>
+        <div class='sb-button text-uppercase mt-5 cursor-pointer' (click)="closeQr()">
+            <span class='spotbie-text-gradient'>FINISH</span>
+            <i class='fa fa-check'></i>
         </div>
         
         <div class='pb-5'></div>
 
-    </div>
-
-    <div class="sb-closeButton" (click)="closeQr()">
-        <i class="fa fa-times"></i>
     </div>
 
 </div>
@@ -96,23 +86,29 @@
             Dollar Value <span class='sb-text-light-green-gradient'>${{ loyaltyPointRewardDollarValue | number:'1.0':'en-US' }}</span>
         </p>
 
-        <span class='sb-button text-uppercase mt-5' (click)="yes()">YES</span>
+        <span class='sb-button text-uppercase mt-5 mb-5' (click)="yes()">
+            YES <i class="fa fa-hamburger"></i>
+        </span>
 
-        <span class='sb-button text-uppercase mt-4' (click)="no()">CANCEL</span>
+        <div class='spotbie-text-gradient cursor-pointer' (click)="no()">
+            <span>CANCEL</span>
+        </div>
 
-    </div>
-
-    <div class="sb-closeButton" (click)="closeQr()">
-        <i class="fa fa-times"></i>
     </div>
 
 </div>
 
 <div class='spotbie-overlay-window' *ngIf="!isBusiness">    
 
+    <div class="sb-readImage" [ngStyle]="{ 'background' : 'url(assets/images/home_imgs/jpg/spotbie-miami-find-new-friends.jpg)' }"></div>
+
     <div class='sb-v-wrapper' style="display: grid; align-content: center;">
 
-        <h5 class="spotbie-text-gradient text-center text-uppercase pt-5 mb-5">SCAN AND EARN LOYALTY POINTS</h5>
+        <div>
+            <img class="sb-qrTitleImage" src="../../../../assets/images/qr/spotbie-qr.svg" />
+
+            <h5 class="spotbie-text-gradient sb-scanQrTitle text-center text-uppercase pt-5">SCAN AND EARN LOYALTY POINTS</h5>
+        </div>
 
         <div class="spotbie-full-qrCode scanner mt-4 mb-4">
 
@@ -123,17 +119,13 @@
                            
         </div>
 
-        <p class="sb-helpInfo spotbie-text-gradient text-center mt-5 text-uppercase">
+        <p class="sb-helpInfo spotbie-text-gradient text-center mt-5">
             Show your host the SpotBie app and they will let you scan and earn through their QR code.
         </p>
         
         <h2 class="spotbie-text-gradient text-center text-uppercase pt-5 mb-5">{{ userLoyaltyPoints | number:'1.0':'en-US' }}</h2>
 
         <button class='sb-button text-uppercase mt-4' (click)="closeQr()">close</button>
-
-        <div class="sb-closeButton" (click)="closeQr()">
-            <i class="fa fa-times"></i>
-        </div>
 
     </div>
 

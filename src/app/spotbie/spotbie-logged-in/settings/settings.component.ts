@@ -64,12 +64,6 @@ export class SettingsComponent implements OnInit {
   public locationFound = false
 
   public personal_account = true
-  public ghost_light_color = 'green'
-  public privacy_light_color = 'green'
-  public privacy_state = 'ON'
-  public ghost_mode_state = 'ON'
-  public privacy_help = { help_text: 'Setting your privacy to OFF will allow users who ARE NOT your friends to view your profile (includes posts, albums, and contact info). Setting your privacy to ON will only allow users who are your friends to view your profile. If your privacy mode is set to ON, users who are not your friends will be able to send your friend requests and view partial profile info(includes most recent profile picture, username, and your full name.)'}
-  public ghost_mode_help = { help_text: 'Setting Ghost Mode to OFF will allow users who ARE NOT your friends to spot on you the Spotbie Map as yourself. If you set Ghost Mode to ON, users who are NOT your friends will identify you on the map as GHOST, while users who ARE your friends will identify you as yourself.'}
 
   public settingsForm: FormGroup
   public placeToEatSettingsForm: FormGroup
@@ -137,7 +131,8 @@ export class SettingsComponent implements OnInit {
     
   public calendlyUp: boolean = false
   
-  public placeToEatCategoryList: Array<string>
+  public placeToEatCategoryList: Array<string> = map_extras.FOOD_CATEGORIES
+  public shoppingCategoryList: Array<string> = map_extras.SHOPPING_CATEGORIES
 
   public selectable = true
   public removable = true
@@ -147,7 +142,7 @@ export class SettingsComponent implements OnInit {
 
   public placesToEatCategories: string[] = []
 
-  @ViewChild('fruitInput') fruitInput: ElementRef<HTMLInputElement>;
+  @ViewChild('businessInput') businessInput: ElementRef<HTMLInputElement>;
 
   constructor(private host: MenuLoggedInComponent,
               private http: HttpClient,
@@ -157,35 +152,38 @@ export class SettingsComponent implements OnInit {
               private userAuthService: UserauthService){ }
 
   add(event: MatChipInputEvent): void {
-    const value = (event.value || '').trim();
+
+    const value = (event.value || '').trim()
 
     // Add our fruit
-    if (value) {
-      this.placesToEatCategories.push(value);
-    }
-
+    if (value) this.placesToEatCategories.push(value)
+    
     this.placeToEatSettingsForm.get('originCategories').setValue(null)
 
   }
 
   remove(fruit: string): void {
-    const index = this.placesToEatCategories.indexOf(fruit);
 
-    if (index >= 0) {
-      this.placesToEatCategories.splice(index, 1);
-    }
+    const index = this.placesToEatCategories.indexOf(fruit)
+
+    if (index >= 0) this.placesToEatCategories.splice(index, 1)
+    
+    this.placeToEatSettingsForm.get('originCategories').setValue(null)
+
   }
 
   selected(event: MatAutocompleteSelectedEvent): void {
-    this.placesToEatCategories.push(event.option.viewValue);
-    this.fruitInput.nativeElement.value = '';
-    this.placeToEatSettingsForm.get('originCategories').setValue(null);
+
+    this.placesToEatCategories.push(event.option.viewValue)
+    this.businessInput.nativeElement.value = ''
+
+    this.placeToEatSettingsForm.get('originCategories').setValue(null)
+
   }
 
   private _filter(value: string): string[] {
-    const filterValue = value.toLowerCase();
-
-    return this.placeToEatCategoryList.filter(fruit => fruit.toLowerCase().includes(filterValue));
+    const filterValue = value.toLowerCase()
+    return this.placeToEatCategoryList.filter(category => category.toLowerCase().includes(filterValue))
   }
 
   private fetchCurrentSettings(): any {
@@ -229,7 +227,7 @@ export class SettingsComponent implements OnInit {
             this.account_type_category = 'PERSONAL'
             break
         }
-        
+
       }
 
       this.settingsFormInitiated = true 
@@ -240,39 +238,20 @@ export class SettingsComponent implements OnInit {
       this.settingsForm.get('spotbie_email').setValue(this.user.email)
       this.settingsForm.get('spotbie_phone_number').setValue(this.user.spotbie_user.phone_number)
       this.settingsForm.get('spotbie_acc_type').setValue(this.account_type_category)
-
+      
       this.password_form.get('spotbie_password').setValue('userpassword')
       this.password_form.get('spotbie_confirm_password').setValue('123456789')
 
-      this.settingsForm.get('spotbie_privacy').setValue(this.user.spotbie_user.privacy)
-      this.settingsForm.get('spotbie_ghost_mode').setValue(this.user.spotbie_user.ghost_mode)
-
-      if (this.user.spotbie_user.privacy == true) {
-        this.privacy_state = 'ON'
-        this.privacy_light_color = 'green'
-      } else {
-        this.privacy_state = 'OFF'
-        this.privacy_light_color = 'red'
-      }
-
-      if (this.user.spotbie_user.ghost_mode == true) {
-        this.ghost_mode_state = 'ON'
-        this.ghost_light_color = 'green'
-      } else {
-        this.ghost_mode_state = 'OFF'
-        this.ghost_light_color = 'red'
-      }
-
-      if (this.chosen_account_type == 1 && settings_response.place_to_eat !== null) {
+      if (this.chosen_account_type == 1 && settings_response.business !== null) {
 
         this.user.business = new Business()
         
-        this.user.business.loc_x = settings_response.place_to_eat.loc_x
-        this.user.business.loc_y = settings_response.place_to_eat.loc_y
-        this.user.business.name = settings_response.place_to_eat.name
-        this.user.business.description = settings_response.place_to_eat.description
-        this.user.business.address = settings_response.place_to_eat.address
-        this.user.business.photo = settings_response.place_to_eat.photo
+        this.user.business.loc_x = settings_response.business.loc_x
+        this.user.business.loc_y = settings_response.business.loc_y
+        this.user.business.name = settings_response.business.name
+        this.user.business.description = settings_response.business.description
+        this.user.business.address = settings_response.business.address
+        this.user.business.photo = settings_response.business.photo
 
         this.originPhoto = this.user.business.photo 
 
@@ -290,6 +269,8 @@ export class SettingsComponent implements OnInit {
 
   public startBusinessVerification(){    
 
+    console.log("startBusinessVerification start")
+
     this.loading = true
     this.placeFormSubmitted = true
 
@@ -298,6 +279,8 @@ export class SettingsComponent implements OnInit {
       this.loading = false
       this.spotbieSettingsWindow.nativeElement.scrollTo(0,0)
       
+      console.log("startBusinessVerification middle")
+
       return
 
     }
@@ -311,6 +294,7 @@ export class SettingsComponent implements OnInit {
     this.passKeyVerificationFormUp = true
     this.loading = false
 
+    console.log("startBusinessVerification end")
     
   }
 
@@ -345,9 +329,11 @@ export class SettingsComponent implements OnInit {
       photo: this.originPhoto,
       loc_x: this.lat,
       loc_y: this.lng,
-      categories: this.originCategories,
+      categories: JSON.stringify(this.placesToEatCategories),
       passkey: this.passKey
     }
+
+    console.log("Save this business", businessInfo)
 
     this.userAuthService.verifyBusiness(businessInfo).subscribe(
       (resp) => {
@@ -833,7 +819,6 @@ export class SettingsComponent implements OnInit {
 
       case 1://place to eat account
         this.initSettingsForm('place_to_eat')
-        this.userAccountTypeNormalScroll.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' })
         this.promptForLocation()
         break
 
@@ -877,8 +862,6 @@ export class SettingsComponent implements OnInit {
           spotbie_email: ['', email_validators],
           spotbie_phone_number: ['', phone_validators],
           spotbie_acc_type: [],
-          spotbie_ghost_mode: [],
-          spotbie_privacy: []
         }, {
           validators: [ValidateUsername('spotbie_username'),
                     ValidatePersonName('spotbie_first_name'),
@@ -903,14 +886,13 @@ export class SettingsComponent implements OnInit {
         const originAddressValidators = [Validators.required]
         const originValidators = [Validators.required]
         const originDescriptionValidators = [Validators.required, Validators.maxLength(350), Validators.minLength(100)]
-        const originCategoriesValidators = [Validators.required]
 
         this.placeToEatSettingsForm = this.formBuilder.group({
           originAddress: ['', originAddressValidators],
           originTitle: ['', originTitleValidators],
           originDescription: ['', originDescriptionValidators],
           spotbieOrigin: ['', originValidators],
-          originCategories: ['', originCategoriesValidators]
+          originCategories: ['']
         })
 
         if(this.user.business !== undefined){
@@ -947,10 +929,6 @@ export class SettingsComponent implements OnInit {
 
         this.fetchCurrentSettings()
 
-        setTimeout(function() {
-          this.mapsAutocomplete() 
-        }.bind(this))
-
         break
     }
   }
@@ -961,9 +939,6 @@ export class SettingsComponent implements OnInit {
   get email() { return this.settingsForm.get('spotbie_email').value }
   get spotbie_phone_number() { return this.settingsForm.get('spotbie_phone_number').value }
   get account_type() { return this.settingsForm.get('spotbie_acc_type').value }
-  
-  get spotbie_ghost_mode() {return this.settingsForm.get('spotbie_ghost_mode').value }
-  get spotbie_privacy() {return this.settingsForm.get('spotbie_privacy').value }
   get f() { return this.settingsForm.controls }
 
   get password() { return this.password_form.get('spotbie_password').value }
@@ -1001,13 +976,6 @@ export class SettingsComponent implements OnInit {
     this.user.email = this.email
     this.user.spotbie_user.phone_number = this.spotbie_phone_number
     this.user.spotbie_user.user_type = this.chosen_account_type
-
-    if (this.account_type_category !== 'PLACE TO EAT') {
-
-      this.user.spotbie_user.ghost_mode = this.spotbie_ghost_mode
-      this.user.spotbie_user.privacy = this.spotbie_privacy
-
-    }
 
     this.userAuthService.saveSettings(this.user).subscribe( 
       resp => {
@@ -1107,46 +1075,6 @@ export class SettingsComponent implements OnInit {
     } else 
       console.log('deactivateCallback', resp)
     
-  }
-
-  public toggleGhostMode() {
-
-    let ghost_mode: number
-
-    if (this.spotbie_ghost_mode == 1) {
-      this.ghost_mode_state = 'OFF'
-      ghost_mode = 0
-    } else {
-      this.ghost_mode_state = 'ON'
-      ghost_mode = 1
-    }
-
-    this.settingsForm.get('spotbie_ghost_mode').setValue(ghost_mode)
-
-  }
-
-  public togglePrivacy() {
-
-    let spotbie_privacy: number
-
-    if (this.spotbie_privacy == 1) {
-      this.privacy_state = 'OFF'
-      spotbie_privacy = 0
-    } else {
-      this.privacy_state = 'ON'
-      spotbie_privacy = 1
-    }
-
-    this.settingsForm.get('spotbie_privacy').setValue(spotbie_privacy)
-
-  }
-
-  public toggleHelp(help_object) {
-    this.help_text = help_object.help_text
-  }
-
-  public getLight(light_name: any) {
-    if (light_name == 1) { return {'background-color': 'green'} } else { return {'background-color': 'red'} }
   }
 
   public closeWindow() {

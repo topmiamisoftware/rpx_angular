@@ -2,11 +2,13 @@ h1,h2,h3,p,li,div{
     font-family: Gotham-Book !important;
 }
 h1{
-    line-height: 65px;
+    line-height: 1.6rem;
+    font-size: 1.5rem;
     text-transform: uppercase;
 }
 h2,h3{
-    line-height: 45px;
+    line-height: 1.3rem;
+    font-size: 1.2rem;
     text-transform: uppercase;
 }
 body{

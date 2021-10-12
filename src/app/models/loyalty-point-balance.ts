@@ -2,7 +2,7 @@ export class LoyaltyPointBalance {
 
     private _balance: number
     private _reset_balance: number
-    private _loyalty_point_dollar_percent_value: number | string
+    private _loyalty_point_dollar_percent_value: number
     private _end_of_month: string
 
     get balance(): number {
@@ -19,10 +19,10 @@ export class LoyaltyPointBalance {
         this._reset_balance = value
     }
 
-    get loyalty_point_dollar_percent_value(): number | string {
+    get loyalty_point_dollar_percent_value(): number {
         return this._loyalty_point_dollar_percent_value
     }
-    set loyalty_point_dollar_percent_value(value: number | string) {
+    set loyalty_point_dollar_percent_value(value: number) {
         this._loyalty_point_dollar_percent_value = value
     }
 
