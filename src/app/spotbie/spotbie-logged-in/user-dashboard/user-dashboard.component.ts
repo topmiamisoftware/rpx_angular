@@ -1,17 +1,16 @@
-import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
-import { UserauthService } from 'src/app/services/userauth.service';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { LoyaltyPointsComponent } from '../loyalty-points/loyalty-points.component';
 import { QrComponent } from '../qr/qr.component';
 import { RewardMenuComponent } from '../reward-menu/reward-menu.component';
 
 @Component({
-  selector: 'app-business-dashboard',
-  templateUrl: './business-dashboard.component.html',
-  styleUrls: ['./business-dashboard.component.css']
+  selector: 'app-user-dashboard',
+  templateUrl: './user-dashboard.component.html',
+  styleUrls: ['./user-dashboard.component.css']
 })
-export class BusinessDashboardComponent implements OnInit {
+export class UserDashboardComponent implements OnInit {
 
-  @Output('openBusinessSettingsEvt') openBusinessSettingsEvt = new EventEmitter
+  public scannerStarted: boolean = false
 
   @ViewChild('loyaltyPointsApp') loyaltyPointsApp: LoyaltyPointsComponent
   @ViewChild('rewardMenuApp') rewardMenuApp: RewardMenuComponent
@@ -21,13 +20,10 @@ export class BusinessDashboardComponent implements OnInit {
   @ViewChild('qrCodeAppAnchor') qrCodeAppAnchor: ElementRef
   @ViewChild('rewardMenuAppAnchor') rewardMenuAppAnchor: ElementRef
 
-  public displayBusinessSetUp: boolean = false
-  public businessFetched: boolean = false
-
-  constructor(private userAuthServe: UserauthService) { }
+  constructor() { }
 
   public openLoyaltyPoints(){
-    console.log("BusinessDashboardComponent loyaltyPointsApp") 
+    console.log("UserDashboardComponent loyaltyPointsApp") 
     this.loyaltyPointsApp.initBusinessLoyaltyPoints()
   }
 
@@ -39,7 +35,8 @@ export class BusinessDashboardComponent implements OnInit {
   public scrollToQrAppAnchor(){
 
     this.qrCodeAppAnchor.nativeElement.scrollIntoView({ behavior: "smooth", block: "start" });
-
+    this.startQrScanner()
+  
   }
   
   public scrollToRewardMenuAppAnchor(){
@@ -48,6 +45,14 @@ export class BusinessDashboardComponent implements OnInit {
 
   }
 
+  public startQrScanner(){
+    this.scannerStarted = true 
+  }
+
+  public closeQrScanner(){
+    this.scannerStarted = false 
+  }
+  
   public closeAll(){
 
     //Close all the windows in the dashboard
@@ -57,31 +62,6 @@ export class BusinessDashboardComponent implements OnInit {
 
   }
 
-  public checkIfBusinessIsSet(){
-
-    this.userAuthServe.getSettings().subscribe(
-      
-      resp => {
-        
-        if(resp.business == null) 
-          this.displayBusinessSetUp = true 
-        else
-          this.displayBusinessSetUp = false
-
-        this.businessFetched = true
-
-      } 
-
-    )
-    
-  }
-
-  public openSettings(){
-    this.openBusinessSettingsEvt.emit()
-  }
-
-  ngOnInit(): void {
-    this.checkIfBusinessIsSet()
-  }
+  ngOnInit(): void {}
 
 }

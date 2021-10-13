@@ -1,26 +1,26 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BusinessDashboardComponent } from './business-dashboard.component';
-import { QrModule } from '../qr/qr.module';
 import { LoyaltyPointsModule } from '../loyalty-points/loyalty-points.module';
 import { RewardMenuModule } from '../reward-menu/reward-menu.module';
 import { RouterModule } from '@angular/router';
-import { AdManagerModule } from '../ad-manager/ad-manager.module';
+import { QrModule } from '../qr/qr.module';
+import { UserDashboardComponent } from './user-dashboard.component';
+
+
 
 @NgModule({
   declarations: [
-    BusinessDashboardComponent
+    UserDashboardComponent
   ],
   imports: [
     CommonModule,
     LoyaltyPointsModule,
     RewardMenuModule,
     RouterModule,
-    QrModule,
-    AdManagerModule
+    QrModule
   ],
-  exports : [
-    BusinessDashboardComponent
+  exports: [
+    UserDashboardComponent
   ]
 })
-export class BusinessDashboardModule { }
+export class UserDashboardModule { }

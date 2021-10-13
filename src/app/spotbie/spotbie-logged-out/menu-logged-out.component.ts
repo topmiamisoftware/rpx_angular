@@ -12,7 +12,7 @@ import { DeviceDetectorService } from 'ngx-device-detector'
 export class MenuLoggedOutComponent implements OnInit {
 
   @Output() spawnCategoriesOut = new EventEmitter()
-  @Output() openWelcome = new EventEmitter()
+  @Output() openHome = new EventEmitter()
 
   @ViewChild('spotbieMainMenu') spotbieMainMenu
 
@@ -85,9 +85,11 @@ export class MenuLoggedOutComponent implements OnInit {
   }
 
   home(){
+    
     this.signUpWindow.open = false
     this.logInWindow.open = false
-    this.openWelcome.emit()
+    this.openHome.emit()
+
   }
 
   ngOnInit(): void {

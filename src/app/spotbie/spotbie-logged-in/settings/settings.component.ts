@@ -1078,7 +1078,7 @@ export class SettingsComponent implements OnInit {
   }
 
   public closeWindow() {
-    this.host.settingsWindow.open = false
+    window.location.reload()
   }
 
   ngOnInit() {

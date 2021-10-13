@@ -13,7 +13,6 @@ export class UserFeaturesComponent implements OnInit {
 
   public spawnCategories(category: string){
 
-    console.log("spawnCategoriesEvt", category)
     this.spawnCategoriesEvt.emit({ category: category })
 
   }

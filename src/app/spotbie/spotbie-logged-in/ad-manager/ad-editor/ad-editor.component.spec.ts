@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ChooseAccountTypeComponent } from './choose-account-type.component';
+import { AdEditorComponent } from './ad-editor.component';
 
-describe('ChooseAccountTypeComponent', () => {
-  let component: ChooseAccountTypeComponent;
-  let fixture: ComponentFixture<ChooseAccountTypeComponent>;
+describe('AdEditorComponent', () => {
+  let component: AdEditorComponent;
+  let fixture: ComponentFixture<AdEditorComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ChooseAccountTypeComponent ]
+      declarations: [ AdEditorComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ChooseAccountTypeComponent);
+    fixture = TestBed.createComponent(AdEditorComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

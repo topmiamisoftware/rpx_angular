@@ -19,14 +19,12 @@ export class BusinessComponent implements OnInit {
 
   constructor(private router: Router, private route: ActivatedRoute) { }
 
-  public spawnCategories(evt: any): void{
-    this.app_map.spawnCategories(evt)
-    this.scrollTop()
+  public spawnCategories(category: string): void{
+    this.app_map.spawnCategories( { category } )
   }
 
-  public openWelcome(){
+  public openHome(){
     this.app_map.openWelcome()
-    this.scrollTop()
   }
 
   public signUp(){

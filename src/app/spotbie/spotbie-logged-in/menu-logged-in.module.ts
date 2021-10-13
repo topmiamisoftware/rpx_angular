@@ -13,7 +13,7 @@ import { RouterModule } from '@angular/router'
 import { HelperModule } from 'src/app/helpers/helper.module'
 import { MapModule } from '../map/map.module'
 
-import { SettingsModule } from './settings/settings.module'
+import { SettingsModule } from './settings/settings.module';
 
 @NgModule({
   declarations: [ 

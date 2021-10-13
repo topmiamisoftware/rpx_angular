@@ -1,5 +1,3 @@
-@import '~ngx-sharebuttons/themes/default';
-
 .spotbie-overlay-window{
     z-index: 95;
 }
@@ -41,6 +39,7 @@
     height: 60vh;
     max-height: 60vh;
     min-height: 60vh;
+    margin-top: 50px;    
 }
 .spotbie-agm-map.sb-map-results-open{
     height: 60vh;
@@ -359,7 +358,7 @@
     margin-top: 20px;
     margin-bottom: 15px;
 }
-.spotbie-next-previous-table-big .sb-button-cell{
+.spotbie-next-previous-table-big .spotbie-button-cell{
     display: table-cell;
     font-size: 16px;
 }
@@ -372,7 +371,7 @@
     font-size: .8rem !important;
     background-color: rgba(0,0,0,.15)
 }
-span.sb-button{
+span.spotbie-button{
     position: relative;
     display: inline-block !important;
     font-size: 16px;
@@ -383,10 +382,10 @@ span.sb-button{
     width: 150px;
     min-width: 162px;
 }
-.sb-button{
+.spotbie-button{
     background-color: rgba(0,0,0,.23);
 }
-.sb-button-prompt{
+.spotbie-button-prompt{
     background-color: #8BC34A;
 }
 .spotbie-profile-right-username{
@@ -564,14 +563,9 @@ span.sb-button{
     border-radius: 20px;
 }
 .map-prompt-mobile{
-    position: fixed;
     left: 0px;
     width: 100%;
     min-width: 100%;
-    bottom: 0px;
-    height: 100%;
-    min-height: 100%;
-    z-index: 93;
     background-color: #332f3e;
 }
 
@@ -625,8 +619,8 @@ swiper{
     transform: translateY(-20%);
     text-align: center;
 }
-.map-prompt-mobile .sb-button:hover,
-.map-prompt-mobile .sb-button:focus{
+.map-prompt-mobile .spotbie-button:hover,
+.map-prompt-mobile .spotbie-button:focus{
     animation: 1s;
     box-shadow: 0px 0px 42px rgb(221 221 221 / 25%);
 }
@@ -876,7 +870,7 @@ swiper{
     .spotbie-search-results-title{
         text-align: center;
     }  
-    span.sb-button{
+    span.spotbie-button{
         max-width: 46%;
         width: 46%;
         min-width: 46%;

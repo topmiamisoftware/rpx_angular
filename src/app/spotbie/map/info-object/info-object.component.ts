@@ -135,9 +135,7 @@ export class InfoObjectComponent implements OnInit {
       this.info_object = httpResponse.data
       this.info_object.type_of_info_object_category = this.infoObjectCategory
 
-      this.infoObjectImageUrl = this.info_object.image_url
-
-      console.log("infoObjectImageUrl", this.infoObjectImageUrl)
+      this.infoObjectImageUrl = this.info_object.image_url      
 
       if(this.router.url.indexOf('place-to-eat') > -1 || this.info_object.type_of_info_object_category == 'food'){
         this.info_object.type_of_info_object = 'yelp_business'
@@ -260,12 +258,49 @@ export class InfoObjectComponent implements OnInit {
     externalBrowserOpen(this.info_object.url)
   }
 
+  public getTitleStyling(){
+
+    if(this.info_object.is_community_member)
+      return 'spotbie-text-gradient sb-titleGreen text-uppercase'
+    else
+      return 'sb-titleGrey text-uppercase'
+
+  }
+
+  public getCloseButtonStyling(){
+
+    if(!this.info_object.is_community_member)
+      return { 'color' : '#332f3e' }
+    else
+      return { 'color' : 'white' }
+
+  }
+
   public getOverlayWindowStyling(){
-    if(this.info_object.spotbie_community){
+
+    if(this.info_object.is_community_member)
       return { 'background-color' : '#332f3e' }
-    } else {
+    else
       return { 'background-color' : 'white' }
-    }
+    
+  }
+
+  public getFontClasses(){
+
+    if(this.info_object.is_community_member)
+      return 'spotbie-text-gradient text-uppercase'
+    else
+      return 'text-uppercase'
+
+  }
+
+  public getIconTheme(){
+    
+    if(this.info_object.is_community_member)
+      return 'material-dark'
+    else
+      return 'material-light'
+
   }
 
   public addFavorite(): void{

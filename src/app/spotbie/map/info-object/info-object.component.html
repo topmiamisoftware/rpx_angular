@@ -1,17 +1,19 @@
-<div class="spotbie-overlay-window" [ngClass]="getOverlayWindowStyling()">
+<div class="spotbie-overlay-window" [ngStyle]="getOverlayWindowStyling()">
 
-    <div class="sb-closeButton" (click)="closeWindowX()">
+    <div class='sb-closeButton' (click)="closeWindowX()" [ngStyle]="getCloseButtonStyling()">
         <i class="fa fa-times"></i>
     </div>
 
     <div class='spotbie-album-media-image-wrapper' 
-            *ngIf="info_object !== null && info_object !== undefined">
+         *ngIf="info_object !== null && info_object !== undefined">
         
-        <div class='spotbie-info-object-title spotbie-text-gradient text-uppercase'>
-            
-            <img class='sb-miniLogoIcon' src="assets/images/home_imgs/spotbie-green-icon.svg" />
+        <div class='spotbie-info-object-title'>
+                        
+            <h6 class="spotbie-text-gradient sb-titleGreen text-uppercase" *ngIf="info_object.is_community_member">SPOTBIE COMMUNITY MEMBER</h6>
 
-            <h1 class="sb-titleGreen">{{ info_object.name }}</h1>
+            <img class='sb-miniLogoIcon' src="assets/images/home_imgs/spotbie-green-icon.svg" *ngIf="info_object.is_community_member" />
+
+            <h1 [ngClass]="getTitleStyling()">{{ info_object.name }}</h1>
             
             <span class='spotbie-search-result-price' *ngIf="info_object.price_on == '1'">({{ info_object.price }})</span>
 
@@ -22,11 +24,11 @@
         <div *ngIf="info_object !== null && info_object.hours !== undefined">
 
             <div class='spotbie-info-object-open' *ngIf="!info_object.isOpenNow">
-                <span class="text-uppercase spotbie-text-gradient">CLOSED </span><span class='fa fa-circle spotbie-is-closed'></span>
+                <span [ngClass]="getFontClasses()">CLOSED </span><span class='fa fa-circle spotbie-is-closed'></span>
             </div>
             
             <div class='spotbie-info-object-open' *ngIf="info_object.isOpenNow">
-                <span class="text-uppercase spotbie-text-gradient">OPEN </span><span class='fa fa-circle spotbie-is-open'></span>
+                <span [ngClass]="getFontClasses()">OPEN </span><span class='fa fa-circle spotbie-is-open'></span>
             </div>
 
         </div>
@@ -35,20 +37,39 @@
     
             <div class='spotbie-info-object-image-thumb'
                 *ngFor="let thumbnail of info_object.photos"
-                (click)="switchPhoto(thumbnail)"
                 [ngStyle]="{ 'background' : 'url(' + thumbnail + ')'}"></div>
     
         </div>
         
-        <div class='spotbie-search-result-phone text-uppercase spotbie-text-gradient' *ngIf="info_object.phone != ''">
+        <div class='spotbie-button spotbie-add-to-favorites' 
+            (click)="addFavorite()"
+            *ngIf="info_object.type_of_info_object != 'ticketmaster_event' && showFavorites && isLoggedIn == '1'">
+
+            <span class="text-uppercase">ADD</span>            
+
+            <i class="fa fa-plus"></i>
+
+        </div>
+
+        <div class='spotbie-button spotbie-add-to-favorites' 
+                (click)="removeFavorite()" 
+                *ngIf="info_object.type_of_info_object != 'ticketmaster_event' && !showFavorites && isLoggedIn == '1'">
+
+            <span class="text-uppercase">REMOVE</span>            
+
+            <i class="fa fa-minus"></i>
+
+        </div>
+
+        <div class='spotbie-search-result-phone' *ngIf="info_object.phone != ''">
             
-            <a href="tel:{{info_object.phone}}" class='spotbie-friendly-ph spotbie-gradient-link'>
+            <a href="tel:{{info_object.phone}}" class='spotbie-friendly-ph' [ngClass]="getFontClasses()">
                 {{ info_object.display_phone }}
             </a>
 
         </div>
 
-        <div class='spotbie-info-object-rating text-uppercase spotbie-text-gradient' *ngIf="info_object.type_of_info_object == 'yelp_business'" (click)="visitInfoObjectPage()">
+        <div class='spotbie-info-object-rating' [ngClass]="getFontClasses()" *ngIf="info_object.type_of_info_object == 'yelp_business'" (click)="visitInfoObjectPage()">
 
             <table class='spotbie-yelp-rating-table'>
                 <tr>
@@ -63,11 +84,11 @@
 
         </div>
         
-        <div class='spotbie-review-count spotbie-text-gradient text-uppercase mt-2' *ngIf="info_object.type_of_info_object == 'yelp_business'" (click)="visitInfoObjectPage()">
-            Based on {{ info_object.review_count }} Reviews
+        <div class='spotbie-review-count mt-2' [ngClass]="getFontClasses()" *ngIf="info_object.type_of_info_object == 'yelp_business'" (click)="visitInfoObjectPage()">
+            Based on {{ info_object.review_count | number:'1.0':'en-US' }} Reviews
         </div>
         
-        <div class='spotbie-info-object-address spotbie-text-gradient text-uppercase' *ngIf="info_object.type_of_info_object == 'ticketmaster_event'">
+        <div class='spotbie-info-object-address' [ngClass]="getFontClasses()" *ngIf="info_object.type_of_info_object == 'ticketmaster_event'">
 
             <div class='spotbie-venue-name'>{{ info_object._embedded.venues[0].name }}</div>
             
@@ -91,17 +112,15 @@
  
         <div class="spotbie-info-object-buttons">
 
-            <div class='spotbie-distance spotbie-text-gradient text-uppercase' *ngIf="info_object.distance !== undefined" (click)="openWithGoogleMaps()">
+            <div class='spotbie-distance' [ngClass]="getFontClasses()" *ngIf="info_object.distance !== undefined" (click)="openWithGoogleMaps()">
                 {{ info_object.distance }} miles from you.
             </div>
 
-            <i class="fa fa-map-marker-alt spotbie-text-gradient" aria-hidden="true" (click)="openWithGoogleMaps()"></i>
+            <i class="fa fa-map-marker-alt" [ngClass]="getFontClasses()" aria-hidden="true" (click)="openWithGoogleMaps()"></i>
 
-            <i class="fa fa-globe spotbie-text-gradient" aria-hidden="true" (click)="visitInfoObjectPage()"></i>
+            <i class="fa fa-globe" [ngClass]="getFontClasses()" aria-hidden="true" (click)="visitInfoObjectPage()"></i>
 
-            <div class='spotbie-distance spotbie-text-gradient text-uppercase'>Start Navigation</div>
-
-            <div class='spotbie-info-object-address spotbie-text-gradient text-uppercase' *ngIf="info_object.type_of_info_object == 'yelp_business'" (click)="openWithGoogleMaps()">
+            <div class='spotbie-info-object-address' [ngClass]="getFontClasses()" *ngIf="info_object.type_of_info_object == 'yelp_business'" (click)="openWithGoogleMaps()">
                 {{ info_object.location.display_address[0] }} 
                 <br/>
                 {{ info_object.location.display_address[1] }}            
@@ -111,34 +130,15 @@
     
         <div class='spotbie-info-object-transactions'> {{ info_object.friendly_transactions }} </div>
 
-        <div class='spotbie-add-to-favorites' 
-                (click)="addFavorite()"
-                *ngIf="info_object.type_of_info_object != 'ticketmaster_event' && showFavorites">
-
-            <span class="spotbie-text-gradient text-uppercase">ADD TO FAVORITES</span>            
-
-            <i class="fa fa-plus"></i>
-
-        </div>
-
-        <div class='spotbie-add-to-favorites text-uppercase' 
-                (click)="removeFavorite()" 
-                *ngIf="info_object.type_of_info_object != 'ticketmaster_event' && !showFavorites">
-
-            <span class="spotbie-text-gradient">REMOVE FROM FAVORITES</span>            
-
-            <i class="fa fa-minus"></i>
-
-        </div>
-
-        <div class='sb-button spotbie-add-to-favorites' (click)="goToTicket()" *ngIf="info_object.type_of_info_object == 'ticketmaster_event'">
+        <div class='spotbie-button spotbie-add-to-favorites' (click)="goToTicket()" *ngIf="info_object.type_of_info_object == 'ticketmaster_event'">
             Buy Tickets
         </div>
 
         <div class='spotbie-share-buttons-wrappper' *ngIf="info_object !== undefined">
     
             <share-buttons
-                    [include]="['facebook', 'twitter', 'linkedin', 'reddit', 'tumblr', 'mix', 'viber', 'messenger','whatsapp']"
+                    show="4"
+                    [theme]="getIconTheme()"
                     [url]="infoObjectLink"
                     [title]="info_object.name"
                     [description]="infoObjectDescription"
@@ -147,7 +147,7 @@
     
         </div>
 
-        <div class='spotbie-copy-link-button text-uppercase spotbie-text-gradient' (click)="linkCopy(infoObjectShareLink)">tap to copy link</div>
+        <div class='spotbie-copy-link-button' [ngClass]="getFontClasses()" (click)="linkCopy(infoObjectShareLink)">tap to copy link</div>
     
         <div class='spotbie-share-post-link' (click)="linkCopy(infoObjectShareLink)">
     
@@ -160,7 +160,7 @@
     <div class='spotbie-exif-optional'></div>
     <div class='spotbie-ai-items-in-image'></div>
 
-    <div class='spotbie-toast-message animated fadeIn' *ngIf="successful_url_copy">Object link copied.</div>
+    <div class='spotbie-toast-message text-uppercase animated fadeIn' *ngIf="successful_url_copy">Link copied</div>
 
 </div>
 

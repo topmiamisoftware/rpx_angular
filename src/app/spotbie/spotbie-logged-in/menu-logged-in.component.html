@@ -11,7 +11,7 @@
   
     <td [ngStyle]="getPointsWrapperStyle()">
       
-      <img class="spotbie-header-mini-logo" src="assets/images/spotbie_logo_header.svg"  *ngIf="isDesktop" (click)="home()"/>
+      <img class="spotbie-header-mini-logo" src="assets/images/spotbie_logo_header.svg" *ngIf="isDesktop" (click)="home()"/>
 
       <span class='sb-loyalty-points' (click)="toggleLoyaltyPoints()" >{{ userLoyaltyPoints | number:'1.0':'en-US' }}</span>
       
@@ -87,6 +87,6 @@
 
 </div>
 
-<app-map [business]="business" *ngIf="mapApp.open" #spotbieMap></app-map>
+<app-map [business]="business" *ngIf="mapApp.open" #spotbieMap (openBusinessSettingsEvt)="openBusinessSettings()"></app-map>
 
-<app-settings *ngIf="settingsWindow.open"></app-settings>
+<app-settings *ngIf="settingsWindow.open" #spotbieSettings></app-settings>

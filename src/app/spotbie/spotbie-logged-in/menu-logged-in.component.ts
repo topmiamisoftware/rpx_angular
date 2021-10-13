@@ -9,6 +9,7 @@ import { externalBrowserOpen } from 'src/app/helpers/cordova/web-intent'
 import { LoyaltyPointsService } from 'src/app/services/loyalty-points/loyalty-points.service'
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast'
 import { AllowedAccountTypes } from 'src/app/helpers/enum/account-type.enum'
+import { SettingsComponent } from './settings/settings.component'
 
 @Component({
   selector: 'app-menu-logged-in',
@@ -23,6 +24,8 @@ export class MenuLoggedInComponent implements OnInit {
   
   @ViewChild('spotbieMap') spotbieMap: MapComponent  
   
+  @ViewChild('spotbieSettings') spotbieSettings: SettingsComponent
+
   public spotbieBackgroundImage: string
   
   public foodWindow = { open : false }
@@ -87,6 +90,16 @@ export class MenuLoggedInComponent implements OnInit {
   public home(){
     this.spotbieMap.closeCategories()
     this.spotbieMap.openWelcome()
+  }
+
+  public openBusinessSettings(){
+    
+    this.settingsWindow.open = true
+
+    setTimeout(() => {
+      this.spotbieSettings.changeAccType()
+    }, 500)
+    
   }
 
   slideMenu(){    

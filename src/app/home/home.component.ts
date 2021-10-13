@@ -18,16 +18,13 @@ export class HomeComponent implements OnInit {
   public spawnCategories(category: string): void{
     
     let evt: any = { category: category }
-
     this.app_map.spawnCategories(evt)
-    //this.scrollTop()
   
   }
 
-  public openWelcome(){
+  public openHome(){
   
     this.app_map.openWelcome()
-    //this.scrollTop()
   
   }
 

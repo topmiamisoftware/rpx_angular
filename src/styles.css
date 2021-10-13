@@ -72,7 +72,9 @@ body {
     height: unset !important; 
     font-family: Gotham-Book !important;
 }
-
+a {
+    color: #212529;
+}
 textarea {
 
     position: relative;
@@ -106,6 +108,9 @@ textarea:active {
 }
 .sb-scroll-y{
     overflow-y: scroll;
+}
+.sb-material-light .sb-icon{
+    color: #332f3e !important;
 }
 .sb-mainWrapper {
 
@@ -298,7 +303,7 @@ a, a:hover, a:active, a:after{
 .sb-closeButton{
     position: fixed;
     display: block;
-    top: 1%;
+    top: 75px;
     right: 1%;
     padding: 10px;
     padding-top: 6px;
@@ -307,7 +312,7 @@ a, a:hover, a:active, a:after{
     text-align: center;
     cursor: pointer;
     color: #FFF;
-    font-size: 23px;
+    font-size: 25px;
     border-radius: 999px;  
 }
 .spotbie-overlay-window{
@@ -320,7 +325,7 @@ a, a:hover, a:active, a:after{
     top: 0;
     bottom: 0;
     margin: 0 auto;  
-    z-index: 99;
+    z-index: 97;
     overflow-y: scroll;
     background-color: #332f3e;    
     padding-top: 20px;
@@ -410,7 +415,7 @@ a, a:hover, a:active, a:after{
 hr{
     color: white !important;
 }
-.sb-button{
+.spotbie-button{
     display: block !important;
     margin: 0 auto;
     width: 440px;
@@ -543,7 +548,7 @@ hr{
     z-index: 99;
     text-align: center;
 }
-.sb-button-mini{
+.spotbie-button-mini{
     margin-top: 20px;
     font-size: 18px;
     background-color: rgba(0,0,0,.23);
@@ -588,7 +593,6 @@ hr{
     padding-right: 2%;
     max-width: 350px;
     text-align: center;
-    letter-spacing: 4px;
 }
 .spotbie-options-bubble-wrap{
     position: relative;
@@ -697,7 +701,7 @@ hr{
     min-width: 50%;
     max-width: 50%;
 }
-.spotbie-confirm-box-table td .sb-button{
+.spotbie-confirm-box-table td .spotbie-button{
     font-size: 16px;
     width: 100%;
     min-width: 100%;
@@ -898,7 +902,7 @@ p.sb-helpInfo{
 
     }
 
-    .sb-button {
+    .spotbie-button {
 
         width: 85%;
         min-width: 85%;
@@ -961,7 +965,7 @@ p.sb-helpInfo{
 
 }
 @media (max-width: 420px) { 
-        .sb-button{
+        .spotbie-button{
             max-width: 65%;
             width: 65%;
             min-width: 65%;

@@ -21,6 +21,8 @@ import { RouterModule } from '@angular/router'
 import { BusinessFeaturesComponent } from '../features/business-features/business-features.component'
 import { UserFeaturesComponent } from '../features/user-features/user-features.component'
 import { BusinessDashboardModule } from '../spotbie-logged-in/business-dashboard/business-dashboard.module'
+import { UserDashboardModule } from '../spotbie-logged-in/user-dashboard/user-dashboard.module'
+import { ShareIconsModule } from 'ngx-sharebuttons/icons'
 
 @NgModule({
   declarations: [    
@@ -28,7 +30,7 @@ import { BusinessDashboardModule } from '../spotbie-logged-in/business-dashboard
     InfoObjectComponent,
     UserInfoObjectComponent,
     BusinessFeaturesComponent,
-    UserFeaturesComponent    
+    UserFeaturesComponent  
   ],
   imports: [
     AgmOverlays,
@@ -38,6 +40,7 @@ import { BusinessDashboardModule } from '../spotbie-logged-in/business-dashboard
     SpotbiePipesModule,
     ReactiveFormsModule,
     FormsModule,
+    ShareIconsModule,
     ShareButtonsModule.withConfig({
       include: ['facebook', 'twitter', 'linkedin', 'reddit', 'tumblr', 'mix', 'viber', 'messenger','whatsapp']
     }),
@@ -48,7 +51,8 @@ import { BusinessDashboardModule } from '../spotbie-logged-in/business-dashboard
       libraries: ['geometry', 'places']
     }),     
     HelperModule,
-    BusinessDashboardModule
+    BusinessDashboardModule,
+    UserDashboardModule
   ],
   providers: [
     MapObjectIconPipe,

@@ -9,28 +9,28 @@ export class MenuComponent implements OnInit {
 
   @Input() public_profile_info : any
   @Input() album_id : string
-  @Input() album_media_id : string
+  @Input() album_media_id : string  
+
+  @ViewChild('spotbieMainMenu') spotbieMainMenu
+
+  @ViewChild('spotbieHoveredApp') spotbieHoveredApp
 
   public public_profile : boolean
 
-  @ViewChild('spotbieMainMenu') spotbieMainMenu;
-
-  @ViewChild('spotbieHoveredApp') spotbieHoveredApp;
-
-  public isLoggedIn : boolean = false;
+  public isLoggedIn: boolean = false
 
   constructor() { }
 
   ngOnInit() {
 
     // save timezone
-    const userTimezone =  Intl.DateTimeFormat().resolvedOptions().timeZone;
-    localStorage.setItem('spotbie_userTimeZone', userTimezone);
+    const userTimezone =  Intl.DateTimeFormat().resolvedOptions().timeZone
+    localStorage.setItem('spotbie_userTimeZone', userTimezone)
 
     // check log in status, turn map on if we are logged out
-    const cookiedLoggedIn = localStorage.getItem('spotbie_loggedIn');
+    const cookiedLoggedIn = localStorage.getItem('spotbie_loggedIn')
 
-    if (cookiedLoggedIn == '1') this.isLoggedIn = true;
+    if (cookiedLoggedIn == '1') this.isLoggedIn = true
 
   }
 

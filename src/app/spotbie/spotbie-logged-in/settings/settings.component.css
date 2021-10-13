@@ -45,7 +45,7 @@
 .spotbie-place-result td{
     padding: unset;
 }
-.sb-button{
+.spotbie-button{
     cursor: pointer;
     background-color: transparent;
     margin-top: 20px;
@@ -53,7 +53,7 @@
     min-width: unset;
     max-width: 350px;     
 }
-.sb-button-mini {
+.spotbie-button-mini {
     margin-top: 20px;
     font-size: 18px;
     background-color: rgba(0,0,0,.23);
@@ -352,7 +352,7 @@ textarea{
         font-size: 16px;
         padding: unset;
     }
-    .sb-button{
+    .spotbie-button{
         font-size: 20px;            
     }
     .spotbie-save-settings-button {

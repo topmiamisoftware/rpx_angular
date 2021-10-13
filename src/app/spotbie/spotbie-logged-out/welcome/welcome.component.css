@@ -68,7 +68,7 @@ p{
     width: 101%;
     left: -1%;
 }
-.sb-button {
+.spotbie-button {
     width: 200px;
     min-width: 200px;
     max-width: 200px;
@@ -85,7 +85,7 @@ img{
     font-size: 13px;
     letter-spacing: 1px;
 }
-.sb-button span{
+.spotbie-button span{
     color: unset !important;
     background: -webkit-linear-gradient(45deg, #eee, #fbfbfb);
     -webkit-background-clip: text;
@@ -142,7 +142,7 @@ img{
     h2{
         font-size: 16px;   
     }
-    .sb-button{
+    .spotbie-button{
         font-size: 1rem;
     }
     .spotbie-flash-card{

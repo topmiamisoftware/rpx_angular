@@ -22,6 +22,10 @@ export class QrComponent implements OnInit {
 
   @Output() openUserLPBalanceEvt = new EventEmitter
 
+  @Output() closeQrUserEvt = new EventEmitter
+
+  @Output() notEnoughLpEvt = new EventEmitter
+
   public business = new Business()
 
   public userHash: string = null
@@ -84,6 +88,12 @@ export class QrComponent implements OnInit {
   }
 
   public async startAwardProcess(){
+
+    if(this.loyaltyPointBalance.balance === 0){
+      this.notEnoughLpEvt.emit()    
+      console.log("eVent emitted")
+      return
+    }
 
     if(this.businessLoyaltyPointsForm.invalid){
       this.businessLoyaltyPointsSubmitted = true
@@ -176,6 +186,10 @@ export class QrComponent implements OnInit {
 
   closeQr(){    
     this.rewardPrompted = false
+  }
+
+  closeQrUser(){
+    this.closeQrUserEvt.emit(null)
   }
 
   ngOnInit(): void {

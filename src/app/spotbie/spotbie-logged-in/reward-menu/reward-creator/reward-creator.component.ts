@@ -17,10 +17,6 @@ const REWARD_MEDIA_MAX_UPLOAD_SIZE = 25e+6
 })
 export class RewardCreatorComponent implements OnInit {
 
-  @Input() userResetBalance: number = 0
-  @Input() userPointToDollarRatio: number = 0
-  @Input() userLoyaltyPoints: number = 0
-
   @Input() reward: Reward
 
   @ViewChild('spbInputInfo') spbInputInfo
@@ -60,7 +56,15 @@ export class RewardCreatorComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
               private rewardCreatorService: RewardCreatorService,
               private http: HttpClient,
-              private loyaltyPointsService: LoyaltyPointsService) { }
+              private loyaltyPointsService: LoyaltyPointsService) { 
+                
+                this.loyaltyPointsService.userLoyaltyPoints$.subscribe(
+                  loyaltyPointsBalance => {
+                    this.loyaltyPointBalance = loyaltyPointsBalance
+                  }
+                )
+
+              }
 
   get rewardType() {return this.rewardCreatorForm.get('rewardType').value }
   get rewardValue() {return this.rewardCreatorForm.get('rewardValue').value }
@@ -112,7 +116,7 @@ export class RewardCreatorComponent implements OnInit {
 
     let pointPercentage = this.loyaltyPointBalance.loyalty_point_dollar_percent_value
     let itemPrice = this.rewardValue
-    
+
     if(pointPercentage == 0 || pointPercentage == null)
       this.businessPointsDollarValue = '0'
     else
@@ -293,15 +297,14 @@ export class RewardCreatorComponent implements OnInit {
 
   }
 
+  public subscribe(){
+  
+
+  }
+
   ngOnInit(): void {
 
     this.initRewardForm()
-
-    this.loyaltyPointsService.userLoyaltyPoints$.subscribe(
-      loyaltyPointsBalance => {
-        this.loyaltyPointBalance = loyaltyPointsBalance
-      }
-    )
 
   }
 

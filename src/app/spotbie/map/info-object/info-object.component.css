@@ -1,14 +1,14 @@
 .spotbie-overlay-window{
     padding-bottom: 0px;
     padding-top: 70px;
-    background: url('src/assets/images/qr/spotbie-white-icon.png');
     background-color: #332f3e;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
     overflow:  hidden !important;
     padding-bottom: 100px;
     z-index: 99;    
+    background: url(src/assets/images/qr/spotbie-white-icon.png);
 }
 .spotbie-repost-title{
     position: relative;
@@ -29,17 +29,18 @@
     cursor: pointer;
 }
 .sb-input{
-    width: 550px;
-    min-width: 550px;
-    max-width: 550px;
-    background-color: rgba(0,0,0,0.23);
-    color: white;
+    width: 850px;
+    min-width: 850px;
+    max-width: 850px;
+    background-color: rgba(0,0,0,0.13);
+    color: #332f3e;
     cursor: pointer;
     border-left: 0px;
     border-right: 0px;
     border-radius: 0px;
-    border-bottom: 1px solid #adadad96;
-    border-top: 1px solid #adadad96;    
+    border-bottom: 1px solid #332f3e;
+    border-top: 1px solid #332f3e;
+    text-align: center;    
 }
 .spotbie-share-button{
     margin-left: 10px;
@@ -172,6 +173,9 @@
 .spotbie-friendly-ph{
     position: relative;
 }
+.spotbie-friendly-ph:active{
+    color: unset !important;
+}
 .spotbie-venue-name{
     font-weight: bold;
     margin-bottom: 20px;
@@ -277,12 +281,20 @@
     margin-bottom: 20px;
     cursor: pointer;
 }
-.sb-button{
+.spotbie-button{
     background-color: rgba(0,0,0,.5);
 }
 .spotbie-add-to-favorites{
     position: relative;
-    cursor:  pointer;
+    cursor: pointer;
+    max-width: 150px;
+    border-radius: 20px !important;
+    padding-top: 10px !important;
+    padding-bottom: 10px !important;
+    background: linear-gradient(90deg,#64e56f,#35a99f);
+    color: #1b1a1e !important;
+    z-index: 99;
+    font-size: .8rem;
 }
 .spotbie-info-object-open {
     margin-top: 30px;
@@ -290,7 +302,6 @@
     font-weight: bold;
 }
 .spotbie-album-media-image-wrapper{
-    background-color: rgba(0,0,0,.63);
     padding-bottom: 40px;
     overflow-y: scroll !important;
 }
@@ -304,13 +315,16 @@
     margin-right: 15px;
     top: -10px;
 }    
+h6.sb-titleGreen{
+    font-size: .8rem;
+}
 .sb-titleGreen{
     background: -webkit-linear-gradient(45deg,#0eb273, #2ddc5b);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
-.fa-plus{
-    color: white;
+.fa-plus, .fa-minus{
+    color: #1b1a1e !important;
     margin-left: 10px;
 }
 @media (max-width: 1583px) { 
@@ -329,7 +343,11 @@
 
 }
 @media (max-width: 900px) { 
-
+    .sb-input{
+        width: 92%;
+        min-width: 92%;
+        max-width: 92%;        
+    }
 }
 @media (max-width: 840px) {
 

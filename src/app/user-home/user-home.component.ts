@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, EventEmitter, OnInit, Output } from '@angular/core'
 import { UserauthService } from '../services/userauth.service'
 
 @Component({
@@ -7,6 +7,8 @@ import { UserauthService } from '../services/userauth.service'
   styleUrls: ['./user-home.component.css']
 })
 export class UserHomeComponent implements OnInit {
+
+  @Output() openSettingsEvt = new EventEmitter()
 
   public arrow_on: boolean = false
 

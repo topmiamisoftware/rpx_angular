@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild }      from '@angular/core'
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild }      from '@angular/core'
 import { MatSliderChange }                   from '@angular/material/slider'
 
 import { AgmMap, AgmInfoWindow }             from '@agm/core'
@@ -16,6 +16,9 @@ import { LocationService }                   from '../../services/location-servi
 import * as map_extras                       from './map_extras/map_extras'
 import * as sorterHelpers                    from 'src/app/helpers/results-sorter.helper'
 import { BusinessDashboardComponent } from '../spotbie-logged-in/business-dashboard/business-dashboard.component'
+import { UserDashboardComponent } from '../spotbie-logged-in/user-dashboard/user-dashboard.component'
+import { UserFeaturesComponent } from '../features/user-features/user-features.component'
+import { BusinessFeaturesComponent } from '../features/business-features/business-features.component'
 
 
 const YELP_BUSINESS_SEARCH_API = 'https://api.yelp.com/v3/businesses/search'
@@ -26,18 +29,24 @@ const YELP_BUSINESS_SEARCH_API = 'https://api.yelp.com/v3/businesses/search'
   styleUrls:   ['./map.component.css']
 })
 export class MapComponent implements OnInit {
-  
-  @ViewChild('spotbie_map') spotbie_map: AgmMap
-
-  @ViewChild('spotbie_user_marker_info_window') spotbie_user_marker_info_window: AgmInfoWindow
-
-  @ViewChild('businessDashboard') businessDashboard: BusinessDashboardComponent
 
   @Input() business: boolean = false
 
   @Input() spotType: any
 
   @Output() signUpEvt = new EventEmitter()
+
+  @Output('openBusinessSettingsEvt') openBusinessSettingsEvt = new EventEmitter
+
+  @ViewChild('spotbie_map') spotbie_map: AgmMap
+
+  @ViewChild('spotbie_user_marker_info_window') spotbie_user_marker_info_window: AgmInfoWindow
+
+  @ViewChild('homeDashboard') homeDashboard: BusinessDashboardComponent | UserDashboardComponent
+
+  @ViewChild('featureWrapper') featureWrapper: ElementRef
+
+  @ViewChild('scrollMapAppAnchor') scrollMapAppAnchor: ElementRef
 
   public isLoggedIn: string
   public iconUrl:  string
@@ -81,6 +90,7 @@ export class MapComponent implements OnInit {
 
   public fitBounds: boolean = false
   public zoom: number = 18
+  public map: boolean = false
 
   public showSearchResults: boolean
   public show_search_box: boolean
@@ -605,17 +615,16 @@ export class MapComponent implements OnInit {
   public openWelcome(){
 
     this.catsUp = false
-    this.show_search_box = false
-    this.showSearchResults = false    
-    this.showMobilePrompt = true
+    this.show_search_box = false 
+    this.infoObject = null
+    this.infoObjectWindow.open = false
+    this.featureWrapper.nativeElement.scrollIntoView({ behavior: "smooth", block: "start" });
 
   }
 
   public spawnCategories(obj: any): void {
 
     let category = obj.category
-    
-    console.log("Spawn Categories", obj)
 
     if(!this.locationFound)
       this.mobileStartLocation()
@@ -624,7 +633,12 @@ export class MapComponent implements OnInit {
     
     this.show_search_box = true
 
+    this.zoom = 18 
     this.fitBounds = false
+
+    this.map = true
+  
+    this.scrollMapAppAnchor.nativeElement.scrollIntoView({ behavior: "smooth", block: "start" })
 
     if(this.searchResults.length == 0) this.showSearchResults = false
 
@@ -701,19 +715,19 @@ export class MapComponent implements OnInit {
   public goToQrCode(){
     //scroll to qr Code
     this.closeCategories()
-    this.businessDashboard.scrollToQrAppAnchor()
+    this.homeDashboard.scrollToQrAppAnchor()
   }
 
   public goToLp(){
     //scroll to loyalty points
     this.closeCategories()
-    this.businessDashboard.scrollToLpAppAnchor()
+    this.homeDashboard.scrollToLpAppAnchor()
   }
 
   public goToRewardMenu(){
     //scroll to reward menu
     this.closeCategories()
-    this.businessDashboard.scrollToRewardMenuAppAnchor()
+    this.homeDashboard.scrollToRewardMenuAppAnchor()
   }
 
   public closeCmS(): void{
@@ -1022,12 +1036,16 @@ export class MapComponent implements OnInit {
 
     results.forEach(business => {
 
+      //Ban some yelp results.
       if(business.id == 'a4LjewExxqm72UJC1-Ct_Q')
         resultsToRemove.push(i)
 
       business.rating_image = setYelpRatingImage(business.rating)
+
       business.type_of_info_object = this.type_of_info_object
       business.type_of_info_object_category = this.searchCategory
+      
+      business.is_community_member = false
 
       if (business.is_closed)
         business.is_closed_msg = 'Closed'
@@ -1276,7 +1294,7 @@ export class MapComponent implements OnInit {
     if(this.isMobile)
       return 'map-prompt-mobile align-items-center justify-content-center'
     else
-      return 'map-prompt-mobile align-items-center sb-scroll-y'
+      return 'map-prompt-mobile align-items-center'
 
   }
 
@@ -1340,6 +1358,12 @@ export class MapComponent implements OnInit {
 
   }
 
+  public openBusinessSettings(){
+
+    this.openBusinessSettingsEvt.emit()
+
+  }
+
   public acceptLocationPrompt(){
 
     localStorage.setItem('spotbie_locationPrompted', '0')
@@ -1360,7 +1384,10 @@ export class MapComponent implements OnInit {
   }
 
   public startLocation(){
-    this.showMobilePrompt = true
+    
+    if(this.isLoggedIn == '1' && !this.business)
+      this.spawnCategories( { category: 'food' } )     
+  
   }
 
   public signUp(){
@@ -1372,8 +1399,6 @@ export class MapComponent implements OnInit {
     this.isDesktop = this.deviceService.isDesktop()
     this.isTablet = this.deviceService.isTablet()
     this.isMobile = this.deviceService.isMobile()
-
-    console.log("Live my life", this.business)
 
     if (this.isDesktop || this.isTablet)
       this.rad_11 =  0.00002

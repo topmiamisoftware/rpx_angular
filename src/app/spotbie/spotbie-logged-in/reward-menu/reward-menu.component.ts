@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core'
+import { Component, Input, OnInit, Output, EventEmitter, ViewChild } from '@angular/core'
 import { ActivatedRoute, Router } from '@angular/router'
 import { AllowedAccountTypes } from 'src/app/helpers/enum/account-type.enum'
 import { LoyaltyPointBalance } from 'src/app/models/loyalty-point-balance'
@@ -6,6 +6,7 @@ import { Business } from 'src/app/models/business'
 import { Reward } from 'src/app/models/reward'
 import { LoyaltyPointsService } from 'src/app/services/loyalty-points/loyalty-points.service'
 import { BusinessMenuServiceService } from 'src/app/services/spotbie-logged-in/business-menu/business-menu-service.service'
+import { RewardCreatorComponent } from './reward-creator/reward-creator.component'
 
 @Component({
   selector: 'app-reward-menu',
@@ -14,11 +15,15 @@ import { BusinessMenuServiceService } from 'src/app/services/spotbie-logged-in/b
 })
 export class RewardMenuComponent implements OnInit {
 
+  @ViewChild('rewardCreator') rewardCreator: RewardCreatorComponent
+
   @Input() fullScreenWindow: boolean = true
 
   @Input() loyaltyPoints: string
 
   @Output() closeWindowEvt = new EventEmitter()
+
+  @Output() notEnoughLpEvt = new EventEmitter()
 
   public menuItemList: Array<any>
 
@@ -106,18 +111,28 @@ export class RewardMenuComponent implements OnInit {
   }
 
   public addItem(){
+    
+    if(this.loyaltyPointsBalance.balance === 0){
+      this.notEnoughLpEvt.emit()
+      this.closeWindow()
+      return
+    }
+
     this.itemCreator = !this.itemCreator
+  
   }
 
   public closeWindow(){
     this.closeWindowEvt.emit()
   }
 
-  public openReward(reward){
+  public openReward(reward: Reward){
 
     this.reward = reward
     this.itemCreator = true
-  
+    
+    this.rewardCreator
+
   }
 
   public closeRewardCreator(){

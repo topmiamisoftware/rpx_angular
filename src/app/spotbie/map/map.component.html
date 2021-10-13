@@ -1,31 +1,14 @@
 <app-loading-screen *ngIf="loading" text="loadingText"></app-loading-screen>
 
-<div class='spotbie-overlay-window'>
+<div class='spotbie-overlay-window'>  
 
   <div [ngClass]="getMapWrapperClass()">
     
-    <div [ngClass]="getMapPromptMobileClass()" *ngIf="showMobilePrompt">
-
-      <div [ngClass]="getMapPromptMobileInnerWrapperClassOne()">
-
-        <app-user-features (spawnCategoriesEvt)="spawnCategories($event)" *ngIf="!business"></app-user-features>        
-        
-        <app-business-features (spawnCategoriesEvt)="spawnCategories($event)" (signUpEvent)="signUp()" *ngIf="business && isLoggedIn !== '1'"></app-business-features>
-
-        <app-business-dashboard *ngIf="business && isLoggedIn == '1'" #businessDashboard></app-business-dashboard>
-
-      </div>
-
-    </div>
-    
-    <div class="map-prompt-mobile pe-none" *ngIf="showMobilePrompt2">
-
-      <div class="spotbie-text-gradient text-uppercase title" id="doubleTapThis"></div>
-
-    </div>
+    <div #scrollMapAppAnchor></div>
 
     <agm-map  [ngClass]="getMapClass()"
               [streetViewControl]="false"
+              *ngIf="map"
               #spotbie_map
               [latitude]="lat" 
               [longitude]="lng"
@@ -93,22 +76,17 @@
 
         </div>
 
-    </agm-map>
+    </agm-map>    
 
     <div class='spotbie-search-results' *ngIf="show_search_box && searchResults.length > 0">
+
+      <div #scrollMapAppAnchor></div>
 
       <div class='spotbie-close-results-mobile' (click)="closeSearchResults()">close</div>
       
       <app-ad class='spotbie-ad' [category]=""></app-ad>
 
       <div class='spotbie-close-results' (click)="closeSearchResults()">close</div>
-    
-      <!--<table class='spotbie-pull-from'>
-        <tr>
-          <td (click)="pullFrom('yelp')" class='spotbie-api-pull' [ngStyle]="getApiPullStyle('yelp')" title="Pull from Yelp">YELP</td>
-          <td (click)="pullFrom('google')" class='spotbie-api-pull' [ngStyle]="getApiPullStyle('google')" title="Pull from Google">Google</td>
-        </tr>
-      </table>-->
     
       <div class='spotbie-search-results-title text-uppercase' *ngIf="type_of_info_object == 'yelp_business'">
 
@@ -344,11 +322,11 @@
     
         <div>
     
-          <span class='sb-button sb-page-button text-uppercase' (click)="loadMoreResults(0)" *ngIf="allPages > 1">
+          <span class='spotbie-button sb-page-button text-uppercase' (click)="loadMoreResults(0)" *ngIf="allPages > 1">
             Previous
           </span>   
       
-          <span class='sb-button sb-page-button text-uppercase' (click)="loadMoreResults(1)" *ngIf="allPages > 1">
+          <span class='spotbie-button sb-page-button text-uppercase' (click)="loadMoreResults(1)" *ngIf="allPages > 1">
             Next
           </span>
       
@@ -359,9 +337,9 @@
         </div>
     
       </div>
-    
+
     </div>
-    
+
     <div class='spotbie-search-results no-results' *ngIf="showNoResultsBox">
       
       <div class='spotbie-no-results' style="text-align: center;" *ngIf="sortEventDate == 'none'">No results available for "{{ search_keyword }}" within {{ maxDistance }} miles.</div>
@@ -374,6 +352,44 @@
         {{ maxDistance }} mi.                            
       </div>
     
+    </div>
+
+    <div [ngClass]="getMapPromptMobileClass()" *ngIf="business" #featureWrapper>
+
+      <div [ngClass]="getMapPromptMobileInnerWrapperClassOne()">
+
+        <app-business-features (signUpEvent)="signUp()" *ngIf="isLoggedIn !== '1'"></app-business-features>
+
+        <app-business-dashboard *ngIf="isLoggedIn == '1'" #homeDashboard (openBusinessSettingsEvt)="openBusinessSettings()"></app-business-dashboard>
+
+      </div>
+
+    </div>
+
+    <div class="map-prompt-mobile pe-none" *ngIf="showMobilePrompt2">
+
+      <div class="spotbie-text-gradient text-uppercase title" id="doubleTapThis"></div>
+
+    </div>    
+
+    <div class="sb-footer pt-5 pb-5" *ngIf="business">
+
+      <p [routerLink]="['/terms']">Terms & Privacy Policy</p>
+      <img class="mt-3 mb-3" src="assets/images/home_imgs/logo_spotbie-02.svg" />
+      <p [routerLink]="['/terms']">SpotBie, LLC.&copy; Copyright 2021</p>
+  
+    </div>
+
+    <div [ngClass]="getMapPromptMobileClass()" *ngIf="!business" #featureWrapper>
+
+      <div [ngClass]="getMapPromptMobileInnerWrapperClassOne()">
+
+        <app-user-features (spawnCategoriesEvt)="spawnCategories($event)" *ngIf="isLoggedIn !== '1'"></app-user-features>        
+        
+        <app-user-dashboard *ngIf="isLoggedIn == '1'" #homeDashboard></app-user-dashboard>
+
+      </div>
+
     </div>
 
   </div>

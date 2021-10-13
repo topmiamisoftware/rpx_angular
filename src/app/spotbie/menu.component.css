@@ -37,7 +37,6 @@
     min-width: 100%;
     max-width: 100%;
     background-color: #121111eb;
-    cursor: pointer;
     table-layout: fixed;
     text-align: center;
 }
@@ -52,6 +51,7 @@
     height: 30px;
     min-height: 30px;
     max-height: 30px;
+    cursor: pointer;
 }
 .sb-businessMenu{
     display: inline-block;
@@ -350,7 +350,7 @@ img.sb-qr:hover{
     max-width: 90%;
 }
 
-.sb-button{
+.spotbie-button{
     margin-bottom: unset !important;
     margin-top: 10px;
 }
@@ -561,14 +561,14 @@ img.sb-qr:hover{
     .spotbie-forgot-your-pass{
         max-width: 90%;
     }  
-    .sb-button {
+    .spotbie-button {
         max-width: 90%;
         width: 90%;
         min-width: 90%;
     }                          
 }
 @media (max-width: 360px) { 
-    .sb-button {
+    .spotbie-button {
         font-size: 13px;
     }    
     .spotbie-color-picker {

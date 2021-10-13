@@ -17,7 +17,7 @@
             </div> 
             
             <ng-template #total_spent_normal>
-                <div class="spotbie-input-info spotbie-text-gradient text-uppercase pl-2 pr-2 mb-4">
+                <div class="spotbie-input-info spotbie-text-gradient pl-2 pr-2 mb-4">
                     What was the total of this bill?
                 </div>          
             </ng-template>
@@ -35,7 +35,7 @@
                                         
         </form>
 
-        <div class='sb-button text-uppercase mt-4' (click)="startAwardProcess()">
+        <div class='spotbie-button text-uppercase mt-4' (click)="startAwardProcess()">
             AWARD<span><i class="fas fa-hamburger"></i></span>
         </div>        
 
@@ -63,7 +63,7 @@
 
         <p class="spotbie-text-gradient text-center mt-5 text-uppercase">CUSTOMERS scan once per table or order</p>
 
-        <div class='sb-button text-uppercase mt-5 cursor-pointer' (click)="closeQr()">
+        <div class='spotbie-button text-uppercase mt-5 cursor-pointer' (click)="closeQr()">
             <span class='spotbie-text-gradient'>FINISH</span>
             <i class='fa fa-check'></i>
         </div>
@@ -86,7 +86,7 @@
             Dollar Value <span class='sb-text-light-green-gradient'>${{ loyaltyPointRewardDollarValue | number:'1.0':'en-US' }}</span>
         </p>
 
-        <span class='sb-button text-uppercase mt-5 mb-5' (click)="yes()">
+        <span class='spotbie-button text-uppercase mt-5 mb-5' (click)="yes()">
             YES <i class="fa fa-hamburger"></i>
         </span>
 
@@ -125,7 +125,7 @@
         
         <h2 class="spotbie-text-gradient text-center text-uppercase pt-5 mb-5">{{ userLoyaltyPoints | number:'1.0':'en-US' }}</h2>
 
-        <button class='sb-button text-uppercase mt-4' (click)="closeQr()">close</button>
+        <button class='spotbie-button text-uppercase mt-4' (click)="closeQrUser()">close</button>
 
     </div>
 
