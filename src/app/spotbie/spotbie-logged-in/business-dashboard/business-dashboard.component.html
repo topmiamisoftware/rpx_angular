@@ -2,7 +2,11 @@
 
     <!-- Check if user has any pending steps to start using their business -->
 
-    <div class="sb-dashboardWrapper sb-v-wrapper" style="display: grid; align-content: center;" *ngIf="displayBusinessSetUp" #businessSettingsAppAnchor>
+    <div class="sb-dashboardWrapper sb-v-wrapper" 
+            style="display: grid; align-content: center; 
+                    min-height: 70vh; 
+                    border-bottom: unset !important;" 
+            *ngIf="displayBusinessSetUp" #businessSettingsAppAnchor>
 
         <i class="fas fa-exclamation-triangle"></i>
 

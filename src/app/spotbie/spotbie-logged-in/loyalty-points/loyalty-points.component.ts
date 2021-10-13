@@ -158,7 +158,11 @@ export class LoyaltyPointsComponent implements OnInit {
     if(resp.success){
       this.loading = false
       this.businessLoyaltyPointsInfo.nativeElement.innerHTML = "Your loyalty point monthly budget was updated <i class='fa fa-check'></i>"
-      location.reload()
+      
+      setTimeout(() => {
+        location.reload()
+      }, 570)      
+
     }
 
   }
