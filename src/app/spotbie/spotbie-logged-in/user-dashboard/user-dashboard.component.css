@@ -10,9 +10,18 @@ h3{
     padding-bottom: 100px;
 }
 .sb-qrImage{
-    position:relative;
+    position: relative;
     display: block;
     margin: 0 auto;
-    width: 350px;
-    min-width: 350px;
+    width: 250px;
+    min-width: 250px;
+    margin-bottom: 70px;
+    cursor: pointer;
+}
+
+@media (max-width: 768px){
+    .sb-qrImage {
+        width: 150px;
+        min-width: 150px
+    }
 }

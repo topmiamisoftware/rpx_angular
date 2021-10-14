@@ -301,6 +301,7 @@ textarea{
 @media (max-width: 768px) { 
     .spotbie-block{
         margin: 0 auto;
+        margin-bottom: 30px;
         width: 98%;
         min-width: 98%;
         max-width: 98%;
@@ -328,17 +329,37 @@ textarea{
     .spotbie-settings-ghost-icon{
         display: none;
     }
-}
-@media (max-width: 460px) {
     .sb-input{
         min-width: 90%;
     }
     .spotbie-input-info{
         margin-top: 0px;
+        width: 90%;
+        min-width: 90%;
+        max-width: 90%;
+        font-size: .8rem;
     }
     .spotbie-info-text{
         margin-bottom: 0px;
     }
+    .spotbie-button{
+        font-size: .9rem !important;
+        max-width: 90%;
+        width: 90%;
+        min-width: 90%;            
+    }
+    .spotbie-settings-table td{
+        padding-top: 7px !important;
+    }
+    .spotbie-settings-table td.deactivate-account{
+        padding-top: 30px !important;
+    }    
+    .spotbie-save-settings-button {
+        margin-top: 0px;        
+    }        
+}
+@media (max-width: 460px) {
+
     .spotbie-toggle{
         width: 98%;
         min-width: 98%;
@@ -351,12 +372,6 @@ textarea{
         line-height: 32px;
         font-size: 16px;
         padding: unset;
-    }
-    .spotbie-button{
-        font-size: 20px;            
-    }
-    .spotbie-save-settings-button {
-        margin-top: 0px;        
     }
     #spotbie-password-table{
         margin-top: 0px;

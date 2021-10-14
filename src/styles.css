@@ -782,8 +782,7 @@ hr{
 }
 .mat-form-field-type-mat-native-select.mat-focused:not(.mat-form-field-invalid).mat-warn .mat-form-field-infix:after, .mat-form-field.mat-form-field-invalid .mat-form-field-label, .mat-form-field.mat-form-field-invalid .mat-form-field-label.mat-accent, .mat-form-field.mat-form-field-invalid .mat-form-field-label .mat-form-field-required-marker {
     color: #332f3e;
-}
-
+}    
 .spotbie-full-qrCode{
     position: relative;
     margin: 0 auto;
@@ -867,9 +866,9 @@ p.sb-helpInfo{
         padding-bottom: 20px;
     }
     .sb-closeButton{
-        top: 2%;
+        top: 68px;
         right: 2%;
-    }
+    }    
 }
 @media (max-width: 700px) { 
 
@@ -898,8 +897,10 @@ p.sb-helpInfo{
     .sb-closeButton{
 
         max-width: 50px;
-        font-size: 16px;        
-        right: 2%
+        font-size: 20px;
+        top: 68px;
+        right: 20px;
+        
 
     }
 
@@ -963,7 +964,13 @@ p.sb-helpInfo{
         min-width: 275px;
         width: 275px;
     }
-
+    .spotbie-full-qrCode.scanner {
+        border-radius: 20px;
+        min-width: 90%;
+        width: 90%;
+        min-height: 245px;
+        height: 243px;
+    }
 }
 @media (max-width: 420px) { 
         .spotbie-button{
