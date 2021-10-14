@@ -1372,6 +1372,7 @@ export class MapComponent implements OnInit {
     this.showSearchResults = false
     this.displaySurroundingObjectList = true
     this.show_search_box = false
+    this.map = false
 
   }
 

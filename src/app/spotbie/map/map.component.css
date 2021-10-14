@@ -322,6 +322,7 @@
     padding: 15px;
     background-color: #f3f3f3;
     margin-top: 5px;
+    margin-bottom: -50px;
 }
 .no-results{
     padding-top: 25px;
@@ -510,17 +511,18 @@ span.spotbie-button{
     font-size: 16px;
 }
 .spotbie-close-results-mobile{
-    position: fixed;
+    position: relative;
+    margin: 0 auto;
     display: none;
     bottom: 10px;
     left: 10px;
     font-size: 14px;
     padding: 6px;
-    background-color: rgba(2,2,2,.741);
     border-radius: 5px;
     z-index: 90;
     font-weight: bold;
-    color: white;
+    color: #332f3e;
+    max-width: 350px;
 }
 
 .gm-style-iw-c{

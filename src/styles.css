@@ -73,7 +73,7 @@ body {
     font-family: Gotham-Book !important;
 }
 a {
-    color: #212529;
+    color: #212529 !important;
 }
 textarea {
 
@@ -111,6 +111,7 @@ textarea:active {
 }
 .sb-material-light .sb-icon{
     color: #332f3e !important;
+    font-size: 1.8rem !important;
 }
 .sb-mainWrapper {
 
