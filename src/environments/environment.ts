@@ -10,9 +10,9 @@ export const environment = {
   /**
    * Enter the IP and PORT you are serving your Laravel App on. 
    * format: https://192.168.1.65:443/api/
-   * Laravel App will not work if it's not served on port 443 or SSL.
+   * Laravel App will not work if it's not served on over SSL.
    * */
-  apiEndpoint: 'https://7831-2600-1700-4804-d5f0-8a70-6839-2b7f-6cee.ngrok.io/api/' 
+  apiEndpoint: 'https://f996-2600-1700-4804-d5f0-d6d2-f360-2e9-e580.ngrok.io/api/' 
 };
 
 /*

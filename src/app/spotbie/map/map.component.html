@@ -82,7 +82,9 @@
 
       <div #scrollMapAppAnchor></div>
 
-      <div class='spotbie-close-results-mobile' (click)="closeSearchResults()">close</div>
+      <div class='spotbie-close-results-mobile' (click)="closeSearchResults()">
+        close
+      </div>
       
       <app-ad class='spotbie-ad' [category]=""></app-ad>
 
@@ -148,11 +150,11 @@
                 [ngStyle]="{ 'border-right' : 'unset' }" 
                 *ngIf="searchCategorySorter == 'food'">
           
-          <td> 
+          <td *ngIf="!isMobile"> 
             <span class='fa fa-circle spotbie-is-open'></span>
           </td>
 
-          <td *ngIf="showOpened == false">
+          <td *ngIf="showOpened == false && !isMobile">
             <span class='fa fa-circle spotbie-is-closed'></span>
           </td>
 
@@ -195,7 +197,7 @@
           <td *ngIf="showOpened == false">OPEN/CLOSED</td>
         </table>   
         
-        <table class='spotbie-controls-search-results' *ngIf="searchCategorySorter == 'events'">
+        <table class='spotbie-controls-search-results text-uppercase' *ngIf="searchCategorySorter == 'events'">
           <tr>
             <td (click)="hideSearchResults()" title="Hide Results"><img src='assets/images/map/hide.svg' /></td>
             <td (click)="sortBy(0)" title="Sort By Distance"><img src='assets/images/map/distance.svg' /></td>
@@ -224,17 +226,45 @@
     
         <div class='spotbie-search-results-title text-uppercase'>
     
-          <span *ngIf="searchCategory !== 'events'">Showing {{ loadedTotalResults }} results within {{ maxDistance }} miles. </span>
-      
+          <span *ngIf="searchCategory !== 'events'">Showing results within {{ maxDistance }} miles. </span>
+          
+          <div></div> 
+
+          <span class='sb-page-button text-uppercase cursor-pointer' (click)="goToPage(1)" *ngIf="allPages > 1">
+            <i class="fa fa-angle-double-left"></i>
+          </span> 
+
           <span class='sb-page-button text-uppercase cursor-pointer' (click)="loadMoreResults(0)" *ngIf="allPages > 1">
-            Previous
+            <i class="fa fa-angle-left"></i>
           </span>   
-    
+          
+          <span class="spotbie-result-page" 
+                (click)="goToPage((around_me_search_page - 2))" 
+                [ngStyle]="displayPage((around_me_search_page - 2))">{{ around_me_search_page - 2 }}</span>
+
+          <span class="spotbie-result-page" 
+                (click)="goToPage((around_me_search_page - 1))" 
+                [ngStyle]="displayPage((around_me_search_page - 1))">{{ around_me_search_page - 1 }}</span>
+
+          <span class="spotbie-result-page active">{{ around_me_search_page }}</span>
+
+          <span class="spotbie-result-page" 
+                (click)="goToPage((around_me_search_page + 1))" 
+                [ngStyle]="displayPageNext((around_me_search_page + 1))">{{ around_me_search_page + 1 }}</span>
+
+          <span class="spotbie-result-page" 
+                (click)="goToPage((around_me_search_page + 2))" 
+                [ngStyle]="displayPageNext((around_me_search_page + 2))">{{ around_me_search_page + 2 }}</span>
+
           <span class='sb-page-button text-uppercase cursor-pointer' (click)="loadMoreResults(1)" *ngIf="allPages > 1">
-            Next
+            <i class="fa fa-angle-right"></i>
           </span>
       
-          <span class='spotbie-search-page-number'>{{ around_me_search_page }} / {{ allPages }}</span>
+          <span class='sb-page-button text-uppercase cursor-pointer' (click)="goToPage(allPages - 1)" *ngIf="allPages > 1">
+            <i class="fa fa-angle-double-right"></i>
+          </span>         
+
+          <span class='spotbie-search-page-number'>{{ around_me_search_page }}/{{ allPages - 1 }}</span>
       
         </div>
         
@@ -322,17 +352,45 @@
     
         <div>
     
-          <span class='spotbie-button sb-page-button text-uppercase' (click)="loadMoreResults(0)" *ngIf="allPages > 1">
-            Previous
+          <div></div> 
+
+          <span class='sb-page-button text-uppercase cursor-pointer' (click)="goToPage(1)" *ngIf="allPages > 1">
+            <i class="fa fa-angle-double-left"></i>
+          </span> 
+
+          <span class='sb-page-button text-uppercase cursor-pointer' (click)="loadMoreResults(0)" *ngIf="allPages > 1">
+            <i class="fa fa-angle-left"></i>
           </span>   
-      
-          <span class='spotbie-button sb-page-button text-uppercase' (click)="loadMoreResults(1)" *ngIf="allPages > 1">
-            Next
+          
+          <span class="spotbie-result-page" 
+                (click)="goToPage((around_me_search_page - 2))" 
+                [ngStyle]="displayPage((around_me_search_page - 2))">{{ around_me_search_page - 2 }}</span>
+
+          <span class="spotbie-result-page" 
+                (click)="goToPage((around_me_search_page - 1))" 
+                [ngStyle]="displayPage((around_me_search_page - 1))">{{ around_me_search_page - 1 }}</span>
+
+          <span class="spotbie-result-page active">{{ around_me_search_page }}</span>
+
+          <span class="spotbie-result-page" 
+                (click)="goToPage((around_me_search_page + 1))" 
+                [ngStyle]="displayPageNext((around_me_search_page + 1))">{{ around_me_search_page + 1 }}</span>
+
+          <span class="spotbie-result-page" 
+                (click)="goToPage((around_me_search_page + 2))" 
+                [ngStyle]="displayPageNext((around_me_search_page + 2))">{{ around_me_search_page + 2 }}</span>
+
+          <span class='sb-page-button text-uppercase cursor-pointer' (click)="loadMoreResults(1)" *ngIf="allPages > 1">
+            <i class="fa fa-angle-right"></i>
           </span>
       
-          <div class='spotbie-search-results-title text-uppercase' style="text-align: center;">
-              {{ around_me_search_page }} / {{ allPages }}
-          </div>
+          <span class='sb-page-button text-uppercase cursor-pointer' (click)="goToPage(allPages - 1)" *ngIf="allPages > 1">
+            <i class="fa fa-angle-double-right"></i>
+          </span>
+
+          <div></div>
+
+          <span class='spotbie-search-page-number'>{{ around_me_search_page }}/{{ allPages - 1 }}</span>
     
         </div>
     

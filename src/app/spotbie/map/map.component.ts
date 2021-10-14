@@ -17,9 +17,6 @@ import * as map_extras                       from './map_extras/map_extras'
 import * as sorterHelpers                    from 'src/app/helpers/results-sorter.helper'
 import { BusinessDashboardComponent } from '../spotbie-logged-in/business-dashboard/business-dashboard.component'
 import { UserDashboardComponent } from '../spotbie-logged-in/user-dashboard/user-dashboard.component'
-import { UserFeaturesComponent } from '../features/user-features/user-features.component'
-import { BusinessFeaturesComponent } from '../features/business-features/business-features.component'
-
 
 const YELP_BUSINESS_SEARCH_API = 'https://api.yelp.com/v3/businesses/search'
 
@@ -53,10 +50,24 @@ export class MapComponent implements OnInit {
   public spotbie_username: string
   public bg_color: string
   public user_default_image: string
-  public sort_by_txt: string = 'Rating'
+
   public searchResultsSubtitle: string
   public searchCategoriesPlaceHolder: string
+
+  
+  public sort_by_txt: string = 'Distance'
   public sorting_order: string = 'asc'
+  public sortAc: number = 0
+  public totalResults: number = 0
+  public current_offset: number = 0
+  public itemsPerPage: number = 20 
+  public around_me_search_page: number = 1  
+  public loadedTotalResults: number = 0
+  public allPages: number = 0
+
+  public maxDistanceCap: number = 45
+  public maxDistance: number = 10 
+
   public searchCategory: string
   public previousSeachCategory: string
   public searchCategorySorter: string
@@ -67,22 +78,14 @@ export class MapComponent implements OnInit {
   private showOpenedParam: string
   public eventDateParam: string
   public sortEventDate: string = 'none'
-  public showingOpenedStatus: string = 'Show Opened and Closed'
+  public showingOpenedStatus: string = 'Showing Opened & Closed'
   public searchApiUrl: string
   
   public lat:   number
   public lng:   number
   public ogLat: number
   public ogLng: number
-  public around_me_search_page: number = 1  
-  public loadedTotalResults: number = 0
-  public allPages: number = 0
-  public maxDistanceCap: number = 45
-  public maxDistance: number = 10
-  public totalResults: number = 0
-  public current_offset: number = 0
-  public itemsPerPage: number = 0
-  public sortAc: number
+
   private n2_x = 0
   private n3_x = 7
   private rad_11 = null
@@ -94,7 +97,7 @@ export class MapComponent implements OnInit {
 
   public showSearchResults: boolean
   public show_search_box: boolean
-  public show_next_page_button: boolean = false 
+  
   public locationFound: boolean = false
   public sliderRight: boolean = false
   public catsUp: boolean = false
@@ -259,8 +262,6 @@ export class MapComponent implements OnInit {
     
     this.eventDateParam = `startEndDateTime=${newStartTime},${newEndTime}`
 
-    console.log("eventsThisWeekend", this.eventDateParam)
-
     this.apiSearch(this.search_keyword)
 
   }
@@ -292,7 +293,7 @@ export class MapComponent implements OnInit {
     
     clearTimeout(this.update_distance_timeout)
 
-    this.update_distance_timeout = setTimeout(function(){
+    this.update_distance_timeout = setTimeout( () => {
 
       this.maxDistance = evt.value
 
@@ -310,9 +311,11 @@ export class MapComponent implements OnInit {
     
         this.searchResults = results
 
+        this.sortBy(this.sortAc)
+
       }
 
-    }.bind(this), 500)
+    }, 500)
 
   }
 
@@ -577,9 +580,11 @@ export class MapComponent implements OnInit {
 
       case 'food':
       case 'shopping':
-        apiUrl = `${this.searchApiUrl}?latitude=${this.lat}&longitude=${this.lng}&term=${keyword}&categories=${keyword}&${this.showOpenedParam}&radius=40000&sort_by=rating&limit=50&offset=${this.current_offset}` 
+        apiUrl = `${this.searchApiUrl}?latitude=${this.lat}&longitude=${this.lng}&term=${keyword}&categories=${keyword}&${this.showOpenedParam}&radius=40000&sort_by=rating&limit=20&offset=${this.current_offset}` 
 
     }
+    
+    console.log("offset", this.current_offset)
 
     searchObj = {
       config_url: apiUrl
@@ -696,14 +701,12 @@ export class MapComponent implements OnInit {
 
           this.type_of_info_object = "yelp_business"                          
           this.maxDistanceCap = 25
-          this.itemsPerPage = 50
           break
 
         case 'events':
 
           this.type_of_info_object = "ticketmaster_events"                   
           this.maxDistanceCap = 45
-          this.itemsPerPage = 20
           return
 
       }
@@ -758,8 +761,8 @@ export class MapComponent implements OnInit {
         
         //Used for loading events from ticketmaster API
 
-        api_url = `size=20&latlong=${this.lat},${this.lng}&keyword=${search_term}&radius=45`
-
+        api_url = `size=20&latlong=${this.lat},${this.lng}&keyword=${search_term}&radius=45`       
+        
         const search_obj = {
           config_url: api_url
         }
@@ -773,8 +776,7 @@ export class MapComponent implements OnInit {
       } else {
 
         //Used for loading places to eat and shopping from yelp
-
-        api_url = `${this.searchApiUrl}?latitude=${this.lat}&longitude=${this.lng}&term=${search_term}&${this.showOpenedParam}&radius=40000&sort_by=best_match&limit=50&offset=${this.current_offset}`
+        api_url = `${this.searchApiUrl}?latitude=${this.lat}&longitude=${this.lng}&term=${search_term}&${this.showOpenedParam}&radius=40000&sort_by=best_match&limit=20&offset=${this.current_offset}`
 
         const search_obj = {
           config_url: api_url
@@ -792,17 +794,44 @@ export class MapComponent implements OnInit {
 
   }
 
+  public displayPageNext(page: number){
+
+    if( page < this.allPages )
+      return {}
+    else
+      return { 'display' : 'none' }  
+
+  }
+
+  public displayPage(page: number){
+
+    if( page > 0 )
+      return {}
+    else
+      return { 'display' : 'none' }     
+
+  }
+
+  public goToPage(page: number){
+
+    this.around_me_search_page = page
+
+    this.current_offset = (this.around_me_search_page * this.itemsPerPage) - this.itemsPerPage
+
+    this.apiSearch(this.search_keyword)
+
+  }
+
   public loadMoreResults(action: number){
 
     switch(action){
       case 0:
 
         //previous
-        if(this.around_me_search_page == 1){
+        if(this.around_me_search_page == 1)
           this.around_me_search_page = Math.ceil(this.totalResults / this.itemsPerPage)          
-        } else {
+        else
           this.around_me_search_page--
-        }
         
         break
 
@@ -812,18 +841,14 @@ export class MapComponent implements OnInit {
         if(this.around_me_search_page == Math.ceil(this.totalResults / this.itemsPerPage)){
           this.around_me_search_page = 1
           this.current_offset = 0
-        } else {          
-          this.around_me_search_page++          
-        }
+        } else          
+          this.around_me_search_page++    
         
         break
 
     }
 
     this.current_offset = (this.around_me_search_page * this.itemsPerPage) - this.itemsPerPage
-
-    //console.log("current offset", this.current_offset)
-    //console.log("search page", this.around_me_search_page)
 
     this.apiSearch(this.search_keyword)
 
@@ -1027,7 +1052,7 @@ export class MapComponent implements OnInit {
 
   }
 
-  private populateYelpResults(data: any): void{
+  private async populateYelpResults(data: any) {
 
     let results = data.businesses
 
@@ -1098,6 +1123,15 @@ export class MapComponent implements OnInit {
     results = results.filter((searchResult) => {
       return searchResult.distance < this.maxDistance
     })
+    
+    this.searchResults = results 
+
+    if(this.sorting_order == 'desc') 
+      this.sorting_order = 'asc' 
+    else 
+      this.sorting_order = 'desc'
+    
+    this.sortBy(this.sortAc)
 
     switch(this.searchCategory){
       case 'food':
@@ -1108,7 +1142,6 @@ export class MapComponent implements OnInit {
         break     
     }
 
-    this.searchResults = results  
     this.loadedTotalResults = this.searchResults.length
     
     this.allPages = Math.ceil(this.totalResults / this.itemsPerPage)
@@ -1119,12 +1152,8 @@ export class MapComponent implements OnInit {
       this.totalResults = 1000
       this.loadedTotalResults = 1000
       this.allPages = 20
-    }
-
-    if(this.loadedTotalResults > (this.around_me_search_page * this.itemsPerPage))
-      this.show_next_page_button = true        
+    }    
     
-
   }
 
   public pullSearchMarker(infoObject: any): void {
@@ -1370,7 +1399,7 @@ export class MapComponent implements OnInit {
     this.startLocation()
 
   }
-
+  
   public mobileStartLocation(){
     
     this.loading = true 

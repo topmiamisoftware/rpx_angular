@@ -2,7 +2,6 @@ import { Component, HostListener } from '@angular/core';
 import { VersionCheckService } from './services/version-check.service';
 import { environment } from 'src/environments/environment.prod';
 import { dismissToast } from './helpers/error-helper';
-import { UserauthService } from './services/userauth.service';
 import { SpotbieMetaService } from './services/meta/spotbie-meta.service';
 import { spotbieMetaDescription, spotbieMetaTitle, spotbieMetaImage } from 'src/app/constants/spotbie'
 
@@ -20,32 +19,12 @@ export class AppComponent {
   title = 'spotbie';
 
   constructor(private versionCheckService : VersionCheckService, 
-              private userAuthService: UserauthService,
               private spotbieMetaService: SpotbieMetaService) {}
   
   @HostListener('window:load', [])
   onWindowLoaded() {
     this.versionCheckService.initVersionCheck(environment.versionCheckURL);
   }
-  
-  /*
-  @HostListener('window:beforeunload')
-  onBeforeUnload() {
-    
-    if(localStorage.getItem('spotbie_rememberMe') != '1'){
-
-      let currentFavorites = localStorage.getItem('spotbie_currentFavorites')
-
-      localStorage.clear()
-
-      localStorage.setItem('spotbie_locationPrompted', '1')
-      localStorage.setItem('spotbie_currentFavorites', currentFavorites)
-
-    }
-    
-    this.userAuthService.closeBrowser().subscribe();
-
-  }*/
 
   public dismissToast() : void{
     dismissToast()

@@ -1,5 +1,6 @@
 .spotbie-overlay-window{
     z-index: 95;
+    overflow-x: hidden;
 }
 .spotie-prompt{
     position: absolute;
@@ -163,6 +164,7 @@
     padding: 5px;
     background-color: white;
 }
+
 .spotbie-single-cat{
     position: relative;
     padding: 5px;
@@ -364,12 +366,9 @@
 }
 .sb-page-button {
     display: inline-block;
-    padding: 20px !important;
+    padding: 10px 5px!important;
     margin: 5px;
-    padding-top: 10px !important;
-    padding-bottom: 10px !important;
     font-size: .8rem !important;
-    background-color: rgba(0,0,0,.15)
 }
 span.spotbie-button{
     position: relative;
@@ -381,6 +380,19 @@ span.spotbie-button{
     max-width: 150px;
     width: 150px;
     min-width: 162px;
+}
+.spotbie-result-page{
+    margin-left: 3px;
+    margin-right: 3px;
+    cursor: pointer;
+    padding: 5px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    background-color: rgba(0,0,0,.23);
+    color: white
+}
+.spotbie-result-page.active{
+    background-color: rgba(0,0,0,.63);
 }
 .spotbie-button{
     background-color: rgba(0,0,0,.23);
@@ -500,14 +512,15 @@ span.spotbie-button{
 .spotbie-close-results-mobile{
     position: fixed;
     display: none;
-    bottom: 18px;
-    right: 10px;
+    bottom: 10px;
+    left: 10px;
     font-size: 14px;
-    padding: 8px;
-    background-color: rgb(2 2 2 / 74%);
-    border-radius: 10px;
+    padding: 6px;
+    background-color: rgba(2,2,2,.741);
+    border-radius: 5px;
     z-index: 90;
     font-weight: bold;
+    color: white;
 }
 
 .gm-style-iw-c{
@@ -629,11 +642,6 @@ swiper{
     color:white;
     background-image: unset;
 } 
-.fa-angle-right,
-.fa-angle-left{
-    font-size: 65px;
-}
-
 .sb-mapWrapper{
     overflow-y: scroll;
 }
@@ -686,9 +694,9 @@ swiper{
 }
 @media (max-width: 840px) {
     .spotbie-search-result{
-        width: 90%;
-        min-width: 90%;
-        max-width: 90%;
+        width: 100%;
+        min-width: 100%;
+        max-width: 100%;
         height: unset;
         min-height: unset;
         max-height: unset;
@@ -762,6 +770,9 @@ swiper{
         width: 70px;
         min-width: 70px        
     }
+    .spotbie-search-result{
+        padding: 5px !important;
+    }
 }
 @media (max-width: 650px){
     .map-prompt-mobile h4{
@@ -783,6 +794,9 @@ swiper{
     }
 }
 @media (max-width: 600px) { 
+    .spotbie-sorting{
+        font-size: 9px;
+    }
     .spotbie-close-categories{
         top: -42px;
         left: 14px;
@@ -812,13 +826,6 @@ swiper{
         padding: 2%;
         border-radius: 0px;
         padding-top: env(safe-area-inset-top);
-    }  
-    .fa-angle-right{
-        padding-left: 10px;
-    }
-    .fa-angle-right,
-    .fa-angle-left{
-        font-size: 50px;
     }  
     .map-prompt-v-align{   
         width: 100%;
@@ -887,7 +894,7 @@ swiper{
         padding: 10px;
     }
     .spotbie-categories{
-        padding-top: env(safe-area-inset-top);
+        padding-top: 70px;
         padding-bottom: 90px;
     }    
 }

@@ -42,6 +42,9 @@
     border-top: 1px solid #332f3e;
     text-align: center;    
 }
+.sb-icon{
+    font-size: 1.8rem;
+}
 .spotbie-share-button{
     margin-left: 10px;
     margin-right: 10px;
