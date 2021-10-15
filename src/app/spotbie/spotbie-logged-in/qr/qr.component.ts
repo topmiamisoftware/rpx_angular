@@ -6,6 +6,7 @@ import { Business } from 'src/app/models/business';
 import { LoyaltyPointsService } from 'src/app/services/loyalty-points/loyalty-points.service';
 import { UserauthService } from 'src/app/services/userauth.service';
 import { environment } from 'src/environments/environment';
+import { DeviceDetectorService } from 'ngx-device-detector';
 
 const QR_CODE_SCAN_BASE_URL = environment.qrCodeScanBaseUrl
 
@@ -55,8 +56,11 @@ export class QrComponent implements OnInit {
 
   public businessLoyaltyPointsSubmitted: boolean = false
 
+  public qrWidth: number = 0
+  
   constructor(private userAuthService: UserauthService,
               private loyaltyPointsService: LoyaltyPointsService,
+              private deviceDetectorService: DeviceDetectorService,
               private formBuilder: FormBuilder) { }
   
   public getWindowClass(){
@@ -199,6 +203,11 @@ export class QrComponent implements OnInit {
         this.loyaltyPointBalance = loyaltyPointBalance       
       }
     )
+    
+    if( this.deviceDetectorService.isMobile() )
+      this.qrWidth = 250
+    else
+      this.qrWidth = 450
 
     let accountType = localStorage.getItem('spotbie_userType')
 

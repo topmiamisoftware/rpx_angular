@@ -6,6 +6,36 @@
     
     <div #scrollMapAppAnchor></div>
 
+    <div class="sb-dashboardWrapper sb-v-wrapper" 
+            style="display: grid; 
+                    align-content: center; 
+                    min-height: 70vh; 
+                    border-bottom: unset !important;" 
+            *ngIf="displayLocationEnablingInstructions" 
+            #businessSettingsAppAnchor>
+
+        <i class="fas fa-exclamation-triangle"></i>
+
+        <h2 class="spotbie-text-gradient text-uppercase mt-4" style="display: inline-block;">BONKERS!</h2>
+        <div class='spotbie-text-gradient mt-2'>LOCATION DISABLED</div>
+
+        <div class='spotbie-text-gradient mt-3'>Let's enable your location.</div>
+  
+        <ol class="sb-locationList spotbie-text-gradient mt-3">
+          
+          <li>Open your browser's settings.</li>
+          <li>Navigate to Privacy & Security.</li>
+          <li>Go to Site Settings.</li>
+          <li>Enable location use for SpotBie.</li>
+
+        </ol>
+
+        <div class="spotbie-button" (click)="spawnCategories('food')">          
+          <span class="spotbie-text-gradient text-uppercase mt-5 cursor-pointer">TRY LOCATION</span>
+        </div>        
+
+    </div> 
+
     <agm-map  [ngClass]="getMapClass()"
               [streetViewControl]="false"
               *ngIf="map"
@@ -88,11 +118,11 @@
     
       <div class='spotbie-search-results-title text-uppercase' *ngIf="type_of_info_object == 'yelp_business'">
 
-        Distance
-        <mat-slider min="1" max="25" step="1" value="{{ maxDistance }}"
+        Distance {{ maxDistance }} mi.  
+        <mat-slider min="1" max="25" step="1" 
+                    value="{{ maxDistance }}"
                     (change)="updateDistance($event)"></mat-slider>
-        {{ maxDistance }} mi.                            
-
+                                                      
       </div>
     
       <div class='spotbie-search-results-title text-uppercase' *ngIf="type_of_info_object == 'ticketmaster_events'">
@@ -186,11 +216,27 @@
           </tr>  
         </table>
     
-        <table (click)="showOpen()" title="Opened or Closed" [ngStyle]="{ 'border-right' : 'unset' }" *ngIf="searchCategorySorter == 'shopping'">
-          <td><span class='fa fa-circle spotbie-is-open'></span></td>
-          <td *ngIf="showOpened == false"><span class='fa fa-circle spotbie-is-closed'></span></td>
-          <td *ngIf="showOpened == true">OPEN</td>
-          <td *ngIf="showOpened == false">OPEN/CLOSED</td>
+        <table  class='spotbie-controls-search-results' 
+                (click)="showOpen()" 
+                title="Opened or Closed" 
+                [ngStyle]="{ 'border-right' : 'unset' }" 
+                *ngIf="searchCategorySorter == 'shopping'">
+
+          <td *ngIf="!isMobile"> 
+            <span class='fa fa-circle spotbie-is-open'></span>
+          </td>
+
+          <td *ngIf="showOpened == false && !isMobile">
+            <span class='fa fa-circle spotbie-is-closed'></span>
+          </td>
+
+          <td *ngIf="showOpened == true">
+            OPEN
+          </td>
+
+          <td *ngIf="showOpened == false">
+            OPEN/CLOSED
+          </td>
         </table>   
         
         <table class='spotbie-controls-search-results text-uppercase' *ngIf="searchCategorySorter == 'events'">
@@ -223,45 +269,7 @@
         <div class='spotbie-search-results-title text-uppercase'>
     
           <span *ngIf="searchCategory !== 'events'">Showing results within {{ maxDistance }} miles. </span>
-          
-          <div></div> 
 
-          <span class='sb-page-button text-uppercase cursor-pointer' (click)="goToPage(1)" *ngIf="allPages > 1">
-            <i class="fa fa-angle-double-left"></i>
-          </span> 
-
-          <span class='sb-page-button text-uppercase cursor-pointer' (click)="loadMoreResults(0)" *ngIf="allPages > 1">
-            <i class="fa fa-angle-left"></i>
-          </span>   
-          
-          <span class="spotbie-result-page" 
-                (click)="goToPage((around_me_search_page - 2))" 
-                [ngStyle]="displayPage((around_me_search_page - 2))">{{ around_me_search_page - 2 }}</span>
-
-          <span class="spotbie-result-page" 
-                (click)="goToPage((around_me_search_page - 1))" 
-                [ngStyle]="displayPage((around_me_search_page - 1))">{{ around_me_search_page - 1 }}</span>
-
-          <span class="spotbie-result-page active">{{ around_me_search_page }}</span>
-
-          <span class="spotbie-result-page" 
-                (click)="goToPage((around_me_search_page + 1))" 
-                [ngStyle]="displayPageNext((around_me_search_page + 1))">{{ around_me_search_page + 1 }}</span>
-
-          <span class="spotbie-result-page" 
-                (click)="goToPage((around_me_search_page + 2))" 
-                [ngStyle]="displayPageNext((around_me_search_page + 2))">{{ around_me_search_page + 2 }}</span>
-
-          <span class='sb-page-button text-uppercase cursor-pointer' (click)="loadMoreResults(1)" *ngIf="allPages > 1">
-            <i class="fa fa-angle-right"></i>
-          </span>
-      
-          <span class='sb-page-button text-uppercase cursor-pointer' (click)="goToPage(allPages - 1)" *ngIf="allPages > 1">
-            <i class="fa fa-angle-double-right"></i>
-          </span>         
-
-          <span class='spotbie-search-page-number'>{{ around_me_search_page }}/{{ allPages - 1 }}</span>
-      
         </div>
         
         <div class='spotbie-no-results' *ngIf='searchResults.length == 0'>No Results Available.</div>
@@ -440,7 +448,10 @@
 
         <app-user-features (spawnCategoriesEvt)="spawnCategories($event)" *ngIf="isLoggedIn !== '1'"></app-user-features>        
         
-        <app-user-dashboard *ngIf="isLoggedIn == '1'" #homeDashboard></app-user-dashboard>
+        <app-user-dashboard 
+          *ngIf="isLoggedIn == '1'" 
+          (spawnCategoriesEvt)="spawnCategories($event)"
+          #homeDashboard></app-user-dashboard>
 
       </div>
 

@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { LoyaltyPointsComponent } from '../loyalty-points/loyalty-points.component';
 import { QrComponent } from '../qr/qr.component';
 import { RewardMenuComponent } from '../reward-menu/reward-menu.component';
@@ -10,7 +10,7 @@ import { RewardMenuComponent } from '../reward-menu/reward-menu.component';
 })
 export class UserDashboardComponent implements OnInit {
 
-  public scannerStarted: boolean = false
+  @Output('spawnCategoriesEvt') spawnCategoriesEvt = new EventEmitter  
 
   @ViewChild('loyaltyPointsApp') loyaltyPointsApp: LoyaltyPointsComponent
   @ViewChild('rewardMenuApp') rewardMenuApp: RewardMenuComponent
@@ -20,10 +20,11 @@ export class UserDashboardComponent implements OnInit {
   @ViewChild('qrCodeAppAnchor') qrCodeAppAnchor: ElementRef
   @ViewChild('rewardMenuAppAnchor') rewardMenuAppAnchor: ElementRef
 
+  public scannerStarted: boolean = false
+
   constructor() { }
 
   public openLoyaltyPoints(){
-    console.log("UserDashboardComponent loyaltyPointsApp") 
     this.loyaltyPointsApp.initBusinessLoyaltyPoints()
   }
 
@@ -53,6 +54,16 @@ export class UserDashboardComponent implements OnInit {
     this.scannerStarted = false 
   }
   
+  public spawnCategories(category: string){
+
+    let obj = {
+      category: category
+    }
+
+    this.spawnCategoriesEvt.emit(obj)
+
+  }
+
   public closeAll(){
 
     //Close all the windows in the dashboard

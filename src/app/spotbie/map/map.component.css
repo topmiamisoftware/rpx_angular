@@ -1,5 +1,5 @@
 .spotbie-overlay-window{
-    z-index: 95;
+    z-index: 94;
     overflow-x: hidden;
 }
 .spotie-prompt{
@@ -371,6 +371,7 @@
     margin: 5px;
     font-size: .8rem !important;
 }
+
 span.spotbie-button{
     position: relative;
     display: inline-block !important;
@@ -667,6 +668,30 @@ swiper{
     min-width: 19px !important;
     max-width: 19px !important;
 }
+.fa-exclamation-triangle{
+    position: relative;
+    color: #ffc107;
+    font-size: 1rem;
+    bottom: 4px;
+    margin-right: 10px;
+}
+.sb-dashboardWrapper{
+    background-color: #27242e;
+    position: relative;
+    display: block;
+    border-bottom: 8px solid #332f3e;
+    padding-top: 100px;
+    padding-bottom: 100px;
+}
+.sb-locationList{
+    display: block;
+    margin: 0 auto;
+    text-align: left;
+}
+.sb-locationList li{
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
 /**WIDTH MEDIA QUERIES */
 @media (max-width: 1583px) { 
     .spotbie-search-result{
@@ -692,7 +717,25 @@ swiper{
 
 }
 @media (max-width: 900px) { 
-
+    .sb-page-button {
+        font-size: 1.4rem !important;
+    }
+    .spotbie-result-page[_ngcontent-serverApp-c70] {
+        display: inline-block;
+        margin-left: 6px;
+        margin-right: 6px;
+        cursor: pointer;
+        padding: 4px 5px;
+        font-size: .8rem;
+        min-width: 15px;    
+    } 
+    .spotbie-search-results-title{
+        padding-left: 0px;
+        padding-right: 0px;
+    }   
+    .sb-page-button{
+        border-radius: 5px;
+    }
 }
 @media (max-width: 840px) {
     .spotbie-search-result{
@@ -752,6 +795,11 @@ swiper{
         width: 16px !important;
         min-width: 16px !important;
         max-width: 16px !important;
+    }
+    .sb-locationList{
+        min-width: 90%;
+        max-width: 90%;        
+        font-size: .9rem;        
     }
 }
 @media (max-width: 700px) { 

@@ -58,5 +58,20 @@ h5{
     .sb-qrTitleImage{
         max-width: 35px;
     }
+    .spotbie-input-info{
+        max-width: 96%;
+        width: 96%;
+        min-width: 96%;
+        font-size: .8rem;
+    }
+    .sb-input {
+        width: 90%;
+        min-width: 90%;
+    }
+    .sb-helpInfo{
+        width: 90%;
+        min-width: 90%;
+        max-width: 90%;
+    }       
 }
 

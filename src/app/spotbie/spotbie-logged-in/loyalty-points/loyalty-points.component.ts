@@ -91,7 +91,7 @@ export class LoyaltyPointsComponent implements OnInit {
 
   public loyaltyPointsClass(){
 
-    if(this.userType == AllowedAccountTypes.PlaceToEat)
+    if( this.userType !== AllowedAccountTypes.Personal)
       return 'sb-loyalty-points cursor-pointer'
     else
       return 'sb-loyalty-points no-cursor'

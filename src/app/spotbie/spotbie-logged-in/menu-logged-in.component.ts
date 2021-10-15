@@ -26,6 +26,8 @@ export class MenuLoggedInComponent implements OnInit {
   
   @ViewChild('spotbieSettings') spotbieSettings: SettingsComponent
 
+  public eAllowedAccountTypes = AllowedAccountTypes
+
   public spotbieBackgroundImage: string
   
   public foodWindow = { open : false }

@@ -1,6 +1,6 @@
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 
-import { Component, OnInit, ViewChild, NgZone, ElementRef } from '@angular/core'
+import { Component, OnInit, ViewChild, NgZone, ElementRef, Output, EventEmitter } from '@angular/core'
 import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms'
 import * as spotbieGlobals from '../../../globals'
 import { User } from '../../../models/user'
@@ -53,6 +53,8 @@ export class SettingsComponent implements OnInit {
 
   @ViewChild('placeToEatMediaUploadInfo') placeToEatMediaUploadInfo
   @ViewChild('placeToEatMediaInput') placeToEatMediaInput
+  
+  @Output('closeWindowEvt') closeWindowEvt = new EventEmitter()
 
   public bg_color: string
 
@@ -1078,7 +1080,7 @@ export class SettingsComponent implements OnInit {
   }
 
   public closeWindow() {
-    window.location.reload()
+    this.closeWindowEvt.emit()
   }
 
   ngOnInit() {

@@ -786,12 +786,10 @@ hr{
 .spotbie-full-qrCode{
     position: relative;
     margin: 0 auto;
-    border-radius: 20px;
     min-width: 450px;
     width: 450px;
     min-height: 450px;
     height: 450px;
-    box-shadow: 0 20px 80px -20px #198754, 0 30px 20px -30px #64e56f, inset 0 -2px 6px #198754; 
     overflow: hidden;   
 }
 .spotbie-full-qrCode.scanner{
@@ -820,8 +818,7 @@ p.sb-helpInfo{
         min-width: 400px;
         width: 400px;
         min-height: 400px;
-        height: 400px;
-        box-shadow: 0 15px 60px -15px #198754, 0 20px 15px -20px #64e56f; 
+        height: 400px; 
     }
 
 }
@@ -874,7 +871,6 @@ p.sb-helpInfo{
 
 }
 @media (max-width: 600px) { 
-
     .spotbie-el-fixed-bottom{
         width: 90%;
         min-width: 90%;
@@ -883,69 +879,62 @@ p.sb-helpInfo{
         padding-bottom: 15px;
         font-size: 26px;              
     }
-
+    .mat-slider-horizontal {
+        height: 48px;
+        width: 95%;
+        min-width: 95%;
+        max-width: 95%;
+    }    
 }
 @media (max-width: 560px) {
     .sb-material-light .sb-icon{
         font-size: 1.4rem !important;
     }
     .sb-mainWrapper{
-
         min-width: 90%;
         max-width: 90%
-
     }
-
+    .spotbie-full-qrCode img{
+        min-height: 250px;
+    }
     .sb-closeButton{
-
         max-width: 50px;
         font-size: 20px;
         top: 68px;
         right: 20px;
-        
-
     }
-
     .spotbie-button {
-
         width: 85%;
         min-width: 85%;
         max-width: 85%;
         font-size: 14px;
         padding-top: 15px !important;
         padding-bottom: 15px !important;
-
     }
-
     .spotbie-color-picker-ok{
         max-width: 95%;
         width: 95%;
         min-width: 95%;
     }
+    p.sb-helpInfo{
+        width: 90%;
+        min-width: 90%;
+        max-width: 90%;        
+    }
 }
 @media (max-width: 460px) { 
-    
     html {
-
-        font-size: 17px
-    
+        font-size: 17px    
     } 
-
     textarea {
-
         width: 90%;
         min-width:  90%;
         max-width: 90%;
         font-size: 18px;
-
     }
-
     .spotbie-toast-input-box {
-
         border-radius: 0px
-
     }
-
     .sb-input{
         font-size: 20px;
         padding-left: 5px;
@@ -953,7 +942,6 @@ p.sb-helpInfo{
         padding-top: 7px;
         padding-bottom: 7px;
     }
-
     .spotbie-select-menu-option{
         position: relative;
         margin: 0 auto;
@@ -961,7 +949,6 @@ p.sb-helpInfo{
         min-width: 100%;
         max-width: 100%;
     }
-
     .sb-logo{
         min-width: 275px;
         width: 275px;
@@ -973,13 +960,20 @@ p.sb-helpInfo{
         min-height: 245px;
         height: 243px;
     }
+    .spotbie-full-qrCode{
+        border-radius: 20px;
+        min-width: 90%;
+        width: 90%;
+        min-height: 325px;
+        height: 325px;
+    }    
 }
 @media (max-width: 420px) { 
         .spotbie-button{
             max-width: 65%;
             width: 65%;
             min-width: 65%;
-            font-size: 1rem !important;
+            font-size: .9rem !important;
             padding-top: 11px!important;
             padding-bottom: 11px!important;            
         }     

@@ -36,7 +36,7 @@ export class RewardCreatorComponent implements OnInit {
 
   public rewardUploadImage: string = '../../assets/images/home_imgs/find-places-to-eat.svg'
 
-  public rewardMediaMessage: string = "Upload an image describing your reward."
+  public rewardMediaMessage: string = "Upload Reward Image"
 
   public rewardMediaUploadProgress: number = 0
 

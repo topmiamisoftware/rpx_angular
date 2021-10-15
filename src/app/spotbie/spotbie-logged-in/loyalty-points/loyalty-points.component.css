@@ -64,32 +64,64 @@ p{
     line-height: 3.5rem;
     z-index: 999;
 }
-
+.spotbie-howDoesItWork{
+    font-size: .8rem;
+}
+.sb-helpBlock{
+    font-size: .8rem;
+    margin-bottom: 30px;
+}
+.spotbie-lpResetInfo{
+    font-size: 1rem;
+}
+h5{
+    font-size: 1rem;
+}
+.spotbie-loyaltyPointsInfo{
+    margin-top: 50px;
+    margin-bottom: 50px;
+}
+.spotbie-overlay-window{
+    width: 103%;
+    min-width: 103%;
+    max-width: 103%;
+}
 @media (max-width: 650px){
     .sb-helpBlock{
-        font-size: .8rem;
+        font-size: .7rem;
         min-width: 92%;
         width: 92%;
         max-width: 92%;
         margin-bottom: 60px;
     }
+    .spotbie-loyaltyPointsInfo{
+        margin-top: 20px;
+        margin-bottom: 20px;
+    }
 }
 @media (max-width: 460px) { 
+    .spotbie-lpResetInfo{
+        font-size: .6rem;
+    }    
     .sb-input{
         width: 94%;
         min-width: 94%;
         max-width: 94%;
     }
+    .sb-budget-wrapper{
+        width: 91%;
+        min-width: 91%;
+        max-width: 91%;
+    }
     h4{
-        font-size: .8rem;
-        padding: 20px;
+        font-size: 1rem;
+        padding: 0px;
     }
     .spotbie-input-info {
         font-size: .8rem;
-        padding: 15px;
     }
     span.sb-loyalty-points{
-        font-size: 5rem !important;
+        font-size: 4rem !important;
         margin-right: unset;
     }
     img.sb-loyalty-points{

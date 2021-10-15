@@ -15,12 +15,12 @@
 
       <span class='sb-loyalty-points' (click)="toggleLoyaltyPoints()" >{{ userLoyaltyPoints | number:'1.0':'en-US' }}</span>
       
-      <img class='sb-loyalty-points' (click)="toggleLoyaltyPoints()"  src="assets/images/spotbie-loyalty-points.svg" />
+      <img class='sb-loyalty-points' *ngIf="!isMobile" (click)="toggleLoyaltyPoints()"  src="assets/images/spotbie-loyalty-points.svg" />
 
       <img class='sb-qr' (click)="toggleQRScanner()"  src="assets/images/spotbie-qr.svg" /> 
       
       <div *ngIf="this.userType == '1'" class="sb-businessMenu">
-        <i class='sb-qr fa fa-bars' (click)="toggleRewardMenu()"></i>
+        <img class='sb-loyalty-points' *ngIf="isMobile" (click)="toggleRewardMenu()"  src="assets/images/spotbie-loyalty-points.svg" />
       </div>
 
       <span class='sb-userName' (click)="openWindow(settingsWindow)" *ngIf="userName !== null && isDesktop">{{ userName }}</span>         
@@ -57,7 +57,7 @@
     <tr>
       <td>
 
-        <div (click)="home()">
+        <div (click)="home()" *ngIf="this.userType !== eAllowedAccountTypes.Personal">
           HOME
         </div>
 
@@ -89,4 +89,4 @@
 
 <app-map [business]="business" *ngIf="mapApp.open" #spotbieMap (openBusinessSettingsEvt)="openBusinessSettings()"></app-map>
 
-<app-settings *ngIf="settingsWindow.open" #spotbieSettings></app-settings>
+<app-settings *ngIf="settingsWindow.open" #spotbieSettings (closeWindowEvt)="closeWindow(settingsWindow)"></app-settings>

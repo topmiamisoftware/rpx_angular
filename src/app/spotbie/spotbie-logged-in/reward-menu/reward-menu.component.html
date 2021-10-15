@@ -2,13 +2,13 @@
 
 <div *ngIf="userType !== '4'">
 
-    <h4 id="sp-loyaltyMenuTitle" class="spotbie-text-gradient text-center text-uppercase pt-5 mb-5">SPOTBIE LOYALTY MENU</h4>
+    <h4 id="sp-loyaltyMenuTitle" class="spotbie-text-gradient text-center text-uppercase mb-5">SPOTBIE LOYALTY MENU</h4>
 
-    <p class="spotbie-text-gradient text-center mt-4">
+    <p class="spotbie-loyaltyMenuDescription spotbie-text-gradient text-center mt-2">
         These are the rewards that your business will offer to the spotbie community.
     </p>
     
-    <div class='sb-menuItemWrapper mb-5'>
+    <div class='sb-menuItemWrapper'>
     
         <div class='sb-addMenuItem' 
                 (click)="addItem()" 
@@ -38,7 +38,7 @@
         pick what's yours
     </p>
     
-    <div class='sb-menuItemWrapper mb-5'>
+    <div class='sb-menuItemWrapper'>
     
         <div class='sb-menuItem' 
                 *ngFor="let reward of rewards"

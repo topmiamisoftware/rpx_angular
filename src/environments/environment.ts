@@ -12,9 +12,8 @@ export const environment = {
    * format: https://192.168.1.65:443/api/
    * Laravel App will not work if it's not served on over SSL.
    * */
-  apiEndpoint: 'https://73a0-2600-1700-4804-d5f0-d6d2-f360-2e9-e580.ngrok.io/api/' 
-};
-
+  apiEndpoint: 'http://localhost:8000/api/'
+}
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.

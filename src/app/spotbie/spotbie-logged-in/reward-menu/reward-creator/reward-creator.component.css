@@ -23,6 +23,7 @@
     -webkit-text-fill-color: unset;
     color: black;
     background-color: #fff;
+    border-radius: 0px;
 }
 .spotbie-background-upload-input{
     display: none;
@@ -67,6 +68,9 @@ img.sb-loyalty-points:hover{
     min-width: 15px;
     max-width: 15px;  
 }
+h5{
+    font-size: 1rem;
+}
 .fa-check{
     background: unset !important;
     color: white;
@@ -79,8 +83,33 @@ img.sb-loyalty-points:hover{
         max-width: 90%;
         width: 90%;
         min-width: 90%;
+        text-align: left;
     }
+    .spotbie-upload-new-background-holder {
+        width: 90%;
+        min-width: 90%;
+        max-width: 90%;
+        height: 300px;
+        min-height: 300px;
+        max-height: 300px;
+        border-radius: 5px;
+    }    
     .spotbie-input-info{
         font-size: .8rem;
-    }    
+    } 
+    .spotbie-upload-new-background-holder{
+        border: 1px solid #eeeeee24;
+    }   
+    .spotbie-click-or-drag-upload{
+        padding-top: 15px;
+        padding-bottom: 15px;
+        width: 100%;
+        min-width: 100%;
+        text-align: center;
+        background-color: rgb(0 0 0 / 41%);
+        font-size: 15px;        
+    }   
+    .spotbie-r-success-title{
+        font-size: 1rem;
+    } 
 }

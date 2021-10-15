@@ -86,6 +86,8 @@ export class MenuLoggedOutComponent implements OnInit {
 
   home(){
     
+    this.menuActive = false
+
     this.signUpWindow.open = false
     this.logInWindow.open = false
     this.openHome.emit()

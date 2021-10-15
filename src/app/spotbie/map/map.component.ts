@@ -164,6 +164,8 @@ export class MapComponent implements OnInit {
 
   public loadingText: string = null
 
+  public displayLocationEnablingInstructions: boolean = false
+
   constructor(private locationService: LocationService,
               private deviceService: DeviceDetectorService,
               private mapIconPipe: MapObjectIconPipe) { }
@@ -583,8 +585,6 @@ export class MapComponent implements OnInit {
         apiUrl = `${this.searchApiUrl}?latitude=${this.lat}&longitude=${this.lng}&term=${keyword}&categories=${keyword}&${this.showOpenedParam}&radius=40000&sort_by=rating&limit=20&offset=${this.current_offset}` 
 
     }
-    
-    console.log("offset", this.current_offset)
 
     searchObj = {
       config_url: apiUrl
@@ -631,9 +631,12 @@ export class MapComponent implements OnInit {
 
     let category = obj.category
 
-    if(!this.locationFound)
+    this.scrollMapAppAnchor.nativeElement.scrollIntoView({ behavior: "smooth", block: "start" })
+
+    if(!this.locationFound){
       this.mobileStartLocation()
-    else if(this.showMobilePrompt)
+      return
+    } else if(this.showMobilePrompt)
       this.showMobilePrompt = false
     
     this.show_search_box = true
@@ -641,9 +644,7 @@ export class MapComponent implements OnInit {
     this.zoom = 18 
     this.fitBounds = false
 
-    this.map = true
-  
-    this.scrollMapAppAnchor.nativeElement.scrollIntoView({ behavior: "smooth", block: "start" })
+    this.map = true    
 
     if(this.searchResults.length == 0) this.showSearchResults = false
 
@@ -1329,7 +1330,7 @@ export class MapComponent implements OnInit {
 
   public getMapPromptMobileInnerWrapperClassOne(){
     
-    if(this.isMobile) return 'map-prompt-v-align mt-5'
+    if(this.isMobile) return 'map-prompt-v-align mt-2'
     
   }
 
@@ -1384,7 +1385,8 @@ export class MapComponent implements OnInit {
 
   public promptForLocation(){
 
-    if(this.isDesktop) this.acceptLocationPrompt()
+    if(this.isDesktop) 
+      this.acceptLocationPrompt()
 
   }
 
@@ -1401,12 +1403,32 @@ export class MapComponent implements OnInit {
 
   }
   
+  public showMapError(){
+    this.displayLocationEnablingInstructions = true
+    this.map = false
+    this.loading = false
+    this.closeCategories()
+    this.cleanCategory()
+  }
+
   public mobileStartLocation(){
     
     this.loading = true 
-    this.loadingText = " finding user position"
 
-    if (window.navigator.geolocation) window.navigator.geolocation.getCurrentPosition(this.showPosition.bind(this)) 
+    if (window.navigator.geolocation){
+
+      window.navigator.geolocation.getCurrentPosition(
+        this.showPosition.bind(this),
+        (err) =>{
+          console.log("map err", err)
+          this.showMapError()
+        }
+      )
+
+    } else {
+      this.showMapError()
+      return
+    }
 
     this.showMobilePrompt = false
     this.showMobilePrompt2 = true
