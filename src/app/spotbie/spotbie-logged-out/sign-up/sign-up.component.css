@@ -164,7 +164,10 @@ p{
 }
 @media (max-width: 768px) { 
     .spotbie-overlay-window {
-        z-index: 99 !important;
+        width: 102%;
+        min-width: 102%;
+        max-width: 102%;        
+        z-index: 95 !important;
     }
 }
 @media (max-width: 700px) { 
@@ -204,7 +207,11 @@ p{
         min-width: 92%;
         max-width: 92%;
     }
+    .sb-closeButton {
+        display: none;
+    }
 }
+
 @media (max-width: 460px) { 
     h1{
         font-size: 58px;

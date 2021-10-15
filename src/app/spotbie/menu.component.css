@@ -252,7 +252,7 @@ img.sb-qr:hover{
     position: fixed;
     top: 0px;
     bottom: 0px;    
-    z-index: 96;
+    z-index: 95;
     min-height: 100vh;
     min-width: 100%;
     width: 100%;

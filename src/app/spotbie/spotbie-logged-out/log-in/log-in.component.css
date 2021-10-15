@@ -94,8 +94,14 @@
         max-height: 350px;
     }
     .spotbie-overlay-window {
-        z-index: 99 !important;
-    }    
+        width: 102%;
+        min-width: 102%;
+        max-width: 102%;        
+        z-index: 95 !important;
+    }  
+    .sb-closeButton{
+        display: none;       
+    }           
 }
 @media (max-width: 700px) { }
 @media (max-width: 600px) { 
@@ -137,7 +143,10 @@
     } 
     .spotie-login-terms{
         font-size: 11px !important;
-    }      
+    } 
+    .sb-closeButton {
+        display: none;    
+    }         
 }
 @media (max-width: 320px) { }
 @media (max-width: 220px) { }

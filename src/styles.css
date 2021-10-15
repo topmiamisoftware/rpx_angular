@@ -886,7 +886,9 @@ p.sb-helpInfo{
 
 }
 @media (max-width: 560px) {
-
+    .sb-material-light .sb-icon{
+        font-size: 1.4rem !important;
+    }
     .sb-mainWrapper{
 
         min-width: 90%;
