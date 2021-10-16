@@ -286,3 +286,5 @@ export const MAP_STYLES = [
   'Souvenir Shops', 'Spiritual Shops', 'Sporting Goods', 'Tabletop Games', 'Teacher Supplies', 'Thrift Stores', 'Tobacco Shops',
   'Toy Stores', 'Trophy Shops', 'Uniforms', 'Used Bookstore', 'Vape Shops', 'Vitamins & Supplements', 'Watches',
   'Wholesale Stores', 'Wigs']
+
+  export const BANNED_YELP_IDS = ['a4LjewExxqm72UJC1-Ct_Q', 'C_AO6re_izyQrv9FTt0CcQ', 'Z3EPvIqhUIaDHSgrVBNEAg']

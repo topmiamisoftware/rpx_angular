@@ -20,6 +20,8 @@ import { UserDashboardComponent } from '../spotbie-logged-in/user-dashboard/user
 
 const YELP_BUSINESS_SEARCH_API = 'https://api.yelp.com/v3/businesses/search'
 
+const BANNED_YELP_IDS = map_extras.BANNED_YELP_IDS
+
 @Component({
   selector:    'app-map',
   templateUrl: './map.component.html',
@@ -54,7 +56,6 @@ export class MapComponent implements OnInit {
   public searchResultsSubtitle: string
   public searchCategoriesPlaceHolder: string
 
-  
   public sort_by_txt: string = 'Distance'
   public sorting_order: string = 'asc'
   public sortAc: number = 0
@@ -71,8 +72,6 @@ export class MapComponent implements OnInit {
   public searchCategory: string
   public previousSeachCategory: string
   public searchCategorySorter: string
-  public coming_soon_ov_title: string = ''
-  public coming_soon_ov_text: string = ''
   public search_keyword: string
   public type_of_info_object: string
   private showOpenedParam: string
@@ -101,7 +100,6 @@ export class MapComponent implements OnInit {
   public locationFound: boolean = false
   public sliderRight: boolean = false
   public catsUp: boolean = false
-  public coming_soon_ov: boolean = false
   public loading: boolean = false
   public toastHelper: boolean = false
   public displaySurroundingObjectList: boolean = false
@@ -139,20 +137,6 @@ export class MapComponent implements OnInit {
     place_sub: { open: false}
   }
 
-  public toastHelperConfig: ToastRequest = {
-    type: "acknowledge",
-    text: {
-      info_text: "There are no events in this category.",
-      confirm: null,
-      decline: null,
-    },
-    actions: {
-      confirm: null,
-      decline: null,
-      acknowledge: this.dismissToast.bind(this)
-    }
-  }
-
   public placesToEat: boolean = false
   public eventsNearYou: boolean = false
   public reatailShop: boolean = false
@@ -165,6 +149,8 @@ export class MapComponent implements OnInit {
   public loadingText: string = null
 
   public displayLocationEnablingInstructions: boolean = false
+
+  public bannedYelpIDs = BANNED_YELP_IDS
 
   constructor(private locationService: LocationService,
               private deviceService: DeviceDetectorService,
@@ -735,12 +721,6 @@ export class MapComponent implements OnInit {
     this.homeDashboard.scrollToRewardMenuAppAnchor()
   }
 
-  public closeCmS(): void{
-    this.coming_soon_ov_title = ''
-    this.coming_soon_ov_text = ''
-    this.coming_soon_ov = false
-  }
-
   public closeCategories(): void {
     this.catsUp = false
   }
@@ -1062,10 +1042,9 @@ export class MapComponent implements OnInit {
     let resultsToRemove = []
 
     results.forEach(business => {
-
-      //Ban some yelp results.
-      if(business.id == 'a4LjewExxqm72UJC1-Ct_Q')
-        resultsToRemove.push(i)
+      
+      //Remove some banned yelp results.
+      if(this.bannedYelpIDs.indexOf(business.id) > -1) resultsToRemove.push(i)
 
       business.rating_image = setYelpRatingImage(business.rating)
 
