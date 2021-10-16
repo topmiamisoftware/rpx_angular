@@ -634,8 +634,9 @@ export class MapComponent implements OnInit {
     this.scrollMapAppAnchor.nativeElement.scrollIntoView({ behavior: "smooth", block: "start" })
 
     if(!this.locationFound){
-      this.mobileStartLocation()
-      return
+      
+      if(this.mobileStartLocation() == false) return
+
     } else if(this.showMobilePrompt)
       this.showMobilePrompt = false
     
@@ -1411,7 +1412,7 @@ export class MapComponent implements OnInit {
     this.cleanCategory()
   }
 
-  public mobileStartLocation(){
+  public mobileStartLocation(): boolean{
     
     this.loading = true 
 
@@ -1422,17 +1423,20 @@ export class MapComponent implements OnInit {
         (err) =>{
           console.log("map err", err)
           this.showMapError()
+          return false
         }
       )
 
     } else {
       this.showMapError()
-      return
+      return false
     }
 
     this.showMobilePrompt = false
     this.showMobilePrompt2 = true
-  
+    
+    return true
+
   }
 
   public startLocation(){
