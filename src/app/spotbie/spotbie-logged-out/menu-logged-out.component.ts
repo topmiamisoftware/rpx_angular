@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angular/core'
+import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core'
 import { Location } from '@angular/common'
 
 import { externalBrowserOpen } from 'src/app/helpers/cordova/web-intent'
@@ -11,6 +11,7 @@ import { DeviceDetectorService } from 'ngx-device-detector'
 })
 export class MenuLoggedOutComponent implements OnInit {
 
+  @Output() myFavoritesEvt = new EventEmitter()
   @Output() spawnCategoriesOut = new EventEmitter()
   @Output() openHome = new EventEmitter()
 
@@ -82,6 +83,11 @@ export class MenuLoggedOutComponent implements OnInit {
   scrollTo(el: string) {
     const element = document.getElementById(el)
     element.scrollIntoView()
+  }
+  
+  public myFavorites(){
+    this.menuActive = false
+    this.myFavoritesEvt.emit()
   }
 
   home(){

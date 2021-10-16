@@ -39,6 +39,7 @@
     background-color: #121111eb;
     table-layout: fixed;
     text-align: center;
+    box-shadow: 0px 10px 8px rgba(0,0,0,.1);
 }
 .spotbie-menu td{
     padding-top: 10px;

@@ -1,3 +1,11 @@
+.spotbie-overlay-window{
+    z-index: 97;
+    display: flex!important;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;   
+}
 .spotbie-favoriteItemWrap{
     position: relative;
     max-width: 450px;
@@ -18,11 +26,41 @@
     height: unset;
     min-height: unset;
     max-height: unset;
+    background-color: white;
 }
 .spotbie-no-notis-box{
     position: fixed;
+    left: 0;
+    right: 0;
+    margin: 0 auto;    
     top: 50%;
-    width: 100%;
-    min-width: 100%;
+    width: 450px;
+    min-width: 450px;
+    max-width: 450px;
     transform: translateY(-50%);
+    padding-top: 50px;
+    padding-bottom: 50px;
+    border-radius: 10px;       
+}
+.fa-exclamation-triangle{
+    position: relative;
+    color: #ffc107;
+    font-size: 1rem;
+    bottom: 4px;
+    margin-right: 10px;
+}
+@media (max-width: 460px){
+    .spotbie-no-notis-box{
+        width: 90%;
+        min-width: 90%;
+        max-width: 90%;
+    }
+    .spotbie-search-result{
+        position: relative;
+        margin: 0 auto 5px 4%;
+        padding-left: 3% !important;
+        width: 94%;
+        min-width: 94%;
+        max-width: 94%;
+    }
 }

@@ -165,7 +165,9 @@ textarea{
     width: 100%;
     min-width: 100%;
     resize: none;
-    text-transform: uppercase;
+    background-color: white;
+    color: black;
+    border-radius: 0px;
 }
 .spotbie-field-blocker{
     position: absolute;
@@ -286,6 +288,12 @@ textarea{
     min-width: 100%;
     max-width:  100%;
 }
+.spotbie-select-menu-option{
+    max-width: 350px;
+    width: 350px;
+    min-width: 350px;
+    cursor: pointer;
+}
 /**WIDTH MEDIA QUERIES */
 @media (max-width: 1300px) { 
 
@@ -315,15 +323,22 @@ textarea{
         max-width: 100%;
         padding-left: 0%;
         padding-right: 0%;
-        border-radius: 0;
-        margin-top: 10px;        
+        border-radius: 0;    
     }    
 }
 @media (max-width: 700px) { 
 
 }
 @media (max-width: 600px) { 
-
+    .spotbie-select-menu-option{
+        font-size: .8rem;
+        max-width: 90%;
+        width: 90%;
+        min-width: 90%;
+    }
+    .sb-helpDemoText{
+        font-size: .8rem;
+    }
 }
 @media (max-width: 560px) { 
     .spotbie-settings-ghost-icon{
@@ -356,7 +371,48 @@ textarea{
     }    
     .spotbie-save-settings-button {
         margin-top: 0px;        
-    }        
+    } 
+    .spotbie-map{
+        width: 96%;
+        min-width: 96%;
+        max-width: 96%;
+    } 
+    .sb-business-image{
+        width: 90%;
+        max-width: 90%;
+        min-width: 90%;        
+    }  
+    .sb-origin-address-input{
+        max-width: 80%;
+        width: 80%;
+        min-width: 80%;
+    }    
+    .sb-search-icon{
+        max-width: 15%;
+        width: 15%;
+        min-width: 15%;
+        padding: 8px 0!important;
+    }
+    .spotbie-category-pick{
+        max-width: 90%;
+        width: 90%;
+        min-width: 90%;
+    }
+    textarea{
+        width: 94%;
+        min-width: 94%;        
+    }
+    .helpDemoText{
+        width: 94%;
+        min-width: 94%; 
+        font-size: .8rem;
+    }
+    .sb-topSettingsPadding{
+        padding-top: 80px;
+    }
+    h4{
+        font-size: .9rem;
+    }
 }
 @media (max-width: 460px) {
 

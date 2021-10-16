@@ -394,7 +394,7 @@ h6.sb-titleGreen{
         background-attachment: scroll !important;  
     }
     .spotbie-share-post-link{
-        margin-bottom: 100px !important;
+        margin-bottom: 20px !important;
     }
     .spotbie-album-media-image-wrapper{
         padding-top: env(safe-area-inset-top, 20px);
@@ -405,7 +405,14 @@ h6.sb-titleGreen{
         width: 92%;
         min-width: 92%;
         max-width: 92%;        
-    }         
+    } 
+    .spotbie-time-event,
+    .spotbie-distance,
+    .spotbie-event-code,
+    .spotbie-price-ranges,
+    .spotbie-venue-name{
+        font-size: .9rem;
+    }             
 }
 @media (max-width: 460px) { 
     .spotbie-info-object-open{

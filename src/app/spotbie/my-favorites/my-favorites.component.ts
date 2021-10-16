@@ -210,8 +210,10 @@ export class MyFavoritesComponent implements OnInit {
   }
 
   public pullSearchMarker(infoObject: any): void {
+    
     this.infoObjectWindow.open = true
     this.infoObject = infoObject
+
   }
 
   ngOnInit(): void {

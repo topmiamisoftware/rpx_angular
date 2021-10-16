@@ -17,6 +17,7 @@ import * as map_extras                       from './map_extras/map_extras'
 import * as sorterHelpers                    from 'src/app/helpers/results-sorter.helper'
 import { BusinessDashboardComponent } from '../spotbie-logged-in/business-dashboard/business-dashboard.component'
 import { UserDashboardComponent } from '../spotbie-logged-in/user-dashboard/user-dashboard.component'
+import { SortOrderPipe } from 'src/app/pipes/sort-order.pipe'
 
 const YELP_BUSINESS_SEARCH_API = 'https://api.yelp.com/v3/businesses/search'
 
@@ -613,9 +614,20 @@ export class MapComponent implements OnInit {
 
   }
 
+  public sortingOrderClass(sorting_order: string){
+
+    return new SortOrderPipe().transform(sorting_order)
+    
+  }
+
   public spawnCategories(obj: any): void {
 
-    let category = obj.category
+    let category
+
+    if(obj.category == undefined)
+      category = obj
+    else
+      category = obj.category
 
     this.scrollMapAppAnchor.nativeElement.scrollIntoView({ behavior: "smooth", block: "start" })
 
@@ -630,7 +642,7 @@ export class MapComponent implements OnInit {
 
     this.zoom = 18 
     this.fitBounds = false
-
+    
     this.map = true    
 
     if(this.searchResults.length == 0) this.showSearchResults = false
@@ -877,9 +889,11 @@ export class MapComponent implements OnInit {
     
     if(this.showSearchResults)
       return 'spotbie-agm-map sb-map-results-open'
-    else
-      return 'spotbie-agm-map'
-
+    else{
+      if(this.isMobile) return 'spotbie-agm-map sb-map-results-open'
+      return 'spotbie-agm-map'    
+    }
+    
   }
 
   public getEventsSearchCallback (httpResponse: any): void {
@@ -1358,9 +1372,11 @@ export class MapComponent implements OnInit {
   }
 
   public myFavorites(): void{
-    
     this.myFavoritesWindow.open = true
+  }
 
+  public closeFavorites():  void{
+    this.myFavoritesWindow.open = false
   }
 
   public promptForLocation(){

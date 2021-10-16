@@ -4,6 +4,7 @@
     
     <app-menu-logged-out #appMenuLoggedOut 
                         class="spotbie-app-menu" 
+                        (myFavoritesEvt)="myFavorites()"
                         (spawnCategoriesOut)="spawnCategories($event)" 
                         (openHome)="openHome()">
     </app-menu-logged-out>

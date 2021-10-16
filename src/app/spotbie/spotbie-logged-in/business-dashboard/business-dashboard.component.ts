@@ -63,7 +63,7 @@ export class BusinessDashboardComponent implements OnInit {
       
       resp => {
         
-        if(resp.business == null) 
+        if(resp.business == null && this) 
           this.displayBusinessSetUp = true 
         else
           this.displayBusinessSetUp = false

@@ -6,6 +6,8 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
   styleUrls: ['../features.component.css', './business-features.component.css']
 })
 export class BusinessFeaturesComponent implements OnInit {
+  
+  @Output() spawnCategoriesEvt = new EventEmitter()
 
   @Output() signUpEvent = new EventEmitter()
 
@@ -13,6 +15,12 @@ export class BusinessFeaturesComponent implements OnInit {
 
   public signUp(){
     this.signUpEvent.emit()
+  }
+
+  public spawnCategories(category: string){
+
+    this.spawnCategoriesEvt.emit({ category: category })
+
   }
 
   ngOnInit(): void {

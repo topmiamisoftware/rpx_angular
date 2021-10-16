@@ -509,8 +509,7 @@ hr{
     cursor: pointer; 
 }
 .spotbie-select-table-text{
-    text-align: left;
-    padding-left: 18px;    
+    text-align: left;    
 }
 .spotbie-select-table-img{
     width: 120px;
@@ -715,12 +714,6 @@ hr{
 .gm-style-iw-d{
     overflow: hidden !important;
 }
-.spotbie-no-notis-box{
-    padding-top: 50px;
-    padding-bottom: 50px;
-    background-color: rgba(0,0,0,.23);
-    border-radius: 10px;
-}
 .mat-slider.mat-slider-horizontal .mat-slider-track-fill {
     background: linear-gradient(90deg,#35a99f,#64e56f);
 }
@@ -901,7 +894,7 @@ p.sb-helpInfo{
         max-width: 50px;
         font-size: 20px;
         top: 68px;
-        right: 20px;
+        right: 15px;
     }
     .spotbie-button {
         width: 85%;
@@ -920,6 +913,12 @@ p.sb-helpInfo{
         width: 90%;
         min-width: 90%;
         max-width: 90%;        
+    }
+    .mat-chip-list-wrapper {
+        margin: 0 auto !important;
+        max-width: 90%;
+        width: 90%;
+        min-width: 90%;
     }
 }
 @media (max-width: 460px) { 

@@ -22,10 +22,12 @@ export class HomeComponent implements OnInit {
   
   }
 
-  public openHome(){
-  
+  public openHome(){  
     this.app_map.openWelcome()
-  
+  }
+
+  public myFavorites(){
+    this.app_map.myFavorites()
   }
 
   async ngOnInit() {

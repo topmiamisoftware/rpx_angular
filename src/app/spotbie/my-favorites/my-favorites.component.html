@@ -2,6 +2,8 @@
 
 <div class="spotbie-overlay-window">
 
+    <h4 class='spotbie-text-gradient mt-5 mb-2' *ngIf="!noFavorites">MY FAVORITES</h4>
+
     <div class='spotbie-search-result' *ngFor='let favorite of favoriteItems' (click)="pullSearchMarker(favorite)">
       
         <div class='spotbie-search-result-title' >
@@ -84,14 +86,22 @@
     </div>     
 
     <div class='spotbie-load-more-button spotbie-button' *ngIf="loadMore" (click)="loadMoreFavorites()">load more</div>
-
+    
     <div class='spotbie-no-notis-box' *ngIf="noFavorites">
-        <div>
+
+        <i class="fas fa-exclamation-triangle"></i>
+
+        <p class="spotbie-text-gradient">
             You have no favorites yet.<br/>
             Add favorites through your map.
-        </div>
-    </div>
+        </p>
 
+        <div class="spotbie-text-gradient cursor-pointer" (click)="closeWindowX()">
+          CLOSE
+        </div>
+
+    </div>
+    
     <div class="sb-closeButton" (click)="closeWindowX()">
       <i class="fa fa-times"></i>
     </div>

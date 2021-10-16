@@ -65,11 +65,15 @@ export class MenuLoggedInComponent implements OnInit {
               private deviceService: DeviceDetectorService,
               private loyaltyPointsService: LoyaltyPointsService) {}
 
+  public myFavorites(){
+    this.menuActive = false
+    this.spotbieMap.myFavorites()    
+  }
+
   public toggleLoyaltyPoints(){
     this.spotbieMap.goToLp()
   }
-
-
+  
   public toggleQRScanner(){
     this.spotbieMap.goToQrCode()
   }

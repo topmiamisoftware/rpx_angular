@@ -138,15 +138,19 @@ export class InfoObjectComponent implements OnInit {
       this.infoObjectImageUrl = this.info_object.image_url      
 
       if(this.router.url.indexOf('place-to-eat') > -1 || this.info_object.type_of_info_object_category == 'food'){
+
         this.info_object.type_of_info_object = 'yelp_business'
         this.info_object.type_of_info_object_category = 'food'
         this.infoObjectLink = `https://spotbie.com/place-to-eat/${this.info_object.alias}/${this.info_object.id}`
+
       }
       
       if(this.router.url.indexOf('shopping') > -1 || this.info_object.type_of_info_object_category == 'shopping'){
+
         this.info_object.type_of_info_object = 'yelp_business'
         this.info_object.type_of_info_object_category = 'shopping'
         this.infoObjectLink = `https://spotbie.com/shopping/${this.info_object.alias}/${this.info_object.id}`
+        
       }
 
       if(this.info_object.hours !== undefined){
@@ -384,7 +388,7 @@ export class InfoObjectComponent implements OnInit {
   }
 
   public getEventCallback (httpResponse: any): void {
-
+    
     if(httpResponse.success){      
       
       if(httpResponse.data._embedded.events[0] === undefined){
@@ -420,7 +424,7 @@ export class InfoObjectComponent implements OnInit {
       
       this.setEventMetaData()
 
-      //console.log("EventObject", this.info_object)
+      console.log("EventObject", this.info_object)
 
     } else
       console.log("getEventsSearchCallback Error: ", httpResponse)
@@ -476,14 +480,13 @@ export class InfoObjectComponent implements OnInit {
     if(this.info_object !== undefined){
       
       this.infoObjectImageUrl = this.info_object.image_url
-      this.infoObjectCategory = this.info_object.type_of_info_object_category
+      this.infoObjectCategory = this.info_object.type_of_info_object_category      
 
       switch(this.info_object.type_of_info_object){
         case 'yelp_business':
           this.urlApi = YELP_BUSINESS_DETAILS_API + this.info_object.id
           break
         case 'ticketmaster_event':
-          this.setEventMetaData()
           this.loading = false
           return
       }

@@ -82,7 +82,7 @@ export class SettingsComponent implements OnInit {
 
   public loading = false
 
-  public accountTypeList = ['PERSONAL', 'PLACE TO EAT']
+  public accountTypeList = ['PERSONAL', 'PLACE TO EAT', 'EVENTS', 'RETAIL STORE']
   public chosen_account_type: number
   public loadAccountTypes = false
 
@@ -805,7 +805,7 @@ export class SettingsComponent implements OnInit {
       case 'EVENTS':
         this.chosen_account_type = 2
         break
-      case 'RETAIL SHOP':
+      case 'RETAIL STORE':
         this.chosen_account_type = 3
         break
     }
@@ -814,7 +814,6 @@ export class SettingsComponent implements OnInit {
 
     switch(this.chosen_account_type){
 
-      case 0://unset account type
       case 4://personal account
         this.initSettingsForm('personal')
         break
@@ -825,11 +824,12 @@ export class SettingsComponent implements OnInit {
         break
 
       case 2://events account type
-        this.initSettingsForm('personal')
+        this.initSettingsForm('events')
         break
 
       case 3://shopping account type
-        this.initSettingsForm('personal')
+        this.initSettingsForm('shopping')
+        this.promptForLocation()
         break
 
       default:
@@ -881,7 +881,9 @@ export class SettingsComponent implements OnInit {
         this.fetchCurrentSettings()               
 
         break
-
+      
+      case 'events':
+      case 'shopping':
       case 'place_to_eat':
 
         const originTitleValidators = [Validators.required]

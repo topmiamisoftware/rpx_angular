@@ -1,4 +1,5 @@
 import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { DeviceDetectorService } from 'ngx-device-detector';
 import { LoyaltyPointsComponent } from '../loyalty-points/loyalty-points.component';
 import { QrComponent } from '../qr/qr.component';
 import { RewardMenuComponent } from '../reward-menu/reward-menu.component';
@@ -17,12 +18,14 @@ export class UserDashboardComponent implements OnInit {
   @ViewChild('qrApp') qrApp: QrComponent
 
   @ViewChild('lpAppAnchor') lpAppAnchor: ElementRef
-  @ViewChild('qrCodeAppAnchor') qrCodeAppAnchor: ElementRef
   @ViewChild('rewardMenuAppAnchor') rewardMenuAppAnchor: ElementRef
+  @ViewChild('qrCodeAppAnchor') qrCodeAppAnchor: ElementRef
 
   public scannerStarted: boolean = false
 
-  constructor() { }
+  public isMobile: boolean = false
+
+  constructor(private deviceDetectorService: DeviceDetectorService) { }
 
   public openLoyaltyPoints(){
     this.loyaltyPointsApp.initBusinessLoyaltyPoints()
@@ -73,6 +76,10 @@ export class UserDashboardComponent implements OnInit {
 
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+
+    this.isMobile = this.deviceDetectorService.isMobile()
+
+  }
 
 }

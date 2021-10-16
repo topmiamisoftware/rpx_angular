@@ -27,6 +27,10 @@ export class BusinessComponent implements OnInit {
     this.app_map.openWelcome()
   }
 
+  public myFavorites(){
+    this.app_map.myFavorites()
+  }
+
   public signUp(){
     this.appMenuLoggedOut.signUp()
   }

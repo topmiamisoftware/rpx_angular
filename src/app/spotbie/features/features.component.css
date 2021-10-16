@@ -132,6 +132,7 @@ p{
     width: 25%;
     min-width: 25%;
     font-size: .6rem;
+    cursor: pointer;
 }
 .sb-homePageIconsTable img{
     max-width: 100px;

@@ -4,14 +4,14 @@
         #spotbieMainMenu>
   <tr>  
 
-    <td class="sb-menu-nav" (click)="slideMenu()" *ngIf="isMobile">
+    <td class="sb-menu-nav" (click)="slideMenu()" *ngIf="isMobile || isTablet">
       <i class="fa fa-bars" *ngIf="!menuActive"></i>
       <i class="fa fa-times" *ngIf="menuActive"></i>
     </td>  
   
     <td [ngStyle]="getPointsWrapperStyle()">
       
-      <img class="spotbie-header-mini-logo" src="assets/images/spotbie_logo_header.svg" *ngIf="isDesktop" (click)="home()"/>
+      <img class="spotbie-header-mini-logo" src="assets/images/spotbie_logo_header.svg" *ngIf="isDesktop || isTablet" (click)="home()"/>
 
       <span class='sb-loyalty-points' (click)="toggleLoyaltyPoints()" >{{ userLoyaltyPoints | number:'1.0':'en-US' }}</span>
       
@@ -20,7 +20,7 @@
       <img class='sb-qr' (click)="toggleQRScanner()"  src="assets/images/spotbie-qr.svg" /> 
       
       <div *ngIf="this.userType == '1'" class="sb-businessMenu">
-        <img class='sb-loyalty-points' *ngIf="isMobile" (click)="toggleRewardMenu()"  src="assets/images/spotbie-loyalty-points.svg" />
+        <img class='sb-loyalty-points' *ngIf="isMobile || isTablet" (click)="toggleRewardMenu()"  src="assets/images/spotbie-loyalty-points.svg" />
       </div>
 
       <span class='sb-userName' (click)="openWindow(settingsWindow)" *ngIf="userName !== null && isDesktop">{{ userName }}</span>         
@@ -28,6 +28,10 @@
     </td>    
 
     <td *ngIf="isDesktop" class="sb-desktopNavBar" style="text-align: right; cursor: default;"> 
+
+      <span (click)="myFavorites()" *ngIf="this.userType === '4'">
+        <i class="fas fa-star"></i>
+      </span>
 
       <span (click)="spawnCategories('food')" *ngIf="this.userType === '4'">
         PLACES TO EAT
@@ -71,6 +75,10 @@
 
         <div (click)="spawnCategories('events')">
           EVENTS <i class="fa fa-angle-right"></i>
+        </div>
+
+        <div (click)="myFavorites()">
+          MY FAVORITES <i class="fas fa-angle-right"></i>
         </div>
 
         <div (click)="openWindow(settingsWindow)">

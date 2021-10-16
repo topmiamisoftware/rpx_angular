@@ -33,7 +33,7 @@
 
         </div>
 
-        <div class='spotbie-info-object-image-list'>
+        <div class='spotbie-info-object-image-list' *ngIf="info_object.type_of_info_object != 'ticketmaster_event'">
     
             <div class='spotbie-info-object-image-thumb'
                 *ngFor="let thumbnail of info_object.photos"
@@ -41,9 +41,16 @@
     
         </div>
         
+        <div class='spotbie-info-object-image-list' *ngIf="info_object.type_of_info_object == 'ticketmaster_event'">
+    
+            <div class='spotbie-info-object-image-thumb'
+                 [ngStyle]="{ 'background' : 'url(' + info_object.image_url + ')'}"></div>
+    
+        </div>
+
         <div class='spotbie-button spotbie-add-to-favorites' 
             (click)="addFavorite()"
-            *ngIf="info_object.type_of_info_object != 'ticketmaster_event' && showFavorites && isLoggedIn == '1'">
+            *ngIf="info_object.type_of_info_object != 'ticketmaster_event' && showFavorites">
 
             <span class="text-uppercase">ADD</span>            
 
@@ -53,7 +60,7 @@
 
         <div class='spotbie-button spotbie-add-to-favorites' 
                 (click)="removeFavorite()" 
-                *ngIf="info_object.type_of_info_object != 'ticketmaster_event' && !showFavorites && isLoggedIn == '1'">
+                *ngIf="info_object.type_of_info_object != 'ticketmaster_event' && !showFavorites">
 
             <span class="text-uppercase">REMOVE</span>            
 
@@ -96,15 +103,15 @@
             
             {{ info_object._embedded.venues[0].address.line1 }} {{ info_object._embedded.venues[0].city.name }}, {{ info_object._embedded.venues[0].state.stateCode }} {{ info_object._embedded.venues[0].postalCode }}    
         
-            <div class='spotbie-time-event' *ngIf="info_object.dates.start.localDate">
+            <div class='spotbie-time-event mb-2' *ngIf="info_object.dates.start.localDate">
                 {{ info_object.dates.start.spotbieDate }}
             </div>
 
-            <div class='spotbie-price-ranges' *ngIf="info_object.priceRanges !== undefined">
+            <div class='spotbie-price-ranges mb-2' *ngIf="info_object.priceRanges !== undefined">
                 Price Ranges ${{ info_object.priceRanges[0].min }} to ${{ info_object.priceRanges[0].max }}
             </div>
 
-            <div class='spotbie-event-code' *ngIf="info_object.dates.status.code">
+            <div class='spotbie-event-code mb-2' *ngIf="info_object.dates.status.code">
                 Status: {{ info_object.dates.status.code }}
             </div>
 
@@ -112,7 +119,7 @@
  
         <div class="spotbie-info-object-buttons">
 
-            <div class='spotbie-distance' [ngClass]="getFontClasses()" *ngIf="info_object.distance !== undefined" (click)="openWithGoogleMaps()">
+            <div class='spotbie-distance mb-2' [ngClass]="getFontClasses()" *ngIf="info_object.distance !== undefined" (click)="openWithGoogleMaps()">
                 {{ info_object.distance }} miles from you.
             </div>
 

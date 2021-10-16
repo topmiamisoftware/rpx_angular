@@ -12,7 +12,7 @@ export const environment = {
    * format: https://192.168.1.65:443/api/
    * Laravel App will not work if it's not served on over SSL.
    * */
-  apiEndpoint: 'http://localhost:8000/api/'
+  apiEndpoint: 'https://24f4-2600-1700-4804-d5f0-7110-c70e-1ecd-b406.ngrok.io/api/'
 }
 /*
  * For easier debugging in development mode, you can import the following file

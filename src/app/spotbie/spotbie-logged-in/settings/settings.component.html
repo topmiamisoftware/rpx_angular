@@ -1,8 +1,8 @@
 <app-loading-screen *ngIf="loading"></app-loading-screen>
 
-<div class='spotbie-overlay-window pt-5 pb-5' #spotbieSettingsWindow>    
+<div class='spotbie-overlay-window pt-2 pb-5' #spotbieSettingsWindow>    
     
-    <div class='spotbie-block'>
+    <div class='spotbie-block sb-topSettingsPadding'>
 
         <div #spotbieSettingsInfoText class="spotbie-text-gradient mt-2 mb-4"></div>
 
@@ -175,12 +175,12 @@
                     </div>
                     
                     <ng-template #spotbie_origin_normal>
-                        <div class="spotbie-input-info mb-2 spotbie-text-gradient text-center" *ngIf="account_type_category == 'PLACE TO EAT'" >
+                        <div class="spotbie-input-info mb-2 spotbie-text-gradient text-center" *ngIf="account_type_category == 'PLACE TO EAT' || account_type_category == 'RETAIL STORE'" >
                             Where is your {{ account_type_category | lowercase  }} located?
                         </div>
                     </ng-template>
     
-                    <tr *ngIf="account_type_category == 'PLACE TO EAT'">
+                    <tr *ngIf="account_type_category == 'PLACE TO EAT' || account_type_category == 'RETAIL STORE'">
                         
                         <td>
     
@@ -316,7 +316,7 @@
 
                         <mat-form-field class="spotbie-category-pick" appearance="fill">
                             
-                            <div class="spotbie-input-info spotbie-text-gradient text-center mt-4 mb-3">
+                            <div class="spotbie-input-info spotbie-text-gradient text-center mt-4 mb-2">
                                 Enter {{ account_type_category | lowercase }} categories.
                             </div>
 
@@ -356,36 +356,36 @@
                             
                         </mat-form-field>
 
-                    </tr>
-
-                    <div *ngIf="placeFormSubmitted && i.originDescription.errors else spotbie_origin_description_normal" 
-                            class="spotbie-input-info mb-3 spotbie-text-gradient text-center spotbie-error">
-                
-                        <div *ngIf="i.originDescription.errors.required">
-                            You must enter a description!
-                        </div>
-                
-                        <div *ngIf="i.originDescription.errors.maxlength">
-                            Your description can only be 350 characters long.
-                        </div>
-
-                        <div *ngIf="i.originDescription.errors.minlength">
-                            Your description must be at least 100 characters.
-                        </div>
-                
-                    </div> 
-
-                    <ng-template #spotbie_origin_description_normal>
-                        <div class="spotbie-input-info spotbie-text-gradient text-center mb-3" *ngIf="account_type_category == 'PLACE TO EAT' && locationFound">
-                            Enter {{ account_type_category | lowercase }} description.
-                        </div>
-                    </ng-template>            
+                    </tr>  
 
                     <tr *ngIf="account_type_category == 'PLACE TO EAT' && locationFound">
     
-                        <td style="background-color: rgba(0,0,0,.23); padding-top: 0px; padding-bottom: 0px;">
-    
-                            <textarea class='spotbie-textarea spotbie-text-gradient' 
+                        <td style="padding-top: 0px; padding-bottom: 0px;">
+                            
+                            <div *ngIf="placeFormSubmitted && i.originDescription.errors else spotbie_origin_description_normal" 
+                                    class="spotbie-input-info mb-3 spotbie-text-gradient text-center spotbie-error">
+                        
+                                <div *ngIf="i.originDescription.errors.required">
+                                    You must enter a description!
+                                </div>
+                        
+                                <div *ngIf="i.originDescription.errors.maxlength">
+                                    Your description can only be 350 characters long.
+                                </div>
+
+                                <div *ngIf="i.originDescription.errors.minlength">
+                                    Your description must be at least 100 characters.
+                                </div>
+                        
+                            </div> 
+
+                            <ng-template #spotbie_origin_description_normal>
+                                <label class="spotbie-input-info spotbie-text-gradient text-center mb-2" *ngIf="account_type_category == 'PLACE TO EAT' && locationFound">
+                                    Enter {{ account_type_category | lowercase }} description.
+                                </label>
+                            </ng-template>          
+
+                            <textarea class='spotbie-textarea' 
                                         (click)="$event.target.select()" 
                                         formControlName="originDescription" 
                                         maxlength="350"
@@ -481,7 +481,7 @@
                         
                         <tr>
                             <td> 
-                                <div class='sb-text-light-green-gradient text-center text-uppercase mt-4'>
+                                <div class='sb-text-light-green-gradient sb-helpDemoText text-center text-uppercase mt-4'>
                                     Don't have one? Book 
                                     <span class='sb-text-light-green-gradient' (click)="calendly()">free demo with SpotBie here.</span>
                                 </div>
@@ -491,12 +491,12 @@
                         <tr>
                             <td>
 
-                                <div class='spotbie-button text-uppercase mt-4' (click)="claimThisBusiness()" *ngIf="locationFound">
+                                <div class='spotbie-button text-uppercase mt-4 mb-4' (click)="claimThisBusiness()" *ngIf="locationFound">
                                     FINISH
                                 </div>
 
-                                <button class='spotbie-text-gradient text-center text-uppercase mt-4' 
-                                     style="cursor: pointer;" (click)="closePassKey()">CANCEL</button>
+                                <div class='spotbie-text-gradient text-center text-uppercase' 
+                                     style="cursor: pointer;" (click)="closePassKey()">CANCEL</div>
 
                             </td>
                         </tr>
@@ -704,13 +704,11 @@
                     Choose an account type.
                 </div>
 
-                <div class="spotbie-select-menu-option" *ngFor="let account_type of accountTypeList" (click)="selectAccountType(account_type)">
-                    
-                    <table class="spotbie-select-table">
-                        <tr>
-                            <td class='spotbie-select-table-text spotbie-text-link text-center text-uppercase'>{{ account_type }}</td>
-                        </tr>
-                    </table>  
+                <div class="spotbie-select-menu-option mt-1 mb-1 pt-3 pb-3" 
+                     *ngFor="let account_type of accountTypeList" 
+                     (click)="selectAccountType(account_type)">
+
+                    <span class='spotbie-text-gradient text-center text-uppercase'>{{ account_type }}</span>
 
                 </div>
                 

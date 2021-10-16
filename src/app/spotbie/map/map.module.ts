@@ -23,11 +23,12 @@ import { UserFeaturesComponent } from '../features/user-features/user-features.c
 import { BusinessDashboardModule } from '../spotbie-logged-in/business-dashboard/business-dashboard.module'
 import { UserDashboardModule } from '../spotbie-logged-in/user-dashboard/user-dashboard.module'
 import { ShareIconsModule } from 'ngx-sharebuttons/icons'
+import { MyFavoritesModule } from '../my-favorites/my-favorites.module'
+import { InfoObjectModule } from './info-object/info-object.module'
 
 @NgModule({
   declarations: [    
-    MapComponent,  
-    InfoObjectComponent,
+    MapComponent,
     UserInfoObjectComponent,
     BusinessFeaturesComponent,
     UserFeaturesComponent  
@@ -41,6 +42,8 @@ import { ShareIconsModule } from 'ngx-sharebuttons/icons'
     ReactiveFormsModule,
     FormsModule,
     ShareIconsModule,
+    MyFavoritesModule,
+    InfoObjectModule,
     ShareButtonsModule.withConfig({
       include: ['facebook', 'twitter', 'linkedin', 'reddit', 'tumblr', 'mix', 'viber', 'messenger','whatsapp']
     }),
