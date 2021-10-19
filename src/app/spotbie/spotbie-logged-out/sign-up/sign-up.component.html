@@ -1,8 +1,6 @@
 <app-loading-screen *ngIf="loading"></app-loading-screen>
 
-<div class="spotbie-overlay-window container">
-
-    <div class="sb-login-top-padding mt-2"></div>
+<div class="spotbie-overlay-window container d-flex">
 
     <p class='spotbie-text-gradient text-uppercase text-center' id="sign_up_general_instructions" #spotbieSignUpIssues>
         <span  *ngIf="!business">Sign up to earn rewards with spotbie.</span>
@@ -31,13 +29,13 @@
 
         </div>   
 
-            <!--<ng-template #username_normal>
+        <!--<ng-template #username_normal>
 
-                <label class="signUpBoxInstructions text-uppercase" id='username_label' for='spotbie_username'>
-                    What will be your username?
-                </label>
+            <label class="signUpBoxInstructions text-uppercase" id='username_label' for='spotbie_username'>
+                What will be your username?
+            </label>
 
-            </ng-template>-->    
+        </ng-template>-->    
 
         <table class="sb-inputWithIconWrapper">
 
@@ -121,12 +119,12 @@
 
         </div> 
                                         
-        <ng-template #password_normal>
+        <!--<ng-template #password_normal>
 
             <label class="signUpBoxInstructions text-uppercase" id='password_label' for='user_pass'>
             </label>
 
-        </ng-template>
+        </ng-template>-->
 
         <table class="sb-inputWithIconWrapper">
 
@@ -150,7 +148,7 @@
 
         <p class='spotbie-rel-div
                     spotbie-padding
-                    spotie-login-terms
+                    spotnie-login-terms
                     spotbie-text-link
                     text-uppercase'>
             By Signing Up, you are agreeing to <a [routerLink]="['/terms']">OUR TERMS & PRIVACY POLICY.</a>
@@ -159,11 +157,11 @@
     </form>
 
     <button class="btn spotbie-button sb-fb-logIn-btn spotbie-padding text-uppercase" (click)="signInWithFB()">
-        Login with Facebook
+        SIGN-UP with Facebook
     </button>
 
     <button class="btn spotbie-button sb-google-logIn-btn spotbie-padding text-uppercase" (click)="signInWithGoogle()">
-        Login with Google
+        SIGN-UP with Google
     </button>                                                              
                   
 

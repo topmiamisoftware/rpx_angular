@@ -4,114 +4,121 @@
     
     <div class='spotbie-block sb-topSettingsPadding'>
 
-        <div #spotbieSettingsInfoText class="spotbie-text-gradient mt-2 mb-4"></div>
+        <div #spotbieSettingsInfoText class="spotbie-text-gradient mt-4 mb-4"></div>
 
         <form [formGroup]="settingsForm" *ngIf="settingsFormInitiated">
 
-            <table class='spotbie-settings-table'>
-                
-                <div *ngIf="submitted && f.spotbie_username.errors else username_normal" class="spotbie-input-info spotbie-text-gradient spotbie-error">
-            
-                    <div *ngIf="f.spotbie_username.errors.required">
-                        You must enter a username!
-                    </div>
-
-                    <div *ngIf="f.spotbie_username.errors.maxlength || f.spotbie_username.errors.wrongLength">
-                        Your username cannot be longer than 15 characters.
-                    </div> 
-                    
-                    <div *ngIf="f.spotbie_username.errors.illegalChars">
-                        Must only contain letters, numbers, dots, and underscores.
-                    </div> 
-                    
-                </div> 
-                
-                <ng-template #username_normal>
-                    <div #spotbie_settings_issues class="spotbie-input-info spotbie-text-gradient">
-                        Change your username.
-                    </div>          
-                </ng-template>
+            <table class='spotbie-settings-table'>            
 
                 <tr>
                     <td>
+                    
+                        <div *ngIf="submitted && f.spotbie_username.errors else username_normal" class="spotbie-input-info spotbie-text-gradient spotbie-error">
+            
+                            <div *ngIf="f.spotbie_username.errors.required">
+                                You must enter a username!
+                            </div>
+        
+                            <div *ngIf="f.spotbie_username.errors.maxlength || f.spotbie_username.errors.wrongLength">
+                                Your username cannot be longer than 15 characters.
+                            </div> 
+                            
+                            <div *ngIf="f.spotbie_username.errors.illegalChars">
+                                Must only contain letters, numbers, dots, and underscores.
+                            </div> 
+                            
+                        </div> 
+                        
+                        <ng-template #username_normal>
+                            <label #spotbie_settings_issues class="spotbie-input-info spotbie-text-gradient">
+                                Change your username.
+                            </label>          
+                        </ng-template>
+
                         <input class="sb-input" (click)="$event.target.select()" formControlName="spotbie_username" type="text" value="username" maxlength="35" />
+                    
                     </td>
                 </tr>
 
-                <div *ngIf="submitted && f.spotbie_first_name.errors else user_first_name_normal" class="spotbie-input-info spotbie-text-gradient spotbie-error">
-            
-                    <div *ngIf="f.spotbie_first_name.errors.required">
-                        Please identify yourself!
-                    </div>
-                    
-                    <div *ngIf="f.spotbie_first_name.errors.maxlength">
-                        Your name cannot be longer than 72 characters.
-                    </div>  
-
-                </div> 
-                
-                <ng-template #user_first_name_normal>
-                    <label class="spotbie-input-info spotbie-text-gradient">
-                        What is your first name?
-                    </label>
-                </ng-template>
-
                 <tr>
                     <td>
+
+                        <div *ngIf="submitted && f.spotbie_first_name.errors else user_first_name_normal" class="spotbie-input-info spotbie-text-gradient spotbie-error">
+            
+                            <div *ngIf="f.spotbie_first_name.errors.required">
+                                Please identify yourself!
+                            </div>
+                            
+                            <div *ngIf="f.spotbie_first_name.errors.maxlength">
+                                Your name cannot be longer than 72 characters.
+                            </div>  
+        
+                        </div> 
+                        
+                        <ng-template #user_first_name_normal>
+                            <label class="spotbie-input-info spotbie-text-gradient">
+                                What is your first name?
+                            </label>
+                        </ng-template>
+
                         <input class="sb-input" (click)="$event.target.select()" formControlName="spotbie_first_name" type="text" value="name" maxlength="72" />
-                    </td>
-                </tr> 
-                
-                <div *ngIf="submitted && f.spotbie_last_name.errors else user_last_name_normal" class="spotbie-input-info spotbie-text-gradient spotbie-error">
-            
-                    <div *ngIf="f.spotbie_last_name.errors.required">
-                        Please identify yourself!
-                    </div>
-                    
-                    <div *ngIf="f.spotbie_last_name.errors.maxlength">
-                        Your name cannot be longer than 72 characters.
-                    </div>  
 
-                </div> 
-                
-                <ng-template #user_last_name_normal>
-                    <label class="spotbie-input-info spotbie-text-gradient">
-                        What is your last name?
-                    </label>
-                </ng-template>
+                    </td>
+                </tr>             
 
                 <tr>
                     <td>
+
+                        <div *ngIf="submitted && f.spotbie_last_name.errors else user_last_name_normal" class="spotbie-input-info spotbie-text-gradient spotbie-error">
+            
+                            <div *ngIf="f.spotbie_last_name.errors.required">
+                                Please identify yourself!
+                            </div>
+                            
+                            <div *ngIf="f.spotbie_last_name.errors.maxlength">
+                                Your name cannot be longer than 72 characters.
+                            </div>  
+        
+                        </div> 
+                        
+                        <ng-template #user_last_name_normal>
+                            <label class="spotbie-input-info spotbie-text-gradient">
+                                What is your last name?
+                            </label>
+                        </ng-template>
+
                         <input class="sb-input" (click)="$event.target.select()" formControlName="spotbie_last_name" type="text" value="name" maxlength="72" />
+
                     </td>
                 </tr> 
 
-                <div *ngIf="submitted && f.spotbie_email.errors else user_email_normal" class="spotbie-input-info  animated shake">
-            
-                    <div *ngIf="f.spotbie_email.errors.required">
-                        Please enter your e-mail, it will be used if you lose your password.
-                    </div>
-            
-                </div> 
-                
-                <ng-template #user_email_normal>
-                    <div class="spotbie-input-info spotbie-text-gradient">
-                        What is your email?
-                    </div>
-                </ng-template>
-
                 <tr>
                     <td>
+
+                        <div *ngIf="submitted && f.spotbie_email.errors else user_email_normal" class="spotbie-input-info  animated shake">
+            
+                            <div *ngIf="f.spotbie_email.errors.required">
+                                Please enter your e-mail, it will be used if you lose your password.
+                            </div>
+                    
+                        </div> 
+                        
+                        <ng-template #user_email_normal>
+                            <label class="spotbie-input-info spotbie-text-gradient">
+                                What is your email?
+                            </label>
+                        </ng-template>
+
                         <input class="sb-input" (click)="$event.target.select()" formControlName="spotbie_email" type="text" value="email" maxlength="135"/>
+
                     </td>
                 </tr>       
 
-                <div class="spotbie-input-info spotbie-text-gradient">
-                    Phone number.
-                </div>
-
                 <tr>
-                    <td>                                  
+                    <td>      
+                        <label class="spotbie-input-info spotbie-text-gradient">
+                            Phone number.
+                        </label>                                                    
                         <input class='sb-input' 
                                 type='tel' 
                                 mask="(000) 000-0000" 
@@ -121,28 +128,31 @@
                     </td>
                 </tr>
 
-                <div *ngIf="submitted && f.spotbie_acc_type.errors else user_account_type_normal" class="spotbie-input-info  spotbie-text-gradient spotbie-error">
-            
-                    <div *ngIf="f.spotbie_acc_type.errors.required">
-                        You must choose an account type!
-                    </div>
-            
-                </div> 
-                
-                <ng-template #user_account_type_normal>
-                    <div class="spotbie-input-info spotbie-text-gradient">
-                        Choose an account type.
-                    </div>
-                </ng-template>
-
                 <tr>
                     <td>
+
+                        <div *ngIf="submitted && f.spotbie_acc_type.errors else user_account_type_normal" class="spotbie-input-info  spotbie-text-gradient spotbie-error">
+            
+                            <div *ngIf="f.spotbie_acc_type.errors.required">
+                                You must choose an account type!
+                            </div>
+                    
+                        </div> 
+                        
+                        <ng-template #user_account_type_normal>
+                            <label class="spotbie-input-info spotbie-text-gradient">
+                                Choose an account type.
+                            </label>
+                        </ng-template>
+
                         <div #userAccountTypeNormalScroll></div>
+
                         <input (click)="changeAccType()" 
                                 class="sb-input spotbie-clickable-field" 
                                 formControlName="spotbie_acc_type" 
                                 type="text"
                                 readonly="readonly" />
+                                
                     </td>
                 </tr>
 
@@ -158,12 +168,13 @@
 
         <div class='spotbie-overlay-window' *ngIf="placeSettingsFormUp">
 
-            <form [formGroup]="placeToEatSettingsForm">
+            <form [formGroup]="businessSettingsForm">
             
                 <table class='spotbie-settings-table' style="border-bottom: unset;">
     
                     <!-- Locale Accounts information-->
-                    <div *ngIf="account_type_category == 'PLACE TO EAT'">
+                    <div *ngIf="account_type_category !== 'PERSONAL'">
+
                         <div *ngIf="placeFormSubmitted && i.spotbieOrigin.errors else spotbie_origin_normal" 
                               class="spotbie-input-info spotbie-text-gradient text-center spotbie-error">
                 
@@ -172,33 +183,33 @@
                             </div>
                     
                         </div> 
+
                     </div>
                     
                     <ng-template #spotbie_origin_normal>
-                        <div class="spotbie-input-info mb-2 spotbie-text-gradient text-center" *ngIf="account_type_category == 'PLACE TO EAT' || account_type_category == 'RETAIL STORE'" >
-                            Where is your {{ account_type_category | lowercase  }} located?
+                        <div class="spotbie-input-info mb-2 spotbie-text-gradient text-center" *ngIf="account_type_category !== 'PERSONAL'" >
+                            Where is your {{ account_type_category }} located?
                         </div>
                     </ng-template>
     
-                    <tr *ngIf="account_type_category == 'PLACE TO EAT' || account_type_category == 'RETAIL STORE'">
+                    <tr *ngIf="account_type_category !== 'PERSONAL'">
                         
                         <td>
     
                             <div class='spotbie-map'>                   
     
                                 <agm-map [streetViewControl]="false"
-                                        id="spotbieMapG"
-                                        *ngIf="locationFound"
-                                        #spotbie_map
-                                        [latitude]="lat" 
-                                        [longitude]="lng"
-                                        [styles]="map_styles"
-                                        [zoom]="18">
+                                            id="spotbieMapG"
+                                            #spotbie_map
+                                            [styles]="map_styles"
+                                            [zoom]="zoom"
+                                            *ngIf="locationFound"
+                                            [fitBounds]="fitBounds"                                            
+                                            [latitude]="lat" 
+                                            [longitude]="lng">
     
                                     <agm-marker [latitude]="lat" 
                                                 [longitude]="lng"
-                                                [markerDraggable]="true"                                     
-                                                (dragEnd)="markerDragEnd($event)"
                                                 *ngIf="locationFound"
                                                 [agmFitBounds]="true">
     
@@ -216,14 +227,6 @@
     
                                 </agm-map>
                                 
-                                <div class="map-prompt-mobile" (click)="mobileStartLocation()" *ngIf="!locationFound">
-                                    
-                                    <button class="title spotbie-button sb-getStarted text-uppercase">
-                                        <span>GET STARTED</span>
-                                    </button>
-                                
-                                </div>
-
                             </div>
                         
                         </td>
@@ -231,10 +234,10 @@
                     </tr>
                     
                     <div class="spotbie-input-info spotbie-text-gradient text-center" *ngIf="chosen_account_type == 1 && locationFound" >
-                        Drag marker or use the search bar.
+                        Find your {{ account_type_category }}.
                     </div>
     
-                    <tr *ngIf="account_type_category == 'PLACE TO EAT' && locationFound">
+                    <tr *ngIf="account_type_category !== 'PERSONAL' && locationFound">
                         <td>
                             
                             <input class="sb-input spotbie-search-map-input sb-origin-address-input"
@@ -266,8 +269,13 @@
                         {{ originTitle }}
                     </div>
 
-                    <img class='sb-business-img' [ngStyle]="getBusinessImgStyle()" *ngIf='locationFound' src="{{originPhoto}}" />
+                    <img class='sb-business-img' [ngClass]="getBusinessImgStyle()" *ngIf='locationFound' src="{{originPhoto}}" />
                     
+                    <div class='spotbie-input-info spotbie-text-gradient spotbie-place-address text-uppercase text-center mt-4 mb-3' 
+                         *ngIf='locationFound && place !== undefined'>
+                        {{  place.formatted_address }}
+                    </div>
+
                     <!--
 
                     <h6 class="spotbie-text-gradient text-uppercase mt-5 mb-4" #placeToEatMediaUploadInfo>
@@ -287,43 +295,45 @@
                         <div class='spotbie-click-or-drag-upload'>
                             <span class="spotbie-text-gradient text-uppercase">tap or drag to upload</span>
                         </div>
-                    </div>--> 
-                
-                    <div *ngIf="placeFormSubmitted && i.originTitle.errors else originTitleNormal" 
-                            class="spotbie-input-info spotbie-text-gradient text-center spotbie-error">
+                    </div>-->             
     
-                        <div *ngIf="i.originTitle.errors.required">
-                            Please enter your {{ account_type_category | lowercase }} title.
-                        </div>                                                
-    
-                    </div>   
+                    <tr *ngIf="account_type_category !== 'PERSONAL' && locationFound">
+                        <td> 
+                            
+                            <div *ngIf="placeFormSubmitted && i.originTitle.errors else originTitleNormal" 
+                                    class="spotbie-input-info spotbie-text-gradient text-center spotbie-error">
+            
+                                <div *ngIf="i.originTitle.errors.required">
+                                    Please enter your {{ account_type_category }} title.
+                                </div>                                                
+            
+                            </div>   
 
-                    <ng-template #originTitleNormal>
-    
-                        <div class="spotbie-input-info spotbie-text-gradient text-center" *ngIf="account_type_category == 'PLACE TO EAT' && locationFound">
-                            Place to eat title.
-                        </div>
-    
-                    </ng-template>
-    
-                    <tr *ngIf="account_type_category == 'PLACE TO EAT' && locationFound">
-                        <td>                                  
-                            <input class='sb-input text-uppercase' type='text' placeholder='TITLE' formControlName="originTitle"/>
+                            <ng-template #originTitleNormal>
+            
+                                <label class="spotbie-input-info spotbie-text-gradient text-center mt-4 mb-2" *ngIf="account_type_category !== 'PERSONAL' && locationFound">
+                                    Choose {{ account_type_category }} title.
+                                </label>
+            
+                            </ng-template>
+
+                            <input class='sb-input text-uppercase' type='text' placeholder='Place Title' formControlName="originTitle"/>
+
                         </td>
                     </tr>
                     
-                    <tr *ngIf="account_type_category == 'PLACE TO EAT' && locationFound">
+                    <tr *ngIf="account_type_category !== 'PERSONAL' && locationFound">
 
                         <mat-form-field class="spotbie-category-pick" appearance="fill">
                             
-                            <div class="spotbie-input-info spotbie-text-gradient text-center mt-4 mb-2">
-                                Enter {{ account_type_category | lowercase }} categories.
-                            </div>
+                            <label class="spotbie-input-info spotbie-text-gradient text-center mt-4 mb-2">
+                                Enter {{ account_type_category }} categories.
+                            </label>
 
                             <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
 
-                                <mat-option *ngFor="let placeToEatCategory of filteredPlacesToEatCategories | async" [value]="placeToEatCategory">
-                                  {{ placeToEatCategory }}
+                                <mat-option *ngFor="let businessCategory of filteredBusinessCategories | async" [value]="businessCategory">
+                                  {{ businessCategory }}
                                 </mat-option>
   
                             </mat-autocomplete>
@@ -332,10 +342,10 @@
 
                               <mat-chip
                                 class="text-uppercase mt-3"
-                                *ngFor="let category of placesToEatCategories"
+                                *ngFor="let category of activeBusinessCategories"
                                 [selectable]="selectable"
                                 [removable]="removable"
-                                (removed)="remove(fruit)">
+                                (removed)="remove(category)">
                                 {{ category }}
 
                                 <i matChipRemove *ngIf="removable" class="fa fa-times"></i>
@@ -358,7 +368,7 @@
 
                     </tr>  
 
-                    <tr *ngIf="account_type_category == 'PLACE TO EAT' && locationFound">
+                    <tr *ngIf="account_type_category !== 'PERSONAL' && locationFound">
     
                         <td style="padding-top: 0px; padding-bottom: 0px;">
                             
@@ -380,8 +390,9 @@
                             </div> 
 
                             <ng-template #spotbie_origin_description_normal>
-                                <label class="spotbie-input-info spotbie-text-gradient text-center mb-2" *ngIf="account_type_category == 'PLACE TO EAT' && locationFound">
-                                    Enter {{ account_type_category | lowercase }} description.
+                                <label class="spotbie-input-info spotbie-text-gradient text-center mb-2" 
+                                        *ngIf="account_type_category !== 'PERSONAL' && locationFound">
+                                    Enter {{ account_type_category }} description.
                                 </label>
                             </ng-template>          
 
@@ -405,7 +416,8 @@
 
                     <tr>
                         <div class='spotbie-text-gradient text-center text-uppercase mt-4 mb-5' 
-                        style="cursor: pointer;" (click)="cancelPlaceSettings()">CANCEL</div>
+                                *ngIf="!loading"
+                                style="cursor: pointer;" (click)="cancelPlaceSettings()">CANCEL</div>
                     </tr>
 
                 </table>

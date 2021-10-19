@@ -14,9 +14,10 @@
             *ngIf="displayLocationEnablingInstructions" 
             #businessSettingsAppAnchor>
 
-        <i class="fas fa-exclamation-triangle"></i>
+        <i class="fas fa-marker"></i>
 
         <h2 class="spotbie-text-gradient text-uppercase mt-4" style="display: inline-block;">BONKERS!</h2>
+        
         <div class='spotbie-text-gradient mt-2'>LOCATION DISABLED</div>
 
         <div class='spotbie-text-gradient mt-3'>Let's enable your location.</div>
@@ -480,37 +481,6 @@
     </div>
 
   </div>
-
-  <div class='spotbie-category-search-yelp animated slideInUp' *ngIf="catsUp">
-  
-    <div class='spotbie-categoryPull' *ngIf="!isMobile">
-
-      <div class='sb-optionGet' (click)="spawnCategories('food')">
-        <img src="assets/images/home_imgs/find-places-to-eat.svg" />
-      </div>
-
-      <div class='sb-optionGet' (click)="spawnCategories('events')">
-          <img src="assets/images/home_imgs/find-events.svg" />
-      </div>  
-
-      <div class='sb-optionGet' (click)="spawnCategories('shopping')">
-          <img src="assets/images/home_imgs/find-places-for-shopping.svg" />
-      </div> 
-
-    </div>
-
-    <input type='text' 
-            class='spotbie-searchbar sb-input' 
-            placeholder="{{ searchCategoriesPlaceHolder }}" 
-            (keyup)="searchSpotBie($event)" />
-  
-    <div class='spotbie-close-categories' 
-          (click)="closeCategories()" 
-          *ngIf="catsUp">
-      close
-    </div>
-  
-  </div>
   
   <div class='spotbie-categories animated slideInRight' *ngIf="catsUp && searchCategory != 'events'">
   
@@ -560,6 +530,37 @@
   
   </div>
   
+  <div class='spotbie-category-search-yelp animated slideInUp' *ngIf="catsUp">
+  
+    <div class='spotbie-categoryPull' *ngIf="!isMobile">
+
+      <div class='sb-optionGet' (click)="spawnCategories('food')">
+        <img src="assets/images/home_imgs/find-places-to-eat.svg" />
+      </div>
+
+      <div class='sb-optionGet' (click)="spawnCategories('events')">
+          <img src="assets/images/home_imgs/find-events.svg" />
+      </div>  
+
+      <div class='sb-optionGet' (click)="spawnCategories('shopping')">
+          <img src="assets/images/home_imgs/find-places-for-shopping.svg" />
+      </div> 
+
+    </div>
+
+    <input type='text' 
+            class='spotbie-searchbar sb-input' 
+            placeholder="{{ searchCategoriesPlaceHolder }}" 
+            (keyup)="searchSpotBie($event)" />
+  
+    <div class='spotbie-close-categories' 
+          (click)="closeCategories()" 
+          *ngIf="catsUp">
+      close
+    </div>
+  
+  </div>
+
   <app-info-object [info_object]="infoObject" (closeWindow)="infoObjectWindow.open = false" *ngIf="infoObjectWindow.open"></app-info-object>
 
   <app-user-info-object [currentMarker]="currentMarker" *ngIf="sliderRight" (close)="sliderRight = false"></app-user-info-object>

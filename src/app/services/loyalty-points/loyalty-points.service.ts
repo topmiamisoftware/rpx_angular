@@ -35,7 +35,7 @@ export class LoyaltyPointsService {
 
         resp => {
 
-          if(resp.success){            
+          if(resp.success){          
             let loyaltyPointBalance: LoyaltyPointBalance = resp.loyalty_points
             this.store.dispatch( setValue({loyaltyPointBalance}) )               
           }       

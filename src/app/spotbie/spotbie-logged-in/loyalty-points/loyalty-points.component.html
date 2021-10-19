@@ -15,13 +15,18 @@
 
         <p class="mt-4 mb-4" (click)="initBusinessLoyaltyPoints()">   
             
-            <span [ngClass]="loyaltyPointsClass()">{{ loyaltyPointBalance.balance | number:'1.0':'en-US' }}</span>
+            <span [ngClass]="loyaltyPointsClass()" *ngIf="loyaltyPointBalance.balance !== null">
+                {{ loyaltyPointBalance.balance | number:'1.0':'en-US' }}
+            </span>
+
+            <span [ngClass]="loyaltyPointsClass()" *ngIf="loyaltyPointBalance.balance === null">
+                0
+            </span>
 
             <span class="sb-added-loyalty-points sb-text-light-green-gradient animated fadeOutUp" 
                     *ngIf="newUserLoyaltyPoints !== null"
                     #newBalanceLoyaltyPoints>+{{ newUserLoyaltyPoints | number:'1.0':'en-US' }}</span>
 
-            <img class='sb-loyalty-points' src="../assets/images/spotbie-loyalty-points.svg" />            
         </p>    
 
         <div class='spotbie-text-gradient' 

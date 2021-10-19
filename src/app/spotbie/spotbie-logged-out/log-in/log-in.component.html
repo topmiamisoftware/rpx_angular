@@ -1,16 +1,19 @@
 <app-loading-screen *ngIf="loading"></app-loading-screen>
 
-<div class="spotbie-overlay-window container">
+<div class="spotbie-overlay-window d-flex container">
 
   <div class="sb-closeButton" (click)="closeWindow()">
     <i class="fa fa-times"></i>
   </div>
 
-  <div class="sb-login-top-padding"></div>  
-  
+  <p class='spotbie-text-gradient text-uppercase text-center' id="sign_up_general_instructions" #spotbieSignUpIssues>
+    <span  *ngIf="!business">Login to earn rewards with spotbie.</span>
+    <span  *ngIf="business">Login to find customers.</span>
+  </p>
+
   <form [formGroup]="logInForm" (ngSubmit)="initLogIn()">
 
-    <div *ngIf="submitted && f.spotbieUsername.errors else username_normal" class="spotbie-invalid-feedback text-uppercase spotbie-text-gradient spotbie-error">
+    <div *ngIf="submitted && f.spotbieUsername.errors" class="spotbie-invalid-feedback text-uppercase spotbie-text-gradient spotbie-error">
                 
       <div *ngIf="f.spotbieUsername.errors.required || f.spotbieUsername.errors.emptyUsername">
         USERNAME OR E-MAIL REQUIRED.
@@ -26,10 +29,10 @@
       
     </div> 
 
-    <ng-template #username_normal>
+    <!--<ng-template #username_normal>
       <div #spotbieLogInIssues class="spotbie-invalid-feedback text-uppercase spotbie-text-gradient spotbie-error">
       </div>
-    </ng-template>
+    </ng-template>-->
 
     <table class="sb-inputWithIconWrapper">
 
@@ -43,7 +46,7 @@
 
     </table>
 
-    <div *ngIf="submitted && f.spotbiePassword.errors else password_normal" class="spotbie-invalid-feedback spotbie-text-gradient spotbie-error">
+    <div *ngIf="submitted && f.spotbiePassword.errors" class="spotbie-invalid-feedback spotbie-text-gradient spotbie-error">
               
       <div *ngIf="f.spotbiePassword.errors.required">
         PASSWORD IS REQUIRED.
@@ -51,9 +54,9 @@
       
     </div>
 
-    <ng-template #password_normal>
+    <!--<ng-template #password_normal>
       <div class="spotbie-input-info spotbie-invalid-feedback spotbie-text-gradient"></div>
-    </ng-template>
+    </ng-template>-->
     
     <table class="sb-inputWithIconWrapper">
 
@@ -95,7 +98,7 @@
 
     <input id="spotbieRememberMe" type="hidden" [value]="rememberMeState" />
 
-    <button class="btn spotbie-button spotbie-padding">
+    <button class="btn spotbie-button spotbie-padding mt-3">
       LOGIN
     </button>
 
@@ -108,6 +111,14 @@
   <button class="btn spotbie-button sb-google-logIn-btn spotbie-padding" (click)="signInWithGoogle()">
     LOGIN WITH GOOGLE <!--<i class="fa fa-google-plus"></i>-->
   </button>
+
+  <p class='spotbie-rel-div
+            spotbie-padding
+            spotnie-login-terms
+            spotbie-text-link
+            text-uppercase'>
+    By Logging in, you are agreeing to <a [routerLink]="['/terms']">OUR TERMS & PRIVACY POLICY.</a>
+  </p>
 
   <div class="spotbie-rel-div
               spotbie-padding
@@ -135,14 +146,6 @@
   </div>
 
   <div></div>
-
-
-  <div class="spotbie-rel-div
-              spotbie-padding
-              spotie-login-terms
-              spotbie-text-link">
-    <span>BY LOGGING IN, YOU ARE AGREEING TO <a [routerLink]="['/terms']">OUR TERMS & PRIVACY POLICY.</a></span>
-  </div>
 
   <div class='sb-closeButton' (click)="closeWindow()">
     <i class="fa fa-times"></i>

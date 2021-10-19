@@ -79,7 +79,7 @@ export class LoyaltyPointsComponent implements OnInit {
 
   public async getLoyaltyPointBalance(){    
 
-    await this.loyaltyPointsService.getLoyaltyPointBalance()
+    await this.loyaltyPointsService.getLoyaltyPointBalance()    
     
   }
   
@@ -116,14 +116,10 @@ export class LoyaltyPointsComponent implements OnInit {
       businessCoinPercentage: ['', businessCoinPercentageValidators], 
     })
 
-    if(this.loyaltyPointBalance.balance > 0 && this.loyaltyPointBalance.reset_balance > 0){
-      
-      this.businessLoyaltyPointsForm.get('businessLoyaltyPoints').setValue(this.loyaltyPointBalance.reset_balance)
-      this.businessLoyaltyPointsForm.get('businessCoinPercentage').setValue(this.loyaltyPointBalance.loyalty_point_dollar_percent_value)
+    this.businessLoyaltyPointsForm.get('businessLoyaltyPoints').setValue(this.loyaltyPointBalance.reset_balance)
+    this.businessLoyaltyPointsForm.get('businessCoinPercentage').setValue(this.loyaltyPointBalance.loyalty_point_dollar_percent_value)
 
-      this.calculateDollarValue()  
-
-    }
+    this.calculateDollarValue()  
 
     this.businessLoyaltyPointsFormUp = true    
     this.loading = false
@@ -154,8 +150,9 @@ export class LoyaltyPointsComponent implements OnInit {
   }
 
   public submitBusinessLoyaltyPointsCB(resp: any){
-    
+
     if(resp.success){
+      
       this.loading = false
       this.businessLoyaltyPointsInfo.nativeElement.innerHTML = "Your loyalty point monthly budget was updated <i class='fa fa-check'></i>"
       
@@ -244,10 +241,10 @@ export class LoyaltyPointsComponent implements OnInit {
 
     this.loyaltyPointsService.userLoyaltyPoints$.subscribe(
       loyaltyPointBalance => {
-        this.loyaltyPointBalance = loyaltyPointBalance       
+        this.loyaltyPointBalance = loyaltyPointBalance      
       }
     )
-
+    
     this.userType = localStorage.getItem('spotbie_userType')
 
     this.loading = false

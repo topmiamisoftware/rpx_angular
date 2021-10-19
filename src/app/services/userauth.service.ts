@@ -100,7 +100,8 @@ export class UserauthService {
         localStorage.setItem('spotbie_userApiKey', null)
         localStorage.setItem('spotbie_rememberMe', '0')
         localStorage.setItem('spotbie_rememberMeToken', null)
-      
+        localStorage.setItem('spotbie_userType', null)
+        
       }
 
   }

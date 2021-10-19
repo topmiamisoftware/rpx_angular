@@ -113,6 +113,8 @@ export class LogInComponent implements OnInit {
 
     let login_status = loginResponse.message
 
+    console.log("loginREsp", loginResponse)
+
     if(login_status == 'success' || login_status == 'confirm'){
 
       localStorage.setItem('spotbie_userLogin', loginResponse.user.username)

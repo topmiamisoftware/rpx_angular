@@ -222,29 +222,25 @@ export class SignUpComponent implements OnInit {
 
   private initSignUpCallback(resp: any) {
       
-      if(resp.message == 'success'){       
+      let sign_up_instructions = this.spotbieSignUpIssues.nativeElement
 
-        let sign_up_instructions = this.spotbieSignUpIssues.nativeElement
+      if(resp.message == 'success'){               
 
         // save the user information.
         localStorage.setItem('spotbie_userLogin', resp.user.username)
-
         localStorage.setItem('spotbie_loggedIn', '1')
-
         localStorage.setItem('spotbie_rememberMe', '0')
-
         localStorage.setItem('spotbie_userId', resp.user.id)
-        
         localStorage.setItem('spotbie_userDefaultImage', resp.spotbie_user.default_picture)
-
         localStorage.setItem('spotbie_userType', resp.spotbie_user.user_type)
-
         localStorage.setItem('spotbiecom_session', resp.token_info.original.access_token)
 
         sign_up_instructions.innerHTML = 'Welcome to SpotBie!'
   
         window.location.reload()
 
+      } else {
+        sign_up_instructions.innerHTML = 'There has been an error signing up.'
       }
 
       this.loading = false

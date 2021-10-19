@@ -294,6 +294,27 @@ textarea{
     min-width: 350px;
     cursor: pointer;
 }
+.sb-topSettingsPadding{
+    padding-top: 90px;
+}
+.sb-business-img{
+    position: relative;
+    display: block;
+    margin: 0 auto;
+}
+.sb-originPhoto-sm{
+    width: 350px;
+    min-width: 350px;
+    max-width: 350px;
+}
+.sb-originPhoto-lg{
+    width: 450px;
+    min-width: 450px;
+    max-width: 450px;
+}
+.spotbie-place-address{
+    font-size: .8rem;
+}
 /**WIDTH MEDIA QUERIES */
 @media (max-width: 1300px) { 
 
@@ -324,7 +345,17 @@ textarea{
         padding-left: 0%;
         padding-right: 0%;
         border-radius: 0;    
-    }    
+    }
+    .sb-originPhoto-sm{
+        width: 150px;
+        min-width: 150px;
+        max-width: 150px;
+    }
+    .sb-originPhoto-lg{
+        width: 94%;
+        min-width: 94%;
+        max-width: 94%;
+    }        
 }
 @media (max-width: 700px) { 
 

@@ -321,8 +321,14 @@ img.sb-qr:hover{
     background: linear-gradient(45deg,#64e56f, #35a99f );
 }
 .spotbie-forgot-your-pass{
-    max-width: 440px;
+    position: relative;
+    margin: 0 auto;
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    margin-top: 0px;
     text-align: right;
+    font-size: .6rem;
 }
 .sb-inputWithIconWrapper .fa.fa-user,
 .sb-inputWithIconWrapper .fa.fa-envelope,
@@ -344,9 +350,9 @@ img.sb-qr:hover{
     text-align: left;
     padding-left: 3%;
 }
-.spotie-login-terms{
+.spotnie-login-terms{
     font-size: 13px !important;
-    margin-top: 40px;
+    margin-top: 0px;
     margin-bottom: 0px;
     max-width: 90%;
 }
@@ -361,8 +367,15 @@ img.sb-qr:hover{
     width: 100%;
     min-width: 100%;
     max-width: 100%;
-    z-index: 95;      
+    z-index: 99;
+    align-content: center;
+    justify-content: center;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    align-items: center; 
+    padding-bottom: unset !important;         
 }
+
 
 .sb-login-top-padding{
     padding-top: 120px;
@@ -389,7 +402,11 @@ img.sb-qr:hover{
     color: #32303e !important;
     border-radius: 5px;
 }
-
+.sb-closeButton{
+    z-index: 99;
+    top: 2%;
+    right: 3%;    
+}
 /**WIDTH MEDIA QUERIES */
 @media (max-width: 1600px) { 
     .sb-userName,
@@ -417,10 +434,7 @@ img.sb-qr:hover{
     }
     .spotbie-menu-fixed{
         padding-top: env(safe-area-inset-top, 20px);   
-    } 
-    .spotbie-forgot-your-pass{
-        max-width: 440px;
-    }       
+    }      
 }
 @media (max-width: 650px) { 
     .spotbie-header-mini-logo{
@@ -553,15 +567,12 @@ img.sb-qr:hover{
         min-height: 30px;
         max-height: 30px;        
     } 
-    .spotie-login-terms{
+    .spotnie-login-terms{
         font-size: 11px !important;
     }        
     .spotbie-text-link{
         font-size: 11px !important;
     } 
-    .spotbie-forgot-your-pass{
-        max-width: 90%;
-    }  
     .spotbie-button {
         max-width: 90%;
         width: 90%;
@@ -617,7 +628,7 @@ img.sb-qr:hover{
     .sb-iconInInputWrapper{
         padding: 10px;
     }    
-    .spotie-login-terms{
+    .spotnie-login-terms{
         font-size: 11px !important;
     }        
 }

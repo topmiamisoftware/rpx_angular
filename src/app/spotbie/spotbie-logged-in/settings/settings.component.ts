@@ -7,7 +7,6 @@ import { User } from '../../../models/user'
 import { AgmMap, MapsAPILoader, MouseEvent } from '@agm/core'
 import { ValidatePassword } from '../../../helpers/password.validator'
 import { MustMatch } from '../../../helpers/must-match.validator'
-import { MenuLoggedInComponent } from '../menu-logged-in.component'
 import { ValidateUsername } from 'src/app/helpers/username.validator'
 import { ValidatePersonName } from 'src/app/helpers/name.validator'
 import { UserauthService } from 'src/app/services/userauth.service'
@@ -22,10 +21,13 @@ import { map, startWith } from 'rxjs/operators'
 
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { Observable } from 'rxjs/internal/Observable';
+import { LocationService } from 'src/app/services/location-service/location.service';
 
 const PLACE_TO_EAT_API = spotbieGlobals.API + 'place-to-eat'
 
 const PLACE_TO_EAT_MEDIA_MAX_UPLOAD_SIZE = 25e+6
+
+const MAX_DISTANCE = 80467
 
 declare const google: any
 
@@ -60,7 +62,8 @@ export class SettingsComponent implements OnInit {
 
   public lat: number
   public lng: number
-  public zoom: number = 18
+  public zoom: number = 12
+  public fitBounds: boolean = false
   public iconUrl: string
 
   public locationFound = false
@@ -68,7 +71,7 @@ export class SettingsComponent implements OnInit {
   public personal_account = true
 
   public settingsForm: FormGroup
-  public placeToEatSettingsForm: FormGroup
+  public businessSettingsForm: FormGroup
 
   public originPhoto: string = '../../assets/images/home_imgs/find-places-to-eat.svg'
 
@@ -81,6 +84,13 @@ export class SettingsComponent implements OnInit {
   public deactivation_submitted = false
 
   public loading = false
+
+  public accountTypePhotos = [
+    '../../assets/images/home_imgs/find-users.svg',
+    '../../assets/images/home_imgs/find-places-to-eat.svg',
+    '../../assets/images/home_imgs/find-events.svg',
+    '../../assets/images/home_imgs/find-places-for-shopping.svg'
+  ]
 
   public accountTypeList = ['PERSONAL', 'PLACE TO EAT', 'EVENTS', 'RETAIL STORE']
   public chosen_account_type: number
@@ -133,59 +143,61 @@ export class SettingsComponent implements OnInit {
     
   public calendlyUp: boolean = false
   
-  public placeToEatCategoryList: Array<string> = map_extras.FOOD_CATEGORIES
-  public shoppingCategoryList: Array<string> = map_extras.SHOPPING_CATEGORIES
+  public businessCategoryList: Array<string> = []
 
   public selectable = true
   public removable = true
   public separatorKeysCodes: number[] = [ENTER, COMMA]
 
-  public filteredPlacesToEatCategories: Observable<string[]>
+  public filteredBusinessCategories: Observable<string[]>
 
-  public placesToEatCategories: string[] = []
+  public activeBusinessCategories: string[] = []
 
   @ViewChild('businessInput') businessInput: ElementRef<HTMLInputElement>;
 
-  constructor(private host: MenuLoggedInComponent,
-              private http: HttpClient,
+  constructor(private http: HttpClient,
               private formBuilder: FormBuilder,
               private mapsAPILoader: MapsAPILoader,
               private ngZone: NgZone,
-              private userAuthService: UserauthService){ }
+              private userAuthService: UserauthService,
+              private locationService: LocationService){ }
 
   add(event: MatChipInputEvent): void {
 
     const value = (event.value || '').trim()
 
-    // Add our fruit
-    if (value) this.placesToEatCategories.push(value)
-    
-    this.placeToEatSettingsForm.get('originCategories').setValue(null)
+    // Add our category 
+
+    if (value) this.activeBusinessCategories.push(value)
+
+    this.businessSettingsForm.get('originCategories').setValue(null)
 
   }
 
-  remove(fruit: string): void {
+  remove(category: string): void {
 
-    const index = this.placesToEatCategories.indexOf(fruit)
+    const index = this.activeBusinessCategories.indexOf(category)
 
-    if (index >= 0) this.placesToEatCategories.splice(index, 1)
+    if (index >= 0) this.activeBusinessCategories.splice(index, 1)
     
-    this.placeToEatSettingsForm.get('originCategories').setValue(null)
+    this.businessSettingsForm.get('originCategories').setValue(null)
 
   }
 
   selected(event: MatAutocompleteSelectedEvent): void {
 
-    this.placesToEatCategories.push(event.option.viewValue)
+    if(this.activeBusinessCategories.indexOf(event.option.viewValue) > -1) return
+
+    this.activeBusinessCategories.push(event.option.viewValue)
     this.businessInput.nativeElement.value = ''
 
-    this.placeToEatSettingsForm.get('originCategories').setValue(null)
+    this.businessSettingsForm.get('originCategories').setValue(null)
 
   }
 
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase()
-    return this.placeToEatCategoryList.filter(category => category.toLowerCase().includes(filterValue))
+    return this.activeBusinessCategories.filter(category => category.toLowerCase().includes(filterValue))
   }
 
   private fetchCurrentSettings(): any {
@@ -222,10 +234,17 @@ export class SettingsComponent implements OnInit {
         this.chosen_account_type = this.user.spotbie_user.user_type
               
         switch(this.chosen_account_type){
-          case 1:          
-            this.account_type_category = 'PLACE TO EAT' 
+          case 1:  
+            this.account_type_category = 'PLACE TO EAT'         
+            break
+          case 2:
+            this.account_type_category = 'EVENTS' 
+            break
+          case 3:
+            this.account_type_category = 'RETAIL STORE' 
             break
           case 4:
+          case 0:
             this.account_type_category = 'PERSONAL'
             break
         }
@@ -276,7 +295,7 @@ export class SettingsComponent implements OnInit {
     this.loading = true
     this.placeFormSubmitted = true
 
-    if (this.placeToEatSettingsForm.invalid) {
+    if (this.businessSettingsForm.invalid) {
 
       this.loading = false
       this.spotbieSettingsWindow.nativeElement.scrollTo(0,0)
@@ -331,7 +350,7 @@ export class SettingsComponent implements OnInit {
       photo: this.originPhoto,
       loc_x: this.lat,
       loc_y: this.lng,
-      categories: JSON.stringify(this.placesToEatCategories),
+      categories: JSON.stringify(this.activeBusinessCategories),
       passkey: this.passKey
     }
 
@@ -383,10 +402,6 @@ export class SettingsComponent implements OnInit {
 
   } 
 
-  private getMyBusinesses(){
-
-  }
-
   openWindow(window: any){
     window.open = true
   }
@@ -406,18 +421,30 @@ export class SettingsComponent implements OnInit {
 
     const service = new google.maps.places.AutocompleteService()
 
+    let location = new google.maps.LatLng(this.lat, this.lng)
+
     service.getQueryPredictions({ 
       input: inputAddress.value,
-      componentRestrictions: { country: "us" },
+      componentRestrictions: { country: "us"},
+      radius: MAX_DISTANCE, 
+      location, 
       types: ['establishment']
     }, (predictions, status) => {
 
-      if (status != google.maps.places.PlacesServiceStatus.OK) {
-        return
+      if (status != google.maps.places.PlacesServiceStatus.OK)
+        return      
+
+      let filteredPredictions = []
+
+      for(let i = 0; i < predictions.length; i++){
+
+        if(predictions[i].place_id !== null && predictions[i].place_id !== undefined)
+          filteredPredictions.push(predictions[i])        
+
       }
 
-      this.ngZone.run(() => {
-        this.address_results = predictions
+      this.ngZone.run(() => {            
+        this.address_results = filteredPredictions  
       })
 
     })
@@ -427,14 +454,9 @@ export class SettingsComponent implements OnInit {
   public focusPlace(place) {
 
     this.loading = true
-
-    this.ngZone.run(() => {
-      
-      this.locationFound = false
-      this.place = place
-      this.getPlaceDetails()
-    
-    })
+    this.place = place
+    this.locationFound = false
+    this.getPlaceDetails()
     
   }
 
@@ -442,20 +464,24 @@ export class SettingsComponent implements OnInit {
 
     const request = {
       placeId: this.place.place_id,
-      fields: ["name", "photo", "geometry"],
+      fields: ["name", "photo", "geometry", "formatted_address"],
     };
-
+    
     const map = document.getElementById('spotbieMapG')
     const service = new google.maps.places.PlacesService(map)    
-
+    
     service.getDetails(request, (place, status) => {          
+
+      this.place = place
 
       this.lat = place.geometry.location.lat()
       this.lng = place.geometry.location.lng()
 
-      this.placeToEatSettingsForm.get('spotbieOrigin').setValue(this.lat + ',' + this.lng)
-      
-      this.placeToEatSettingsForm.get('originTitle').setValue(place.name)
+      this.zoom = 18
+
+      this.businessSettingsForm.get('spotbieOrigin').setValue(this.lat + ',' + this.lng)      
+      this.businessSettingsForm.get('originTitle').setValue(place.name)
+      this.businessSettingsForm.get('originAddress').setValue(place.formatted_address)
       
       if(place.photos)
         this.originPhoto = place.photos[0].getUrl()
@@ -464,9 +490,9 @@ export class SettingsComponent implements OnInit {
 
       this.locationFound = true
       this.claimBusiness = true
-      this.loading = false
+      this.loading = false          
 
-    })
+    })    
 
     //Clear Address/Place Predictions
     this.address_results = []
@@ -478,9 +504,9 @@ export class SettingsComponent implements OnInit {
     if(this.originPhoto === null) return
 
     if(this.originPhoto.includes('home_imgs'))
-      return {'width': '150px', 'max-width': '150px', 'min-width': '150px'}
+      return 'sb-originPhoto-sm'
     else
-      return {'width': '450px', 'max-width': '450px', 'min-width': '450px'}
+      return 'sb-originPhoto-lg'
     
   }
 
@@ -560,7 +586,7 @@ export class SettingsComponent implements OnInit {
       const inputAddress = this.addressSearch.nativeElement
 
       const autocomplete = new google.maps.places.Autocomplete(inputAddress, {
-        componentRestrictions: { country: "us" },
+        componentRestrictions: { country: "us", distance_meters: MAX_DISTANCE },
         types: ['establishment']
       })
 
@@ -628,7 +654,6 @@ export class SettingsComponent implements OnInit {
   public mobileStartLocation(){
     
     this.setCurrentLocation()
-    this.getMyBusinesses()
     this.showMobilePrompt = false
     this.showMobilePrompt2 = true
   
@@ -640,7 +665,9 @@ export class SettingsComponent implements OnInit {
 
   // Get Current Location Coordinates
   private setCurrentLocation() {
+
     if ('geolocation' in navigator) {
+
       navigator.geolocation.getCurrentPosition((position) => {
         this.lat = position.coords.latitude
         this.lng = position.coords.longitude
@@ -648,32 +675,43 @@ export class SettingsComponent implements OnInit {
         this.locationFound = true
         this.getAddress(this.lat, this.lng)
       })
+
     }
+
   }
 
   markerDragEnd($event: MouseEvent) {
+
     console.log($event)
     this.lat = $event.coords.lat
     this.lng = $event.coords.lng
     this.getAddress(this.lat, this.lng)
+    
   }
 
-  getAddress(latitude, longitude) {
+  async getAddress(latitude, longitude) {
 
-    this.geoCoder.geocode({ location: { lat: latitude, lng: longitude } }, (results, status) => {
+    await this.mapsAPILoader.load().then(() => {
+    
+      this.geoCoder = new google.maps.Geocoder
+    
+    })
+
+    await this.geoCoder.geocode({ location: { lat: latitude, lng: longitude } }, (results, status) => {
 
       if (status === 'OK') {
+
         if (results[0]) {
           this.zoom = 18
           this.address = results[0].formatted_address
-          this.placeToEatSettingsForm.get('originAddress').setValue(this.address)
-          this.placeToEatSettingsForm.get('spotbieOrigin').setValue(this.lat + ',' + this.lng)
-        } else {
+          this.businessSettingsForm.get('originAddress').setValue(this.address)
+          this.businessSettingsForm.get('spotbieOrigin').setValue(this.lat + ',' + this.lng)
+        } else
           window.alert('No results found')
-        }
-      } else {
+        
+      } else
         window.alert('Geocoder failed due to: ' + status)
-      }
+      
 
     })
 
@@ -798,15 +836,22 @@ export class SettingsComponent implements OnInit {
     switch(this.account_type_category){
       case 'PERSONAL':
         this.chosen_account_type = 4
+        this.originPhoto = this.accountTypePhotos[0]
         break
       case 'PLACE TO EAT':
         this.chosen_account_type = 1
+        this.originPhoto = this.accountTypePhotos[1]
+        this.mobileStartLocation()
         break
       case 'EVENTS':
         this.chosen_account_type = 2
+        this.originPhoto = this.accountTypePhotos[2]
+        this.mobileStartLocation()
         break
       case 'RETAIL STORE':
         this.chosen_account_type = 3
+        this.originPhoto = this.accountTypePhotos[3]
+        this.mobileStartLocation()
         break
     }
 
@@ -820,7 +865,6 @@ export class SettingsComponent implements OnInit {
 
       case 1://place to eat account
         this.initSettingsForm('place_to_eat')
-        this.promptForLocation()
         break
 
       case 2://events account type
@@ -829,7 +873,6 @@ export class SettingsComponent implements OnInit {
 
       case 3://shopping account type
         this.initSettingsForm('shopping')
-        this.promptForLocation()
         break
 
       default:
@@ -841,7 +884,7 @@ export class SettingsComponent implements OnInit {
 
   }
 
-  private initSettingsForm(action: string) {
+  private async initSettingsForm(action: string) {
 
     // will set validators for form and take care of animations
     const username_validators = [Validators.required, Validators.maxLength(135)]
@@ -878,6 +921,8 @@ export class SettingsComponent implements OnInit {
                     MustMatch('spotbie_password', 'spotbie_confirm_password')]
         })
 
+        this.account_type_category = 'PERSONAL'
+
         this.fetchCurrentSettings()               
 
         break
@@ -891,7 +936,7 @@ export class SettingsComponent implements OnInit {
         const originValidators = [Validators.required]
         const originDescriptionValidators = [Validators.required, Validators.maxLength(350), Validators.minLength(100)]
 
-        this.placeToEatSettingsForm = this.formBuilder.group({
+        this.businessSettingsForm = this.formBuilder.group({
           originAddress: ['', originAddressValidators],
           originTitle: ['', originTitleValidators],
           originDescription: ['', originDescriptionValidators],
@@ -901,9 +946,9 @@ export class SettingsComponent implements OnInit {
 
         if(this.user.business !== undefined){
 
-          this.placeToEatSettingsForm.get('originAddress').setValue(this.user.business.address)
+          this.businessSettingsForm.get('originAddress').setValue(this.user.business.address)
           
-          this.placeToEatSettingsForm.get('spotbieOrigin').setValue(`${this.user.business.loc_x},${this.user.business.loc_y}`)    
+          this.businessSettingsForm.get('spotbieOrigin').setValue(`${this.user.business.loc_x},${this.user.business.loc_y}`)    
 
           let position = {
             coords : { latitude : this.user.business.loc_x, longitude : this.user.business.loc_y }
@@ -911,25 +956,42 @@ export class SettingsComponent implements OnInit {
 
           this.showPosition(position)
           this.originPhoto = this.user.business.photo
-          this.placeToEatSettingsForm.get('originDescription').setValue(this.user.business.description)
-          this.placeToEatSettingsForm.get('originTitle').setValue(this.user.business.name)
+          this.businessSettingsForm.get('originDescription').setValue(this.user.business.description)
+          this.businessSettingsForm.get('originTitle').setValue(this.user.business.name)
           
         } else {
 
-          this.placeToEatSettingsForm.get('originAddress').setValue('SEARCH FOR LOCATION')
-          this.placeToEatSettingsForm.get('spotbieOrigin').setValue( this.lat + ',' + this.lng)
+          this.businessSettingsForm.get('originAddress').setValue('SEARCH FOR LOCATION')
+          this.businessSettingsForm.get('spotbieOrigin').setValue( this.lat + ',' + this.lng)
 
         }        
 
         //Set the filtered places to eat categories event listener.
-        this.filteredPlacesToEatCategories = this.placeToEatSettingsForm.get('originCategories').valueChanges.pipe(
+        this.filteredBusinessCategories = this.businessSettingsForm.get('originCategories').valueChanges.pipe(
           startWith(null),
-          map((fruit: string | null) => fruit ? this._filter(fruit) : this.placeToEatCategoryList.slice())
+          map((fruit: string | null) => fruit ? this._filter(fruit) : this.businessCategoryList.slice())
         )
 
         this.placeSettingsFormUp = true
 
-        this.account_type_category = 'PLACE TO EAT'
+        switch(action){
+          case 'events':
+            this.account_type_category = 'EVENTS'
+            await this.classificationSearch().subscribe(
+              resp =>{
+                console.log("EVENTS", resp)
+              }
+            )
+            break
+          case 'place_to_eat':
+            this.account_type_category = 'PLACE TO EAT'
+            this.businessCategoryList = map_extras.FOOD_CATEGORIES
+            break
+          case 'shopping':            
+            this.account_type_category = 'RETAIL STORE'
+            this.businessCategoryList = map_extras.SHOPPING_CATEGORIES
+            break            
+        } 
 
         this.fetchCurrentSettings()
 
@@ -953,12 +1015,12 @@ export class SettingsComponent implements OnInit {
   get deactivation_password() { return this.deactivation_form.get('spotbie_deactivation_password').value }
   get h() { return this.deactivation_form.controls }
 
-  get originAddress() {return this.placeToEatSettingsForm.get('originAddress').value }
-  get spotbieOrigin() { return this.placeToEatSettingsForm.get('spotbieOrigin').value }
-  get originTitle() { return this.placeToEatSettingsForm.get('originTitle').value }
-  get originDescription() { return this.placeToEatSettingsForm.get('originDescription').value }
-  get originCategories() { return this.placeToEatSettingsForm.get('originCategories').value }
-  get i() { return this.placeToEatSettingsForm.controls }
+  get originAddress() {return this.businessSettingsForm.get('originAddress').value }
+  get spotbieOrigin() { return this.businessSettingsForm.get('spotbieOrigin').value }
+  get originTitle() { return this.businessSettingsForm.get('originTitle').value }
+  get originDescription() { return this.businessSettingsForm.get('originDescription').value }
+  get originCategories() { return this.businessSettingsForm.get('originCategories').value }
+  get i() { return this.businessSettingsForm.controls }
 
   public saveSettings() {
 
@@ -1082,7 +1144,19 @@ export class SettingsComponent implements OnInit {
   }
 
   public closeWindow() {
-    this.closeWindowEvt.emit()
+    window.location.reload()
+  }
+
+  public classificationSearch(): Observable<any>{
+
+    this.loading = true
+    
+    return this.locationService.getClassifications()
+
+  }
+
+  public classificationSearchCallback(resp){
+    console.log("classificationSearchCallback", resp)
   }
 
   ngOnInit() {

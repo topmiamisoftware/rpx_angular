@@ -9,10 +9,14 @@ h3, h2{
     padding-top: 100px;
     padding-bottom: 100px;
 }
-.fa-exclamation-triangle{
+.fa-users{
     position: relative;
-    color: #ffc107;
-    font-size: 1rem;
+    color: #56d37e;
+    font-size: 3.5rem;
     bottom: 4px;
-    margin-right: 10px;
+}
+@media (max-width: 560px){
+    .sb-welcome2Spotbie{
+        font-size: 1.2rem
+    }
 }

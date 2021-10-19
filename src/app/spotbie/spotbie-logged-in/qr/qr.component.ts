@@ -75,6 +75,7 @@ export class QrComponent implements OnInit {
   public checkForSetLoyaltyPointSettings(){
     
     if( this.loyaltyPointBalance.balance == null || 
+        this.loyaltyPointBalance.balance == 0    || 
         this.loyaltyPointBalance.balance == undefined )
     {
       //Open the users Loyalty Points Balance Window

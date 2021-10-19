@@ -63,7 +63,6 @@
     margin: 0 auto;
     max-width: 440px;    
     text-align: center;
-    padding-top: 50px;
     padding-bottom: 10px;
     font-size: 13px;
     text-align: left;
@@ -142,6 +141,13 @@ p{
 .sb-login-top-padding{
     padding-top: 60px !important;
 }
+.spotbie-overlay-window{
+    padding-bottom: 80px;
+    background: url('../../../../assets/images/home_imgs/jpg/spotbie-login-background.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}
 /**WIDTH MEDIA QUERIES */
 @media (max-width: 1300px) { 
 
@@ -189,9 +195,7 @@ p{
     }  
 }
 @media (max-width: 600px) { 
-    .sb-login-top-padding{
-        padding-top: 20px!important;
-    }
+
 }
 @media (max-width: 560px) { 
     .spotbieSignUpButton{
@@ -206,9 +210,6 @@ p{
         width: 92%;
         min-width: 92%;
         max-width: 92%;
-    }
-    .sb-closeButton {
-        display: none;
     }
 }
 

@@ -803,6 +803,10 @@ p.sb-helpInfo{
     margin: 0 auto;
     max-width: 450px;
 }
+.mat-chip.mat-standard-chip {
+    background: linear-gradient( 90deg,#35a99f,#64e56f);
+    padding-top: 11px !important;
+}
 /**WIDTH MEDIA QUERIES */
 @media (max-width: 1440px) {
     

@@ -172,7 +172,10 @@ export class MenuLoggedInComponent implements OnInit {
     this.loyaltyPointsService.userLoyaltyPoints$.subscribe(
 
       loyaltyPointsBalance =>{
-        this.userLoyaltyPoints = loyaltyPointsBalance.balance
+        
+        if(loyaltyPointsBalance.balance != null)
+          this.userLoyaltyPoints = loyaltyPointsBalance.balance                
+
       }
 
     )
