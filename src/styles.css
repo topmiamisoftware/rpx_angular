@@ -286,14 +286,12 @@ a, a:hover, a:active, a:after{
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     letter-spacing: 2px;
-    line-height: 25px;
 }
 .sb-text-light-green-gradient{
     background: -webkit-linear-gradient(90deg, #35a99f, #64e56f);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     letter-spacing: 2px;
-    line-height: 25px;
 }
 .spotbie-error{    
     background: -webkit-linear-gradient(45deg,#e61d1d,#f70505,#ff0000);

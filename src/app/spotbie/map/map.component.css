@@ -716,6 +716,11 @@ swiper{
     color:rgb(43, 194, 136);
     font-size: 25px;
 }
+.fa-map-marker-alt{
+    position: relative;
+    color: #ffc107;
+    font-size: 2rem;
+}
 /**WIDTH MEDIA QUERIES */
 @media (max-width: 1583px) { 
     .spotbie-search-result{
