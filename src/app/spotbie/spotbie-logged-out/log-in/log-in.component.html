@@ -6,149 +6,157 @@
     <i class="fa fa-times"></i>
   </div>
 
-  <p class='spotbie-text-gradient text-uppercase text-center' id="sign_up_general_instructions" #spotbieSignUpIssues>
-    <span  *ngIf="!business">Login to earn rewards with spotbie.</span>
-    <span  *ngIf="business">Login to find customers.</span>
-  </p>
+  <div style="overflow-y: scroll;">
 
-  <form [formGroup]="logInForm" (ngSubmit)="initLogIn()">
+    <p class='spotbie-text-gradient text-uppercase text-center' id="sign_up_general_instructions" #spotbieSignUpIssues>
+      <span  *ngIf="!business">Login to earn rewards with spotbie.</span>
+      <span  *ngIf="business">Login to find customers.</span>
+    </p>
 
-    <div *ngIf="submitted && f.spotbieUsername.errors" class="spotbie-invalid-feedback text-uppercase spotbie-text-gradient spotbie-error">
-                
-      <div *ngIf="f.spotbieUsername.errors.required || f.spotbieUsername.errors.emptyUsername">
-        USERNAME OR E-MAIL REQUIRED.
-      </div>
+    <div class='spotbie-loginWrapper'>
 
-      <div *ngIf="f.spotbieUsername.errors.wrongLength">
-        USERNAME MUST BE BETWEEN 5 AND 15 CHARACTERS.
-      </div>     
+      <form [formGroup]="logInForm" (ngSubmit)="initLogIn()">
 
-      <div *ngIf="f.spotbieUsername.errors.illegalChars">
-        USERNAME MUST ONLY CONTAIN LETTERS, NUMBERS, AND UNDERSCORES.
-      </div>
-      
-    </div> 
-
-    <!--<ng-template #username_normal>
-      <div #spotbieLogInIssues class="spotbie-invalid-feedback text-uppercase spotbie-text-gradient spotbie-error">
-      </div>
-    </ng-template>-->
-
-    <table class="sb-inputWithIconWrapper">
-
-      <td class="sb-iconInInputWrapper">
-        <i class="fa fa-envelope"></i>
-      </td>
-
-      <td>
-        <input class="sb-input" id="spotbieLoginUsername" formControlName="spotbieUsername" type="text" placeholder="USERNAME/EMAIL" autocomplete="username"/>
-      </td>
-
-    </table>
-
-    <div *ngIf="submitted && f.spotbiePassword.errors" class="spotbie-invalid-feedback spotbie-text-gradient spotbie-error">
-              
-      <div *ngIf="f.spotbiePassword.errors.required">
-        PASSWORD IS REQUIRED.
-      </div>   
-      
-    </div>
-
-    <!--<ng-template #password_normal>
-      <div class="spotbie-input-info spotbie-invalid-feedback spotbie-text-gradient"></div>
-    </ng-template>-->
+        <div *ngIf="submitted && f.spotbieUsername.errors" class="spotbie-invalid-feedback text-uppercase spotbie-text-gradient spotbie-error">
+                    
+          <div *ngIf="f.spotbieUsername.errors.required || f.spotbieUsername.errors.emptyUsername">
+            USERNAME OR E-MAIL REQUIRED.
+          </div>
     
-    <table class="sb-inputWithIconWrapper">
+          <div *ngIf="f.spotbieUsername.errors.wrongLength">
+            USERNAME MUST BE BETWEEN 5 AND 15 CHARACTERS.
+          </div>     
+    
+          <div *ngIf="f.spotbieUsername.errors.illegalChars">
+            USERNAME MUST ONLY CONTAIN LETTERS, NUMBERS, AND UNDERSCORES.
+          </div>
+          
+        </div> 
+    
+        <!--<ng-template #username_normal>
+          <div #spotbieLogInIssues class="spotbie-invalid-feedback text-uppercase spotbie-text-gradient spotbie-error">
+          </div>
+        </ng-template>-->
+    
+        <table class="sb-inputWithIconWrapper">
+    
+          <td class="sb-iconInInputWrapper">
+            <i class="fa fa-envelope"></i>
+          </td>
+    
+          <td>
+            <input class="sb-input" id="spotbieLoginUsername" formControlName="spotbieUsername" type="text" placeholder="USERNAME/EMAIL" autocomplete="username"/>
+          </td>
+    
+        </table>
+    
+        <div *ngIf="submitted && f.spotbiePassword.errors" class="spotbie-invalid-feedback spotbie-text-gradient spotbie-error">
+                  
+          <div *ngIf="f.spotbiePassword.errors.required">
+            PASSWORD IS REQUIRED.
+          </div>   
+          
+        </div>
+    
+        <!--<ng-template #password_normal>
+          <div class="spotbie-input-info spotbie-invalid-feedback spotbie-text-gradient"></div>
+        </ng-template>-->
+        
+        <table class="sb-inputWithIconWrapper">
+    
+          <td class="sb-iconInInputWrapper">
+            <i class="fa fa-lock"></i>
+          </td>
+    
+          <td>
+            <input class='sb-input' 
+                    [type]="!passwordShow ? 'password' : 'text'"  
+                    formControlName="spotbiePassword" 
+                    id='spotbieLoginPassword' 
+                    autocomplete="password" 
+                    placeholder='PASSWORD'/>  
+    
+            <fa-icon class='fa-eye' [icon]="faEye" (click)="togglePassword()" *ngIf="!passwordShow"></fa-icon> 
+            <fa-icon class='fa-eye' [icon]="faEyeSlash" (click)="togglePassword()" *ngIf="passwordShow"></fa-icon> 
+    
+          </td>
+    
+        </table>
+    
+        <div class="spotbie-rel-div
+                    spotbie-forgot-your-pass
+                    spotbie-text-link"
+                    (click)="openWindow(forgotPasswordWindow)">
+          FORGOT YOUR PASSWORD?
+        </div>
+    
+        <!--<table class="spotbie-toggle" (click)="toggleRememberMe()">
+    
+          <tr>
+            <td class="spotbie-toggle-info-text spotbie-gradient-link" id="spotbieRememberMeText">REMEMBER ME</td>
+    
+            <td class="spotbie-toggle-light" id="spotbieRememberMeLight" [ngStyle]="{'background-color' : rememberMeLight }"></td>
+          </tr>
+    
+        </table>-->
+    
+        <input id="spotbieRememberMe" type="hidden" [value]="rememberMeState" />
+    
+        <button class="btn spotbie-button spotbie-padding mt-3">
+          LOGIN
+        </button>
+    
+      </form>
 
-      <td class="sb-iconInInputWrapper">
-        <i class="fa fa-lock"></i>
-      </td>
-
-      <td>
-        <input class='sb-input' 
-                [type]="!passwordShow ? 'password' : 'text'"  
-                formControlName="spotbiePassword" 
-                id='spotbieLoginPassword' 
-                autocomplete="password" 
-                placeholder='PASSWORD'/>  
-
-        <fa-icon class='fa-eye' [icon]="faEye" (click)="togglePassword()" *ngIf="!passwordShow"></fa-icon> 
-        <fa-icon class='fa-eye' [icon]="faEyeSlash" (click)="togglePassword()" *ngIf="passwordShow"></fa-icon> 
-
-      </td>
-
-    </table>
-
-    <div class="spotbie-rel-div
-                spotbie-forgot-your-pass
-                spotbie-text-link"
-                (click)="openWindow(forgotPasswordWindow)">
-      FORGOT YOUR PASSWORD?
     </div>
 
-    <!--<table class="spotbie-toggle" (click)="toggleRememberMe()">
-
-      <tr>
-        <td class="spotbie-toggle-info-text spotbie-gradient-link" id="spotbieRememberMeText">REMEMBER ME</td>
-
-        <td class="spotbie-toggle-light" id="spotbieRememberMeLight" [ngStyle]="{'background-color' : rememberMeLight }"></td>
-      </tr>
-
-    </table>-->
-
-    <input id="spotbieRememberMe" type="hidden" [value]="rememberMeState" />
-
-    <button class="btn spotbie-button spotbie-padding mt-3">
-      LOGIN
+    <button class="btn spotbie-button sb-fb-logIn-btn spotbie-padding" (click)="signInWithFB()">
+      LOGIN WITH FACEBOOK <!--<i class="fa fa-facebook"></i>-->
     </button>
 
-  </form>
+    <button class="btn spotbie-button sb-google-logIn-btn spotbie-padding" (click)="signInWithGoogle()">
+      LOGIN WITH GOOGLE <!--<i class="fa fa-google-plus"></i>-->
+    </button>
 
-  <button class="btn spotbie-button sb-fb-logIn-btn spotbie-padding" (click)="signInWithFB()">
-    LOGIN WITH FACEBOOK <!--<i class="fa fa-facebook"></i>-->
-  </button>
-
-  <button class="btn spotbie-button sb-google-logIn-btn spotbie-padding" (click)="signInWithGoogle()">
-    LOGIN WITH GOOGLE <!--<i class="fa fa-google-plus"></i>-->
-  </button>
-
-  <p class='spotbie-rel-div
-            spotbie-padding
-            spotnie-login-terms
-            spotbie-text-link
-            text-uppercase'>
-    By Logging in, you are agreeing to <a [routerLink]="['/terms']">OUR TERMS & PRIVACY POLICY.</a>
-  </p>
-
-  <div class="spotbie-rel-div
+    <p class='spotbie-rel-div
               spotbie-padding
-              spotbie-text-link"
-              (click)="signUp()">
-        NOT A MEMBER? SIGN UP NOW.
-  </div>  
+              spotnie-login-terms
+              spotbie-text-link
+              text-uppercase'>
+      By Logging in, you are agreeing to <a [routerLink]="['/terms']">OUR TERMS & PRIVACY POLICY.</a>
+    </p>
 
-  <div class="sb-logo mt-3 mb-3"></div>
+    <div class="spotbie-rel-div
+                spotbie-padding
+                spotbie-text-link"
+                (click)="signUp()">
+          NOT A MEMBER? SIGN UP NOW.
+    </div>  
 
-  <div class="spotbie-rel-div
-              spotbie-padding
-              spotbie-text-link"
-              *ngIf="business"
-              (click)="usersHome()">
-      CLICK HERE FOR NON-BUSINESS USERS
-  </div>
+    <div class="sb-logo mt-3 mb-3"></div>
 
-  <div class="spotbie-rel-div
-              spotbie-padding
-              spotbie-text-link"
-              *ngIf="!business"
-              (click)="businessHome()">
-      LOOKING FOR THE BUSINESS PORTAL?
-  </div>
+    <div class="spotbie-rel-div
+                spotbie-padding
+                spotbie-text-link"
+                *ngIf="business"
+                (click)="usersHome()">
+        CLICK HERE FOR NON-BUSINESS USERS
+    </div>
 
-  <div></div>
+    <div class="spotbie-rel-div
+                spotbie-padding
+                spotbie-text-link"
+                *ngIf="!business"
+                (click)="businessHome()">
+        LOOKING FOR THE BUSINESS PORTAL?
+    </div>
 
-  <div class='sb-closeButton' (click)="closeWindow()">
-    <i class="fa fa-times"></i>
+    <div></div>
+
+    <div class='sb-closeButton' (click)="closeWindow()">
+      <i class="fa fa-times"></i>
+    </div>
+
   </div>
 
 </div>

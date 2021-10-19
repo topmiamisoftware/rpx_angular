@@ -286,14 +286,12 @@ a, a:hover, a:active, a:after{
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     letter-spacing: 2px;
-    line-height: 25px;
 }
 .sb-text-light-green-gradient{
     background: -webkit-linear-gradient(90deg, #35a99f, #64e56f);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     letter-spacing: 2px;
-    line-height: 25px;
 }
 .spotbie-error{    
     background: -webkit-linear-gradient(45deg,#e61d1d,#f70505,#ff0000);
@@ -894,6 +892,13 @@ p.sb-helpInfo{
     .spotbie-full-qrCode img{
         min-height: 250px;
     }
+    .spotbie-full-qrCode.scanner {
+        border-radius: 0px;
+        min-width: 100%;
+        width: 100%;
+        min-height: 245px;
+        height: 243px;
+    }    
     .sb-closeButton{
         max-width: 50px;
         font-size: 20px;
@@ -955,13 +960,6 @@ p.sb-helpInfo{
     .sb-logo{
         min-width: 275px;
         width: 275px;
-    }
-    .spotbie-full-qrCode.scanner {
-        border-radius: 20px;
-        min-width: 90%;
-        width: 90%;
-        min-height: 245px;
-        height: 243px;
     }
     .spotbie-full-qrCode{
         border-radius: 20px;

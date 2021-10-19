@@ -131,7 +131,7 @@ export class SettingsComponent implements OnInit {
   public passKeyVerificationForm: FormGroup
   public passKeyVerificationSubmitted: boolean = false
 
-  public placeToEatVerified: boolean = false
+  public businessVerified: boolean = false
 
   public placeToEatMediaMessage: string
   public placeToEatMediaUploadProgress: number = 0
@@ -191,7 +191,7 @@ export class SettingsComponent implements OnInit {
     this.activeBusinessCategories.push(event.option.viewValue)
     this.businessInput.nativeElement.value = ''
 
-    this.businessSettingsForm.get('originCategories').setValue(null)
+    this.businessSettingsForm.get('originCategories').setValue( null )
 
   }
 
@@ -366,8 +366,6 @@ export class SettingsComponent implements OnInit {
 
   private claimThisBusinessCB(resp: any){
 
-    console.log("claimThisBusinessCB", resp)
-
     if(resp.message == 'passkey_mismatch'){
       
       this.passKeyVerificationForm.get('passKey').setErrors({'invalid': true})
@@ -380,7 +378,11 @@ export class SettingsComponent implements OnInit {
 
       localStorage.setItem('spotbie_userType', this.chosen_account_type.toString())
 
-      this.placeToEatVerified = true
+      this.businessVerified = true
+
+      setTimeout(()=>{
+        window.location.reload()
+      }, 500)
 
     }
 

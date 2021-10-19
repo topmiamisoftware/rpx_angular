@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AllowedAccountTypes } from 'src/app/helpers/enum/account-type.enum';
 import { LoyaltyPointBalance } from 'src/app/models/loyalty-point-balance';
@@ -20,12 +20,11 @@ export class QrComponent implements OnInit {
   @Input('fullScreenWindow') fullScreenWindow: boolean = false
 
   @Output() closeThisEvt = new EventEmitter
-
   @Output() openUserLPBalanceEvt = new EventEmitter
-
   @Output() closeQrUserEvt = new EventEmitter
-
   @Output() notEnoughLpEvt = new EventEmitter
+
+  @ViewChild('sbEarnedPoints') sbEarnedPoints: ElementRef
 
   public business = new Business()
 
@@ -57,7 +56,11 @@ export class QrComponent implements OnInit {
   public businessLoyaltyPointsSubmitted: boolean = false
 
   public qrWidth: number = 0
-  
+
+  public scanSuccess: boolean = false
+
+  public awarded: boolean = false
+
   constructor(private userAuthService: UserauthService,
               private loyaltyPointsService: LoyaltyPointsService,
               private deviceDetectorService: DeviceDetectorService,
@@ -99,22 +102,22 @@ export class QrComponent implements OnInit {
       console.log("eVent emitted")
       return
     }
+    
+    this.businessLoyaltyPointsSubmitted = true
 
-    if(this.businessLoyaltyPointsForm.invalid){
-      this.businessLoyaltyPointsSubmitted = true
-      return
-    }
+    if(this.businessLoyaltyPointsForm.invalid) return
 
     let settingsCheck = await this.checkForSetLoyaltyPointSettings()
 
     if(!settingsCheck)
       return
-    else
-      this.calculateLoyaltyPointValue()
-
+    else{
+      this.createRedeemable()
+    }
+     
   }
 
-  public calculateLoyaltyPointValue(){
+  public createRedeemable(){
 
     let percentValue: number = parseFloat(this.loyaltyPointBalance.loyalty_point_dollar_percent_value.toString())
     
@@ -125,30 +128,96 @@ export class QrComponent implements OnInit {
       this.loyaltyPointRewardDollarValue / 
       ( this.loyaltyPointBalance.reset_balance * (percentValue / 100) )
     ) * this.loyaltyPointBalance.reset_balance
-    
-    this.business.qr_code_link 
-    = `${this.qrCodeBaseUrl}/${this.userHash}/${this.business.qr_code_link}/${this.totalSpent}/${this.loyaltyPointReward}`
 
     this.rewardPrompt = true
-    this.promptForRewardTimeout = null
+
+  } 
+
+  public yes(){
+
+    let redeemableObj = {
+      amount: this.loyaltyPointReward,
+      total_spent: this.totalSpent,
+      dollar_value: this.loyaltyPointRewardDollarValue      
+    }
+
+    this.loyaltyPointsService.createRedeemable(redeemableObj).subscribe(
+      resp =>{
+        
+        this.createRedeemableCb(resp)
+
+      }
+    )
+
+    this.rewardPrompt = false
+    this.rewardPrompted = true
     
   }
 
-  public scanSuccessHandler(evt){
-    console.log("scan success", evt)
+  public createRedeemableCb(resp: any){
+
+    console.log("resp", resp)
+
+    if(resp.success){
+      
+      this.business.qr_code_link 
+      = `${this.qrCodeBaseUrl}
+      ?&r=${resp.redeemable.uuid}`    
+
+      this.promptForRewardTimeout = null
+
+    } else
+      console.log("resp", resp)
+    
+
+  }
+
+  public scanSuccessHandler(urlString: string){
+    
+    if(this.scanSuccess) return
+
+    this.scanSuccess = true
+
+    let url = new URL(urlString)
+    let urlParams = new URLSearchParams(url.search)
+
+    let addLpObj = {
+      redeemableHash: urlParams.get('r')
+    }
+
+    this.loyaltyPointsService.addLoyaltyPoints(addLpObj, 
+      (resp) => {
+        this.scanSuccessHandlerCb(resp)
+      }
+    )
+
+  }
+
+  public scanSuccessHandlerCb(resp: any){
+
+    console.log("scanSuccessHandlerCb", resp)
+
+    if(resp.success){
+        
+      this.awarded = true      
+      this.userLoyaltyPoints = resp.redeemable.amount      
+      this.sbEarnedPoints.nativeElement.style.display = 'block'
+
+    } else {
+
+      alert(resp.message)
+
+    }
+
+    this.scanSuccess = false
+
   }
 
   public scanErrorHandler(event){
-    console.log("scan error", event)
   }
 
   public scanFailureHandler(event){
     console.log("scan failure", event)
-  }
-
-  public yes(){
-    this.rewardPrompt = false
-    this.rewardPrompted = true
   }
 
   public no(){

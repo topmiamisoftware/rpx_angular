@@ -1,8 +1,7 @@
 span.sb-loyalty-points{
     font-size: 10rem !important;
     color: #fff !important;
-    border-right: unset !important;    
-    margin-right: .8rem;
+    border-right: unset !important;
 }
 img.sb-loyalty-points{
     width: 25px;
@@ -86,6 +85,11 @@ h5{
     min-width: 103%;
     max-width: 103%;
 }
+@media (max-width: 768px){
+    span.sb-loyalty-points{
+        font-size: 7rem !important;
+    }
+} 
 @media (max-width: 650px){
     .sb-helpBlock{
         font-size: .7rem;

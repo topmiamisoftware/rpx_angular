@@ -10,6 +10,7 @@ import { setValue } from 'src/app/spotbie/spotbie-logged-in/loyalty-points/loyal
 import { LoyaltyPointBalance } from 'src/app/models/loyalty-point-balance'
 
 const LOYATLY_POINTS_API = spotbieGlobals.API+'loyalty-points'
+const REDEEMABLE_API = spotbieGlobals.API+'redeemable'
 
 @Injectable({
   providedIn: 'root'
@@ -56,19 +57,34 @@ export class LoyaltyPointsService {
 
   }
 
-  addLoyaltyPoints(businessLoyaltyPointsObj: any): any{
+  addLoyaltyPoints(businessLoyaltyPointsObj: any, callback: Function): any{
 
-    let apiUrl = `${LOYATLY_POINTS_API}/add`
+    let apiUrl = `${REDEEMABLE_API}/redeem`
 
     this.http.post<any>(apiUrl, businessLoyaltyPointsObj).pipe(
+
       catchError(handleError("saveLoyaltyPoint"))
+
     ).subscribe(
       resp => {
-        if(resp.success){
-          this.store.dispatch(setValue(resp.balance))
-          return resp
-        }
-      }
+        if(resp.success){                  
+          let loyaltyPointBalance: LoyaltyPointBalance = resp.loyalty_points
+          this.store.dispatch( setValue({loyaltyPointBalance}) )                         
+        } 
+        callback(resp)
+      }    
+    )
+
+  }
+
+  public createRedeemable(createRedeemableObj: any): Observable<any>{
+
+    let apiUrl = `${REDEEMABLE_API}/create`
+
+    return this.http.post<any>(apiUrl, createRedeemableObj).pipe(
+
+      catchError(handleError("createRedeemable"))
+
     )
 
   }
@@ -84,7 +100,7 @@ export class LoyaltyPointsService {
       resp => {
 
         if(resp.success){
-          let loyaltyPointBalance: LoyaltyPointBalance = resp.loyalty_points
+          let loyaltyPointBalance: LoyaltyPointBalance = resp.loyalty_points         
           this.store.dispatch( setValue({loyaltyPointBalance}) )     
         }
 

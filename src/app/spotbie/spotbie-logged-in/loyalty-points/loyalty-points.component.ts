@@ -200,32 +200,6 @@ export class LoyaltyPointsComponent implements OnInit {
     this.helpEnabled = !this.helpEnabled
   }
 
-  public async addLoyaltyPoints(){
-
-    this.loading = true
-
-    let addPointsObj: any = {
-      qr_code_link: this.qrCodeLink,
-      user_hash: this.userHash,
-      totalSpent: this.totalSpent,
-      loyaltyPointReward: this.loyaltyPointReward
-    }
-    
-    let resp = await this.loyaltyPointsService.addLoyaltyPoints(addPointsObj)
-
-    this.addLoyaltyPointsCb(resp)     
-    
-  }
-
-  public addLoyaltyPointsCb(resp: any){
-
-    if(resp.success)
-      this.newUserLoyaltyPoints = this.loyaltyPointReward
-
-    this.loading = false
-
-  }
-
   /**
    * Will reset the user's loyalty point balance to their current reset value.
    */
@@ -250,8 +224,6 @@ export class LoyaltyPointsComponent implements OnInit {
     this.loading = false
     
     this.getLoyaltyPointBalance()
-
-    if(this.qrCodeLink !== null) this.addLoyaltyPoints()
 
   }
 

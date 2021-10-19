@@ -76,9 +76,16 @@ h5{
     color: white;
     margin-left: 5px;
 }
+@media (max-width: 768px){
+    .spotbie-upload-new-background-holder,
+    .spotbie-textarea{
+        max-width: 450px;
+        width: 450px;
+        min-width: 450px;
+    }
+}
 @media (max-width: 600px){
-    .sb-input, 
-    .spotbie-textarea, 
+    .sb-input,
     .spotbie-input-info{
         max-width: 90%;
         width: 90%;

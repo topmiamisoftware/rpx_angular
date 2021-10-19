@@ -2,196 +2,200 @@
 
 <div class="spotbie-overlay-window container d-flex">
 
-    <p class='spotbie-text-gradient text-uppercase text-center' id="sign_up_general_instructions" #spotbieSignUpIssues>
-        <span  *ngIf="!business">Sign up to earn rewards with spotbie.</span>
-        <span  *ngIf="business">Sign up to find customers.</span>
-    </p>
-    
-    <form [formGroup]="signUpFormx" (ngSubmit)="initSignUp()">                                               
+    <div style="overflow-y: scroll;">
 
-        <div *ngIf="submitted && f.spotbieUsername.errors" class="spotbie-invalid-feedback spotbie-text-gradient spotbie-error text-uppercase">
+        <p class='spotbie-text-gradient text-uppercase text-center' id="sign_up_general_instructions" #spotbieSignUpIssues>
+            <span  *ngIf="!business">Sign up to earn rewards with spotbie.</span>
+            <span  *ngIf="business">Sign up to find customers.</span>
+        </p>
+        
+        <form [formGroup]="signUpFormx" (ngSubmit)="initSignUp()">                                               
 
-            <div *ngIf="f.spotbieUsername.errors.required || f.spotbieUsername.errors.emptyUsername">
-                Username required.
-            </div>
+            <div *ngIf="submitted && f.spotbieUsername.errors" class="spotbie-invalid-feedback spotbie-text-gradient spotbie-error text-uppercase">
 
-            <div *ngIf="f.spotbieUsername.errors.wrongLength">
-                Username must be 1 to 35 characters long.
-            </div>
+                <div *ngIf="f.spotbieUsername.errors.required || f.spotbieUsername.errors.emptyUsername">
+                    Username required.
+                </div>
 
-            <div *ngIf="f.spotbieUsername.errors.illegalChars">
-                Username must only contain letters, numbers, and underscores.
-            </div>
-            
-            <div *ngIf="f.spotbieUsername.errors.notUnique">
-                Username is already in use.
-            </div>
+                <div *ngIf="f.spotbieUsername.errors.wrongLength">
+                    Username must be 1 to 35 characters long.
+                </div>
 
-        </div>   
+                <div *ngIf="f.spotbieUsername.errors.illegalChars">
+                    Username must only contain letters, numbers, and underscores.
+                </div>
+                
+                <div *ngIf="f.spotbieUsername.errors.notUnique">
+                    Username is already in use.
+                </div>
 
-        <!--<ng-template #username_normal>
+            </div>   
 
-            <label class="signUpBoxInstructions text-uppercase" id='username_label' for='spotbie_username'>
-                What will be your username?
-            </label>
+            <!--<ng-template #username_normal>
 
-        </ng-template>-->    
+                <label class="signUpBoxInstructions text-uppercase" id='username_label' for='spotbie_username'>
+                    What will be your username?
+                </label>
 
-        <table class="sb-inputWithIconWrapper">
+            </ng-template>-->    
 
-            <tr>
+            <table class="sb-inputWithIconWrapper">
+
+                <tr>
+
+                    <td class="sb-iconInInputWrapper">
+                        <i class="fa fa-user"></i>
+                    </td>
+                    <td>
+                        <input class='sb-input'
+                                username
+                                type='text' 
+                                id='spotbie_username' 
+                                formControlName="spotbieUsername" 
+                                placeholder='USERNAME' 
+                                autocomplete="username"/>
+                    </td>
+
+                </tr>
+
+            </table>                              
+
+            <div *ngIf="submitted && f.spotbieEmail.errors" class="spotbie-invalid-feedback spotbie-text-gradient spotbie-error text-uppercase">
+
+                <div *ngIf="f.spotbieEmail.errors.required">
+                    Please enter your email.
+                </div>
+
+                <div *ngIf="f.spotbieEmail.errors.email">
+                    Invalid email.
+                </div>                              
+                    
+                <div *ngIf="f.spotbieEmail.errors.notUnique">
+                    Email is already in use.
+                </div>                             
+
+                <div *ngIf="f.spotbieEmail.errors.emailTaken">
+                    Email is already in use.
+                </div> 
+
+            </div>      
+
+
+            <table class="sb-inputWithIconWrapper">
 
                 <td class="sb-iconInInputWrapper">
-                    <i class="fa fa-user"></i>
+                    <i class="fa fa-envelope"></i>
                 </td>
                 <td>
                     <input class='sb-input'
-                            username
-                            type='text' 
-                            id='spotbie_username' 
-                            formControlName="spotbieUsername" 
-                            placeholder='USERNAME' 
-                            autocomplete="username"/>
+                            (keyup)="removeWhiteSpace('spotbieEmail')" 
+                            type='text' id='user_email' 
+                            formControlName="spotbieEmail" 
+                            placeholder='EMAIL' 
+                            autocomplete="email"/>
                 </td>
 
-            </tr>
+            </table>
 
-        </table>                              
+            <div *ngIf="submitted && f.spotbiePassword.errors" class="spotbie-invalid-feedback spotbie-text-gradient spotbie-error text-uppercase">
+                    
+                <div *ngIf="f.spotbiePassword.errors.required">
+                    Please provide a password.
+                </div>
 
-        <div *ngIf="submitted && f.spotbieEmail.errors" class="spotbie-invalid-feedback spotbie-text-gradient spotbie-error text-uppercase">
+                <div *ngIf="f.spotbiePassword.errors.wrongLength">
+                    Password must be 1 to 15 characters long.
+                </div>
 
-            <div *ngIf="f.spotbieEmail.errors.required">
-                Please enter your email.
-            </div>
+                <div *ngIf="f.spotbiePassword.errors.oneNumber">
+                    Password must contain at least one number (0-9)!
+                </div> 
 
-            <div *ngIf="f.spotbieEmail.errors.email">
-                Invalid email.
-            </div>                              
-                
-            <div *ngIf="f.spotbieEmail.errors.notUnique">
-                Email is already in use.
-            </div>                             
+                <div *ngIf="f.spotbiePassword.errors.oneLowerCase">
+                    Password must contain at least one lowercase letter (a-z)!
+                </div>  
 
-            <div *ngIf="f.spotbieEmail.errors.emailTaken">
-                Email is already in use.
+                <div *ngIf="f.spotbiePassword.errors.oneUpperCase">
+                    Password must contain at least one uppercase letter (A-Z)!
+                </div> 
+
             </div> 
+                                            
+            <!--<ng-template #password_normal>
 
-        </div>      
+                <label class="signUpBoxInstructions text-uppercase" id='password_label' for='user_pass'>
+                </label>
 
+            </ng-template>-->
 
-        <table class="sb-inputWithIconWrapper">
+            <table class="sb-inputWithIconWrapper">
 
-            <td class="sb-iconInInputWrapper">
-                <i class="fa fa-envelope"></i>
-            </td>
-            <td>
-                <input class='sb-input'
-                        (keyup)="removeWhiteSpace('spotbieEmail')" 
-                        type='text' id='user_email' 
-                        formControlName="spotbieEmail" 
-                        placeholder='EMAIL' 
-                        autocomplete="email"/>
-            </td>
+                <td class="sb-iconInInputWrapper">
+                    <i class="fa fa-lock"></i>
+                </td>
+                <td>
+                    <input class='sb-input' 
+                            [type]="!passwordShow ? 'password' : 'text'"  
+                            formControlName="spotbiePassword" 
+                            id='user_pass' 
+                            autocomplete="new-password" 
+                            placeholder='PASSWORD'/>   
+                    <fa-icon class='fa-eye' [icon]="faEye" (click)="togglePassword()" *ngIf="!passwordShow"></fa-icon> 
+                    <fa-icon class='fa-eye' [icon]="faEyeSlash" (click)="togglePassword()" *ngIf="passwordShow"></fa-icon>                                             
+                </td>
 
-        </table>
+            </table>                  
 
-        <div *ngIf="submitted && f.spotbiePassword.errors" class="spotbie-invalid-feedback spotbie-text-gradient spotbie-error text-uppercase">
-                
-            <div *ngIf="f.spotbiePassword.errors.required">
-                Please provide a password.
-            </div>
+            <button class='btn spotbie-button spotbie-padding'>SIGN UP</button>
 
-            <div *ngIf="f.spotbiePassword.errors.wrongLength">
-                Password must be 1 to 15 characters long.
-            </div>
+            <p class='spotbie-rel-div
+                        spotbie-padding
+                        spotnie-login-terms
+                        spotbie-text-link
+                        text-uppercase'>
+                By Signing Up, you are agreeing to <a [routerLink]="['/terms']">OUR TERMS & PRIVACY POLICY.</a>
+            </p>
 
-            <div *ngIf="f.spotbiePassword.errors.oneNumber">
-                Password must contain at least one number (0-9)!
-            </div> 
+        </form>
 
-            <div *ngIf="f.spotbiePassword.errors.oneLowerCase">
-                Password must contain at least one lowercase letter (a-z)!
-            </div>  
+        <button class="btn spotbie-button sb-fb-logIn-btn spotbie-padding text-uppercase" (click)="signInWithFB()">
+            SIGN-UP with Facebook
+        </button>
 
-            <div *ngIf="f.spotbiePassword.errors.oneUpperCase">
-                Password must contain at least one uppercase letter (A-Z)!
-            </div> 
+        <button class="btn spotbie-button sb-google-logIn-btn spotbie-padding text-uppercase" (click)="signInWithGoogle()">
+            SIGN-UP with Google
+        </button>                                                              
+                    
 
-        </div> 
-                                        
-        <!--<ng-template #password_normal>
-
-            <label class="signUpBoxInstructions text-uppercase" id='password_label' for='user_pass'>
-            </label>
-
-        </ng-template>-->
-
-        <table class="sb-inputWithIconWrapper">
-
-            <td class="sb-iconInInputWrapper">
-                <i class="fa fa-lock"></i>
-            </td>
-            <td>
-                <input class='sb-input' 
-                        [type]="!passwordShow ? 'password' : 'text'"  
-                        formControlName="spotbiePassword" 
-                        id='user_pass' 
-                        autocomplete="new-password" 
-                        placeholder='PASSWORD'/>   
-                <fa-icon class='fa-eye' [icon]="faEye" (click)="togglePassword()" *ngIf="!passwordShow"></fa-icon> 
-                <fa-icon class='fa-eye' [icon]="faEyeSlash" (click)="togglePassword()" *ngIf="passwordShow"></fa-icon>                                             
-            </td>
-
-        </table>                  
-
-        <button class='btn spotbie-button spotbie-padding'>SIGN UP</button>
-
-        <p class='spotbie-rel-div
+        <div class="spotbie-rel-div
                     spotbie-padding
-                    spotnie-login-terms
-                    spotbie-text-link
-                    text-uppercase'>
-            By Signing Up, you are agreeing to <a [routerLink]="['/terms']">OUR TERMS & PRIVACY POLICY.</a>
-        </p>
+                    spotbie-text-link"
+            (click)="logIn()">
+        ALREADY A MEMBER? LOGIN NOW.
+        </div>
 
-    </form>
+        <div class="sb-logo mt-3 mb-3"></div>
 
-    <button class="btn spotbie-button sb-fb-logIn-btn spotbie-padding text-uppercase" (click)="signInWithFB()">
-        SIGN-UP with Facebook
-    </button>
+        <div class="spotbie-rel-div
+                    spotbie-padding
+                    spotbie-text-link"
+            *ngIf="business"
+            (click)="usersHome()">
+            CLICK HERE FOR NON-BUSINESS USERS
+        </div>
 
-    <button class="btn spotbie-button sb-google-logIn-btn spotbie-padding text-uppercase" (click)="signInWithGoogle()">
-        SIGN-UP with Google
-    </button>                                                              
-                  
+        <div class="spotbie-rel-div
+                    spotbie-padding
+                    spotbie-text-link"
+            *ngIf="!business"
+            (click)="businessHome()">
+            LOOKING FOR THE BUSINESS PORTAL?
+        </div>
 
-    <div class="spotbie-rel-div
-                spotbie-padding
-                spotbie-text-link"
-        (click)="logIn()">
-      ALREADY A MEMBER? LOGIN NOW.
-    </div>
+        <div class='sb-closeButton' (click)="closeWindowX()">
+            <i class="fa fa-times"></i>
+        </div>
 
-    <div class="sb-logo mt-3 mb-3"></div>
-
-    <div class="spotbie-rel-div
-                spotbie-padding
-                spotbie-text-link"
-        *ngIf="business"
-        (click)="usersHome()">
-        CLICK HERE FOR NON-BUSINESS USERS
-    </div>
-
-    <div class="spotbie-rel-div
-                spotbie-padding
-                spotbie-text-link"
-        *ngIf="!business"
-        (click)="businessHome()">
-        LOOKING FOR THE BUSINESS PORTAL?
-    </div>
-
-    <div class='sb-closeButton' (click)="closeWindowX()">
-        <i class="fa fa-times"></i>
     </div>
 
 </div>

@@ -6,13 +6,13 @@ export const environment = {
   production: false,
   google_maps_apiKey: 'AIzaSyBg9GGAv2rRn8WQbylRbpF4j6u-9TFxBG8',
   google_places_apiAkey: 'AIzaSyChSn9IE6Dp0Jv8TS013np1b4X1rCsQt_E',
-  qrCodeScanBaseUrl : 'https://localhost:4200/loyalty-points/scan',
+  qrCodeScanBaseUrl : 'https://192.168.1.65:4200/loyalty-points',
   /**
    * Enter the IP and PORT you are serving your Laravel App on. 
    * format: https://192.168.1.65:443/api/
    * Laravel App will not work if it's not served on over SSL.
    * */
-  apiEndpoint: 'https://e97f-2600-1700-4804-d5f0-c25b-4781-c937-36e4.ngrok.io/api/'
+  apiEndpoint: 'https://655a-2600-1700-4804-d5f0-c25b-4781-c937-36e4.ngrok.io/api/'
 }
 /*
  * For easier debugging in development mode, you can import the following file

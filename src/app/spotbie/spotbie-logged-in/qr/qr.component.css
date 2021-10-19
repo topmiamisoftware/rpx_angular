@@ -39,6 +39,18 @@ h5{
     display: inline-block;
     font-size: 1rem;
 }
+.sb-earnedPoints{
+    position: fixed;
+    display: none;
+    left: 0;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 7rem;
+}  
+.sb-v-wrapper{
+    flex-direction: column;
+}
 @media (max-width: 768px){
     .sb-readImage{
         width: 100%;

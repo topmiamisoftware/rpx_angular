@@ -1162,9 +1162,10 @@ export class MapComponent implements OnInit {
    * Fucntion gets called when the navigator's GPS system has found the user's location.
    * @param position
    */
-  public showPosition(position: any ): void {
+  public showPosition(position: any): void {
     
     this.locationFound = true
+    this.displayLocationEnablingInstructions = false
 
     this.lat = position.coords.latitude
     this.lng = position.coords.longitude
@@ -1414,7 +1415,7 @@ export class MapComponent implements OnInit {
     if (window.navigator.geolocation){
 
       window.navigator.geolocation.getCurrentPosition(
-        this.showPosition.bind(this),
+        this.showPosition.bind(this), 
         (err) =>{
           console.log("map err", err)
           this.showMapError()

@@ -19,7 +19,7 @@ export const routes: Routes = [
   { path: 'user-home', loadChildren: () => import('./user-home/user-home.module').then(m => m.UserHomeModule), canActivate: [LoginGuardServiceService] }, 
 
   { path: 'business-menu/:userHash/:qrCode', component: RewardMenuComponent},
-  { path: 'loyalty-points/scan/:userHash/:qrCode/:totalSpent/:loyaltyPointReward', component: LoyaltyPointsComponent },
+  { path: 'loyalty-points/:qrCode/:totalSpent/:loyaltyPointReward', component: LoyaltyPointsComponent },
   
   { path: 'place-to-eat/:name/:id', component: InfoObjectComponent },
   { path: 'shopping/:name/:id', component: InfoObjectComponent },

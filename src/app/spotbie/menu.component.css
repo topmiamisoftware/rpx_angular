@@ -320,16 +320,6 @@ img.sb-qr:hover{
     table-layout: fixed;
     background: linear-gradient(45deg,#64e56f, #35a99f );
 }
-.spotbie-forgot-your-pass{
-    position: relative;
-    margin: 0 auto;
-    width: 100%;
-    min-width: 100%;
-    max-width: 100%;
-    margin-top: 0px;
-    text-align: right;
-    font-size: .6rem;
-}
 .sb-inputWithIconWrapper .fa.fa-user,
 .sb-inputWithIconWrapper .fa.fa-envelope,
 .sb-inputWithIconWrapper .fa.fa-lock{
@@ -367,7 +357,7 @@ img.sb-qr:hover{
     width: 100%;
     min-width: 100%;
     max-width: 100%;
-    z-index: 99;
+    z-index: 99 !important;
     align-content: center;
     justify-content: center;
     flex-wrap: nowrap;
