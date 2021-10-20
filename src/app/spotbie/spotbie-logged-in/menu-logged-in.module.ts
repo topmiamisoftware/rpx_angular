@@ -14,12 +14,15 @@ import { HelperModule } from 'src/app/helpers/helper.module'
 import { MapModule } from '../map/map.module'
 
 import { SettingsModule } from './settings/settings.module';
+import { RedeemableModule } from './redeemable/redeemable.module'
+import { EventMenuModule } from './event-menu/event-menu.module'
 
 @NgModule({
   declarations: [ 
     MenuLoggedInComponent
   ],
   imports: [  
+    RedeemableModule,
     CommonModule,
     FormsModule, 
     ReactiveFormsModule,
@@ -30,6 +33,7 @@ import { SettingsModule } from './settings/settings.module';
     MapModule,
     SettingsModule,
     RouterModule,
+    EventMenuModule
   ],
   providers: [
     DeviceDetectorService

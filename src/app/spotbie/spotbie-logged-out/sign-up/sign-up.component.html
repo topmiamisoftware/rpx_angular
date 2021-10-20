@@ -2,7 +2,7 @@
 
 <div class="spotbie-overlay-window container d-flex">
 
-    <div style="overflow-y: scroll;">
+    <div class='sb-scroll'>
 
         <p class='spotbie-text-gradient text-uppercase text-center' id="sign_up_general_instructions" #spotbieSignUpIssues>
             <span  *ngIf="!business">Sign up to earn rewards with spotbie.</span>
@@ -146,7 +146,6 @@
 
             </table>                  
 
-            <button class='btn spotbie-button spotbie-padding'>SIGN UP</button>
 
             <p class='spotbie-rel-div
                         spotbie-padding
@@ -156,22 +155,15 @@
                 By Signing Up, you are agreeing to <a [routerLink]="['/terms']">OUR TERMS & PRIVACY POLICY.</a>
             </p>
 
-        </form>
+            <button class='btn spotbie-button spotbie-padding'>SIGN UP</button>
 
-        <button class="btn spotbie-button sb-fb-logIn-btn spotbie-padding text-uppercase" (click)="signInWithFB()">
-            SIGN-UP with Facebook
-        </button>
-
-        <button class="btn spotbie-button sb-google-logIn-btn spotbie-padding text-uppercase" (click)="signInWithGoogle()">
-            SIGN-UP with Google
-        </button>                                                              
-                    
+        </form>                                                                              
 
         <div class="spotbie-rel-div
                     spotbie-padding
                     spotbie-text-link"
             (click)="logIn()">
-        ALREADY A MEMBER? LOGIN NOW.
+            ALREADY A MEMBER? LOGIN NOW.
         </div>
 
         <div class="sb-logo mt-3 mb-3"></div>
@@ -191,6 +183,14 @@
             (click)="businessHome()">
             LOOKING FOR THE BUSINESS PORTAL?
         </div>
+
+        <button class="btn spotbie-button sb-fb-logIn-btn spotbie-padding text-uppercase" (click)="signInWithFB()">
+            SIGN-UP with Facebook
+        </button>
+
+        <button class="btn spotbie-button sb-google-logIn-btn spotbie-padding text-uppercase" (click)="signInWithGoogle()">
+            SIGN-UP with Google
+        </button>    
 
         <div class='sb-closeButton' (click)="closeWindowX()">
             <i class="fa fa-times"></i>

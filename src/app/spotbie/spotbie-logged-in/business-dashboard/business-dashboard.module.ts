@@ -6,6 +6,7 @@ import { LoyaltyPointsModule } from '../loyalty-points/loyalty-points.module';
 import { RewardMenuModule } from '../reward-menu/reward-menu.module';
 import { RouterModule } from '@angular/router';
 import { AdManagerModule } from '../ad-manager/ad-manager.module';
+import { RedeemableModule } from '../redeemable/redeemable.module';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { AdManagerModule } from '../ad-manager/ad-manager.module';
     RewardMenuModule,
     RouterModule,
     QrModule,
-    AdManagerModule
+    AdManagerModule,
+    RedeemableModule
   ],
   exports : [
     BusinessDashboardComponent

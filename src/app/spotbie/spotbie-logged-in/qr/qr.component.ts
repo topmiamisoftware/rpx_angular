@@ -148,9 +148,6 @@ export class QrComponent implements OnInit {
 
       }
     )
-
-    this.rewardPrompt = false
-    this.rewardPrompted = true
     
   }
 
@@ -166,9 +163,11 @@ export class QrComponent implements OnInit {
 
       this.promptForRewardTimeout = null
 
-    } else
-      console.log("resp", resp)
-    
+      this.rewardPrompt = false
+      this.rewardPrompted = true
+
+    } else 
+      alert(resp.message)    
 
   }
 
@@ -195,10 +194,8 @@ export class QrComponent implements OnInit {
 
   public scanSuccessHandlerCb(resp: any){
 
-    console.log("scanSuccessHandlerCb", resp)
-
     if(resp.success){
-        
+            
       this.awarded = true      
       this.userLoyaltyPoints = resp.redeemable.amount      
       this.sbEarnedPoints.nativeElement.style.display = 'block'

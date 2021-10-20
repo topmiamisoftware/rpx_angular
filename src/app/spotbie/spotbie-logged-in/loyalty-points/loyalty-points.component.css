@@ -24,6 +24,10 @@ p{
     min-width: 450px;
 }
 .spotbie-overlay-window{
+    display: flex!important;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-content: center;    
     background: #332f3e;
     text-align: center;    
     z-index: 97;
@@ -88,7 +92,7 @@ h5{
 @media (max-width: 768px){
     span.sb-loyalty-points{
         font-size: 7rem !important;
-    }
+    }    
 } 
 @media (max-width: 650px){
     .sb-helpBlock{
@@ -102,8 +106,13 @@ h5{
         margin-top: 20px;
         margin-bottom: 20px;
     }
+    .spotbie-redeemItem{
+        max-width: 94%;
+        min-width: 94%;
+        width: 94%;
+    }       
 }
-@media (max-width: 460px) { 
+@media (max-width: 460px) {  
     .spotbie-lpResetInfo{
         font-size: .6rem;
     }    

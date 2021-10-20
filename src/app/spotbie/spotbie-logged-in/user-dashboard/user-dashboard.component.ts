@@ -2,6 +2,7 @@ import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { LoyaltyPointsComponent } from '../loyalty-points/loyalty-points.component';
 import { QrComponent } from '../qr/qr.component';
+import { RedeemableComponent } from '../redeemable/redeemable.component';
 import { RewardMenuComponent } from '../reward-menu/reward-menu.component';
 
 @Component({
@@ -16,6 +17,7 @@ export class UserDashboardComponent implements OnInit {
   @ViewChild('loyaltyPointsApp') loyaltyPointsApp: LoyaltyPointsComponent
   @ViewChild('rewardMenuApp') rewardMenuApp: RewardMenuComponent
   @ViewChild('qrApp') qrApp: QrComponent
+  @ViewChild('redeemablesApp') redeemablesApp: RedeemableComponent
 
   @ViewChild('lpAppAnchor') lpAppAnchor: ElementRef
   @ViewChild('rewardMenuAppAnchor') rewardMenuAppAnchor: ElementRef
@@ -25,7 +27,14 @@ export class UserDashboardComponent implements OnInit {
 
   public isMobile: boolean = false
 
+  public getRedeemableItems: boolean =  false
+
   constructor(private deviceDetectorService: DeviceDetectorService) { }
+
+  public redeemedLp(){
+    this.getRedeemableItems = true
+    this.redeemablesApp.getRedeemed()
+  }
 
   public openLoyaltyPoints(){
     this.loyaltyPointsApp.initBusinessLoyaltyPoints()

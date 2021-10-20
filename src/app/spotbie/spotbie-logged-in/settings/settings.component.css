@@ -5,11 +5,11 @@
     max-width: 950px;
     margin-bottom: 20px;
 }
-.spotbie-deactivate-table{
-    cursor: pointer;
-}
 .spotbie-info-text{
     background-color: transparent;
+}
+.deactivate-account{
+    cursor: pointer;
 }
 .spotbie-overlay-window{
     padding-bottom: 100px;
@@ -457,9 +457,6 @@ textarea{
         padding: unset;
     }
     #spotbie-password-table{
-        margin-top: 0px;
-    }
-    #spotbie-deactivate-table{
         margin-top: 0px;
     }
     .spotbie-overlay-window{

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core'
+import { Component, OnInit } from '@angular/core'
 import { FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { UserauthService } from '../../../services/userauth.service'
 import { HttpResponse } from '../../../models/http-reponse'
@@ -6,6 +6,7 @@ import { Router } from '@angular/router'
 import { MenuLoggedOutComponent } from '../menu-logged-out.component'
 
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
+import { catchError } from 'rxjs'
 
 @Component({
   selector: 'app-log-in',
@@ -13,8 +14,6 @@ import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
   styleUrls: ['./log-in.component.css', '../../menu.component.css']
 })
 export class LogInComponent implements OnInit {
- 
-  @ViewChild('spotbieLogInIssues') spotbieLogInIssues
 
   public faEye = faEye
   public faEyeSlash = faEyeSlash
@@ -90,15 +89,22 @@ export class LogInComponent implements OnInit {
 
   public loginUser(){
     
-    this.userAuthService.initLogin().subscribe(
-      resp =>{
+    this.userAuthService.initLogin().subscribe({
+      next: (resp) => {
         this.loginCallback(resp)    
+      },
+      error: (e) => {
+        this.logInForm.setErrors(null)
+        this.logInForm.get('spotbieUsername').setErrors({ invalidUorP: true })
+        this.loading = false
       }
-    )
+    })
 
   }
 
   private loginCallback(loginResponse: any): void{
+
+    console.log("response", loginResponse)
 
     if(loginResponse.error == 'popup_closed_by_user'){
       this.loading = false
@@ -107,13 +113,11 @@ export class LogInComponent implements OnInit {
     
     if(loginResponse === undefined){
       this.logInForm.setErrors(null)
-      this.spotbieLogInIssues.nativeElement.innerHTML = "Invalid username or password."
+      this.logInForm.get('spotbieUsername').setErrors({ invalidUorP: true })
       this.loading = false
     }
 
     let login_status = loginResponse.message
-
-    console.log("loginREsp", loginResponse)
 
     if(login_status == 'success' || login_status == 'confirm'){
 
@@ -145,17 +149,14 @@ export class LogInComponent implements OnInit {
       if (login_status == 'invalid_cred' || login_status == 'spotbie_google_account' || login_status == 'spotbie_fb_account' || login_status == 'spotbie_account') {
   
         if(login_status == 'invalid_cred')      
-          this.spotbieLogInIssues.nativeElement.innerHTML = "Invalid username or password."   
+          this.logInForm.get('spotbieUsername').setErrors({ invalidUorP: true })   
         else if(login_status == 'spotbie_google_account')
-          this.spotbieLogInIssues.nativeElement.innerHTML = "You signed up with google."
+          this.logInForm.get('spotbieUsername').setErrors({ spotbie_google_account: true })
         else if(login_status == 'spotbie_fb_account')
-          this.spotbieLogInIssues.nativeElement.innerHTML = "You signed up with facebook."          
+          this.logInForm.get('spotbieUsername').setErrors({ spotbie_fb_account: true })         
         else if(login_status == 'spotbie_account')
-          this.spotbieLogInIssues.nativeElement.innerHTML = "You signed up with an email address."
+          this.logInForm.get('spotbieUsername').setErrors({ spotbie_account: true })
 
-        this.spotbieLogInIssues.nativeElement.className = 'spotbie-invalid-feedback spotbie-text-gradient spotbie-error text-uppercase'
-        this.spotbieLogInIssues.nativeElement.style.display = 'block'
-  
         localStorage.setItem('spotbie_userId', null)
         localStorage.setItem('spotbie_loggedIn', '0')
         localStorage.setItem('spotbie_userApiKey', null)

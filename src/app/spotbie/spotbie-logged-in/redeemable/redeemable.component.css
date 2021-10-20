@@ -1,0 +1,33 @@
+.spotbie-overlay-window{
+    display: flex!important;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-content: center;    
+    background: #332f3e;
+    text-align: center;    
+    z-index: 97;
+}
+.spotbie-redeemItem{
+    position: relative;
+    margin: 0 auto 5px;
+    border-radius: 5px;
+    max-width: 650px;
+    min-width: 650px;
+    width: 650px;
+    color: white;
+    background-color: rgba(0,0,0,.2);
+    text-align: left;
+}
+.card-body{
+    font-size: .9rem;
+}
+.card-footer{
+    font-size: .6rem;
+}
+@media (max-width: 650px){
+    .spotbie-redeemItem{
+        max-width: 94%;
+        min-width: 94%;
+        width: 94%;
+    }
+}

@@ -32,6 +32,7 @@ export class LoyaltyPointsComponent implements OnInit {
   public businessAccount: boolean = false
 
   public businessLoyaltyPointsOpen: boolean = false
+  public personalLoyaltyPointsOpen: boolean = false
 
   public businessLoyaltyPointsForm: FormGroup
   public businessLoyaltyPointsFormUp: boolean = false
@@ -63,7 +64,7 @@ export class LoyaltyPointsComponent implements OnInit {
          this.loyaltyPointReward = route.snapshot.params.loyaltyPointReward
          this.totalSpent = route.snapshot.params.totalSpent
          this.userHash = route.snapshot.params.userHash
-
+        
       }
 
   }
@@ -82,7 +83,7 @@ export class LoyaltyPointsComponent implements OnInit {
     await this.loyaltyPointsService.getLoyaltyPointBalance()    
     
   }
-  
+
   /* TO-DO: Create a function which shows a business's or personal account' past transactions. */
   public fetchLedger(){}
 
@@ -98,13 +99,19 @@ export class LoyaltyPointsComponent implements OnInit {
     
   }
   
+  public initPersonalLoyaltyPoints(){
+
+    this.personalLoyaltyPointsOpen = true
+
+  }
+
   get businessLoyaltyPoints() {return this.businessLoyaltyPointsForm.get('businessLoyaltyPoints').value }
   get businessCoinPercentage() {return this.businessLoyaltyPointsForm.get('businessCoinPercentage').value }
   get f() { return this.businessLoyaltyPointsForm.controls }
   
   public initBusinessLoyaltyPoints(){    
 
-    if(this.userType == AllowedAccountTypes.Personal) return
+    if(this.userType == AllowedAccountTypes.Personal) return    
 
     this.businessLoyaltyPointsOpen = true
     
@@ -215,7 +222,7 @@ export class LoyaltyPointsComponent implements OnInit {
 
     this.loyaltyPointsService.userLoyaltyPoints$.subscribe(
       loyaltyPointBalance => {
-        this.loyaltyPointBalance = loyaltyPointBalance      
+        this.loyaltyPointBalance = loyaltyPointBalance              
       }
     )
     
@@ -224,6 +231,8 @@ export class LoyaltyPointsComponent implements OnInit {
     this.loading = false
     
     this.getLoyaltyPointBalance()
+    
+    //this.getRedeemed()
 
   }
 

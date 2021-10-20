@@ -15,35 +15,43 @@
 
       <span class='sb-loyalty-points' (click)="toggleLoyaltyPoints()" >{{ userLoyaltyPoints | number:'1.0':'en-US' }}</span>
       
-      <img class='sb-loyalty-points' *ngIf="!isMobile" (click)="toggleLoyaltyPoints()"  src="assets/images/spotbie-loyalty-points.svg" />
+      <img class='sb-loyalty-points' *ngIf="!isMobile" (click)="toggleRedeemables()"  src="assets/images/spotbie-loyalty-points.svg" />
 
-      <img class='sb-qr' (click)="toggleQRScanner()"  src="assets/images/spotbie-qr.svg" /> 
-      
-      <div *ngIf="this.userType == '1'" class="sb-businessMenu">
-        <img class='sb-loyalty-points' *ngIf="isMobile" (click)="toggleRewardMenu()"  src="assets/images/spotbie-loyalty-points.svg" />
+      <div class="sb-businessMenu" *ngIf="isMobile">
+        <img class='sb-loyalty-points' (click)="toggleRedeemables()" src="assets/images/spotbie-loyalty-points.svg" />
       </div>
 
+      <div *ngIf="this.userType == '1' || this.userType == '2' || this.userType == '3'" class="sb-businessMenu">
+        <img class='sb-loyalty-points' (click)="toggleRewardMenu()"  src="assets/images/menu spotbie-01.svg" />
+      </div>
+
+      <img class='sb-qr' (click)="toggleQRScanner()"  src="assets/images/spotbie-qr.svg" /> 
+
       <span class='sb-userName' (click)="openWindow(settingsWindow)" *ngIf="userName !== null && isDesktop">{{ userName }}</span>         
-    
+      
     </td>    
 
     <td *ngIf="isDesktop" class="sb-desktopNavBar" style="text-align: right; cursor: default;"> 
 
-      <span (click)="myFavorites()" *ngIf="this.userType === '4'">
+      <span (click)="myFavorites()" *ngIf="this.userType === eAllowedAccountTypes.Personal">
         <i class="fas fa-star"></i>
       </span>
 
-      <span (click)="spawnCategories('food')" *ngIf="this.userType === '4'">
+      <span (click)="spawnCategories('food')" *ngIf="this.userType === eAllowedAccountTypes.Personal">
         PLACES TO EAT
       </span>
 
-      <span (click)="spawnCategories('shopping')" *ngIf="this.userType === '4'"> 
+      <span (click)="spawnCategories('shopping')" *ngIf="this.userType === eAllowedAccountTypes.Personal"> 
         SHOPPING
       </span>
 
-      <span (click)="spawnCategories('events')" *ngIf="this.userType === '4'">
+      <span (click)="spawnCategories('events')" *ngIf="this.userType === eAllowedAccountTypes.Personal">
         EVENTS
       </span>
+
+      <div class="sb-businessMenu" *ngIf="this.userType === eAllowedAccountTypes.Events">
+        <img class='sb-loyalty-points' (click)="openEvents()" src="assets/images/spotbie-loyalty-points.svg" />
+      </div>
 
       <span (click)="logOut()">
         LOG OUT
@@ -94,6 +102,10 @@
   </table>
 
 </div>
+
+<app-redeemable *ngIf="getRedeemableItems" (closeWindowEvt)="closeRedeemables()"></app-redeemable>
+
+<app-event-menu *ngIf="eventMenuOpen"></app-event-menu>
 
 <app-map [business]="business" *ngIf="mapApp.open" #spotbieMap (openBusinessSettingsEvt)="openBusinessSettings()"></app-map>
 

@@ -120,7 +120,9 @@ export class UserauthService {
     const logInApi = `${USER_API}/login`
 
     return this.http.post<any>(logInApi, params).pipe(
-      catchError(handleError("initLogin"))
+      catchError( err => {
+        throw err
+      })
     )
 
   }

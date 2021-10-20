@@ -25,6 +25,15 @@ export class LoyaltyPointsService {
               private store: Store<{ loyaltyPoints }>) {
   }
 
+  getRedeemed(getRedeemedObj: any): Observable<any>{
+
+    let apiUrl = `${REDEEMABLE_API}/index`
+
+    return this.http.post<any>(apiUrl, getRedeemedObj).pipe(
+      catchError(handleError("getRedeemed"))
+    )
+
+  }
 
   getLoyaltyPointBalance(): any{
 
@@ -67,7 +76,8 @@ export class LoyaltyPointsService {
 
     ).subscribe(
       resp => {
-        if(resp.success){                  
+        if(resp.success){
+          console.log("add loyalty points", resp)                  
           let loyaltyPointBalance: LoyaltyPointBalance = resp.loyalty_points
           this.store.dispatch( setValue({loyaltyPointBalance}) )                         
         } 

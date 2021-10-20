@@ -33,7 +33,7 @@
                 *ngIf="scannerStarted" 
                 (openLoyaltyPoints)="openLoyaltyPoints()"
                 (openUserLPBalanceEvt)="openLoyaltyPoints()" 
-                (closeQrUserEvt)="closeQrScanner()" 
+                (closeQrUserEvt)="closeQrScanner()"
                 #qrApp>
         </app-qr>
 
@@ -42,6 +42,8 @@
     <div class="sb-dashboardWrapper" #lpAppAnchor>
         <app-loyalty-points [fullScreenWindow]="false" #loyaltyPointsApp></app-loyalty-points>
     </div>
+
+    <app-redeemable *ngIf="getRedeemableItems"></app-redeemable>
 
 </div>
 

@@ -43,14 +43,15 @@
                 <tr>
                     <td>
 
-                        <div *ngIf="submitted && f.spotbie_first_name.errors else user_first_name_normal" class="spotbie-input-info spotbie-text-gradient spotbie-error">
+                        <div *ngIf="submitted && f.spotbie_first_name.errors else user_first_name_normal" 
+                                class="spotbie-input-info spotbie-text-gradient spotbie-error mb-2">
             
                             <div *ngIf="f.spotbie_first_name.errors.required">
-                                Please identify yourself!
+                                Please enter your first name.
                             </div>
                             
                             <div *ngIf="f.spotbie_first_name.errors.maxlength">
-                                Your name cannot be longer than 72 characters.
+                                Your first name cannot be longer than 72 characters.
                             </div>  
         
                         </div> 
@@ -69,14 +70,15 @@
                 <tr>
                     <td>
 
-                        <div *ngIf="submitted && f.spotbie_last_name.errors else user_last_name_normal" class="spotbie-input-info spotbie-text-gradient spotbie-error">
+                        <div *ngIf="submitted && f.spotbie_last_name.errors else user_last_name_normal" 
+                                class="spotbie-input-info spotbie-text-gradient spotbie-error mb-2">
             
                             <div *ngIf="f.spotbie_last_name.errors.required">
-                                Please identify yourself!
+                                Please enter your last name.
                             </div>
                             
                             <div *ngIf="f.spotbie_last_name.errors.maxlength">
-                                Your name cannot be longer than 72 characters.
+                                Your last name cannot be longer than 72 characters.
                             </div>  
         
                         </div> 
@@ -95,7 +97,8 @@
                 <tr>
                     <td>
 
-                        <div *ngIf="submitted && f.spotbie_email.errors else user_email_normal" class="spotbie-input-info  animated shake">
+                        <div *ngIf="submitted && f.spotbie_email.errors else user_email_normal" 
+                                class="spotbie-input-info spotbie-text-gradient spotbie-error mb-2">
             
                             <div *ngIf="f.spotbie_email.errors.required">
                                 Please enter your e-mail, it will be used if you lose your password.
@@ -131,7 +134,8 @@
                 <tr>
                     <td>
 
-                        <div *ngIf="submitted && f.spotbie_acc_type.errors else user_account_type_normal" class="spotbie-input-info  spotbie-text-gradient spotbie-error">
+                        <div *ngIf="submitted && f.spotbie_acc_type.errors else user_account_type_normal" 
+                                    class="spotbie-input-info spotbie-text-gradient spotbie-error mb-2">
             
                             <div *ngIf="f.spotbie_acc_type.errors.required">
                                 You must choose an account type!
@@ -182,7 +186,8 @@
         
                     <tr>
                         <td>
-                            <div *ngIf="password_submitted && g.spotbie_password.errors else spotbie_password_normal" class="spotbie-input-info spotbie-text-gradient spotbie-error">    
+                            <div *ngIf="password_submitted && g.spotbie_password.errors else spotbie_password_normal" 
+                                    class="spotbie-input-info spotbie-text-gradient spotbie-error mb-2">    
                 
                                 <div *ngIf="g.spotbie_password.errors.required">
                                     Please provide a password.
@@ -219,7 +224,8 @@
         
                     <tr>
                         <td>
-                            <div *ngIf="password_submitted && g.spotbie_confirm_password.errors else spotbie_confirm_password_normal" class="spotbie-input-info  spotbie-text-gradient spotbie-error">
+                            <div *ngIf="password_submitted && g.spotbie_confirm_password.errors else spotbie_confirm_password_normal" 
+                                    class="spotbie-input-info spotbie-text-gradient spotbie-error mb-2">
             
                                 <div *ngIf="g.spotbie_confirm_password.errors.required">
                                     Please confirm your password.
@@ -233,7 +239,9 @@
                                 </label>
                             </ng-template>  
 
-                            <input class="sb-input" (click)="$event.target.select()" formControlName="spotbie_confirm_password" type="password" value="newpassword" autocomplete="false" />
+                            <input class="sb-input" 
+                                    (click)="$event.target.select()" 
+                                    formControlName="spotbie_confirm_password" type="password" value="newpassword" autocomplete="false" />
                         </td>
                     </tr>
             
@@ -241,7 +249,7 @@
                         <td>
 
                             <div class='spotbie-button spotbie-save-settings-button text-uppercase mb-5' (click)="savePassword()">
-                                Save Settings
+                                CHANGE PASSWORD
                             </div>
 
                         </td>
@@ -299,7 +307,7 @@
         
         <table class="spotbie-settings-table" id="spotbie-deactivate-table" *ngIf="settingsFormInitiated">
             <tr>
-                <td class='spotbie-text-gradient text-uppercase deactivate-account' style="margin-top: 0px; cursor: pointer;" (click)="startDeactivateAccount()">
+                <td class='spotbie-text-gradient text-uppercase deactivate-account pt-4 pb-4' (click)="startDeactivateAccount()">
                     Deactivate Account
                 </td>
             </tr>
@@ -357,6 +365,12 @@
                 </div>
 
                 <div class="spotbie-select-menu-option mt-1 mb-1 pt-3 pb-3" 
+                     *ngIf="chosen_account_type != 0"
+                     (click)="selectAccountType('PERSONAL')">
+                     <span class='spotbie-text-gradient text-center text-uppercase'>PERSONAL</span>
+                </div> 
+
+                <div class="spotbie-select-menu-option mt-1 mb-1 pt-3 pb-3" 
                      *ngFor="let account_type of accountTypeList" 
                      (click)="selectAccountType(account_type)">
 
@@ -396,7 +410,7 @@
                     <ng-template #spotbie_origin_normal>
                         <div class='mt-4'></div>
                         <label class="spotbie-input-info spotbie-text-gradient text-center mt-5 mb-2">
-                            Where is your {{ account_type_category }} located?
+                            Where is your {{ account_type_category_friendly_name }} located?
                         </label>
                     </ng-template>
 
@@ -438,7 +452,7 @@
             </tr>
             
             <div class="spotbie-input-info spotbie-text-gradient text-center" *ngIf="chosen_account_type == 1 && locationFound" >
-                Find your {{ account_type_category }}.
+                Find your {{ account_type_category_friendly_name }}.
             </div>
 
             <tr *ngIf="account_type_category !== 'PERSONAL' && locationFound">
@@ -508,7 +522,7 @@
                             class="spotbie-input-info spotbie-text-gradient text-center spotbie-error mt-4 mb-2">
     
                         <div *ngIf="i.originTitle.errors.required">
-                            Please enter your {{ account_type_category }} title.
+                            Please enter your {{ account_type_category_friendly_name }} title.
                         </div>                                                
     
                     </div>   
@@ -516,7 +530,7 @@
                     <ng-template #originTitleNormal>
     
                         <label class="spotbie-input-info spotbie-text-gradient text-center mt-4 mb-2" *ngIf="account_type_category !== 'PERSONAL' && locationFound">
-                            Choose {{ account_type_category }} title.
+                            Choose {{ account_type_category_friendly_name }} title.
                         </label>
     
                     </ng-template>
@@ -535,7 +549,7 @@
                             class="spotbie-input-info spotbie-text-gradient text-center spotbie-error mt-4 mb-2">
     
                         <div *ngIf="i.originCategories.errors.required">
-                            Enter {{ account_type_category }} categories.
+                            Enter {{ account_type_category_friendly_name }} categories.
                         </div>                                                
     
                     </div>   
@@ -543,7 +557,7 @@
                     <ng-template #originCategoriesNormal>
                     
                         <label class="spotbie-input-info spotbie-text-gradient text-center mt-4 mb-2">
-                            Enter {{ account_type_category }} categories.
+                            Enter {{ account_type_category_friendly_name }} categories.
                         </label>
 
                     </ng-template>
@@ -576,9 +590,7 @@
                         #businessInput
                         formControlName="originCategories"
                         [matAutocomplete]="auto"
-                        [matChipInputFor]="chipList"
-                        [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-                        (matChipInputTokenEnd)="add($event)">
+                        [matChipInputFor]="chipList">
 
                     </mat-chip-list>
                     
@@ -610,7 +622,7 @@
                     <ng-template #spotbie_origin_description_normal>
                         <label class="spotbie-input-info spotbie-text-gradient text-center mb-2" 
                                 *ngIf="account_type_category !== 'PERSONAL' && locationFound">
-                            Enter {{ account_type_category }} description.
+                            Enter {{ account_type_category_friendly_name }} description.
                         </label>
                     </ng-template>          
 
@@ -651,7 +663,7 @@
         <h4 class="spotbie-text-gradient text-uppercase">YOUR VERIFICATION WAS SUCCESSFUL</h4>
 
         <div class="sb-verificationCheck mt-4 mb-4">
-            <i class="fa fa-check"></i>
+            <i class="fa fa-check sb-text-light-green-gradient"></i>
         </div>
 
         <h4 class="spotbie-text-gradient text-uppercase">YOU ARE READY TO START</h4>

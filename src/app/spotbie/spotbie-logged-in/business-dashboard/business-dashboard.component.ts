@@ -2,6 +2,7 @@ import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '
 import { UserauthService } from 'src/app/services/userauth.service';
 import { LoyaltyPointsComponent } from '../loyalty-points/loyalty-points.component';
 import { QrComponent } from '../qr/qr.component';
+import { RedeemableComponent } from '../redeemable/redeemable.component';
 import { RewardMenuComponent } from '../reward-menu/reward-menu.component';
 
 @Component({
@@ -16,6 +17,7 @@ export class BusinessDashboardComponent implements OnInit {
   @ViewChild('loyaltyPointsApp') loyaltyPointsApp: LoyaltyPointsComponent
   @ViewChild('rewardMenuApp') rewardMenuApp: RewardMenuComponent
   @ViewChild('qrApp') qrApp: QrComponent
+  @ViewChild('redeemablesApp') redeemablesApp: RedeemableComponent
 
   @ViewChild('lpAppAnchor') lpAppAnchor: ElementRef
   @ViewChild('qrCodeAppAnchor') qrCodeAppAnchor: ElementRef
@@ -24,7 +26,14 @@ export class BusinessDashboardComponent implements OnInit {
   public displayBusinessSetUp: boolean = false
   public businessFetched: boolean = false
 
+  public getRedeemableItems: boolean =  false
+
   constructor(private userAuthServe: UserauthService) { }
+
+  public redeemedLp(){
+    this.getRedeemableItems = true
+    this.redeemablesApp.getRedeemed()
+  }
 
   public openLoyaltyPoints(){
     console.log("BusinessDashboardComponent loyaltyPointsApp") 

@@ -6,7 +6,7 @@
     <i class="fa fa-times"></i>
   </div>
 
-  <div style="overflow-y: scroll;">
+  <div class='sb-scroll'>
 
     <p class='spotbie-text-gradient text-uppercase text-center' id="sign_up_general_instructions" #spotbieSignUpIssues>
       <span  *ngIf="!business">Login to earn rewards with spotbie.</span>
@@ -18,7 +18,7 @@
       <form [formGroup]="logInForm" (ngSubmit)="initLogIn()">
 
         <div *ngIf="submitted && f.spotbieUsername.errors" class="spotbie-invalid-feedback text-uppercase spotbie-text-gradient spotbie-error">
-                    
+                
           <div *ngIf="f.spotbieUsername.errors.required || f.spotbieUsername.errors.emptyUsername">
             USERNAME OR E-MAIL REQUIRED.
           </div>
@@ -31,21 +31,34 @@
             USERNAME MUST ONLY CONTAIN LETTERS, NUMBERS, AND UNDERSCORES.
           </div>
           
-        </div> 
-    
-        <!--<ng-template #username_normal>
-          <div #spotbieLogInIssues class="spotbie-invalid-feedback text-uppercase spotbie-text-gradient spotbie-error">
+          <div *ngIf="f.spotbieUsername.errors.invalidUorP" >
+            INVALID USERNAME OR PASSWORD.
           </div>
-        </ng-template>-->
-    
+
+          <div *ngIf="f.spotbieUsername.errors.spotbie_google_account" >
+            You signed up with google.
+          </div>
+
+          <div *ngIf="f.spotbieUsername.errors.spotbie_fb_account" >
+            You signed up with facebook.
+          </div>
+          
+          <div *ngIf="f.spotbieUsername.errors.spotbie_account" >
+            You signed up with an email address.
+          </div>          
+
+        </div> 
+
         <table class="sb-inputWithIconWrapper">
     
           <td class="sb-iconInInputWrapper">
             <i class="fa fa-envelope"></i>
           </td>
     
-          <td>
+          <td>          
+
             <input class="sb-input" id="spotbieLoginUsername" formControlName="spotbieUsername" type="text" placeholder="USERNAME/EMAIL" autocomplete="username"/>
+
           </td>
     
         </table>
@@ -58,10 +71,6 @@
           
         </div>
     
-        <!--<ng-template #password_normal>
-          <div class="spotbie-input-info spotbie-invalid-feedback spotbie-text-gradient"></div>
-        </ng-template>-->
-        
         <table class="sb-inputWithIconWrapper">
     
           <td class="sb-iconInInputWrapper">
@@ -118,6 +127,15 @@
       LOGIN WITH GOOGLE <!--<i class="fa fa-google-plus"></i>-->
     </button>
 
+    <div class="spotbie-rel-div
+                spotbie-padding
+                spotbie-text-link"
+                (click)="signUp()">
+          NOT A MEMBER? SIGN UP NOW.
+    </div> 
+
+    <div></div>
+
     <p class='spotbie-rel-div
               spotbie-padding
               spotnie-login-terms
@@ -125,13 +143,6 @@
               text-uppercase'>
       By Logging in, you are agreeing to <a [routerLink]="['/terms']">OUR TERMS & PRIVACY POLICY.</a>
     </p>
-
-    <div class="spotbie-rel-div
-                spotbie-padding
-                spotbie-text-link"
-                (click)="signUp()">
-          NOT A MEMBER? SIGN UP NOW.
-    </div>  
 
     <div class="sb-logo mt-3 mb-3"></div>
 

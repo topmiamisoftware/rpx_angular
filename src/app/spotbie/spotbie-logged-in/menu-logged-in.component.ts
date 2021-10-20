@@ -1,13 +1,9 @@
 import { Component, OnInit, Input, ViewChild, EventEmitter, Output, ElementRef } from '@angular/core'
 import { Router } from '@angular/router'
-import { Location } from '@angular/common'
 import { UserauthService } from 'src/app/services/userauth.service'
-import { Subscription } from 'rxjs'
 import { MapComponent } from '../map/map.component'
 import { DeviceDetectorService } from 'ngx-device-detector'
-import { externalBrowserOpen } from 'src/app/helpers/cordova/web-intent'
 import { LoyaltyPointsService } from 'src/app/services/loyalty-points/loyalty-points.service'
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast'
 import { AllowedAccountTypes } from 'src/app/helpers/enum/account-type.enum'
 import { SettingsComponent } from './settings/settings.component'
 
@@ -59,6 +55,10 @@ export class MenuLoggedInComponent implements OnInit {
   public qrCode: boolean = false
 
   public business: boolean = false
+
+  public getRedeemableItems: boolean = false
+
+  public eventMenuOpen: boolean = false
 
   constructor(private router : Router,
               private userAuthService : UserauthService,
@@ -167,6 +167,14 @@ export class MenuLoggedInComponent implements OnInit {
     
   }
 
+  public openEvents(){
+    this.eventMenuOpen = true
+  }
+
+  public closeEvents(){
+    this.eventMenuOpen = false
+  }
+
   ngOnInit() : void {
 
     this.loyaltyPointsService.userLoyaltyPoints$.subscribe(
@@ -195,6 +203,14 @@ export class MenuLoggedInComponent implements OnInit {
 
     this.getLoyaltyPointBalance()
 
+  }
+
+  toggleRedeemables(){
+    this.getRedeemableItems = !this.getRedeemableItems
+  }
+  
+  closeRedeemables(){
+    this.getRedeemableItems = false
   }
 
   ngAfterViewInit(){
