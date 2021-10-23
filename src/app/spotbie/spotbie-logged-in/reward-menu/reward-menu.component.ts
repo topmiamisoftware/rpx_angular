@@ -25,6 +25,8 @@ export class RewardMenuComponent implements OnInit {
 
   @Output() notEnoughLpEvt = new EventEmitter()
 
+  public eAllowedAccountTypes = AllowedAccountTypes
+
   public menuItemList: Array<any>
 
   public itemCreator: boolean = false
@@ -33,7 +35,7 @@ export class RewardMenuComponent implements OnInit {
   public userResetBalance
   public userPointToDollarRatio
 
-  public rewards: Array<Reward>
+  public rewards: Array<Reward> = null
   public reward: Reward
 
   public qrCodeLink: string = null
@@ -96,12 +98,14 @@ export class RewardMenuComponent implements OnInit {
   }
 
   private fetchRewardsCb(resp){
+    
+    console.log("fetchRewardsCb", resp)
 
     if(resp.success){
 
       this.rewards = resp.rewards
 
-      if(this.userType === AllowedAccountTypes.Personal){
+      if(this.userType === this.eAllowedAccountTypes.Personal){
         this.userPointToDollarRatio = resp.loyalty_point_dollar_percent_value	
         this.business.name = resp.placeToEatName
       }
@@ -161,7 +165,7 @@ export class RewardMenuComponent implements OnInit {
 
     this.userType = localStorage.getItem('spotbie_userType')
 
-    if(this.userType !== AllowedAccountTypes.Personal){
+    if(this.userType !== this.eAllowedAccountTypes.Personal){
 
       this.getLoyaltyPointBalance()
       this.fetchRewards()

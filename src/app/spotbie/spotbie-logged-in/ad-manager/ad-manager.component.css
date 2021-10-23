@@ -3,3 +3,10 @@
     margin-top: 30px;
     margin-bottom: 30px;
 }
+@media (max-width: 460px){
+    .sb-v-wrapper p{
+        width: 94%;
+        min-width: 94%;
+        max-width: 94%;
+    }
+}

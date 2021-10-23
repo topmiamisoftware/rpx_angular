@@ -301,11 +301,15 @@ export class UserauthService {
 
   public signInWithFB(loginCallBack, route: string) {
     
+    /**
+     * Please look at this document for extra fbLoginOptions
+     * https://developers.facebook.com/docs/reference/javascript/FB.login/v2.11
+     */
     const fbLoginOptions = {
       scope: 'email,public_profile,user_friends',
       return_scopes: true,
       enable_profile_selector: true
-    }; // https://developers.facebook.com/docs/reference/javascript/FB.login/v2.11
+    }; 
 
     this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID, fbLoginOptions).catch(
       (error) => {
@@ -342,7 +346,8 @@ export class UserauthService {
       lastName: userObj.lastName,
       email: userObj.email,
       photoUrl: userObj.photoUrl,
-      remember_me: this.userRememberMe
+      remember_me: this.userRememberMe,
+      route
     }
 
     return this.http.post<any>(fbLoginApi, facebookLoginObj).pipe(

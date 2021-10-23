@@ -76,8 +76,7 @@ export class LoyaltyPointsService {
 
     ).subscribe(
       resp => {
-        if(resp.success){
-          console.log("add loyalty points", resp)                  
+        if(resp.success){                
           let loyaltyPointBalance: LoyaltyPointBalance = resp.loyalty_points
           this.store.dispatch( setValue({loyaltyPointBalance}) )                         
         } 

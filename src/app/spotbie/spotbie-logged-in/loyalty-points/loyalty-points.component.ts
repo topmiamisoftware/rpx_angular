@@ -12,9 +12,10 @@ import { LoyaltyPointsService } from 'src/app/services/loyalty-points/loyalty-po
 })
 export class LoyaltyPointsComponent implements OnInit {
 
-  @Input() fullScreenWindow: boolean = true
-
   @Output() closeWindow = new EventEmitter
+  @Output() openRedeemed = new EventEmitter
+
+  @Input() fullScreenWindow: boolean = true
 
   @ViewChild('newBalanceLoyaltyPoints') newBalanceLoyaltyPoints
 
@@ -111,8 +112,10 @@ export class LoyaltyPointsComponent implements OnInit {
   
   public initBusinessLoyaltyPoints(){    
 
-    if(this.userType == AllowedAccountTypes.Personal) return    
-
+    if(this.userType == AllowedAccountTypes.Personal){
+      this.openRedeemed.emit()
+      return    
+    }
     this.businessLoyaltyPointsOpen = true
     
     const coinValidators = [Validators.required]
@@ -161,7 +164,7 @@ export class LoyaltyPointsComponent implements OnInit {
     if(resp.success){
       
       this.loading = false
-      this.businessLoyaltyPointsInfo.nativeElement.innerHTML = "Your loyalty point monthly budget was updated <i class='fa fa-check'></i>"
+      this.businessLoyaltyPointsInfo.nativeElement.innerHTML = "Your loyalty point monthly budget was updated <i class='fa fa-check sb-text-light-green-gradient'></i>"
       
       setTimeout(() => {
         location.reload()

@@ -19,8 +19,12 @@
 
         </div>
 
-        <!--<div class='spotbie-info-object-image' [ngStyle]="{ 'background' : 'url(' + infoObjectImageUrl + ')'}"></div>-->
-    
+        <div class='spotbie-info-object-image' [ngStyle]="{ 'background' : 'url(' + infoObjectImageUrl + ')'}"></div>
+        
+        <div class='spotbie-communityMemberDescription spotbie-text-gradient' *ngIf="info_object.is_community_member">
+            {{ info_object.description }}
+        </div>
+
         <div *ngIf="info_object !== null && info_object.hours !== undefined">
 
             <div class='spotbie-info-object-open' *ngIf="!info_object.isOpenNow">
@@ -33,7 +37,9 @@
 
         </div>
 
-        <div class='spotbie-info-object-image-list' *ngIf="info_object.type_of_info_object != 'ticketmaster_event'">
+        <div class='spotbie-info-object-image-list' 
+                *ngIf="info_object.type_of_info_object != 'ticketmaster_event' &&
+                        info_object.type_of_info_object != 'spotbie_community'">
     
             <div class='spotbie-info-object-image-thumb'
                 *ngFor="let thumbnail of info_object.photos"
@@ -41,6 +47,14 @@
     
         </div>
         
+        <div class='spotbie-info-object-image-list' 
+                *ngIf="info_object.type_of_info_object == 'spotbie_community'">
+    
+            <div class='spotbie-info-object-image-thumb'
+                [ngStyle]="{ 'background' : 'url(' + info_object.photo + ')'}"></div>
+    
+        </div>
+
         <div class='spotbie-info-object-image-list' *ngIf="info_object.type_of_info_object == 'ticketmaster_event'">
     
             <div class='spotbie-info-object-image-thumb'
@@ -73,6 +87,14 @@
             <a href="tel:{{info_object.phone}}" class='spotbie-friendly-ph' [ngClass]="getFontClasses()">
                 {{ info_object.display_phone }}
             </a>
+
+        </div>
+
+        <div class='mt-4 mb-4' *ngIf="info_object.is_community_member">
+
+            <span class='spotbie-text-gradient' style='font-size: .8rem;'>DOLLAR VALUE RATE</span><br/>
+            <span class='sb-text-light-green-gradient mt-4 mb-4' style='font-size: 1.8rem;'>{{ info_object.rewardRate | currency : 'USD' }}</span><br/>
+            <span class='spotbie-text-gradient' style='font-size: .8rem;'> PER DOLLAR SPENT</span>
 
         </div>
 
@@ -125,7 +147,11 @@
 
             <i class="fa fa-map-marker-alt" [ngClass]="getFontClasses()" aria-hidden="true" (click)="openWithGoogleMaps()"></i>
 
-            <i class="fa fa-globe" [ngClass]="getFontClasses()" aria-hidden="true" (click)="visitInfoObjectPage()"></i>
+            <i class="fa fa-globe" 
+                *ngIf="info_object.is_community_member"
+                [ngClass]="getFontClasses()" 
+                aria-hidden="true" 
+                (click)="visitInfoObjectPage()"></i>
 
             <div class='spotbie-info-object-address' [ngClass]="getFontClasses()" *ngIf="info_object.type_of_info_object == 'yelp_business'" (click)="openWithGoogleMaps()">
                 {{ info_object.location.display_address[0] }} 

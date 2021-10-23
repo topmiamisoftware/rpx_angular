@@ -128,29 +128,49 @@ export class InfoObjectComponent implements OnInit {
 
   private pullInfoObjectCallback(httpResponse: any): void{
 
-    console.log("info object", this.info_object)
-
     if (httpResponse.success) {
 
       this.info_object = httpResponse.data
+
+      console.log("info_object", this.info_object)
+
       this.info_object.type_of_info_object_category = this.infoObjectCategory
 
-      this.infoObjectImageUrl = this.info_object.image_url      
+      if(this.info_object.is_community_member == '1')
+        this.infoObjectImageUrl = 'assets/images/home_imgs/spotbie-green-icon.svg'
+      else
+        this.infoObjectImageUrl =  'assets/images/home_imgs/spotbie-white-icon.svg'
 
-      if(this.router.url.indexOf('place-to-eat') > -1 || this.info_object.type_of_info_object_category == 'food'){
-
+      if(this.router.url.indexOf('place-to-eat') > -1 || 
+          this.info_object.type_of_info_object_category == 'food'){
+       
         this.info_object.type_of_info_object = 'yelp_business'
         this.info_object.type_of_info_object_category = 'food'
         this.infoObjectLink = `https://spotbie.com/place-to-eat/${this.info_object.alias}/${this.info_object.id}`
 
       }
       
-      if(this.router.url.indexOf('shopping') > -1 || this.info_object.type_of_info_object_category == 'shopping'){
+      if(this.router.url.indexOf('shopping') > -1 || 
+          this.info_object.type_of_info_object_category == 'shopping'){
 
         this.info_object.type_of_info_object = 'yelp_business'
         this.info_object.type_of_info_object_category = 'shopping'
         this.infoObjectLink = `https://spotbie.com/shopping/${this.info_object.alias}/${this.info_object.id}`
         
+      }
+
+      if(this.router.url.indexOf('events') > -1 || 
+          this.info_object.type_of_info_object_category == 'events'){
+          
+        this.info_object.type_of_info_object = 'ticketmaster_event'
+        this.info_object.type_of_info_object_category = 'events'
+        this.infoObjectLink = `https://spotbie.com/events/${this.info_object.alias}/${this.info_object.id}`
+        
+      }
+
+      if(this.info_object.is_community_member == '1'){
+        this.info_object.type_of_info_object = 'spotbie_community'        
+        this.info_object.image_url = this.info_object.photo
       }
 
       if(this.info_object.hours !== undefined){
@@ -283,7 +303,7 @@ export class InfoObjectComponent implements OnInit {
   public getOverlayWindowStyling(){
 
     if(this.info_object.is_community_member)
-      return { 'background-color' : '#332f3e' }
+      return { 'background-color' : 'rgb(16, 16, 16)' }
     else
       return { 'background-color' : 'white' }
     
@@ -450,24 +470,22 @@ export class InfoObjectComponent implements OnInit {
     let title = `${this.info_object.name} at ${this.info_object._embedded.venues[0].name}`
 
     this.infoObjectLink = `https://spotbie.com/event/${alias}/${this.info_object.id}`
-    this.infoObjectImageUrl = this.info_object.image_url
     this.infoObjectDescription = `Hey! Let's go to ${this.info_object.name} together. It's at ${this.info_object._embedded.venues[0].name} located in ${this.info_object._embedded.venues[0].address.line1}, ${this.info_object._embedded.venues[0].city.name} ${this.info_object._embedded.venues[0].postalCode}. Prices range from $${this.info_object.priceRanges[0].min} to $${this.info_object.priceRanges[0].min}`
     this.infoObjectTitle = title
 
     this.spotbieMetaService.setTitle(title)
     this.spotbieMetaService.setDescription(this.infoObjectDescription)
-    this.spotbieMetaService.setImage(this.infoObjectImageUrl)
+    this.spotbieMetaService.setImage(this.info_object.image_url)
 
   }
 
   public visitInfoObjectPage(){
 
-    if(this.info_object.type_of_info_object == 'yelp_business'){
+    if(this.info_object.type_of_info_object == 'yelp_business')
       externalBrowserOpen(`${this.info_object.url}`)
-    } else if(this.info_object.type_of_info_object == 'ticketmaster_event'){
+    else if(this.info_object.type_of_info_object == 'ticketmaster_event')
       this.goToTicket()
-    }
-
+  
   }
 
   ngOnInit(){
@@ -478,22 +496,35 @@ export class InfoObjectComponent implements OnInit {
     this.isLoggedIn = localStorage.getItem('spotbie_loggedIn')
 
     if(this.info_object !== undefined){
-      
-      this.infoObjectImageUrl = this.info_object.image_url
-      this.infoObjectCategory = this.info_object.type_of_info_object_category      
 
+      console.log('businessInfoObecjt', this.info_object)
+
+      this.infoObjectCategory = this.info_object.type_of_info_object_category      
+      
+      if(this.info_object.is_community_member)
+        this.infoObjectImageUrl = 'assets/images/home_imgs/spotbie-white-icon.svg'
+      else
+        this.infoObjectImageUrl = 'assets/images/home_imgs/spotbie-white-icon.svg'
+        
       switch(this.info_object.type_of_info_object){
+
         case 'yelp_business':
           this.urlApi = YELP_BUSINESS_DETAILS_API + this.info_object.id
           break
         case 'ticketmaster_event':
           this.loading = false
           return
+        case 'spotbie_community':
+          this.urlApi + this.info_object.id
+          return
+
       }
 
     } else {
 
-      if(this.router.url.indexOf('shopping') > -1 || this.router.url.indexOf('place-to-eat') > -1 ){
+      if(this.router.url.indexOf('shopping') > -1 || 
+         this.router.url.indexOf('place-to-eat') > -1 || 
+         this.router.url.indexOf('events') > -1 ){
         
         let infoObjectId = this.activatedRoute.snapshot.paramMap.get('id')
 

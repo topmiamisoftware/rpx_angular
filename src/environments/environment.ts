@@ -12,7 +12,7 @@ export const environment = {
    * format: https://192.168.1.65:443/api/
    * Laravel App will not work if it's not served on over SSL.
    * */
-  apiEndpoint: 'https://d3e5-2600-1700-4804-d5f0-291f-a3e7-7bb2-9cbd.ngrok.io/api/'
+  apiEndpoint: 'https://26d2-2600-1700-4804-d5f0-efac-e22e-7d96-c166.ngrok.io/api/'
 }
 /*
  * For easier debugging in development mode, you can import the following file
@@ -21,4 +21,5 @@ export const environment = {
  * This import should be commented out in production mode because it will have a negative impact
  * on performance if an error is thrown.
  */
-// import 'zone.js/dist/zone-error';  // Included with Angular CLI.
+
+import 'zone.js/dist/zone-error'; // Included with Angular CLI.

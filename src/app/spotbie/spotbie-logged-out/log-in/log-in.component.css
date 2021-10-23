@@ -157,10 +157,7 @@
         min-width: 200px;
         max-width: 200px;
         font-size: 18px;
-    } 
-    .spotnie-login-terms{
-        font-size: 11px !important;
-    }        
+    }      
 }
 @media (max-width: 320px) { }
 @media (max-width: 220px) { }

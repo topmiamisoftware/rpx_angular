@@ -13,9 +13,8 @@ import { SpotbiePipesModule } from 'src/app/spotbie-pipes/spotbie-pipes.module'
 import { MapComponent } from './map.component'
 import { MapObjectIconPipe } from 'src/app/pipes/map-object-icon.pipe'
 import { HelperModule } from 'src/app/helpers/helper.module'
-import { InfoObjectComponent } from './info-object/info-object.component'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
-import { ShareButtonsModule } from 'ngx-sharebuttons/buttons';
+
 import { UserInfoObjectComponent } from './user-info-object/user-info-object.component'
 import { RouterModule } from '@angular/router'
 import { BusinessFeaturesComponent } from '../features/business-features/business-features.component'
@@ -31,7 +30,7 @@ import { InfoObjectModule } from './info-object/info-object.module'
     MapComponent,
     UserInfoObjectComponent,
     BusinessFeaturesComponent,
-    UserFeaturesComponent  
+    UserFeaturesComponent
   ],
   imports: [
     AgmOverlays,
@@ -44,9 +43,6 @@ import { InfoObjectModule } from './info-object/info-object.module'
     ShareIconsModule,
     MyFavoritesModule,
     InfoObjectModule,
-    ShareButtonsModule.withConfig({
-      include: ['facebook', 'twitter', 'linkedin', 'reddit', 'tumblr', 'mix', 'viber', 'messenger','whatsapp']
-    }),
     RouterModule,
     AgmCoreModule.forRoot({
       apiKey: environment.google_maps_apiKey,

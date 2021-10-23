@@ -1,6 +1,6 @@
 
 
-<div *ngIf="userType !== '4'">
+<div *ngIf="userType !== eAllowedAccountTypes.Personal && userType !== eAllowedAccountTypes.Unset">
 
     <h4 id="sp-loyaltyMenuTitle" class="spotbie-text-gradient text-center text-uppercase mb-5">SPOTBIE LOYALTY MENU</h4>
 
@@ -12,7 +12,7 @@
     
         <div class='sb-addMenuItem' 
                 (click)="addItem()" 
-                *ngIf="rewards !== undefined && rewards.length < 8">
+                *ngIf="rewards !== null && rewards.length < 8">
             <h6 class="spotbie-text-gradient">+ ADD REWARD</h6>
         </div>
     
@@ -30,15 +30,15 @@
 
 </div>
 
-<div *ngIf="userType === '4'">
+<div *ngIf="userType === eAllowedAccountTypes.Personal">
 
     <h4 class="spotbie-text-gradient text-center text-uppercase pt-5 mb-5">{{ business.name }} LOYALTY MENU</h4>
 
     <p class="spotbie-text-gradient text-uppercase text-center mt-4">
-        pick what's yours
+        IT'S ON US
     </p>
     
-    <div class='sb-menuItemWrapper'>
+    <div class='sb-menuItemWrapper' *ngIf="rewards.length > 0">
     
         <div class='sb-menuItem' 
                 *ngFor="let reward of rewards"
@@ -50,7 +50,7 @@
         </div>
     
     </div>
-    
+
     <div class='spotbie-text-gradient text-uppercase cursor-pointer' (click)="closeWindow()" *ngIf="fullScreenWindow">CLOSE</div>
 
 </div>

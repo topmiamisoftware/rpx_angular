@@ -153,8 +153,6 @@ export class QrComponent implements OnInit {
 
   public createRedeemableCb(resp: any){
 
-    console.log("resp", resp)
-
     if(resp.success){
       
       this.business.qr_code_link 

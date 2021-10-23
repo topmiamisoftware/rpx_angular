@@ -85,6 +85,10 @@ h5{
         width: 90%;
         min-width: 90%;
         max-width: 90%;
-    }       
+    }  
+    .sb-v-wrapper p{
+        max-width: 82%;
+        margin: 0 auto;
+    }     
 }
 

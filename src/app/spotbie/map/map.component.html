@@ -293,7 +293,46 @@
 
         </div>
         
-        <div class='spotbie-no-results' *ngIf='searchResults.length == 0'>No Results Available.</div>
+        <!-- First let's display the member list for -->
+        <div class='spotbie-search-result spotbie-communityMember-search-result' 
+              *ngFor='let communityMember of communityMemberList' 
+              (click)="pullSearchMarker(communityMember)">
+          
+          <table class='spotbie-search-result-table'>
+            <tr>
+              
+              <td>
+                <img class='sb-miniLogoIcon' src="assets/images/home_imgs/spotbie-green-icon.svg" />
+                <div class='spotbie-search-result-image' [ngStyle]="{ 'background' : 'url(' + communityMember.photo + ')' }" ></div>          
+              </td>            
+
+              <td>
+    
+                <h6 class='spotbie-search-result-title' style='font-size: .8rem;'>
+                  {{ communityMember.name  | truncateText:[20, '...'] }}                   
+                </h6>
+                
+                <p style='font-size: .5rem; text-overflow: ellipsis; max-height: 30px' class='spotbie-text-gradient mt-3'>
+                  {{ communityMember.description | truncateText:[20, '...'] }}
+                </p>
+
+                <p style='font-size: .4rem;' class="spotbie-text-gradient mt-3">
+                  {{ communityMember.categories | truncateText:[20, '...']}}
+                </p>
+
+                <div class='sb-community-member-brand'>
+                  <span class='sb-text-light-green-gradient text-uppercase'>{{ communityMember.rewardRate | currency: 'USD' }} per DOLLAR</span>
+                </div>
+
+              </td>
+    
+            </tr>
+    
+          </table>
+      
+        </div>       
+
+        <div class='spotbie-no-results' *ngIf='searchResults.length == 0'>No YELP Results Available.</div>
     
         <div class='spotbie-search-result' *ngFor='let search_result of searchResults' (click)="pullSearchMarker(search_result)">
           
@@ -377,8 +416,6 @@
     
         <div>
     
-          <div></div> 
-
           <span class='sb-page-button text-uppercase cursor-pointer' (click)="goToPage(1)" *ngIf="allPages > 1">
             <i class="fa fa-angle-double-left"></i>
           </span> 

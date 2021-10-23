@@ -7,6 +7,7 @@ import { Observable } from 'rxjs';
 
 const USER_LOCATION_API   = `${spotbieGlobals.API}user-location`
 const SEARCH_BUSINESS_API = `${spotbieGlobals.API}surroundings/search-businesses`
+const SB_COMMUNITY_MEMBERS_API = `${spotbieGlobals.API}surroundings/get-community-members`
 const SEARCH_EVENTS_API   = `${spotbieGlobals.API}surroundings/search-events`
 const GET_CLASSIFICATIONS = `${spotbieGlobals.API}surroundings/get-classifications`
 
@@ -43,6 +44,16 @@ export class LocationService {
 
     return this.http.post<any>(getBusinessesApi, searchObj).pipe(
       catchError(handleError("getBusinesses"))
+    )
+
+  }
+
+  public getSpotBieCommunityMemberList(searchObj: any): Observable<any> {
+
+    const getBusinessesApi = `${SB_COMMUNITY_MEMBERS_API}`
+
+    return this.http.post<any>(getBusinessesApi, searchObj).pipe(
+      catchError(handleError("getSpotBieCommunityMemberList"))
     )
 
   }

@@ -323,9 +323,9 @@ a, a:hover, a:active, a:after{
     position: fixed;
     left: 0;
     text-align: center;
-    width: 100%;
-    min-width: 100%;
-    max-width: 100%;   
+    width: 99%;
+    min-width: 99%;
+    max-width: 99%;   
     top: 0;
     bottom: 0;
     margin: 0 auto;  
@@ -810,6 +810,10 @@ p.sb-helpInfo{
     background: linear-gradient( 90deg,#35a99f,#64e56f);
     padding-top: 11px !important;
 }
+.sb-v-wrapper p{
+    position: relative;
+    margin: 0 auto;
+}
 /**WIDTH MEDIA QUERIES */
 @media (max-width: 1440px) {
     
@@ -894,7 +898,8 @@ p.sb-helpInfo{
         min-width: 90%;
         max-width: 90%
     }
-    .spotbie-full-qrCode img{
+    .spotbie-full-qrCode{
+        height: 250px;
         min-height: 250px;
     }
     .spotbie-full-qrCode.scanner {
@@ -970,9 +975,9 @@ p.sb-helpInfo{
         border-radius: 20px;
         min-width: 90%;
         width: 90%;
-        min-height: 325px;
-        height: 325px;
-    }    
+        height: 90vw;
+        min-height: 90vw;
+    }      
 }
 @media (max-width: 420px) { 
         .spotbie-button{

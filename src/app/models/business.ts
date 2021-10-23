@@ -1,3 +1,5 @@
+import { LoyaltyPointBalance } from "./loyalty-point-balance"
+
 export class Business {
 
     public id: number = null
@@ -11,5 +13,14 @@ export class Business {
     public created_at: string = null
     public updated_at: string = null
     public qr_code_link: string = null
+
+    public type_of_info_object: string = null
+    public is_community_member: boolean = true
+    public categories: Array<string> | string = []
+
+    public rewardRate: number = null
+
+    public loyalty_point_dollar_percent_value: number = null
+    public balance: number = null
 
 }

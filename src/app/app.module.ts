@@ -74,7 +74,7 @@ import { loyaltyPointsReducer } from './spotbie/spotbie-logged-in/loyalty-points
           },
           {
             id: FacebookLoginProvider.PROVIDER_ID,
-            provider: new FacebookLoginProvider('555919295437570')
+            provider: new FacebookLoginProvider('413076816928369')
           }
         ]
       } as SocialAuthServiceConfig,

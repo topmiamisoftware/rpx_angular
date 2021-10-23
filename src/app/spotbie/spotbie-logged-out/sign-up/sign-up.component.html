@@ -4,7 +4,7 @@
 
     <div class='sb-scroll'>
 
-        <p class='spotbie-text-gradient text-uppercase text-center' id="sign_up_general_instructions" #spotbieSignUpIssues>
+        <p class='spotbie-text-gradient text-uppercase text-center mt-4' id="sign_up_general_instructions" #spotbieSignUpIssues>
             <span  *ngIf="!business">Sign up to earn rewards with spotbie.</span>
             <span  *ngIf="business">Sign up to find customers.</span>
         </p>
@@ -149,7 +149,7 @@
 
             <p class='spotbie-rel-div
                         spotbie-padding
-                        spotnie-login-terms
+                        spotbie-login-terms
                         spotbie-text-link
                         text-uppercase'>
                 By Signing Up, you are agreeing to <a [routerLink]="['/terms']">OUR TERMS & PRIVACY POLICY.</a>
@@ -191,6 +191,8 @@
         <button class="btn spotbie-button sb-google-logIn-btn spotbie-padding text-uppercase" (click)="signInWithGoogle()">
             SIGN-UP with Google
         </button>    
+
+        <div class="mt-4"></div>
 
         <div class='sb-closeButton' (click)="closeWindowX()">
             <i class="fa fa-times"></i>

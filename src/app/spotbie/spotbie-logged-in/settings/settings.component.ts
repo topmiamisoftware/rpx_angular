@@ -38,10 +38,10 @@ declare const google: any
 })
 export class SettingsComponent implements OnInit {
 
-    @ViewChild('spotbieSettingsInfoText') spotbieSettingsInfoText
+    @ViewChild('spotbieSettingsInfoText') spotbieSettingsInfoText: ElementRef
 
-    @ViewChild('spotbie_password_change_info_text') spotbiePasswordInfoText
-    @ViewChild('current_password_info') spotbieCurrentPasswordInfoText
+    @ViewChild('spotbie_password_change_info_text') spotbiePasswordInfoText: ElementRef
+    @ViewChild('current_password_info') spotbieCurrentPasswordInfoText: ElementRef
 
     @ViewChild('spotbie_deactivation_info') spotbieAccountDeactivationInfo
 
@@ -737,17 +737,25 @@ export class SettingsComponent implements OnInit {
     }
 
     public savePassword(): void {
+        
+        this.spotbiePasswordInfoText.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' })
+
+        console.log("savePassword", this.password_form)
 
         if (this.password_form.invalid) {
-        this.spotbiePasswordInfoText.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' })
-        return
+            console.log("password_form invalid error", this.password_form.errors)
+            this.spotbiePasswordInfoText.nativeElement.style.display = 'block'            
+            return
         }
 
         if (this.password !== this.confirm_password) {
-        this.spotbiePasswordInfoText.nativeElement.innerHTML = 'Passwords must match.'
-        return
+            console.log("confirm password error")
+            this.spotbiePasswordInfoText.nativeElement.style.display = 'block'
+            this.spotbiePasswordInfoText.nativeElement.innerHTML = 'Passwords must match.'
+            return
         }
 
+        this.spotbiePasswordInfoText.nativeElement.style.display = 'block'
         this.spotbiePasswordInfoText.nativeElement.innerHTML = 'Great, your passwords match!'
 
         this.save_password = true
@@ -769,18 +777,18 @@ export class SettingsComponent implements OnInit {
         if (this.password_form.invalid) return
 
         const savePasswordObj = {
-        password: this.password,
-        passwordConfirmation: this.confirm_password,
-        currentPassword: this.current_password
+            password: this.password,
+            passwordConfirmation: this.confirm_password,
+            currentPassword: this.current_password
         }
 
         this.userAuthService.passwordChange(savePasswordObj).subscribe( 
-        resp => {
-            this.passwordChangeCallback(resp)
-        },
-        error => {
-            console.log('error', error)
-        }
+            resp => {
+                this.passwordChangeCallback(resp)
+            },
+            error => {
+                console.log('error', error)
+            }
         )
 
     }
@@ -801,6 +809,7 @@ export class SettingsComponent implements OnInit {
             this.password_form.get('spotbie_password').setValue('asdrqweee')
             this.password_form.get('spotbie_confirm_password').setValue('asdeqweqq')
             
+            this.spotbiePasswordInfoText.nativeElement.style.display = 'block'
             this.spotbiePasswordInfoText.nativeElement.innerHTML = 'Would you like to change your password?'
 
             setTimeout(function() {
@@ -814,6 +823,7 @@ export class SettingsComponent implements OnInit {
             // server error
             this.save_password = false
             this.password_submitted = false
+            this.spotbiePasswordInfoText.nativeElement.style.display = 'block'            
             this.spotbiePasswordInfoText.nativeElement.innerHTML = 'There was an error with the server. Try again.'
             break
             

@@ -89,6 +89,11 @@ h5{
     min-width: 103%;
     max-width: 103%;
 }
+.fa-refresh{
+    color: white;
+    margin-left: 15px;
+    font-size: .8rem;
+}
 @media (max-width: 768px){
     span.sb-loyalty-points{
         font-size: 7rem !important;

@@ -61,7 +61,7 @@
         </p>
 
         <p class="spotbie-text-gradient text-center mt-5 text-uppercase">
-            Dollar Value<br/><span class='sb-text-light-green-gradient'>${{ loyaltyPointRewardDollarValue | number:'1.0':'en-US' }}</span>
+            Dollar Value<br/><span class='sb-text-light-green-gradient'>{{ loyaltyPointRewardDollarValue | currency : 'USD' }}</span>
         </p>
 
         <p class="spotbie-text-gradient text-center text-uppercase mt-5">scan once per table</p>
@@ -82,11 +82,11 @@
     <div class='sb-v-wrapper' style="display: grid; align-content: center;">
 
         <p class="spotbie-text-gradient text-center mt-4">
-            Are you sure you want to reward this user for a <span class='sb-text-light-green-gradient'>${{ totalSpent }}</span> bill?
+            Are you sure you want to reward this user for a <span class='sb-text-light-green-gradient'>{{ totalSpent | currency : 'USD' }}</span> bill?
         </p>
 
         <p class="spotbie-text-gradient text-center mt-4 text-uppercase">
-            Dollar Value <span class='sb-text-light-green-gradient'>${{ loyaltyPointRewardDollarValue | number:'1.0':'en-US' }}</span>
+            Dollar Value <span class='sb-text-light-green-gradient'>{{ loyaltyPointRewardDollarValue | currency : 'USD' }}</span>
         </p>
 
         <span class='spotbie-button text-uppercase mt-5 mb-4' (click)="yes()">
@@ -119,6 +119,7 @@
         </div>
 
         <h2 class='sb-text-light-green-gradient mt-4' *ngIf="awarded">SUCCESS</h2>
+
         <i class='fas fa-check mb-4' *ngIf="awarded"></i>    
         
         <p class="sb-helpInfo spotbie-text-gradient text-center text-uppercase" *ngIf="!awarded">

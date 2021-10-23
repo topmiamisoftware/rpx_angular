@@ -118,5 +118,10 @@ h5{
     }   
     .spotbie-r-success-title{
         font-size: 1rem;
+    }
+    .spotbie-textarea {
+        width: 92%;
+        min-width: 92%;
+        max-width: 92%;
     } 
 }

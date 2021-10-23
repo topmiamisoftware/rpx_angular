@@ -66,6 +66,10 @@ export class UserDashboardComponent implements OnInit {
     this.scannerStarted = false 
   }
   
+  public closeRedeemables(){
+    this.getRedeemableItems = false
+  }
+
   public spawnCategories(category: string){
 
     let obj = {

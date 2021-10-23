@@ -40,10 +40,10 @@
     </div>    
 
     <div class="sb-dashboardWrapper" #lpAppAnchor>
-        <app-loyalty-points [fullScreenWindow]="false" #loyaltyPointsApp></app-loyalty-points>
+        <app-loyalty-points [fullScreenWindow]="false" (openRedeemed)="redeemedLp()" #loyaltyPointsApp></app-loyalty-points>
     </div>
 
-    <app-redeemable *ngIf="getRedeemableItems"></app-redeemable>
+    <app-redeemable *ngIf="getRedeemableItems" (closeWindowEvt)="closeRedeemables()"></app-redeemable>
 
 </div>
 

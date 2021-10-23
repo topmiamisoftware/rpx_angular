@@ -71,8 +71,8 @@ export class BusinessDashboardComponent implements OnInit {
     this.userAuthServe.getSettings().subscribe(
       
       resp => {
-        
-        if(resp.business == null && this) 
+      
+        if(resp.business == null) 
           this.displayBusinessSetUp = true 
         else
           this.displayBusinessSetUp = false

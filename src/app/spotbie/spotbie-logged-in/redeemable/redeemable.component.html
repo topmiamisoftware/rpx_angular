@@ -1,7 +1,8 @@
 <div class='spotbie-overlay-window'>
-    <div class="mt-5">
 
-        <h4 class='spotbie-text-gradient text-uppercase mt-4 mb-3'>REDEEMABLE HISTORY</h4>
+    <div class="mt-5" *ngIf="redeemList !== null">
+
+        <h6 class='spotbie-text-gradient text-uppercase mt-4 mb-3' *ngIf="redeemList.length > 0">REDEEMABLE HISTORY</h6>
 
         <div class="card spotbie-redeemItem" *ngFor="let redeemItem of redeemList">
             
@@ -10,36 +11,46 @@
                 <img [ngSrc]="redeemItem.default_picture" class='rounded-circle' />
 
                 <span class='sb-text-light-green-gradient' *ngIf="!redeemItem.name">{{ redeemItem.username }}</span>
-                <span class='sb-text-light-green-gradient' *ngIf="redeemItem.name">{{ redeemItem.name }}</span>
+
+                <span class='sb-text-light-green-gradient text-uppercase' 
+                        *ngIf="redeemItem.name">{{ redeemItem.name }}</span>
 
             </div>
             
             <div class='card-body text-uppercase' *ngIf="!redeemItem.name">
+
                 <div class='mb-2'>
                     {{ redeemItem.updated_at | date:'mediumDate' }}
                 </div>
+
                 <div class='mb-2'>
                     Loyalty Points:
                         <span *ngIf="redeemItem.redeemed == 1" class='sb-text-red-gradient'>-{{ redeemItem.amount | number:'1.0':'en-US' }}</span>
                         <span *ngIf="redeemItem.redeemed != 1" class='spotbie-text-gradient'>{{ redeemItem.amount | number:'1.0':'en-US' }} (not redeemed)</span>
-                </div>              
+                </div>      
+
                 <div class='mb-2'>
                     Customer Spent: <span class='sb-text-light-green-gradient'>${{ redeemItem.total_spent | number:'1.0':'en-US' }}</span>
-                </div>                    
+                </div>        
+
             </div>
             
             <div class='card-body text-uppercase' *ngIf="redeemItem.name">
+
                 <div class='mb-2'>
                     {{ redeemItem.updated_at | date:'mediumDate' }}
                 </div>
+
                 <div class='mb-2'>
                     Loyalty Points: <span class='sb-text-light-green-gradient'>
                         +{{ redeemItem.amount | number:'1.0':'en-US' }}
                     </span>
-                </div>                
+                </div>      
+                         
                 <div class='mb-2'>
                     Total Spent: <span class='sb-text-light-green-gradient'>${{ redeemItem.total_spent | number:'1.0':'en-US' }}</span>
-                </div>                    
+                </div>        
+                            
             </div>
 
             <div class='card-footer text-uppercase text-center'>
@@ -47,15 +58,31 @@
             </div>
 
         </div>
-        
+
         <div class='spotbie-text-gradient mt-3 cursor-pointer' *ngIf="loadMoreRedeem" (click)="loadMoreRedeemPg()">
             LOAD MORE
         </div>
-    
-    </div>
 
-    <div class='spotbie-text-gradient mt-3 cursor-pointer' (click)="closeWindow()">
-        CLOSE
+        <div class='spotbie-text-gradient mt-3 cursor-pointer' *ngIf="redeemList.length > 0" (click)="closeWindow()">
+            CLOSE
+        </div>
+
+        <div class='spotbie-no-notis-box' *ngIf="redeemList.length === 0">
+
+            <i class="fas fa-exclamation-triangle"></i>
+            <br/><br/>
+            <p class="spotbie-text-gradient">
+                You have no redemeed points.<br/><br/>
+                Find places to eat, events, and retail stores through our map and start redeeming LP points.
+            </p>    
+
+            <div class='spotbie-text-gradient mt-3 cursor-pointer' (click)="closeWindow()">
+                CLOSE
+            </div>
+
+        </div>
+
+
     </div>
 
     <div class='sb-closeButton' (click)="closeWindow()">

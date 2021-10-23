@@ -104,8 +104,6 @@ export class LogInComponent implements OnInit {
 
   private loginCallback(loginResponse: any): void{
 
-    console.log("response", loginResponse)
-
     if(loginResponse.error == 'popup_closed_by_user'){
       this.loading = false
       return

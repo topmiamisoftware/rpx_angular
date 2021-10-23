@@ -1,4 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { AllowedAccountTypes } from 'src/app/helpers/enum/account-type.enum';
 import { LoyaltyPointsService } from 'src/app/services/loyalty-points/loyalty-points.service';
 
 @Component({
@@ -10,7 +11,7 @@ export class RedeemableComponent implements OnInit {
 
   @Output() closeWindowEvt = new EventEmitter
 
-  public redeemList: Array<any> = []
+  public redeemList: Array<any> = null
 
   public redeemedPage: number = 0
 
@@ -18,6 +19,9 @@ export class RedeemableComponent implements OnInit {
 
   public loadMoreRedeem: boolean = false
 
+  public eAllowedAccountTypes = AllowedAccountTypes
+
+  public userType: string
 
   constructor(private loyaltyPointsService: LoyaltyPointsService) { }
 
@@ -35,8 +39,6 @@ export class RedeemableComponent implements OnInit {
     this.loyaltyPointsService.getRedeemed(getRedeemedObj).subscribe({
       next: (resp) => {
 
-        console.log("Response", resp)
-
         let redeemItemData = resp.redeemedList.data
       
         this.totalRedeemed = redeemItemData.length
@@ -51,6 +53,8 @@ export class RedeemableComponent implements OnInit {
           this.loadMoreRedeem = false
         else
           this.loadMoreRedeem = true
+
+        if(this.redeemList == null) this.redeemList = []
 
         redeemItemData.forEach(redeemItem => {
           this.redeemList.push(redeemItem)
@@ -69,6 +73,7 @@ export class RedeemableComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.userType = localStorage.getItem('spotbie_userType')
     this.getRedeemed()
   }
 

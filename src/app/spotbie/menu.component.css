@@ -334,7 +334,7 @@ img.sb-qr:hover{
     text-align: left;
     padding-left: 3%;
 }
-.spotnie-login-terms{
+.spotbie-login-terms{
     font-size: 13px !important;
     margin-top: 0px;
     margin-bottom: 0px;
@@ -356,7 +356,8 @@ img.sb-qr:hover{
     flex-wrap: nowrap;
     flex-direction: column;
     align-items: center; 
-    padding-bottom: unset !important;         
+    padding-bottom: unset !important; 
+    overflow-y: hidden;        
 }
 .sb-login-top-padding{
     padding-top: 120px;
@@ -389,7 +390,13 @@ img.sb-qr:hover{
     right: 3%;    
 }
 .sb-scroll{
-    overflow-y: hidden;
+    overflow-y: scroll;
+    min-width: 100%;
+    width: 100%;
+    max-width: 100%;
+}
+::-webkit-scrollbar-button{
+    background: transparent
 }
 /**WIDTH MEDIA QUERIES */
 @media (max-width: 1600px) { 
@@ -438,7 +445,8 @@ img.sb-qr:hover{
 }
 @media (max-width: 600px) { 
     .spotbie-slider-menu{
-        max-width: 350px;
+        width: 300px;
+        max-width: 300px;
         min-width: 300px;
     }
     .sb-inputWithIconWrapper{
@@ -526,6 +534,7 @@ img.sb-qr:hover{
         border-radius: 6px;  
     }
     .spotbie-slider-menu{
+        width: 300px;
         max-width: 300px;
         min-width: 300px;
     }
@@ -554,7 +563,7 @@ img.sb-qr:hover{
         min-height: 30px;
         max-height: 30px;        
     } 
-    .spotnie-login-terms{
+    .spotbie-login-terms{
         font-size: 11px !important;
     }        
     .spotbie-text-link{
@@ -597,9 +606,10 @@ img.sb-qr:hover{
         max-height: 25px;        
     } 
     .spotbie-slider-menu{
-        max-width: 270px;
-        min-width: 270px;
-    }   
+        width: 250px;
+        max-width: 250px;
+        min-width: 250px;
+    }  
     .spotbie-slider-menu td div{
         padding-top: 10px;
         padding-bottom: 10px;         
@@ -615,7 +625,7 @@ img.sb-qr:hover{
     .sb-iconInInputWrapper{
         padding: 10px;
     }    
-    .spotnie-login-terms{
+    .spotbie-login-terms{
         font-size: 11px !important;
     }        
 }

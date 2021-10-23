@@ -4,7 +4,6 @@ import { MatSliderChange }                   from '@angular/material/slider'
 import { AgmMap, AgmInfoWindow }             from '@agm/core'
 
 import { metersToMiles, setYelpRatingImage } from 'src/app/helpers/info-object-helper'
-import { ToastRequest }                      from 'src/app/helpers/toast-helper/toast-models/toast-request'
 
 import { DateFormatPipe, TimeFormatPipe }    from 'src/app/pipes/date-format.pipe'
 import { MapObjectIconPipe }                 from 'src/app/pipes/map-object-icon.pipe'
@@ -18,6 +17,7 @@ import * as sorterHelpers                    from 'src/app/helpers/results-sorte
 import { BusinessDashboardComponent } from '../spotbie-logged-in/business-dashboard/business-dashboard.component'
 import { UserDashboardComponent } from '../spotbie-logged-in/user-dashboard/user-dashboard.component'
 import { SortOrderPipe } from 'src/app/pipes/sort-order.pipe'
+import { Business } from 'src/app/models/business'
 
 const YELP_BUSINESS_SEARCH_API = 'https://api.yelp.com/v3/businesses/search'
 
@@ -152,6 +152,8 @@ export class MapComponent implements OnInit {
   public displayLocationEnablingInstructions: boolean = false
 
   public bannedYelpIDs = BANNED_YELP_IDS
+
+  public communityMemberList: Array<Business> = []
 
   constructor(private locationService: LocationService,
               private deviceService: DeviceDetectorService,
@@ -559,7 +561,6 @@ export class MapComponent implements OnInit {
     }
     
     let apiUrl: string
-    let searchObj: any
 
     switch(this.searchCategory){
 
@@ -573,17 +574,31 @@ export class MapComponent implements OnInit {
 
     }
 
-    searchObj = {
+    const searchObj = {
       config_url: apiUrl
     }
     
+    const searchObjSb = {
+      loc_x: this.lat,
+      loc_y: this.lng,
+      categories: keyword
+    }
+
     switch(this.searchCategory){
 
       case 'events':
 
+        //Retrieve the SpotBie Community Member Results
         this.locationService.getEvents(searchObj).subscribe(
           resp => {
             this.getEventsSearchCallback(resp)
+          }
+        )
+
+        //Retrieve the SpotBie Community Member Results
+        this.locationService.getSpotBieCommunityMemberList(searchObjSb).subscribe(
+          resp => {
+            this.getSpotBieCommunityMemberListCb(resp)
           }
         )
 
@@ -591,12 +606,20 @@ export class MapComponent implements OnInit {
 
       case 'food':
       case 'shopping':
-
+        
+        //Retrieve the thirst party API Yelp Results
         this.locationService.getBusinesses(searchObj).subscribe(
           resp => {
             this.getBusinessesSearchCallback(resp)
           }
         )    
+        
+        //Retrieve the SpotBie Community Member Results
+        this.locationService.getSpotBieCommunityMemberList(searchObjSb).subscribe(
+          resp => {
+            this.getSpotBieCommunityMemberListCb(resp)
+          }
+        )
 
         break
 
@@ -1005,6 +1028,49 @@ export class MapComponent implements OnInit {
     )
 
     return largestImage.url
+
+  }
+
+  public getSpotBieCommunityMemberListCb(httpResponse: any){
+
+    if(httpResponse.success){
+
+      let communityMemberList: Array<Business> = httpResponse.data.data
+
+      communityMemberList.forEach(business => {        
+
+        business.type_of_info_object = 'spotbie_community'
+        business.is_community_member = true
+
+        if(business.photo == ''){
+
+          switch(this.searchCategory){
+            case 'food':
+              business.photo = 'assets/images/home_imgs/find-places-to-eat.svg'
+              break
+      
+            case 'shopping':
+              business.photo = 'assets/images/home_imgs/find-places-for-shopping.svg'
+              break
+    
+            case 'events':
+              business.photo = 'assets/images/home_imgs/find-events.svg'
+              
+          }
+
+          business.categories = JSON.parse(
+            business.categories.toString().replace(',', ', ')
+          )
+
+          business.rewardRate = (business.loyalty_point_dollar_percent_value / 100)
+
+          this.communityMemberList.push(business)
+
+        }
+
+      });
+
+    }
 
   }
 
