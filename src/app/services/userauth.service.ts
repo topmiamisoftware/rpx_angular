@@ -132,7 +132,9 @@ export class UserauthService {
     const getSettingsApi = `${USER_API}/settings`
 
     return this.http.post<any>(getSettingsApi, null).pipe(
-      catchError(handleError("getSettings"))
+      catchError( err => {
+        throw err
+      })
     )  
 
   }
@@ -144,6 +146,7 @@ export class UserauthService {
     let saveSettingsObj
 
     if(user.business === undefined){
+      
       saveSettingsObj = {
         _method: 'PUT',
         username: user.username,
@@ -155,6 +158,7 @@ export class UserauthService {
         privacy: user.spotbie_user.privacy,
         account_type: user.spotbie_user.user_type
       }
+
     } else {
 
       saveSettingsObj = {
@@ -177,7 +181,9 @@ export class UserauthService {
     }
 
     return this.http.post<any>(saveSettingsApi, saveSettingsObj).pipe(
-      catchError(handleError("saveSettings"))
+      catchError( err => {
+        throw err
+      })
     )  
 
   }
@@ -190,7 +196,9 @@ export class UserauthService {
     }
 
     return this.http.post<any>(resetPasswordApi, setPassResetObj).pipe(
-      catchError(handleError("setPassResetPin"))
+      catchError( err => {
+        throw err
+      })
     ) 
 
   }

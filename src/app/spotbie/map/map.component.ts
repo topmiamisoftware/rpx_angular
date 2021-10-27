@@ -633,7 +633,7 @@ export class MapComponent implements OnInit {
     this.show_search_box = false 
     this.infoObject = null
     this.infoObjectWindow.open = false
-    this.featureWrapper.nativeElement.scrollIntoView({ behavior: "smooth", block: "start" });
+    this.featureWrapper.nativeElement.scrollIntoView({ behavior: "smooth", block: "start" })
 
   }
 
@@ -1036,7 +1036,7 @@ export class MapComponent implements OnInit {
     if(httpResponse.success){
 
       let communityMemberList: Array<Business> = httpResponse.data.data
-
+      
       communityMemberList.forEach(business => {        
 
         business.type_of_info_object = 'spotbie_community'
@@ -1058,15 +1058,15 @@ export class MapComponent implements OnInit {
               
           }
 
-          business.categories = JSON.parse(
-            business.categories.toString().replace(',', ', ')
-          )
-
-          business.rewardRate = (business.loyalty_point_dollar_percent_value / 100)
-
-          this.communityMemberList.push(business)
-
         }
+
+        business.categories = JSON.parse(
+          business.categories.toString().replace(',', ', ')
+        )
+
+        business.rewardRate = (business.loyalty_point_dollar_percent_value / 100)
+
+        this.communityMemberList.push(business)    
 
       });
 

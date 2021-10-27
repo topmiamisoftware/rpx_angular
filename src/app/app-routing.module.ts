@@ -18,7 +18,7 @@ export const routes: Routes = [
   
   { path: 'user-home', loadChildren: () => import('./user-home/user-home.module').then(m => m.UserHomeModule), canActivate: [LoginGuardServiceService] }, 
 
-  { path: 'business-menu/:userHash/:qrCode', component: RewardMenuComponent},
+  { path: 'business-menu/:qrCode/:rewardUuid', component: RewardMenuComponent},
   { path: 'loyalty-points/:qrCode/:totalSpent/:loyaltyPointReward', component: LoyaltyPointsComponent },
   
   { path: 'place-to-eat/:name/:id', component: InfoObjectComponent },

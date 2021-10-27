@@ -1,6 +1,6 @@
 
 
-<div *ngIf="userType !== eAllowedAccountTypes.Personal && userType !== eAllowedAccountTypes.Unset">
+<div *ngIf="isLoggedIn == '1' && (userType !== eAllowedAccountTypes.Personal && userType !== eAllowedAccountTypes.Unset)">
 
     <h4 id="sp-loyaltyMenuTitle" class="spotbie-text-gradient text-center text-uppercase mb-5">SPOTBIE LOYALTY MENU</h4>
 
@@ -18,10 +18,21 @@
     
         <div class='sb-menuItem' 
                 *ngFor="let reward of rewards"
-                [ngStyle]="placeToEatTileStyling(reward)"
-                (click)="openReward(reward)">
-            <h6 *ngIf="reward.type == '0'"> {{ reward.name }} </h6>
-            <h6 *ngIf="reward.type == '1'"> ${{ (reward.point_cost * (loyaltyPointsBalance.loyalty_point_dollar_percent_value / 100)) | number:'1.0':'en-US' }} </h6>
+                [ngStyle]="rewardTileStyling(reward)"
+                (click)="editReward(reward)">
+
+            <h6 *ngIf="reward.type == '0'">
+                <span class="sb-text-light-green-gradient">
+                    {{ reward.name }}
+                </span>
+            </h6>
+
+            <h6 *ngIf="reward.type == '1'">
+                <span class='sb-text-light-green-gradient'>
+                    {{ (reward.point_cost * (loyaltyPointsBalance.loyalty_point_dollar_percent_value / 100)) | currency : 'USD' }} DISCOUNT
+                </span>
+            </h6>
+
         </div>            
 
     </div>
@@ -30,24 +41,38 @@
 
 </div>
 
-<div *ngIf="userType === eAllowedAccountTypes.Personal">
+<div *ngIf="(userType === eAllowedAccountTypes.Personal || isLoggedIn !== '1')">
 
-    <h4 class="spotbie-text-gradient text-center text-uppercase pt-5 mb-5">{{ business.name }} LOYALTY MENU</h4>
+    <h4 class="spotbie-text-gradient sb-text-light-green-gradient text-center text-uppercase pt-5 mb-2">
+        {{ business.name }}
+    </h4>
 
-    <p class="spotbie-text-gradient text-uppercase text-center mt-4">
-        IT'S ON US
+    <h5 class="spotbie-text-gradient text-center text-uppercase pt-2 mb-4">LOYALTY MENU</h5>
+
+    <p class="spotbie-text-gradient text-center mt-4 mb-4">
+        Pay with your SpotBie Loyalty Points.
     </p>
     
-    <div class='sb-menuItemWrapper' *ngIf="rewards.length > 0">
+    <div class='sb-menuItemWrapper'>
     
         <div class='sb-menuItem' 
                 *ngFor="let reward of rewards"
-                [ngStyle]="placeToEatTileStyling(reward)">
-            <h6 *ngIf="reward.type == '0'"> {{ reward.name }} </h6>
-            <h6 *ngIf="reward.type == '1'"> 
-                ${{ (reward.point_cost * (loyaltyPointsBalance.loyalty_point_dollar_percent_value / 100)) | number:'1.0':'en-US' }} 
+                [ngStyle]="rewardTileStyling(reward)"
+                (click)="openReward(reward)">
+
+            <h6 *ngIf="reward.type == '0'">
+                <span class="sb-text-light-green-gradient">
+                    {{ reward.name }}
+                </span>
             </h6>
-        </div>
+
+            <h6 *ngIf="reward.type == '1'">
+                <span class='sb-text-light-green-gradient'>
+                    {{  reward.point_cost * (userPointToDollarRatio / 100) | currency : 'USD' }} DISCOUNT
+                </span>
+            </h6>
+
+        </div> 
     
     </div>
 
@@ -57,7 +82,13 @@
 
 <app-reward-creator *ngIf="itemCreator" 
                     (closeRewardCreatorAndRefetchRewardListEvt)="closeRewardCreatorAndRefetchRewardList()"
-                    (closeWindowEvt)="closeWindow()"
-                    (closeThisEvt)="closeRewardCreator()"
+                    (closeParentWindowEvt)="closeWindow()"
+                    (closeRewardCreatorEvt)="closeRewardCreator()"
                     #rewardCreator
                     [reward]="reward"></app-reward-creator>
+
+<app-reward *ngIf="rewardApp"
+            #appRewardViewer
+            [reward]="reward"
+            [userPointToDollarRatio]="userPointToDollarRatio"
+            (closeWindowEvt)="closeReward()"></app-reward>

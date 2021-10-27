@@ -1,0 +1,39 @@
+
+
+<div *ngIf="userType !== eAllowedAccountTypes.Personal && userType !== eAllowedAccountTypes.Unset">
+
+    <h4 id="sp-loyaltyMenuTitle" class="spotbie-text-gradient text-center text-uppercase mb-5">SPOTBIE AD MANAGER</h4>
+
+    <p class="spotbie-loyaltyMenuDescription spotbie-text-gradient text-center mt-2">
+        Local ads that work and get your business exposure.
+    </p>
+
+    <div class='sb-menuAdWrapper'>
+    
+        <div class='sb-menuAd' 
+                *ngFor="let ad of ads"
+                [ngStyle]="adTileStyling(ad)"
+                (click)="openAd(ad)">
+            
+            <h6>{{ ad.name }}</h6>
+
+        </div>            
+
+        <div class='spotbie-button text-uppercase mt-5'
+                *ngIf="ads !== null && ads.length < 0"
+                (click)="addAd()">
+            CREATE AD
+        </div>
+
+    </div>
+
+    <div class='spotbie-text-gradient text-uppercase' (click)="closeWindow()" *ngIf="fullScreenWindow">CLOSE</div>
+
+</div>
+
+<app-ad-creator *ngIf="itemCreator" 
+                (closeAdCreatorAndRefetchAdListEvt)="closeAdCreatorAndRefetchAdList()"
+                (closeWindowEvt)="closeWindow()"
+                (closeThisEvt)="closeAdCreator()"
+                #adCreator
+                [ad]="ad"></app-ad-creator>

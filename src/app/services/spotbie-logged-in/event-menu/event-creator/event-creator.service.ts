@@ -5,6 +5,7 @@ import { Observable } from 'rxjs'
 import { handleError } from 'src/app/helpers/error-helper'
 import { catchError } from 'rxjs/operators'
 import { Reward } from 'src/app/models/reward'
+import { SpEvent } from 'src/app/models/event'
 
 const REWARD_API = `${spotbieGlobals.API}reward` 
 
@@ -15,7 +16,7 @@ export class EventCreatorService {
 
   constructor(private http: HttpClient) {}
 
-  public saveItem(itemObj: Reward): Observable<any>{
+  public saveItem(itemObj: SpEvent): Observable<any>{
 
     const placeToEatRewardApi = `${REWARD_API}/create`
 
@@ -33,7 +34,7 @@ export class EventCreatorService {
 
   }
 
-  public updateItem(itemObj: Reward): Observable<any>{
+  public updateItem(itemObj: SpEvent): Observable<any>{
 
     const placeToEatRewardApi = `${REWARD_API}/update`
 
@@ -52,7 +53,7 @@ export class EventCreatorService {
 
   }
 
-  public deleteMe(itemObj: Reward): Observable<any>{
+  public deleteMe(itemObj: SpEvent): Observable<any>{
 
     const placeToEatRewardApi = `${REWARD_API}/delete`
 

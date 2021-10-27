@@ -1,0 +1,64 @@
+import { Injectable } from '@angular/core'
+import * as spotbieGlobals from 'src/app/globals'
+import { HttpClient } from '@angular/common/http'
+import { Observable } from 'rxjs'
+import { handleError } from 'src/app/helpers/error-helper'
+import { catchError } from 'rxjs/operators'
+import { Ad } from 'src/app/models/ad'
+
+const ADS_API = spotbieGlobals.API+'in-house'
+
+@Injectable({
+  providedIn: 'root'
+})
+export class AdCreatorService {
+
+  constructor(private http: HttpClient) {}
+
+  public saveAd(adObj: Ad): Observable<any>{
+
+    const placeToEatAdApi = `${ADS_API}/create`
+
+    const adObjToSave = {
+      name: adObj.name,    
+      description: adObj.description,
+      type: adObj.type
+    }
+
+    return this.http.post<any>(placeToEatAdApi, adObjToSave).pipe(
+      catchError(handleError("completeReset"))
+    ) 
+
+  }
+
+  public updateAd(adObj: Ad): Observable<any>{
+
+    const placeToEatAdApi = `${ADS_API}/update`
+
+    const adObjToSave = {
+      name: adObj.name,    
+      description: adObj.description,
+      type: adObj.type,
+      id: adObj.id
+    }
+
+    return this.http.post<any>(placeToEatAdApi, adObjToSave).pipe(
+      catchError(handleError("completeReset"))
+    ) 
+
+  }
+
+  public deleteMe(adObj: Ad): Observable<any>{
+
+    const placeToEatAdApi = `${ADS_API}/delete`
+
+    const adObjToSave = {
+      id: adObj.id
+    }
+
+    return this.http.post<any>(placeToEatAdApi, adObjToSave).pipe(
+      catchError(handleError("completeReset"))
+    ) 
+  }
+
+}

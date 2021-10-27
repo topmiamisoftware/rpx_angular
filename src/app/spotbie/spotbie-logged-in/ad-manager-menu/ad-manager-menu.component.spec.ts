@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AdEditorComponent } from './ad-editor.component';
+import { AdManagerMenuComponent } from './ad-manager-menu.component';
 
-describe('AdEditorComponent', () => {
-  let component: AdEditorComponent;
-  let fixture: ComponentFixture<AdEditorComponent>;
+describe('AdManagerMenuComponent', () => {
+  let component: AdManagerMenuComponent;
+  let fixture: ComponentFixture<AdManagerMenuComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AdEditorComponent ]
+      declarations: [ AdManagerMenuComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AdEditorComponent);
+    fixture = TestBed.createComponent(AdManagerMenuComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

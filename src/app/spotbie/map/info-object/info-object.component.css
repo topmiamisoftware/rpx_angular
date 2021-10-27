@@ -330,6 +330,12 @@ h6.sb-titleGreen{
     margin: 0 auto;
     max-width: 950px;
 }
+.sb-infoObjectInputLight{
+    color: white;
+}
+sb-infoObjectInputDark{
+    color: #332f3e;
+}
 @media (max-width: 1583px) { 
 
 }
@@ -417,10 +423,22 @@ h6.sb-titleGreen{
     }    
     .spotbie-communityMemberDescription{
         max-width: 92%;
-    }        
-    .sb-titleGreen{
-        position: absolute;
+        font-size: .9rem;
     } 
+    .sb-miniLogoIcon{
+        display: none;
+    }  
+    h6.sb-titleGreen{
+        font-size: .5rem;
+    }
+    h1.sb-titleGreen{
+        position: relative;
+        margin: 0 auto;
+        font-size: .9rem;
+        max-width: 90%;
+        width: 90%;
+        min-width: 90%;
+    }       
 }
 @media (max-width: 460px) { 
     .spotbie-info-object-open{

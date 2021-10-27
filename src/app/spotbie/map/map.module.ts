@@ -24,6 +24,7 @@ import { UserDashboardModule } from '../spotbie-logged-in/user-dashboard/user-da
 import { ShareIconsModule } from 'ngx-sharebuttons/icons'
 import { MyFavoritesModule } from '../my-favorites/my-favorites.module'
 import { InfoObjectModule } from './info-object/info-object.module'
+import { AdsModule } from '../ads/ads.module'
 
 @NgModule({
   declarations: [    
@@ -51,7 +52,8 @@ import { InfoObjectModule } from './info-object/info-object.module'
     }),     
     HelperModule,
     BusinessDashboardModule,
-    UserDashboardModule
+    UserDashboardModule,
+    AdsModule
   ],
   providers: [
     MapObjectIconPipe,

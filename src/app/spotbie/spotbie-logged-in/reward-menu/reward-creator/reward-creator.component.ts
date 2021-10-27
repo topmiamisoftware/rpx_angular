@@ -5,6 +5,7 @@ import { LoyaltyPointBalance } from 'src/app/models/loyalty-point-balance'
 import { Reward } from 'src/app/models/reward'
 import { LoyaltyPointsService } from 'src/app/services/loyalty-points/loyalty-points.service'
 import { RewardCreatorService } from 'src/app/services/spotbie-logged-in/business-menu/reward-creator/reward-creator.service'
+import { environment } from 'src/environments/environment'
 import * as spotbieGlobals from '../../../../globals'
 
 const REWARD_MEDIA_UPLOAD_API_URL = `${spotbieGlobals.API}reward/upload-media`
@@ -23,8 +24,8 @@ export class RewardCreatorComponent implements OnInit {
   @ViewChild('rewardMediaInput') rewardMediaInput
   @ViewChild('spbTopAnchor') spbTopAnchor
 
-  @Output() closeWindowEvt = new EventEmitter()
-  @Output() closeThisEvt = new EventEmitter()
+  @Output() closeParentWindowEvt = new EventEmitter()
+  @Output() closeRewardCreatorEvt = new EventEmitter()
   @Output() closeRewardCreatorAndRefetchRewardListEvt = new EventEmitter()
 
   public loading: boolean = false
@@ -100,9 +101,10 @@ export class RewardCreatorComponent implements OnInit {
       this.rewardCreatorForm.get('rewardValue').setValue(this.reward.point_cost)
       this.rewardCreatorForm.get('rewardName').setValue(this.reward.name)
       this.rewardCreatorForm.get('rewardDescription').setValue(this.reward.description)
-      this.rewardCreatorForm.get('rewardImage').setValue(this.reward.images)      
+      this.rewardCreatorForm.get('rewardImage').setValue(this.reward.images)     
+
       this.rewardUploadImage = this.reward.images
-      
+
       this.calculateDollarValue()
 
     }
@@ -110,6 +112,11 @@ export class RewardCreatorComponent implements OnInit {
     this.rewardCreatorFormUp = true
     this.loading = false
 
+  }
+
+  public setReward(reward: Reward){
+    this.reward = reward
+    
   }
 
   public calculateDollarValue(){
@@ -240,8 +247,11 @@ export class RewardCreatorComponent implements OnInit {
     console.log('rewardMediaUploadFinished', httpResponse)
 
     if (httpResponse.success){
+
       this.rewardUploadImage = httpResponse.image
+      
       this.rewardCreatorForm.get('rewardImage').setValue(this.rewardUploadImage)
+      
     } else
       console.log('rewardMediaUploadFinished', httpResponse)
     
@@ -254,7 +264,9 @@ export class RewardCreatorComponent implements OnInit {
     if(this.rewardType == 0){
       //reward is discount
       this.uploadMediaForm = true
+
       this.rewardUploadImage = this.reward.images
+
     } else {
       //reward is somethign from our menu
       this.uploadMediaForm = false
@@ -262,12 +274,12 @@ export class RewardCreatorComponent implements OnInit {
 
   }
 
-  public closeThis(){
-    this.closeThisEvt.emit()
+  public closeRewardCreator(){
+    this.closeRewardCreatorEvt.emit()
   }
 
   public closeWindow(){
-    this.closeWindowEvt.emit()
+    this.closeParentWindowEvt.emit()
   }
 
   public closeRewardCreatorAndRefetchRewardList(){
@@ -297,15 +309,8 @@ export class RewardCreatorComponent implements OnInit {
 
   }
 
-  public subscribe(){
-  
-
-  }
-
   ngOnInit(): void {
-
     this.initRewardForm()
-
   }
 
 }

@@ -9,6 +9,7 @@ import { setYelpRatingImage } from 'src/app/helpers/info-object-helper'
 import { shareNative } from 'src/app/helpers/cordova/sharesheet'
 import { externalBrowserOpen } from 'src/app/helpers/cordova/web-intent'
 import { spotbieMetaDescription, spotbieMetaTitle, spotbieMetaImage } from 'src/app/constants/spotbie'
+import { InfoObject } from 'src/app/models/info-object'
 
 const YELP_BUSINESS_DETAILS_API = "https://api.yelp.com/v3/businesses/"
 
@@ -23,7 +24,7 @@ const SPOTBIE_META_IMAGE = spotbieMetaImage
 })
 export class InfoObjectComponent implements OnInit {
 
-  @Input() info_object
+  @Input() info_object: InfoObject
 
   @Output() closeWindow = new EventEmitter()
   @Output() removeFavoriteEvent = new EventEmitter()
@@ -31,6 +32,8 @@ export class InfoObjectComponent implements OnInit {
   public bgColor: string
 
   public loading: boolean = false
+
+  public rewardMenuUp: boolean = false
 
   public urlApi: string
 
@@ -128,20 +131,18 @@ export class InfoObjectComponent implements OnInit {
 
   private pullInfoObjectCallback(httpResponse: any): void{
 
-    if (httpResponse.success) {
+    if (httpResponse.success) {      
 
-      this.info_object = httpResponse.data
-
-      console.log("info_object", this.info_object)
+      this.info_object = httpResponse.data as InfoObject
 
       this.info_object.type_of_info_object_category = this.infoObjectCategory
 
-      if(this.info_object.is_community_member == '1')
+      if(this.info_object.is_community_member)
         this.infoObjectImageUrl = 'assets/images/home_imgs/spotbie-green-icon.svg'
       else
         this.infoObjectImageUrl =  'assets/images/home_imgs/spotbie-white-icon.svg'
 
-      if(this.router.url.indexOf('place-to-eat') > -1 || 
+      if( this.router.url.indexOf('place-to-eat') > -1 || 
           this.info_object.type_of_info_object_category == 'food'){
        
         this.info_object.type_of_info_object = 'yelp_business'
@@ -168,9 +169,12 @@ export class InfoObjectComponent implements OnInit {
         
       }
 
-      if(this.info_object.is_community_member == '1'){
+      if(this.info_object.is_community_member){
+
         this.info_object.type_of_info_object = 'spotbie_community'        
         this.info_object.image_url = this.info_object.photo
+        this.infoObjectLink = `https://spotbie.com/${this.info_object.name}/${this.info_object.id}`
+        
       }
 
       if(this.info_object.hours !== undefined){
@@ -184,7 +188,11 @@ export class InfoObjectComponent implements OnInit {
 
       }
 
-      this.objectDisplayAddress = `${this.info_object.location.display_address[0]}, ${this.info_object.location.display_address[1]}`
+      if(this.info_object.is_community_member){
+        this.objectDisplayAddress = `${this.info_object.location.display_address[0]}, ${this.info_object.location.display_address[1]}`
+      } else {
+        this.objectDisplayAddress = this.info_object.address
+      }
 
       this.info_object.categories.forEach(category => {
         this.objectCategories = `${this.objectCategories}, ${category.title}`
@@ -211,8 +219,8 @@ export class InfoObjectComponent implements OnInit {
       
       this.loading = false
       
-      this.isInMyFavorites(this.info_object.id, 'yelp')
-      
+      this.isInMyFavorites(this.info_object.id, 'yelp')      
+
     } else
       console.log('pullInfoObjectCallback', httpResponse)
 
@@ -444,8 +452,6 @@ export class InfoObjectComponent implements OnInit {
       
       this.setEventMetaData()
 
-      console.log("EventObject", this.info_object)
-
     } else
       console.log("getEventsSearchCallback Error: ", httpResponse)
 
@@ -465,11 +471,15 @@ export class InfoObjectComponent implements OnInit {
   }
 
   public setEventMetaData(){
-  
+    
     let alias = this.info_object.name.toLowerCase().replace(/ /g,'-').replace(/[-]+/g, '-').replace(/[^\w-]+/g,'')
     let title = `${this.info_object.name} at ${this.info_object._embedded.venues[0].name}`
 
-    this.infoObjectLink = `https://spotbie.com/event/${alias}/${this.info_object.id}`
+    if(this.info_object.is_community_member)
+      this.infoObjectImageUrl = `https://spotbie.com/${this.info_object.type_of_info_object_category}/${this.info_object.id}`
+    else
+      this.infoObjectLink = `https://spotbie.com/event/${alias}/${this.info_object.id}`
+    
     this.infoObjectDescription = `Hey! Let's go to ${this.info_object.name} together. It's at ${this.info_object._embedded.venues[0].name} located in ${this.info_object._embedded.venues[0].address.line1}, ${this.info_object._embedded.venues[0].city.name} ${this.info_object._embedded.venues[0].postalCode}. Prices range from $${this.info_object.priceRanges[0].min} to $${this.info_object.priceRanges[0].min}`
     this.infoObjectTitle = title
 
@@ -488,6 +498,14 @@ export class InfoObjectComponent implements OnInit {
   
   }
 
+  getInputClass(){
+    if(this.info_object.is_community_member)
+      return 'sb-infoObjectInputLight'
+    else
+      return 'sb-infoObjectInputDark'      
+    
+  }
+
   ngOnInit(){
 
     this.loading = true
@@ -497,15 +515,13 @@ export class InfoObjectComponent implements OnInit {
 
     if(this.info_object !== undefined){
 
-      console.log('businessInfoObecjt', this.info_object)
-
       this.infoObjectCategory = this.info_object.type_of_info_object_category      
       
       if(this.info_object.is_community_member)
         this.infoObjectImageUrl = 'assets/images/home_imgs/spotbie-white-icon.svg'
       else
         this.infoObjectImageUrl = 'assets/images/home_imgs/spotbie-white-icon.svg'
-        
+      
       switch(this.info_object.type_of_info_object){
 
         case 'yelp_business':
@@ -515,10 +531,19 @@ export class InfoObjectComponent implements OnInit {
           this.loading = false
           return
         case 'spotbie_community':
-          this.urlApi + this.info_object.id
+          
+          this.rewardMenuUp = true
+
+          if(this.info_object.user_type == 1)
+            this.infoObjectLink = 'https://spotbie.com/places-to-eat/community/' + this.info_object.qr_code_link
+          else if(this.info_object.user_type == 2)
+            this.infoObjectLink = 'https://spotbie.com/events/community/' + this.info_object.qr_code_link
+          else if(this.info_object.user_type == 3)
+            this.infoObjectLink = 'https://spotbie.com/shoppping/community/' +  this.info_object.qr_code_link
+          
           return
 
-      }
+      }      
 
     } else {
 

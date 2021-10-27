@@ -8,14 +8,14 @@
 
   <div class='sb-scroll'>
 
-    <p class='spotbie-text-gradient text-uppercase text-center mt-4' id="sign_up_general_instructions" #spotbieSignUpIssues>
-      <span  *ngIf="!business">Login to earn rewards with spotbie.</span>
-      <span  *ngIf="business">Login to find customers.</span>
-    </p>
+    <p class='sb-signUpGeneralInstructions spotbie-text-gradient text-uppercase text-center mt-4' *ngIf="!business">Login to earn rewards with spotbie.</p>
+    <p class='sb-signUpGeneralInstructions spotbie-text-gradient text-uppercase text-center mt-4' *ngIf="business">Login to find customers.</p>
+    
+    <p class='sb-signUpGeneralInstructions spotbie-text-gradient text-uppercase text-center mt-4' id="sign_up_general_instructions" #spotbieSignUpIssues></p>
 
     <div class='spotbie-loginWrapper'>
 
-      <form [formGroup]="logInForm" (ngSubmit)="initLogIn()">
+      <form [formGroup]="logInForm">
 
         <div *ngIf="submitted && f.spotbieUsername.errors" class="spotbie-invalid-feedback text-uppercase spotbie-text-gradient spotbie-error">
                 
@@ -29,10 +29,6 @@
     
           <div *ngIf="f.spotbieUsername.errors.illegalChars">
             USERNAME MUST ONLY CONTAIN LETTERS, NUMBERS, AND UNDERSCORES.
-          </div>
-          
-          <div *ngIf="f.spotbieUsername.errors.invalidUorP" >
-            INVALID USERNAME OR PASSWORD.
           </div>
 
           <div *ngIf="f.spotbieUsername.errors.spotbie_google_account" >
@@ -111,10 +107,10 @@
     
         <input id="spotbieRememberMe" type="hidden" [value]="rememberMeState" />
     
-        <button class="btn spotbie-button spotbie-padding mt-3">
+        <button class="btn spotbie-button spotbie-padding mt-3" (click)="initLogIn()">
           LOGIN
         </button>
-    
+        
       </form>
 
     </div>

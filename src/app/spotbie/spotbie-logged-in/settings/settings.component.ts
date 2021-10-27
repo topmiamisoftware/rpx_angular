@@ -204,12 +204,12 @@ export class SettingsComponent implements OnInit {
     private fetchCurrentSettings(): any {
 
         this.userAuthService.getSettings().subscribe(
-        resp =>{
-            this.populateSettings(resp)
-        },
-        error =>{
-            console.log("Error", error)
-        }
+            resp =>{
+                this.populateSettings(resp)
+            },
+            error =>{
+                console.log("Error", error)
+            }
         )
 
     }
@@ -221,68 +221,75 @@ export class SettingsComponent implements OnInit {
     private populateSettings(settings_response: any) {
 
         if (settings_response.message == 'success') {
-        
-        this.user = settings_response.user
-        this.user.spotbie_user = settings_response.spotbie_user
+            
+            this.user = settings_response.user
+            this.user.spotbie_user = settings_response.spotbie_user
 
-        if(this.user.spotbie_user.user_type == 0 && !this.settingsFormInitiated){
-            //User type has not been set, so we must prompt the user for it.
-            this.loadAccountTypes = true        
-        }
-
-        if(!this.settingsFormInitiated){
-
-            this.chosen_account_type = this.user.spotbie_user.user_type
-                
-            switch(this.chosen_account_type){
-            case 1:  
-                this.account_type_category = 'PLACE TO EAT'
-                this.account_type_category_friendly_name = 'PLACE TO EAT'         
-                break
-            case 2:
-                this.account_type_category = 'EVENTS'
-                this.account_type_category_friendly_name = 'EVENTS BUSINESS'  
-                break
-            case 3:
-                this.account_type_category = 'RETAIL STORE' 
-                this.account_type_category_friendly_name = 'RETAIL STORE'  
-                break
-            case 4:
-            case 0:
-                this.account_type_category = 'PERSONAL'
-                this.account_type_category_friendly_name = 'PERSONAL' 
-                break
+            if(this.user.spotbie_user.user_type == 0 && !this.settingsFormInitiated){
+                //User type has not been set, so we must prompt the user for it.
+                this.loadAccountTypes = true        
             }
 
-        }
+            if(!this.settingsFormInitiated){
 
-        this.settingsFormInitiated = true 
+                this.chosen_account_type = this.user.spotbie_user.user_type
+                    
+                switch(this.chosen_account_type){
+                case 1:  
+                    this.account_type_category = 'PLACE TO EAT'
+                    this.account_type_category_friendly_name = 'PLACE TO EAT'         
+                    break
+                case 2:
+                    this.account_type_category = 'EVENTS'
+                    this.account_type_category_friendly_name = 'EVENTS BUSINESS'  
+                    break
+                case 3:
+                    this.account_type_category = 'RETAIL STORE' 
+                    this.account_type_category_friendly_name = 'RETAIL STORE'  
+                    break
+                case 4:
+                case 0:
+                    this.account_type_category = 'PERSONAL'
+                    this.account_type_category_friendly_name = 'PERSONAL' 
+                    break
+                }
 
-        this.settingsForm.get('spotbie_username').setValue(this.user.username)
-        this.settingsForm.get('spotbie_first_name').setValue(this.user.spotbie_user.first_name)
-        this.settingsForm.get('spotbie_last_name').setValue(this.user.spotbie_user.last_name)
-        this.settingsForm.get('spotbie_email').setValue(this.user.email)
-        this.settingsForm.get('spotbie_phone_number').setValue(this.user.spotbie_user.phone_number)
-        this.settingsForm.get('spotbie_acc_type').setValue(this.account_type_category)
-        
-        this.password_form.get('spotbie_password').setValue('userpassword')
-        this.password_form.get('spotbie_confirm_password').setValue('123456789')
+            }
 
-        if ( (this.chosen_account_type == 1 || this.chosen_account_type == 2 || this.chosen_account_type == 3)
-             && settings_response.business !== null) {
+            this.settingsFormInitiated = true 
 
-            this.user.business = new Business()
+            this.settingsForm.get('spotbie_username').setValue(this.user.username)
+            this.settingsForm.get('spotbie_first_name').setValue(this.user.spotbie_user.first_name)
+            this.settingsForm.get('spotbie_last_name').setValue(this.user.spotbie_user.last_name)
+            this.settingsForm.get('spotbie_email').setValue(this.user.email)
+            this.settingsForm.get('spotbie_phone_number').setValue(this.user.spotbie_user.phone_number)
+            this.settingsForm.get('spotbie_acc_type').setValue(this.account_type_category)
             
-            this.user.business.loc_x = settings_response.business.loc_x
-            this.user.business.loc_y = settings_response.business.loc_y
-            this.user.business.name = settings_response.business.name
-            this.user.business.description = settings_response.business.description
-            this.user.business.address = settings_response.business.address
-            this.user.business.photo = settings_response.business.photo
+            this.password_form.get('spotbie_password').setValue('userpassword')
+            this.password_form.get('spotbie_confirm_password').setValue('123456789')
 
-            this.originPhoto = this.user.business.photo 
+            console.log("chosen_account_type", this.chosen_account_type)
 
-        }      
+            if ( (this.chosen_account_type == 1 || 
+                  this.chosen_account_type == 2 || 
+                  this.chosen_account_type == 3 )
+                  && settings_response.business !== null
+            ){
+
+                this.user.business = new Business()
+                
+                this.user.business.loc_x = settings_response.business.loc_x
+                this.user.business.loc_y = settings_response.business.loc_y
+                this.user.business.name = settings_response.business.name
+                this.user.business.description = settings_response.business.description
+                this.user.business.address = settings_response.business.address
+                this.user.business.photo = settings_response.business.photo
+                
+                this.originPhoto = this.user.business.photo 
+
+                console.log("My user Business", this.user.business)
+
+            }      
         
         } else
             console.log('Settings Error: ', settings_response)
@@ -303,12 +310,12 @@ export class SettingsComponent implements OnInit {
 
         if (this.businessSettingsForm.invalid) {
 
-        this.loading = false
-        this.spotbieSettingsWindow.nativeElement.scrollTo(0,0)
-        
-        console.log("startBusinessVerification middle")
+            this.loading = false
+            this.spotbieSettingsWindow.nativeElement.scrollTo(0,0)
+            
+            console.log("startBusinessVerification middle")
 
-        return
+            return
 
         }
 
@@ -1061,10 +1068,10 @@ export class SettingsComponent implements OnInit {
 
         if (this.settingsForm.invalid) {
 
-        this.loading = false
-        this.spotbieSettingsWindow.nativeElement.scrollTo(0,0)
-        
-        return
+            this.loading = false
+            this.spotbieSettingsWindow.nativeElement.scrollTo(0,0)
+            
+            return
 
         }
 
@@ -1075,11 +1082,30 @@ export class SettingsComponent implements OnInit {
         this.user.spotbie_user.phone_number = this.spotbie_phone_number
         this.user.spotbie_user.user_type = this.chosen_account_type
 
-        this.userAuthService.saveSettings(this.user).subscribe( 
-        resp => {
-            this.saveSettingsCallback(resp)
-        }
-        )
+        this.userAuthService.saveSettings(this.user).subscribe({
+            next: (resp) => {
+                this.saveSettingsCallback(resp)   
+            },
+            error:(error: any) => {
+                
+                if(error.error.errors.email[0] == 'notUnique')
+                    this.settingsForm.get('spotbie_email').setErrors({ notUnique: true })
+
+                    
+                this.spotbieSettingsInfoText.nativeElement.innerHTML = `
+                    <span class='spotbie-text-gradient spotbie-error'>
+                        There was an error saving.
+                    </span>
+                `
+
+                this.spotbieSettingsWindow.nativeElement.scrollTo(0,0)
+
+                this.loading = false
+                this.placeSettingsFormUp = false 
+                
+            }
+        })
+
     }
 
     private saveSettingsCallback(resp: any) {
@@ -1089,19 +1115,28 @@ export class SettingsComponent implements OnInit {
 
         if (resp.success) {
 
-        this.spotbieSettingsInfoText.nativeElement.innerHTML = `
-            <span class='sb-text-light-green-gradient'>
-            Your settings were saved <i class='fa fa-check' style="color: #64e56f;"></i>        
-            </span>
-        `
+            this.spotbieSettingsInfoText.nativeElement.innerHTML = `
+                <span class='sb-text-light-green-gradient'>
+                Your settings were saved.       
+                </span>
+            `
+            
+            this.spotbieSettingsWindow.nativeElement.scrollTo(0,0)
 
-        this.spotbieSettingsWindow.nativeElement.scrollTo(0,0)
+            localStorage.setItem('spotbie_userLogin', resp.user.username)
+            localStorage.setItem('spotbie_userType', resp.user.spotbie_user.user_type)
 
-        localStorage.setItem('spotbie_userLogin', resp.user.username)
-        localStorage.setItem('spotbie_userType', resp.user.spotbie_user.user_type)
+        } else {
 
-        } else
-        console.log('Failed Save Settings: ', resp)
+            this.spotbieSettingsInfoText.nativeElement.innerHTML = `
+                <span class='spotbie-text-gradient spotbie-error'>
+                    There was an error saving.     
+                </span>
+            `
+            console.log('Failed Save Settings: ', resp)            
+
+        }
+        
 
     }
 
@@ -1116,7 +1151,7 @@ export class SettingsComponent implements OnInit {
         const deactivation_password_validator = [Validators.required]
 
         this.deactivation_form = this.formBuilder.group({
-        spotbie_deactivation_password: ['', deactivation_password_validator]
+            spotbie_deactivation_password: ['', deactivation_password_validator]
         })
 
         this.deactivation_form.get('spotbie_deactivation_password').setValue('123456789')
@@ -1130,14 +1165,14 @@ export class SettingsComponent implements OnInit {
         this.loading = true
 
         if (this.deactivation_form.invalid) {
-        this.spotbieAccountDeactivationInfo.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' })
-        return
+            this.spotbieAccountDeactivationInfo.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' })
+            return
         }
 
         this.userAuthService.deactivateAccount( this.deactivation_password).subscribe(
-        resp => {
-            this.deactivateCallback(resp)
-        }
+            resp => {
+                this.deactivateCallback(resp)
+            }
         )
 
     }
@@ -1148,30 +1183,31 @@ export class SettingsComponent implements OnInit {
 
         if (resp.success) {
 
-        switch (resp.message) {
-            case 'saved':
+            switch (resp.message) {
+                
+                case 'saved':
 
-            // account deactivation complete
-            setTimeout(function() {
+                    // account deactivation complete
+                    setTimeout(function() {
 
-                this.spotbieAccountDeactivationInfo.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' })
-                this.spotbieAccountDeactivationInfo.nativeElement.innerHTML = 'Your account was deativated. You can re-activate your account by loggin-in again. While deactivated your account is non-accessible to any of our users.'
-                this.host.logOut()
+                        this.spotbieAccountDeactivationInfo.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' })
+                        this.spotbieAccountDeactivationInfo.nativeElement.innerHTML = 'Your account was deativated. You can re-activate your account by loggin-in again. While deactivated your account is non-accessible to any of our users.'
+                        this.host.logOut()
 
-            }.bind(this), 1500)
+                    }.bind(this), 1500)
 
-            break
+                    break
 
-            case 'SB-E-000':
-            // Server error
-            this.deactivation_submitted = false
-            this.spotbieAccountDeactivationInfo.nativeElement.innerHTML = 'Deactivation failed. Server Error, please try again.'
-            break
+                case 'SB-E-000':
+                    // Server error
+                    this.deactivation_submitted = false
+                    this.spotbieAccountDeactivationInfo.nativeElement.innerHTML = 'Deactivation failed. Server Error, please try again.'
+                    break
 
-        }
+            }
         
         } else 
-        console.log('deactivateCallback', resp)
+            console.log('deactivateCallback', resp)
         
     }
 

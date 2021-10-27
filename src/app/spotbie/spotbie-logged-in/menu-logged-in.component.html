@@ -21,8 +21,12 @@
         <img class='sb-loyalty-points' (click)="toggleRedeemables()" src="assets/images/spotbie-loyalty-points.svg" />
       </div>
 
-      <div *ngIf="this.userType == '1' || this.userType == '2' || this.userType == '3'" class="sb-businessMenu">
-        <img class='sb-loyalty-points' (click)="toggleRewardMenu()"  src="assets/images/menu spotbie-01.svg" />
+      <div *ngIf="this.userType == '1' || this.userType == '2' || this.userType == '3'" class="sb-businessMenu" (click)="toggleRewardMenu()">
+        <img class='sb-loyalty-points' src="assets/images/menu spotbie-01.svg" />
+      </div>
+
+      <div *ngIf="this.userType == '4'" class="sb-businessMenu" (click)="toggleRewardMenu()">
+        <img class='sb-loyalty-points' src="assets/images/menu spotbie-01.svg" />
       </div>
 
       <img class='sb-qr' (click)="toggleQRScanner()"  src="assets/images/spotbie-qr.svg" /> 

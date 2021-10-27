@@ -1,4 +1,4 @@
-<app-loading-screen *ngIf="loading" text="loadingText"></app-loading-screen>
+<app-loading-screen *ngIf="loading"></app-loading-screen>
 
 <div class='spotbie-overlay-window'>  
 
@@ -9,8 +9,7 @@
     <div class="sb-dashboardWrapper sb-v-wrapper" 
             style="display: grid; 
                     align-content: center; 
-                    min-height: 70vh; 
-                    border-bottom: unset !important;" 
+                    min-height: 70vh;" 
             *ngIf="displayLocationEnablingInstructions" 
             #businessSettingsAppAnchor>
 
@@ -20,14 +19,14 @@
         
         <div class='spotbie-text-gradient mt-2'>LOCATION DISABLED</div>
   
-        <ol class="sb-locationList spotbie-text-gradient mt-3">
+        <p class="sb-locationList spotbie-text-gradient text-center mt-3">
           
-          <li>Open your browser's settings.</li>
-          <li>Navigate to Privacy & Security.</li>
-          <li>Go to Site Settings.</li>
-          <li>Enable location use for SpotBie.</li>
+          <span>Open your browser's settings.</span>
+          <span>Navigate to Privacy & Security.</span>
+          <span>Go to Site Settings.</span>
+          <span>Enable Location Use for SpotBie.</span>
 
-        </ol>
+        </p>
 
         <div class="spotbie-button" (click)="spawnCategories('food')">          
           <span class="spotbie-text-gradient text-uppercase mt-5 cursor-pointer">TRY LOCATION</span>
@@ -127,10 +126,10 @@
 
       <div #scrollMapAppAnchor></div>
       
-      <app-ad class='spotbie-ad' [category]=""></app-ad>
+      <app-single-ad class='spotbie-ad' [category]="this.search_keyword"></app-single-ad>
 
       <div class='spotbie-close-results' (click)="closeSearchResults()">close</div>
-    
+
       <div class='spotbie-search-results-title text-uppercase' *ngIf="type_of_info_object == 'yelp_business'">
 
         Distance {{ maxDistance }} mi.  

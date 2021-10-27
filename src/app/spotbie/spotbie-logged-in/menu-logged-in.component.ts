@@ -78,7 +78,7 @@ export class MenuLoggedInComponent implements OnInit {
     this.spotbieMap.goToQrCode()
   }
 
-  public toggleRewardMenu(){    
+  public toggleRewardMenu(ac: string){    
     this.spotbieMap.goToRewardMenu()
   }
 

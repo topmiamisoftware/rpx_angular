@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AdManagerComponent } from './ad-manager.component';
+import { StripeAccountComponent } from './stripe-account.component';
 
-describe('AdManagerComponent', () => {
-  let component: AdManagerComponent;
-  let fixture: ComponentFixture<AdManagerComponent>;
+describe('StripeAccountComponent', () => {
+  let component: StripeAccountComponent;
+  let fixture: ComponentFixture<StripeAccountComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AdManagerComponent ]
+      declarations: [ StripeAccountComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(AdManagerComponent);
+    fixture = TestBed.createComponent(StripeAccountComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

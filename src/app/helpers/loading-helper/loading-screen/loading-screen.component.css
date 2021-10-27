@@ -8,7 +8,7 @@
     z-index: 999;
     text-align: center;
 }
-.spotbie-loading-gif{
+.spotbie-loading-wrapper{
     display: block;
     left: 0;
     right: 0;
@@ -16,5 +16,10 @@
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    font-size: 38px;
+    font-size: 1.5rem;
+}
+.spotbie-loading-gif {
+    font-size: 1.3rem;
+    margin-right: 19px;
+    color: #fff;
 }

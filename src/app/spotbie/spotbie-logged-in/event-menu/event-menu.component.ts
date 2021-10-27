@@ -121,7 +121,7 @@ export class EventMenuComponent implements OnInit {
     this.closeWindowEvt.emit()
   }
 
-  public openReward(reward: Reward){
+  public editReward(reward: Reward){
 
     this.reward = reward
     this.itemCreator = true

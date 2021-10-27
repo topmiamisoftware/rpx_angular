@@ -5,8 +5,8 @@ import { QrModule } from '../qr/qr.module';
 import { LoyaltyPointsModule } from '../loyalty-points/loyalty-points.module';
 import { RewardMenuModule } from '../reward-menu/reward-menu.module';
 import { RouterModule } from '@angular/router';
-import { AdManagerModule } from '../ad-manager/ad-manager.module';
 import { RedeemableModule } from '../redeemable/redeemable.module';
+import { AdManagerModule } from '../ad-manager-menu/ad-manager-menu.module';
 
 @NgModule({
   declarations: [

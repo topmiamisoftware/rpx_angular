@@ -7,6 +7,7 @@ import { LoyaltyPointsService } from 'src/app/services/loyalty-points/loyalty-po
 import { UserauthService } from 'src/app/services/userauth.service';
 import { environment } from 'src/environments/environment';
 import { DeviceDetectorService } from 'ngx-device-detector';
+import { Redeemable } from 'src/app/models/redeemable';
 
 const QR_CODE_SCAN_BASE_URL = environment.qrCodeScanBaseUrl
 
@@ -27,6 +28,8 @@ export class QrComponent implements OnInit {
   @ViewChild('sbEarnedPoints') sbEarnedPoints: ElementRef
 
   public business = new Business()
+
+  public redeemable = new Redeemable()
 
   public userHash: string = null
 
@@ -155,7 +158,7 @@ export class QrComponent implements OnInit {
 
     if(resp.success){
       
-      this.business.qr_code_link 
+      this.redeemable.uuid 
       = `${this.qrCodeBaseUrl}
       ?&r=${resp.redeemable.uuid}`    
 

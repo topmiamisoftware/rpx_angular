@@ -16,7 +16,7 @@ import { NgxMaskModule, IConfig } from 'ngx-mask'
 /* SpotBie Imports */
 import { environment } from 'src/environments/environment'
 import { SettingsComponent } from './settings.component'
-import { HelperModule } from 'src/app/helpers/helper.module'
+import { HelperModule } from 'src/app/helpers/helper.module';
 
 export const options : Partial<IConfig> | (() => Partial<IConfig>) = null
 

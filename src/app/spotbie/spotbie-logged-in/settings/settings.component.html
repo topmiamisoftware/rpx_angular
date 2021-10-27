@@ -101,9 +101,13 @@
                                 class="spotbie-input-info spotbie-text-gradient spotbie-error mb-2">
             
                             <div *ngIf="f.spotbie_email.errors.required">
-                                Please enter your e-mail.
+                                Please enter your email.
                             </div>
-                    
+                            
+                            <div *ngIf="f.spotbie_email.errors.notUnique">
+                                This email is already taken.
+                            </div>
+
                         </div> 
                         
                         <ng-template #user_email_normal>

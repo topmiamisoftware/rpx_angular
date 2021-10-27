@@ -51,6 +51,13 @@ h5{
 .sb-v-wrapper{
     flex-direction: column;
 }
+.fa-exclamation-triangle{
+    position: relative;
+    color: #ffc107;
+    font-size: 1rem;
+    bottom: 4px;
+    margin-right: 10px;
+}
 @media (max-width: 768px){
     .sb-readImage{
         width: 100%;

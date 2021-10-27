@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-loading-screen',
@@ -6,6 +6,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./loading-screen.component.css']
 })
 export class LoadingScreenComponent implements OnInit {
+
+  @Input('loadingText') loadingText: string = 'LOADING...'
 
   constructor() { }
 

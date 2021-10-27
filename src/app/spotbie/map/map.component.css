@@ -1,6 +1,9 @@
 .spotbie-overlay-window{
     z-index: 94;
     overflow-x: hidden;
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;    
 }
 .spotie-prompt{
     position: absolute;
@@ -719,9 +722,12 @@ swiper{
 .sb-locationList{
     display: block;
     margin: 0 auto;
+    margin-top: 10px;
+    margin-bottom: 10px;
     text-align: left;
 }
-.sb-locationList li{
+.sb-locationList span{
+    display: block;
     padding-top: 10px;
     padding-bottom: 10px;
 }

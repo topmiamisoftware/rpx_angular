@@ -1,19 +1,19 @@
 <div class="spotbie-overlay-window" [ngStyle]="getOverlayWindowStyling()">
 
-    <div class='sb-closeButton' (click)="closeWindowX()" [ngStyle]="getCloseButtonStyling()">
-        <i class="fa fa-times"></i>
-    </div>
-
     <div class='spotbie-album-media-image-wrapper' 
          *ngIf="info_object !== null && info_object !== undefined">
         
+        <div class='sb-closeButton' (click)="closeWindowX()" [ngStyle]="getCloseButtonStyling()">
+            <i class="fa fa-times"></i>
+        </div>
+
         <div class='spotbie-info-object-title'>
                         
             <h6 class="spotbie-text-gradient sb-titleGreen text-uppercase" *ngIf="info_object.is_community_member">SPOTBIE COMMUNITY MEMBER</h6>
 
             <img class='sb-miniLogoIcon' src="assets/images/home_imgs/spotbie-green-icon.svg" *ngIf="info_object.is_community_member" />
 
-            <h1 [ngClass]="getTitleStyling()">{{ info_object.name }}</h1>
+            <h1 class="mb-3" [ngClass]="getTitleStyling()">{{ info_object.name }}</h1>
             
             <span class='spotbie-search-result-price' *ngIf="info_object.price_on == '1'">({{ info_object.price }})</span>
 
@@ -21,7 +21,7 @@
 
         <div class='spotbie-info-object-image' [ngStyle]="{ 'background' : 'url(' + infoObjectImageUrl + ')'}"></div>
         
-        <div class='spotbie-communityMemberDescription spotbie-text-gradient' *ngIf="info_object.is_community_member">
+        <div class='spotbie-communityMemberDescription spotbie-text-gradient mb-4' *ngIf="info_object.is_community_member">
             {{ info_object.description }}
         </div>
 
@@ -64,7 +64,9 @@
 
         <div class='spotbie-button spotbie-add-to-favorites' 
             (click)="addFavorite()"
-            *ngIf="info_object.type_of_info_object != 'ticketmaster_event' && showFavorites">
+            *ngIf="info_object.type_of_info_object != 'ticketmaster_event' && 
+                    showFavorites && 
+                    info_object.is_community_member">
 
             <span class="text-uppercase">ADD</span>            
 
@@ -138,17 +140,23 @@
             </div>
 
         </div>
- 
+        
+        <div class='' *ngIf="rewardMenuUp"> 
+            <app-reward-menu [qrCodeLink]="info_object.qr_code_link" 
+                              [fullScreenWindow]="false">
+            </app-reward-menu>
+        </div>
+
         <div class="spotbie-info-object-buttons">
 
             <div class='spotbie-distance mb-2' [ngClass]="getFontClasses()" *ngIf="info_object.distance !== undefined" (click)="openWithGoogleMaps()">
                 {{ info_object.distance }} miles from you.
             </div>
 
-            <i class="fa fa-map-marker-alt" [ngClass]="getFontClasses()" aria-hidden="true" (click)="openWithGoogleMaps()"></i>
+            <i  class="fa fa-map-marker-alt" [ngClass]="getFontClasses()" aria-hidden="true" (click)="openWithGoogleMaps()"></i>
 
-            <i class="fa fa-globe" 
-                *ngIf="info_object.is_community_member"
+            <i  class="fa fa-globe" 
+                *ngIf="!info_object.is_community_member"
                 [ngClass]="getFontClasses()" 
                 aria-hidden="true" 
                 (click)="visitInfoObjectPage()"></i>
@@ -184,7 +192,7 @@
     
         <div class='spotbie-share-post-link' (click)="linkCopy(infoObjectShareLink)">
     
-            <input class='sb-input' type='text' [(value)]="infoObjectLink" readonly #infoObjectShareLink />
+            <input class='sb-input' type='text' [ngClass]="getInputClass()"  [(value)]="infoObjectLink" readonly #infoObjectShareLink />
     
         </div>
 

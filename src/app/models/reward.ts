@@ -1,6 +1,7 @@
 export class Reward {
 
     public id: number = null
+    public uuid: string = null
     public business_id: number = null
     public type: string = null
     public name: string = null    
@@ -13,5 +14,7 @@ export class Reward {
     public updated_at: string = null
 
     public dollar_value: number = null
+
+    public link: string = null
 
 }

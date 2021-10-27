@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core'
 import { FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { UserauthService } from '../../../services/userauth.service'
 import { HttpResponse } from '../../../models/http-reponse'
@@ -6,7 +6,6 @@ import { Router } from '@angular/router'
 import { MenuLoggedOutComponent } from '../menu-logged-out.component'
 
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
-import { catchError } from 'rxjs'
 
 @Component({
   selector: 'app-log-in',
@@ -14,6 +13,8 @@ import { catchError } from 'rxjs'
   styleUrls: ['./log-in.component.css', '../../menu.component.css']
 })
 export class LogInComponent implements OnInit {
+
+  @ViewChild('spotbieSignUpIssues') spotbieSignUpIssues: ElementRef
 
   public faEye = faEye
   public faEyeSlash = faEyeSlash
@@ -89,14 +90,18 @@ export class LogInComponent implements OnInit {
 
   public loginUser(){
     
+    this.spotbieSignUpIssues.nativeElement.style.display = 'none'
+
     this.userAuthService.initLogin().subscribe({
       next: (resp) => {
         this.loginCallback(resp)    
       },
       error: (e) => {
-        this.logInForm.setErrors(null)
-        this.logInForm.get('spotbieUsername').setErrors({ invalidUorP: true })
+        this.spotbieSignUpIssues.nativeElement.scrollIntoView({ behavior: "smooth", block: "start" })
+        this.spotbieSignUpIssues.nativeElement.innerHTML = `<span class='spotbie-text-gradient spotbie-error'>INVALID USERNAME OR PASSWORD.</span>`
+        this.spotbieSignUpIssues.nativeElement.style.display = 'block'
         this.loading = false
+        return
       }
     })
 
@@ -120,17 +125,11 @@ export class LogInComponent implements OnInit {
     if(login_status == 'success' || login_status == 'confirm'){
 
       localStorage.setItem('spotbie_userLogin', loginResponse.user.username)
-
       localStorage.setItem('spotbie_loggedIn', '1')
-      
       localStorage.setItem('spotbie_rememberMe', this.userAuthService.userRememberMe)
-
       localStorage.setItem('spotbie_userId', loginResponse.user.id)
-
       localStorage.setItem('spotbie_userDefaultImage', loginResponse.spotbie_user.default_picture)
-
       localStorage.setItem('spotbie_userType', loginResponse.spotbie_user.user_type)
-
       localStorage.setItem('spotbiecom_session', loginResponse.token_info.original.access_token)
 
       if (this.userAuthService.userRememberMe == '1'){
@@ -144,11 +143,19 @@ export class LogInComponent implements OnInit {
 
     } else {
 
-      if (login_status == 'invalid_cred' || login_status == 'spotbie_google_account' || login_status == 'spotbie_fb_account' || login_status == 'spotbie_account') {
+      if (login_status == 'invalid_cred' || 
+          login_status == 'spotbie_google_account' || 
+          login_status == 'spotbie_fb_account' || 
+          login_status == 'spotbie_account'
+      ) {
   
-        if(login_status == 'invalid_cred')      
-          this.logInForm.get('spotbieUsername').setErrors({ invalidUorP: true })   
-        else if(login_status == 'spotbie_google_account')
+        if(login_status == 'invalid_cred'){      
+        
+          this.spotbieSignUpIssues.nativeElement.scrollIntoView({ behavior: "smooth", block: "start" })
+          this.spotbieSignUpIssues.nativeElement.innerHTML = `<span class='spotbie-text-gradient spotbie-error'>INVALID USERNAME OR PASSWORD.</span>`
+          this.spotbieSignUpIssues.nativeElement.style.display = 'block'
+
+        } else if(login_status == 'spotbie_google_account')
           this.logInForm.get('spotbieUsername').setErrors({ spotbie_google_account: true })
         else if(login_status == 'spotbie_fb_account')
           this.logInForm.get('spotbieUsername').setErrors({ spotbie_fb_account: true })         
@@ -173,12 +180,11 @@ export class LogInComponent implements OnInit {
 
     this.loading = true
 
-    // will be used when the user hits the submit button
     this.submitted = true
 
     // stop here if form is invalid
     if (this.logInForm.invalid) {
-      this.loading = false
+      this.loading = false      
       return
     }
 
