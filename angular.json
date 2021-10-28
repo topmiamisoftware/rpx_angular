@@ -22,7 +22,12 @@
             "assets": [
               "src/assets",
               "src/manifest.webmanifest",
-              "src/.htaccess"
+              "src/.htaccess",
+              {
+                "glob": "_redirects",
+                "input": "src",
+                "output": "/"
+              }                
             ],
             "styles": [
               "src/custom-theme.scss",
