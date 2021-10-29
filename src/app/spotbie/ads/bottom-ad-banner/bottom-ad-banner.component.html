@@ -1,0 +1,33 @@
+<div class='spotbie-ad-wrapper-header'     
+    *ngIf="displayAd"
+    (click)="openAd()">
+
+    <div class='sb-ad-top'>
+
+        <span class='sb-text-light-green-gradient sb-sponsored text-uppercase'>SPONSORED</span>
+
+        <span class='spotbie-text-gradient sb-sponsoredName text-uppercase'>{{ business.name }}</span>
+
+        <span class='sb-text-light-green-gradient sb-totalRewards text-uppercase'>{{ totalRewards  }} REWARDS</span>
+
+    </div>
+
+    <div class='spotbie-white-iconImg' [ngStyle]="{'background' : 'url(' + whiteIconSvg + ')'}" ></div>
+
+    <div class="spotbie-ad-image" [ngStyle]="{'background' : 'url(' + ad.images + ')'}"></div>
+    
+    <div class='sb-ad-bottom'>
+        
+        <span class='sb-text-light-green-gradient sb-distanceMiles text-uppercase'>{{ distance | number:'1.0':'en-US' }} miles.</span>
+
+        <span class='sb-text-light-green-gradient sb-perDollar text-uppercase'>{{ (business.loyalty_point_dollar_percent_value / 100) | currency : 'USD' }} per dollar</span>
+
+        <span class='spotbie-text-gradient sb-address text-uppercase'><i class='fas fa-map-marker-alt'></i> {{ business.address }}</span>
+
+        <span class='spotbie-text-gradient sb-categoryList text-uppercase'>{{ categoriesListFriendly }}</span>
+
+    </div>
+
+</div>
+
+<app-community-member [business]="business" [qrCodeLink]="business.qr_code_link" (closeWindowEvt)="closeRewardMenu()" *ngIf="rewardMenuOpen"></app-community-member>

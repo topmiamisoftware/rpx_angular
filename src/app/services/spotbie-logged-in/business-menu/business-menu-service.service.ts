@@ -6,6 +6,7 @@ import { handleError } from 'src/app/helpers/error-helper';
 import { catchError, tap } from 'rxjs/operators';
 
 const REWARD_API = `${spotbieGlobals.API}reward`
+const BUSINESS_API = `${spotbieGlobals.API}business`
 
 @Injectable({
   providedIn: 'root'
@@ -16,9 +17,19 @@ export class BusinessMenuServiceService {
 
   public fetchRewards(fetchRewardsReq: any = null): Observable<any>{
 
-    const placeToEatApi = `${REWARD_API}/index`
+    const rewardsApi = `${REWARD_API}/index`
 
-    return this.http.post<any>(placeToEatApi, fetchRewardsReq).pipe(
+    return this.http.post<any>(rewardsApi, fetchRewardsReq).pipe(
+      catchError(handleError("fetchRewards"))
+    ) 
+
+  }
+
+  public getCommunityMember(fetchRewardsReq: any){
+
+    const communityMemberApi = `${BUSINESS_API}/show`
+
+    return this.http.post<any>(communityMemberApi, fetchRewardsReq).pipe(
       catchError(handleError("fetchRewards"))
     ) 
 

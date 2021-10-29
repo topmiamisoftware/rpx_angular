@@ -20,7 +20,8 @@ export class RewardMenuComponent implements OnInit {
   @ViewChild('rewardCreator') rewardCreator: RewardCreatorComponent
   @ViewChild('appRewardViewer') appRewardViewer: RewardComponent
 
-  @Input() fullScreenWindow: boolean = true
+  @Input() rewardAppFullScreen: boolean = false
+  @Input() fullScreenMode: boolean = true
 
   @Input() loyaltyPoints: string
 
@@ -66,7 +67,7 @@ export class RewardMenuComponent implements OnInit {
 
   public getWindowClass(){
 
-    if(this.fullScreenWindow)
+    if(this.fullScreenMode)
       return 'spotbie-overlay-window'
     else
       return ''
@@ -110,8 +111,6 @@ export class RewardMenuComponent implements OnInit {
     if(resp.success){
 
       this.rewards = resp.rewards
-
-      console.log("fetchRewardsCb", resp)
 
       if(this.userType === this.eAllowedAccountTypes.Personal || this.isLoggedIn !== '1'){
 

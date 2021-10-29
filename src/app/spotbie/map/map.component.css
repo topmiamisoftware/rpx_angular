@@ -246,8 +246,10 @@
     padding-left: 1px;
     font-size: .6rem;
 }
+.spotbie-distance{
+    font-size: .7rem;
+}
 .spotbie-time-event,
-.spotbie-distance,
 .spotbie-event-code,
 .spotbie-price-ranges,
 .spotbie-venue-name{
@@ -590,6 +592,20 @@ span.spotbie-button{
 .spotbie-marker-bg:hover{
     border: 1px solid rgb(22 181 146);
 }
+.spotbie-marker-bg.sb-communityMember{
+    min-height: 45px;
+    height: 45px;
+    width: 45px;
+    min-width: 45px;
+    border: 2px solid #1c1924;
+}
+.sb-communityMember img{
+    position: absolute;
+    top: -2px;
+    left: -1px;
+    width: 15px;
+    max-width: 15px;
+}
 .spotbie-close-results{
     position: absolute;
     top: 15px;
@@ -759,6 +775,11 @@ button.gm-ui-hover-effect:focus,
 button.gm-ui-hover-effect:active,
 button.gm-ui-hover-effect:focus-within{
     border: unset !important;
+}
+.spotbie-no-results{
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
 }
 /**WIDTH MEDIA QUERIES */
 @media (max-width: 1583px) { 

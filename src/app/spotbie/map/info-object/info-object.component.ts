@@ -10,6 +10,7 @@ import { shareNative } from 'src/app/helpers/cordova/sharesheet'
 import { externalBrowserOpen } from 'src/app/helpers/cordova/web-intent'
 import { spotbieMetaDescription, spotbieMetaTitle, spotbieMetaImage } from 'src/app/constants/spotbie'
 import { InfoObject } from 'src/app/models/info-object'
+import { environment } from 'src/environments/environment'
 
 const YELP_BUSINESS_DETAILS_API = "https://api.yelp.com/v3/businesses/"
 
@@ -25,6 +26,8 @@ const SPOTBIE_META_IMAGE = spotbieMetaImage
 export class InfoObjectComponent implements OnInit {
 
   @Input() info_object: InfoObject
+
+  @Input() fullScreenMode: boolean = false
 
   @Output() closeWindow = new EventEmitter()
   @Output() removeFavoriteEvent = new EventEmitter()
@@ -65,9 +68,20 @@ export class InfoObjectComponent implements OnInit {
               private activatedRoute: ActivatedRoute,
               private spotbieMetaService: SpotbieMetaService) { }
 
+
+  public getFullScreenModeClass(){
+
+    if(this.fullScreenMode)
+      return 'fullScreenMode'
+    else
+      return ''
+
+  }
+
   public closeWindowX(): void {
 
-    if(this.router.url.indexOf('event') > -1 || this.router.url.indexOf('place-to-eat') > -1 || this.router.url.indexOf('shopping') > -1){
+    if(this.router.url.indexOf('event') > -1 || this.router.url.indexOf('place-to-eat') > -1 || 
+       this.router.url.indexOf('shopping') > -1 || this.router.url.indexOf('community') > -1){
 
       this.router.navigate(['/home'])
    
@@ -95,6 +109,8 @@ export class InfoObjectComponent implements OnInit {
     const infoObjToPull = {
       config_url: this.urlApi
     }
+
+    console.log("infoObjToPull", infoObjToPull)
 
     if(this.router.url.indexOf('event') > -1){
 
@@ -533,13 +549,13 @@ export class InfoObjectComponent implements OnInit {
         case 'spotbie_community':
           
           this.rewardMenuUp = true
-
+        
           if(this.info_object.user_type == 1)
-            this.infoObjectLink = 'https://spotbie.com/places-to-eat/community/' + this.info_object.qr_code_link
+            this.infoObjectLink = environment.baseUrl + 'community/' + this.info_object.qr_code_link
           else if(this.info_object.user_type == 2)
-            this.infoObjectLink = 'https://spotbie.com/events/community/' + this.info_object.qr_code_link
+            this.infoObjectLink = environment.baseUrl + 'community/' + this.info_object.qr_code_link
           else if(this.info_object.user_type == 3)
-            this.infoObjectLink = 'https://spotbie.com/shoppping/community/' +  this.info_object.qr_code_link
+            this.infoObjectLink = environment.baseUrl + 'community/' + this.info_object.qr_code_link
           
           return
 
@@ -559,8 +575,8 @@ export class InfoObjectComponent implements OnInit {
 
     }
     
-    this.pullInfoObject()
-
+    this.pullInfoObject()  
+    
   }
 
 }

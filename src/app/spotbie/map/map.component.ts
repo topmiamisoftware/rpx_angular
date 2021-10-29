@@ -18,6 +18,10 @@ import { BusinessDashboardComponent } from '../spotbie-logged-in/business-dashbo
 import { UserDashboardComponent } from '../spotbie-logged-in/user-dashboard/user-dashboard.component'
 import { SortOrderPipe } from 'src/app/pipes/sort-order.pipe'
 import { Business } from 'src/app/models/business'
+import { BusinessMenuServiceService } from 'src/app/services/spotbie-logged-in/business-menu/business-menu-service.service'
+import { AdsService } from '../ads/ads.service'
+import { BottomAdBannerComponent } from '../ads/bottom-ad-banner/bottom-ad-banner.component'
+import { SingleAdComponent } from '../ads/single-ad/single-ad.component'
 
 const YELP_BUSINESS_SEARCH_API = 'https://api.yelp.com/v3/businesses/search'
 
@@ -47,6 +51,9 @@ export class MapComponent implements OnInit {
   @ViewChild('featureWrapper') featureWrapper: ElementRef
 
   @ViewChild('scrollMapAppAnchor') scrollMapAppAnchor: ElementRef
+
+  @ViewChild('bottomAdBanner') bottomAdBanner: BottomAdBannerComponent
+  @ViewChild('singleAdApp') singleAdApp: SingleAdComponent
 
   public isLoggedIn: string
   public iconUrl:  string
@@ -542,6 +549,8 @@ export class MapComponent implements OnInit {
     this.search_keyword = keyword
 
     keyword = encodeURIComponent(keyword)
+
+    this.communityMemberList = []
 
     if(this.search_keyword !== keyword){
 
@@ -1069,7 +1078,7 @@ export class MapComponent implements OnInit {
         this.communityMemberList.push(business)    
 
       });
-
+      
     }
 
   }

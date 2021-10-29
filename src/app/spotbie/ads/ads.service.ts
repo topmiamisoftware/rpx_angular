@@ -14,13 +14,13 @@ export class AdsService {
 
   constructor(private http: HttpClient) { }
 
-  public getSingleAdBanner(): Observable<any>{
+  public getHeaderBanner(headerBannerReqObj: any): Observable<any>{
 
     const getAd = `${ADS_API}/header-banner`
 
-    return this.http.post(getAd, null).pipe(
+    return this.http.post(getAd, headerBannerReqObj).pipe(
       catchError(
-        handleError("getSingleAdBanner")
+        handleError("getHeaderBanner")
       )
     )
 
@@ -38,4 +38,17 @@ export class AdsService {
 
   }
 
+  public getSingleAdList(searchObjSb: any):  Observable<any>{
+    
+    const getAdsApi = `${ADS_API}/single-ad-list`
+
+    return this.http.post(getAdsApi, searchObjSb).pipe(
+      catchError(
+        handleError("getSingleAdList")
+      )
+    )
+
+  }
+
+  
 }

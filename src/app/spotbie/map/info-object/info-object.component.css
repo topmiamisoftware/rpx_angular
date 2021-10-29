@@ -158,6 +158,9 @@
 .sb-closeButton{
     z-index: 99;
 }
+.sb-closeButton.fullScreenMode{
+    top: 20px;
+}
 .spotbie-info-object-transactions{
     position: relative;
     margin: 0 auto;
@@ -196,6 +199,10 @@
     margin-top: 130px;
     margin-bottom: 25px;
 }
+.spotbie-info-object-title.fullScreenMode{
+    margin-top: 50px;
+}
+
 .spotbie-info-object-image-list{
     position: relative;
     margin: 0 auto;

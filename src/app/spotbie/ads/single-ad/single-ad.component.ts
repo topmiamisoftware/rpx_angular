@@ -1,6 +1,10 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { AdsService } from '../ads.service';
 import { externalBrowserOpen } from 'src/app/helpers/cordova/web-intent'
+import { Business } from 'src/app/models/business';
+import { getDistanceFromLatLngInMiles } from 'src/app/helpers/measure-units.helper';
+import { Ad } from 'src/app/models/ad';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-single-ad',
@@ -9,54 +13,85 @@ import { externalBrowserOpen } from 'src/app/helpers/cordova/web-intent'
 })
 export class SingleAdComponent implements OnInit {
 
-  @Input('category') category: string
+  @Input('lat') lat: number
+  @Input('lng') lng: number
+  @Input('business') business: Business = new Business()
+  @Input('ad') ad: Ad = new Ad()
 
-  public ad: any = {}
+  @Input('categories') categories: string
 
   public link: string
 
   public displayAd: boolean = false
 
+  public whiteIconSvg = 'assets/images/home_imgs/spotbie-white-icon.svg'
+
+  public distance: number = 0
+
+  public totalRewards: number = 0
+
+  public categoriesListFriendly: string = ''
+
+  public adIsOpen: boolean = false
+
+  public rewardMenuOpen: boolean = false
+
   constructor(private adsService: AdsService) { }
 
-  public getSingleAdBanner(){
+  public getHeaderBanner(){
 
-    this.adsService.getSingleAdBanner().subscribe(
+    const headerBannerReqObj = {
+      loc_x: this.lat,
+      loc_y: this.lng,
+      categories: JSON.stringify(this.categories)
+    }
+
+    this.adsService.getHeaderBanner(headerBannerReqObj).subscribe(
       resp =>{
-        this.getSingleAdCallback(resp)
+        this.getHeaderBannerAdCallback(resp)
       }
     )
 
   }
 
-  public getSingleAdCallback(resp: any){
+  public closeRewardMenu(){
+    this.rewardMenuOpen = false    
+  }
+
+  public getHeaderBannerAdCallback(resp: any){
 
     if(resp.success){
 
-      this.link = resp.ad.link.match(/href="([^"]*)/)[1]
-      this.ad.content = resp.ad.link.replace('target="_blank"', '')
-      this.ad.content = this.ad.content.replace(this.link, '')
-      this.ad.content = this.ad.content.replace('href', '')
-      this.ad.content = this.ad.content.replace('<a', '<div')
-      this.ad.content = this.ad.content.replace('</a>', '</div>')
+      this.ad = resp.ad
+      
+      this.business = resp.business
+      
+      this.business.is_community_member = true
+      this.business.type_of_info_object = 'spotbie_community'
 
       this.displayAd = true
 
-    } else {
-      console.log("getSingleAdCallback", resp)
-    }
+      this.totalRewards = resp.totalRewards
+      this.categoriesListFriendly = JSON.parse(
+        this.business.categories.toString().replace(',', ", ")
+      )
+      this.distance = getDistanceFromLatLngInMiles(this.business.loc_x, this.business.loc_y, this.lat, this.lng)
+
+    } else
+      console.log("getHeaderBannerAdCallback", resp)
 
   }
 
+
   public openAd(): void{
     
-    externalBrowserOpen(this.link)
+    this.rewardMenuOpen = true
+    //this.router.navigate([`/business-menu/${this.business.qr_code_link}`])
 
   }
 
   ngOnInit(): void {
-    this.getSingleAdBanner()
-    console.log("Current Category", this.category)
+    this.getHeaderBanner()
   }
 
 }

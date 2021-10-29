@@ -960,17 +960,17 @@ export class SettingsComponent implements OnInit {
         case 'shopping':
         case 'place_to_eat':
 
-            const originTitleValidators = [Validators.required]
+            const originTitleValidators = [Validators.required, Validators.maxLength(25)]
             const originAddressValidators = [Validators.required]
             const originValidators = [Validators.required]
             const originDescriptionValidators = [Validators.required, Validators.maxLength(350), Validators.minLength(100)]
 
             this.businessSettingsForm = this.formBuilder.group({
-            originAddress: ['', originAddressValidators],
-            originTitle: ['', originTitleValidators],
-            originDescription: ['', originDescriptionValidators],
-            spotbieOrigin: ['', originValidators],
-            originCategories: ['']
+                originAddress: ['', originAddressValidators],
+                originTitle: ['', originTitleValidators],
+                originDescription: ['', originDescriptionValidators],
+                spotbieOrigin: ['', originValidators],
+                originCategories: ['']
             })
 
             if(this.user.business !== undefined){

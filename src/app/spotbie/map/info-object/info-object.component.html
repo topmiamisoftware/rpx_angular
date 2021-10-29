@@ -3,11 +3,11 @@
     <div class='spotbie-album-media-image-wrapper' 
          *ngIf="info_object !== null && info_object !== undefined">
         
-        <div class='sb-closeButton' (click)="closeWindowX()" [ngStyle]="getCloseButtonStyling()">
+        <div class='sb-closeButton' (click)="closeWindowX()" [ngStyle]="getCloseButtonStyling()" [ngClass]="getFullScreenModeClass()">
             <i class="fa fa-times"></i>
         </div>
 
-        <div class='spotbie-info-object-title'>
+        <div class='spotbie-info-object-title' [ngClass]="getFullScreenModeClass()">
                         
             <h6 class="spotbie-text-gradient sb-titleGreen text-uppercase" *ngIf="info_object.is_community_member">SPOTBIE COMMUNITY MEMBER</h6>
 
@@ -142,8 +142,9 @@
         </div>
         
         <div class='' *ngIf="rewardMenuUp"> 
-            <app-reward-menu [qrCodeLink]="info_object.qr_code_link" 
-                              [fullScreenWindow]="false">
+            <app-reward-menu [qrCodeLink]="info_object.qr_code_link"
+                              [rewardAppFullScreen]="fullScreenMode"
+                              [fullScreenMode]="false">
             </app-reward-menu>
         </div>
 

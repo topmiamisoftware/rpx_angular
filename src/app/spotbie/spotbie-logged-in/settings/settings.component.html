@@ -534,9 +534,13 @@
                             class="spotbie-input-info spotbie-text-gradient text-center spotbie-error mt-4 mb-2">
     
                         <div *ngIf="i.originTitle.errors.required">
-                            Please enter your {{ account_type_category_friendly_name }} title.
+                            Choose {{ account_type_category_friendly_name }} title.
                         </div>                                                
     
+                        <div *ngIf="i.originTitle.errors.maxlength">
+                            Title must be less than 25 characters long.
+                        </div> 
+
                     </div>   
 
                     <ng-template #originTitleNormal>

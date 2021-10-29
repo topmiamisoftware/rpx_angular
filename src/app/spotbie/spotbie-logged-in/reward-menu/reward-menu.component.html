@@ -29,7 +29,11 @@
 
             <h6 *ngIf="reward.type == '1'">
                 <span class='sb-text-light-green-gradient'>
-                    {{ (reward.point_cost * (loyaltyPointsBalance.loyalty_point_dollar_percent_value / 100)) | currency : 'USD' }} DISCOUNT
+                    {{ (reward.point_cost * (loyaltyPointsBalance.loyalty_point_dollar_percent_value / 100)) | currency : 'USD' }}
+                </span>
+                <br/>
+                <span class='spotbie-text-gradient' style='font-size: .5rem;'>
+                    DISCOUNT
                 </span>
             </h6>
 
@@ -37,13 +41,13 @@
 
     </div>
 
-    <div class='spotbie-text-gradient text-uppercase' (click)="closeWindow()" *ngIf="fullScreenWindow">CLOSE</div>
+    <div class='spotbie-text-gradient text-uppercase' (click)="closeWindow()" *ngIf="fullScreenMode">CLOSE</div>
 
 </div>
 
-<div *ngIf="(userType === eAllowedAccountTypes.Personal || isLoggedIn !== '1')">
+<div *ngIf="(userType === eAllowedAccountTypes.Personal || isLoggedIn !== '1')" [ngClass]="getWindowClass()">
 
-    <h4 class="spotbie-text-gradient sb-text-light-green-gradient text-center text-uppercase pt-5 mb-2">
+    <h4 class="spotbie-text-gradient sb-titleGreen text-center text-uppercase pt-5 mb-2">
         {{ business.name }}
     </h4>
 
@@ -68,15 +72,19 @@
 
             <h6 *ngIf="reward.type == '1'">
                 <span class='sb-text-light-green-gradient'>
-                    {{  reward.point_cost * (userPointToDollarRatio / 100) | currency : 'USD' }} DISCOUNT
+                    {{  reward.point_cost * (userPointToDollarRatio / 100) | currency : 'USD' }}
                 </span>
+                <br/>
+                <span class='spotbie-text-gradient sb-discountTitle' style='font-size: .5rem;'>
+                    DISCOUNT
+                </span>                
             </h6>
 
         </div> 
     
     </div>
 
-    <div class='spotbie-text-gradient text-uppercase cursor-pointer' (click)="closeWindow()" *ngIf="fullScreenWindow">CLOSE</div>
+    <div class='spotbie-text-gradient text-uppercase cursor-pointer mt-5' (click)="closeWindow()" *ngIf="fullScreenMode">CLOSE</div>
 
 </div>
 
@@ -90,5 +98,6 @@
 <app-reward *ngIf="rewardApp"
             #appRewardViewer
             [reward]="reward"
+            [fullScreenMode]="rewardAppFullScreen"
             [userPointToDollarRatio]="userPointToDollarRatio"
             (closeWindowEvt)="closeReward()"></app-reward>

@@ -78,30 +78,57 @@
               title="{{ mapObject.username }}"
               [ngStyle]="{ 'background' : 'url(' + mapObject.map_icon + ')' }">
           </div>
-
+          
         </agm-overlay>  
 
         </div>
 
         <div *ngIf="show_search_box && searchResults.length > 0">
 
-          <agm-overlay *ngFor="let mapObject of searchResults"
-                        [latitude]="mapObject.coordinates.latitude" 
-                        [longitude]="mapObject.coordinates.longitude">
+          <div *ngFor="let mapObject of searchResults">
 
-          <div class='spotbie-marker-bg'
-              (click)="pullSearchMarker(mapObject)"
-              [ngStyle]="{ 'background' : 'url(' + mapObject.icon + ')' }">
+            <div *ngIf="mapObject.business_id == undefined">
+
+              <agm-overlay
+                [latitude]="mapObject.coordinates.latitude" 
+                [longitude]="mapObject.coordinates.longitude">
+
+                <div class='spotbie-marker-bg'
+                    (click)="pullSearchMarker(mapObject)"
+                    [ngStyle]="{ 'background' : 'url(' + mapObject.icon + ')' }">
+                </div>
+
+              </agm-overlay>                    
+
+              <agm-marker [latitude]="mapObject.coordinates.latitude" 
+                          [longitude]="mapObject.coordinates.longitude"
+                          [agmFitBounds]="true"
+                          [visible]="false">
+              </agm-marker>
+
+            </div>
+
           </div>
 
-          </agm-overlay>                    
+          <agm-overlay *ngFor="let communityMember of communityMemberList"
+                        [latitude]="communityMember.loc_x" 
+                        [longitude]="communityMember.loc_y">
 
-          <agm-marker *ngFor="let mapObject of searchResults"
-                      [latitude]="mapObject.coordinates.latitude" 
-                      [longitude]="mapObject.coordinates.longitude"
-                      [agmFitBounds]="true"
-                      [visible]="false"></agm-marker>
+            
+            <div class='spotbie-marker-bg sb-communityMember'
+                (click)="pullSearchMarker(communityMember)"
+                [ngStyle]="{ 'background' : 'url(' + communityMember.photo + ')' }">
+                <img src="assets/images/home_imgs/spotbie-green-icon.svg" />
+            </div>
 
+          </agm-overlay>    
+
+          <agm-marker *ngFor="let communityMember of communityMemberList"
+              [latitude]="communityMember.loc_x" 
+              [longitude]="communityMember.loc_y"
+              [agmFitBounds]="true"
+              [visible]="false"></agm-marker>
+                      
         </div>
 
     </agm-map>    
@@ -126,8 +153,6 @@
 
       <div #scrollMapAppAnchor></div>
       
-      <app-single-ad class='spotbie-ad' [category]="this.search_keyword"></app-single-ad>
-
       <div class='spotbie-close-results' (click)="closeSearchResults()">close</div>
 
       <div class='spotbie-search-results-title text-uppercase' *ngIf="type_of_info_object == 'yelp_business'">
@@ -283,7 +308,9 @@
         </ng-template>
     
       </div>
-    
+  
+      <app-single-ad #singleAdApp class='spotbie-ad' [categories]="this.search_keyword" [lat]="lat" [lng]="lng"></app-single-ad>
+
       <div class='spotbie-search-result-wrapper' *ngIf="showSearchResults">
     
         <div class='spotbie-search-results-title text-uppercase'>
@@ -331,8 +358,10 @@
       
         </div>       
 
-        <div class='spotbie-no-results' *ngIf='searchResults.length == 0'>No YELP Results Available.</div>
-    
+        <div class='spotbie-no-results mt-4 mb-4' *ngIf='searchResults.length == 0'>No YELP Results Available.</div>
+        
+        <div class='spotbie-no-results mt-4 mb-4' *ngIf='searchResults.length > 0'>YELP RESULTS</div>
+
         <div class='spotbie-search-result' *ngFor='let search_result of searchResults' (click)="pullSearchMarker(search_result)">
           
           <table class='spotbie-search-result-table'>
@@ -454,7 +483,9 @@
           <span class='spotbie-search-page-number'>{{ around_me_search_page }}/{{ allPages - 1 }}</span>
     
         </div>
-    
+        
+        <app-bottom-ad-banner #bottomAdBanner [categories]="this.search_keyword" [lat]="lat" [lng]="lng"></app-bottom-ad-banner>
+
       </div>
 
     </div>

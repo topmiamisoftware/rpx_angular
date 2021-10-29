@@ -26,7 +26,9 @@
 .sb-closeButton {
     z-index: 99;
 }
-
+.sb-closeButton.fullScreenMode{
+    top: 20px;
+}
 .spotbie-info-object-title {
     position: relative;
     margin: 0 auto;
@@ -34,7 +36,9 @@
     margin-top: 50px;
     margin-bottom: 25px;
 }
-
+.spotbie-info-object-title.fullScreenMode{
+    margin-top: 50px;
+}
 h6.sb-titleGreen {
     font-size: .8rem;
 }
@@ -131,6 +135,14 @@ h6.sb-titleGreen {
     top: 50%;
     transform: translateY(-50%);
 }
+@media (max-width: 900px) { 
+    .sb-input{
+        width: 92%;
+        min-width: 92%;
+        max-width: 92%;        
+    }
+}
+
 @media (max-width: 840px) {
     .spotbie-info-object-image-thumb {
         margin-left: unset;
@@ -143,4 +155,39 @@ h6.sb-titleGreen {
         background-size: cover!important;
         background-position: center!important;
     }
+}
+
+@media (max-width: 560px) { 
+    .spotbie-info-object-title {
+        font-size: 18px;
+        max-width: 90%;
+        letter-spacing: 1px;
+    }
+    .spotbie-info-object-title h1{
+        font-size: 1.2rem;
+    }
+    .spotbie-communityMemberDescription{
+        max-width: 92%;
+        font-size: .9rem;
+    }     
+    .spotbie-share-post-link{
+        margin-bottom: 20px !important;
+    }
+    .sb-miniLogoIcon{
+        display: none;
+    }  
+    h6.sb-titleGreen{
+        font-size: .5rem;
+    }
+    h1.sb-titleGreen{
+        position: relative;
+        margin: 0 auto;
+        font-size: .9rem;
+        max-width: 90%;
+        width: 90%;
+        min-width: 90%;
+    }
+    .spotbie-info-object-title.fullScreenMode{
+        margin-top: 0px;
+    }             
 }
