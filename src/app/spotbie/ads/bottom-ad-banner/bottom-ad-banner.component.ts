@@ -77,6 +77,10 @@ export class BottomAdBannerComponent implements OnInit {
 
   }
 
+  public switchAd(){
+    this.getSingleAdList()
+  }
+
   ngOnInit(): void {
     this.getSingleAdList()
   }

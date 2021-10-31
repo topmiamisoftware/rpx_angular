@@ -802,7 +802,15 @@ export class MapComponent implements OnInit {
       } else {
 
         //Used for loading places to eat and shopping from yelp
-        api_url = `${this.searchApiUrl}?latitude=${this.lat}&longitude=${this.lng}&term=${search_term}&${this.showOpenedParam}&radius=40000&sort_by=best_match&limit=20&offset=${this.current_offset}`
+        api_url = `${this.searchApiUrl}
+          ?latitude=${this.lat}
+          &longitude=${this.lng}
+          &term=${search_term}
+          &${this.showOpenedParam}
+          &radius=40000
+          &sort_by=best_match
+          &limit=20
+          &offset=${this.current_offset}`
 
         const search_obj = {
           config_url: api_url
@@ -811,6 +819,19 @@ export class MapComponent implements OnInit {
         this.locationService.getBusinesses(search_obj).subscribe(
           resp => {
             this.getBusinessesSearchCallback(resp)
+          }
+        )
+
+        const searchObjSb = {
+          loc_x: this.lat,
+          loc_y: this.lng,
+          categories: this.search_keyword
+        }    
+
+        //Retrieve the SpotBie Community Member Results
+        this.locationService.getSpotBieCommunityMemberList(searchObjSb).subscribe(
+          resp => {
+            this.getSpotBieCommunityMemberListCb(resp)
           }
         )
 
@@ -1077,8 +1098,11 @@ export class MapComponent implements OnInit {
 
         this.communityMemberList.push(business)    
 
-      });
+      })
       
+      this.bottomAdBanner.switchAd()
+      this.singleAdApp.switchAd()
+
     }
 
   }

@@ -82,6 +82,9 @@ export class SingleAdComponent implements OnInit {
 
   }
 
+  public switchAd(){
+    this.getHeaderBanner()
+  }
 
   public openAd(): void{
     
