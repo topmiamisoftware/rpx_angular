@@ -340,8 +340,20 @@ h6.sb-titleGreen{
 .sb-infoObjectInputLight{
     color: white;
 }
-sb-infoObjectInputDark{
+.sb-infoObjectInputDark{
     color: #332f3e;
+}
+.spotbie-info-object-is-sponsored{
+    position: relative;
+    display: inline-block;
+    margin: 0 auto;
+    cursor: pointer;
+    margin-top: 15px;
+    font-size: .8rem;
+}
+.fa-search-dollar{
+    font-size: .8rem;
+    margin-left: 5px;
 }
 @media (max-width: 1583px) { 
 

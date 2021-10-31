@@ -64,6 +64,11 @@
     
         </div>
 
+        <div class='spotbie-info-object-is-sponsored sb-text-light-green-gradient mt-4' 
+                *ngIf="info_object.type_of_info_object == 'spotbie_community' && ad !== undefined">    
+            SPONSORED <i class='fa fa-search-dollar'></i>   
+        </div>
+
         <div class='spotbie-info-object-image-list' *ngIf="info_object.type_of_info_object == 'ticketmaster_event'">
     
             <div class='spotbie-info-object-image-thumb'
@@ -102,11 +107,15 @@
         </div>
 
         <div class='mt-4 mb-4' *ngIf="info_object.is_community_member">
-
+            
+            <h1 class='spotbie-text-gradient mb-4'>
+                - {{ info_object.balance| number:'1.0':'en-US' }} LP -
+            </h1>
+            <br/><br/>
             <span class='spotbie-text-gradient' style='font-size: .8rem;'>DOLLAR VALUE RATE</span><br/>
             <span class='sb-text-light-green-gradient mt-4 mb-4' style='font-size: 1.8rem;'>{{ info_object.rewardRate | currency : 'USD' }}</span><br/>
-            <span class='spotbie-text-gradient' style='font-size: .8rem;'> PER DOLLAR SPENT</span>
-
+            <span class='spotbie-text-gradient' style='font-size: .8rem;'> PER DOLLAR SPENT</span><br/>
+            <span class='sb-text-light-green-gradient mt-4'> {{ info_object.loyalty_point_dollar_percent_value | number:'1.0':'en-US' }}% REWARD RATE</span>
         </div>
 
         <div class='spotbie-info-object-rating' [ngClass]="getFontClasses()" *ngIf="info_object.type_of_info_object == 'yelp_business'" (click)="visitInfoObjectPage()">
