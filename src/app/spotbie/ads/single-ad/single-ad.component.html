@@ -30,4 +30,8 @@
 
 </div>
 
-<app-community-member [business]="business" [qrCodeLink]="business.qr_code_link" (closeWindowEvt)="closeRewardMenu()" *ngIf="rewardMenuOpen"></app-community-member>
+<app-community-member [business]="business"
+                      [ad]="ad"
+                      [qrCodeLink]="business.qr_code_link" 
+                      (closeWindowEvt)="closeRewardMenu()" 
+                      *ngIf="rewardMenuOpen"></app-community-member>

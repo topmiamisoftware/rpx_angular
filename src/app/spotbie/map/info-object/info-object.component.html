@@ -38,8 +38,8 @@
         </div>
 
         <div class='spotbie-info-object-image-list' 
-                *ngIf="info_object.type_of_info_object != 'ticketmaster_event' &&
-                        info_object.type_of_info_object != 'spotbie_community'">
+                *ngIf="(info_object.type_of_info_object != 'ticketmaster_event' &&
+                        info_object.type_of_info_object != 'spotbie_community')">
     
             <div class='spotbie-info-object-image-thumb'
                 *ngFor="let thumbnail of info_object.photos"
@@ -48,10 +48,19 @@
         </div>
         
         <div class='spotbie-info-object-image-list' 
-                *ngIf="info_object.type_of_info_object == 'spotbie_community'">
+                *ngIf="info_object.type_of_info_object == 'spotbie_community' && ad === undefined">
     
             <div class='spotbie-info-object-image-thumb'
                 [ngStyle]="{ 'background' : 'url(' + info_object.photo + ')'}"></div>
+    
+        </div>
+
+        
+        <div class='spotbie-info-object-image-list' 
+                *ngIf="info_object.type_of_info_object == 'spotbie_community' && ad !== undefined">
+    
+            <div class='spotbie-info-object-image-thumb'
+                [ngStyle]="{ 'background' : 'url(' + ad.images + ')'}"></div>
     
         </div>
 

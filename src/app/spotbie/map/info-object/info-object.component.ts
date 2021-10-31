@@ -11,6 +11,7 @@ import { externalBrowserOpen } from 'src/app/helpers/cordova/web-intent'
 import { spotbieMetaDescription, spotbieMetaTitle, spotbieMetaImage } from 'src/app/constants/spotbie'
 import { InfoObject } from 'src/app/models/info-object'
 import { environment } from 'src/environments/environment'
+import { Ad } from 'src/app/models/ad'
 
 const YELP_BUSINESS_DETAILS_API = "https://api.yelp.com/v3/businesses/"
 
@@ -26,12 +27,13 @@ const SPOTBIE_META_IMAGE = spotbieMetaImage
 export class InfoObjectComponent implements OnInit {
 
   @Input() info_object: InfoObject
+  @Input() ad: Ad
 
   @Input() fullScreenMode: boolean = false
 
   @Output() closeWindow = new EventEmitter()
   @Output() removeFavoriteEvent = new EventEmitter()
-
+  
   public bgColor: string
 
   public loading: boolean = false
@@ -67,7 +69,6 @@ export class InfoObjectComponent implements OnInit {
               private router: Router,
               private activatedRoute: ActivatedRoute,
               private spotbieMetaService: SpotbieMetaService) { }
-
 
   public getFullScreenModeClass(){
 
@@ -530,6 +531,10 @@ export class InfoObjectComponent implements OnInit {
     this.isLoggedIn = localStorage.getItem('spotbie_loggedIn')
 
     if(this.info_object !== undefined){
+
+      console.log("My Ad Info Object is", this.info_object)
+
+      console.log("My Ad Object is", this.ad)
 
       this.infoObjectCategory = this.info_object.type_of_info_object_category      
       

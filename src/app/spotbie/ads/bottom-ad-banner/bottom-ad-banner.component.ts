@@ -77,6 +77,17 @@ export class BottomAdBannerComponent implements OnInit {
 
   }
 
+  public openAd(): void{
+    
+    this.rewardMenuOpen = true
+    //this.router.navigate([`/business-menu/${this.business.qr_code_link}`])
+
+  }
+
+  public closeRewardMenu(){
+    this.rewardMenuOpen = false    
+  }
+  
   public switchAd(){
     this.getSingleAdList()
   }

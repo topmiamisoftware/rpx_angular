@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Ad } from 'src/app/models/ad';
 import { Business } from 'src/app/models/business';
 import { BusinessMenuServiceService } from 'src/app/services/spotbie-logged-in/business-menu/business-menu-service.service';
 
@@ -12,6 +13,7 @@ export class CommunityMemberComponent implements OnInit {
 
   @Output('closeWindowEvt') closeWindowEvt = new EventEmitter()
 
+  @Input('ad') ad: Ad = new Ad()
   @Input('business') business: Business = new Business()
   @Input('qrCodeLink') qrCodeLink: string = null 
 

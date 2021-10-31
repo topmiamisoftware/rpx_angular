@@ -172,6 +172,15 @@ p{
         height: 300px;
         min-height: 300px;
     }
+    .sb-whiteIconBg{
+        position: absolute;
+        margin-top: -261px;
+        left: 0px;
+        width: 100%;
+        min-width: 100%;
+        max-width: 100%;
+        opacity: .2;        
+    }
 }
 @media (max-width: 700px) { 
     .sb-homePageIconsTable{
