@@ -12,6 +12,8 @@ import { spotbieMetaDescription, spotbieMetaTitle, spotbieMetaImage } from 'src/
 import { InfoObject } from 'src/app/models/info-object'
 import { environment } from 'src/environments/environment'
 import { Ad } from 'src/app/models/ad'
+import { I } from '@angular/cdk/keycodes'
+import { InfoObjectType } from 'src/app/helpers/enum/info-object-type.enum'
 
 const YELP_BUSINESS_DETAILS_API = "https://api.yelp.com/v3/businesses/"
 
@@ -62,6 +64,8 @@ export class InfoObjectComponent implements OnInit {
   public objectCategories: string = ""
 
   public objectDisplayAddress: string
+
+  public eInfoObjectType: any = InfoObjectType
 
   constructor(private infoObjectService: InfoObjectServiceService,
               private myFavoritesService: MyFavoritesService,
@@ -162,7 +166,7 @@ export class InfoObjectComponent implements OnInit {
       if( this.router.url.indexOf('place-to-eat') > -1 || 
           this.info_object.type_of_info_object_category == 'food'){
        
-        this.info_object.type_of_info_object = 'yelp_business'
+        this.info_object.type_of_info_object = InfoObjectType.Yelp
         this.info_object.type_of_info_object_category = 'food'
         this.infoObjectLink = `https://spotbie.com/place-to-eat/${this.info_object.alias}/${this.info_object.id}`
 
@@ -171,7 +175,7 @@ export class InfoObjectComponent implements OnInit {
       if(this.router.url.indexOf('shopping') > -1 || 
           this.info_object.type_of_info_object_category == 'shopping'){
 
-        this.info_object.type_of_info_object = 'yelp_business'
+        this.info_object.type_of_info_object = InfoObjectType.Yelp
         this.info_object.type_of_info_object_category = 'shopping'
         this.infoObjectLink = `https://spotbie.com/shopping/${this.info_object.alias}/${this.info_object.id}`
         
@@ -180,7 +184,7 @@ export class InfoObjectComponent implements OnInit {
       if(this.router.url.indexOf('events') > -1 || 
           this.info_object.type_of_info_object_category == 'events'){
           
-        this.info_object.type_of_info_object = 'ticketmaster_event'
+        this.info_object.type_of_info_object = InfoObjectType.TicketMaster
         this.info_object.type_of_info_object_category = 'events'
         this.infoObjectLink = `https://spotbie.com/events/${this.info_object.alias}/${this.info_object.id}`
         
@@ -188,7 +192,7 @@ export class InfoObjectComponent implements OnInit {
 
       if(this.info_object.is_community_member){
 
-        this.info_object.type_of_info_object = 'spotbie_community'        
+        this.info_object.type_of_info_object = InfoObjectType.SpotBieCommunity        
         this.info_object.image_url = this.info_object.photo
         this.infoObjectLink = `https://spotbie.com/${this.info_object.name}/${this.info_object.id}`
         
@@ -236,7 +240,7 @@ export class InfoObjectComponent implements OnInit {
       
       this.loading = false
       
-      this.isInMyFavorites(this.info_object.id, 'yelp')      
+      this.isInMyFavorites(this.info_object.id, this.info_object.type_of_info_object)      
 
     } else
       console.log('pullInfoObjectCallback', httpResponse)
@@ -328,9 +332,9 @@ export class InfoObjectComponent implements OnInit {
   public getOverlayWindowStyling(){
 
     if(this.info_object.is_community_member)
-      return { 'background-color' : 'rgb(16, 16, 16)' }
+      return 'spotbie-overlay-window communityMemberWindow'
     else
-      return { 'background-color' : 'white' }
+      return 'spotbie-overlay-window infoObjectWindow'
     
   }
 
@@ -356,13 +360,26 @@ export class InfoObjectComponent implements OnInit {
 
     this.loading = true
 
-    const yelpId = this.info_object.id
+    const id = this.info_object.id
     const name = this.info_object.name
-    const locX = this.info_object.coordinates.latitude
-    const locY = this.info_object.coordinates.longitude
+
+    let locX = null
+    let locY = null
+
+    if(this.info_object.type_of_info_object == InfoObjectType.SpotBieCommunity){
+
+      locX = this.info_object.loc_x
+      locY = this.info_object.loc_y
+
+    } else {
+
+      locX = this.info_object.coordinates.latitude
+      locY = this.info_object.coordinates.longitude     
+
+    }
 
     const favoriteObj = {
-      third_party_id: yelpId,
+      third_party_id: id,
       name: name,
       description: null,
       loc_x: locX,
@@ -508,9 +525,9 @@ export class InfoObjectComponent implements OnInit {
 
   public visitInfoObjectPage(){
 
-    if(this.info_object.type_of_info_object == 'yelp_business')
+    if(this.info_object.type_of_info_object == InfoObjectType.Yelp)
       externalBrowserOpen(`${this.info_object.url}`)
-    else if(this.info_object.type_of_info_object == 'ticketmaster_event')
+    else if(this.info_object.type_of_info_object == InfoObjectType.TicketMaster)
       this.goToTicket()
   
   }
@@ -521,6 +538,12 @@ export class InfoObjectComponent implements OnInit {
     else
       return 'sb-infoObjectInputDark'      
     
+  }
+
+  clickGoToSponsored(){
+    
+    window.open("/advertise-my-business", '_blank')
+
   }
 
   ngOnInit(){
@@ -534,20 +557,15 @@ export class InfoObjectComponent implements OnInit {
 
       this.infoObjectCategory = this.info_object.type_of_info_object_category      
       
-      if(this.info_object.is_community_member)
-        this.infoObjectImageUrl = 'assets/images/home_imgs/spotbie-white-icon.svg'
-      else
-        this.infoObjectImageUrl = 'assets/images/home_imgs/spotbie-white-icon.svg'
-      
       switch(this.info_object.type_of_info_object){
 
-        case 'yelp_business':
+        case InfoObjectType.Yelp:
           this.urlApi = YELP_BUSINESS_DETAILS_API + this.info_object.id
           break
-        case 'ticketmaster_event':
+        case InfoObjectType.TicketMaster:
           this.loading = false
           return
-        case 'spotbie_community':
+        case InfoObjectType.SpotBieCommunity:
           
           this.rewardMenuUp = true
         

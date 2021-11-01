@@ -92,6 +92,12 @@ export class BottomAdBannerComponent implements OnInit {
     this.getSingleAdList()
   }
 
+  public clickGoToSponsored(){
+    
+    window.open("/advertise-my-business", '_blank')
+
+  }
+
   ngOnInit(): void {
     this.getSingleAdList()
   }

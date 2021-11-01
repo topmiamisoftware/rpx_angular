@@ -4,7 +4,6 @@ import { externalBrowserOpen } from 'src/app/helpers/cordova/web-intent'
 import { Business } from 'src/app/models/business';
 import { getDistanceFromLatLngInMiles } from 'src/app/helpers/measure-units.helper';
 import { Ad } from 'src/app/models/ad';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-single-ad',
@@ -56,6 +55,12 @@ export class SingleAdComponent implements OnInit {
 
   public closeRewardMenu(){
     this.rewardMenuOpen = false    
+  }
+
+  public clickGoToSponsored(){
+    
+    window.open("/advertise-my-business", '_blank')
+
   }
 
   public getHeaderBannerAdCallback(resp: any){

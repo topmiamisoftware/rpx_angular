@@ -1,12 +1,12 @@
+<app-menu-logged-out class="spotbie-app-menu" 
+(myFavoritesEvt)="myFavorites()"
+(spawnCategoriesOut)="spawnCategories($event)" 
+(openHome)="openHome()">
+</app-menu-logged-out>
+
 <div class="spotbie-main-holder" id="spotbieMainHolder">
 
     <app-map [business]="false" #app_map></app-map>
-    
-    <app-menu-logged-out class="spotbie-app-menu" 
-                        (myFavoritesEvt)="myFavorites()"
-                        (spawnCategoriesOut)="spawnCategories($event)" 
-                        (openHome)="openHome()">
-    </app-menu-logged-out>
 
     <div class="spotbie-menu-page-padding-top-not-logged"></div>
 

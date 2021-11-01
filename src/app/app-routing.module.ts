@@ -6,7 +6,6 @@ import { InfoObjectComponent } from './spotbie/map/info-object/info-object.compo
 import { BugsComponent } from './bugs/bugs.component'
 import { LoyaltyPointsComponent } from './spotbie/spotbie-logged-in/loyalty-points/loyalty-points.component'
 import { RewardMenuComponent } from './spotbie/spotbie-logged-in/reward-menu/reward-menu.component'
-import { CommunityMemberComponent } from './spotbie/community-member/community-member.component'
 
 export const routes: Routes = [
 
@@ -29,6 +28,8 @@ export const routes: Routes = [
   { path: 'place-to-eat/:name/:id', component: InfoObjectComponent },
   { path: 'shopping/:name/:id', component: InfoObjectComponent },
   { path: 'event/:name/:id', component: InfoObjectComponent },
+
+  { path: 'advertise-my-business', loadChildren: () => import('./advertise-my-business/advertise-my-business.module').then(m => m.AdvertiseMyBusinessModule ) }, 
 
   { path: 'user-profile', loadChildren: () => import('./user/user.module').then(m => m.UserModule ) }, 
   
