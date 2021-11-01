@@ -40,11 +40,12 @@
     </div>
 
     <h3 class="sb-text-light-green-gradient text-uppercase mt-5">
-        {{ ( reward.point_cost * (userPointToDollarRatio / 100) ) | currency : 'USD' }}
+        {{ reward.point_cost | number:'1.00':'en-US' }} LP COST
+        
     </h3>
 
     <h5 class="spotbie-text-gradient text-uppercase mt-2">       
-        {{ reward.point_cost | number:'1.00':'en-US' }} LOYALTY POINTS
+        {{ ( reward.point_cost * (userPointToDollarRatio / 100) ) | currency : 'USD' }} VALUE
     </h5>
 
     <div class='spotbie-communityMemberDescription spotbie-text-gradient mt-4 mb-4'>

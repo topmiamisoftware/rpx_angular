@@ -80,11 +80,11 @@
             (click)="addFavorite()"
             *ngIf="info_object.type_of_info_object != 'ticketmaster_event' && 
                     showFavorites && 
-                    info_object.is_community_member">
+                    info_object.is_community_member">                      
 
-            <span class="text-uppercase">ADD</span>            
+            <i class="fa fa-star"></i>
 
-            <i class="fa fa-plus"></i>
+            <span class="text-uppercase">FAVORITE</span>  
 
         </div>
 
@@ -92,9 +92,9 @@
                 (click)="removeFavorite()" 
                 *ngIf="info_object.type_of_info_object != 'ticketmaster_event' && !showFavorites">
 
-            <span class="text-uppercase">REMOVE</span>            
-
             <i class="fa fa-minus"></i>
+
+            <span class="text-uppercase">UNFAVORITE</span>                        
 
         </div>
 

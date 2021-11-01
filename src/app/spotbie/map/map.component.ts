@@ -867,6 +867,8 @@ export class MapComponent implements OnInit {
 
     this.apiSearch(this.search_keyword)
 
+    this.scrollMapAppAnchor.nativeElement.scrollIntoView({ behavior: "smooth", block: "start" })
+
   }
 
   public loadMoreResults(action: number){
@@ -898,6 +900,8 @@ export class MapComponent implements OnInit {
     this.current_offset = (this.around_me_search_page * this.itemsPerPage) - this.itemsPerPage
 
     this.apiSearch(this.search_keyword)
+
+    this.scrollMapAppAnchor.nativeElement.scrollIntoView({ behavior: "smooth", block: "start" })
 
   }
 

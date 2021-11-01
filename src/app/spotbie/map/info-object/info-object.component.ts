@@ -532,10 +532,6 @@ export class InfoObjectComponent implements OnInit {
 
     if(this.info_object !== undefined){
 
-      console.log("My Ad Info Object is", this.info_object)
-
-      console.log("My Ad Object is", this.ad)
-
       this.infoObjectCategory = this.info_object.type_of_info_object_category      
       
       if(this.info_object.is_community_member)

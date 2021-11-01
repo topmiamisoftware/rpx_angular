@@ -4,6 +4,7 @@
 
   <div [ngClass]="getMapWrapperClass()">
     
+    <div #singleAdAppAnchor></div>
     <div #scrollMapAppAnchor></div>
 
     <div class="sb-dashboardWrapper sb-v-wrapper" 
@@ -307,8 +308,8 @@
           <span class='fa fa-circle spotbie-is-closed' *ngIf="showOpened == false" [ngStyle]="{ 'margin-left' : '5px' }"></span>
         </ng-template>
     
-      </div>
-  
+      </div>      
+
       <app-single-ad #singleAdApp class='spotbie-ad' [categories]="this.search_keyword" [lat]="lat" [lng]="lng"></app-single-ad>
 
       <div class='spotbie-search-result-wrapper' *ngIf="showSearchResults">
