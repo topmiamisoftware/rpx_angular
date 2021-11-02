@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { InfoObjectComponent } from './info-object.component';
 import { ShareButtonsModule } from 'ngx-sharebuttons/buttons';
 import { RewardMenuModule } from '../../spotbie-logged-in/reward-menu/reward-menu.module';
+import { AdsModule } from '../../ads/ads.module';
 
 
 @NgModule({

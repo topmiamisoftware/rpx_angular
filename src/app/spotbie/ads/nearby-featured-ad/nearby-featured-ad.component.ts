@@ -1,21 +1,21 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { AdsService } from '../ads.service';
-import { Business } from 'src/app/models/business';
-import { getDistanceFromLatLngInMiles } from 'src/app/helpers/measure-units.helper';
-import { Ad } from 'src/app/models/ad';
 import { DeviceDetectorService } from 'ngx-device-detector';
-import { FOOD_CATEGORIES, SHOPPING_CATEGORIES, EVENT_CATEGORIES } from '../../map/map_extras/map_extras';
 import { AllowedAccountTypes } from 'src/app/helpers/enum/account-type.enum';
 import { InfoObjectType } from 'src/app/helpers/enum/info-object-type.enum';
+import { getDistanceFromLatLngInMiles } from 'src/app/helpers/measure-units.helper';
+import { Ad } from 'src/app/models/ad';
+import { Business } from 'src/app/models/business';
 import { LoyaltyPointBalance } from 'src/app/models/loyalty-point-balance';
 import { LoyaltyPointsService } from 'src/app/services/loyalty-points/loyalty-points.service';
+import { EVENT_CATEGORIES, FOOD_CATEGORIES, SHOPPING_CATEGORIES } from '../../map/map_extras/map_extras';
+import { AdsService } from '../ads.service';
 
 @Component({
-  selector: 'app-single-ad',
-  templateUrl: './single-ad.component.html',
-  styleUrls: ['./single-ad.component.css']
+  selector: 'app-nearby-featured-ad',
+  templateUrl: './nearby-featured-ad.component.html',
+  styleUrls: ['./nearby-featured-ad.component.css']
 })
-export class SingleAdComponent implements OnInit {
+export class NearbyFeaturedAdComponent implements OnInit {
 
   @Input('lat') lat: number
   @Input('lng') lng: number
@@ -50,6 +50,8 @@ export class SingleAdComponent implements OnInit {
 
   public adTypeWithId: boolean = false
 
+  public adList: Array<Ad> = []
+
   constructor(private adsService: AdsService,
               private deviceDetectorService: DeviceDetectorService,
               private loyaltyPointsService: LoyaltyPointsService) { 
@@ -62,9 +64,9 @@ export class SingleAdComponent implements OnInit {
 
               }
               
-  public getHeaderBanner(){
+  public getNearByFeatured(){
 
-    const headerBannerReqObj = {
+    const nearByFeaturedObj = {
       loc_x: this.lat,
       loc_y: this.lng,
       categories: JSON.stringify(this.categories),
@@ -72,16 +74,16 @@ export class SingleAdComponent implements OnInit {
     }
 
     //Retrieve the SpotBie Ads
-    this.adsService.getHeaderBanner(headerBannerReqObj).subscribe(
+    this.adsService.getNearByFeatured(nearByFeaturedObj).subscribe(
       resp => {
 
         if(this.ad.id == null){
           
-          this.getHeaderBannerAdCallback(resp)
+          this.getNearByFeaturedCallback(resp)
 
         } else {
 
-          this.getBottomHeaderWithIdCb(resp)
+          this.getNearByFeaturedWithIdCb(resp)
           this.adTypeWithId = true
 
         }
@@ -95,7 +97,7 @@ export class SingleAdComponent implements OnInit {
   public getAdStyle(){
     
     if(this.adTypeWithId) {
-
+      
       return { 
         'position' : 'relative',
         'margin' : '0 auto',
@@ -116,7 +118,9 @@ export class SingleAdComponent implements OnInit {
 
   }
 
-  public getBottomHeaderWithIdCb(resp: any){
+  public getNearByFeaturedWithIdCb(resp: any){
+
+    console.log("getNearByFeaturedWithIdCb", resp)
 
     if(resp.success){
       
@@ -124,6 +128,8 @@ export class SingleAdComponent implements OnInit {
       
       this.ad = resp.ad
       
+      this.adList.push(this.ad)
+
       this.totalRewards = resp.totalRewards
 
       this.distance = 5
@@ -136,7 +142,7 @@ export class SingleAdComponent implements OnInit {
 
   }
 
-  public async getHeaderBannerAdCallback(resp: any){
+  public async getNearByFeaturedCallback(resp: any){
 
     if(resp.success){
 
@@ -186,7 +192,7 @@ export class SingleAdComponent implements OnInit {
   }
 
   public switchAd(){
-    this.getHeaderBanner()
+    this.getNearByFeatured()
   }
 
   public openAd(): void{
@@ -197,14 +203,16 @@ export class SingleAdComponent implements OnInit {
   }
 
   public updateAdImage(image: string){
+    
     this.ad.images = image
+
   }
 
   ngOnInit(): void {
 
     this.isMobile = this.deviceDetectorService.isMobile()
 
-    this.getHeaderBanner()
+    this.getNearByFeatured()
 
   }
 

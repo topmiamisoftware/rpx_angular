@@ -26,6 +26,18 @@ export class AdsService {
 
   }
 
+  public getNearByFeatured(nearByFeaturedReqObj: any): Observable<any>{
+
+    const getAd = `${ADS_API}/featured-ad-list`
+
+    return this.http.post(getAd, nearByFeaturedReqObj).pipe(
+      catchError(
+        handleError("getNearByFeatured")
+      )
+    )
+
+  }  
+  
   public getAds():  Observable<any>{
     
     const getAdsApi = `${ADS_API}/index`
@@ -38,13 +50,13 @@ export class AdsService {
 
   }
 
-  public getSingleAdList(searchObjSb: any):  Observable<any>{
+  public getBottomHeader(searchObjSb: any):  Observable<any>{
     
     const getAdsApi = `${ADS_API}/single-ad-list`
 
     return this.http.post(getAdsApi, searchObjSb).pipe(
       catchError(
-        handleError("getSingleAdList")
+        handleError("getBottomHeader")
       )
     )
 

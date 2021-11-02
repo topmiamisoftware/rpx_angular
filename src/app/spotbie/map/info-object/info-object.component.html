@@ -211,11 +211,12 @@
 
     </div>
 
-
     <div class='spotbie-exif-optional'></div>
     <div class='spotbie-ai-items-in-image'></div>
 
     <div class='spotbie-toast-message text-uppercase animated fadeIn' *ngIf="successful_url_copy">Link copied</div>
+
+    <app-nearby-featured-ad [lat]="lat" [lng]="lng" [categories]="info_object.categories" *ngIf="displayAds"></app-nearby-featured-ad>
 
 </div>
 

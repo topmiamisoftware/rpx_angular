@@ -35,15 +35,13 @@ export class AdManagerMenuComponent implements OnInit {
   public userResetBalance
   public userPointToDollarRatio
 
-  public ads: Array<Ad> = []
+  public adList: Array<Ad> = []
   public ad: Ad
 
   public qrCodeLink: string = null
   public userHash: string = null
 
   public userType: string = null
-
-  public business: Business = new Business()
 
   public loyaltyPointsBalance: LoyaltyPointBalance
 
@@ -52,9 +50,11 @@ export class AdManagerMenuComponent implements OnInit {
               private router: Router,
               route: ActivatedRoute){
 
-      if(this.router.url.indexOf('business-menu') > -1){               
+      if(this.router.url.indexOf('business-menu') > -1){     
+
         this.qrCodeLink = route.snapshot.params.qrCode
         this.userHash   = route.snapshot.params.userHash
+
       }        
 
   }
@@ -71,9 +71,11 @@ export class AdManagerMenuComponent implements OnInit {
   public getLoyaltyPointBalance(){    
 
     this.loyaltyPointsService.userLoyaltyPoints$.subscribe(
+
       loyaltyPointsBalance => {
         this.loyaltyPointsBalance = loyaltyPointsBalance
       }
+
     )
     
   }
@@ -81,23 +83,24 @@ export class AdManagerMenuComponent implements OnInit {
   public fetchAds(){
 
     this.adCreatorService.getAds().subscribe(
+
       resp => {
         this.fetchAdsCb(resp)
       }
+
     )
 
   }
 
   private fetchAdsCb(resp){
-    
-    console.log("fetchAdsCb", resp)
 
     if(resp.success){
 
-      this.ads = resp.adList
+      this.adList = resp.adList
 
-    }
-
+    } else
+      console.log("fetchAdsCb", resp)
+    
   }
 
   public addAd(){        

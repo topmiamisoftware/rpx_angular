@@ -22,7 +22,8 @@ export class AdCreatorService {
     const adObjToSave = {
       name: adObj.name,    
       description: adObj.description,
-      type: adObj.type
+      type: adObj.type,
+      images: adObj.images
     }
 
     return this.http.post<any>(placeToEatAdApi, adObjToSave).pipe(
@@ -39,7 +40,8 @@ export class AdCreatorService {
       name: adObj.name,    
       description: adObj.description,
       type: adObj.type,
-      id: adObj.id
+      id: adObj.id,
+      images: adObj.images
     }
 
     return this.http.post<any>(placeToEatAdApi, adObjToSave).pipe(

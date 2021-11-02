@@ -32,6 +32,9 @@ export class InfoObjectComponent implements OnInit {
 
   @Input() fullScreenMode: boolean = false
 
+  @Input() lat: number = null
+  @Input() lng: number = null
+
   @Output() closeWindow = new EventEmitter()
   @Output() removeFavoriteEvent = new EventEmitter()
   
@@ -66,6 +69,8 @@ export class InfoObjectComponent implements OnInit {
 
   public eInfoObjectType: any = InfoObjectType
   
+  public displayAds: boolean = false
+
   constructor(private infoObjectService: InfoObjectServiceService,
               private myFavoritesService: MyFavoritesService,
               public share: ShareService,
@@ -543,6 +548,15 @@ export class InfoObjectComponent implements OnInit {
 
   }
 
+  public showPosition(position: any): void {
+    
+    this.lat = position.coords.latitude
+    this.lng = position.coords.longitude
+    
+    this.displayAds = true
+
+  }
+  
   ngOnInit(){
 
     this.loading = true
@@ -590,7 +604,7 @@ export class InfoObjectComponent implements OnInit {
       }
 
     }
-    
+
     this.pullInfoObject()  
     
   }

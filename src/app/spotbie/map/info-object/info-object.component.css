@@ -1,16 +1,17 @@
 .spotbie-overlay-window{
     padding-bottom: 0px;
     padding-top: 70px;
-    background-color: #332f3e;
+    background-color: #1b1822;
     padding-bottom: 100px;
     background: url(src/assets/images/home_imgs/spotbie-white-icon.svg);
     background-size: cover !important;
     background-position: center !important;
     background-repeat: no-repeat !important;
-    background-attachment: fixed;z-index: 90 !important;    
+    background-attachment: fixed;
+    z-index: 90 !important;    
 }
 .communityMemberWindow{
-    background-color: rgb(16, 16, 16);
+    background-color: #1b1822;
 }
 .infoObjectWindow{
     background-color: white;

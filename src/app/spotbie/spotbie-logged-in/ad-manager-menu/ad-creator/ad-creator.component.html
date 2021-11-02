@@ -6,7 +6,7 @@
 
     <div class='sb-adCreatorWrapper'>
         
-        <h5 class="spotbie-text-gradient text-center text-uppercase pt-3 mb-4">AD CREATOR</h5>
+        <h5 class="spotbie-text-gradient text-center text-uppercase pt-3 mb-4">AD EDITOR</h5>
 
         <form [formGroup]="adCreatorForm" *ngIf="adCreatorFormUp">
 
@@ -120,7 +120,8 @@
             
             <ng-template #adMediaUploadInfoTemplate>
 
-                <div class="spotbie-input-info text-uppercase spotbie-text-gradient text-center mt-4 mb-2" #adMediaUploadInfo>
+                <div class="spotbie-input-info text-uppercase spotbie-text-gradient text-center mt-4 mb-2 cursor-pointer" 
+                    (click)="startAdMediaUploader()" #adMediaUploadInfo>
                     {{ adMediaMessage }} ({{ adTypeList[selected].dimensions }})
                 </div>     
 
@@ -132,13 +133,14 @@
                     (change)="uploadMedia(adMediaInput.files)" 
                     accept="image/jpeg, image/gif, image/png"
                     multiple=false />
-                
-            <div class='spotbie-upload-new-background-holder' 
-                    [ngClass]="adFormatClass()"
-                    [ngStyle]="{ 'background' : 'url(' + ad.images + ')' }"
-                    (click)="startAdMediaUploader()"
-                    #spotbieAdUploader>
-            </div>
+
+            <div (click)="startAdMediaUploader()" class='cursor-pointer'>
+
+                <app-single-ad #adApp class="pe-none" *ngIf="adType == 0" [ad]="ad" [business]="business"></app-single-ad>
+                <app-nearby-featured-ad #adApp class="pe-none" *ngIf="adType == 1" [ad]="ad" [business]="business"></app-nearby-featured-ad>
+                <app-bottom-ad-banner #adApp class="pe-none" *ngIf="adType == 2" [ad]="ad" [business]="business"></app-bottom-ad-banner>
+            
+            </div> 
 
             <h6 class='sb-text-light-green-gradient mt-2'>SPOTBIE AD PREVIEW</h6>
 
@@ -181,7 +183,7 @@
 
     <div class='sb-v-wrapper' style="display: grid; align-content: center;">
         
-        <h4 class="spotbie-text-gradient text-uppercase">REWARD WAS DELETED</h4>
+        <h4 class="spotbie-text-gradient text-uppercase">AD WAS DELETED</h4>
 
         <div class="sb-verificationCheck sb-text-light-green-gradient mt-4 mb-4">
             <i class="fa fa-check"></i>

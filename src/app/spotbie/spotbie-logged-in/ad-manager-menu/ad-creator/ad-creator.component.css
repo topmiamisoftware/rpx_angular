@@ -1,14 +1,19 @@
 .spotbie-overlay-window{
     padding-bottom: 50px;
     padding-top: 100px;
-    background: #332f3e;
-    text-align: center;    
+    background-color: #1b1822 !important;
+    text-align: center;   
+    background: url(src/assets/images/home_imgs/spotbie-white-icon.svg);
+    background-size: cover !important;
+    background-position: center !important;
+    background-repeat: no-repeat !important;
+    background-attachment: fixed;         
     z-index: 97 !important;
 }
 .sb-adCreatorWrapper{
     position: relative;
     margin: 0 auto;
-    max-width: 900px;
+    max-width: 100%;
 }
 .sb-input{
     text-align: center;
@@ -16,9 +21,9 @@
     min-width: 450px;
 }
 .spotbie-textarea{
-    width: 100%;
-    min-width: 100%;
-    max-width: 100%;
+    width: 900px;
+    min-width: 900px;
+    max-width: 900px;
     background: unset;
     -webkit-text-fill-color: unset;
     color: black;
@@ -61,13 +66,13 @@
 }
 
 /* Large Rectangle Ad Format*/
-.in-content-related-nearby-box{
-    width: 336px;
-    min-width: 336px;
-    max-width: 336px;
-    height: 280px;
-    min-height: 280px;
-    max-height: 280px;
+.footer-banner{
+    width: 890px;
+    min-width: 890px;
+    max-width: 890px;
+    height: 370px;
+    min-height: 370px;
+    max-height: 370px;
 }
 
 .spotbie-click-or-drag-upload{
@@ -110,7 +115,15 @@ h5{
         min-height: 27vh;
         height: 27vh;
         max-height: 27vh;
-    }    
+    }   
+    .footer-banner{
+        min-width: 100%;
+        width: 100%;
+        max-width: 100%;
+        min-height: 250px;
+        height: 250px;
+        max-height: 250px;
+    } 
 }
 @media (max-width: 768px){
     .spotbie-upload-new-background-holder,

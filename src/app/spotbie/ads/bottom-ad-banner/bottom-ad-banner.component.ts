@@ -5,6 +5,8 @@ import { InfoObjectType } from 'src/app/helpers/enum/info-object-type.enum';
 import { getDistanceFromLatLngInMiles } from 'src/app/helpers/measure-units.helper';
 import { Ad } from 'src/app/models/ad';
 import { Business } from 'src/app/models/business';
+import { LoyaltyPointBalance } from 'src/app/models/loyalty-point-balance';
+import { LoyaltyPointsService } from 'src/app/services/loyalty-points/loyalty-points.service';
 import { EVENT_CATEGORIES, FOOD_CATEGORIES, SHOPPING_CATEGORIES } from '../../map/map_extras/map_extras';
 import { AdsService } from '../ads.service';
 
@@ -18,7 +20,7 @@ export class BottomAdBannerComponent implements OnInit {
   @Input('lat') lat: number
   @Input('lng') lng: number
   @Input('business') business: Business = new Business()
-  @Input('ad') ad: Ad = new Ad()
+  @Input('ad') ad: Ad = null
 
   @Input('categories') categories: number
 
@@ -44,27 +46,66 @@ export class BottomAdBannerComponent implements OnInit {
 
   public categoryListForUi: string = null
 
-  constructor(private adsService: AdsService,
-              private deviceDetectorService: DeviceDetectorService) { }
+  public loyaltyPointBalance: LoyaltyPointBalance
 
-  public getSingleAdList(){
+  constructor(private adsService: AdsService,
+              private deviceDetectorService: DeviceDetectorService,
+              private loyaltyPointsService: LoyaltyPointsService) { 
+                
+                this.loyaltyPointsService.userLoyaltyPoints$.subscribe(
+                  loyaltyPointsBalance => {
+                    this.loyaltyPointBalance = loyaltyPointsBalance
+                  }
+                )
+
+              }
+
+  public getBottomHeader(){
     
-    let searchObjSb = {
+    let searchObjSb = {      
       loc_x: this.lat,
       loc_y: this.lng,
-      categories: JSON.stringify(this.categories)
+      categories: JSON.stringify(this.categories),
+      id: this.ad.id,
     }
 
     //Retrieve the SpotBie Ads
-    this.adsService.getSingleAdList(searchObjSb).subscribe(
+    this.adsService.getBottomHeader(searchObjSb).subscribe(
       resp => {
-        this.getSingleAdListCb(resp)
+
+        if(this.ad.id == null){
+          this.getBottomHeaderCb(resp)
+        } else {
+          this.getBottomHeaderWithIdCb(resp)
+        }
+        
+      
       }
     )
 
   }
 
-  public async getSingleAdListCb(resp: any){
+  public getBottomHeaderWithIdCb(resp: any){
+
+    if(resp.success){
+      
+      this.business = resp.business
+      
+      this.ad = resp.ad
+      
+      this.totalRewards = resp.totalRewards
+
+      this.distance = 5
+
+      this.displayAd = true
+
+      this.business.loyalty_point_dollar_percent_value = this.loyaltyPointBalance.loyalty_point_dollar_percent_value
+
+    }
+
+  }
+
+  public async getBottomHeaderCb(resp: any){
 
     if(resp.success){
 
@@ -101,7 +142,7 @@ export class BottomAdBannerComponent implements OnInit {
 
       this.business.is_community_member = true
       this.business.type_of_info_object = InfoObjectType.SpotBieCommunity
-
+      
       this.displayAd = true
 
       this.totalRewards = resp.totalRewards
@@ -125,7 +166,7 @@ export class BottomAdBannerComponent implements OnInit {
   }
   
   public switchAd(){
-    this.getSingleAdList()
+    this.getBottomHeader()
   }
 
   public clickGoToSponsored(){
@@ -134,11 +175,15 @@ export class BottomAdBannerComponent implements OnInit {
 
   }
 
+  public updateAdImage(image: string){
+    this.ad.images = image
+  }
+
   ngOnInit(): void {
     
     this.isMobile = this.deviceDetectorService.isMobile()
 
-    this.getSingleAdList()
+    this.getBottomHeader()
     
   }
 

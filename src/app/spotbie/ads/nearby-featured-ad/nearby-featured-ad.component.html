@@ -1,11 +1,10 @@
-<div class='spotbie-ad-wrapper-header'
-    [ngStyle]="getAdStyle()"     
-    *ngIf="displayAd"
+<div class='spotbie-ad-wrapper-header'     
+    *ngFor="let ad of adList"
     (click)="openAd()">
 
     <div class='sb-ad-top'>
 
-        <span class='sb-text-light-green-gradient sb-sponsored text-uppercase' (click)="clickGoToSponsored()">SPONSORED</span>
+        <span class='sb-text-light-green-gradient sb-sponsored text-uppercase' (click)="clickGoToSponsored()">SPONSORED</span><br/>
 
         <span class='spotbie-text-gradient sb-sponsoredName text-uppercase'>{{ business.name }}</span>
 
@@ -28,7 +27,7 @@
         <span class='sb-text-light-green-gradient sb-perDollar text-uppercase' *ngIf="isMobile">
             {{ (business.loyalty_point_dollar_percent_value / 100) | currency : 'USD' }} per dollar
         </span>
-        
+
         <span class='spotbie-text-gradient sb-address text-uppercase'><i class='fas fa-map-marker-alt'></i> {{ business.address }}</span>
 
         <span class='spotbie-text-gradient sb-categoryList text-uppercase'>{{ categoryListForUi }}</span>
@@ -38,7 +37,7 @@
 </div>
 
 <app-community-member [business]="business"
-                      [ad]="ad"
-                      [qrCodeLink]="business.qr_code_link" 
-                      (closeWindowEvt)="closeRewardMenu()" 
-                      *ngIf="rewardMenuOpen"></app-community-member>
+                        [ad]="ad"
+                        [qrCodeLink]="business.qr_code_link" 
+                        (closeWindowEvt)="closeRewardMenu()" 
+                        *ngIf="rewardMenuOpen"></app-community-member>

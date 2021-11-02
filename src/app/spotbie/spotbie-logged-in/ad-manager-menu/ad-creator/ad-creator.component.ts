@@ -2,12 +2,16 @@ import { HttpClient, HttpEventType } from '@angular/common/http'
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { Ad } from 'src/app/models/ad'
+import { Business } from 'src/app/models/business'
 import { LoyaltyPointBalance } from 'src/app/models/loyalty-point-balance'
 import { LoyaltyPointsService } from 'src/app/services/loyalty-points/loyalty-points.service'
 import { AdCreatorService } from 'src/app/services/spotbie-logged-in/ad-manager-menu/ad-creator/ad-creator.service'
+import { BottomAdBannerComponent } from 'src/app/spotbie/ads/bottom-ad-banner/bottom-ad-banner.component'
+import { NearbyFeaturedAdComponent } from 'src/app/spotbie/ads/nearby-featured-ad/nearby-featured-ad.component'
+import { SingleAdComponent } from 'src/app/spotbie/ads/single-ad/single-ad.component'
 import * as spotbieGlobals from '../../../../globals'
 
-const AD_MEDIA_UPLOAD_API_URL = `${spotbieGlobals.API}ad/upload-media`
+const AD_MEDIA_UPLOAD_API_URL = `${spotbieGlobals.API}in-house/upload-media`
 const AD_MEDIA_MAX_UPLOAD_SIZE = 25e+6
 
 @Component({
@@ -17,11 +21,13 @@ const AD_MEDIA_MAX_UPLOAD_SIZE = 25e+6
 })
 export class AdCreatorComponent implements OnInit {
 
-  @Input() ad: Ad
+  @Input() ad: Ad = null
 
   @ViewChild('spbInputInfo') spbInputInfo
   @ViewChild('adMediaInput') adMediaInput
   @ViewChild('spbTopAnchor') spbTopAnchor
+
+  @ViewChild('adApp') adApp: SingleAdComponent | BottomAdBannerComponent | NearbyFeaturedAdComponent
 
   @Output() closeWindowEvt = new EventEmitter()
   @Output() closeThisEvt = new EventEmitter()
@@ -45,19 +51,19 @@ export class AdCreatorComponent implements OnInit {
   public dollarValueCalculated: boolean = false
   
   public adTypeList: Array<any> = [
-    { name: 'Header Banner ($15.99/monthly)', dimensions: '728x90'}, 
-    { name: 'Related-Nearby Box ($13.99/monthly)', dimensions: '300x250'}, 
-    { name: 'Footer Banner ($10.99)', dimensions: '336x280'} 
+    { name: 'Header Banner ($15.99/monthly)', dimensions: '1200x370'}, 
+    { name: 'Related-Nearby Box ($13.99/monthly)', dimensions: '600x600'}, 
+    { name: 'Footer Banner ($10.99)', dimensions: '1200x370'} 
   ]
 
   public adCreated: boolean = false
   public adDeleted: boolean = false
 
-  public uploadMediaForm: boolean = false
-
   public loyaltyPointBalance: LoyaltyPointBalance
 
   public selected: number = 0
+
+  public business: Business = null
 
   constructor(private formBuilder: FormBuilder,
               private adCreatorService: AdCreatorService,
@@ -66,7 +72,9 @@ export class AdCreatorComponent implements OnInit {
                 
                 this.loyaltyPointsService.userLoyaltyPoints$.subscribe(
                   loyaltyPointsBalance => {
-                    this.loyaltyPointBalance = loyaltyPointsBalance
+
+                    this.loyaltyPointBalance = loyaltyPointsBalance                    
+
                   }
                 )
 
@@ -98,10 +106,8 @@ export class AdCreatorComponent implements OnInit {
       adImage: ['', adImageValidators]
     })
 
-    if(this.ad !== null && this.ad !== undefined){
+    if(this.ad !== null){
       
-      //console.log("ad is ", this.ad)
-
       this.selected = this.ad.type
       this.adCreatorForm.get('adType').setValue(this.ad.type)
       this.adCreatorForm.get('adName').setValue(this.ad.name)
@@ -119,14 +125,15 @@ export class AdCreatorComponent implements OnInit {
     this.adFormSubmitted = true
     this.spbTopAnchor.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' })
     
-    let itemObj = new Ad()
-    itemObj.name = this.adName   
-    itemObj.description = this.adDescription
-    itemObj.type = this.adType
+    let adObj = new Ad()
+    adObj.name = this.adName   
+    adObj.description = this.adDescription
+    adObj.images = this.ad.images
+    adObj.type = this.adType
 
     if(this.ad === null || this.ad === undefined){
 
-      this.adCreatorService.saveAd(itemObj).subscribe(
+      this.adCreatorService.saveAd(adObj).subscribe(
         resp =>{        
           this.saveAdCb(resp)
         }
@@ -134,9 +141,9 @@ export class AdCreatorComponent implements OnInit {
 
     } else {
 
-      itemObj.id = this.ad.id
+      adObj.id = this.ad.id
 
-      this.adCreatorService.updateAd(itemObj).subscribe(
+      this.adCreatorService.updateAd(adObj).subscribe(
         resp =>{        
           this.saveAdCb(resp)
         }
@@ -223,11 +230,16 @@ export class AdCreatorComponent implements OnInit {
 
   private adMediaUploadFinished(httpResponse: any): void {
 
-    console.log('adMediaUploadFinished', httpResponse)
-
     if (httpResponse.success){
+
       this.adUploadImage = httpResponse.image
+
+      this.ad.images = this.adUploadImage
+
+      this.adApp.updateAdImage(this.ad.images)
+
       this.adCreatorForm.get('adImage').setValue(this.adUploadImage)
+    
     } else
       console.log('adMediaUploadFinished', httpResponse)
     
@@ -276,8 +288,6 @@ export class AdCreatorComponent implements OnInit {
 
   public adFormatClass(){
 
-    console.log("adType", this.adType)
-
     switch(this.adType){
 
       case 0:
@@ -287,7 +297,7 @@ export class AdCreatorComponent implements OnInit {
         return 'related-nearby-box'
         
       case 2:
-        return 'in-content-related-nearby-box'      
+        return 'footer-banner'      
 
     }
 

@@ -6,7 +6,7 @@
     background-repeat: no-repeat!important;
     background-size: contain!important;
     background-position: center!important;
-    max-width: 100%;
+    max-width: 1600px;
     min-width: 100%;
     width: 100%;
     background-color: #1c1924!important;
@@ -82,8 +82,7 @@
     max-width: 85%;
     background-repeat: no-repeat!important;
     background-size: cover!important;
-    background-position: center!important;
-    box-shadow: inset -25px 0px 10px 9px #221f2a;   
+    background-position: center!important; 
 }
 .spotbie-white-iconImg{
     position: absolute;
