@@ -62,6 +62,13 @@ export class BottomAdBannerComponent implements OnInit {
 
   public getBottomHeader(){
     
+    if(this.ad === undefined || this.ad === null){
+      
+      this.ad = new Ad()
+      this.ad.id = 10
+
+    }
+
     let searchObjSb = {      
       loc_x: this.lat,
       loc_y: this.lng,

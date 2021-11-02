@@ -59,7 +59,7 @@ export class AdCreatorService {
     }
 
     return this.http.post<any>(placeToEatAdApi, adObjToSave).pipe(
-      catchError(handleError("completeReset"))
+      catchError(handleError("deleteMe"))
     ) 
   }
 

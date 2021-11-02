@@ -62,7 +62,14 @@ export class SingleAdComponent implements OnInit {
 
               }
               
-  public getHeaderBanner(){
+  public getHeaderBanner(newAd: boolean = false){
+
+    if(this.ad === undefined || this.ad === null){
+      
+      this.ad = new Ad()
+      this.ad.id = 10
+
+    }
 
     const headerBannerReqObj = {
       loc_x: this.lat,

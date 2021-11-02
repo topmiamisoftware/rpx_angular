@@ -106,13 +106,18 @@ export class AdCreatorComponent implements OnInit {
       adImage: ['', adImageValidators]
     })
 
-    if(this.ad !== null){
+    console.log("Our ad", this.ad)
+
+    if(this.ad !== null && this.ad !== undefined){
       
-      this.selected = this.ad.type
       this.adCreatorForm.get('adType').setValue(this.ad.type)
       this.adCreatorForm.get('adName').setValue(this.ad.name)
       this.adCreatorForm.get('adDescription').setValue(this.ad.description)     
 
+      this.selected = this.ad.type
+
+    } else {
+      this.selected = 0
     }
 
     this.adCreatorFormUp = true
@@ -121,14 +126,14 @@ export class AdCreatorComponent implements OnInit {
   }
 
   public saveAd(){
-    
+
     this.adFormSubmitted = true
     this.spbTopAnchor.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' })
     
     let adObj = new Ad()
     adObj.name = this.adName   
     adObj.description = this.adDescription
-    adObj.images = this.ad.images
+    adObj.images = this.adUploadImage
     adObj.type = this.adType
 
     if(this.ad === null || this.ad === undefined){
@@ -158,10 +163,13 @@ export class AdCreatorComponent implements OnInit {
     console.log(resp)
 
     if(resp.success){
+
       this.adCreated = true    
+
       setTimeout(() => {
         this.closeAdCreatorAndRefetchAdList()
-      }, 1500)      
+      }, 1500)    
+        
     }
 
   }
@@ -234,9 +242,7 @@ export class AdCreatorComponent implements OnInit {
 
       this.adUploadImage = httpResponse.image
 
-      this.ad.images = this.adUploadImage
-
-      this.adApp.updateAdImage(this.ad.images)
+      this.adApp.updateAdImage(this.adUploadImage)
 
       this.adCreatorForm.get('adImage').setValue(this.adUploadImage)
     

@@ -66,6 +66,13 @@ export class NearbyFeaturedAdComponent implements OnInit {
               
   public getNearByFeatured(){
 
+    if(this.ad === undefined || this.ad === null){
+      
+      this.ad = new Ad()
+      this.ad.id = 10
+
+    }
+
     const nearByFeaturedObj = {
       loc_x: this.lat,
       loc_y: this.lng,
@@ -203,7 +210,7 @@ export class NearbyFeaturedAdComponent implements OnInit {
   }
 
   public updateAdImage(image: string){
-    
+
     this.ad.images = image
 
   }
