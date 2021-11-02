@@ -127,8 +127,6 @@ export class NearbyFeaturedAdComponent implements OnInit {
 
   public getNearByFeaturedWithIdCb(resp: any){
 
-    console.log("getNearByFeaturedWithIdCb", resp)
-
     if(resp.success){
       
       this.business = resp.business
@@ -209,9 +207,9 @@ export class NearbyFeaturedAdComponent implements OnInit {
 
   }
 
-  public updateAdImage(image: string){
+  public updateAdImage(image: string = ''){
 
-    this.ad.images = image
+    if(image != '') this.ad.images = image
 
   }
 

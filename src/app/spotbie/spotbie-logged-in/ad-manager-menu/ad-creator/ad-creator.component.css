@@ -44,6 +44,12 @@
     border: 1px solid #e7e7e7;
 }
 
+.fa-exclamation-triangle{
+    position: relative;
+    color: #ffc107;
+    bottom: 0px;
+    margin-right: 10px;
+}
 
 .header-banner{
   display: block;

@@ -1087,8 +1087,6 @@ export class MapComponent implements OnInit {
     if(httpResponse.success){
 
       let communityMemberList: Array<Business> = httpResponse.data.data
-      
-      console.log("httpResponse", httpResponse)
 
       communityMemberList.forEach( (business: Business) => {        
 

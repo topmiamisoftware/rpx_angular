@@ -6,6 +6,13 @@
 
     <div class='sb-adCreatorWrapper'>
         
+        <p class="cursor-pointer"
+            style="font-size: .8rem;"
+            (click)="activateAdMembership()">
+            <i class="fas fa-exclamation-triangle"></i>
+            <span class='spotbie-text-gradient text-uppercase '>CLICK & ACTIVATE THIS AD NOW</span>
+        </p>
+
         <h5 class="spotbie-text-gradient text-center text-uppercase pt-3 mb-4">AD EDITOR</h5>
 
         <form [formGroup]="adCreatorForm" *ngIf="adCreatorFormUp">

@@ -40,7 +40,7 @@ export class AdCreatorComponent implements OnInit {
 
   public adFormSubmitted: boolean = false
 
-  public adUploadImage: string = '../../assets/images/home_imgs/find-places-to-eat.svg'
+  public adUploadImage: string = null
 
   public adMediaMessage: string = "Upload Ad Image"
 
@@ -106,8 +106,6 @@ export class AdCreatorComponent implements OnInit {
       adImage: ['', adImageValidators]
     })
 
-    console.log("Our ad", this.ad)
-
     if(this.ad !== null && this.ad !== undefined){
       
       this.adCreatorForm.get('adType').setValue(this.ad.type)
@@ -167,9 +165,11 @@ export class AdCreatorComponent implements OnInit {
       this.adCreated = true    
 
       setTimeout(() => {
-        this.closeAdCreatorAndRefetchAdList()
-      }, 1500)    
         
+        this.closeAdCreatorAndRefetchAdList()
+
+      }, 1500)    
+
     }
 
   }
@@ -255,6 +255,8 @@ export class AdCreatorComponent implements OnInit {
 
   public adTypeChange(){
 
+    if(this.adUploadImage !== null) this.adApp.updateAdImage(this.adUploadImage)
+
   }
 
   public closeThis(){
@@ -271,11 +273,15 @@ export class AdCreatorComponent implements OnInit {
 
   public deleteMe(){
     
-    this.adCreatorService.deleteMe(this.ad).subscribe(
-      resp => {
-        this.deleteMeCb(resp)
-      }
-    )
+    let r = confirm('Are you sure you want to delete this Ad?')
+
+    if(r){
+      this.adCreatorService.deleteMe(this.ad).subscribe(
+        resp => {
+          this.deleteMeCb(resp)
+        }
+      )
+    }
 
   }
 
@@ -306,6 +312,16 @@ export class AdCreatorComponent implements OnInit {
         return 'footer-banner'      
 
     }
+
+  }
+
+  public activateAdMembership(){
+
+    this.adCreatorService.activateMembership().subscribe(
+      resp => {
+        console.log("REsp", resp)
+      }
+    )
 
   }
 

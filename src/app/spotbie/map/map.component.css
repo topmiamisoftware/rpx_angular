@@ -343,6 +343,7 @@
     margin: 0 auto;
     text-align: center;
 }
+
 .spotbie-search-result{
     position: relative;
     display: inline-block;
@@ -829,9 +830,9 @@ button.gm-ui-hover-effect:focus-within{
 }
 @media (max-width: 840px) {
     .spotbie-search-result{
-        width: 100%;
-        min-width: 100%;
-        max-width: 100%;
+        width: 99%;
+        min-width: 99%;
+        max-width: 99%;
         height: unset;
         min-height: unset;
         max-height: unset;

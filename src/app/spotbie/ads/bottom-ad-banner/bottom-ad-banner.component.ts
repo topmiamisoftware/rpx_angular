@@ -182,8 +182,8 @@ export class BottomAdBannerComponent implements OnInit {
 
   }
 
-  public updateAdImage(image: string){
-    this.ad.images = image
+  public updateAdImage(image: string = ''){
+    if(image !== '') this.ad.images = image
   }
 
   ngOnInit(): void {

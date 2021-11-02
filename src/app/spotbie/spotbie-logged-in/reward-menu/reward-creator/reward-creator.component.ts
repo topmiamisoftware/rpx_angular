@@ -244,8 +244,6 @@ export class RewardCreatorComponent implements OnInit {
 
   private rewardMediaUploadFinished(httpResponse: any): void {
 
-    console.log('rewardMediaUploadFinished', httpResponse)
-
     if (httpResponse.success){
 
       this.rewardUploadImage = httpResponse.image

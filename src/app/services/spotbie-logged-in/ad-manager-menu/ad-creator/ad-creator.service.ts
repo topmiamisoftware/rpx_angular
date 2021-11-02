@@ -32,6 +32,16 @@ export class AdCreatorService {
 
   }
 
+  public activateMembership(){
+
+    const placeToEatAdApi = `${ADS_API}/make-payment`
+
+    return this.http.post<any>(placeToEatAdApi, null).pipe(
+      catchError(handleError("completeReset"))
+    ) 
+
+  }
+
   public updateAd(adObj: Ad): Observable<any>{
 
     const placeToEatAdApi = `${ADS_API}/update`
