@@ -310,9 +310,9 @@
     
       </div>      
 
-      <app-single-ad #singleAdApp class='spotbie-ad' [categories]="this.search_keyword" [lat]="lat" [lng]="lng"></app-single-ad>
+      <app-single-ad #singleAdApp class='spotbie-ad' [categories]="number_categories" [lat]="lat" [lng]="lng"></app-single-ad>
 
-      <div class='spotbie-search-result-wrapper' *ngIf="showSearchResults">
+      <div class='spotbie-search-result-wrapper pt-3' *ngIf="showSearchResults">
     
         <div class='spotbie-search-results-title text-uppercase'>
     
@@ -344,7 +344,7 @@
                 </p>
 
                 <p style='font-size: .4rem;' class="spotbie-text-gradient mt-3">
-                  {{ communityMember.categories | truncateText:[20, '...']}}
+                  {{ communityMember.cleanCategories | truncateText:[20, '...']}}
                 </p>
 
                 <div class='sb-community-member-brand'>
@@ -443,7 +443,9 @@
     
         </div>
     
-        <div>
+        <app-bottom-ad-banner class='mt-4' #bottomAdBanner [categories]="number_categories" [lat]="lat" [lng]="lng"></app-bottom-ad-banner>
+
+        <div class='mt-2 mb-5'>
     
           <span class='sb-page-button text-uppercase cursor-pointer' (click)="goToPage(1)" *ngIf="allPages > 1">
             <i class="fa fa-angle-double-left"></i>
@@ -485,8 +487,6 @@
     
         </div>
         
-        <app-bottom-ad-banner #bottomAdBanner [categories]="this.search_keyword" [lat]="lat" [lng]="lng"></app-bottom-ad-banner>
-
       </div>
 
     </div>

@@ -328,7 +328,6 @@
 .spotbie-search-results {
     position: relative;
     margin: 0 auto;
-    padding: 15px;
     background-color: #f3f3f3;
     margin-top: 5px;
 }
@@ -422,14 +421,16 @@ span.spotbie-button{
     min-width: 162px;
 }
 .spotbie-result-page{
-    margin-left: 3px;
+    display: inline-block;
+    min-width: 35px;
+    width: 35px;
     margin-right: 3px;
+    margin-left: 3px;
     cursor: pointer;
-    padding: 5px;
-    padding-top: 4px;
-    padding-bottom: 4px;
-    background-color: rgba(0,0,0,.23);
-    color: white
+    padding: 4px 5px;
+    background-color: rgba(0,0,0,.231);
+    color: #fff;
+    border-radius: 99px;
 }
 .spotbie-result-page.active{
     background-color: rgba(0,0,0,.63);

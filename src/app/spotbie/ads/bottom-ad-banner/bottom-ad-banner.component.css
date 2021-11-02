@@ -23,14 +23,21 @@
     position: absolute;
     top: 41px;
     right: 14px;
-    font-size: .5rem;
+    font-size: .9rem;
 }
 
 .sb-totalRewards{
     position: absolute;
-    top: 65px;
+    top: 70px;
     right: 14px;
     font-size: .8rem;
+}
+
+.sb-perDollarTopAd{
+    position: absolute;
+    top: 120px;
+    right: 14px;
+    font-size: 1rem;
 }
 
 .sb-perDollar{
@@ -41,21 +48,25 @@
 }
 .sb-distanceMiles{
     position: absolute;
-    bottom: 65px;
+    bottom: 42px;
     right: 14px;
     font-size: .8rem;
 }
 .sb-address {
     position: absolute;
-    bottom: 41px;
+    bottom: 14px;
     right: 14px;
-    font-size: .5rem;
+    font-size: .8rem;
 }
 .sb-categoryList{
     position: absolute;
-    bottom: 91px;
+    display: block;
+    bottom: 230px;
     right: 14px;
-    font-size: .5rem;
+    font-size: .6rem;
+    max-width: 250px;
+    text-align: left;
+    word-break: break-all;
 }
 .fa-map-marker-alt{
     font-size: .5rem;

@@ -16,11 +16,17 @@ export class Business {
 
     public type_of_info_object: string = null
     public is_community_member: boolean = true
-    public categories: Array<string> | string = []
+
+    public cleanCategories: string = null
+    public categories: number[] = []
 
     public rewardRate: number = null
 
     public loyalty_point_dollar_percent_value: number = null
     public balance: number = null
 
-}
+    public user_type: number | string = null
+
+
+    
+}   

@@ -22,6 +22,7 @@ import { BusinessMenuServiceService } from 'src/app/services/spotbie-logged-in/b
 import { AdsService } from '../ads/ads.service'
 import { BottomAdBannerComponent } from '../ads/bottom-ad-banner/bottom-ad-banner.component'
 import { SingleAdComponent } from '../ads/single-ad/single-ad.component'
+import { EVENT_CATEGORIES, FOOD_CATEGORIES, SHOPPING_CATEGORIES } from './map_extras/map_extras'
 
 const YELP_BUSINESS_SEARCH_API = 'https://api.yelp.com/v3/businesses/search'
 
@@ -128,6 +129,8 @@ export class MapComponent implements OnInit {
   public food_categories = map_extras.FOOD_CATEGORIES
   public shopping_categories = map_extras.SHOPPING_CATEGORIES
 
+  public number_categories: number
+
   public map_styles = map_extras.MAP_STYLES
 
   public infoObject: any
@@ -161,6 +164,7 @@ export class MapComponent implements OnInit {
   public bannedYelpIDs = BANNED_YELP_IDS
 
   public communityMemberList: Array<Business> = []
+  currentCategoryList: any
 
   constructor(private locationService: LocationService,
               private deviceService: DeviceDetectorService,
@@ -574,12 +578,25 @@ export class MapComponent implements OnInit {
     switch(this.searchCategory){
 
       case 'events':
-        apiUrl = `size=2&latlong=${this.lat},${this.lng}&classificationName=${keyword}&radius=45&${this.eventDateParam}`      
+        
+        apiUrl = `size=2&latlong=${this.lat},${this.lng}&classificationName=${keyword}&radius=45&${this.eventDateParam}`
+        
+        this.number_categories = this.event_categories.indexOf(keyword)             
         break
 
       case 'food':
-      case 'shopping':
+
         apiUrl = `${this.searchApiUrl}?latitude=${this.lat}&longitude=${this.lng}&term=${keyword}&categories=${keyword}&${this.showOpenedParam}&radius=40000&sort_by=rating&limit=20&offset=${this.current_offset}` 
+        
+        this.number_categories = this.food_categories.indexOf(keyword)
+        
+        break
+
+      case 'shopping':
+        
+        apiUrl = `${this.searchApiUrl}?latitude=${this.lat}&longitude=${this.lng}&term=${keyword}&categories=${keyword}&${this.showOpenedParam}&radius=40000&sort_by=rating&limit=20&offset=${this.current_offset}` 
+
+        this.number_categories = this.shopping_categories.indexOf(keyword)
 
     }
 
@@ -590,7 +607,7 @@ export class MapComponent implements OnInit {
     const searchObjSb = {
       loc_x: this.lat,
       loc_y: this.lng,
-      categories: keyword
+      categories: JSON.stringify(this.number_categories)
     }
 
     switch(this.searchCategory){
@@ -1066,37 +1083,48 @@ export class MapComponent implements OnInit {
   }
 
   public getSpotBieCommunityMemberListCb(httpResponse: any){
-
+    
     if(httpResponse.success){
 
       let communityMemberList: Array<Business> = httpResponse.data.data
       
-      communityMemberList.forEach(business => {        
+      console.log("httpResponse", httpResponse)
+
+      communityMemberList.forEach( (business: Business) => {        
 
         business.type_of_info_object = 'spotbie_community'
-        business.is_community_member = true
-
-        if(business.photo == ''){
-
-          switch(this.searchCategory){
-            case 'food':
-              business.photo = 'assets/images/home_imgs/find-places-to-eat.svg'
-              break
-      
-            case 'shopping':
-              business.photo = 'assets/images/home_imgs/find-places-for-shopping.svg'
-              break
+        business.is_community_member = true       
+        
+        switch(this.searchCategory){
+          
+          case 'food':
+            if(business.photo == '') business.photo = 'assets/images/home_imgs/find-places-to-eat.svg'
+            this.currentCategoryList = FOOD_CATEGORIES    
+            break
     
-            case 'events':
-              business.photo = 'assets/images/home_imgs/find-events.svg'
-              
-          }
-
+          case 'shopping':
+            if(business.photo == '') business.photo = 'assets/images/home_imgs/find-places-for-shopping.svg'
+            this.currentCategoryList = SHOPPING_CATEGORIES 
+            break
+  
+          case 'events':
+            if(business.photo == '') business.photo = 'assets/images/home_imgs/find-events.svg'
+            this.currentCategoryList = EVENT_CATEGORIES    
+            
         }
 
-        business.categories = JSON.parse(
-          business.categories.toString().replace(',', ', ')
-        )
+        let cleanCategories = []
+
+        this.currentCategoryList.reduce((previousValue: string, currentValue: string, currentIndex: number, array: string[]) => {
+          
+          if(business.categories.indexOf(currentIndex) > -1)
+            cleanCategories.push(this.currentCategoryList[currentIndex])
+                    
+          return currentValue
+  
+        })
+
+        business.cleanCategories = cleanCategories.toString()    
 
         business.rewardRate = (business.loyalty_point_dollar_percent_value / 100)
 

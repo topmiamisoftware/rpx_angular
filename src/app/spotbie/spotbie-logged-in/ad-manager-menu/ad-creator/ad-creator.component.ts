@@ -47,7 +47,7 @@ export class AdCreatorComponent implements OnInit {
   public adTypeList: Array<any> = [
     { name: 'Header Banner ($15.99/monthly)', dimensions: '728x90'}, 
     { name: 'Related-Nearby Box ($13.99/monthly)', dimensions: '300x250'}, 
-    { name: 'In-Content Related-Nearby ($6.99)', dimensions: '336x280'}, 
+    { name: 'Footer Banner ($10.99)', dimensions: '336x280'} 
   ]
 
   public adCreated: boolean = false

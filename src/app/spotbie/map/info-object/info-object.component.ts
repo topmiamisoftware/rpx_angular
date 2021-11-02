@@ -12,7 +12,6 @@ import { spotbieMetaDescription, spotbieMetaTitle, spotbieMetaImage } from 'src/
 import { InfoObject } from 'src/app/models/info-object'
 import { environment } from 'src/environments/environment'
 import { Ad } from 'src/app/models/ad'
-import { I } from '@angular/cdk/keycodes'
 import { InfoObjectType } from 'src/app/helpers/enum/info-object-type.enum'
 
 const YELP_BUSINESS_DETAILS_API = "https://api.yelp.com/v3/businesses/"
@@ -66,7 +65,7 @@ export class InfoObjectComponent implements OnInit {
   public objectDisplayAddress: string
 
   public eInfoObjectType: any = InfoObjectType
-
+  
   constructor(private infoObjectService: InfoObjectServiceService,
               private myFavoritesService: MyFavoritesService,
               public share: ShareService,
@@ -114,8 +113,6 @@ export class InfoObjectComponent implements OnInit {
     const infoObjToPull = {
       config_url: this.urlApi
     }
-
-    console.log("infoObjToPull", infoObjToPull)
 
     if(this.router.url.indexOf('event') > -1){
 
@@ -195,7 +192,7 @@ export class InfoObjectComponent implements OnInit {
         this.info_object.type_of_info_object = InfoObjectType.SpotBieCommunity        
         this.info_object.image_url = this.info_object.photo
         this.infoObjectLink = `https://spotbie.com/${this.info_object.name}/${this.info_object.id}`
-        
+
       }
 
       if(this.info_object.hours !== undefined){
@@ -209,15 +206,15 @@ export class InfoObjectComponent implements OnInit {
 
       }
 
-      if(this.info_object.is_community_member){
+      if(this.info_object.is_community_member)
         this.objectDisplayAddress = `${this.info_object.location.display_address[0]}, ${this.info_object.location.display_address[1]}`
-      } else {
+      else
         this.objectDisplayAddress = this.info_object.address
-      }
+      
 
       this.info_object.categories.forEach(category => {
         this.objectCategories = `${this.objectCategories}, ${category.title}`
-      });
+      })
 
       this.objectCategories = this.objectCategories.substring(2, this.objectCategories.length)
 
