@@ -209,7 +209,8 @@
     height: 30vw;
     min-height: 30vw;
     background-size: cover !important;
-    background-position: center !important;       
+    background-position: center !important; 
+    border-radius: 25px;      
 }
 .spotbie-search-result-yelp-logo{
     position: relative;

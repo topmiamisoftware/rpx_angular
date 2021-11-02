@@ -80,9 +80,10 @@
     height: 100%;
     max-height: 100%;
     max-width: 85%;
-    background-repeat: no-repeat !important;
-    background-size: cover !important;
-    background-position: center !important;    
+    background-repeat: no-repeat!important;
+    background-size: cover!important;
+    background-position: center!important;
+    box-shadow: inset -25px 0px 10px 9px #221f2a;   
 }
 .spotbie-white-iconImg{
     position: absolute;
@@ -143,6 +144,7 @@
         height: 250px;
         max-height: 100%;
         max-width: 100%;
+        box-shadow: unset;   
     } 
     .sb-sponsored,
     .sb-sponsoredName,

@@ -105,6 +105,7 @@ h6.sb-titleGreen {
     min-height: 30vw;
     background-size: cover !important;
     background-position: center !important;
+    border-radius: 25px; 
 }
 
 .spotbie-share-post-link {
