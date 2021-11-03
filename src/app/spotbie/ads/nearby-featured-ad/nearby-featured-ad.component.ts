@@ -22,6 +22,8 @@ export class NearbyFeaturedAdComponent implements OnInit {
   @Input('business') business: Business = new Business()
   @Input('ad') ad: Ad = null
 
+  @Input('editMode') editMode: boolean = false
+
   @Input('categories') categories: number
 
   public link: string
@@ -51,7 +53,7 @@ export class NearbyFeaturedAdComponent implements OnInit {
   public adTypeWithId: boolean = false
 
   public adList: Array<Ad> = []
-
+  
   constructor(private adsService: AdsService,
               private deviceDetectorService: DeviceDetectorService,
               private loyaltyPointsService: LoyaltyPointsService) { 
@@ -66,25 +68,28 @@ export class NearbyFeaturedAdComponent implements OnInit {
               
   public getNearByFeatured(){
 
-    if(this.ad === undefined || this.ad === null){
+    let adId = null
+
+    if(this.editMode){
       
       this.ad = new Ad()
       this.ad.id = 10
-
+      adId = this.ad.id
+      
     }
 
     const nearByFeaturedObj = {
       loc_x: this.lat,
       loc_y: this.lng,
       categories: JSON.stringify(this.categories),
-      id: this.ad.id
+      id: adId
     }
 
     //Retrieve the SpotBie Ads
     this.adsService.getNearByFeatured(nearByFeaturedObj).subscribe(
       resp => {
 
-        if(this.ad.id == null){
+        if(this.ad == null || this.ad == undefined){
           
           this.getNearByFeaturedCallback(resp)
 

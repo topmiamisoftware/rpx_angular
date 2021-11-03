@@ -108,8 +108,8 @@ h6.sb-titleGreen {
     height: 30vw;
     min-height: 30vw;
     background-size: cover !important;
-    background-position: center !important;
-    border-radius: 25px; 
+    background-position: center !important; 
+    border-radius: 25px;    
 }
 
 .spotbie-share-post-link {
@@ -149,12 +149,13 @@ h6.sb-titleGreen {
 }
 
 @media (max-width: 840px) {
-    .spotbie-info-object-image-thumb {
+    .spotbie-info-object-image-thumb{
         margin-left: unset;
         margin-right: unset;
-        width: 100%;
-        min-width: 100%;
-        max-width: 100%;
+        width: 96%;
+        min-width: 96%;
+        max-width: 96%;
+        border-radius: 9px;
         height: 60vw;
         min-height: 60vw;
         background-size: cover!important;

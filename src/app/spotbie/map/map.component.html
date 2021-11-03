@@ -154,7 +154,7 @@
 
       <div #scrollMapAppAnchor></div>
       
-      <div class='spotbie-close-results' (click)="closeSearchResults()">close</div>
+      <app-single-ad #singleAdApp class='spotbie-ad' [categories]="number_categories" [lat]="lat" [lng]="lng"></app-single-ad>
 
       <div class='spotbie-search-results-title text-uppercase' *ngIf="type_of_info_object == 'yelp_business'">
 
@@ -309,8 +309,6 @@
         </ng-template>
     
       </div>      
-
-      <app-single-ad #singleAdApp class='spotbie-ad' [categories]="number_categories" [lat]="lat" [lng]="lng"></app-single-ad>
 
       <div class='spotbie-search-result-wrapper pt-3' *ngIf="showSearchResults">
     

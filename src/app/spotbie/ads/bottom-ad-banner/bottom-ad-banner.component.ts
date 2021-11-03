@@ -22,6 +22,8 @@ export class BottomAdBannerComponent implements OnInit {
   @Input('business') business: Business = new Business()
   @Input('ad') ad: Ad = null
 
+  @Input('editMode') editMode: boolean = false
+
   @Input('categories') categories: number
 
   public link: string
@@ -48,6 +50,8 @@ export class BottomAdBannerComponent implements OnInit {
 
   public loyaltyPointBalance: LoyaltyPointBalance
 
+  public adTypeWithId: boolean = false
+
   constructor(private adsService: AdsService,
               private deviceDetectorService: DeviceDetectorService,
               private loyaltyPointsService: LoyaltyPointsService) { 
@@ -62,10 +66,13 @@ export class BottomAdBannerComponent implements OnInit {
 
   public getBottomHeader(){
     
-    if(this.ad === undefined || this.ad === null){
+    let adId = null
+
+    if(this.editMode){
       
       this.ad = new Ad()
       this.ad.id = 10
+      adId = this.ad.id
 
     }
 
@@ -73,19 +80,19 @@ export class BottomAdBannerComponent implements OnInit {
       loc_x: this.lat,
       loc_y: this.lng,
       categories: JSON.stringify(this.categories),
-      id: this.ad.id,
+      id: adId
     }
 
     //Retrieve the SpotBie Ads
     this.adsService.getBottomHeader(searchObjSb).subscribe(
       resp => {
 
-        if(this.ad.id == null){
+        if(this.ad == null || this.ad == undefined){
           this.getBottomHeaderCb(resp)
         } else {
           this.getBottomHeaderWithIdCb(resp)
-        }
-        
+          this.adTypeWithId = true
+        }        
       
       }
     )

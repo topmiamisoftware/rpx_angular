@@ -24,6 +24,8 @@ export class SingleAdComponent implements OnInit {
 
   @Input('categories') categories: number
 
+  @Input('editMode') editMode: boolean = false
+
   public link: string
 
   public displayAd: boolean = false
@@ -64,25 +66,27 @@ export class SingleAdComponent implements OnInit {
               
   public getHeaderBanner(newAd: boolean = false){
 
-    if(this.ad === undefined || this.ad === null){
+    let adId = null
+
+    if(this.editMode){
       
       this.ad = new Ad()
       this.ad.id = 10
-
+      adId = this.ad.id
+      
     }
-
     const headerBannerReqObj = {
       loc_x: this.lat,
       loc_y: this.lng,
       categories: JSON.stringify(this.categories),
-      id: this.ad.id
+      id: adId
     }
 
     //Retrieve the SpotBie Ads
     this.adsService.getHeaderBanner(headerBannerReqObj).subscribe(
       resp => {
 
-        if(this.ad.id == null){
+        if(this.ad == null || this.ad == undefined){
           
           this.getHeaderBannerAdCallback(resp)
 
