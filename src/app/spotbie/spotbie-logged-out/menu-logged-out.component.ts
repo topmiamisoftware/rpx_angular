@@ -20,8 +20,6 @@ export class MenuLoggedOutComponent implements OnInit {
   public logInWindow = { open: false }
   public signUpWindow = { open: false }
 
-  public home_route: boolean = false
-
   public prevScrollpos
   
   public menuActive: boolean = false
@@ -104,10 +102,10 @@ export class MenuLoggedOutComponent implements OnInit {
     
     const activatedRoute = this.location.path()
 
-    if(activatedRoute.indexOf('/home') > -1)
-      this.home_route = true
-    else
-      this.home_route = false
+    this.isMobile = this.deviceService.isMobile()
+    this.isDesktop = this.deviceService.isDesktop()
+    this.isTablet = this.deviceService.isTablet()
+
     
     // check if we need to auto log-in
     const cookiedRememberMe = localStorage.getItem('spotbie_rememberMe')
@@ -119,9 +117,6 @@ export class MenuLoggedOutComponent implements OnInit {
       this.logInWindow.open = true
     }
     
-    this.isMobile = this.deviceService.isMobile()
-    this.isDesktop = this.deviceService.isDesktop()
-    this.isTablet = this.deviceService.isTablet()
     
   }
 

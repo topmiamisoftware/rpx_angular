@@ -7,7 +7,7 @@ import { Observable } from 'rxjs/internal/Observable'
 import { of } from 'rxjs'
 import { ActivatedRoute, Router } from '@angular/router'
 
-const DEF_INC_PASS_OR_EM_MSG = "Please enter your phone number or e-mail."
+const DEF_INC_PASS_OR_EM_MSG = "Please enter your e-mail address."
 
 const DEF_PIN_PASS_OR_EM_MSG = "Check your e-mail for a reset link."
 
@@ -63,9 +63,6 @@ export class ForgotPasswordComponent implements OnInit {
               private router: Router) { }
 
   public closeWindowX(): void{
-    if(this.token !== null)
-      this.router.navigate(['/home'])
-    else
       this.closeWindow.emit(null)
   }
 
@@ -95,18 +92,17 @@ export class ForgotPasswordComponent implements OnInit {
 
   public setPassResetPin(): void{
 
+    this.loading = true
     this.passResetSubmitted = true
 
-    if(this.loading) return
-
-    if(this.passwordResetForm.invalid) return
-
-    this.loading = true
+    if(this.passwordResetForm.invalid){
+      this.loading = false
+      return
+    }  
     
     let emailOrPhone = this.spotbie_email_or_ph
 
-    this.userAuthService.setPassResetPin(emailOrPhone)
-    .subscribe(
+    this.userAuthService.setPassResetPin(emailOrPhone).subscribe(
       resp => {
         this.startPassResetCb(resp)
       }
@@ -125,55 +121,24 @@ export class ForgotPasswordComponent implements OnInit {
         this.showSuccess()
       } else if(httpResponse.status == 'passwords.throttled'){
         this.email_or_ph_error = "You have sent too many password reset requests, please try again later."
+      } else if(httpResponse.status == 'social_account'){
+        this.email_or_ph_error = "You signed up with social media."
       } else {
-        this.email_or_ph_error = "Incorrect e-mail or phone number."
+        this.email_or_ph_error = "E-mail address not found."
       }
 
     } else {
+
       console.log('Pass Reset Error: ', httpResponse)
-      this.email_or_ph_error = "Incorrect e-mail or phone number."
+      this.email_or_ph_error = "I e-mail address."
+
     }
       
     this.getLinkMessage.nativeElement.style.display = 'none'
-    this.getLinkMessage.nativeElement.className = 'spotbie-toast-info spotbie-contact-me-info animated shake'
+    this.getLinkMessage.nativeElement.className = 'spotbie-text-gradient spotbie-error spotbie-contact-me-info'
     this.getLinkMessage.nativeElement.style.display = 'block'
 
     this.loading = false
-
-  }
-
-  public forgotPassError<T>(operation = 'operation', result?: T) {
-
-    return (error: any): Observable<T> => {
-
-      // TODO: send the error to remote logging infrastructure
-      console.log(error) // log to console instead
-
-      // TODO: better job of transforming error for user consumption
-      //this.log(`${operation} failed: ${error.message}`);
-
-      this.email_or_ph_error = "There was an error signing-up."
-
-      const error_list = error.error.errors
-
-      console.log("Error List", error_list)
-
-      if(error_list.username){
-
-        let errors: {[k: string]: any} = {};
-        error_list.username.forEach(error => {
-          errors[error] = true
-        })
-        //this.signUpFormx.get('spotbieUsername').setErrors(errors)
-        document.getElementById('spotbie_username').style.border = '1px solid red' 
-
-      } else
-        document.getElementById('spotbie_username').style.border = 'unset'
-
-      // Let the app keep running by returning an empty result.
-      return of(result as T)
-
-    }
 
   }
 
@@ -222,12 +187,16 @@ export class ForgotPasswordComponent implements OnInit {
       switch (settingsResponse.status) {
 
         case 'passwords.reset':
+
           this.new_password_msg = 'Your password was updated. You can now log-in.'
+          
           this.step_three = false
           this.step_four = true
+          
           setTimeout(function(){
             this.closeWindowX()
           }.bind(this), 3000)
+          
           break
 
         case 'passwords.token':
@@ -245,6 +214,10 @@ export class ForgotPasswordComponent implements OnInit {
     this.save_password = false
     this.loading = false
 
+  }
+
+  public goHome(){
+    this.router.navigate(['/home'])
   }
 
   ngOnInit() {

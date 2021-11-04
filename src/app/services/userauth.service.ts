@@ -192,7 +192,7 @@ export class UserauthService {
 
     const resetPasswordApi = `${USER_API}/send-pass-email`
     const setPassResetObj = {
-      email_or_phone: emailOrPhone
+      email: emailOrPhone
     }
 
     return this.http.post<any>(resetPasswordApi, setPassResetObj).pipe(

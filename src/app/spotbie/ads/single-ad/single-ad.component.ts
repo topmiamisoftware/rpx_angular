@@ -64,40 +64,35 @@ export class SingleAdComponent implements OnInit {
 
               }
               
-  public getHeaderBanner(newAd: boolean = false){
+  public getHeaderBanner(){
 
     let adId = null
 
     if(this.editMode){
       
-      this.ad = new Ad()
-      this.ad.id = 10
-      adId = this.ad.id
+      if(this.ad == null){
+        
+        this.ad = new Ad()
+        this.ad.id = 10
+        adId = this.ad.id
+
+      } else adId = this.ad.id
       
     }
+
     const headerBannerReqObj = {
       loc_x: this.lat,
       loc_y: this.lng,
       categories: JSON.stringify(this.categories),
       id: adId
     }
-
+    
     //Retrieve the SpotBie Ads
     this.adsService.getHeaderBanner(headerBannerReqObj).subscribe(
       resp => {
 
-        if(this.ad == null || this.ad == undefined){
-          
-          this.getHeaderBannerAdCallback(resp)
+        this.getHeaderBannerAdCallback(resp)
 
-        } else {
-
-          this.getBottomHeaderWithIdCb(resp)
-          this.adTypeWithId = true
-
-        }
-        
-      
       }
     )
 
@@ -127,26 +122,6 @@ export class SingleAdComponent implements OnInit {
 
   }
 
-  public getBottomHeaderWithIdCb(resp: any){
-
-    if(resp.success){
-      
-      this.business = resp.business
-      
-      this.ad = resp.ad
-      
-      this.totalRewards = resp.totalRewards
-
-      this.distance = 5
-
-      this.displayAd = true
-
-      this.business.loyalty_point_dollar_percent_value = this.loyaltyPointBalance.loyalty_point_dollar_percent_value
-
-    }
-
-  }
-
   public async getHeaderBannerAdCallback(resp: any){
 
     if(resp.success){
@@ -155,30 +130,36 @@ export class SingleAdComponent implements OnInit {
       
       this.business = resp.business
 
-      switch(this.business.user_type.toString()){
+      if(!this.editMode){
+        
+        switch(this.business.user_type.toString()){
 
-        case AllowedAccountTypes.PlaceToEat:
-          this.currentCategoryList = FOOD_CATEGORIES          
-          break
+          case AllowedAccountTypes.PlaceToEat:
+            this.currentCategoryList = FOOD_CATEGORIES          
+            break
+  
+          case AllowedAccountTypes.Events:
+            this.currentCategoryList = EVENT_CATEGORIES          
+            break
+  
+          case AllowedAccountTypes.Shopping:
+            this.currentCategoryList = SHOPPING_CATEGORIES          
+            break     
 
-        case AllowedAccountTypes.Events:
-          this.currentCategoryList = EVENT_CATEGORIES          
-          break
+        }
 
-        case AllowedAccountTypes.Shopping:
-          this.currentCategoryList = SHOPPING_CATEGORIES          
-          break            
+
+        this.currentCategoryList.reduce((previousValue: string, currentValue: string, currentIndex: number, array: string[]) => {
+        
+          if(resp.business.categories.indexOf(currentIndex) > -1)
+            this.categoriesListFriendly.push(this.currentCategoryList[currentIndex])
+                  
+          return currentValue
+  
+        })
+  
+
       }
-
-      this.currentCategoryList.reduce((previousValue: string, currentValue: string, currentIndex: number, array: string[]) => {
-        
-        if(resp.business.categories.indexOf(currentIndex) > -1)
-          this.categoriesListFriendly.push(this.currentCategoryList[currentIndex])
-        
-        
-        return currentValue
-
-      })
 
       this.categoryListForUi = this.categoriesListFriendly.toString().replace(',', ', ')
 
@@ -189,7 +170,10 @@ export class SingleAdComponent implements OnInit {
 
       this.totalRewards = resp.totalRewards
 
-      this.distance = getDistanceFromLatLngInMiles(this.business.loc_x, this.business.loc_y, this.lat, this.lng)
+      if(!this.editMode)
+        this.distance = getDistanceFromLatLngInMiles(this.business.loc_x, this.business.loc_y, this.lat, this.lng)
+      else
+        this.distance = 5
 
     } else
       console.log("getHeaderBannerAdCallback", resp)
@@ -209,8 +193,7 @@ export class SingleAdComponent implements OnInit {
 
   public updateAdImage(image: string = ''){
     
-    if(image != '')
-      this.ad.images = image
+    if(image != '') this.ad.images = image
   
   }
 

@@ -72,9 +72,13 @@ export class NearbyFeaturedAdComponent implements OnInit {
 
     if(this.editMode){
       
-      this.ad = new Ad()
-      this.ad.id = 10
-      adId = this.ad.id
+      if(this.ad == null){
+        
+        this.ad = new Ad()
+        this.ad.id = 10
+        adId = this.ad.id
+
+      } else adId = this.ad.id
       
     }
 
@@ -88,19 +92,7 @@ export class NearbyFeaturedAdComponent implements OnInit {
     //Retrieve the SpotBie Ads
     this.adsService.getNearByFeatured(nearByFeaturedObj).subscribe(
       resp => {
-
-        if(this.ad == null || this.ad == undefined){
-          
-          this.getNearByFeaturedCallback(resp)
-
-        } else {
-
-          this.getNearByFeaturedWithIdCb(resp)
-          this.adTypeWithId = true
-
-        }
-        
-      
+        this.getNearByFeaturedCallback(resp)
       }
     )
 
@@ -130,71 +122,55 @@ export class NearbyFeaturedAdComponent implements OnInit {
 
   }
 
-  public getNearByFeaturedWithIdCb(resp: any){
-
-    if(resp.success){
-      
-      this.business = resp.business
-      
-      this.ad = resp.ad
-      
-      this.adList.push(this.ad)
-
-      this.totalRewards = resp.totalRewards
-
-      this.distance = 5
-
-      this.displayAd = true
-
-      this.business.loyalty_point_dollar_percent_value = this.loyaltyPointBalance.loyalty_point_dollar_percent_value
-
-    }
-
-  }
-
   public async getNearByFeaturedCallback(resp: any){
 
     if(resp.success){
 
       this.ad = resp.ad
-      
       this.business = resp.business
 
-      switch(this.business.user_type.toString()){
+      if(!this.editMode){
 
-        case AllowedAccountTypes.PlaceToEat:
-          this.currentCategoryList = FOOD_CATEGORIES          
-          break
+        switch(this.business.user_type.toString()){
 
-        case AllowedAccountTypes.Events:
-          this.currentCategoryList = EVENT_CATEGORIES          
-          break
+          case AllowedAccountTypes.PlaceToEat:
+            this.currentCategoryList = FOOD_CATEGORIES          
+            break
+  
+          case AllowedAccountTypes.Events:
+            this.currentCategoryList = EVENT_CATEGORIES          
+            break
+  
+          case AllowedAccountTypes.Shopping:
+            this.currentCategoryList = SHOPPING_CATEGORIES          
+            break            
+        }
+  
+        this.currentCategoryList.reduce((previousValue: string, currentValue: string, currentIndex: number, array: string[]) => {
+          
+          if(resp.business.categories.indexOf(currentIndex) > -1)
+            this.categoriesListFriendly.push(this.currentCategoryList[currentIndex])
+          
+          
+          return currentValue
+  
+        })
 
-        case AllowedAccountTypes.Shopping:
-          this.currentCategoryList = SHOPPING_CATEGORIES          
-          break            
       }
-
-      this.currentCategoryList.reduce((previousValue: string, currentValue: string, currentIndex: number, array: string[]) => {
-        
-        if(resp.business.categories.indexOf(currentIndex) > -1)
-          this.categoriesListFriendly.push(this.currentCategoryList[currentIndex])
-        
-        
-        return currentValue
-
-      })
 
       this.categoryListForUi = this.categoriesListFriendly.toString().replace(',', ', ')
 
       this.business.is_community_member = true
       this.business.type_of_info_object = InfoObjectType.SpotBieCommunity
 
-      this.displayAd = true
-
       this.totalRewards = resp.totalRewards
 
-      this.distance = getDistanceFromLatLngInMiles(this.business.loc_x, this.business.loc_y, this.lat, this.lng)
+      if(!this.editMode)
+        this.distance = getDistanceFromLatLngInMiles(this.business.loc_x, this.business.loc_y, this.lat, this.lng)
+      else
+        this.distance = 5
+
+      this.displayAd = true
 
     } else
       console.log("getHeaderBannerAdCallback", resp)

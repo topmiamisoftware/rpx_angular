@@ -2,7 +2,6 @@ import { Component, Input, OnInit, Output, EventEmitter, ViewChild } from '@angu
 import { ActivatedRoute, Router } from '@angular/router'
 import { AllowedAccountTypes } from 'src/app/helpers/enum/account-type.enum'
 import { LoyaltyPointBalance } from 'src/app/models/loyalty-point-balance'
-import { Business } from 'src/app/models/business'
 import { Ad } from 'src/app/models/ad'
 import { LoyaltyPointsService } from 'src/app/services/loyalty-points/loyalty-points.service'
 import { AdCreatorComponent } from './ad-creator/ad-creator.component'
@@ -115,8 +114,6 @@ export class AdManagerMenuComponent implements OnInit {
 
     this.ad = ad
     this.itemCreator = true
-    
-    this.adCreator
 
   }
 

@@ -9,6 +9,7 @@ import { AdCreatorService } from 'src/app/services/spotbie-logged-in/ad-manager-
 import { BottomAdBannerComponent } from 'src/app/spotbie/ads/bottom-ad-banner/bottom-ad-banner.component'
 import { NearbyFeaturedAdComponent } from 'src/app/spotbie/ads/nearby-featured-ad/nearby-featured-ad.component'
 import { SingleAdComponent } from 'src/app/spotbie/ads/single-ad/single-ad.component'
+import { environment } from 'src/environments/environment'
 import * as spotbieGlobals from '../../../../globals'
 
 const AD_MEDIA_UPLOAD_API_URL = `${spotbieGlobals.API}in-house/upload-media`
@@ -111,14 +112,16 @@ export class AdCreatorComponent implements OnInit {
       this.adCreatorForm.get('adType').setValue(this.ad.type)
       this.adCreatorForm.get('adName').setValue(this.ad.name)
       this.adCreatorForm.get('adDescription').setValue(this.ad.description)     
-
+      this.adCreatorForm.get('adImage').setValue(this.ad.images)
+      this.adUploadImage = this.ad.images
+      console.log('adUPloadImage', this.adUploadImage)
       this.selected = this.ad.type
 
-    } else {
+    } else
       this.selected = 0
-    }
+    
+    this.adCreatorFormUp = true 
 
-    this.adCreatorFormUp = true
     this.loading = false
 
   }
@@ -158,14 +161,24 @@ export class AdCreatorComponent implements OnInit {
 
   public saveAdCb(resp: any){
 
-    console.log(resp)
-
     if(resp.success){
 
       this.adCreated = true    
 
       setTimeout(() => {
         
+        switch(this.adType){
+          case 0:
+            window.open(environment.subscriptionHeaderPaymentLink, '_blank')
+            break;
+          case 1:
+            window.open(environment.subscriptionRelatedPaymentLink, '_blank')
+            break;
+          case 2:
+            window.open(environment.subscriptionFooterPaymentLink, '_blank')
+            break;
+        }
+
         this.closeAdCreatorAndRefetchAdList()
 
       }, 1500)    
@@ -317,11 +330,19 @@ export class AdCreatorComponent implements OnInit {
 
   public activateAdMembership(){
 
-    this.adCreatorService.activateMembership().subscribe(
-      resp => {
-        console.log("REsp", resp)
-      }
-    )
+    switch(this.adType){
+
+      case 0:
+        window.open(environment.subscriptionHeaderPaymentLink, '_blank')
+        break
+      case 1:
+        window.open(environment.subscriptionRelatedPaymentLink, '_blank')
+        break        
+      case 2:
+        window.open(environment.subscriptionFooterPaymentLink, '_blank')
+        break
+
+    }
 
   }
 

@@ -2,7 +2,7 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-let ngrok = 'https://bee5-2600-1700-4804-d5f0-dbe7-7a3d-932d-75f0.ngrok.io/'
+let ngrok = 'https://75b0-2600-1700-4804-d5f0-d275-d614-210d-beb0.ngrok.io/'
 let baseUrl = 'https://192.168.1.65:4200/'
 export const environment = {
   production: false,
@@ -15,7 +15,12 @@ export const environment = {
    * format: https://192.168.1.65:443/api/
    * Laravel App will not work if it's not served on over SSL.
    * */
-  apiEndpoint: `${ngrok}api/`
+  apiEndpoint: `${ngrok}api/`,
+
+  subscriptionHeaderPaymentLink: 'https://buy.stripe.com/test_6oEbKs308deIfTi9AC',
+  subscriptionFooterPaymentLink: 'https://buy.stripe.com/test_8wM9CkfMU0rW22s8ww',
+  subscriptionRelatedPaymentLink: 'https://buy.stripe.com/test_bIYdSAdEMb6A22s7st'
+
 }
 /*
  * For easier debugging in development mode, you can import the following file

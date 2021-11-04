@@ -177,6 +177,10 @@ export class MenuLoggedInComponent implements OnInit {
 
   ngOnInit() : void {
 
+    this.isMobile = this.deviceService.isMobile()
+    this.isDesktop = this.deviceService.isDesktop()
+    this.isTablet = this.deviceService.isTablet()
+
     this.loyaltyPointsService.userLoyaltyPoints$.subscribe(
 
       loyaltyPointsBalance =>{
@@ -187,10 +191,6 @@ export class MenuLoggedInComponent implements OnInit {
       }
 
     )
-
-    this.isMobile = this.deviceService.isMobile()
-    this.isDesktop = this.deviceService.isDesktop()
-    this.isTablet = this.deviceService.isTablet()
 
     this.userType = localStorage.getItem('spotbie_userType')
 

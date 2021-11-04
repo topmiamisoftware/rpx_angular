@@ -18,8 +18,6 @@ import { BusinessDashboardComponent } from '../spotbie-logged-in/business-dashbo
 import { UserDashboardComponent } from '../spotbie-logged-in/user-dashboard/user-dashboard.component'
 import { SortOrderPipe } from 'src/app/pipes/sort-order.pipe'
 import { Business } from 'src/app/models/business'
-import { BusinessMenuServiceService } from 'src/app/services/spotbie-logged-in/business-menu/business-menu-service.service'
-import { AdsService } from '../ads/ads.service'
 import { BottomAdBannerComponent } from '../ads/bottom-ad-banner/bottom-ad-banner.component'
 import { SingleAdComponent } from '../ads/single-ad/single-ad.component'
 import { EVENT_CATEGORIES, FOOD_CATEGORIES, SHOPPING_CATEGORIES } from './map_extras/map_extras'
