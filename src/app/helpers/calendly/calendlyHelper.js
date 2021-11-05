@@ -14,6 +14,4 @@ export const spawnCalendly = function(title, address){
         });
     }, 500)
 
-    console.log('cas', Calendly)
-
 }

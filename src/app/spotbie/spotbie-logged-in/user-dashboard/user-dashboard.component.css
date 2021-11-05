@@ -30,6 +30,12 @@ h3{
     padding-bottom: 15px;
     cursor: pointer;
 }
+.sb-optionGet span{
+    display: block;
+    margin-top: 10px;
+    font-size: .9rem;
+}
+
 @media (max-width: 768px){
     .sb-qrImage {
         width: 150px;

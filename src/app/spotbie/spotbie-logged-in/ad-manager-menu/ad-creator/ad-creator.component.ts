@@ -165,24 +165,17 @@ export class AdCreatorComponent implements OnInit {
 
       this.adCreated = true    
 
+      let ad = resp.newAd
+
       setTimeout(() => {
         
-        switch(this.adType){
-          case 0:
-            window.open(environment.subscriptionHeaderPaymentLink, '_blank')
-            break;
-          case 1:
-            window.open(environment.subscriptionRelatedPaymentLink, '_blank')
-            break;
-          case 2:
-            window.open(environment.subscriptionFooterPaymentLink, '_blank')
-            break;
-        }
+        window.open(`/make-payment/${ad.uuid}`, '_blank')
 
         this.closeAdCreatorAndRefetchAdList()
 
       }, 1500)    
-
+      
+    
     }
 
   }
@@ -330,19 +323,9 @@ export class AdCreatorComponent implements OnInit {
 
   public activateAdMembership(){
 
-    switch(this.adType){
+    let paymentUrl = `${environment.baseUrl}/make-payment/${this.ad.uuid}`
 
-      case 0:
-        window.open(environment.subscriptionHeaderPaymentLink, '_blank')
-        break
-      case 1:
-        window.open(environment.subscriptionRelatedPaymentLink, '_blank')
-        break        
-      case 2:
-        window.open(environment.subscriptionFooterPaymentLink, '_blank')
-        break
-
-    }
+    window.open(paymentUrl, '_blank')
 
   }
 

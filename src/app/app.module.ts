@@ -34,6 +34,9 @@ import { UserauthService } from './services/userauth.service'
 import { StoreModule } from '@ngrx/store'
 import { loyaltyPointsReducer } from './spotbie/spotbie-logged-in/loyalty-points/loyalty-points.reducer'
 
+import { StripeModule } from "stripe-angular"
+import { MakePaymentModule } from './make-payment/make-payment.module'
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -53,8 +56,10 @@ import { loyaltyPointsReducer } from './spotbie/spotbie-logged-in/loyalty-points
     UserHomeModule,
     UserModule,
     HelperModule,
+    MakePaymentModule,
     BrowserAnimationsModule,
     SocialLoginModule, 
+    StripeModule.forRoot(""),
     StoreModule.forRoot({ 
       loyaltyPoints: loyaltyPointsReducer
     }),       

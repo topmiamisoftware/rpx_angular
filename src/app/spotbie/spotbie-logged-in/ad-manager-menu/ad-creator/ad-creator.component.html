@@ -7,6 +7,7 @@
     <div class='sb-adCreatorWrapper'>
         
         <p class="cursor-pointer"
+            *ngIf="(ad !== null && ad !== undefined) && ad.is_live !== 1"
             style="font-size: .8rem;"
             (click)="activateAdMembership()">
             <i class="fas fa-exclamation-triangle"></i>
@@ -159,7 +160,7 @@
         </div>
 
         <div class='mt-5 mb-5 sb-deleteMe' *ngIf="ad !== null && ad !== undefined" (click)="deleteMe()">
-            <span class="spotbie-text-gradient">DELETE ME </span><i class='fa fa-trash'></i>
+            <span class="spotbie-text-gradient">DELETE AD SUBSCRIPTION </span><i class='fa fa-trash'></i>
         </div>
 
         <div class='mt-5 mb-5 cursor-pointer' (click)="closeThis()">

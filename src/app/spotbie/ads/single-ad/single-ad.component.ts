@@ -200,7 +200,7 @@ export class SingleAdComponent implements OnInit {
   ngOnInit(): void {
 
     this.isMobile = this.deviceDetectorService.isMobile()
-
+    
     this.getHeaderBanner()
 
   }

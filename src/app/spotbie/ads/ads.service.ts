@@ -38,6 +38,18 @@ export class AdsService {
 
   }  
   
+  public saveAdPayment(saveAdsObj: any): Observable<any>{
+    
+    const saveAdsApi = `${ADS_API}/save-payment`
+
+    return this.http.post(saveAdsApi, saveAdsObj).pipe(
+      catchError(
+        handleError("saveAdPayment")
+      )
+    )
+
+  }
+
   public getAds():  Observable<any>{
     
     const getAdsApi = `${ADS_API}/index`
@@ -45,6 +57,18 @@ export class AdsService {
     return this.http.post(getAdsApi, null).pipe(
       catchError(
         handleError("getAds")
+      )
+    )
+
+  }
+
+  public getAdByUUID(searchObjSb: any):  Observable<any>{
+    
+    const getAdsApi = `${ADS_API}/get-by-uuid`
+
+    return this.http.post(getAdsApi, searchObjSb).pipe(
+      catchError(
+        handleError("getAdByUUID")
       )
     )
 

@@ -92,7 +92,7 @@ export class SettingsComponent implements OnInit {
         '../../assets/images/home_imgs/find-places-for-shopping.svg'
     ]
 
-    public accountTypeList = ['PLACE TO EAT', 'EVENTS', 'RETAIL STORE']
+    public accountTypeList = ['PLACE TO EAT', 'RETAIL STORE']
     public chosen_account_type: number
     public loadAccountTypes = false
 
@@ -153,6 +153,13 @@ export class SettingsComponent implements OnInit {
     public filteredBusinessCategories: Observable<string[]>
 
     public activeBusinessCategories: string[] = []
+
+    public city: string = null
+    public country: string = null
+    public line1: string = null
+    public line2: string = null
+    public postal_code: string = null
+    public state: string = null
 
     @ViewChild('businessInput') businessInput: ElementRef<HTMLInputElement>;
 
@@ -351,20 +358,26 @@ export class SettingsComponent implements OnInit {
         this.passKeyVerificationSubmitted = true
 
         if(this.passKeyVerificationForm.invalid){
-        this.loading = false
-        return
+            this.loading = false
+            return
         }
 
         let businessInfo = {
-        accountType: this.chosen_account_type,
-        name: this.originTitle,
-        description: this.originDescription,
-        address: this.originAddress,
-        photo: this.originPhoto,
-        loc_x: this.lat,
-        loc_y: this.lng,
-        categories: JSON.stringify(this.activeBusinessCategories),
-        passkey: this.passKey
+            accountType: this.chosen_account_type,
+            name: this.originTitle,
+            description: this.originDescription,
+            address: this.originAddress,
+            city: this.city,
+            country: this.country,
+            line1: this.line1,
+            line2: this.line2,
+            postal_code: this.postal_code,
+            state: this.state,
+            photo: this.originPhoto,
+            loc_x: this.lat,
+            loc_y: this.lng,
+            categories: JSON.stringify(this.activeBusinessCategories),
+            passkey: this.passKey
         }
 
         console.log("Save this business", businessInfo)
@@ -439,11 +452,11 @@ export class SettingsComponent implements OnInit {
         let location = new google.maps.LatLng(this.lat, this.lng)
 
         service.getQueryPredictions({ 
-        input: inputAddress.value,
-        componentRestrictions: { country: "us"},
-        radius: MAX_DISTANCE, 
-        location, 
-        types: ['establishment']
+            input: inputAddress.value,
+            componentRestrictions: { country: "us"},
+            radius: MAX_DISTANCE, 
+            location, 
+            types: ['establishment']
         }, (predictions, status) => {
 
         if (status != google.maps.places.PlacesServiceStatus.OK)
@@ -478,34 +491,36 @@ export class SettingsComponent implements OnInit {
     public getPlaceDetails(){
 
         const request = {
-        placeId: this.place.place_id,
-        fields: ["name", "photo", "geometry", "formatted_address"],
+            placeId: this.place.place_id,
+            fields: ["name", "photo", "geometry", "adr_address", "formatted_address"],
         };
         
         const map = document.getElementById('spotbieMapG')
-        const service = new google.maps.places.PlacesService(map)    
+        const mapService = new google.maps.places.PlacesService(map)    
         
-        service.getDetails(request, (place, status) => {          
+        mapService.getDetails(request, (place, status) => {          
 
-        this.place = place
+            this.place = place
 
-        this.lat = place.geometry.location.lat()
-        this.lng = place.geometry.location.lng()
+            console.log("Place found", this.place)
 
-        this.zoom = 18
+            this.lat = place.geometry.location.lat()
+            this.lng = place.geometry.location.lng()
 
-        this.businessSettingsForm.get('spotbieOrigin').setValue(this.lat + ',' + this.lng)      
-        this.businessSettingsForm.get('originTitle').setValue(place.name)
-        this.businessSettingsForm.get('originAddress').setValue(place.formatted_address)
-        
-        if(place.photos)
-            this.originPhoto = place.photos[0].getUrl()
-        else
-            this.originPhoto = '../../assets/images/home_imgs/find-places-to-eat.svg'
+            this.zoom = 18
 
-        this.locationFound = true
-        this.claimBusiness = true
-        this.loading = false          
+            this.businessSettingsForm.get('spotbieOrigin').setValue(this.lat + ',' + this.lng)      
+            this.businessSettingsForm.get('originTitle').setValue(place.name)
+            this.businessSettingsForm.get('originAddress').setValue(place.formatted_address)
+            
+            if(place.photos)
+                this.originPhoto = place.photos[0].getUrl()
+            else
+                this.originPhoto = '../../assets/images/home_imgs/find-places-to-eat.svg'
+
+            this.locationFound = true
+            this.claimBusiness = true
+            this.loading = false          
 
         })    
 
@@ -684,11 +699,13 @@ export class SettingsComponent implements OnInit {
         if ('geolocation' in navigator) {
 
         navigator.geolocation.getCurrentPosition((position) => {
+
             this.lat = position.coords.latitude
             this.lng = position.coords.longitude
             this.zoom = 18
             this.locationFound = true
             this.getAddress(this.lat, this.lng)
+        
         })
 
         }
@@ -713,21 +730,29 @@ export class SettingsComponent implements OnInit {
         })
 
         await this.geoCoder.geocode({ location: { lat: latitude, lng: longitude } }, (results, status) => {
-
+            
         if (status === 'OK') {
 
             if (results[0]) {
-            this.zoom = 18
-            this.address = results[0].formatted_address
-            this.businessSettingsForm.get('originAddress').setValue(this.address)
-            this.businessSettingsForm.get('spotbieOrigin').setValue(this.lat + ',' + this.lng)
+
+                this.zoom = 18
+                
+                this.address = results[0].formatted_address
+
+                this.city = results[0].address_components[2].long_name
+                this.line1 = results[0].address_components[0].long_name + ' ' + results[0].address_components[1].long_name
+                this.state = results[0].address_components[4].short_name
+                this.country = results[0].address_components[5].short_name
+                this.postal_code = results[0].address_components[6].short_name
+
+                this.businessSettingsForm.get('originAddress').setValue(this.address)
+                this.businessSettingsForm.get('spotbieOrigin').setValue(this.lat + ',' + this.lng)
+
             } else
-            window.alert('No results found')
+                window.alert('No results found')
             
         } else
             window.alert('Geocoder failed due to: ' + status)
-        
-
         })
 
     }

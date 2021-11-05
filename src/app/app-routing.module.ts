@@ -31,6 +31,8 @@ export const routes: Routes = [
 
   { path: 'advertise-my-business', loadChildren: () => import('./advertise-my-business/advertise-my-business.module').then(m => m.AdvertiseMyBusinessModule ) }, 
 
+  { path: 'make-payment', loadChildren: () => import('./make-payment/make-payment.module').then(m => m.MakePaymentModule ) }, 
+
   { path: 'user-profile', loadChildren: () => import('./user/user.module').then(m => m.UserModule ) }, 
   
   { path: '', redirectTo: '/home', pathMatch: 'full' }

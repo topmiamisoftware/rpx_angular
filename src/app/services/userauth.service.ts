@@ -384,7 +384,13 @@ export class UserauthService {
       loc_x: businessInfo.loc_x,
       loc_y: businessInfo.loc_y,
       passkey: businessInfo.passkey,
-      categories: businessInfo.categories
+      categories: businessInfo.categories,
+      city: businessInfo.city,
+      country: businessInfo.country,
+      line1: businessInfo.line1,
+      line2: businessInfo.line2,
+      postal_code: businessInfo.postal_code,
+      state: businessInfo.state      
     }
 
     console.log("businessInfoObj", businessInfoObj)
