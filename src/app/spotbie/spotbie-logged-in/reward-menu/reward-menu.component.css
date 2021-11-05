@@ -111,6 +111,8 @@
         font-size:.8rem;
     }
     .spotbie-loyaltyMenuDescription{
+        position: relative;
+        margin: 0 auto;
         max-width: 94%;
         width: 94%;
     }
