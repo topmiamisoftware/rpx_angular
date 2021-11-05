@@ -293,9 +293,7 @@ export class SettingsComponent implements OnInit {
                 this.user.business.address = settings_response.business.address
                 this.user.business.photo = settings_response.business.photo
                 
-                this.friendlyCategories = JSON.parse(settings_response.business.categories.toString())
-
-                this.activeBusinessCategories = settings_response.business.categories
+                this.friendlyCategories = JSON.parse(settings_response.business.categories.toString()).toString()
 
                 this.originPhoto = this.user.business.photo 
 
