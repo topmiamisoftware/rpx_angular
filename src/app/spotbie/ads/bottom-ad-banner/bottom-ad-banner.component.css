@@ -145,9 +145,11 @@
         max-height: 100%;
         max-width: 100%;
         box-shadow: unset;   
-    } 
+    }
+    .sb-categoryList{
+        text-align: center;
+    }
     .sb-sponsored,
-    .sb-sponsoredName,
     .sb-perDollar,
     .sb-totalRewards,
     .sb-distanceMiles,
@@ -161,7 +163,16 @@
     }      
     .sb-sponsored,
     .sb-sponsoredName{
-        margin-top: 25px;
+        position: relative;
+        display: block;
+        top: unset;
+        right: unset;
+        left: unset;
+        margin: 0 auto;
+        margin-top: 0px;
+    }
+    .sb-sponsored{
+        padding-top: 20px;
     }
     .sb-perDollar
     .sb-distanceMiles,
@@ -176,9 +187,6 @@
         display: block;
         margin-top: 10px;
     }      
-    .sb-sponsoredName{
-        margin-left: 5px;
-    }
     .sb-perDollar{
         margin-right: 5px;
     }    
