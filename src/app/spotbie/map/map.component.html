@@ -312,10 +312,8 @@
 
       <div class='spotbie-search-result-wrapper pt-3' *ngIf="showSearchResults">
     
-        <div class='spotbie-search-results-title text-uppercase'>
-    
-          <span *ngIf="searchCategory !== 'events'">Showing results within {{ maxDistance }} miles. </span>
-
+        <div class='spotbie-search-results-title text-uppercase' *ngIf="communityMemberList.length > 0">
+          SPOTBIE COMMUNITY MEMBERS          
         </div>
         
         <!-- First let's display the member list for -->

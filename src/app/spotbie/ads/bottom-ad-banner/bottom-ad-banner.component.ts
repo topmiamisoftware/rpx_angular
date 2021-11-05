@@ -90,7 +90,7 @@ export class BottomAdBannerComponent implements OnInit {
     //Retrieve the SpotBie Ads
     this.adsService.getBottomHeader(searchObjSb).subscribe(
       resp => {
-
+        console.log("getBottomHeaderCb", resp)
         this.getBottomHeaderCb(resp)       
       
       }
@@ -166,6 +166,8 @@ export class BottomAdBannerComponent implements OnInit {
   }
   
   public switchAd(){
+    this.categoriesListFriendly = []
+    this.categoryListForUi = null
     this.getBottomHeader()
   }
 

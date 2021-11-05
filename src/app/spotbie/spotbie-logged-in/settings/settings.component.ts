@@ -22,6 +22,7 @@ import { map, startWith } from 'rxjs/operators'
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { Observable } from 'rxjs/internal/Observable';
 import { LocationService } from 'src/app/services/location-service/location.service';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 const PLACE_TO_EAT_API = spotbieGlobals.API + 'place-to-eat'
 
@@ -161,6 +162,8 @@ export class SettingsComponent implements OnInit {
     public postal_code: string = null
     public state: string = null
 
+    public friendlyCategories: string = null
+
     @ViewChild('businessInput') businessInput: ElementRef<HTMLInputElement>;
 
     constructor(private http: HttpClient,
@@ -275,8 +278,6 @@ export class SettingsComponent implements OnInit {
             this.password_form.get('spotbie_password').setValue('userpassword')
             this.password_form.get('spotbie_confirm_password').setValue('123456789')
 
-            console.log("chosen_account_type", this.chosen_account_type)
-
             if ( (this.chosen_account_type == 1 || 
                   this.chosen_account_type == 2 || 
                   this.chosen_account_type == 3 )
@@ -292,9 +293,11 @@ export class SettingsComponent implements OnInit {
                 this.user.business.address = settings_response.business.address
                 this.user.business.photo = settings_response.business.photo
                 
-                this.originPhoto = this.user.business.photo 
+                this.friendlyCategories = JSON.parse(settings_response.business.categories.toString())
 
-                console.log("My user Business", this.user.business)
+                this.activeBusinessCategories = settings_response.business.categories
+
+                this.originPhoto = this.user.business.photo 
 
             }      
         
@@ -309,8 +312,6 @@ export class SettingsComponent implements OnInit {
     get j() { return this.passKeyVerificationForm.controls }
 
     public startBusinessVerification(){    
-
-        console.log("startBusinessVerification start")
 
         this.loading = true
         this.placeFormSubmitted = true
@@ -329,7 +330,7 @@ export class SettingsComponent implements OnInit {
         const passKeyValidators = [Validators.required, Validators.minLength(6)]
 
         this.passKeyVerificationForm = this.formBuilder.group({
-        passKey: ['', passKeyValidators]
+            passKey: ['', passKeyValidators]
         })
 
         this.passKeyVerificationFormUp = true
@@ -346,9 +347,11 @@ export class SettingsComponent implements OnInit {
 
     public calendly(){
         
+        this.loading = true
         this.calendlyUp = !this.calendlyUp
 
-        if(this.calendlyUp) calendly.spawnCalendly(this.originTitle, this.originAddress)
+        if(this.calendlyUp) 
+            calendly.spawnCalendly(this.originTitle, this.originAddress, () => { this.loading = false } )
 
     }
 
@@ -383,9 +386,9 @@ export class SettingsComponent implements OnInit {
         console.log("Save this business", businessInfo)
 
         this.userAuthService.verifyBusiness(businessInfo).subscribe(
-        (resp) => {
-            this.claimThisBusinessCB(resp)
-        }
+            (resp) => {
+                this.claimThisBusinessCB(resp)
+            }
         )
 
     } 
@@ -394,21 +397,21 @@ export class SettingsComponent implements OnInit {
 
         if(resp.message == 'passkey_mismatch'){
         
-        this.passKeyVerificationForm.get('passKey').setErrors({'invalid': true})
+            this.passKeyVerificationForm.get('passKey').setErrors({'invalid': true})
 
         } else if(resp.message == 'success'){
 
-        this.passKeyVerificationSubmitted = false
-        this.passKeyVerificationForm = null
-        this.passKeyVerificationFormUp = false      
+            this.passKeyVerificationSubmitted = false
+            this.passKeyVerificationForm = null
+            this.passKeyVerificationFormUp = false      
 
-        localStorage.setItem('spotbie_userType', this.chosen_account_type.toString())
+            localStorage.setItem('spotbie_userType', this.chosen_account_type.toString())
 
-        this.businessVerified = true
+            this.businessVerified = true
 
-        setTimeout(()=>{
-            window.location.reload()
-        }, 500)
+            setTimeout(()=>{
+                window.location.reload()
+            }, 500)
 
         }
 
@@ -419,13 +422,13 @@ export class SettingsComponent implements OnInit {
     public claimWithGoogle(){
 
         let businessInfo = {
-        accountType: this.chosen_account_type
+            accountType: this.chosen_account_type
         }
 
         this.userAuthService.verifyBusiness(businessInfo).subscribe(
-        (resp) => {
-            this.claimThisBusinessCB(resp)
-        }
+            (resp) => {
+                this.claimThisBusinessCB(resp)
+            }
         )
 
     } 
@@ -437,7 +440,7 @@ export class SettingsComponent implements OnInit {
     public searchMapsKeyDown(evt){
         
         if(evt.key == 'Enter')
-        this.searchMaps()
+            this.searchMaps()
 
     }
 
@@ -534,9 +537,9 @@ export class SettingsComponent implements OnInit {
         if(this.originPhoto === null) return
 
         if(this.originPhoto.includes('home_imgs'))
-        return 'sb-originPhoto-sm'
+            return 'sb-originPhoto-sm'
         else
-        return 'sb-originPhoto-lg'
+            return 'sb-originPhoto-lg'
         
     }
 
@@ -549,11 +552,11 @@ export class SettingsComponent implements OnInit {
         const file_list_length = files.length
 
         if (file_list_length === 0) {
-        this.placeToEatMediaMessage = 'You must upload at least one file.'
-        return
+            this.placeToEatMediaMessage = 'You must upload at least one file.'
+            return
         } else if (file_list_length > 1) {
-        this.placeToEatMediaMessage = 'Upload only one background image.'
-        return
+            this.placeToEatMediaMessage = 'Upload only one background image.'
+            return
         }
 
         this.loading = true
@@ -599,9 +602,9 @@ export class SettingsComponent implements OnInit {
         console.log('placeToEatMediaUploadFinished', httpResponse)
 
         if (httpResponse.success)
-        this.originPhoto = httpResponse.background_picture
+            this.originPhoto = httpResponse.background_picture
         else
-        console.log('placeToEatMediaUploadFinished', httpResponse)
+            console.log('placeToEatMediaUploadFinished', httpResponse)
         
         this.loading = false
 
@@ -955,24 +958,24 @@ export class SettingsComponent implements OnInit {
         case 'personal':
 
             this.settingsForm = this.formBuilder.group({
-            spotbie_username: ['', username_validators],
-            spotbie_first_name: ['', first_name_validators],
-            spotbie_last_name: ['', last_name_validators],
-            spotbie_email: ['', email_validators],
-            spotbie_phone_number: ['', phone_validators],
-            spotbie_acc_type: [],
+                spotbie_username: ['', username_validators],
+                spotbie_first_name: ['', first_name_validators],
+                spotbie_last_name: ['', last_name_validators],
+                spotbie_email: ['', email_validators],
+                spotbie_phone_number: ['', phone_validators],
+                spotbie_acc_type: [],
             }, {
-            validators: [ValidateUsername('spotbie_username'),
-                        ValidatePersonName('spotbie_first_name'),
-                        ValidatePersonName('spotbie_last_name')]
+                validators: [ValidateUsername('spotbie_username'),
+                            ValidatePersonName('spotbie_first_name'),
+                            ValidatePersonName('spotbie_last_name')]
             })
 
             this.password_form = this.formBuilder.group({
-            spotbie_password: ['', password_validators],
-            spotbie_confirm_password: ['', password_confirm_validators]
+                spotbie_password: ['', password_validators],
+                spotbie_confirm_password: ['', password_confirm_validators]
             }, {
-            validators: [ValidatePassword('spotbie_password'),
-                        MustMatch('spotbie_password', 'spotbie_confirm_password')]
+                validators: [ValidatePassword('spotbie_password'),
+                            MustMatch('spotbie_password', 'spotbie_confirm_password')]
             })
 
             this.account_type_category = 'PERSONAL'
@@ -1022,39 +1025,41 @@ export class SettingsComponent implements OnInit {
 
             //Set the filtered places to eat categories event listener.
             this.filteredBusinessCategories = this.businessSettingsForm.get('originCategories').valueChanges.pipe(
-            startWith(null),
-            map((fruit: string | null) => fruit ? this._filter(fruit) : this.businessCategoryList.slice())
+                startWith(null),
+                map((fruit: string | null) => fruit ? this._filter(fruit) : this.businessCategoryList.slice())
             )
 
             this.placeSettingsFormUp = true
 
             switch(action){
-            case 'events':
+                case 'events':
+                    
+                    this.account_type_category = 'EVENTS'
+                    this.account_type_category_friendly_name = 'EVENTS BUSINESS'
+
+                    await this.classificationSearch().subscribe(
+                        resp =>{
+                            this.classificationSearchCallback(resp)
+                        }
+                    )
+
+                    break
+
+                case 'place_to_eat':
                 
-                this.account_type_category = 'EVENTS'
-                this.account_type_category_friendly_name = 'EVENTS BUSINESS'
+                    this.account_type_category = 'PLACE TO EAT'
+                    this.account_type_category_friendly_name = 'PLACE TO EAT'
+                    this.businessCategoryList = map_extras.FOOD_CATEGORIES
+                
+                    break
+                
+                case 'shopping':   
 
-                await this.classificationSearch().subscribe(
-                resp =>{
-                    this.classificationSearchCallback(resp)
-                }
-                )
+                    this.account_type_category = 'RETAIL STORE'
+                    this.account_type_category_friendly_name = 'RETAIL STORE'
+                    this.businessCategoryList = map_extras.SHOPPING_CATEGORIES
 
-                break
-
-            case 'place_to_eat':
-            
-                this.account_type_category = 'PLACE TO EAT'
-                this.account_type_category_friendly_name = 'PLACE TO EAT'
-                this.businessCategoryList = map_extras.FOOD_CATEGORIES
-            
-                break
-            
-            case 'shopping':            
-                this.account_type_category = 'RETAIL STORE'
-                this.account_type_category_friendly_name = 'RETAIL STORE'
-                this.businessCategoryList = map_extras.SHOPPING_CATEGORIES
-                break            
+                    break            
             } 
 
             this.fetchCurrentSettings()

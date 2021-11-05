@@ -576,6 +576,10 @@
                             Enter {{ account_type_category_friendly_name }} categories.
                         </label>
 
+                        <div class="spotbie-text-gradient text-uppercase mt-4 mb-4">
+                            {{ friendlyCategories }}
+                        </div>
+                        
                     </ng-template>
 
                     <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
@@ -604,6 +608,7 @@
                         class="sb-input mb-4"
                         placeholder="New category..."
                         #businessInput
+                        style="background-color: white;"
                         formControlName="originCategories"
                         [matAutocomplete]="auto"
                         [matChipInputFor]="chipList">
@@ -739,9 +744,9 @@
                 
                 <tr>
                     <td> 
-                        <div class='sb-text-light-green-gradient sb-helpDemoText text-center text-uppercase mt-4'>
+                        <div class='spotbie-text-gradient sb-helpDemoText text-center text-uppercase mt-4'>
                             Don't have one? Book 
-                            <span class='sb-text-light-green-gradient' (click)="calendly()">free demo with SpotBie here.</span>
+                            <span class='sb-text-light-green-gradient cursor-pointer' (click)="calendly()">free demo with SpotBie here.</span>
                         </div>
                     </td>
                 </tr>
@@ -767,7 +772,7 @@
 
 </div>
 
-<div class='spotbie-overlay-window' *ngIf="calendlyUp">
+<div class='spotbie-overlay-window' style="z-index: 99;" *ngIf="calendlyUp">
 
     <div class='sb-v-wrapper' style="display: grid; align-content: center;">  
          

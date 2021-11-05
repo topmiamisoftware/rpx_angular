@@ -161,7 +161,7 @@ export class SingleAdComponent implements OnInit {
 
       }
 
-      this.categoryListForUi = this.categoriesListFriendly.toString().replace(',', ', ')
+      this.categoryListForUi = this.categoriesListFriendly.toString()
 
       this.business.is_community_member = true
       this.business.type_of_info_object = InfoObjectType.SpotBieCommunity
@@ -181,6 +181,8 @@ export class SingleAdComponent implements OnInit {
   }
 
   public switchAd(){
+    this.categoriesListFriendly = []
+    this.categoryListForUi = null
     this.getHeaderBanner()
   }
 

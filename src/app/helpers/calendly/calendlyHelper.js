@@ -1,6 +1,7 @@
-export const spawnCalendly = function(title, address){
+export const spawnCalendly = function(title, address, callbackFn){
 
     setTimeout(()=>{
+
         Calendly.initInlineWidget({
             url: 'https://calendly.com/spotbie-demos/45min',
             parentElement: document.getElementById('calendlyEl'),
@@ -12,6 +13,9 @@ export const spawnCalendly = function(title, address){
             },
             utm: {}
         });
+
+        callbackFn()
+
     }, 500)
 
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core'
+import { Component, OnInit, ViewChild, Output, EventEmitter, ElementRef } from '@angular/core'
 import { Location } from '@angular/common'
 
 import { externalBrowserOpen } from 'src/app/helpers/cordova/web-intent'
@@ -15,7 +15,7 @@ export class MenuLoggedOutComponent implements OnInit {
   @Output() spawnCategoriesOut = new EventEmitter()
   @Output() openHome = new EventEmitter()
 
-  @ViewChild('spotbieMainMenu') spotbieMainMenu
+  @ViewChild('spotbieMainMenu') spotbieMainMenu: ElementRef
 
   public logInWindow = { open: false }
   public signUpWindow = { open: false }
@@ -116,8 +116,13 @@ export class MenuLoggedOutComponent implements OnInit {
         && logged_in !== '1'){
       this.logInWindow.open = true
     }
-    
-    
+
+  }
+
+  ngAfterViewInit(): void {
+    //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
+    //Add 'implements AfterViewInit' to the class.
+    this.spotbieMainMenu.nativeElement.style.display = 'table'
   }
 
 }

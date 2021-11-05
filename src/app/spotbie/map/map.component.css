@@ -179,7 +179,7 @@
     padding: 15px 38px;
     text-align: left;
     cursor: pointer;
-    background-color: rgba(0,0,0,.05);
+    background-color: rgba(0,0,0,.02);
     transition: all .2s;
     color: #332f3e;
     text-transform: uppercase;
@@ -210,7 +210,7 @@
 }
 .spotbie-sub-cat{
     position: relative;
-    background-color: rgba(0, 0, 0, 0.13);
+    background-color: transparent;
     text-align: center;
     margin-top: 3px;
     word-break: break-word;
@@ -218,6 +218,7 @@
     font-weight: normal;
     padding-top: 18px;
     padding-bottom: 18px;
+    border-bottom: 1px solid #e3e3e3;
 }
 .spotbie-subgenre{
     position: relative;
@@ -947,7 +948,11 @@ button.gm-ui-hover-effect:focus-within{
         width: 100%;
         min-width: 100%;
         max-width: 100%;
-    }       
+    } 
+    .spotbie-single-cat{
+        position: relative;
+        padding: 15px 10px;
+    }           
 }
 @media (max-width: 700px) { 
     .spotbie-map{
@@ -1032,7 +1037,7 @@ button.gm-ui-hover-effect:focus-within{
         min-width: 200px;
         padding: 8px !important;
         margin-top: 40px;  
-    }
+    }   
 }
 @media (max-width: 560px) { 
     .spotbie-search-page-number{
