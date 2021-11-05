@@ -120,9 +120,13 @@ export class MenuLoggedOutComponent implements OnInit {
   }
 
   ngAfterViewInit(): void {
+    
     //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
     //Add 'implements AfterViewInit' to the class.
-    this.spotbieMainMenu.nativeElement.style.display = 'table'
+    setTimeout(()=>{
+      this.spotbieMainMenu.nativeElement.style.display = 'table'
+    }, 750) 
+
   }
 
 }

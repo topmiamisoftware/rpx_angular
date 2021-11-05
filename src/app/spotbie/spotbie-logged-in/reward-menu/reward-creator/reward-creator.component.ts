@@ -308,6 +308,7 @@ export class RewardCreatorComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log("initRewardForm", this.reward)
     this.initRewardForm()
   }
 

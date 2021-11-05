@@ -192,6 +192,15 @@
             <span class="spotbie-text-gradient">CANCEL</span>
         </div>
 
+        <ngx-qrcode 
+        *ngIf="reward !== null && reward !== undefined"
+        [value]="reward.uuid"
+        [width]="qrWidth"
+        cssClass="spotbie-full-qrCode mt-4 mb-4"
+        colorDark="#000"
+        colorLight="#64e56f"
+        errorCorrectionLevel="H"></ngx-qrcode>
+
     </div>
 
 </div>
