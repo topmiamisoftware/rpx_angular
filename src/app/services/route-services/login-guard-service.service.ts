@@ -21,7 +21,6 @@ export class LoginGuardServiceService {
       } else {
 
         let loggedOutFavorites = localStorage.getItem('spotbie_currentFavorites')
-        let isCordova = localStorage.getItem('isCordova')
 
         localStorage.clear()
         
@@ -30,17 +29,9 @@ export class LoginGuardServiceService {
         localStorage.setItem('spotbie_userId', '0')
         localStorage.setItem('spotbie_loggedIn', '0')
         localStorage.setItem('spotbie_rememberMe', '0')
-        localStorage.setItem('spotbie_rememberMeToken', null)      
+        localStorage.setItem('spotbie_rememberMeToken', null)        
 
-        localStorage.setItem('isCordova', isCordova)      
-
-        window.document.body.style.backgroundColor = 'unset'
-
-        this.router.navigate(['/home'], {
-          queryParams: {
-            return: state.url
-          }
-        })
+        this.router.navigate(['/home'])
         
         return false
 

@@ -331,8 +331,12 @@ export class UserauthService {
       this.userPassword = null 
       this.userRememberMe = '1'
       
+      console.log(
+        "My Facebook User: ", user 
+      )
+
       localStorage.setItem('spotbiecom_social_session', user.authToken)
-      localStorage.setItem('spotbiecom_social_id_session', user.idToken)
+      localStorage.setItem('spotbiecom_social_id', user.id)
 
       this.saveCurrentFbProfile(user, route).subscribe(
         (resp) => {

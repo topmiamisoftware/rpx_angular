@@ -170,7 +170,7 @@ export class AdCreatorComponent implements OnInit {
 
       setTimeout(() => {
         
-        window.open(`/make-payment/${ad.uuid}`, '_blank')
+        window.open(`${AD_PAYMENT_URL}${ad.uuid}`, '_blank')
 
         this.closeAdCreatorAndRefetchAdList()
 

@@ -4,7 +4,6 @@ import { MakePaymentComponent } from './make-payment.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule, Routes } from '@angular/router';
 import { StripeModule } from 'stripe-angular';
-import { AdsModule } from '../spotbie/ads/ads.module';
 import { HelperModule } from '../helpers/helper.module';
 
 export const ROUTES: Routes = [

@@ -141,8 +141,15 @@ export class MenuLoggedInComponent implements OnInit {
   private logOutCallback(logOutResponse : any): void{
 
     if(logOutResponse.success){
-      window.document.body.style.backgroundColor = 'unset'
+      
+      let loggedOutFavorites = localStorage.getItem('spotbie_currentFavorites')
+
+      localStorage.clear()
+      
+      localStorage.setItem('spotbie_currentFavorites', loggedOutFavorites)
+      
       this.router.navigate(['/home'])
+
     } else
       console.log("Log Out Error : ", logOutResponse)
 
