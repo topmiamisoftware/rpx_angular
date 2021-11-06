@@ -82,7 +82,7 @@
     "@types/googlemaps": "^3.43.3",
     "@types/jasmine": "^3.9.1",
     "@types/jasminewd2": "^2.0.10",
-    "@types/node": "^16.10.3",
+    "@types/node": "^16.11.6",
     "agm-overlays": "^2.0.0",
     "codelyzer": "^6.0.2",
     "ftp-deploy": "^2.4.1",

@@ -19,8 +19,8 @@ import { UserDashboardComponent } from '../spotbie-logged-in/user-dashboard/user
 import { SortOrderPipe } from 'src/app/pipes/sort-order.pipe'
 import { Business } from 'src/app/models/business'
 import { BottomAdBannerComponent } from '../ads/bottom-ad-banner/bottom-ad-banner.component'
-import { SingleAdComponent } from '../ads/single-ad/single-ad.component'
 import { EVENT_CATEGORIES, FOOD_CATEGORIES, SHOPPING_CATEGORIES } from './map_extras/map_extras'
+import { HeaderAdBannerComponent } from '../ads/header-ad-banner/header-ad-banner.component'
 
 const YELP_BUSINESS_SEARCH_API = 'https://api.yelp.com/v3/businesses/search'
 
@@ -48,11 +48,12 @@ export class MapComponent implements OnInit {
   @ViewChild('homeDashboard') homeDashboard: BusinessDashboardComponent | UserDashboardComponent
 
   @ViewChild('featureWrapper') featureWrapper: ElementRef
+  @ViewChild('featureWrapperAnchor') featureWrapperAnchor: ElementRef
 
   @ViewChild('scrollMapAppAnchor') scrollMapAppAnchor: ElementRef
 
   @ViewChild('bottomAdBanner') bottomAdBanner: BottomAdBannerComponent
-  @ViewChild('singleAdApp') singleAdApp: SingleAdComponent
+  @ViewChild('singleAdApp') singleAdApp: HeaderAdBannerComponent
 
   public isLoggedIn: string
   public iconUrl:  string
@@ -653,11 +654,14 @@ export class MapComponent implements OnInit {
 
   public openWelcome(){
 
+    this.scrollMapAppAnchor.nativeElement.scrollIntoView({ behavior: "smooth", block: "start" })
+
     this.catsUp = false
+    this.map = false
     this.show_search_box = false 
+    this.showSearchResults = false
     this.infoObject = null
     this.infoObjectWindow.open = false
-    this.featureWrapper.nativeElement.scrollIntoView({ behavior: "smooth", block: "start" })
 
   }
 

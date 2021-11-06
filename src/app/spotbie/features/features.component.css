@@ -71,7 +71,9 @@ h2{
     background: url(../../../assets/images/spotbie-miami.jpg);
     box-shadow: inset 0px -80px 65px #332f3e;
 }
-
+.fa-map-marker-alt{
+    font-size: .8rem;
+}
 h4{
     position: relative;
     margin: 0 auto;

@@ -13,6 +13,8 @@ export const routes: Routes = [
   { path: 'business', loadChildren: () => import('./business/business.module').then(m => m.BusinessModule) },
   { path: 'terms', component: TermsComponent },  
   { path: 'bugs', component: BugsComponent },
+  { path: 'earn-loyalty-points', component: BugsComponent },
+  { path: 'award-loyalty-points', component: BugsComponent },
 
   { path: 'password', loadChildren: () => import('./spotbie/spotbie-logged-out/forgot-password/forgot-password.module').then(m => m.ForgotPasswordModule ) },
   

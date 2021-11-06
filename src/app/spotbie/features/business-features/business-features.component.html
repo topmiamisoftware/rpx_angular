@@ -11,9 +11,24 @@
 
 <h4 class="text-uppercase">SPOTBIE COMMUNITY</h4>
 
-<p>
-    The SpotBie community unites users to places to eat, events, and retail shops. The SpotBie community rewards users to keep attending
-    locales and venues that are part of it. Users redeem their SpotBie Loyalty Points at SpotBie community partner locations.
+<p class="text-center">    
+
+    <br/>
+    <a class="spotbie-text-link text-uppercase" [routerLink]="['/earn-loyalty-points']">Award Loyalty Points</a>
+    <br/><br/>
+    
+    <span class="spotbie-text-gradient"><i class='fa fa-map-marker-alt'></i> to nearby</span>
+    
+    <br/><br/>
+    <a class="spotbie-text-link text-uppercase" [routerLink]="['/home']">SpotBie Community Members</a> 
+    <br/><br/>
+    <span class="spotbie-text-gradient">Food, Shopping, Events</span>
+    <br/><br/>
+
+    Offer exclusive discounts, drinks & food, event merchandise, and more.
+    
+    <br/><br/><br/>
+
 </p>
 
 <div class="sb-homePageIconsTable mt-4 mb-4">
@@ -112,3 +127,11 @@
 
 <div class="mb-4 sb-readImage cursor-pointer"
         id="sbReadImageUsers"></div>
+
+<div class="sb-footer pt-5 pb-5">
+
+    <p [routerLink]="['/terms']">Terms & Privacy Policy</p>
+    <img class="mt-3 mb-3" src="assets/images/home_imgs/logo_spotbie-02.svg" />
+    <p [routerLink]="['/terms']">SpotBie, LLC.&copy; Copyright 2021</p>
+
+</div>

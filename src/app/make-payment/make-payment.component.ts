@@ -1,8 +1,5 @@
-import { Component, OnInit, ViewChild, ViewChildren } from '@angular/core'
-import { FormBuilder } from '@angular/forms'
+import { Component, OnInit, ViewChild } from '@angular/core'
 
-
-import { HttpClient } from '@angular/common/http'
 import { StripeCard, StripeScriptTag } from 'stripe-angular'
 import { ActivatedRoute } from '@angular/router'
 import { Ad } from '../models/ad'
@@ -10,7 +7,7 @@ import { AdsService } from '../spotbie/ads/ads.service'
 import { Business } from '../models/business'
 import { BottomAdBannerComponent } from '../spotbie/ads/bottom-ad-banner/bottom-ad-banner.component'
 import { NearbyFeaturedAdComponent } from '../spotbie/ads/nearby-featured-ad/nearby-featured-ad.component'
-import { SingleAdComponent } from '../spotbie/ads/single-ad/single-ad.component'
+import { HeaderAdBannerComponent } from '../spotbie/ads/header-ad-banner/header-ad-banner.component'
 
 @Component({
   selector: 'app-make-payment',
@@ -21,7 +18,7 @@ export class MakePaymentComponent implements OnInit {
 
   @ViewChild('stripeCard') stripeCard: StripeCard
 
-  @ViewChild('adPreviewApp') adPreviewApp: BottomAdBannerComponent | NearbyFeaturedAdComponent | SingleAdComponent = null
+  @ViewChild('adPreviewApp') adPreviewApp: BottomAdBannerComponent | NearbyFeaturedAdComponent | HeaderAdBannerComponent = null
 
   public invalidError: any = null
 
@@ -30,6 +27,7 @@ export class MakePaymentComponent implements OnInit {
   public cardDetailsFilledOut: boolean = false
 
   public uuid: string = ''
+  public paymentType: string = ''
 
   public ad: Ad = new Ad()
   public business: Business = new Business()
@@ -124,9 +122,17 @@ export class MakePaymentComponent implements OnInit {
 
   ngOnInit(): void {
     
+    this.paymentType = this.activatedRoute.snapshot.paramMap.get('paymentType')
     this.uuid = this.activatedRoute.snapshot.paramMap.get('uuid')
 
-    this.getAdFromUuid()
+    switch(this.paymentType){
+      case 'in-house':
+        this.getAdFromUuid()
+        break;
+      case 'business-membership':
+        break;
+    }
+    
 
   }
 

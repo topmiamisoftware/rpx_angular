@@ -7,8 +7,4 @@ export const environment = {
   apiEndpoint: 'https://api.spotbie.com/api/',
   qrCodeScanBaseUrl : 'https://spotbie.com/loyalty-points/scan',
   ngrok: null,
-  subscriptionHeaderPaymentLink: 'https://buy.stripe.com/test_6oEbKs308deIfTi9AC',
-  subscriptionFooterPaymentLink: 'https://buy.stripe.com/test_8wM9CkfMU0rW22s8ww',
-  subscriptionRelatedPaymentLink: 'https://buy.stripe.com/test_bIYdSAdEMb6A22s7st'
-
 };

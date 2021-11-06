@@ -103,6 +103,7 @@
     bottom: 0;
     left: 0;
     width: 100%;
+    font-size: .6rem;
 }
 .sb-perDollarTopAd{
     position: absolute;
@@ -162,5 +163,9 @@
 
 }
 @media (max-width: 768px) { 
-
+    .spotbie-ad-wrapper-header{
+        width: 100%;
+        min-width: 100%;
+        max-width: 100%;
+    }
 }

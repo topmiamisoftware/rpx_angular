@@ -8,7 +8,7 @@ import { AdsModule } from '../spotbie/ads/ads.module';
 import { HelperModule } from '../helpers/helper.module';
 
 export const ROUTES: Routes = [
-  { path: ':uuid', component: MakePaymentComponent }
+  { path: ':paymentType/:uuid', component: MakePaymentComponent }
 ]
 
 @NgModule({

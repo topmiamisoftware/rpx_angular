@@ -154,7 +154,7 @@
 
       <div #scrollMapAppAnchor></div>
       
-      <app-single-ad #singleAdApp class='spotbie-ad' [categories]="number_categories" [lat]="lat" [lng]="lng"></app-single-ad>
+      <app-header-ad-banner #singleAdApp class='spotbie-ad' [categories]="number_categories" [lat]="lat" [lng]="lng"></app-header-ad-banner>
 
       <div class='spotbie-search-results-title text-uppercase' *ngIf="type_of_info_object == 'yelp_business'">
 
@@ -501,7 +501,15 @@
     
     </div>
 
-    <div [ngClass]="getMapPromptMobileClass()" *ngIf="business" #featureWrapper>
+    <div class="sb-footer pt-5 pb-5" *ngIf="showSearchResults || (showSearchResults && isLoggedIn !== '1' )">
+
+      <p [routerLink]="['/terms']">Terms & Privacy Policy</p>
+      <img class="mt-3 mb-3" src="assets/images/home_imgs/logo_spotbie-02.svg" />
+      <p [routerLink]="['/terms']">SpotBie, LLC.&copy; Copyright 2021</p>
+
+    </div>
+
+    <div [ngClass]="getMapPromptMobileClass()" *ngIf="business && !showSearchResults" #featureWrapper>
 
       <div [ngClass]="getMapPromptMobileInnerWrapperClassOne()">
 
@@ -519,15 +527,7 @@
 
     </div>    
 
-    <div class="sb-footer pt-5 pb-5" *ngIf="business">
-
-      <p [routerLink]="['/terms']">Terms & Privacy Policy</p>
-      <img class="mt-3 mb-3" src="assets/images/home_imgs/logo_spotbie-02.svg" />
-      <p [routerLink]="['/terms']">SpotBie, LLC.&copy; Copyright 2021</p>
-  
-    </div>
-
-    <div [ngClass]="getMapPromptMobileClass()" *ngIf="!business" #featureWrapper>
+    <div [ngClass]="getMapPromptMobileClass()" *ngIf="!business && !showSearchResults" #featureWrapper>
 
       <div [ngClass]="getMapPromptMobileInnerWrapperClassOne()">
 
@@ -543,7 +543,7 @@
     </div>
 
   </div>
-  
+
   <div class='spotbie-categories animated slideInRight' *ngIf="catsUp && searchCategory != 'events'">
   
     <div *ngFor="let category of categories; let i = index" [ngClass]="getSingleCatClass(i)" (click)="apiSearch(category)">

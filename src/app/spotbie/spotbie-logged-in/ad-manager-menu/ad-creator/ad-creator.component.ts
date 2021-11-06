@@ -7,13 +7,14 @@ import { LoyaltyPointBalance } from 'src/app/models/loyalty-point-balance'
 import { LoyaltyPointsService } from 'src/app/services/loyalty-points/loyalty-points.service'
 import { AdCreatorService } from 'src/app/services/spotbie-logged-in/ad-manager-menu/ad-creator/ad-creator.service'
 import { BottomAdBannerComponent } from 'src/app/spotbie/ads/bottom-ad-banner/bottom-ad-banner.component'
+import { HeaderAdBannerComponent } from 'src/app/spotbie/ads/header-ad-banner/header-ad-banner.component'
 import { NearbyFeaturedAdComponent } from 'src/app/spotbie/ads/nearby-featured-ad/nearby-featured-ad.component'
-import { SingleAdComponent } from 'src/app/spotbie/ads/single-ad/single-ad.component'
 import { environment } from 'src/environments/environment'
 import * as spotbieGlobals from '../../../../globals'
 
 const AD_MEDIA_UPLOAD_API_URL = `${spotbieGlobals.API}in-house/upload-media`
 const AD_MEDIA_MAX_UPLOAD_SIZE = 25e+6
+const AD_PAYMENT_URL = `${environment.baseUrl}/make-payment/in-house/`
 
 @Component({
   selector: 'app-ad-creator',
@@ -28,7 +29,7 @@ export class AdCreatorComponent implements OnInit {
   @ViewChild('adMediaInput') adMediaInput
   @ViewChild('spbTopAnchor') spbTopAnchor
 
-  @ViewChild('adApp') adApp: SingleAdComponent | BottomAdBannerComponent | NearbyFeaturedAdComponent
+  @ViewChild('adApp') adApp: HeaderAdBannerComponent | BottomAdBannerComponent | NearbyFeaturedAdComponent
 
   @Output() closeWindowEvt = new EventEmitter()
   @Output() closeThisEvt = new EventEmitter()
@@ -323,7 +324,7 @@ export class AdCreatorComponent implements OnInit {
 
   public activateAdMembership(){
 
-    let paymentUrl = `${environment.baseUrl}/make-payment/${this.ad.uuid}`
+    let paymentUrl = `${AD_PAYMENT_URL}${this.ad.uuid}`
 
     window.open(paymentUrl, '_blank')
 
