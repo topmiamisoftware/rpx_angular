@@ -264,8 +264,9 @@ export class UserauthService {
     this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID, gLoginOptions).catch(
       (error) => {
         loginCallBack(error)
+        return
       }
-    );
+    )
     
     this.socialAuthService.authState.subscribe((user) => {
 
@@ -320,9 +321,12 @@ export class UserauthService {
     }; 
 
     this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID, fbLoginOptions).catch(
+      
       (error) => {
         loginCallBack(error)
+        return
       }
+
     )
     
     this.socialAuthService.authState.subscribe( (user) => {

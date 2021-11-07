@@ -115,9 +115,11 @@ export class LogInComponent implements OnInit {
     }
     
     if(loginResponse === undefined){
+
       this.logInForm.setErrors(null)
       this.logInForm.get('spotbieUsername').setErrors({ invalidUorP: true })
       this.loading = false
+      
     }
 
     let login_status = loginResponse.message

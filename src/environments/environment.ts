@@ -2,7 +2,7 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-let ngrok = 'https://3075-2600-1700-4804-d5f0-b58d-fcc3-2e64-7fff.ngrok.io/'
+let ngrok = 'https://c842-2600-1700-4804-d5f0-87f0-a8a3-e70b-ed84.ngrok.io/'
 let baseUrl = 'https://192.168.1.65:4200/'
 export const environment = {
   production: false,
