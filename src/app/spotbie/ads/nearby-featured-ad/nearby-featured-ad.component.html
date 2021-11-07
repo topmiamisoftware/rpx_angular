@@ -1,43 +1,29 @@
 <div class='spotbie-ad-wrapper-header'
     (click)="openAd()">
 
-    <div class='sb-ad-top'>
-
-        <span class='sb-text-light-green-gradient sb-sponsored text-uppercase' (click)="clickGoToSponsored()">SPONSORED</span><br/>
-
-        <span class='spotbie-text-gradient sb-sponsoredName text-uppercase'>{{ business.name }}</span>
-
-        <span class='sb-text-light-green-gradient sb-totalRewards text-uppercase'>{{ totalRewards  }} REWARDS</span>
-
-        <span class='sb-text-light-green-gradient sb-perDollarTopAd text-uppercase' *ngIf="!isMobile && !editMode">
-            {{ (business.loyalty_point_dollar_percent_value / 100) | currency : 'USD' }} per dollar
-        </span>
-
-        <span class='sb-text-light-green-gradient sb-perDollarTopAd text-uppercase' *ngIf="!isMobile && editMode">
-            {{ (loyaltyPointBalance.loyalty_point_dollar_percent_value / 100) | currency : 'USD' }} per dollar
-        </span>
-
-    </div>
-
-    <div class='spotbie-white-iconImg' [ngStyle]="{'background' : 'url(' + whiteIconSvg + ')'}" ></div>
-
     <div class="spotbie-ad-image" [ngStyle]="{'background' : 'url(' + ad.images + ')'}"></div>
     
     <div class='sb-ad-bottom'>
         
-        <span class='sb-text-light-green-gradient sb-distanceMiles text-uppercase'>{{ distance | number:'1.0':'en-US' }} miles.</span>
+        <span class='spotbie-text-gradient sb-sponsoredName text-uppercase'>{{ business.name }}</span>
 
-        <span class='sb-text-light-green-gradient sb-perDollar text-uppercase' *ngIf="isMobile && !editMode">
+        <br/>
+        <span class='sb-text-light-green-gradient sb-totalRewards text-uppercase'>{{ totalRewards }} REWARDS</span>
+
+        <br/>
+        <span class='sb-text-light-green-gradient sb-distanceMiles text-uppercase'>
+            <i class='fas fa-map-marker-alt'></i>
+            {{ distance | number:'1.0':'en-US' }} miles
+        </span>
+
+        <br/>
+        <span class='sb-text-light-green-gradient sb-perDollar text-uppercase' *ngIf="!editMode">
             {{ (business.loyalty_point_dollar_percent_value / 100) | currency : 'USD' }} per dollar
         </span>
-
-        <span class='sb-text-light-green-gradient sb-perDollar text-uppercase' *ngIf="isMobile && editMode">
+        
+        <span class='sb-text-light-green-gradient sb-perDollar text-uppercase' *ngIf="editMode">
             {{ (loyaltyPointBalance.loyalty_point_dollar_percent_value / 100) | currency : 'USD' }} per dollar
         </span>
-
-        <span class='spotbie-text-gradient sb-address text-uppercase'><i class='fas fa-map-marker-alt'></i> {{ business.address }}</span>
-
-        <span class='spotbie-text-gradient sb-categoryList text-uppercase'>{{ categoryListForUi }}</span>
 
     </div>
 

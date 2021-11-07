@@ -23,16 +23,10 @@
     font-size: .5rem;
 }
 .sb-sponsoredName{
-    position: absolute;
-    top: 41px;
-    right: 14px;
     font-size: .5rem;
 }
 
 .sb-totalRewards{
-    position: absolute;
-    top: 65px;
-    right: 14px;
     font-size: .8rem;
 }
 
@@ -41,12 +35,6 @@
     bottom: 17px;
     right: 14px;
     font-size: .5rem;
-}
-.sb-distanceMiles{
-    position: absolute;
-    bottom: 65px;
-    right: 14px;
-    font-size: .8rem;
 }
 .sb-address {
     position: absolute;
@@ -66,12 +54,12 @@
 .spotbie-ad-image{
     position: relative;
     margin: 0 auto;
-    min-height: 250px;
-    height: 250px;
-    max-height: 100%;
-    max-width: 100%;
+    min-height: 300px;
+    height: 300px;
+    max-height: 300px;
+    max-width: 300px;
     background-repeat: no-repeat!important;
-    background-size: 100%!important;
+    background-size: cover!important;
     background-position: center!important; 
 }
 .spotbie-white-iconImg{
@@ -115,9 +103,12 @@
 .spotbie-ad-wrapper-header{
     position: relative;
     display: inline-block;
-    max-width: 30%;
-    min-width: 30%;
-    width: 30%;
+    max-width: 300px;
+    min-width: 300px;
+    height: 300px;
+    max-height: 300px;
+    min-height: 300px;
+    height: 300px;    
     margin-left: 1%;
     margin-right: 1%;     
 }
@@ -137,26 +128,22 @@
 }      
 .sb-sponsored,
 .sb-sponsoredName{
-    margin-top: 25px;
+    margin-top: 18px;
 }
+
 .sb-perDollar
-.sb-distanceMiles,
 .sb-categoryList{
     margin-bottom: 25px;        
 } 
 .sb-totalRewards{
     display: block;
-    margin-bottom: 10px;
 }   
 .sb-distanceMiles{
     display: block;
     margin-top: 10px;
 }      
-.sb-sponsoredName{
-    margin-left: 5px;
-}
 .sb-perDollar{
-    margin-right: 5px;
+   padding-bottom: 5px;
 } 
 
 @media (max-width: 1100px) { 

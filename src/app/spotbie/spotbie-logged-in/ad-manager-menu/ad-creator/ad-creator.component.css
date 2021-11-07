@@ -50,7 +50,10 @@
     bottom: 0px;
     margin-right: 10px;
 }
-
+.fa-map-marker-alt{
+    color: white;
+    margin-right: 10px;
+}
 .header-banner{
   display: block;
   min-width: 900px;
