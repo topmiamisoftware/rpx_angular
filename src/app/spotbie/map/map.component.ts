@@ -546,6 +546,16 @@ export class MapComponent implements OnInit {
 
   }
 
+  public newKeyWord(){
+    
+      this.totalResults = 0
+      this.allPages = 0
+      this.current_offset = 0
+      this.around_me_search_page = 1
+      this.searchResults = []
+
+  }
+
   public apiSearch(keyword: string, resetEventSorter: boolean = false) {
 
     this.loading = true
@@ -557,11 +567,7 @@ export class MapComponent implements OnInit {
 
     if(this.search_keyword !== keyword){
 
-      this.totalResults = 0
-      this.allPages = 0
-      this.current_offset = 0
-      this.around_me_search_page = 1
-      this.searchResults = []
+      this.newKeyWord()
 
     }
 

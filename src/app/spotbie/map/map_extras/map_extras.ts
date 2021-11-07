@@ -1,36 +1,81 @@
 export const MAP_STYLES = [
     {
-        "featureType": "all",
-        "elementType": "labels.text.fill",
-        "stylers": [
-            {
-                "saturation": 36
-            },
-            {
-                "color": "#000000"
-            },
-            {
-                "lightness": 40
-            }
-        ]
-    },
-    {
-        "featureType": "all",
-        "elementType": "labels.text.stroke",
+        "featureType": "landscape",
+        "elementType": "all",
         "stylers": [
             {
                 "visibility": "on"
             },
             {
-                "color": "#000000"
-            },
-            {
-                "lightness": 16
+                "color": "#fdfdfd"
             }
         ]
     },
     {
-        "featureType": "all",
+        "featureType": "landscape",
+        "elementType": "geometry.fill",
+        "stylers": [
+            {
+                "color": "#f5efef"
+            }
+        ]
+    },
+    {
+        "featureType": "landscape.man_made",
+        "elementType": "geometry",
+        "stylers": [
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "landscape.man_made",
+        "elementType": "geometry.fill",
+        "stylers": [
+            {
+                "color": "#b04949"
+            }
+        ]
+    },
+    {
+        "featureType": "poi",
+        "elementType": "labels.icon",
+        "stylers": [
+            {
+                "visibility": "on"
+            }
+        ]
+    },
+    {
+        "featureType": "poi.attraction",
+        "elementType": "geometry",
+        "stylers": [
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "poi.attraction",
+        "elementType": "geometry.fill",
+        "stylers": [
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "poi.attraction",
+        "elementType": "labels.icon",
+        "stylers": [
+            {
+                "visibility": "on"
+            }
+        ]
+    },
+    {
+        "featureType": "poi.business",
         "elementType": "labels.icon",
         "stylers": [
             {
@@ -39,154 +84,107 @@ export const MAP_STYLES = [
         ]
     },
     {
-        "featureType": "administrative",
-        "elementType": "geometry.fill",
+        "featureType": "poi.government",
+        "elementType": "labels.icon",
         "stylers": [
-            {
-                "color": "#000000"
-            },
-            {
-                "lightness": 15
-            },
             {
                 "visibility": "on"
             }
         ]
     },
     {
-        "featureType": "administrative",
-        "elementType": "geometry.stroke",
+        "featureType": "poi.park",
+        "elementType": "labels.icon",
         "stylers": [
             {
-                "color": "#000000"
+                "visibility": "on"
             },
             {
-                "lightness": 10
+                "saturation": "3"
             },
             {
-                "weight": 1.2
-            },
+                "lightness": "22"
+            }
+        ]
+    },
+    {
+        "featureType": "poi.sports_complex",
+        "elementType": "labels.icon",
+        "stylers": [
             {
                 "visibility": "on"
             }
         ]
     },
     {
-        "featureType": "administrative",
-        "elementType": "labels.text",
-        "stylers": [
-            {
-                "color": "#93c991"
-            },
-            {
-                "visibility": "simplified"
-            }
-        ]
-    },
-    {
-        "featureType": "landscape",
+        "featureType": "road",
         "elementType": "all",
         "stylers": [
             {
-                "visibility": "on"
-            },
-            {
                 "color": "#000000"
             }
         ]
     },
     {
-        "featureType": "landscape",
-        "elementType": "geometry",
-        "stylers": [
-            {
-                "color": "#000000"
-            },
-            {
-                "lightness": 20
-            },
-            {
-                "visibility": "on"
-            }
-        ]
-    },
-    {
-        "featureType": "landscape.natural",
+        "featureType": "road",
         "elementType": "geometry.fill",
         "stylers": [
             {
-                "visibility": "on"
-            },
-            {
-                "color": "#000000"
+                "color": "#ffffff"
             }
         ]
     },
     {
-        "featureType": "landscape.natural.landcover",
-        "elementType": "geometry",
-        "stylers": [
-            {
-                "visibility": "on"
-            },
-            {
-                "color": "#000000"
-            }
-        ]
-    },
-    {
-        "featureType": "landscape.natural.landcover",
-        "elementType": "geometry.fill",
-        "stylers": [
-            {
-                "visibility": "on"
-            },
-            {
-                "color": "#000000"
-            }
-        ]
-    },
-    {
-        "featureType": "landscape.natural.landcover",
+        "featureType": "road",
         "elementType": "geometry.stroke",
         "stylers": [
             {
-                "visibility": "on"
+                "gamma": 7.18
             },
             {
-                "color": "#000000"
+                "color": "#ffffff"
             }
         ]
     },
     {
-        "featureType": "landscape.natural.terrain",
-        "elementType": "geometry.fill",
+        "featureType": "road",
+        "elementType": "labels.text",
         "stylers": [
             {
                 "visibility": "on"
             },
             {
-                "color": "#000000"
-            }
-        ]
-    },
-    {
-        "featureType": "landscape.natural.terrain",
-        "elementType": "geometry.stroke",
-        "stylers": [
-            {
-                "visibility": "on"
+                "saturation": "-35"
             },
             {
-                "color": "#000000"
+                "lightness": "-95"
+            },
+            {
+                "gamma": "0.00"
+            },
+            {
+                "weight": "0.01"
             }
         ]
     },
     {
-        "featureType": "poi",
+        "featureType": "road",
+        "elementType": "labels.icon",
         "stylers": [
             {
-                "visibility" : "off"
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "road.highway",
+        "elementType": "all",
+        "stylers": [
+            {
+                "color": "#ffb900"
+            },
+            {
+                "visibility": "off"
             }
         ]
     },
@@ -195,79 +193,112 @@ export const MAP_STYLES = [
         "elementType": "geometry.fill",
         "stylers": [
             {
-                "color": "#000000"
-            },
-            {
-                "lightness": 17
+                "visibility": "off"
             }
         ]
     },
     {
         "featureType": "road.highway",
-        "elementType": "geometry.stroke",
+        "elementType": "labels.text.fill",
         "stylers": [
             {
-                "color": "#000000"
-            },
-            {
-                "lightness": 29
-            },
-            {
-                "weight": 0.2
+                "visibility": "off"
             }
         ]
     },
     {
-        "featureType": "road.arterial",
-        "elementType": "geometry",
+        "featureType": "road.highway.controlled_access",
+        "elementType": "geometry.fill",
         "stylers": [
             {
-                "color": "#000000"
+                "visibility": "off"
             },
             {
-                "lightness": 18
+                "saturation": "-15"
             }
         ]
     },
     {
         "featureType": "road.local",
-        "elementType": "geometry",
+        "elementType": "labels.text",
         "stylers": [
             {
-                "color": "#000000"
-            },
-            {
-                "lightness": 16
+                "visibility": "on"
             }
         ]
     },
     {
         "featureType": "transit",
+        "elementType": "all",
+        "stylers": [
+            {
+                "visibility": "on"
+            }
+        ]
+    },
+    {
+        "featureType": "transit.line",
         "elementType": "geometry",
         "stylers": [
             {
-                "color": "#000000"
+                "gamma": 0.48
+            }
+        ]
+    },
+    {
+        "featureType": "transit.station",
+        "elementType": "labels.icon",
+        "stylers": [
+            {
+                "visibility": "off"
+            }
+        ]
+    },
+    {
+        "featureType": "transit.station.rail",
+        "elementType": "all",
+        "stylers": [
+            {
+                "visibility": "off"
             },
             {
-                "lightness": 19
+                "color": "#ff0000"
             }
         ]
     },
     {
         "featureType": "water",
-        "elementType": "geometry",
+        "elementType": "all",
         "stylers": [
             {
-                "color": "#000000"
+                "color": "#4d4946"
+            }
+        ]
+    },
+    {
+        "featureType": "water",
+        "elementType": "geometry.fill",
+        "stylers": [
+            {
+                "visibility": "on"
             },
             {
-                "lightness": 17
+                "color": "#a8bbd5"
+            }
+        ]
+    },
+    {
+        "featureType": "water",
+        "elementType": "labels.text.fill",
+        "stylers": [
+            {
+                "hue": "#ff0000"
             }
         ]
     }
 ]
 
-  export const FOOD_CATEGORIES = ['Asian Fusion', 'Bagels', 'Bakery', 'Bar', 'Barbeque', 'Breakfast', 'British',
+export const FOOD_CATEGORIES = ['Asian Fusion', 'Bagels', 'Bakery', 'Bar', 'Barbeque', 'Breakfast', 'British',
   'Brunch', 'Buffets', 'Burgers', 'Cajun/Creole', 'Caribbean', 'Coffee/Espresso', 'Country Food', 'Cuban',
   'Deli', 'Doughnuts', 'Family Fare', 'Fast Food', 'Fine Dining', 'Food Trucks', 'French', 'German',
   'Gluten-free', 'Greek', 'Happy Hour', 'Hot Dogs', 'Ice Cream', 'Indian', 'Irish', 'Italian',

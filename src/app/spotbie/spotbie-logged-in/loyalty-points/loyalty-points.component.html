@@ -115,8 +115,9 @@
         
         </form>               
         
-        <p class="spotbie-text-gradient text-uppercase mt-4" style="font-size: .8rem !important;" *ngIf="monthlyDollarValueCalculated">
-            monthly dollar value ${{ userPointToDollarRatio | number:'1.0':'en-US' }}
+        <p class="text-uppercase mt-4" style="font-size: .8rem !important;" *ngIf="monthlyDollarValueCalculated">
+            <span class='spotbie-text-gradient'>monthly dollar value </span>
+            <span class='sb-text-light-green-gradient'>${{ userPointToDollarRatio | number:'1.0':'en-US' }}</span>
         </p>
 
         <div class='spotbie-howDoesItWork spotbie-text-gradient text-center text-uppercase mt-4' (click)="toggleHelp()" style="cursor: pointer;">
