@@ -154,7 +154,11 @@
 
       <div #scrollMapAppAnchor></div>
       
-      <app-header-ad-banner #singleAdApp class='spotbie-ad' [accountType]="searchCategory" [categories]="number_categories" [lat]="lat" [lng]="lng"></app-header-ad-banner>
+      <app-header-ad-banner #singleAdApp class='spotbie-ad' 
+                              [eventsClassification]="eventsClassification"
+                              [accountType]="searchCategory" 
+                              [categories]="number_categories" 
+                              [lat]="lat" [lng]="lng"></app-header-ad-banner>
 
       <div class='spotbie-search-results-title text-uppercase' *ngIf="type_of_info_object == 'yelp_business'">
 
@@ -316,7 +320,7 @@
           SPOTBIE COMMUNITY MEMBERS          
         </div>
         
-        <!-- First let's display the member list for -->
+        <!-- First let's display the spotbie community member list for -->
         <div class='spotbie-search-result spotbie-communityMember-search-result' 
               *ngFor='let communityMember of communityMemberList' 
               (click)="pullSearchMarker(communityMember)">
@@ -355,9 +359,11 @@
       
         </div>       
 
-        <div class='spotbie-no-results mt-4 mb-4' *ngIf='searchResults.length == 0'>No YELP Results Available.</div>
+        <div class='spotbie-no-results mt-4 mb-4 text-uppercase' *ngIf="searchResults.length == 0">No results available.</div>
         
-        <div class='spotbie-no-results mt-4 mb-4' *ngIf='searchResults.length > 0'>YELP RESULTS</div>
+        <div class='spotbie-no-results mt-4 mb-4 text-uppercase' *ngIf="searchResults.length > 0 && type_of_info_object == 'yelp_business'">YELP RESULTS</div>
+        
+        <div class='spotbie-no-results mt-4 mb-4 text-uppercase' *ngIf="searchResults.length > 0 && type_of_info_object == 'ticketmaster_events'">TICKETMASTER RESULTS</div>
 
         <div class='spotbie-search-result' *ngFor='let search_result of searchResults' (click)="pullSearchMarker(search_result)">
           
@@ -439,7 +445,13 @@
     
         </div>
     
-        <app-bottom-ad-banner class='mt-4' #bottomAdBanner [accountType]="searchCategory" [categories]="number_categories" [lat]="lat" [lng]="lng"></app-bottom-ad-banner>
+        <app-bottom-ad-banner class='mt-4' 
+                              #bottomAdBanner 
+                              [eventsClassification]="eventsClassification"
+                              [accountType]="searchCategory" 
+                              [categories]="number_categories" 
+                              [lat]="lat" 
+                              [lng]="lng"></app-bottom-ad-banner>
 
         <div class='mt-5 pb-5'>
     

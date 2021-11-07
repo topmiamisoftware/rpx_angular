@@ -32,6 +32,8 @@ export class NearbyFeaturedAdComponent implements OnInit {
 
   @Input('categories') categories: number
 
+  @Input('eventsClassification') eventsClassification: number = null
+
   public link: string
 
   public displayAd: boolean = false
@@ -101,6 +103,7 @@ export class NearbyFeaturedAdComponent implements OnInit {
           break
         case 3:
           this.genericAdImage = EVENTS_AD_IMAGE
+          this.categories = this.eventsClassification
           break  
       }
 
@@ -120,6 +123,7 @@ export class NearbyFeaturedAdComponent implements OnInit {
         case 'events':
           accountType = 3
           this.genericAdImage = EVENTS_AD_IMAGE
+          this.categories = this.eventsClassification
           break                          
         
       }

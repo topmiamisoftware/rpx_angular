@@ -32,6 +32,8 @@ export class HeaderAdBannerComponent implements OnInit {
 
   @Input('editMode') editMode: boolean = false
 
+  @Input('eventsClassification') eventsClassification: number = null
+
   public link: string
 
   public displayAd: boolean = false
@@ -99,6 +101,7 @@ export class HeaderAdBannerComponent implements OnInit {
           break
         case 3:
           this.genericAdImage = EVENTS_AD_IMAGE
+          this.categories = this.eventsClassification
           break  
       }
 
@@ -118,6 +121,7 @@ export class HeaderAdBannerComponent implements OnInit {
         case 'events':
           accountType = 3
           this.genericAdImage = EVENTS_AD_IMAGE
+          this.categories = this.eventsClassification
           break                          
         
       }

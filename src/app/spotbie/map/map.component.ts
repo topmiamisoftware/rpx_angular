@@ -125,6 +125,7 @@ export class MapComponent implements OnInit {
   private searchResultsOriginal: Array<any> = []
 
   public event_categories
+  public event_classifications = map_extras.EVENT_CATEGORIES
   public food_categories = map_extras.FOOD_CATEGORIES
   public shopping_categories = map_extras.SHOPPING_CATEGORIES
 
@@ -163,6 +164,9 @@ export class MapComponent implements OnInit {
   public bannedYelpIDs = BANNED_YELP_IDS
 
   public communityMemberList: Array<Business> = []
+
+  public eventsClassification: number = null
+
   currentCategoryList: any
 
   constructor(private locationService: LocationService,
@@ -542,6 +546,7 @@ export class MapComponent implements OnInit {
 
   public showEventSub(classification: any){
 
+    this.eventsClassification = this.event_classifications.indexOf(classification.name)
     classification.show_sub = !classification.show_sub 
 
   }
@@ -586,7 +591,8 @@ export class MapComponent implements OnInit {
         
         apiUrl = `size=2&latlong=${this.lat},${this.lng}&classificationName=${keyword}&radius=45&${this.eventDateParam}`
         
-        this.number_categories = this.event_categories.indexOf(keyword)             
+        this.number_categories = this.event_categories.indexOf(keyword) 
+
         break
 
       case 'food':

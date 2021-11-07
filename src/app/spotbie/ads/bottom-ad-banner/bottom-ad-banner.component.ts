@@ -32,6 +32,8 @@ export class BottomAdBannerComponent implements OnInit {
 
   @Input('categories') categories: number
 
+  @Input('eventsClassification') eventsClassification: number = null
+
   public link: string
 
   public displayAd: boolean = false
@@ -97,7 +99,8 @@ export class BottomAdBannerComponent implements OnInit {
           this.genericAdImage = SHOPPING_AD_IMAGE
           break
         case 3:
-          this.genericAdImage = EVENTS_AD_IMAGE
+          this.genericAdImage = EVENTS_AD_IMAGE 
+          this.categories = this.eventsClassification         
           break  
       }
 
@@ -117,6 +120,7 @@ export class BottomAdBannerComponent implements OnInit {
         case 'events':
           accountType = 3
           this.genericAdImage = EVENTS_AD_IMAGE
+          this.categories = this.eventsClassification
           break                          
         
       }
