@@ -314,9 +314,9 @@
     
       </div>      
 
-      <div class='spotbie-search-result-wrapper pt-3' *ngIf="showSearchResults">
+      <div class='spotbie-search-result-wrapper' *ngIf="showSearchResults">
     
-        <div class='spotbie-search-results-title text-uppercase' *ngIf="communityMemberList.length > 0">
+        <div class='spotbie-search-results-title text-uppercase' style="margin-top:0px;" *ngIf="communityMemberList.length > 0">
           SPOTBIE COMMUNITY MEMBERS          
         </div>
         
@@ -363,7 +363,7 @@
         
         <div class='spotbie-no-results mt-4 mb-4 text-uppercase' *ngIf="searchResults.length > 0 && type_of_info_object == 'yelp_business'">YELP RESULTS</div>
         
-        <div class='spotbie-no-results mt-4 mb-4 text-uppercase' *ngIf="searchResults.length > 0 && type_of_info_object == 'ticketmaster_events'">TICKETMASTER RESULTS</div>
+        <div class='spotbie-no-results mt-4 mb-4 sb-eventsResultsTitle text-uppercase' *ngIf="searchResults.length > 0 && type_of_info_object == 'ticketmaster_events'">TICKETMASTER RESULTS</div>
 
         <div class='spotbie-search-result' *ngFor='let search_result of searchResults' (click)="pullSearchMarker(search_result)">
           
