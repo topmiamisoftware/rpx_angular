@@ -1,6 +1,6 @@
 <app-loading-screen *ngIf="loading"></app-loading-screen>
 
-<div class='spotbie-overlay-window'>  
+<div class='spotbie-overlay-window' #parentWindow>  
 
   <div [ngClass]="getMapWrapperClass()">
     
@@ -154,7 +154,7 @@
 
       <div #scrollMapAppAnchor></div>
       
-      <app-header-ad-banner #singleAdApp class='spotbie-ad' [categories]="number_categories" [lat]="lat" [lng]="lng"></app-header-ad-banner>
+      <app-header-ad-banner #singleAdApp class='spotbie-ad' [accountType]="searchCategory" [categories]="number_categories" [lat]="lat" [lng]="lng"></app-header-ad-banner>
 
       <div class='spotbie-search-results-title text-uppercase' *ngIf="type_of_info_object == 'yelp_business'">
 
@@ -439,7 +439,7 @@
     
         </div>
     
-        <app-bottom-ad-banner class='mt-4' #bottomAdBanner [categories]="number_categories" [lat]="lat" [lng]="lng"></app-bottom-ad-banner>
+        <app-bottom-ad-banner class='mt-4' #bottomAdBanner [accountType]="searchCategory" [categories]="number_categories" [lat]="lat" [lng]="lng"></app-bottom-ad-banner>
 
         <div class='mt-5 pb-5'>
     
@@ -629,6 +629,6 @@
 
   <app-my-favorites *ngIf="myFavoritesWindow.open" (closeWindow)="closeFavorites()"></app-my-favorites>
 
-  <app-scroll-to-top></app-scroll-to-top>
+  <app-scroll-to-top [inputWindow]="parentWindow"></app-scroll-to-top>
 
 </div>

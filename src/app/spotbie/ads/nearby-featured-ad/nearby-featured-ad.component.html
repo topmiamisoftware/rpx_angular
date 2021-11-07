@@ -1,7 +1,9 @@
 <div class='spotbie-ad-wrapper-header'
     (click)="openAd()">
 
-    <div class="spotbie-ad-image" [ngStyle]="{'background' : 'url(' + ad.images + ')'}"></div>
+    <div class="spotbie-ad-image" [ngStyle]="{'background' : 'url(' + ad.images + ')'}" *ngIf="!editMode && ad.id != 2"></div>
+    
+    <div class="spotbie-ad-image" [ngStyle]="{'background' : 'url(' + genericAdImage  + ')'}" *ngIf="editMode && ad.id == 2"></div>
     
     <div class='sb-ad-bottom'>
         

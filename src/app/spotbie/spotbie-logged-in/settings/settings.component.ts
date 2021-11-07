@@ -350,6 +350,8 @@ export class SettingsComponent implements OnInit {
 
         if(this.calendlyUp) 
             calendly.spawnCalendly(this.originTitle, this.originAddress, () => { this.loading = false } )
+        else
+            this.loading = false
 
     }
 

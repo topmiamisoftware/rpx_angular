@@ -10,6 +10,10 @@ import { InfoObjectType } from 'src/app/helpers/enum/info-object-type.enum';
 import { LoyaltyPointBalance } from 'src/app/models/loyalty-point-balance';
 import { LoyaltyPointsService } from 'src/app/services/loyalty-points/loyalty-points.service';
 
+const PLACE_TO_EAT_AD_IMAGE = 'assets/images/def/places-to-eat/header_banner_in_house.jpg'
+const SHOPPING_AD_IMAGE = 'assets/images/def/shopping/header_banner_in_house.jpg'
+const EVENTS_AD_IMAGE = 'assets/images/def/events/header_banner_in_house.jpg'
+
 @Component({
   selector: 'app-header-ad-banner',
   templateUrl: './header-ad-banner.component.html',
@@ -21,6 +25,8 @@ export class HeaderAdBannerComponent implements OnInit {
   @Input('lng') lng: number
   @Input('business') business: Business = new Business()
   @Input('ad') ad: Ad = null
+
+  @Input('accountType') accountType: string = null
 
   @Input('categories') categories: number
 
@@ -52,6 +58,8 @@ export class HeaderAdBannerComponent implements OnInit {
 
   public adTypeWithId: boolean = false
 
+  public genericAdImage: string = PLACE_TO_EAT_AD_IMAGE
+
   constructor(private adsService: AdsService,
               private deviceDetectorService: DeviceDetectorService,
               private loyaltyPointsService: LoyaltyPointsService) { 
@@ -68,23 +76,60 @@ export class HeaderAdBannerComponent implements OnInit {
 
     let adId = null
 
+    let accountType 
+
     if(this.editMode){
       
       if(this.ad == null){
         
         this.ad = new Ad()
-        this.ad.id = 10
+        this.ad.id = 2
         adId = this.ad.id
 
       } else adId = this.ad.id
-      
+
+      accountType = localStorage.getItem('spotbie_userType')
+
+      switch(accountType){
+        case 1:
+          this.genericAdImage = PLACE_TO_EAT_AD_IMAGE
+          break
+        case 2:
+          this.genericAdImage = SHOPPING_AD_IMAGE
+          break
+        case 3:
+          this.genericAdImage = EVENTS_AD_IMAGE
+          break  
+      }
+
+
+    } else {
+
+      switch(this.accountType){
+
+        case 'food':
+          accountType = 1
+          this.genericAdImage = PLACE_TO_EAT_AD_IMAGE
+          break
+        case 'shopping':
+          accountType = 2
+          this.genericAdImage = SHOPPING_AD_IMAGE
+          break
+        case 'events':
+          accountType = 3
+          this.genericAdImage = EVENTS_AD_IMAGE
+          break                          
+        
+      }
+
     }
 
     const headerBannerReqObj = {
       loc_x: this.lat,
       loc_y: this.lng,
       categories: JSON.stringify(this.categories),
-      id: adId
+      id: adId,
+      account_type: accountType
     }
     
     //Retrieve the SpotBie Ads
@@ -125,6 +170,8 @@ export class HeaderAdBannerComponent implements OnInit {
     if(resp.success){
 
       this.ad = resp.ad
+      
+      if(this.editMode) this.ad.name = "Harry's"
       
       this.business = resp.business
 
@@ -200,7 +247,7 @@ export class HeaderAdBannerComponent implements OnInit {
   ngOnInit(): void {
 
     this.isMobile = this.deviceDetectorService.isMobile()
-    
+
     this.getHeaderBanner()
 
   }

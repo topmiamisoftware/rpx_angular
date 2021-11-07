@@ -2,8 +2,10 @@
     *ngIf="displayAd"
     (click)="openAd()">
 
-    <div class="spotbie-ad-image" [ngStyle]="{'background' : 'url(' + ad.images + ')'}"></div>
+    <div class="spotbie-ad-image" [ngStyle]="{'background' : 'url(' + ad.images + ')'}" *ngIf="!editMode && ad.id != 2"></div>
     
+    <div class="spotbie-ad-image" [ngStyle]="{'background' : 'url(' + genericAdImage  + ')'}" *ngIf="editMode && ad.id == 2"></div>
+
     <div class='sb-ad-bottom'>
         
         <span class='spotbie-text-gradient sb-sponsoredName text-uppercase'>{{ business.name }}</span>

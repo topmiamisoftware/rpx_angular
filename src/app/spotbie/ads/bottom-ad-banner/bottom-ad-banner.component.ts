@@ -10,6 +10,10 @@ import { LoyaltyPointsService } from 'src/app/services/loyalty-points/loyalty-po
 import { EVENT_CATEGORIES, FOOD_CATEGORIES, SHOPPING_CATEGORIES } from '../../map/map_extras/map_extras';
 import { AdsService } from '../ads.service';
 
+const PLACE_TO_EAT_AD_IMAGE = 'assets/images/def/places-to-eat/footer_banner_in_house.jpg'
+const SHOPPING_AD_IMAGE = 'assets/images/def/shopping/footer_banner_in_house.jpg'
+const EVENTS_AD_IMAGE = 'assets/images/def/events/footer_banner_in_house.jpg'
+
 @Component({
   selector: 'app-bottom-ad-banner',
   templateUrl: './bottom-ad-banner.component.html',
@@ -21,6 +25,8 @@ export class BottomAdBannerComponent implements OnInit {
   @Input('lng') lng: number
   @Input('business') business: Business = new Business()
   @Input('ad') ad: Ad = null
+  
+  @Input('accountType') accountType: string = null
 
   @Input('editMode') editMode: boolean = false
 
@@ -52,6 +58,8 @@ export class BottomAdBannerComponent implements OnInit {
 
   public adTypeWithId: boolean = false
 
+  public genericAdImage: string = PLACE_TO_EAT_AD_IMAGE
+
   constructor(private adsService: AdsService,
               private deviceDetectorService: DeviceDetectorService,
               private loyaltyPointsService: LoyaltyPointsService) { 
@@ -67,24 +75,60 @@ export class BottomAdBannerComponent implements OnInit {
   public getBottomHeader(){
     
     let adId = null
-    
+    let accountType
+
     if(this.editMode){
       
       if(this.ad == null){
         
         this.ad = new Ad()
-        this.ad.id = 10
+        this.ad.id = 2
         adId = this.ad.id
 
       } else adId = this.ad.id
-      
+
+      accountType = localStorage.getItem('spotbie_userType')
+
+      switch(accountType){
+        case 1:
+          this.genericAdImage = PLACE_TO_EAT_AD_IMAGE
+          break
+        case 2:
+          this.genericAdImage = SHOPPING_AD_IMAGE
+          break
+        case 3:
+          this.genericAdImage = EVENTS_AD_IMAGE
+          break  
+      }
+
+
+    } else {
+
+      switch(this.accountType){
+
+        case 'food':
+          accountType = 1
+          this.genericAdImage = PLACE_TO_EAT_AD_IMAGE
+          break
+        case 'shopping':
+          accountType = 2
+          this.genericAdImage = SHOPPING_AD_IMAGE
+          break
+        case 'events':
+          accountType = 3
+          this.genericAdImage = EVENTS_AD_IMAGE
+          break                          
+        
+      }
+
     }
 
     let searchObjSb = {      
       loc_x: this.lat,
       loc_y: this.lng,
       categories: JSON.stringify(this.categories),
-      id: adId
+      id: adId,
+      account_type: accountType
     }
 
     //Retrieve the SpotBie Ads
@@ -102,6 +146,8 @@ export class BottomAdBannerComponent implements OnInit {
 
       this.ad = resp.ad
       
+      if(this.editMode) this.ad.name = "Harry's"
+
       this.business = resp.business
 
       if(!this.editMode){
@@ -132,9 +178,10 @@ export class BottomAdBannerComponent implements OnInit {
         })
 
       }
-
-      this.categoryListForUi = this.categoriesListFriendly.toString().replace(',', ', ')
-
+      
+      console.log("Your Footer Ad:", resp)
+      console.log("Footer Banner caretgory list", this.categoriesListFriendly)
+      
       this.business.is_community_member = true
       this.business.type_of_info_object = InfoObjectType.SpotBieCommunity
       

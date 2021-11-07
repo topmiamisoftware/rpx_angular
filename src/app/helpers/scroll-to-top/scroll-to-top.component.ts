@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import * as $ from 'jquery'
 
 @Component({
@@ -7,6 +7,8 @@ import * as $ from 'jquery'
   styleUrls: ['./scroll-to-top.component.css']
 })
 export class ScrollToTopComponent implements OnInit {
+
+  @Input('inputWindow') inputWindow: ElementRef
 
   @ViewChild('scrollArrow') scrollArrow: ElementRef
 
@@ -30,7 +32,9 @@ export class ScrollToTopComponent implements OnInit {
 
   ngAfterViewInit(){
 
-    $(window).on('scroll', function() {
+    console.log("(this.inputWindow.nativeElement", this.inputWindow.nativeElement)
+
+    $(this.inputWindow.nativeElement).on('scroll', function() {
       // do your things like logging the Y-axis
       const scrollTop = $(window).scrollTop()
       if (scrollTop < 50) {
@@ -40,6 +44,8 @@ export class ScrollToTopComponent implements OnInit {
         this.arrowOn = true
         this.scrollArrow.nativeElement.className = 'spotbie-scroll-top'
       }
+
+      console.log("scrollTop", scrollTop)
 
     }.bind(this))
 
