@@ -1,13 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CommunityMemberComponent } from './community-member.component';
-import { InfoObjectModule } from '../map/info-object/info-object.module';
 import { RouterModule, Routes } from '@angular/router';
 
 const routes : Routes = [
   { path : ':qrCode', component : CommunityMemberComponent }
 ];
-
 
 @NgModule({
   declarations: [
@@ -15,7 +13,6 @@ const routes : Routes = [
   ],
   imports: [
     CommonModule,
-    InfoObjectModule,
     RouterModule.forChild(routes)
   ],
   exports: [

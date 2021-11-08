@@ -105,13 +105,13 @@
         
         <span class='sb-text-light-green-gradient'>LOYALTY POINTS THIS MONTH</span><br/>
         <h1 class='spotbie-text-gradient mb-4'>
-            - {{ info_object.balance| number:'1.0':'en-US' }} LP -
+            - {{ info_object.balance| number:'1.1-2':'en-US' }} LP -
         </h1>
         <br/><br/>
         <span class='spotbie-text-gradient' style='font-size: .8rem;'>DOLLAR VALUE RATE</span><br/>
         <span class='sb-text-light-green-gradient mt-4 mb-4' style='font-size: 1.8rem;'>{{ info_object.rewardRate | currency : 'USD' }}</span><br/>
         <span class='spotbie-text-gradient' style='font-size: .8rem;'> PER DOLLAR SPENT</span><br/>
-        <span class='sb-text-light-green-gradient mt-4'> {{ info_object.loyalty_point_dollar_percent_value | number:'1.0':'en-US' }}% REWARD RATE</span>
+        <span class='sb-text-light-green-gradient mt-4'> {{ info_object.loyalty_point_dollar_percent_value | number:'1.1-2':'en-US' }}% REWARD RATE</span>
     </div>
 
     <div class='spotbie-info-object-rating' [ngClass]="getFontClasses()" *ngIf="info_object.type_of_info_object == eInfoObjectType.Yelp" (click)="visitInfoObjectPage()">
@@ -130,7 +130,7 @@
     </div>
     
     <div class='spotbie-review-count mt-2' [ngClass]="getFontClasses()" *ngIf="info_object.type_of_info_object == eInfoObjectType.Yelp" (click)="visitInfoObjectPage()">
-        Based on {{ info_object.review_count | number:'1.0':'en-US' }} Reviews
+        Based on {{ info_object.review_count | number:'1.1-2':'en-US' }} Reviews
     </div>
     
     <div class='spotbie-info-object-address' [ngClass]="getFontClasses()" *ngIf="info_object.type_of_info_object == eInfoObjectType.TicketMaster">
@@ -216,7 +216,11 @@
 
     <div class='spotbie-toast-message text-uppercase animated fadeIn' *ngIf="successful_url_copy">Link copied</div>
 
-    <app-nearby-featured-ad [lat]="lat" [lng]="lng" [categories]="info_object.categories" *ngIf="displayAds"></app-nearby-featured-ad>
+    <app-nearby-ads-three [lat]="lat" 
+                            [lng]="lng"
+                            [eventsClassification]="eventsClassification"
+                            [accountType]="accountType" 
+                            [categories]="info_object.categories"></app-nearby-ads-three>
 
 </div>
 

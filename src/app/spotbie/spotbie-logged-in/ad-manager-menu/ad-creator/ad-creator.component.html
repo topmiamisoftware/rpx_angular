@@ -10,8 +10,10 @@
             *ngIf="(ad !== null && ad !== undefined) && ad.is_live !== 1"
             style="font-size: .8rem;"
             (click)="activateAdMembership()">
+
             <i class="fas fa-exclamation-triangle"></i>
             <span class='spotbie-text-gradient text-uppercase '>CLICK & ACTIVATE THIS AD NOW</span>
+
         </p>
 
         <h5 class="spotbie-text-gradient text-center text-uppercase pt-3 mb-4">AD EDITOR</h5>
@@ -76,40 +78,6 @@
                     type="text"
                     placeholder="My Ad"
                     maxlength="50" /> 
-
-            <div *ngIf="adFormSubmitted && f.adDescription.errors else adDescriptionNormalTemplate" 
-                    class="spotbie-input-info spotbie-text-gradient spotbie-error mt-4 mb-2">
-
-                <div *ngIf="f.adDescription.errors.required">
-                    Enter ad description.
-                </div>
-
-                <div *ngIf="f.adDescription.errors.minlength">
-                    Min. length - description - 50
-                </div>
-
-                <div *ngIf="f.adDescription.errors.maxlength">
-                    Max length - description - 250
-                </div>
-                
-            </div> 
-            
-            <ng-template #adDescriptionNormalTemplate>
-
-                <label class="spotbie-input-info spotbie-text-gradient mt-4 mb-2">
-                    Briefly describe your ad.
-                </label>     
-
-            </ng-template>
-
-            <textarea class='spotbie-textarea spotbie-text-gradient mb-2' 
-                        (click)="$event.target.select()" 
-                        formControlName="adDescription" 
-                        maxlength="150"
-                        placeholder="Ad Description"
-                        style="margin: 0 auto;"></textarea>
-
-            <span class='spotbie-text-gradient'>{{ adDescription.length }}/150</span>
 
             <input type="hidden" formControlName="adImage" />
 

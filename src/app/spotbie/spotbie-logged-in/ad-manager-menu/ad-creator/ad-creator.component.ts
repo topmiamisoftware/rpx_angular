@@ -114,8 +114,9 @@ export class AdCreatorComponent implements OnInit {
       this.adCreatorForm.get('adName').setValue(this.ad.name)
       this.adCreatorForm.get('adDescription').setValue(this.ad.description)     
       this.adCreatorForm.get('adImage').setValue(this.ad.images)
+
       this.adUploadImage = this.ad.images
-      console.log('adUPloadImage', this.adUploadImage)
+
       this.selected = this.ad.type
 
     } else

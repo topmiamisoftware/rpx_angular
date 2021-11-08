@@ -25,12 +25,12 @@
 
                 <div class='mb-2'>
                     Loyalty Points:
-                        <span *ngIf="redeemItem.redeemed == 1" class='sb-text-red-gradient'>-{{ redeemItem.amount | number:'1.0':'en-US' }}</span>
-                        <span *ngIf="redeemItem.redeemed != 1" class='spotbie-text-gradient'>{{ redeemItem.amount | number:'1.0':'en-US' }} (not redeemed)</span>
+                        <span *ngIf="redeemItem.redeemed == 1" class='sb-text-red-gradient'>-{{ redeemItem.amount | number:'1.1-2':'en-US' }}</span>
+                        <span *ngIf="redeemItem.redeemed != 1" class='spotbie-text-gradient'>{{ redeemItem.amount | number:'1.1-2':'en-US' }} (not redeemed)</span>
                 </div>      
 
                 <div class='mb-2'>
-                    Customer Spent: <span class='sb-text-light-green-gradient'>${{ redeemItem.total_spent | number:'1.0':'en-US' }}</span>
+                    Customer Spent: <span class='sb-text-light-green-gradient'>${{ redeemItem.total_spent | number:'1.1-2':'en-US' }}</span>
                 </div>        
 
             </div>
@@ -43,12 +43,12 @@
 
                 <div class='mb-2'>
                     Loyalty Points: <span class='sb-text-light-green-gradient'>
-                        +{{ redeemItem.amount | number:'1.0':'en-US' }}
+                        +{{ redeemItem.amount | number:'1.1-2':'en-US' }}
                     </span>
                 </div>      
                          
                 <div class='mb-2'>
-                    Total Spent: <span class='sb-text-light-green-gradient'>${{ redeemItem.total_spent | number:'1.0':'en-US' }}</span>
+                    Total Spent: <span class='sb-text-light-green-gradient'>${{ redeemItem.total_spent | number:'1.1-2':'en-US' }}</span>
                 </div>        
                             
             </div>

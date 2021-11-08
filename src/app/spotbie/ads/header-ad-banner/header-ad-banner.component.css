@@ -31,7 +31,7 @@
     max-width: 100%;
     min-width: 100%;
     background-repeat: no-repeat!important;
-    background-size: contain!important;
+    background-size: cover!important;
     background-position: center!important; 
 }
 

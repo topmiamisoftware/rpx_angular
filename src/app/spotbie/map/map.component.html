@@ -635,9 +635,16 @@
   
   </div>
 
-  <app-info-object [info_object]="infoObject" (closeWindow)="infoObjectWindow.open = false" *ngIf="infoObjectWindow.open"></app-info-object>
+  <app-info-object [info_object]="infoObject" 
+                    [lat]="lat"
+                    [lng]="lng"
+                    [eventsClassification]="eventsClassification"
+                    [accountType]="searchCategory" 
+                    (closeWindow)="infoObjectWindow.open = false" 
+                    *ngIf="infoObjectWindow.open">
+  </app-info-object>
 
-  <app-user-info-object [currentMarker]="currentMarker" *ngIf="sliderRight" (close)="sliderRight = false"></app-user-info-object>
+  <app-user-info-object [currentMarker]="currentMarker" *ngIf="sliderRight" [lat]="lat" [lng]="lng" (close)="sliderRight = false"></app-user-info-object>
 
   <app-my-favorites *ngIf="myFavoritesWindow.open" (closeWindow)="closeFavorites()"></app-my-favorites>
 

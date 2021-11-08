@@ -6,6 +6,8 @@
     
     <div class="spotbie-ad-image" [ngStyle]="{'background' : 'url(' + genericAdImage  + ')'}" *ngIf="editMode && ad.id == 2"></div>
 
+    <div class="spotbie-ad-image" [ngStyle]="{'background' : 'url(' + ad.images  + ')'}" *ngIf="editMode && ad.id != 2"></div>
+
     <div class='sb-ad-bottom'>
         
         <span class='spotbie-text-gradient sb-sponsoredName text-uppercase'>{{ business.name }}</span>
@@ -14,7 +16,7 @@
         <span class='sb-text-light-green-gradient sb-totalRewards text-uppercase'>{{ totalRewards }} REWARDS</span>
 
         <span class='spotbie-text-gradient m-2 mt-0 mb-0' *ngIf="!isMobile">-</span>
-        <span class='sb-text-light-green-gradient sb-distanceMiles text-uppercase'>{{ distance | number:'1.0':'en-US' }} miles</span>
+        <span class='sb-text-light-green-gradient sb-distanceMiles text-uppercase'>{{ distance | number:'1.1-2':'en-US' }} miles</span>
 
         <span class='spotbie-text-gradient m-2 mt-0 mb-0' *ngIf="!editMode && !isMobile">-</span>
         <span class='sb-text-light-green-gradient sb-perDollar text-uppercase' *ngIf="!editMode">

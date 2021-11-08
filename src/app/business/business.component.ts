@@ -11,7 +11,7 @@ import { MenuLoggedOutComponent } from '../spotbie/spotbie-logged-out/menu-logge
 })
 export class BusinessComponent implements OnInit {
 
-  public arrowOn: boolean = false;
+  public scheduleBusinessDemo: boolean = true
 
   @ViewChild('app_map') app_map: MapComponent
 

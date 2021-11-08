@@ -1,244 +1,56 @@
 <div class="sb-mainWrapper" *ngIf="showSubmitBug">
 
-    <h1>Submitting Bugs</h1>
+    <h1 class="spotbie-text-gradient text-uppercase">Submit a Bug</h1>
 
-    <p>Want to report bugs in our platform? You can do so here.</p>
-    
     <form [formGroup]="bugsForm">
 
-        <div *ngIf="submitted && f.description.errors" class="spotbie-invalid-feedback">                   
+        <div *ngIf="submitted && f.description.errors else descriptionNormalTemplate" class="spotbie-invalid-feedback spotbie-text-gradient spotbie-error text-uppercase">
+
+            <div *ngIf="f.description.errors.required">
+                Brief bug description and your e-mail.
+            </div>  
+
+            <div *ngIf="f.description.errors.minlength">
+                Your bug description must be at least 100 characters long.
+            </div>
+
             <div *ngIf="f.description.errors.maxlength">
-                Your profile description can only be 500 characters long.
+                Your bug description can only be 500 characters long.
             </div>                       
+
         </div> 
 
+        <ng-template #descriptionNormalTemplate>
+            <label class="spotbie-text-gradient mt-4 mb-4">Brief bug description and your e-mail.</label>
+        </ng-template>
+        
         <textarea formControlName="description" placeholder="Bug details..." maxlength="500"></textarea>
+
+        <p class="spotbie-text-gradient mt-2 mb-2">
+            {{ description.length }} / 500
+        </p>
 
     </form>
     
-    <div class="spotbie-button" (click)="insertBug()">Send</div>
+    <div class="spotbie-button text-uppercase" (click)="insertBug()">Send</div>
 
-</div>
-
-<div class="sb-mainWrapper" *ngIf="success">
-
-    <h1>Bug was Submitted!</h1>
-
-    <p>Your bug report was sent successfully. Thank you.</p>
-
-</div>
-
-
-<div class='aards-servicesTable'>
-    
-    <div class='aards-serviceTile aards-BlueBg' onclick="readMoreService(0)">
-    
-        <div class='aards-serviceIcon'></div>
-
-        <h3>AUTOIMMUNE DISEASES</h3>
-        
-        <div class='aards-serviceReadMore'>
-            READ MORE
-            <i class='fa fa-chevron-circle-right'></i>
-        </div>
-
-    </div>
-
-    <div class='aards-serviceTile' onclick="readMoreService(1)">
-    
-        <div class='aards-serviceIcon'></div>
-
-        <h3>RHEUMATOID ARTHRITIS</h3>
-        
-        <div class='aards-serviceReadMore'>
-            READ MORE
-            <i class='fa fa-chevron-circle-right'></i>
-        </div>
-
-    </div>
-
-    <div class='aards-serviceTile aards-BlueBg' onclick="readMoreService(2)">
-    
-        <div class='aards-serviceIcon'></div>
-
-        <h3>OSTEOPOROSIS</h3>
-        
-        <div class='aards-serviceReadMore'>
-            READ MORE
-            <i class='fa fa-chevron-circle-right'></i>
-        </div>
-
-    </div>
-
-    <div class='aards-serviceTile' onclick="readMoreService(3)">
-    
-        <div class='aards-serviceIcon'></div>
-
-        <h3>SYSTEMIC LUPUS ERYTHEMATOSUS</h3>
-        
-        <div class='aards-serviceReadMore'>
-            READ MORE
-            <i class='fa fa-chevron-circle-right'></i>
-        </div>
-
-    </div>
-
-    <div class='aards-serviceTile aards-BlueBg' onclick="readMoreService(4)">
-    
-        <div class='aards-serviceIcon'></div>
-
-        <h3>PSORIATIC ARTHRITIS</h3>
-        
-        <div class='aards-serviceReadMore'>
-            READ MORE
-            <i class='fa fa-chevron-circle-right'></i>
-        </div>
-
-    </div>
-
-    <div class='aards-serviceTile' onclick="readMoreService(5)">
-    
-        <div class='aards-serviceIcon'></div>
-
-        <h3>CHRONIC PAIN</h3>
-        
-        <div class='aards-serviceReadMore'>
-            READ MORE
-            <i class='fa fa-chevron-circle-right'></i>
-        </div>
-
-    </div>
-
-    <div class='aards-serviceTile aards-BlueBg' onclick="readMoreService(6)">
-    
-        <div class='aards-serviceIcon'></div>
-
-        <h3>GOUT</h3>
-        
-        <div class='aards-serviceReadMore'>
-            READ MORE
-            <i class='fa fa-chevron-circle-right'></i>
-        </div>
-
-    </div>
-
-    <div class='aards-serviceTile' onclick="readMoreService(7)">
-    
-        <div class='aards-serviceIcon'></div>
-
-        <h3>FIBROMYALGIA</h3>
-        
-        <div class='aards-serviceReadMore'>
-            READ MORE
-            <i class='fa fa-chevron-circle-right'></i>
-        </div>
-
+    <div class="text-uppercase mt-4 text-center" style="font-size: 2rem; color: white;">
+        <i class='fa fa-bug'></i>
     </div>
 
 </div>
-<div class='aards-servicesTable'>
-    
-    <div class='aards-serviceTile' onclick="readMoreService(8)">
-    
-        <div class='aards-serviceIcon'></div>
 
-        <h3>CARPAL TUNNEL SYNDROME</h3>
+<div class='sb-mainWrapper' *ngIf="success">
+
+    <div class='sb-v-wrapper' style="display: grid; align-content: center;">
         
-        <div class='aards-serviceReadMore'>
-            READ MORE
-            <i class='fa fa-chevron-circle-right'></i>
+        <h4 class="spotbie-text-gradient spotbie-r-success-title text-uppercase">BUG SUBMITTED</h4>
+
+        <div class="sb-verificationCheck sb-text-light-green-gradient mt-4 mb-4">
+            <i class="fa fa-check"></i>
         </div>
 
-    </div>
-
-    <div class='aards-serviceTile aards-BlueBg' onclick="readMoreService(9)">
-    
-        <div class='aards-serviceIcon'></div>
-
-        <h3>DRY MOUTH SYNDROME</h3>
-        
-        <div class='aards-serviceReadMore'>
-            READ MORE
-            <i class='fa fa-chevron-circle-right'></i>
-        </div>
-
-    </div>
-
-    <div class='aards-serviceTile' onclick="readMoreService(10)">
-    
-        <div class='aards-serviceIcon'></div>
-
-        <h3>SJOGREN'S SYNDROME</h3>
-        
-        <div class='aards-serviceReadMore'>
-            READ MORE
-            <i class='fa fa-chevron-circle-right'></i>
-        </div>
-
-    </div>
-
-    <div class='aards-serviceTile aards-BlueBg' onclick="readMoreService(11)">
-    
-        <div class='aards-serviceIcon'></div>
-
-        <h3>POLYMYOSITIS</h3>
-        
-        <div class='aards-serviceReadMore'>
-            READ MORE
-            <i class='fa fa-chevron-circle-right'></i>
-        </div>
-
-    </div>
-
-    <div class='aards-serviceTile' onclick="readMoreService(12)">
-    
-        <div class='aards-serviceIcon'></div>
-
-        <h3>ANKYLOSING SPONDYLITIS</h3>
-        
-        <div class='aards-serviceReadMore'>
-            READ MORE
-            <i class='fa fa-chevron-circle-right'></i>
-        </div>
-
-    </div>
-
-    <div class='aards-serviceTile aards-BlueBg' onclick="readMoreService(13)">
-    
-        <div class='aards-serviceIcon'></div>
-
-        <h3>SCLERODERMA</h3>
-        
-        <div class='aards-serviceReadMore'>
-            READ MORE
-            <i class='fa fa-chevron-circle-right'></i>
-        </div>
-
-    </div>
-
-    <div class='aards-serviceTile' onclick="readMoreService(14)">
-    
-        <div class='aards-serviceIcon'></div>
-
-        <h3>PAGET'S DISEASE</h3>
-        
-        <div class='aards-serviceReadMore'>
-            READ MORE
-            <i class='fa fa-chevron-circle-right'></i>
-        </div>
-
-    </div>
-
-    <div class='aards-serviceTile aards-BlueBg' onclick="readMoreService(15)">
-    
-        <div class='aards-serviceIcon'></div>
-
-        <h3>OSTEOARTHRITIS</h3>
-        
-        <div class='aards-serviceReadMore'>
-            READ MORE
-            <i class='fa fa-chevron-circle-right'></i>
-        </div>
+        <h4 class="spotbie-text-gradient spotbie-r-success-title text-uppercase">THANK YOU</h4>
 
     </div>
 

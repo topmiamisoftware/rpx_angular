@@ -21,18 +21,14 @@ const EVENTS_AD_IMAGE = 'assets/images/def/events/featured_banner_in_house.jpg'
 })
 export class NearbyFeaturedAdComponent implements OnInit {
 
-  @Input('lat') lat: number
-  @Input('lng') lng: number
-  @Input('business') business: Business = new Business()
-  @Input('ad') ad: Ad = null
-
-  @Input('accountType') accountType: string = null
-
-  @Input('editMode') editMode: boolean = false
-
-  @Input('categories') categories: number
-
-  @Input('eventsClassification') eventsClassification: number = null
+  @Input() lat: number
+  @Input() lng: number
+  @Input() business: Business = new Business()
+  @Input() ad: Ad = null
+  @Input() accountType: string = null
+  @Input() editMode: boolean = false
+  @Input() categories: number
+  @Input() eventsClassification: number = null
 
   public link: string
 
@@ -63,6 +59,8 @@ export class NearbyFeaturedAdComponent implements OnInit {
   public adList: Array<Ad> = []
   
   public genericAdImage: string = PLACE_TO_EAT_AD_IMAGE
+
+  public businessReady: boolean = false
 
   constructor(private adsService: AdsService,
               private deviceDetectorService: DeviceDetectorService,
@@ -175,10 +173,9 @@ export class NearbyFeaturedAdComponent implements OnInit {
     if(resp.success){
 
       this.ad = resp.ad
-      
-      if(this.editMode) this.ad.name = "Harry's"
-      
       this.business = resp.business
+
+      this.businessReady = true
 
       if(!this.editMode){
 
@@ -196,7 +193,9 @@ export class NearbyFeaturedAdComponent implements OnInit {
             this.currentCategoryList = SHOPPING_CATEGORIES          
             break            
         }
-  
+        
+        this.categoriesListFriendly = []
+
         this.currentCategoryList.reduce((previousValue: string, currentValue: string, currentIndex: number, array: string[]) => {
           
           if(resp.business.categories.indexOf(currentIndex) > -1)
@@ -208,8 +207,6 @@ export class NearbyFeaturedAdComponent implements OnInit {
         })
 
       }
-
-      this.categoryListForUi = this.categoriesListFriendly.toString().replace(',', ', ')
 
       this.business.is_community_member = true
       this.business.type_of_info_object = InfoObjectType.SpotBieCommunity
@@ -241,7 +238,10 @@ export class NearbyFeaturedAdComponent implements OnInit {
 
   public updateAdImage(image: string = ''){
 
-    if(image != '') this.ad.images = image
+    if(image != ''){
+      this.ad.images = image
+      this.genericAdImage = image
+    }
 
   }
 

@@ -1,0 +1,12 @@
+.spotbie-overlay-window{
+    padding-bottom: 100px;
+    background: #332f3e;
+    background-attachment: fixed;
+    background-size: cover;
+    text-align: center;    
+    z-index: 97;
+    background: url(src/assets/images/home_imgs/jpg/spotbie-miami-find-new-friends.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;    
+}

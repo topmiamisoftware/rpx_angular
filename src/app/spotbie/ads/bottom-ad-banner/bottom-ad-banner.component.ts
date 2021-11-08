@@ -21,18 +21,14 @@ const EVENTS_AD_IMAGE = 'assets/images/def/events/footer_banner_in_house.jpg'
 })
 export class BottomAdBannerComponent implements OnInit {
 
-  @Input('lat') lat: number
-  @Input('lng') lng: number
-  @Input('business') business: Business = new Business()
-  @Input('ad') ad: Ad = null
-  
-  @Input('accountType') accountType: string = null
-
-  @Input('editMode') editMode: boolean = false
-
-  @Input('categories') categories: number
-
-  @Input('eventsClassification') eventsClassification: number = null
+  @Input() lat: number
+  @Input() lng: number
+  @Input() business: Business = new Business()
+  @Input() ad: Ad = null
+  @Input() accountType: string = null
+  @Input() categories: number
+  @Input() editMode: boolean = false
+  @Input() eventsClassification: number = null
 
   public link: string
 
@@ -62,6 +58,8 @@ export class BottomAdBannerComponent implements OnInit {
 
   public genericAdImage: string = PLACE_TO_EAT_AD_IMAGE
 
+  public switchAdInterval: any = null
+
   constructor(private adsService: AdsService,
               private deviceDetectorService: DeviceDetectorService,
               private loyaltyPointsService: LoyaltyPointsService) { 
@@ -78,6 +76,14 @@ export class BottomAdBannerComponent implements OnInit {
     
     let adId = null
     let accountType
+
+    //Stop the service if there's a window on top of the ad component.    
+    let needleElement = document.getElementsByClassName('sb-closeButton')
+      
+    if(needleElement.length > 0){
+      //There's a componenet on top of the bottom header.
+      return//bounce this request
+    }
 
     if(this.editMode){
       
@@ -141,11 +147,11 @@ export class BottomAdBannerComponent implements OnInit {
         this.getBottomHeaderCb(resp)             
       }
     )
-
+    
   }
 
   public async getBottomHeaderCb(resp: any){
-
+    
     if(resp.success){
 
       this.ad = resp.ad
@@ -170,17 +176,18 @@ export class BottomAdBannerComponent implements OnInit {
             this.currentCategoryList = SHOPPING_CATEGORIES          
             break            
         }
-   
+        
+        this.categoriesListFriendly = []
+
         await this.currentCategoryList.reduce((previousValue: string, currentValue: string, currentIndex: number, array: string[]) => {
           
           if(resp.business.categories.indexOf(currentIndex) > -1)
-            this.categoriesListFriendly.push(this.currentCategoryList[currentIndex])
-          
+            this.categoriesListFriendly.push(this.currentCategoryList[currentIndex])          
           
           return currentValue
   
         })
-
+        
       }
       
       console.log("Your Footer Ad:", resp)
@@ -197,7 +204,17 @@ export class BottomAdBannerComponent implements OnInit {
         this.distance = getDistanceFromLatLngInMiles(this.business.loc_x, this.business.loc_y, this.lat, this.lng)
       else
         this.distance = 5
+      
+      if(this.switchAdInterval == null){
+
+        this.switchAdInterval = setInterval(()=>{
+      
+          if(!this.editMode) this.getBottomHeader()
+  
+        }, 8000)
         
+      }
+
     } else
       console.log("getSingleAdListCb", resp)
 
@@ -227,7 +244,12 @@ export class BottomAdBannerComponent implements OnInit {
   }
 
   public updateAdImage(image: string = ''){
-    if(image !== '') this.ad.images = image
+
+    if(image != ''){
+      this.ad.images = image
+      this.genericAdImage = image
+    }
+
   }
 
   ngOnInit(): void {

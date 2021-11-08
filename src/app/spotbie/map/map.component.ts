@@ -167,6 +167,8 @@ export class MapComponent implements OnInit {
 
   public eventsClassification: number = null
 
+  public getSpotBieCommunityMemberListInterval: any = null
+
   currentCategoryList: any
 
   constructor(private locationService: LocationService,
@@ -1099,9 +1101,9 @@ export class MapComponent implements OnInit {
   public getSpotBieCommunityMemberListCb(httpResponse: any){
     
     if(httpResponse.success){
-
+      
       let communityMemberList: Array<Business> = httpResponse.data.data
-
+      
       communityMemberList.forEach( (business: Business) => {        
 
         business.type_of_info_object = 'spotbie_community'
@@ -1138,14 +1140,31 @@ export class MapComponent implements OnInit {
 
         business.cleanCategories = cleanCategories.toString()    
 
-        business.rewardRate = (business.loyalty_point_dollar_percent_value / 100)
-
-        this.communityMemberList.push(business)    
+        business.rewardRate = (business.loyalty_point_dollar_percent_value / 100)      
 
       })
-      
-      this.bottomAdBanner.switchAd()
-      this.singleAdApp.switchAd()
+
+      this.communityMemberList = communityMemberList
+
+      if(this.getSpotBieCommunityMemberListInterval == null){
+
+        this.getSpotBieCommunityMemberListInterval = setInterval(() => {
+
+          const searchObjSb = {
+            loc_x: this.lat,
+            loc_y: this.lng,
+            categories: JSON.stringify(this.number_categories)
+          }
+
+          //Retrieve the SpotBie Community Member Results
+          this.locationService.getSpotBieCommunityMemberList(searchObjSb).subscribe(
+            resp => {              
+              this.getSpotBieCommunityMemberListCb(resp)
+            }
+          )
+
+        }, 10000)
+      }
 
     }
 

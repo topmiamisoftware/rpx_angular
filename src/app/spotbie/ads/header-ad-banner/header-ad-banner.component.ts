@@ -21,18 +21,15 @@ const EVENTS_AD_IMAGE = 'assets/images/def/events/header_banner_in_house.jpg'
 })
 export class HeaderAdBannerComponent implements OnInit {
 
-  @Input('lat') lat: number
-  @Input('lng') lng: number
-  @Input('business') business: Business = new Business()
-  @Input('ad') ad: Ad = null
-
-  @Input('accountType') accountType: string = null
-
-  @Input('categories') categories: number
-
-  @Input('editMode') editMode: boolean = false
-
-  @Input('eventsClassification') eventsClassification: number = null
+  @Input() lat: number
+  @Input() lng: number
+  @Input() business: Business = new Business()
+  @Input() ad: Ad = null
+  @Input() accountType: string = null
+  @Input() categories: number
+  @Input() editMode: boolean = false
+  @Input() eventsClassification: number = null
+  
 
   public link: string
 
@@ -62,6 +59,8 @@ export class HeaderAdBannerComponent implements OnInit {
 
   public genericAdImage: string = PLACE_TO_EAT_AD_IMAGE
 
+  public switchAdInterval: any
+  
   constructor(private adsService: AdsService,
               private deviceDetectorService: DeviceDetectorService,
               private loyaltyPointsService: LoyaltyPointsService) { 
@@ -77,8 +76,15 @@ export class HeaderAdBannerComponent implements OnInit {
   public getHeaderBanner(){
 
     let adId = null
-
     let accountType 
+
+    //Stop the service if there's a window on top of the ad component.    
+    let needleElement = document.getElementsByClassName('sb-closeButton')
+  
+    if(needleElement.length > 0){
+      //There's a componenet on top of the bottom header.
+      return//bounce this request
+    }
 
     if(this.editMode){
       
@@ -147,6 +153,75 @@ export class HeaderAdBannerComponent implements OnInit {
 
   }
 
+  public async getHeaderBannerAdCallback(resp: any){
+
+    if(resp.success){
+
+      this.ad = resp.ad      
+      this.business = resp.business
+
+      if(!this.editMode){
+        
+        switch(this.business.user_type.toString()){
+
+          case AllowedAccountTypes.PlaceToEat:
+            this.currentCategoryList = FOOD_CATEGORIES          
+            break
+  
+          case AllowedAccountTypes.Events:
+            this.currentCategoryList = EVENT_CATEGORIES          
+            break
+  
+          case AllowedAccountTypes.Shopping:
+            this.currentCategoryList = SHOPPING_CATEGORIES          
+            break     
+
+        }
+
+        this.categoriesListFriendly = []
+
+        this.currentCategoryList.reduce((previousValue: string, currentValue: string, currentIndex: number, array: string[]) => {
+        
+          if(resp.business.categories.indexOf(currentIndex) > -1)
+            this.categoriesListFriendly.push(this.currentCategoryList[currentIndex])
+                  
+          return currentValue
+  
+        })
+  
+      }
+
+      console.log("Your Ad:", resp)
+      console.log("Header Banner caretgory list", this.categoriesListFriendly)
+
+      this.business.is_community_member = true
+      this.business.type_of_info_object = InfoObjectType.SpotBieCommunity
+
+      this.displayAd = true
+
+      this.totalRewards = resp.totalRewards
+
+      if(!this.editMode)
+        this.distance = getDistanceFromLatLngInMiles(this.business.loc_x, this.business.loc_y, this.lat, this.lng)
+      else
+        this.distance = 5
+
+    
+      if(this.switchAdInterval == null){
+
+        this.switchAdInterval = setInterval(()=>{
+      
+          if(!this.editMode) this.getHeaderBanner()
+  
+        }, 8000)
+        
+      }
+
+    } else
+      console.log("getHeaderBannerAdCallback", resp)
+
+  }
+
   public getAdStyle(){
     
     if(this.editMode) {
@@ -169,66 +244,6 @@ export class HeaderAdBannerComponent implements OnInit {
     window.open("/advertise-my-business", '_blank')
   }
 
-  public async getHeaderBannerAdCallback(resp: any){
-
-    if(resp.success){
-
-      this.ad = resp.ad
-      
-      if(this.editMode) this.ad.name = "Harry's"
-      
-      this.business = resp.business
-
-      if(!this.editMode){
-        
-        switch(this.business.user_type.toString()){
-
-          case AllowedAccountTypes.PlaceToEat:
-            this.currentCategoryList = FOOD_CATEGORIES          
-            break
-  
-          case AllowedAccountTypes.Events:
-            this.currentCategoryList = EVENT_CATEGORIES          
-            break
-  
-          case AllowedAccountTypes.Shopping:
-            this.currentCategoryList = SHOPPING_CATEGORIES          
-            break     
-
-        }
-
-        this.currentCategoryList.reduce((previousValue: string, currentValue: string, currentIndex: number, array: string[]) => {
-        
-          if(resp.business.categories.indexOf(currentIndex) > -1)
-            this.categoriesListFriendly.push(this.currentCategoryList[currentIndex])
-                  
-          return currentValue
-  
-        })
-  
-
-      }
-
-      console.log("Your Ad:", resp)
-      console.log("Header Banner caretgory list", this.categoriesListFriendly)
-
-      this.business.is_community_member = true
-      this.business.type_of_info_object = InfoObjectType.SpotBieCommunity
-
-      this.displayAd = true
-
-      this.totalRewards = resp.totalRewards
-
-      if(!this.editMode)
-        this.distance = getDistanceFromLatLngInMiles(this.business.loc_x, this.business.loc_y, this.lat, this.lng)
-      else
-        this.distance = 5
-
-    } else
-      console.log("getHeaderBannerAdCallback", resp)
-
-  }
-
   public switchAd(){
     this.categoriesListFriendly = []
     this.categoryListForUi = null
@@ -244,8 +259,11 @@ export class HeaderAdBannerComponent implements OnInit {
 
   public updateAdImage(image: string = ''){
     
-    if(image != '') this.ad.images = image
-  
+    if(image != ''){
+      this.ad.images = image
+      this.genericAdImage = image
+    }
+
   }
 
   ngOnInit(): void {

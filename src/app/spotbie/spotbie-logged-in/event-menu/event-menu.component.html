@@ -44,7 +44,7 @@
                 [ngStyle]="placeToEatTileStyling(event)">
             <h6 *ngIf="event.type == '0'"> {{ event.name }} </h6>
             <h6 *ngIf="event.type == '1'"> 
-                ${{ (event.point_cost * (loyaltyPointsBalance.loyalty_point_dollar_percent_value / 100)) | number:'1.0':'en-US' }} 
+                ${{ (event.point_cost * (loyaltyPointsBalance.loyalty_point_dollar_percent_value / 100)) | number:'1.1-2':'en-US' }} 
             </h6>
         </div>
     

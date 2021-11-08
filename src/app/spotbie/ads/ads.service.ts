@@ -75,7 +75,7 @@ export class AdsService {
   }
 
   public getBottomHeader(searchObjSb: any):  Observable<any>{
-    
+
     const getAdsApi = `${ADS_API}/footer-banner`
 
     return this.http.post(getAdsApi, searchObjSb).pipe(

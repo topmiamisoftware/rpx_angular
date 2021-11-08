@@ -1,0 +1,22 @@
+.sb-top-headerImg{
+    background: url('../../../assets/images/home_imgs/spotbie-miami.jpg') !important;
+    background-position: center !important;
+    background-size: cover !important;
+    background-repeat: no-repeat !important;    
+}
+h4{
+    cursor: default
+}
+#sbReadImageRestaurants{
+    background: url('../../../assets/images/home_imgs/jpg/spotbie-find-restaurant-customers-near-you.jpg')
+}
+#sbReadImageEvents
+{
+    background: url('../../../assets/images/home_imgs/jpg/spotbie-miami-events.jpg')
+}
+#sbReadImageShopping{
+    background: url('../../../assets/images/home_imgs/jpg/spotbie-find-customers-near-you.jpg')
+}
+#sbReadImageUsers{
+    background: url('../../../assets/images/home_imgs/jpg/spotbie-miami-find-new-friends.jpg')    
+}

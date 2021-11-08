@@ -370,10 +370,10 @@ h6.sb-titleGreen{
     .spotbie-info-object-image-thumb{
         margin-left: unset;
         margin-right: unset;
-        width: 96%;
-        min-width: 96%;
-        max-width: 96%;
-        border-radius: 9px;
+        width: 100%;
+        min-width: 100%;
+        max-width: 100%;
+        border-radius: 0px;
         height: 60vw;
         min-height: 60vw;
         background-size: cover!important;

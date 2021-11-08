@@ -321,7 +321,7 @@ export class UserauthService {
     }; 
 
     this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID, fbLoginOptions).catch(
-      
+
       (error) => {
         loginCallBack(error)
         return
@@ -334,10 +334,6 @@ export class UserauthService {
       this.userLogin = user.email
       this.userPassword = null 
       this.userRememberMe = '1'
-      
-      console.log(
-        "My Facebook User: ", user 
-      )
 
       localStorage.setItem('spotbiecom_social_session', user.authToken)
       localStorage.setItem('spotbiecom_social_id', user.id)

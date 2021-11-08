@@ -28,7 +28,7 @@
 
             <span class="sb-added-loyalty-points sb-text-light-green-gradient animated fadeOutUp" 
                     *ngIf="newUserLoyaltyPoints !== null"
-                    #newBalanceLoyaltyPoints>+{{ newUserLoyaltyPoints | number:'1.0':'en-US' }}</span>
+                    #newBalanceLoyaltyPoints>+{{ newUserLoyaltyPoints | number:'1.1-2':'en-US' }}</span>
 
         </p>    
 
@@ -117,7 +117,7 @@
         
         <p class="text-uppercase mt-4" style="font-size: .8rem !important;" *ngIf="monthlyDollarValueCalculated">
             <span class='spotbie-text-gradient'>monthly dollar value </span>
-            <span class='sb-text-light-green-gradient'>${{ userPointToDollarRatio | number:'1.0':'en-US' }}</span>
+            <span class='sb-text-light-green-gradient'>${{ userPointToDollarRatio | number:'1.1-2':'en-US' }}</span>
         </p>
 
         <div class='spotbie-howDoesItWork spotbie-text-gradient text-center text-uppercase mt-4' (click)="toggleHelp()" style="cursor: pointer;">

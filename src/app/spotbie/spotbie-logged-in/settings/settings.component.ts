@@ -22,7 +22,6 @@ import { map, startWith } from 'rxjs/operators'
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { Observable } from 'rxjs/internal/Observable';
 import { LocationService } from 'src/app/services/location-service/location.service';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 const PLACE_TO_EAT_API = spotbieGlobals.API + 'place-to-eat'
 

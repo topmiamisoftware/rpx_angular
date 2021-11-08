@@ -11,6 +11,7 @@ import { AdsModule } from '../../ads/ads.module';
   imports: [
     CommonModule,
     RewardMenuModule,
+    AdsModule,
     ShareButtonsModule.withConfig({
       include: ['facebook', 'twitter', 'linkedin', 'reddit', 'tumblr', 'mix', 'viber', 'messenger','whatsapp']
     }),    

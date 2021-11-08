@@ -34,6 +34,9 @@ export class InfoObjectComponent implements OnInit {
 
   @Input() lat: number = null
   @Input() lng: number = null
+  @Input() accountType: number = null
+  @Input() eventsClassification: number = null
+  @Input() categories: number
 
   @Output() closeWindow = new EventEmitter()
   @Output() removeFavoriteEvent = new EventEmitter()
@@ -549,9 +552,6 @@ export class InfoObjectComponent implements OnInit {
   }
 
   public showPosition(position: any): void {
-    
-    this.lat = position.coords.latitude
-    this.lng = position.coords.longitude
     
     this.displayAds = true
 
