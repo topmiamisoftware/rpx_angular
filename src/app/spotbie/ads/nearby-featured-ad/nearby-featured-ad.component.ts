@@ -62,6 +62,8 @@ export class NearbyFeaturedAdComponent implements OnInit {
 
   public businessReady: boolean = false
 
+  public switchAdInterval: any
+
   constructor(private adsService: AdsService,
               private deviceDetectorService: DeviceDetectorService,
               private loyaltyPointsService: LoyaltyPointsService) { 
@@ -77,8 +79,15 @@ export class NearbyFeaturedAdComponent implements OnInit {
   public getNearByFeatured(){
 
     let adId = null
-
     let accountType 
+
+    //Stop the service if there's a window on top of the ad component.    
+    let needleElement = document.getElementsByClassName('sb-closeButton')
+  
+    if(needleElement.length > 1){
+      //There's a componenet aside from the infoObjectWindow
+      return//bounce this request
+    }
 
     if(this.editMode){
       
@@ -105,7 +114,6 @@ export class NearbyFeaturedAdComponent implements OnInit {
           break  
       }
 
-
     } else {
 
       switch(this.accountType){
@@ -114,10 +122,12 @@ export class NearbyFeaturedAdComponent implements OnInit {
           accountType = 1
           this.genericAdImage = PLACE_TO_EAT_AD_IMAGE
           break
+
         case 'shopping':
           accountType = 2
           this.genericAdImage = SHOPPING_AD_IMAGE
           break
+          
         case 'events':
           accountType = 3
           this.genericAdImage = EVENTS_AD_IMAGE
@@ -131,8 +141,9 @@ export class NearbyFeaturedAdComponent implements OnInit {
     const nearByFeaturedObj = {
       loc_x: this.lat,
       loc_y: this.lng,
-      categories: JSON.stringify(this.categories),
-      id: adId
+      categories: this.categories,
+      id: adId,
+      account_type: accountType
     }
 
     //Retrieve the SpotBie Ads
@@ -141,30 +152,6 @@ export class NearbyFeaturedAdComponent implements OnInit {
         this.getNearByFeaturedCallback(resp)
       }
     )
-
-  }
-
-  public getAdStyle(){
-    
-    if(this.adTypeWithId) {
-      
-      return { 
-        'position' : 'relative',
-        'margin' : '0 auto',
-        'right': '0'
-      }
-    
-    }
-
-  }
-
-  public closeRewardMenu(){
-    this.rewardMenuOpen = false    
-  }
-
-  public clickGoToSponsored(){
-    
-    window.open("/advertise-my-business", '_blank')
 
   }
 
@@ -200,16 +187,20 @@ export class NearbyFeaturedAdComponent implements OnInit {
           
           if(resp.business.categories.indexOf(currentIndex) > -1)
             this.categoriesListFriendly.push(this.currentCategoryList[currentIndex])
-          
-          
+                    
           return currentValue
   
         })
 
       }
 
+      console.log("Your Ad:", resp)
+      console.log("Featured Banner caretgory list", this.categoriesListFriendly)
+
       this.business.is_community_member = true
       this.business.type_of_info_object = InfoObjectType.SpotBieCommunity
+
+      this.displayAd = true
 
       this.totalRewards = resp.totalRewards
 
@@ -218,10 +209,42 @@ export class NearbyFeaturedAdComponent implements OnInit {
       else
         this.distance = 5
 
-      this.displayAd = true
+      if(this.switchAdInterval == null){
+
+        this.switchAdInterval = setInterval(()=>{
+      
+          if(!this.editMode) this.getNearByFeatured()
+  
+        }, 8000)
+        
+      }
 
     } else
-      console.log("getHeaderBannerAdCallback", resp)
+      console.log("getNearByFeaturedCallback", resp)
+
+  }
+
+  public getAdStyle(){
+    
+    if(this.adTypeWithId) {
+      
+      return { 
+        'position' : 'relative',
+        'margin' : '0 auto',
+        'right': '0'
+      }
+    
+    }
+
+  }
+
+  public closeRewardMenu(){
+    this.rewardMenuOpen = false    
+  }
+
+  public clickGoToSponsored(){
+    
+    window.open("/advertise-my-business", '_blank')
 
   }
 
@@ -251,6 +274,13 @@ export class NearbyFeaturedAdComponent implements OnInit {
 
     this.getNearByFeatured()
 
+  }
+
+  ngOnDestroy(): void {
+    //Called once, before the instance is destroyed.
+    //Add 'implements OnDestroy' to the class.
+    clearTimeout(this.switchAdInterval)
+    this.switchAdInterval = null
   }
 
 }

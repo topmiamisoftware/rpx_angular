@@ -1,0 +1,12 @@
+<div class='spotbie-threeAdWrapper'>
+
+    <app-nearby-featured-ad *ngFor="let theAd of adList"
+                            [lat]="lat"
+                            [lng]="lng"
+                            [accountType]="accountType"
+                            [eventsClassification]="eventsClassification"
+                            [categories]="categories"
+                            [editMode]="editMode">
+    </app-nearby-featured-ad>
+     
+</div>

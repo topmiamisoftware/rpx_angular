@@ -13,8 +13,15 @@ export class CommunityMemberComponent implements OnInit {
 
   @Output('closeWindowEvt') closeWindowEvt = new EventEmitter()
 
-  @Input('ad') ad: Ad = new Ad()
-  @Input('business') business: Business = new Business()
+  @Input() lat: number
+  @Input() lng: number
+  @Input() business: Business = new Business()
+  @Input() ad: Ad = null
+  @Input() accountType: string = null
+  @Input() categories: number
+  @Input() editMode: boolean = false
+  @Input() eventsClassification: number = null
+
   @Input('qrCodeLink') qrCodeLink: string = null 
 
   public infoObjectLoaded: boolean = false
@@ -36,10 +43,10 @@ export class CommunityMemberComponent implements OnInit {
     let getCommunityMemberReqObj = {
       qrCodeLink: this.qrCodeLink
     }
-
+    
     this.businessMenuService.getCommunityMember(getCommunityMemberReqObj).subscribe(
       resp => {
-        
+
         this.business = resp.business
         this.business.is_community_member = true
         this.business.type_of_info_object = 'spotbie_community'

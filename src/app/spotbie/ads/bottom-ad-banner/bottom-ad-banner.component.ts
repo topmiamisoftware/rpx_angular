@@ -44,7 +44,7 @@ export class BottomAdBannerComponent implements OnInit {
 
   public adIsOpen: boolean = false
 
-  public rewardMenuOpen: boolean = false
+  public communityMemberOpen: boolean = false
 
   public isMobile: boolean = false
 
@@ -110,7 +110,6 @@ export class BottomAdBannerComponent implements OnInit {
           break  
       }
 
-
     } else {
 
       switch(this.accountType){
@@ -136,7 +135,7 @@ export class BottomAdBannerComponent implements OnInit {
     let searchObjSb = {      
       loc_x: this.lat,
       loc_y: this.lng,
-      categories: JSON.stringify(this.categories),
+      categories: this.categories,
       id: adId,
       account_type: accountType
     }
@@ -222,13 +221,13 @@ export class BottomAdBannerComponent implements OnInit {
 
   public openAd(): void{
     
-    this.rewardMenuOpen = true
+    this.communityMemberOpen = true
     //this.router.navigate([`/business-menu/${this.business.qr_code_link}`])
     
   }
 
   public closeRewardMenu(){
-    this.rewardMenuOpen = false    
+    this.communityMemberOpen = false    
   }
   
   public switchAd(){

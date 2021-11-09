@@ -32,11 +32,11 @@ export class InfoObjectComponent implements OnInit {
 
   @Input() fullScreenMode: boolean = false
 
-  @Input() lat: number = null
-  @Input() lng: number = null
-  @Input() accountType: number = null
-  @Input() eventsClassification: number = null
-  @Input() categories: number
+  @Input('lat') lat: number = null
+  @Input('lng') lng: number = null
+  @Input('accountType') accountType: number = null
+  @Input('eventsClassification') eventsClassification: number = null
+  @Input('categories') categories: number
 
   @Output() closeWindow = new EventEmitter()
   @Output() removeFavoriteEvent = new EventEmitter()

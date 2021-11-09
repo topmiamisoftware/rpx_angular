@@ -203,6 +203,14 @@
 
     </div>
 
+    <app-nearby-ads-three   
+                    [lat]="lat" 
+                    [lng]="lng"
+                    [eventsClassification]="eventsClassification"
+                    [accountType]="accountType" 
+                    [categories]="categories">
+    </app-nearby-ads-three>
+
     <div class='spotbie-copy-link-button' [ngClass]="getFontClasses()" (click)="linkCopy(infoObjectShareLink)">tap to copy link</div>
 
     <div class='spotbie-share-post-link' (click)="linkCopy(infoObjectShareLink)">
@@ -215,12 +223,6 @@
     <div class='spotbie-ai-items-in-image'></div>
 
     <div class='spotbie-toast-message text-uppercase animated fadeIn' *ngIf="successful_url_copy">Link copied</div>
-
-    <app-nearby-ads-three [lat]="lat" 
-                            [lng]="lng"
-                            [eventsClassification]="eventsClassification"
-                            [accountType]="accountType" 
-                            [categories]="info_object.categories"></app-nearby-ads-three>
 
 </div>
 

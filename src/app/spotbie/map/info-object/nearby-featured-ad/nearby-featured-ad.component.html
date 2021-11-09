@@ -33,15 +33,3 @@
     </div>
 
 </div>
-
-<app-community-member   [business]="business"
-                        [ad]="ad"
-                        [lat]="lat"
-                        [lng]="lng"
-                        [accountType]="accountType"
-                        [eventsClassification]="eventsClassification"
-                        [categories]="categories"                        
-                        [qrCodeLink]="business.qr_code_link" 
-                        [editMode]="false"
-                        (closeWindowEvt)="closeRewardMenu()" 
-                        *ngIf="rewardMenuOpen"></app-community-member>

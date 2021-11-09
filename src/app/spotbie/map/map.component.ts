@@ -23,7 +23,6 @@ import { EVENT_CATEGORIES, FOOD_CATEGORIES, SHOPPING_CATEGORIES } from './map_ex
 import { HeaderAdBannerComponent } from '../ads/header-ad-banner/header-ad-banner.component'
 
 const YELP_BUSINESS_SEARCH_API = 'https://api.yelp.com/v3/businesses/search'
-
 const BANNED_YELP_IDS = map_extras.BANNED_YELP_IDS
 
 @Component({

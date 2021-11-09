@@ -28,7 +28,7 @@
         
         <span class='spotbie-text-gradient m-2 mt-0 mb-0' *ngIf="editMode && !isMobile">-</span>
         <span class='sb-text-light-green-gradient sb-perDollar text-uppercase' *ngIf="editMode">
-            {{ (loyaltyPointBalance.loyalty_point_dollar_percent_value / 100) | currency : 'USD' }} per dollar
+             {{ (loyaltyPointBalance.loyalty_point_dollar_percent_value / 100) | currency : 'USD' }} per dollar
         </span>
 
         <span class='spotbie-text-gradient m-2 mt-0 mb-0' *ngIf="!isMobile">-</span>
@@ -40,6 +40,10 @@
 
 <app-community-member [business]="business"
                       [ad]="ad"
+                      [lat]="lat"
+                      [lng]="lng"
+                      [accountType]="accountType"
+                      [categories]="categories"
                       [qrCodeLink]="business.qr_code_link" 
                       (closeWindowEvt)="closeRewardMenu()" 
-                      *ngIf="rewardMenuOpen"></app-community-member>
+                      *ngIf="communityMemberOpen"></app-community-member>
