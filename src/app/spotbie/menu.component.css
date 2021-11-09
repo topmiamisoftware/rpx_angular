@@ -428,7 +428,10 @@ img.sb-qr:hover{
     }    
     .sb-scroll{
         overflow-y: scroll;
-    }  
+    }
+    .sb-desktopNavBar{
+        display: none;
+    }      
 }
 @media (max-width: 650px) { 
     .spotbie-header-mini-logo{

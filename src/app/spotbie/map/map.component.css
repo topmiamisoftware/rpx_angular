@@ -194,8 +194,9 @@
 }
 .spotbie-search-results-title{
     position: relative;
-    width: 92%;
-    max-width: 92%;
+    width: 98%;
+    min-width: 98%;
+    max-width: 1600px;
     margin: 0 auto;
     margin-top: 0;
     margin-bottom: 0;
@@ -239,7 +240,7 @@
     padding-top: 5px;
     padding-bottom: 5px;
     font-family: 'Gotham-Bold';
-    color: #332f3e;
+    color: 'white';
     font-weight: bold;
 }
 .spotbie-review-count{
@@ -346,16 +347,15 @@
     text-align: center;
     padding-top: 100px;
 }
-
 .spotbie-search-result{
     position: relative;
     display: inline-block;
     vertical-align: top;
-    width: 23%;
-    min-width: 23%;
-    max-width: 23%;
-    margin-left: 2px;
-    margin-right: 2px;
+    width: 24%;
+    min-width: 24%;
+    max-width: 24%;
+    margin-left: 1px;
+    margin-right: 1px;
     margin-top: 2px;
     margin-bottom: 2px;
     padding: 15px;
@@ -375,7 +375,6 @@
 }
 .spotbie-communityMember-search-result .spotbie-search-result-title{
     word-break: break-word;
-    color: white;
 }
 .spotbie-communityMember-search-result p{
     word-wrap: break-word;

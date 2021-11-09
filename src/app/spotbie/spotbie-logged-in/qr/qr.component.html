@@ -127,10 +127,10 @@
         </p>
         
         <div class="sb-text-light-green-gradient sb-earnedPoints animated fadeOutUp" #sbEarnedPoints>
-            +{{ userLoyaltyPoints | number:'1.1-2':'en-US' }}
+            +{{ userLoyaltyPoints | number:'1.0':'en-US' }}
         </div>
 
-        <h2 class="spotbie-text-gradient text-center text-uppercase pt-4 mb-4">{{ userLoyaltyPoints | number:'1.1-2':'en-US' }}</h2>
+        <h2 class="spotbie-text-gradient text-center text-uppercase pt-4 mb-4">{{ userLoyaltyPoints | number:'1.0':'en-US' }}</h2>
 
         <button class='spotbie-button text-uppercase mt-3' (click)="closeQrUser()">close</button>
 

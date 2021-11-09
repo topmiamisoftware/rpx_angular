@@ -202,19 +202,19 @@ export class HeaderAdBannerComponent implements OnInit {
         this.distance = getDistanceFromLatLngInMiles(this.business.loc_x, this.business.loc_y, this.lat, this.lng)
       else
         this.distance = 5
-    
-      if(this.switchAdInterval == null){
-
-        this.switchAdInterval = setInterval(()=>{
-      
-          if(!this.editMode) this.getHeaderBanner()
-  
-        }, 8000)
-        
-      }
 
     } else
       console.log("getHeaderBannerAdCallback", resp)
+
+    if(this.switchAdInterval == null){
+
+      this.switchAdInterval = setInterval(()=>{
+    
+        if(!this.editMode) this.getHeaderBanner()
+
+      }, 8000)
+      
+    }
 
   }
 

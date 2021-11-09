@@ -105,7 +105,7 @@
         
         <span class='sb-text-light-green-gradient'>LOYALTY POINTS THIS MONTH</span><br/>
         <h1 class='spotbie-text-gradient mb-4'>
-            - {{ info_object.balance| number:'1.1-2':'en-US' }} LP -
+            {{ info_object.balance| number:'1.0':'en-US' }}
         </h1>
         <br/><br/>
         <span class='spotbie-text-gradient' style='font-size: .8rem;'>DOLLAR VALUE RATE</span><br/>
@@ -130,7 +130,7 @@
     </div>
     
     <div class='spotbie-review-count mt-2' [ngClass]="getFontClasses()" *ngIf="info_object.type_of_info_object == eInfoObjectType.Yelp" (click)="visitInfoObjectPage()">
-        Based on {{ info_object.review_count | number:'1.1-2':'en-US' }} Reviews
+        Based on {{ info_object.review_count }} Reviews
     </div>
     
     <div class='spotbie-info-object-address' [ngClass]="getFontClasses()" *ngIf="info_object.type_of_info_object == eInfoObjectType.TicketMaster">
@@ -190,7 +190,7 @@
         Buy Tickets
     </div>
 
-    <div class='spotbie-share-buttons-wrappper' *ngIf="info_object !== undefined">
+    <div class='spotbie-share-buttons-wrappper mb-4' *ngIf="info_object !== undefined">
 
         <share-buttons
                 show="4"

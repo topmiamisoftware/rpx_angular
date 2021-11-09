@@ -17,3 +17,8 @@
 .sb-userName{
     text-transform: uppercase;
 }
+@media(max-width:768px){
+    .sb-desktopNavBar{
+        display: none;
+    }
+}

@@ -1,6 +1,6 @@
 <app-loading-screen *ngIf="loading"></app-loading-screen>
 
-<div class='spotbie-overlay-window' #parentWindow>  
+<div class='spotbie-overlay-window' #parentWindow id="spotbieMainSpotBieScroll">  
 
   <div [ngClass]="getMapWrapperClass()">
     
@@ -336,8 +336,8 @@
 
               <td>
     
-                <h6 class='spotbie-search-result-title' style='font-size: .8rem;'>
-                  {{ communityMember.name  | truncateText:[20, '...'] }}                   
+                <h6 class='spotbie-search-result-title sb-text-light-green-gradient' style='font-size: .8rem;'>
+                  {{ communityMember.name | truncateText:[20, '...'] }}                   
                 </h6>
                 
                 <p style='font-size: .5rem; text-overflow: ellipsis; max-height: 30px' class='spotbie-text-gradient mt-3'>
@@ -361,10 +361,6 @@
         </div>       
 
         <div class='spotbie-no-results mt-4 mb-4 text-uppercase' *ngIf="searchResults.length == 0">No results available.</div>
-        
-        <div class='spotbie-no-results mt-4 mb-4 text-uppercase' *ngIf="searchResults.length > 0 && type_of_info_object == 'yelp_business'">YELP RESULTS</div>
-        
-        <div class='spotbie-no-results mt-4 mb-4 sb-eventsResultsTitle text-uppercase' *ngIf="searchResults.length > 0 && type_of_info_object == 'ticketmaster_events'">TICKETMASTER RESULTS</div>
 
         <div class='spotbie-search-result' *ngFor='let search_result of searchResults' (click)="pullSearchMarker(search_result)">
           
@@ -445,17 +441,10 @@
           <div class='spotbie-search-result-transactions' *ngIf="search_result.transactions_on == '1'">{{ search_result.friendly_transactions }}</div>
     
         </div>
-    
-        <app-bottom-ad-banner class='mt-4' 
-                              #bottomAdBanner 
-                              [eventsClassification]="eventsClassification"
-                              [accountType]="searchCategory" 
-                              [categories]="number_categories" 
-                              [lat]="lat" 
-                              [lng]="lng"></app-bottom-ad-banner>
-
+        
+        <!--Page Number Wrapper -->
         <div class='mt-5 pb-5'>
-    
+
           <span class='sb-page-button text-uppercase cursor-pointer' (click)="goToPage(1)" *ngIf="allPages > 1">
             <i class="fa fa-angle-double-left"></i>
           </span> 
@@ -495,6 +484,14 @@
           <span class='spotbie-search-page-number'>{{ around_me_search_page }}/{{ allPages - 1 }}</span>
     
         </div>
+
+        <app-bottom-ad-banner class='mt-4' 
+                              #bottomAdBanner 
+                              [eventsClassification]="eventsClassification"
+                              [accountType]="searchCategory" 
+                              [categories]="number_categories" 
+                              [lat]="lat" 
+                              [lng]="lng"></app-bottom-ad-banner>
         
       </div>
 

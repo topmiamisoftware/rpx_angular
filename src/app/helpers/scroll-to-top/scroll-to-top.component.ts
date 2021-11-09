@@ -17,7 +17,7 @@ export class ScrollToTopComponent implements OnInit {
   constructor() { }
 
   scrollTop() {
-    $('html, body').animate({ scrollTop: 0 }, 'slow')
+    $('#spotbieMainSpotBieScroll').animate({ scrollTop: 0 }, 'slow')
   }
 
   addScrollEvent() {
@@ -32,28 +32,34 @@ export class ScrollToTopComponent implements OnInit {
 
   ngAfterViewInit(){
 
-    console.log("(this.inputWindow.nativeElement", this.inputWindow.nativeElement)
-
-    $(this.inputWindow.nativeElement).on('scroll', function() {
+    $('#spotbieMainSpotBieScroll').on('scroll', function() {
       // do your things like logging the Y-axis
-      const scrollTop = $(window).scrollTop()
+      
+      const scrollTop = $('#spotbieMainSpotBieScroll').scrollTop()
+
       if (scrollTop < 50) {
+        
         this.scrollArrow.nativeElement.className = 'spotbie-scroll-top spotbie-arrow-transparent'
         this.arrowOn = false
+
       } else if (this.arrowOn == false) {
+        
         this.arrowOn = true
         this.scrollArrow.nativeElement.className = 'spotbie-scroll-top'
+
       }
 
       console.log("scrollTop", scrollTop)
 
     }.bind(this))
 
-    const scrollTop = $(window).scrollTop()
+    const scrollTop = $('#spotbieMainSpotBieScroll').scrollTop()
 
     if (scrollTop > 50) {
+
       this.scrollArrow.nativeElement.className = 'spotbie-scroll-top'
       this.arrowOn = true
+
     }
 
   }

@@ -51,8 +51,8 @@ export class MapComponent implements OnInit {
 
   @ViewChild('scrollMapAppAnchor') scrollMapAppAnchor: ElementRef
 
-  @ViewChild('bottomAdBanner') bottomAdBanner: BottomAdBannerComponent
-  @ViewChild('singleAdApp') singleAdApp: HeaderAdBannerComponent
+  @ViewChild('bottomAdBanner') bottomAdBanner: BottomAdBannerComponent = null
+  @ViewChild('singleAdApp') singleAdApp: HeaderAdBannerComponent = null
 
   public isLoggedIn: string
   public iconUrl:  string
@@ -745,6 +745,18 @@ export class MapComponent implements OnInit {
         this.categories = this.event_categories
         this.classificationSearch()
         return
+
+    }
+
+    if(this.singleAdApp !== null){
+
+      setTimeout(() => {
+        clearInterval(this.singleAdApp.switchAdInterval)
+        clearInterval(this.bottomAdBanner.switchAdInterval)
+        
+        this.singleAdApp.getHeaderBanner()
+        this.bottomAdBanner.getBottomHeader()
+      })
 
     }
 

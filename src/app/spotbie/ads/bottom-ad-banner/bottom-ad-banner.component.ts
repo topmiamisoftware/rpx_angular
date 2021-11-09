@@ -204,18 +204,20 @@ export class BottomAdBannerComponent implements OnInit {
       else
         this.distance = 5
       
-      if(this.switchAdInterval == null){
-
-        this.switchAdInterval = setInterval(()=>{
-      
-          if(!this.editMode) this.getBottomHeader()
-  
-        }, 8000)
-        
-      }
 
     } else
       console.log("getSingleAdListCb", resp)
+
+      
+    if(this.switchAdInterval == null){
+
+      this.switchAdInterval = setInterval(()=>{
+    
+        if(!this.editMode) this.getBottomHeader()
+
+      }, 8000)
+      
+    }
 
   }
 

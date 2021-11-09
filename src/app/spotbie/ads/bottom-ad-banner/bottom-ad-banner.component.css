@@ -110,7 +110,7 @@
     .sb-categoryList,
     .sb-address{
         position: relative;
-        display: inline-block;
+        display: block;
         top: unset;
         right: unset;
         bottom: unset;        
@@ -142,7 +142,7 @@
         margin-top: 10px;
     }      
     .sb-perDollar{
-        margin-right: 5px;
+        margin-right: 0px;
     }    
     .sb-ad-bottom,
     .sb-ad-top{
