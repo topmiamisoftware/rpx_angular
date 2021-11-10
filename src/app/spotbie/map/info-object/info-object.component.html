@@ -59,14 +59,6 @@
 
     </div>
 
-    <div (click)="clickGoToSponsored()" 
-            class='spotbie-info-object-is-sponsored sb-text-light-green-gradient mt-4' 
-            *ngIf="info_object.type_of_info_object == eInfoObjectType.SpotBieCommunity && ad !== undefined"> 
-
-        SPONSORED <i class='fa fa-search-dollar'></i> 
-
-    </div>
-
     <div class='spotbie-info-object-image-list' *ngIf="info_object.type_of_info_object == eInfoObjectType.TicketMaster">
 
         <div class='spotbie-info-object-image-thumb'
@@ -78,7 +70,8 @@
         (click)="addFavorite()"
         *ngIf="info_object.type_of_info_object != eInfoObjectType.TicketMaster && 
                 showFavorites && 
-                info_object.is_community_member">                      
+                info_object.is_community_member &&
+                ad == undefined">                      
 
         <i class="fa fa-star"></i>
 
@@ -87,8 +80,11 @@
     </div>
 
     <div class='spotbie-button spotbie-add-to-favorites' 
-            (click)="removeFavorite()" 
-            *ngIf="info_object.type_of_info_object != eInfoObjectType.TicketMaster && !showFavorites">
+        (click)="removeFavorite()" 
+        *ngIf="info_object.type_of_info_object != eInfoObjectType.TicketMaster && 
+        !showFavorites && 
+        info_object.is_community_member &&
+        ad == undefined">
 
         <i class="fa fa-minus"></i>
 
@@ -203,6 +199,13 @@
                 [description]="infoObjectDescription"
                 [autoSetMeta]="false">     
         </share-buttons>
+
+    </div>
+
+    <div (click)="clickGoToSponsored()" 
+          class='spotbie-info-object-is-sponsored sb-text-light-green-gradient mt-4'> 
+
+        SPONSORED <i class='fa fa-search-dollar'></i> 
 
     </div>
 
