@@ -106,6 +106,7 @@ h5{
     max-width: 450px;
     color: white;
     text-align: center;
+    letter-spacing: 1px;
 }
 
 p{
@@ -139,6 +140,9 @@ p{
 .sb-homePageIconsTable img{
     max-width: 100px;
     width: 100px;
+}
+.sb-footer p{
+    text-align: center !important;
 }
 @media (max-width: 840px) {
     p{

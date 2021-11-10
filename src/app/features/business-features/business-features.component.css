@@ -4,9 +4,6 @@
     background-size: cover !important;
     background-repeat: no-repeat !important;    
 }
-h4{
-    cursor: default
-}
 #sbReadImageRestaurants{
     background: url('../../../assets/images/home_imgs/jpg/spotbie-find-restaurant-customers-near-you.jpg')
 }

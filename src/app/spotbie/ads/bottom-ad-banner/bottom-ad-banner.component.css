@@ -1,7 +1,7 @@
 .spotbie-ad-wrapper-header{
     position: relative;
     text-align: center;
-    margin: 5px auto;
+    margin: 0 auto;
     min-height: 500px;
     background-repeat: no-repeat!important;
     background-size: contain!important;
@@ -50,18 +50,9 @@
     z-index: 0;
     pointer-events: none;   
 }
-
-.sb-ad-top{
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 2;
-}
-
 .sb-ad-bottom{
     position: absolute;
-    bottom: 0;
+    top: -27px;
     left: 0;
     width: 100%;
     z-index: 2;
@@ -148,5 +139,6 @@
     .sb-ad-top{
         position:relative;
         background-color: rgb(28 25 36) !important;
+        top: unset;
     }
 }

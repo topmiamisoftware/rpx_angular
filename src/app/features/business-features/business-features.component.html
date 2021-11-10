@@ -1,53 +1,62 @@
 
 <div class="sb-top-headerImg"></div>
 
-<h5 class="text-uppercase">CONNECTING PLACES TO EAT, SHOPPING, AND EVENTS TO CUSTOMERS.</h5>
+<h2 class="text-uppercase spotbie-text-gradient" style="font-size: 1.8rem;">GROW YOUR BUSINESS</h2>
+
+<img class="sb-logo-withStreet mt-4 mb-4" src="assets/images/spotbie-miami-find-places-to-eat.png" />
 
 <button class="spotbie-button sb-getStarted" (click)="signUp()">
     <span>GET STARTED</span>
 </button>
 
-<img class="sb-logo-withStreet mt-4 mb-4" src="assets/images/spotbie-miami-find-places-to-eat.png" />
+<br/><br/>
 
 <h4 class="text-uppercase">SPOTBIE COMMUNITY</h4>
 
-<p class="text-center">    
+<br/>
 
+<h2><a class="spotbie-text-gradient text-uppercase" [routerLink]="['loyalty-points']">Award Loyalty Points</a></h2>
+
+<p class="text-center">  
     <br/>
-    <a class="spotbie-text-link text-uppercase" [routerLink]="['/earn-loyalty-points']">Award Loyalty Points</a>
-    <br/><br/>
-    
     <span class="spotbie-text-gradient"><i class='fa fa-map-marker-alt'></i> to nearby</span>
     
     <br/><br/>
     <a class="spotbie-text-link text-uppercase" [routerLink]="['/home']">SpotBie Community Members</a> 
     <br/><br/>
-    <span class="spotbie-text-gradient">Food, Shopping, Events</span>
-    <br/><br/>
-
-    Offer exclusive discounts, drinks & food, event merchandise, and more.
-    
-    <br/><br/>
-
-    <a class="spotbie-text-link text-uppercase" [routerLink]="['/business']">SCHEDULE DEMO</a>
-
-    <br/><br/>
-
 </p>
 
-<div class="sb-homePageIconsTable mt-4 mb-4">
+<h2><span class="spotbie-text-gradient">Food, Shopping, Events</span></h2>
+
+<p class="text-center">        
+    <br/><br/>
+    Offer exclusive discounts, drinks & food, event merchandise, and more.
+    <br/><br/>
+</p>
+
+<div class="spotbie-button text-uppercase mb-5" [routerLink]="['/business']">
+    SCHEDULE DEMO <i class="fa fa-calendar-check"></i>
+</div>
+
+<app-download-mobile [buttonStyle]="1"></app-download-mobile>
+
+<div class="sb-homePageIconsTable mt-5 mb-4">
+
     <div (click)="spawnCategories('food')">
         <img src="assets/images/home_imgs/find-places-to-eat.svg" /><br/>
         <span class='spotbie-text-gradient'>FOOD</span>
     </div>
+
     <div (click)="spawnCategories('events')">
         <img src="assets/images/home_imgs/find-events.svg" /><br/>
         <span class='spotbie-text-gradient'>EVENTS</span>
-    </div>        
+    </div>  
+
     <div (click)="spawnCategories('shopping')">
         <img src="assets/images/home_imgs/find-places-for-shopping.svg" /><br/>
         <span class='spotbie-text-gradient'>RETAIL</span>
-    </div>                        
+    </div> 
+
 </div>
 
 <div class="mb-4 sb-readImage cursor-pointer" 
@@ -55,9 +64,9 @@
         
 <img class='sb-greenIcon' src='assets/images/home_imgs/spotbie-green-icon.svg' />            
 
-<h4 class="text-uppercase">
+<h2 class="text-uppercase spotbie-text-gradient">
     FIND NEW CUSTOMERS
-</h4>
+</h2>
 
 <p class="mt-2 mb-2">
 
@@ -84,9 +93,9 @@
 
 <img class='sb-greenIcon' src='assets/images/home_imgs/spotbie-green-icon.svg' />
 
-<h4 class="text-uppercase">
+<h2 class="text-uppercase spotbie-text-gradient">
     RETAIN CLIENTELE
-</h4>
+</h2>
 
 <p class="mt-2 mb-2">
 
@@ -110,9 +119,9 @@
 
 <img class='sb-greenIcon' src='assets/images/home_imgs/spotbie-green-icon.svg' />
 
-<h4 class="text-uppercase">
-    ENGAGING 
-</h4>
+<h2 class="text-uppercase spotbie-text-gradient">
+    ENGAGE YOUR AUDIENCE 
+</h2>
 
 <p class="mt-2 mb-2">
 
@@ -135,7 +144,9 @@
 <div class="sb-footer pt-5 pb-5">
 
     <p [routerLink]="['/terms']">Terms & Privacy Policy</p>
+
     <img class="mt-3 mb-3" src="assets/images/home_imgs/logo_spotbie-02.svg" />
+
     <p [routerLink]="['/terms']">SpotBie, LLC.&copy; Copyright 2021</p>
 
 </div>

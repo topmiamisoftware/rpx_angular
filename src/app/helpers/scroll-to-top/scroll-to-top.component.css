@@ -1,7 +1,7 @@
 .spotbie-scroll-top{
     position: fixed;
-    left: 15px;
-    bottom: 15px;
+    left: 16px;
+    bottom: 20px;
     transition: 0.5s;
     background: linear-gradient(90deg,#35a99f,#64e56f);
     padding: 5px;
@@ -9,7 +9,7 @@
     padding-right: 13px;
     border-radius: 99%;  
     transition: 0.5s;
-    z-index: 92;
+    z-index: 89;
 }
 .spotbie-scroll-top:hover{
     cursor: pointer;
@@ -30,6 +30,6 @@
         padding-bottom: 6px;
     }
     .spotbie-scroll-top i {
-        font-size: 22px;
+        font-size: 32px;
     }
 }

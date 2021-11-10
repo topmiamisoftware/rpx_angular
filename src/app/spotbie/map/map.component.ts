@@ -751,11 +751,10 @@ export class MapComponent implements OnInit {
     if(this.singleAdApp !== null){
 
       setTimeout(() => {
+
         clearInterval(this.singleAdApp.switchAdInterval)
         clearInterval(this.bottomAdBanner.switchAdInterval)
-        
-        this.singleAdApp.getHeaderBanner()
-        this.bottomAdBanner.getBottomHeader()
+
       })
 
     }

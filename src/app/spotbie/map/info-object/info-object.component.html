@@ -59,9 +59,12 @@
 
     </div>
 
-    <div    (click)="clickGoToSponsored()" class='spotbie-info-object-is-sponsored sb-text-light-green-gradient mt-4' 
-            *ngIf="info_object.type_of_info_object == eInfoObjectType.SpotBieCommunity && ad !== undefined">    
-        SPONSORED <i class='fa fa-search-dollar'></i>   
+    <div (click)="clickGoToSponsored()" 
+            class='spotbie-info-object-is-sponsored sb-text-light-green-gradient mt-4' 
+            *ngIf="info_object.type_of_info_object == eInfoObjectType.SpotBieCommunity && ad !== undefined"> 
+
+        SPONSORED <i class='fa fa-search-dollar'></i> 
+
     </div>
 
     <div class='spotbie-info-object-image-list' *ngIf="info_object.type_of_info_object == eInfoObjectType.TicketMaster">

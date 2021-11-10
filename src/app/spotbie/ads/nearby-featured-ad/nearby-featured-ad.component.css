@@ -3,8 +3,8 @@
     text-align: center;
     margin-top: 50px;
     margin-bottom: 5px;
-    margin-left: 1%;
-    margin-right: 1%;
+    margin-left: 2px;
+    margin-right: 2px;
     min-height: 274px;
     background-repeat: no-repeat !important;
     background-size: contain !important;
@@ -110,8 +110,8 @@
     max-height: 300px;
     min-height: 300px;
     height: 300px;    
-    margin-left: 1%;
-    margin-right: 1%;     
+    margin-left: 20px;
+    margin-right: 20px;     
 }
 
 .sb-sponsored,

@@ -25,6 +25,7 @@ import { ShareIconsModule } from 'ngx-sharebuttons/icons'
 import { MyFavoritesModule } from '../my-favorites/my-favorites.module'
 import { InfoObjectModule } from './info-object/info-object.module'
 import { AdsModule } from '../ads/ads.module'
+import { DownloadMobileModule } from 'src/app/download-mobile/download-mobile.module'
 
 @NgModule({
   declarations: [    
@@ -44,6 +45,7 @@ import { AdsModule } from '../ads/ads.module'
     ShareIconsModule,
     MyFavoritesModule,
     InfoObjectModule,
+    DownloadMobileModule,
     RouterModule,
     AgmCoreModule.forRoot({
       apiKey: environment.google_maps_apiKey,

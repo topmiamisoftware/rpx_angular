@@ -433,7 +433,7 @@ hr{
     color: inherit;
     font-size: 1rem;
     cursor: pointer;
-    letter-spacing: 2px;
+    letter-spacing: 0px;
     color: white !important;
     border: unset !important;
     padding: 0px;

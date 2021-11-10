@@ -49,8 +49,6 @@ export class ScrollToTopComponent implements OnInit {
 
       }
 
-      console.log("scrollTop", scrollTop)
-
     }.bind(this))
 
     const scrollTop = $('#spotbieMainSpotBieScroll').scrollTop()

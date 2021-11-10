@@ -35,10 +35,6 @@ export class BusinessComponent implements OnInit {
     this.appMenuLoggedOut.signUp()
   }
 
-  scrollTop() {
-    $('html, body').animate({ scrollTop: 0 }, 'slow')    
-  }
-
   async ngOnInit() {
 
     const isLoggedIn = localStorage.getItem("spotbie_loggedIn")

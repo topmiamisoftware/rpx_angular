@@ -962,7 +962,14 @@ button.gm-ui-hover-effect:focus-within{
     }
     .spotbie-search-result-wrapper{
         padding-top: unset;
-    }           
+    }
+    .spotbie-map.sb-map-results-open,
+    .spotbie-agm-map.sb-map-results-open,
+    .spotbie-map.sb-map-results-open{
+        height: 50vh;
+        max-height: 50vh;
+        min-height: 50vh;
+    }               
 }
 @media (max-width: 700px) { 
     .spotbie-map{

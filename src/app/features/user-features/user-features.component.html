@@ -1,7 +1,7 @@
 
 <div class="sb-top-headerImg"></div>
 
-<h5 class="text-uppercase">LOYALTY POINTS AT NEARBY<br/>PLACES TO EAT, RETAILS, AND EVENTS</h5>
+<h4 class="text-uppercase">SPOTBIE COMMUNITY</h4>
 
 <div class="spotbie-button sb-getStarted" (click)="spawnCategories('food')">
     <span>GET STARTED</span>
@@ -9,15 +9,14 @@
 
 <img class="sb-logo-withStreet mt-4 mb-4" src="assets/images/spotbie-miami-find-places-to-eat.png" />
 
-<h4 class="text-uppercase">SPOTBIE COMMUNITY</h4>
-
 <p class="text-center">    
 
     <br/>
     <a class="spotbie-text-link text-uppercase" [routerLink]="['/earn-loyalty-points']">Earn Loyalty Points</a>
     <br/><br/>
     
-    <span class="spotbie-text-gradient"><i class='fa fa-map-marker-alt'></i> from nearby</span>
+    <i class='fa fa-map-marker-alt'></i>
+    <span class="spotbie-text-gradient"> from nearby</span>
     
     <br/><br/>
     <a class="spotbie-text-link text-uppercase" [routerLink]="['/business']">SpotBie Community Members</a> 
@@ -28,11 +27,13 @@
 
     Exclusive discounts, drinks & food, event merchandise, and more.
     
-    <br/><br/><br/>
+    <br/><br/>
 
 </p>
 
-<div class="sb-homePageIconsTable mt-4 mb-4">
+<app-download-mobile></app-download-mobile>
+
+<div class="sb-homePageIconsTable mt-5 mb-4">
     <div (click)="spawnCategories('food')">
         <img src="assets/images/home_imgs/find-places-to-eat.svg" /><br/>
         <span class='spotbie-text-gradient'>FOOD</span>
@@ -46,7 +47,7 @@
         <span class='spotbie-text-gradient'>RETAIL</span>
     </div>                        
 </div>
-        
+
 <div class="mb-4 sb-readImage cursor-pointer" [ngStyle]="{ 'background' : 'url(assets/images/home_imgs/jpg/spotbie-find-restaurant-customers-near-you.jpg)' }" (click)="spawnCategories('food')"></div>
 
 <img class='sb-greenIcon' src='assets/images/home_imgs/spotbie-green-icon.svg' (click)="spawnCategories('food')" />            

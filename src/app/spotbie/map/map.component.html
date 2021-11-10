@@ -43,6 +43,7 @@
               [longitude]="lng"
               [styles]="map_styles"
               [zoom]="zoom"
+              [gestureHandling]="cooperative"
               [fitBounds]="fitBounds">
 
         <agm-overlay [latitude]="lat" [longitude]="lng" *ngIf="locationFound">

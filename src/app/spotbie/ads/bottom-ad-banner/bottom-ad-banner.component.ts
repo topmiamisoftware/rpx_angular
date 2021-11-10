@@ -221,6 +221,12 @@ export class BottomAdBannerComponent implements OnInit {
 
   }
 
+  public spotbieAdWrapperStyles(){
+    
+    if(this.editMode) return { 'margin-top' : '45px' }
+
+  }
+
   public openAd(): void{
     
     this.communityMemberOpen = true
