@@ -201,16 +201,16 @@
 .spotbie-info-object-image-thumb{
     position: relative;
     display: inline-block;
-    margin-left: 10px;
-    margin-right: 10px;
+    margin-left: 1px;
+    margin-right: 1px;
     width: 30%;
     min-width: 30%;
     max-width: 30%;
     height: 30vw;
     min-height: 30vw;
-    background-size: cover !important;
-    background-position: center !important; 
-    border-radius: 25px;      
+    background-size: cover!important;
+    background-position: center!important;
+    border-radius: 5px;     
 }
 .spotbie-search-result-yelp-logo{
     position: relative;

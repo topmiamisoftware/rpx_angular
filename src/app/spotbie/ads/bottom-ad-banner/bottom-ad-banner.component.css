@@ -13,11 +13,9 @@
     cursor: pointer;
     z-index: 9;
 }
-
 .fa-map-marker-alt{
     font-size: .5rem;
 }
-
 .spotbie-ad-image{
     position: absolute;
     left: 0;
@@ -33,7 +31,6 @@
     background-size: cover!important;
     background-position: center!important; 
 }
-
 .spotbie-white-iconImg{
     position: absolute;
     top: 0;
@@ -61,7 +58,6 @@
     font-size: .6rem;
     background-color: rgba(0,0,0,.729);    
 }
-
 @media (max-width: 1100px) { 
     .spotbie-ad-wrapper-header{
         max-width: 55%;

@@ -18,6 +18,8 @@ export class AppComponent {
   
   title = 'spotbie';
 
+  public testMode: boolean = true
+
   constructor(private versionCheckService : VersionCheckService, 
               private spotbieMetaService: SpotbieMetaService) {}
   
@@ -31,7 +33,9 @@ export class AppComponent {
   }
 
   ngOnInit(){
-    
+
+    if(environment.staging) this.testMode = true
+
     this.spotbieMetaService.setTitle(SPOTBIE_META_TITLE)
     this.spotbieMetaService.setDescription(SPOTBIE_META_DESCRIPTION)
     this.spotbieMetaService.setImage(SPOTBIE_META_IMAGE)

@@ -5,6 +5,13 @@
     min-width: 100%;
     max-width: 100%;    
 }
+.sb-miniLogoIconM{
+    position: relative;
+    margin-top: -6px;
+    margin-right: 3px;
+    width: 16px;
+    max-width: 19px;
+}
 .spotie-prompt{
     position: absolute;
     left: 0;
@@ -326,7 +333,8 @@
     margin-right: 15px;
     background-position: center !important;
     background-repeat: no-repeat !important;
-    background-size: cover !important;     
+    background-size: cover !important;
+    border-radius: 5px;     
 }
 .spotbie-search-results {
     position: relative;

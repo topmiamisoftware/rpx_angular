@@ -46,7 +46,8 @@
     height: 215px;
     min-height: 215px;
     max-height: 215px;
-    margin-left: 10px;
+    margin-left: 5px;
+    margin-right: 5px;
     background-size: cover !important;
     background-repeat: no-repeat !important;
     background-position: center !important;

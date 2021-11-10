@@ -1,3 +1,6 @@
 <router-outlet></router-outlet>
 
-<div id='spotbie-errors' class='spotbie-error-display'></div>
+<div class="sb-testMode pe-none" *ngIf="testMode">
+    <i class="fas fa-exclamation-triangle"></i>
+    <span> TEST MODE</span>
+</div>

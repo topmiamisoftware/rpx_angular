@@ -1,14 +1,11 @@
 .spotbie-scroll-top{
     position: fixed;
     left: 16px;
-    bottom: 20px;
-    transition: 0.5s;
+    bottom: 53px;
     background: linear-gradient(90deg,#35a99f,#64e56f);
-    padding: 5px;
-    padding-left: 13px;
-    padding-right: 13px;
-    border-radius: 99%;  
-    transition: 0.5s;
+    padding: 5px 14px;
+    border-radius: 99%;
+    transition: .5s;
     z-index: 89;
 }
 .spotbie-scroll-top:hover{
@@ -26,8 +23,10 @@
 @media (max-width: 460px) { 
 
     .spotbie-scroll-top{
-        padding-top: 6px;
-        padding-bottom: 6px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        bottom: 27px;
+        left: 13px;
     }
     .spotbie-scroll-top i {
         font-size: 32px;

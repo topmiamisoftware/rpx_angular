@@ -21,6 +21,7 @@ import { Business } from 'src/app/models/business'
 import { BottomAdBannerComponent } from '../ads/bottom-ad-banner/bottom-ad-banner.component'
 import { EVENT_CATEGORIES, FOOD_CATEGORIES, SHOPPING_CATEGORIES } from './map_extras/map_extras'
 import { HeaderAdBannerComponent } from '../ads/header-ad-banner/header-ad-banner.component'
+import { environment } from 'src/environments/environment'
 
 const YELP_BUSINESS_SEARCH_API = 'https://api.yelp.com/v3/businesses/search'
 const BANNED_YELP_IDS = map_extras.BANNED_YELP_IDS
@@ -1112,7 +1113,7 @@ export class MapComponent implements OnInit {
     
     if(httpResponse.success){
       
-      let communityMemberList: Array<Business> = httpResponse.data.data
+      let communityMemberList: Array<Business> = httpResponse.data
       
       communityMemberList.forEach( (business: Business) => {        
 
@@ -1155,7 +1156,7 @@ export class MapComponent implements OnInit {
       })
 
       this.communityMemberList = communityMemberList
-
+      
       if(this.getSpotBieCommunityMemberListInterval == null){
 
         this.getSpotBieCommunityMemberListInterval = setInterval(() => {
@@ -1339,10 +1340,21 @@ export class MapComponent implements OnInit {
     this.locationFound = true
     this.displayLocationEnablingInstructions = false
 
-    this.lat = position.coords.latitude
-    this.lng = position.coords.longitude
-    this.ogLat = position.coords.latitude
-    this.ogLng = position.coords.longitude
+    if(environment.fakeLocation){
+
+      this.lat = environment.myLocX
+      this.lng = environment.myLocY
+      this.ogLat = environment.myLocX
+      this.ogLng = environment.myLocY
+
+    } else {
+
+      this.lat = position.coords.latitude
+      this.lng = position.coords.longitude
+      this.ogLat = position.coords.latitude
+      this.ogLng = position.coords.longitude  
+
+    }
 
     this.spotbie_map.triggerResize(true)
 

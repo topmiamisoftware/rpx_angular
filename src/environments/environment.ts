@@ -2,10 +2,13 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-let ngrok = 'https://42a9-2600-1700-4804-d5f0-72dc-a29e-42f7-8023.ngrok.io/'
+let ngrok = 'https://a1c3-2600-1700-4804-d5f0-ba0d-7884-4653-6945.ngrok.io/'
 let baseUrl = 'https://192.168.1.65:4200/'
+
 export const environment = {
+
   production: false,
+  staging: true,
   baseUrl: baseUrl,
   google_maps_apiKey: 'AIzaSyBg9GGAv2rRn8WQbylRbpF4j6u-9TFxBG8',
   google_places_apiAkey: 'AIzaSyChSn9IE6Dp0Jv8TS013np1b4X1rCsQt_E',
@@ -17,9 +20,9 @@ export const environment = {
    * */
   apiEndpoint: `${ngrok}api/`,
 
-  subscriptionHeaderPaymentLink: 'https://buy.stripe.com/test_6oEbKs308deIfTi9AC',
-  subscriptionFooterPaymentLink: 'https://buy.stripe.com/test_8wM9CkfMU0rW22s8ww',
-  subscriptionRelatedPaymentLink: 'https://buy.stripe.com/test_bIYdSAdEMb6A22s7st'
+  fakeLocation: true,
+  myLocX: 25.786286,
+  myLocY: -80.186562
 
 }
 /*

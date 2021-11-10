@@ -1,0 +1,17 @@
+.sb-testMode{
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 29px;
+    margin: 0 auto;
+    max-width: 228px;
+    background-color: rgba(0,0,0,.231);
+    border-radius: 5px;
+    color: white;
+    z-index: 99;
+    text-align: center;
+    padding: 2px;
+}
+.fa-exclamation-triangle{
+    color: #ffc107;
+}

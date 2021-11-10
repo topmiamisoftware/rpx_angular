@@ -1,5 +1,6 @@
 export const environment = {
   production: true,
+  staging: true,
   baseUrl: 'https://spotbie-master.netlify.app/',
   versionCheckURL : 'https://spotbie.com/version.json',
   google_maps_apiKey: 'AIzaSyC4Su0B2cBzsSpAF-Kphq_78uR8b5eA4_Q',
@@ -7,4 +8,7 @@ export const environment = {
   apiEndpoint: 'https://api.spotbie.com/api/',
   qrCodeScanBaseUrl : 'https://spotbie.com/loyalty-points/scan',
   ngrok: null,
+  fakeLocation: true,
+  myLocX: 25.786286,
+  myLocY: -80.186562
 };

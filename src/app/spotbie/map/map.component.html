@@ -33,7 +33,7 @@
           <span class="spotbie-text-gradient text-uppercase mt-5 cursor-pointer">TRY LOCATION</span>
         </div>        
 
-    </div> 
+    </div>     
 
     <agm-map  [ngClass]="getMapClass()"
               [streetViewControl]="false"
@@ -128,7 +128,6 @@
           <agm-marker *ngFor="let communityMember of communityMemberList"
               [latitude]="communityMember.loc_x" 
               [longitude]="communityMember.loc_y"
-              [agmFitBounds]="true"
               [visible]="false"></agm-marker>
                       
         </div>
@@ -318,7 +317,8 @@
 
       <div class='spotbie-search-result-wrapper' *ngIf="showSearchResults">
     
-        <div class='spotbie-search-results-title text-uppercase' style="margin-top:0px;" *ngIf="communityMemberList.length > 0">
+        <div class='spotbie-search-results-title text-uppercase' style="margin-top:0px;">
+          <img src="assets/images/home_imgs/spotbie-green-icon.svg" class="sb-miniLogoIconM">
           SPOTBIE COMMUNITY MEMBERS          
         </div>
         

@@ -22,6 +22,7 @@ import { map, startWith } from 'rxjs/operators'
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { Observable } from 'rxjs/internal/Observable';
 import { LocationService } from 'src/app/services/location-service/location.service';
+import { environment } from 'src/environments/environment';
 
 const PLACE_TO_EAT_API = spotbieGlobals.API + 'place-to-eat'
 
@@ -702,8 +703,14 @@ export class SettingsComponent implements OnInit {
 
         navigator.geolocation.getCurrentPosition((position) => {
 
-            this.lat = position.coords.latitude
-            this.lng = position.coords.longitude
+            if(environment.fakeLocation){
+                this.lat = environment.myLocX
+                this.lng = environment.myLocY
+            } else {
+                this.lat = position.coords.latitude
+                this.lng = position.coords.longitude                
+            }
+
             this.zoom = 18
             this.locationFound = true
             this.getAddress(this.lat, this.lng)
@@ -763,9 +770,14 @@ export class SettingsComponent implements OnInit {
 
         this.locationFound = true
 
-        this.lat = position.coords.latitude
-        this.lng = position.coords.longitude
-
+        if(environment.fakeLocation){
+            this.lat = environment.myLocX
+            this.lng = environment.myLocY            
+        } else {
+            this.lat = position.coords.latitude
+            this.lng = position.coords.longitude
+        }
+            
         this.showMobilePrompt2 = false
 
     }
