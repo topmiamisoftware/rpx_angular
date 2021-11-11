@@ -438,12 +438,12 @@ span.spotbie-button{
     margin-left: 3px;
     cursor: pointer;
     padding: 4px 5px;
-    background-color: rgba(0,0,0,.231);
+    background-color: rgb(51 47 62 / 63%);
     color: #fff;
     border-radius: 99px;
 }
 .spotbie-result-page.active{
-    background-color: rgba(0,0,0,.63);
+    background-color: rgba(51 47 62);
 }
 .spotbie-button{
     background-color: rgba(0,0,0,.23);
@@ -857,15 +857,6 @@ button.gm-ui-hover-effect:focus-within{
     .sb-page-button {
         font-size: 1.4rem !important;
     }
-    .spotbie-result-page[_ngcontent-serverApp-c70] {
-        display: inline-block;
-        margin-left: 6px;
-        margin-right: 6px;
-        cursor: pointer;
-        padding: 4px 5px;
-        font-size: .8rem;
-        min-width: 15px;    
-    } 
     .spotbie-search-results-title{
         padding-left: 0px;
         padding-right: 0px;
@@ -918,8 +909,8 @@ button.gm-ui-hover-effect:focus-within{
     }
     .map-prompt-mobile{
         overflow-y: scroll;
-        width: 103%;
-        min-width: 103%;        
+        width: 102%;
+        min-width: 102%;        
     }    
     .sb-deliverySortImg{
         width: 13px !important;

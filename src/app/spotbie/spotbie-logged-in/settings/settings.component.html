@@ -576,10 +576,6 @@
                             Enter {{ account_type_category_friendly_name }} categories.
                         </label>
 
-                        <div class="spotbie-text-gradient text-uppercase mt-4 mb-4">
-                            {{ friendlyCategories }}
-                        </div>
-                        
                     </ng-template>
 
                     <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
@@ -733,10 +729,7 @@
                 <tr>
                     <td>                                  
                         <input class='sb-input text-center' 
-                               type='text' 
-                               [patterns]="customPatterns" 
-                               mask="A00-A00"
-                               placeholder='A12-B34' 
+                               type='text'  
                                maxlength="7"
                                formControlName="passKey" />
                     </td>

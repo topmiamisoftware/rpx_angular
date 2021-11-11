@@ -401,9 +401,11 @@ export class InfoObjectComponent implements OnInit {
       )
 
     } else {
+
       this.myFavoritesService.addFavoriteLoggedOut(favoriteObj)
       this.showFavorites = false
       this.loading = false
+
     }
 
   }
@@ -434,10 +436,13 @@ export class InfoObjectComponent implements OnInit {
       )
 
     } else {
+
       this.myFavoritesService.removeFavoriteLoggedOut(yelpId)
       this.removeFavoriteCb({success: true}, yelpId)
       this.loading = false
+
       this.showFavorites = true
+
     }
 
   }
@@ -445,8 +450,10 @@ export class InfoObjectComponent implements OnInit {
   public removeFavoriteCb(resp, favoriteId: string){
 
     if(resp.success) {
+
       this.showFavorites = true
       this.removeFavoriteEvent.emit({ favoriteId: favoriteId })
+
     } else
       console.log("removeFavoriteCb", resp)
 

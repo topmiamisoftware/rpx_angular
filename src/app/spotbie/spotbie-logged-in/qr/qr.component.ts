@@ -231,12 +231,15 @@ export class QrComponent implements OnInit {
     this.loyaltyPointsService.getLoyaltyPointBalance()
 
     this.userAuthService.getSettings().subscribe(
+
       resp => {        
         this.userHash = resp.user.hash
         this.business.address = resp.business.address
         this.business.name = resp.business.name
         this.business.qr_code_link = resp.business.qr_code_link
+        this.business.trial_ends_at = resp.business.trial_ends_at
        }
+
     )
     
     const totalSpentValidators = [Validators.required]

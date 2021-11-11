@@ -209,7 +209,7 @@ export class NearbyFeaturedAdComponent implements OnInit {
       else
         this.distance = 5
 
-      if(this.switchAdInterval == null){
+      if(!this.switchAdInterval){
 
         this.switchAdInterval = setInterval(()=>{
       
@@ -280,7 +280,7 @@ export class NearbyFeaturedAdComponent implements OnInit {
     //Called once, before the instance is destroyed.
     //Add 'implements OnDestroy' to the class.
     clearTimeout(this.switchAdInterval)
-    this.switchAdInterval = null
+    this.switchAdInterval = false
   }
 
 }

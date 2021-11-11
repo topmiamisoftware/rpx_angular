@@ -206,7 +206,7 @@ export class HeaderAdBannerComponent implements OnInit {
     } else
       console.log("getHeaderBannerAdCallback", resp)
 
-    if(this.switchAdInterval == null){
+    if(!this.switchAdInterval){
 
       this.switchAdInterval = setInterval(()=>{
     
@@ -269,6 +269,13 @@ export class HeaderAdBannerComponent implements OnInit {
 
     this.getHeaderBanner()
 
+  }
+
+  ngOnDestroy(): void {
+    //Called once, before the instance is destroyed.
+    //Add 'implements OnDestroy' to the class.
+    clearInterval(this.switchAdInterval)
+    this.switchAdInterval = false
   }
 
 }

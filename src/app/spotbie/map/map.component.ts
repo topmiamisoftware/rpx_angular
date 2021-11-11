@@ -167,7 +167,7 @@ export class MapComponent implements OnInit {
 
   public eventsClassification: number = null
 
-  public getSpotBieCommunityMemberListInterval: any = null
+  public getSpotBieCommunityMemberListInterval: any = false
 
   currentCategoryList: any
 
@@ -572,11 +572,7 @@ export class MapComponent implements OnInit {
 
     this.communityMemberList = []
 
-    if(this.search_keyword !== keyword){
-
-      this.newKeyWord()
-
-    }
+    if(this.search_keyword !== keyword) this.newKeyWord()
 
     if(resetEventSorter){
 
@@ -593,15 +589,15 @@ export class MapComponent implements OnInit {
         
         apiUrl = `size=2&latlong=${this.lat},${this.lng}&classificationName=${keyword}&radius=45&${this.eventDateParam}`
         
-        this.number_categories = this.event_categories.indexOf(keyword) 
+        this.number_categories = this.event_categories.indexOf(this.search_keyword) 
 
         break
 
       case 'food':
 
         apiUrl = `${this.searchApiUrl}?latitude=${this.lat}&longitude=${this.lng}&term=${keyword}&categories=${keyword}&${this.showOpenedParam}&radius=40000&sort_by=rating&limit=20&offset=${this.current_offset}` 
-        
-        this.number_categories = this.food_categories.indexOf(keyword)
+
+        this.number_categories = this.food_categories.indexOf(this.search_keyword)
         
         break
 
@@ -609,7 +605,7 @@ export class MapComponent implements OnInit {
         
         apiUrl = `${this.searchApiUrl}?latitude=${this.lat}&longitude=${this.lng}&term=${keyword}&categories=${keyword}&${this.showOpenedParam}&radius=40000&sort_by=rating&limit=20&offset=${this.current_offset}` 
 
-        this.number_categories = this.shopping_categories.indexOf(keyword)
+        this.number_categories = this.shopping_categories.indexOf(this.search_keyword)
 
     }
 
@@ -748,18 +744,7 @@ export class MapComponent implements OnInit {
         return
 
     }
-
-    if(this.singleAdApp !== null){
-
-      setTimeout(() => {
-
-        clearInterval(this.singleAdApp.switchAdInterval)
-        clearInterval(this.bottomAdBanner.switchAdInterval)
-
-      })
-
-    }
-
+    
     this.catsUp = true
 
   }
@@ -1157,7 +1142,7 @@ export class MapComponent implements OnInit {
 
       this.communityMemberList = communityMemberList
       
-      if(this.getSpotBieCommunityMemberListInterval == null){
+      if(!this.getSpotBieCommunityMemberListInterval){
 
         this.getSpotBieCommunityMemberListInterval = setInterval(() => {
 
@@ -1175,6 +1160,7 @@ export class MapComponent implements OnInit {
           )
 
         }, 10000)
+        
       }
 
     }

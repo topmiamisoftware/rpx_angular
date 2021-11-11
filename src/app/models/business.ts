@@ -27,6 +27,6 @@ export class Business {
 
     public user_type: number | string = null
 
-
+    public trial_ends_at: string = null
     
 }   

@@ -58,7 +58,7 @@ export class BottomAdBannerComponent implements OnInit {
 
   public genericAdImage: string = PLACE_TO_EAT_AD_IMAGE
 
-  public switchAdInterval: any = null
+  public switchAdInterval: any = false
 
   constructor(private adsService: AdsService,
               private deviceDetectorService: DeviceDetectorService,
@@ -209,7 +209,7 @@ export class BottomAdBannerComponent implements OnInit {
       console.log("getSingleAdListCb", resp)
 
       
-    if(this.switchAdInterval == null){
+    if(!this.switchAdInterval){
 
       this.switchAdInterval = setInterval(()=>{
     
@@ -262,9 +262,15 @@ export class BottomAdBannerComponent implements OnInit {
   ngOnInit(): void {
     
     this.isMobile = this.deviceDetectorService.isMobile()
-
     this.getBottomHeader()
     
+  }
+
+  ngOnDestroy(): void {
+    //Called once, before the instance is destroyed.
+    //Add 'implements OnDestroy' to the class.
+    clearInterval(this.switchAdInterval)
+    this.switchAdInterval = false
   }
 
 }
