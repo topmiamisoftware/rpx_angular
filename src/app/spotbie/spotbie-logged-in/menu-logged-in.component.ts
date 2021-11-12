@@ -46,7 +46,7 @@ export class MenuLoggedInComponent implements OnInit {
   public isDesktop: boolean
   public isTablet: boolean
 
-  public userType: string
+  public userType: number
 
   public userLoyaltyPoints: number = 0
 
@@ -199,7 +199,7 @@ export class MenuLoggedInComponent implements OnInit {
 
     )
 
-    this.userType = localStorage.getItem('spotbie_userType')
+    this.userType = parseInt(localStorage.getItem('spotbie_userType'))
 
     if(this.userType == AllowedAccountTypes.Personal)
       this.business = false

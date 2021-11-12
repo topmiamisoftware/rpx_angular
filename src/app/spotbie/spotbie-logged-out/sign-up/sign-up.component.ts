@@ -114,27 +114,32 @@ export class SignUpComponent implements OnInit {
 
     } else {
 
-      if (login_status == 'invalid_cred' || login_status == 'social_media_account' || login_status == 'spotbie_account') {
+      if (login_status == 'invalid_cred' || 
+          login_status == 'spotbie_google_account' || 
+          login_status == 'spotbie_fb_account' || 
+          login_status == 'spotbie_account'
+      ) {
   
-        if(login_status == 'invalid_cred')      
-          this.spotbieSignUpIssues.nativeElement.innerHTML = "Invalid username or password."   
-        else if(login_status == 'social_media_account')
-          this.spotbieSignUpIssues.nativeElement.innerHTML = "You signed up with social media."
-        else if(login_status == 'spotbie_account')
-          this.spotbieSignUpIssues.nativeElement.innerHTML = "You signed up with an email address."
+        if(login_status == 'invalid_cred'){      
+        
+          this.spotbieSignUpIssues.nativeElement.scrollIntoView({ behavior: "smooth", block: "start" })
+          this.spotbieSignUpIssues.nativeElement.innerHTML = `<span class='spotbie-text-gradient spotbie-error'>INVALID USERNAME OR PASSWORD.</span>`
+          this.spotbieSignUpIssues.nativeElement.style.display = 'block'
 
-        this.spotbieSignUpIssues.nativeElement.className = 'spotbie-invalid-feedback spotbie-text-gradient spotbie-error text-uppercase'
-        this.spotbieSignUpIssues.nativeElement.style.display = 'block'
-  
-        localStorage.setItem('spotbie_userId', null)
-        localStorage.setItem('spotbie_loggedIn', '0')
-        localStorage.setItem('spotbie_userApiKey', null)
-        localStorage.setItem('spotbie_rememberMe', '0')
-        localStorage.setItem('spotbie_rememberMeToken', null)
+        } else if(login_status == 'spotbie_google_account')
+          this.signUpFormx.get('spotbieEmail').setErrors({ spotbie_google_account: true })
+        else if(login_status == 'spotbie_fb_account')
+          this.signUpFormx.get('spotbieEmail').setErrors({ spotbie_fb_account: true })         
+        else if(login_status == 'spotbie_account')
+          this.signUpFormx.get('spotbieEmail').setErrors({ spotbie_account: true })
+        
+        let favorites = localStorage.getItem('spotbie_currentFavorites') 
+        localStorage.clear()
+        localStorage.setItem('', favorites)
   
       } 
 
-    }
+    } 
 
     this.loading = false
 

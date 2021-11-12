@@ -145,12 +145,15 @@ export class LogInComponent implements OnInit {
 
     } else {
 
+      console.log("login_status", login_status)
+
       if (login_status == 'invalid_cred' || 
           login_status == 'spotbie_google_account' || 
           login_status == 'spotbie_fb_account' || 
           login_status == 'spotbie_account'
       ) {
-  
+        
+
         if(login_status == 'invalid_cred'){      
         
           this.spotbieSignUpIssues.nativeElement.scrollIntoView({ behavior: "smooth", block: "start" })
@@ -164,11 +167,10 @@ export class LogInComponent implements OnInit {
         else if(login_status == 'spotbie_account')
           this.logInForm.get('spotbieUsername').setErrors({ spotbie_account: true })
 
-        localStorage.setItem('spotbie_userId', null)
-        localStorage.setItem('spotbie_loggedIn', '0')
-        localStorage.setItem('spotbie_userApiKey', null)
-        localStorage.setItem('spotbie_rememberMe', '0')
-        localStorage.setItem('spotbie_rememberMeToken', null)
+        let favorites = localStorage.getItem('spotbie_currentFavorites') 
+        
+        localStorage.clear()
+        localStorage.setItem('', favorites)
   
       } 
 

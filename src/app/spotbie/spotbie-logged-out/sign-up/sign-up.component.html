@@ -28,7 +28,7 @@
                 <div *ngIf="f.spotbieUsername.errors.notUnique">
                     Username is already in use.
                 </div>
-
+                
             </div>   
 
             <!--<ng-template #username_normal>
@@ -77,6 +77,18 @@
                 <div *ngIf="f.spotbieEmail.errors.emailTaken">
                     Email is already in use.
                 </div> 
+
+                <div *ngIf="f.spotbieEmail.errors.spotbie_google_account" >
+                    You signed up with google.
+                </div>
+    
+                <div *ngIf="f.spotbieEmail.errors.spotbie_fb_account" >
+                    You signed up with facebook.
+                </div>
+                
+                <div *ngIf="f.spotbieEmail.errors.spotbie_account" >
+                    You signed up with an email address.
+                </div>
 
             </div>      
 

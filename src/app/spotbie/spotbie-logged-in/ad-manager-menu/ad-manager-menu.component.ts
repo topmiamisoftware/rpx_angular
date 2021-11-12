@@ -40,8 +40,6 @@ export class AdManagerMenuComponent implements OnInit {
   public qrCodeLink: string = null
   public userHash: string = null
 
-  public userType: string = null
-
   public loyaltyPointsBalance: LoyaltyPointBalance
 
   constructor(private loyaltyPointsService: LoyaltyPointsService,

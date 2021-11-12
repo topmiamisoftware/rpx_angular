@@ -14,10 +14,6 @@
     </td>   
     
     <td *ngIf="isDesktop" class="sb-desktopNavBar" style="text-align: right; cursor: default;">
-      
-      <span (click)="myFavorites()">
-        <i class="fas fa-star"></i>
-      </span>
 
       <span (click)="home()">
         HOME
@@ -70,11 +66,7 @@
       <div (click)="spawnCategories('events')">
         EVENTS <i class="fa fa-angle-right"></i>
       </div>
-
-      <div (click)="myFavorites()">
-        MY FAVORITES <i class="fas fa-angle-right"></i>
-      </div>
-
+      
       <div (click)="openWindow(signUpWindow)">
         SIGN UP
       </div>

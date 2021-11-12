@@ -10,6 +10,7 @@ import { User } from '../models/user'
 
 import { SocialAuthService } from "angularx-social-login";
 import { FacebookLoginProvider, GoogleLoginProvider } from "angularx-social-login";
+import { AllowedAccountTypes } from '../helpers/enum/account-type.enum'
 
 const USER_API = spotbieGlobals.API + 'user'
 
@@ -52,12 +53,10 @@ export class UserauthService {
       
   }
 
-  public getOAuthBearer(){
-    return this.socialAuthService.authState.subscribe(
-      (user) => {
-        console.log("user", user)
-      }
-    )
+  public getOAuthBearer(): Observable<any>{
+
+    return this.socialAuthService.authState
+
   }
 
   private reRouteFromSpotBie(){
@@ -238,13 +237,14 @@ export class UserauthService {
 
   }
 
-  public deactivateAccount(password: string): Observable<any>{
+  public deactivateAccount(password: string, is_social_account: boolean): Observable<any>{
 
     const resetPasswordApi = `${USER_API}/deactivate`
 
     const passResetObj = {
       _method: 'DELETE',
-      password
+      password,
+      is_social_account 
     }
 
     return this.http.post<any>(resetPasswordApi, passResetObj).pipe(
@@ -371,13 +371,15 @@ export class UserauthService {
   public verifyBusiness(businessInfo: any): Observable<any>{
 
     let apiUrl
-
+    
     switch(businessInfo.accountType){
-      case 1:
+      
+      case AllowedAccountTypes.PlaceToEat:
+      case AllowedAccountTypes.Shopping:
+      case AllowedAccountTypes.Events:
         apiUrl = `${BUSINESS_API}/verify`
         break
-      default:
-        return
+
     }
     
     const businessInfoObj = {
@@ -396,8 +398,6 @@ export class UserauthService {
       postal_code: businessInfo.postal_code,
       state: businessInfo.state      
     }
-
-    console.log("businessInfoObj", businessInfoObj)
 
     return this.http.post<any>(apiUrl, businessInfoObj).pipe(
       catchError(handleError("verifyBusiness"))

@@ -15,7 +15,7 @@ import { MapModule } from '../map/map.module'
 
 import { SettingsModule } from './settings/settings.module';
 import { RedeemableModule } from './redeemable/redeemable.module'
-import { EventMenuModule } from './event-menu/event-menu.module'
+//import { EventMenuModule } from './event-menu/event-menu.module'
 
 @NgModule({
   declarations: [ 
@@ -33,7 +33,7 @@ import { EventMenuModule } from './event-menu/event-menu.module'
     MapModule,
     SettingsModule,
     RouterModule,
-    EventMenuModule
+    //EventMenuModule
   ],
   providers: [
     DeviceDetectorService

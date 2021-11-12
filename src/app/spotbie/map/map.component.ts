@@ -744,7 +744,7 @@ export class MapComponent implements OnInit {
         return
 
     }
-    
+
     this.catsUp = true
 
   }

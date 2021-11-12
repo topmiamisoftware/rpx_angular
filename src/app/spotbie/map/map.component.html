@@ -322,6 +322,11 @@
           SPOTBIE COMMUNITY MEMBERS          
         </div>
         
+        <div class='spotbie-search-results-title text-uppercase' style="margin-top:0px;" *ngIf="communityMemberList.length == 0">
+          <img src="assets/images/home_imgs/spotbie-green-icon.svg" class="sb-miniLogoIconM">
+          SPOTBIE COMMUNITY MEMBERS          
+        </div>
+
         <div class='mt-5' style="margin-top:0px;" *ngIf="communityMemberList.length == 0"></div>
 
         <!-- First let's display the spotbie community member list for -->
@@ -380,18 +385,19 @@
             
                   {{ search_result.name }} 
                   
-                  <span class='spotbie-search-result-price' *ngIf="search_result.price_on == '1'">({{ search_result.price }})</span>
-          
                 </div>
     
                 <table class='spotbie-yelp-rating-table'>
                   <tr>
+
                     <td>
                       <div class='spotbie-search-result-rating-img' [ngStyle]="{ 'background' : 'url(' + search_result.rating_image + ')' }"></div>
                     </td>
+
                     <td>
                       <div class='spotbie-search-result-yelp-logo' [ngStyle]="{ 'background' : 'url(assets/images/yelp/yelp_logo.png)' }"></div>
                     </td>
+
                   </tr>
                 </table>
       
@@ -651,7 +657,7 @@
                       [lat]="lat" [lng]="lng" 
                       (close)="sliderRight = false"></app-user-info-object>
 
-  <app-my-favorites *ngIf="myFavoritesWindow.open" (closeWindow)="closeFavorites()"></app-my-favorites>
+  <!--<app-my-favorites *ngIf="myFavoritesWindow.open" (closeWindow)="closeFavorites()"></app-my-favorites>-->
 
   <app-scroll-to-top [inputWindow]="parentWindow"></app-scroll-to-top>
 

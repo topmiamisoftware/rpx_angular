@@ -84,8 +84,10 @@ export class MenuLoggedOutComponent implements OnInit {
   }
   
   public myFavorites(){
+
     this.menuActive = false
     this.myFavoritesEvt.emit()
+    
   }
 
   home(){

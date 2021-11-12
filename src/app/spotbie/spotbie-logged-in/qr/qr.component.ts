@@ -280,7 +280,7 @@ export class QrComponent implements OnInit {
     else
       this.qrWidth = 450
 
-    let accountType = localStorage.getItem('spotbie_userType')
+    let accountType = parseInt(localStorage.getItem('spotbie_userType'))
 
     if(accountType === AllowedAccountTypes.Personal)
       this.startQrCodeScanner()

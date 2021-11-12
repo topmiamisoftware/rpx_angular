@@ -168,7 +168,7 @@ export class NearbyFeaturedAdComponent implements OnInit {
 
       if(!this.editMode){
 
-        switch(this.business.user_type.toString()){
+        switch( this.business.user_type ){
 
           case AllowedAccountTypes.PlaceToEat:
             this.currentCategoryList = FOOD_CATEGORIES          
@@ -211,9 +211,9 @@ export class NearbyFeaturedAdComponent implements OnInit {
       else
         this.distance = 5
 
-      if(this.switchAdInterval == null){
+      if(!this.switchAdInterval){
 
-        this.switchAdInterval = setInterval(()=>{
+        this.switchAdInterval = setInterval( () => {
       
           if(!this.editMode) this.getNearByFeatured()
   

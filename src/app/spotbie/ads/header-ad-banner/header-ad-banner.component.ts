@@ -159,7 +159,7 @@ export class HeaderAdBannerComponent implements OnInit {
       
       if(!this.editMode){
         
-        switch(this.business.user_type.toString()){
+        switch(this.business.user_type){
 
           case AllowedAccountTypes.PlaceToEat:
             this.currentCategoryList = FOOD_CATEGORIES          

@@ -1,15 +1,15 @@
 <app-loading-screen *ngIf="loading"></app-loading-screen>
 
-<div class="spotbie-overlay-window" *ngIf="!adPaidFor"> 
+<div class="spotbie-overlay-window" *ngIf="!adPaidFor && !membershipPaidFor"> 
 
     <div class='sb-makePaymentWrapper'>
 
         <div class="sb-logo mt-3 mb-3"></div>
 
-        <h3 class="spotbie-text-gradient text-uppercase  mb-4">FINISH AD SUBSCRIPTION</h3>
+        <h3 class="spotbie-text-gradient text-uppercase  mb-4">{{ paymentTitle }}</h3>
 
         <p class="spotbie-text-gradient">
-            You are about to subscribe to our Ads Service. Payments are made automatically on a monthly basis from the card you provide us with.
+            {{ paymentDescription }}
         </p>
 
         <div *ngIf="invalidError" style="color:red">
@@ -23,21 +23,31 @@
             (cardMounted) = "onCardCaptureReady()"
             (paymentMethodChange) = "setPaymentMethod($event)"
             (tokenChange) = "setStripeToken($event)"
-            (sourceChange) = "setStripeSource($event)"
-        >
+            (sourceChange) = "setStripeSource($event)">
         </stripe-card>
         
-        <h4 class="spotbie-text-gradient text-uppercase mt-4">{{ ad.name }}</h4>
+        <div *ngIf="paymentType == 'in-house'">
 
-        <h3 class="sb-text-light-green-gradient mt-4">{{ ad.dollar_cost | currency: 'USD'}} monthly</h3>
+            <h4 class="spotbie-text-gradient text-uppercase mt-4">{{ ad.name }}</h4>
 
-        <img class="sb-adImage" [src]="ad.images" />
+            <h3 class="sb-text-light-green-gradient mt-4">{{ ad.dollar_cost | currency: 'USD'}} monthly</h3>
+    
+            <img class="sb-adImage" [src]="ad.images" />
 
-        <p class='spotbie-rel-div
-                spotbie-padding
-                spotbie-login-terms
-                spotbie-text-link'>
-        By clicking "Pay Now", you are agreeing to<br/><a [routerLink]="['/terms']">OUR TERMS & PRIVACY POLICY.</a>
+        </div>
+
+        <div *ngIf="paymentType == 'business-membership'">
+
+            <h4 class="spotbie-text-gradient text-uppercase mt-4">{{ ad.name }}</h4>
+
+            <h3 class="sb-text-light-green-gradient mt-4">$9.99 monthly</h3>
+    
+            <img class="sb-adImage" [src]="ad.images" />
+
+        </div>
+
+        <p class='spotbie-login-terms spotbie-text-link'>
+            By clicking "Pay Now", you are agreeing to<br/><a [routerLink]="['/terms']">OUR TERMS & PRIVACY POLICY.</a>
         </p>
 
         <button class="spotbie-button text-uppercase" type="button" (click)="stripeCreatePaymentMethod()">
@@ -61,6 +71,26 @@
         </div>
 
         <h4 class="spotbie-text-gradient spotbie-r-success-title text-uppercase">YOUR AD IS LIVE</h4>
+
+    </div>
+
+    <div class="spotbie-text-gradient text-uppercase mt-4 cursor-pointer" [routerLink]="['/user-home']">RETURN TO HOME PAGE</div>
+
+</div>
+
+<div class='spotbie-overlay-window d-flex align-items-center justify-content-center' *ngIf="membershipPaidFor">
+
+    <div class="sb-logo mt-3 mb-3"></div>
+
+    <div class='sb-makePaymentWrapper' style="box-shadow: unset;">
+        
+        <h4 class="spotbie-text-gradient spotbie-r-success-title text-uppercase">PAYMENT SUCCESSFUL</h4>
+
+        <div class="sb-verificationCheck sb-text-light-green-gradient mt-4 mb-4">
+            <i class="fa fa-users"></i>
+        </div>
+
+        <h4 class="spotbie-text-gradient spotbie-r-success-title text-uppercase">YOUR MEMBERSHIP IS LIVE</h4>
 
     </div>
 

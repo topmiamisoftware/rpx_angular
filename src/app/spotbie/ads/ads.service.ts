@@ -37,18 +37,6 @@ export class AdsService {
     )
 
   }  
-  
-  public saveAdPayment(saveAdsObj: any): Observable<any>{
-    
-    const saveAdsApi = `${ADS_API}/save-payment`
-
-    return this.http.post(saveAdsApi, saveAdsObj).pipe(
-      catchError(
-        handleError("saveAdPayment")
-      )
-    )
-
-  }
 
   public getAds():  Observable<any>{
     

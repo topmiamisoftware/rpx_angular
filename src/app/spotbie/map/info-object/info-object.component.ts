@@ -75,7 +75,7 @@ export class InfoObjectComponent implements OnInit {
   public displayAds: boolean = false
 
   constructor(private infoObjectService: InfoObjectServiceService,
-              private myFavoritesService: MyFavoritesService,
+              //private myFavoritesService: MyFavoritesService,
               public share: ShareService,
               private router: Router,
               private activatedRoute: ActivatedRoute,
@@ -245,14 +245,14 @@ export class InfoObjectComponent implements OnInit {
       
       this.loading = false
       
-      this.isInMyFavorites(this.info_object.id, this.info_object.type_of_info_object)      
+      //this.isInMyFavorites(this.info_object.id, this.info_object.type_of_info_object)      
 
     } else
       console.log('pullInfoObjectCallback', httpResponse)
 
   }
 
-  private isInMyFavorites(objId: string, objType: string): void{
+  /*private isInMyFavorites(objId: string, objType: string): void{
 
     if(this.isLoggedIn === '1'){
 
@@ -291,7 +291,7 @@ export class InfoObjectComponent implements OnInit {
 
     this.loading = false
 
-  }
+  }*/
 
   public openWithGoogleMaps(): void {
 
@@ -394,15 +394,15 @@ export class InfoObjectComponent implements OnInit {
 
     if(this.isLoggedIn == '1'){
 
-      this.myFavoritesService.addFavorite(favoriteObj).subscribe(
+      /*this.myFavoritesService.addFavorite(favoriteObj).subscribe(
         resp => {
           this.addFavoriteCb(resp)
         }
-      )
+      )*/
 
     } else {
 
-      this.myFavoritesService.addFavoriteLoggedOut(favoriteObj)
+      //this.myFavoritesService.addFavoriteLoggedOut(favoriteObj)
       this.showFavorites = false
       this.loading = false
 
@@ -423,6 +423,7 @@ export class InfoObjectComponent implements OnInit {
 
   public removeFavorite(){
 
+    /*
     this.loading = true
 
     const yelpId = this.info_object.id
@@ -444,7 +445,7 @@ export class InfoObjectComponent implements OnInit {
       this.showFavorites = true
 
     }
-
+    */
   }
 
   public removeFavoriteCb(resp, favoriteId: string){

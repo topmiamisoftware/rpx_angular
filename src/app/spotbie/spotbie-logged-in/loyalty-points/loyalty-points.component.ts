@@ -50,7 +50,7 @@ export class LoyaltyPointsComponent implements OnInit {
 
   public newUserLoyaltyPoints: number = null
 
-  public userType: string = null
+  public userType: number = null
 
   public loyaltyPointBalance: LoyaltyPointBalance = new LoyaltyPointBalance()
 
@@ -229,7 +229,7 @@ export class LoyaltyPointsComponent implements OnInit {
       }
     )
     
-    this.userType = localStorage.getItem('spotbie_userType')
+    this.userType = parseInt(localStorage.getItem('spotbie_userType'))
 
     this.loading = false
     

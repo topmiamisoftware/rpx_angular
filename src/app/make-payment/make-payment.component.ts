@@ -8,6 +8,7 @@ import { Business } from '../models/business'
 import { BottomAdBannerComponent } from '../spotbie/ads/bottom-ad-banner/bottom-ad-banner.component'
 import { NearbyFeaturedAdComponent } from '../spotbie/ads/nearby-featured-ad/nearby-featured-ad.component'
 import { HeaderAdBannerComponent } from '../spotbie/ads/header-ad-banner/header-ad-banner.component'
+import { SpotbiePaymentsService } from '../services/spotbie-payments/spotbie-payments.service'
 
 @Component({
   selector: 'app-make-payment',
@@ -36,15 +37,20 @@ export class MakePaymentComponent implements OnInit {
 
   public adPaidFor: boolean = false
 
+  public membershipPaidFor: boolean = false
+
+  public paymentTitle: string = ''
+  public paymentDescription: string = ''
+
   constructor(
     private stripeScriptTag: StripeScriptTag,
     private activatedRoute: ActivatedRoute,
-    private adsService: AdsService
+    private adsService: AdsService,
+    private paymentsService: SpotbiePaymentsService
   ) {
     
-    if (!this.stripeScriptTag.StripeInstance) {
-      this.stripeScriptTag.setPublishableKey('pk_test_51JrUwnGFcsifY4UhCCJp023Q1dWwv5AabBTsMDwiJ7RycEVLyP1EBpwbXRsfn07qpw5lovv9CGfvfhQ82Zt3Be8U00aH3hD9pj');
-    }
+    if (!this.stripeScriptTag.StripeInstance)
+      this.stripeScriptTag.setPublishableKey('pk_test_51JrUwnGFcsifY4UhCCJp023Q1dWwv5AabBTsMDwiJ7RycEVLyP1EBpwbXRsfn07qpw5lovv9CGfvfhQ82Zt3Be8U00aH3hD9pj')
 
   }
 
@@ -58,20 +64,37 @@ export class MakePaymentComponent implements OnInit {
 
   setPaymentMethod( token: stripe.paymentMethod.PaymentMethod ){
     
-    let subscriptionRequestItem = {
-      payment_method: token,
-      ad: this.ad,
-      business: this.business
+    let subscriptionRequestItem
+    let serviceUrl
+
+    switch(this.paymentType) {
+      case 'business-membership':
+        subscriptionRequestItem = {
+          payment_method: token,
+          uuid: this.uuid
+        }
+        serviceUrl = 'user/business-membership'
+        break
+      case 'in-house':
+        subscriptionRequestItem = {
+          payment_method: token,
+          ad: this.ad,
+          business: this.business
+        }
+        serviceUrl = 'ads/save-payment'        
+        break
+
+      default: return 
+    
     }
 
     //Store the payment method on Stripe and Spotbie 
-    this.adsService.saveAdPayment(subscriptionRequestItem).subscribe(
+    this.paymentsService.savePayment(subscriptionRequestItem, serviceUrl).subscribe(
       resp => {
         
-        let newAd = resp.newAd
+        let newAd = resp.newAd        
         
-        if(newAd.is_live == 1)
-          this.adPaidFor = true
+        if(newAd.is_live == 1) this.adPaidFor = true        
         
         this.loading = false
 
@@ -81,8 +104,10 @@ export class MakePaymentComponent implements OnInit {
   }
 
   stripeCreatePaymentMethod(){
+
     this.loading = true
     this.stripeCard.createPaymentMethod({})    
+  
   }
 
   setStripeToken( token: stripe.Token ){
@@ -120,6 +145,37 @@ export class MakePaymentComponent implements OnInit {
     
   }
 
+  checkBusinessMembershipStatus(){
+    
+    let businessByUuidReq = {
+      uuid: this.uuid
+    }
+
+    this.paymentsService.checkBusinessMembershipStatus(businessByUuidReq).subscribe(
+      resp => {
+
+        if(resp.membershipInfo) this.membershipPaidFor = true   
+        this.loading = false 
+      
+      }
+    )
+
+  }
+
+  public initBusinesMembershipPaymentForm(){
+    this.paymentTitle = 'FINISH SUBSCRIPTION'
+    this.paymentDescription = `
+      You are about to subscribe to our Busibess Membership. Payments are made automatically on a monthly basis from the card you provide us with.
+    `
+  }
+
+  public initInHousePaymentForm(){
+    this.paymentTitle = 'FINISH AD SUBSCRIPTION'
+    this.paymentDescription = `
+      You are about to subscribe to our Ads Service. Payments are made automatically on a monthly basis from the card you provide us with.
+    `    
+  }
+
   ngOnInit(): void {
     
     this.paymentType = this.activatedRoute.snapshot.paramMap.get('paymentType')
@@ -127,10 +183,13 @@ export class MakePaymentComponent implements OnInit {
 
     switch(this.paymentType){
       case 'in-house':
+        this.initInHousePaymentForm()        
         this.getAdFromUuid()
-        break;
+        break
       case 'business-membership':
-        break;
+        this.checkBusinessMembershipStatus()
+        this.initBusinesMembershipPaymentForm()
+        break
     }
     
 
