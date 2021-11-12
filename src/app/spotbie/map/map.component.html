@@ -150,6 +150,17 @@
 
     </div>
 
+    <!--<app-bottom-ad-banner 
+            class='mt-4' 
+            *ngIf="map && locationFound && searchResults.length < 1"
+            #bottomAdBanner 
+            [eventsClassification]="eventsClassification"
+            [accountType]="searchCategory" 
+            [categories]="bottom_banner_categories"  
+            [lat]="lat" 
+            [lng]="lng">
+    </app-bottom-ad-banner>-->
+
     <div class='spotbie-search-results' *ngIf="show_search_box && searchResults.length > 0">
 
       <div #scrollMapAppAnchor></div>

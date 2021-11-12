@@ -259,8 +259,6 @@ export class SettingsComponent implements OnInit {
             this.userIsSubscribed = settings_response.is_subscribed
             this.userIsTrial = settings_response.is_trial
 
-
-
             if( this.user.spotbie_user.user_type == AllowedAccountTypes.Unset && 
                !this.settingsFormInitiated){
                 //User type has not been set, so we must prompt the user for it.
@@ -550,14 +548,15 @@ export class SettingsComponent implements OnInit {
             this.businessSettingsForm.get('spotbieOrigin').setValue(this.lat + ',' + this.lng)      
             this.businessSettingsForm.get('originTitle').setValue(place.name)
             this.businessSettingsForm.get('originAddress').setValue(place.formatted_address)
-            
+
+            this.locationFound = true
+            this.claimBusiness = true
+
             if(place.photos)
                 this.originPhoto = place.photos[0].getUrl()
             else
                 this.originPhoto = '../../assets/images/home_imgs/find-places-to-eat.svg'
 
-            this.locationFound = true
-            this.claimBusiness = true
             this.loading = false          
 
         })    

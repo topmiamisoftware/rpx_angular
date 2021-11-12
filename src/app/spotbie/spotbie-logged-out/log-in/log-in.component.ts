@@ -6,6 +6,7 @@ import { Router } from '@angular/router'
 import { MenuLoggedOutComponent } from '../menu-logged-out.component'
 
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
+import { logOutCallback } from 'src/app/helpers/logout-callback'
 
 @Component({
   selector: 'app-log-in',
@@ -167,10 +168,7 @@ export class LogInComponent implements OnInit {
         else if(login_status == 'spotbie_account')
           this.logInForm.get('spotbieUsername').setErrors({ spotbie_account: true })
 
-        let favorites = localStorage.getItem('spotbie_currentFavorites') 
-        
-        localStorage.clear()
-        localStorage.setItem('', favorites)
+        logOutCallback({success: true})
   
       } 
 

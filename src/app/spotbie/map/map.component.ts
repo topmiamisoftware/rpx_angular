@@ -130,6 +130,7 @@ export class MapComponent implements OnInit {
   public shopping_categories = map_extras.SHOPPING_CATEGORIES
 
   public number_categories: number
+  public bottom_banner_categories: number
 
   public map_styles = map_extras.MAP_STYLES
 
@@ -671,6 +672,7 @@ export class MapComponent implements OnInit {
     this.show_search_box = false 
     this.showSearchResults = false
     this.infoObject = null
+    this.searchResults = []
     this.infoObjectWindow.open = false
 
   }
@@ -684,12 +686,12 @@ export class MapComponent implements OnInit {
   public spawnCategories(obj: any): void {
 
     let category
-
+    
     if(obj.category == undefined)
       category = obj
     else
       category = obj.category
-
+    
     this.scrollMapAppAnchor.nativeElement.scrollIntoView()
 
     if(!this.locationFound){
@@ -975,9 +977,11 @@ export class MapComponent implements OnInit {
     
     if(this.showSearchResults)
       return 'spotbie-agm-map sb-map-results-open'
-    else{
+    else {
+      
       if(this.isMobile) return 'spotbie-agm-map sb-map-results-open'
       return 'spotbie-agm-map'    
+    
     }
     
   }

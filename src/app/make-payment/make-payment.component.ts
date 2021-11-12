@@ -153,7 +153,7 @@ export class MakePaymentComponent implements OnInit {
 
     this.paymentsService.checkBusinessMembershipStatus(businessByUuidReq).subscribe(
       resp => {
-
+        
         if(resp.membershipInfo) this.membershipPaidFor = true   
         this.loading = false 
       

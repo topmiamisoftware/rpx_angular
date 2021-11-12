@@ -87,9 +87,11 @@ export class SignUpComponent implements OnInit {
     }
 
     if(loginResponse === undefined){
+
       this.signUpFormx.setErrors(null)
       this.spotbieSignUpIssues.nativeElement.innerHTML = "Invalid username or password."
       this.loading = false
+
     }
 
     let login_status = loginResponse.message
@@ -100,7 +102,7 @@ export class SignUpComponent implements OnInit {
       localStorage.setItem('spotbie_loggedIn', '1')
       localStorage.setItem('spotbie_rememberMe', this.userAuthService.userRememberMe)
       localStorage.setItem('spotbie_userId', loginResponse.user.id)
-      localStorage.setItem('spotbiecom_session', loginResponse.user.original.access_token)
+      localStorage.setItem('spotbiecom_session', loginResponse.token_info.original.access_token)
       localStorage.setItem('spotbie_userDefaultImage', loginResponse.spotbie_user.default_picture)
 
       if( this.userAuthService.userRememberMe == '1' ){

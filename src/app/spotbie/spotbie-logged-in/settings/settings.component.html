@@ -352,56 +352,69 @@
             <div>
 
                 <h5 *ngIf="!userIsSubscribed && 
-                            chosen_account_type != 4 &&
-                            user.trial_ends_at === null"
-                    class="sb-text-light-green-gradient">
-                
-                    START YOUR 45-DAY TRIAL
-                
+                           !userIsTrial &&
+                           chosen_account_type != 4 && 
+                           user.trial_ends_at !== null"
+                    class="sb-text-light-green-gradient">                
+                    YOUR MEMBERSHIP IS EXPIRED                
                 </h5>
-                
-                <div class="spotbie-input-info spotbie-text-gradient text-center mt-4 mb-4">
-                    Choose an account type.
-                </div>
 
-                <div class="spotbie-select-menu-option mt-1 mb-1 pt-3 pb-3" 
-                     *ngFor="let account_type of accountTypeList" 
-                     (click)="selectAccountType(account_type)">
+                <div *ngIf="(userIsSubscribed || 
+                            userIsTrial) &&
+                            chosen_account_type != 4">
 
-                    <span class='spotbie-text-gradient text-center text-uppercase'>{{ account_type }}</span>
-
-                </div>                            
-
-                <div class="mt-4" style="font-size: .8rem;" *ngIf="userIsTrial && !userIsSubscribed">
-
-                    <span class='sb-text-light-green-gradient'>TRIAL IS ACTIVE</span>
-
-                    <div class='spotbie-text-gradient text-uppercase mt-2 mb-4' style="font-size: .8rem;">
-                        EXPIRES ON {{ user.trial_ends_at | date:'mediumDate' }}
-                    </div>
-
-                </div>
-
-                <div class='spotbie-button text-uppercase cursor-pointer mt-4'  
-                        *ngIf="!userIsSubscribed && 
+                    <h5 *ngIf="!userIsSubscribed && 
                                 chosen_account_type != 4 &&
-                                user.trial_ends_at === null" 
-                        (click)="activateFullMembership()">
-                    SKIP TRIAL
-                </div>
-
-                <div class="mt-4" style="font-size: .8rem;" *ngIf="userIsSubscribed">
-
-                    <span class='sb-text-light-green-gradient'>MEMBERSHIP IS ACTIVE</span>
-
-                    <div class='spotbie-text-gradient text-uppercase mt-2 mb-4' style="font-size: .8rem;">
-                        NEXT PAYMENT {{ user.trial_ends_at | date:'mediumDate' }}
+                                user.trial_ends_at === null"
+                        class="sb-text-light-green-gradient">
+                    
+                        START YOUR 45-DAY TRIAL
+                    
+                    </h5>
+                    
+                    <div class="spotbie-input-info spotbie-text-gradient text-center mt-4 mb-4">
+                        Choose an account type.
                     </div>
 
-                    <span class='sb-text-red-gradient text-uppercase cursor-pointer' (click)="cancelMembership()">
-                        CANCEL MEMBERSHIP
-                    </span>
+                    <div class="spotbie-select-menu-option mt-1 mb-1 pt-3 pb-3" 
+                        *ngFor="let account_type of accountTypeList" 
+                        (click)="selectAccountType(account_type)">
 
+                        <span class='spotbie-text-gradient text-center text-uppercase'>{{ account_type }}</span>
+
+                    </div>                            
+
+                    <div class="mt-4" style="font-size: .8rem;" *ngIf="userIsTrial && !userIsSubscribed">
+
+                        <span class='sb-text-light-green-gradient'>TRIAL IS ACTIVE</span>
+
+                        <div class='spotbie-text-gradient text-uppercase mt-2 mb-4' style="font-size: .8rem;">
+                            EXPIRES ON {{ user.trial_ends_at | date:'mediumDate' }}
+                        </div>
+
+                    </div>
+
+                    <div class='spotbie-button text-uppercase cursor-pointer mt-4'  
+                            *ngIf="!userIsSubscribed && 
+                                    chosen_account_type != 4 &&
+                                    userIsTrial" 
+                            (click)="activateFullMembership()">                        
+                        SKIP TRIAL
+                    </div>
+
+                    <div class="mt-4" style="font-size: .8rem;" *ngIf="userIsSubscribed">
+
+                        <span class='sb-text-light-green-gradient'>MEMBERSHIP IS ACTIVE</span>
+
+                        <div class='spotbie-text-gradient text-uppercase mt-2 mb-4' style="font-size: .8rem;">
+                            NEXT PAYMENT {{ user.trial_ends_at | date:'mediumDate' }}
+                        </div>
+
+                        <span class='sb-text-red-gradient text-uppercase cursor-pointer' (click)="cancelMembership()">
+                            CANCEL MEMBERSHIP
+                        </span>
+
+                    </div>
                 </div>
 
             </div>
