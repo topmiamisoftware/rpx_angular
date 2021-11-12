@@ -6,6 +6,7 @@ import { DeviceDetectorService } from 'ngx-device-detector'
 import { LoyaltyPointsService } from 'src/app/services/loyalty-points/loyalty-points.service'
 import { AllowedAccountTypes } from 'src/app/helpers/enum/account-type.enum'
 import { SettingsComponent } from './settings/settings.component'
+import { logOutCallback } from 'src/app/helpers/logout-callback'
 
 @Component({
   selector: 'app-menu-logged-in',
@@ -133,25 +134,8 @@ export class MenuLoggedInComponent implements OnInit {
 
     this.userAuthService.logOut().subscribe(
       resp => {
-        this.logOutCallback(resp)
+        logOutCallback(resp)
     })
-
-  }
-  
-  private logOutCallback(logOutResponse : any): void{
-
-    if(logOutResponse.success){
-      
-      let loggedOutFavorites = localStorage.getItem('spotbie_currentFavorites')
-
-      localStorage.clear()
-      
-      localStorage.setItem('spotbie_currentFavorites', loggedOutFavorites)
-      
-      this.router.navigate(['/home'])
-
-    } else
-      console.log("Log Out Error : ", logOutResponse)
 
   }
 

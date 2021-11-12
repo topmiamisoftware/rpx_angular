@@ -528,7 +528,7 @@
 
     </div>
 
-    <div [ngClass]="getMapPromptMobileClass()" *ngIf="business && !showSearchResults" #featureWrapper>
+    <div [ngClass]="getMapPromptMobileClass()" *ngIf="business && !showSearchResults && !map" #featureWrapper>
 
       <div [ngClass]="getMapPromptMobileInnerWrapperClassOne()">
 
@@ -546,7 +546,7 @@
 
     </div>    
 
-    <div [ngClass]="getMapPromptMobileClass()" *ngIf="!business && !showSearchResults" #featureWrapper>
+    <div [ngClass]="getMapPromptMobileClass()" *ngIf="!business && !showSearchResults && !map" #featureWrapper>
 
       <div [ngClass]="getMapPromptMobileInnerWrapperClassOne()">
 

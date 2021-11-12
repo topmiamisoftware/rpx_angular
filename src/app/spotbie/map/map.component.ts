@@ -690,7 +690,7 @@ export class MapComponent implements OnInit {
     else
       category = obj.category
 
-    this.scrollMapAppAnchor.nativeElement.scrollIntoView({ behavior: "smooth", block: "start" })
+    this.scrollMapAppAnchor.nativeElement.scrollIntoView()
 
     if(!this.locationFound){
       
@@ -897,7 +897,7 @@ export class MapComponent implements OnInit {
     this.apiSearch(this.search_keyword)
 
     this.scrollMapAppAnchor.nativeElement.scrollIntoView({ behavior: "smooth", block: "start" })
-
+    
   }
 
   public loadMoreResults(action: number){

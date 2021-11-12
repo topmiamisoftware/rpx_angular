@@ -11,6 +11,7 @@ import { User } from '../models/user'
 import { SocialAuthService } from "angularx-social-login";
 import { FacebookLoginProvider, GoogleLoginProvider } from "angularx-social-login";
 import { AllowedAccountTypes } from '../helpers/enum/account-type.enum'
+import { logOutCallback } from '../helpers/logout-callback'
 
 const USER_API = spotbieGlobals.API + 'user'
 
@@ -67,9 +68,7 @@ export class UserauthService {
 
     const logOutApi = `${USER_API}/logout`
 
-    return this.http.post<any>(logOutApi, null).pipe(
-      tap( resp => { this.logOutCallback(resp) })
-    )
+    return this.http.post<any>(logOutApi, null)
 
   }
 
@@ -77,31 +76,7 @@ export class UserauthService {
 
     const logOutApi = `${USER_API}/close-browser`
 
-    return this.http.post<any>(logOutApi, null).pipe(
-      tap( resp => { this.logOutCallback(resp) })
-    )
-
-  }
-
-  private logOutCallback(logOutResponse: any): void {
-
-      if(logOutResponse.success){
-
-        let loggedOutFavorites = localStorage.getItem('spotbie_currentFavorites')
-
-        localStorage.clear()
-        
-        localStorage.setItem('spotbie_currentFavorites', loggedOutFavorites)
-
-        localStorage.setItem('spotbie_locationPrompted', '1')
-        localStorage.setItem('spotbie_userId', '0')
-        localStorage.setItem('spotbie_loggedIn', '0')
-        localStorage.setItem('spotbie_userApiKey', null)
-        localStorage.setItem('spotbie_rememberMe', '0')
-        localStorage.setItem('spotbie_rememberMeToken', null)
-        localStorage.setItem('spotbie_userType', null)
-        
-      }
+    return this.http.post<any>(logOutApi, null)
 
   }
 

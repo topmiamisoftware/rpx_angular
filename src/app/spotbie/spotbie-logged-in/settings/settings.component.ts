@@ -1303,15 +1303,9 @@ export class SettingsComponent implements OnInit {
         this.loading = false
 
         if (resp.success) {
+            
+            
 
-            let favorites = localStorage.getItem('spotbie_currentFavorites')
-
-            localStorage.clear()
-
-            localStorage.setItem('spotbie_currentFavorites', favorites)
-
-            window.location.reload()
-        
         } else 
             console.log('deactivateCallback', resp)
         
