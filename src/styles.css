@@ -345,7 +345,6 @@ a, a:hover, a:active, a:after{
     width: 100%;
     min-width: 100%;
     text-align: center;
-    background: -webkit-linear-gradient(45deg,#64e56f,#35a99f);
 }
 .sb-footer img{
     width: 120px;
@@ -354,9 +353,9 @@ a, a:hover, a:active, a:after{
     z-index: 1;
 }
 .sb-footer p{
-    color: #332f3e !important;
+    color: white !important;
     cursor: pointer;
-    font-size: .6rem !important;
+    font-size: .8rem !important;
 }
 .sb-input{
     position: relative;

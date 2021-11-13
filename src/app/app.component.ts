@@ -20,6 +20,8 @@ export class AppComponent {
 
   public testMode: boolean = true
 
+  public displayTestModeOptions: boolean = false
+
   constructor(private versionCheckService : VersionCheckService, 
               private spotbieMetaService: SpotbieMetaService) {}
   
@@ -28,8 +30,16 @@ export class AppComponent {
     this.versionCheckService.initVersionCheck(environment.versionCheckURL);
   }
 
-  public dismissToast() : void{
+  public dismissToast(): void{
     dismissToast()
+  }
+
+  public openTestModeSpecs(): void{
+    this.displayTestModeOptions = true
+  }
+
+  public closeTestModeSpecs(): void{
+    this.displayTestModeOptions = false
   }
 
   ngOnInit(){

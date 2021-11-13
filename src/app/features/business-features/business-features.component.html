@@ -1,150 +1,174 @@
+<section id="awardLoyaltyPointsToCustomers" #awardLoyaltyPointsToCustomers>
+    
+    <div class="sb-top-headerImg"></div>
 
-<div class="sb-top-headerImg"></div>
+    <h1 class="text-uppercase sb-text-light-green-gradient" style="font-size: 1.8rem;">GROW YOUR BUSINESS</h1>
+    
+    <img class="sb-logo-withStreet mt-4 mb-4" src="assets/images/spotbie-miami-find-places-to-eat.png" />
+    
+    <button class="spotbie-button sb-getStarted" (click)="signUp()">
+        <span>GET STARTED</span>
+    </button>
 
-<h2 class="text-uppercase spotbie-text-gradient" style="font-size: 1.8rem;">GROW YOUR BUSINESS</h2>
+    <br/><br/>
 
-<img class="sb-logo-withStreet mt-4 mb-4" src="assets/images/spotbie-miami-find-places-to-eat.png" />
-
-<button class="spotbie-button sb-getStarted" (click)="signUp()">
-    <span>GET STARTED</span>
-</button>
-
-<br/><br/>
-
-<h4 class="text-uppercase">SPOTBIE COMMUNITY</h4>
-
-<br/>
-
-<h2><a class="spotbie-text-gradient text-uppercase" [routerLink]="['loyalty-points']">Award Loyalty Points</a></h2>
-
-<p class="text-center">  
     <br/>
-    <span class="spotbie-text-gradient"><i class='fa fa-map-marker-alt'></i> to nearby</span>    
-    <br/><br/>
-    <a class="spotbie-text-link text-uppercase" [routerLink]="['/home']">SpotBie Community Members</a> 
-    <br/><br/>
-</p>
-
-<h2><span class="spotbie-text-gradient">Food, Shopping, Events</span></h2>
-
-<p class="text-center">        
-    <br/>
-    Offer exclusive discounts, drinks & food, event merchandise, and more.
-    <br/><br/>
-</p>
-
-<div class="spotbie-button text-uppercase mb-5" [routerLink]="['/business']">
-    SCHEDULE DEMO
-</div>
-
-<app-download-mobile [buttonStyle]="1"></app-download-mobile>
-
-<div class="sb-homePageIconsTable mt-5 mb-4">
-
-    <div (click)="spawnCategories('food')">
-        <img src="assets/images/home_imgs/find-places-to-eat.svg" /><br/>
-        <span class='spotbie-text-gradient'>FOOD</span>
+    
+    <h2 class="spotbie-text-gradient text-uppercase">Award Loyalty Points</h2>
+    
+    <p class="text-center">  
+        <br/>
+        <span class="spotbie-text-gradient"><i class='fa fa-map-marker-alt'></i> to nearby</span>    
+        <br/><br/>
+        <span class="sb-text-light-green-gradient text-uppercase"><b>SpotBie Community Members</b></span> 
+        <br/><br/>
+    </p>
+    
+    <h2><span class="spotbie-text-gradient">Food, Shopping, Events</span></h2>
+    
+    <p class="text-center">        
+        <br/>
+        Offer exclusive discounts, drinks & food, merchandise, and more.
+        <br/><br/>
+    </p>
+    
+    <div class="spotbie-button text-uppercase mb-5" [routerLink]="['/business']">
+        SCHEDULE DEMO
     </div>
-
-    <div (click)="spawnCategories('events')">
-        <img src="assets/images/home_imgs/find-events.svg" /><br/>
-        <span class='spotbie-text-gradient'>EVENTS</span>
-    </div>  
-
-    <div (click)="spawnCategories('shopping')">
-        <img src="assets/images/home_imgs/find-places-for-shopping.svg" /><br/>
-        <span class='spotbie-text-gradient'>RETAIL</span>
-    </div> 
-
-</div>
-
-<div class="mb-4 sb-readImage cursor-pointer" 
-        id="sbReadImageRestaurants"></div>
+    
+    <app-download-mobile [buttonStyle]="1"></app-download-mobile>
+    
+    <div class="sb-homePageIconsTable mt-5 mb-4">
+    
+        <div (click)="spawnCategories('food')">
+            <img src="assets/images/home_imgs/find-places-to-eat.svg" /><br/>
+            <span class='spotbie-text-gradient'>FOOD</span>
+        </div>
+    
+        <div (click)="spawnCategories('events')">
+            <img src="assets/images/home_imgs/find-events.svg" /><br/>
+            <span class='spotbie-text-gradient'>EVENTS</span>
+        </div>  
+    
+        <div (click)="spawnCategories('shopping')">
+            <img src="assets/images/home_imgs/find-places-for-shopping.svg" /><br/>
+            <span class='spotbie-text-gradient'>RETAIL</span>
+        </div> 
+    
+    </div>
         
-<img class='sb-greenIcon' src='assets/images/home_imgs/spotbie-green-icon.svg' />            
+</section>
 
-<h2 class="text-uppercase spotbie-text-gradient">
-    FIND NEW CUSTOMERS
-</h2>
+<section id="attractNewCustomers" #attractNewCustomers>
 
-<p class="mt-2 mb-2">
+    <div class="mb-4 sb-readImage" id="sbReadImageRestaurants"></div>
+
+    <img class='sb-greenIcon' src='assets/images/home_imgs/spotbie-green-icon.svg' />            
+
+    <h2 class="text-uppercase spotbie-text-gradient">
+        - NEW CUSTOMERS -
+    </h2>
 
     <img class='sb-whiteIconBg right' src='assets/images/qr/spotbie-white-icon.png' />
 
-    Do you own a <b>place to eat</b>? 
-    Let SpotBie help you find the best <b>customers around you</b>. 
-    SpotBie uses GPS technology to help you find <b>customers</b>. 
-    We show users your <b>restaurant</b> by displaying it neatly in a map.
-    Make sure you upload great rewards such as items from your menu or unbeatable discounts.
-    Users are more likely to visit your store if they see great rewards and higher loyalty point ratings. 
-    Mark your restaurant under a category to be easier to find. Compete with local SpotBie community members and
-    bring in clients who are truly interested in your restaurant.
+    <div class="text-uppercase text-center">
 
-</p>      
+        <br/>
+        <h3 class="sb-text-light-green-gradient">LOCAL IMPRESSIONS</h3>
+        <br/>
+        <span><i class="fa fa-map-marker-alt" style="font-size: 1.8rem;"></i></span>
+        <br/><br/>
+        <h4 class="spotbie-text-gradient">BRING LOCAL TRAFFIC BY OFFERING</h4>
 
-<button class="spotbie-button sb-getStarted mt-4 mb-5" (click)="signUp()">
-    <span>GET STARTED</span>
-</button>
+    </div>
 
-<div class="mb-4 sb-readImage cursor-pointer" 
-        id="sbReadImageEvents"        
-        style="margin-top: 0%;"></div>  
+    <p class="sb-text-light-green-gradient text-center mt-2 mb-2">
+        REWARDS, REWARD RATES, & DISCOUNTS 
+    </p>
 
-<img class='sb-greenIcon' src='assets/images/home_imgs/spotbie-green-icon.svg' />
+    <button class="spotbie-button sb-getStarted mt-4 mb-5" (click)="signUp()">
+        <span>GET STARTED</span>
+    </button>
+    
+</section>
 
-<h2 class="text-uppercase spotbie-text-gradient">
-    RETAIN CLIENTELE
-</h2>
+<section id="retainCustomers" #retainCustomers>
 
-<p class="mt-2 mb-2">
+    <div class="mb-4 sb-readImage" id="sbReadImageShopping"></div>
+            
+    <img class='sb-greenIcon' src='assets/images/home_imgs/spotbie-green-icon.svg' />            
+
+    <h2 class="text-uppercase spotbie-text-gradient">
+        - RETAIN CUSTOMERS -
+    </h2>
 
     <img class='sb-whiteIconBg left' src='assets/images/qr/spotbie-white-icon.png' />
 
-    Are you looking for <b>people to attend your event</b>? 
-    Let SpotBie help you find local and bored people to attend your event. 
-    SpotBie uses GPS technology to help you find bored users nearby who are looking to attend an event. 
-    We display your event venue in our map and detail our users rewards and SpotBie loyalty points earnings for attending your event.          
-    With the help of the SpotBie Community, you will get those attendees you are looking for.
-    Make your event more tempting by offering high quality rewards.
-    
-</p>      
+    <div class="text-uppercase text-center">
 
-<button class="spotbie-button sb-getStarted mt-4 mb-5" (click)="signUp()">
-    <span>GET STARTED</span>
-</button>
+        <br/>
+        <h3 class="sb-text-light-green-gradient">WITH LOYALTY POINTS</h3>
+        <br/>
+        <span><img style="max-width: 50px;" src='assets/images/spotbie-loyalty-points.svg' /></span>
+        <br/><br/>
+        <h4 class="spotbie-text-gradient">OFFER REWARDS</h4>
 
-<div class="mb-4 sb-readImage cursor-pointer" 
-        id="sbReadImageShopping"></div>
+    </div>
 
-<img class='sb-greenIcon' src='assets/images/home_imgs/spotbie-green-icon.svg' />
+    <p class="spotbie-text-gradient text-center">
+        <br/>    
+        Edit your <span class='sb-text-light-green-gradient'>REWARD RATE</span> and <span class='sb-text-light-green-gradient'>REWARD MENU</span> to bring more customers.
+        <br/><br/> 
+    </p>   
 
-<h2 class="text-uppercase spotbie-text-gradient">
-    ENGAGE YOUR AUDIENCE 
-</h2>
+    <button class="spotbie-button sb-getStarted mt-4 mb-5" (click)="signUp()">
+        <span>GET STARTED</span>
+    </button>
 
-<p class="mt-2 mb-2">
+</section>
+
+<section id="engageYourAudience" #engageYourAudience>
+
+    <div class="mb-4 sb-readImage" id="sbReadImageEvents"></div>
+            
+    <img class='sb-greenIcon' src='assets/images/home_imgs/spotbie-green-icon.svg' />            
+
+    <h2 class="text-uppercase spotbie-text-gradient">
+        - ENGAGE YOUR AUDIENCE -
+    </h2>
 
     <img class='sb-whiteIconBg right' src='assets/images/qr/spotbie-white-icon.png' />
 
-    Bring more clients to your store by offering satisfying discounts. SpotBie Community members love to shop
-    and spend. SpotBie helps you attract new and old clientele by giving them an extra reason why to visit your store.
-    When a SpotBie Community members opens the map, they will see your store if they are close by, and when they click on it,
-    they will also be tempted by your fabulous loyalty point ratings and reward menu!
+    <div class="text-uppercase text-center">
 
-</p>      
+        <br/>
+        <h3 class="sb-text-light-green-gradient">SOMETHING EXCITING</h3>
+        <br/>
+        <span><i class="fa fa-money-bill" style="font-size: 1.8rem;"></i></span>
+        <br/><br/>
+        <h4 class="spotbie-text-gradient">ATTRACT NEW USERS</h4>
 
-<button class="spotbie-button sb-getStarted mt-4 mb-5" (click)="signUp()">
-    <span>GET STARTED</span>
-</button>  
+    </div>
 
-<div class="mb-4 sb-readImage cursor-pointer"
-        id="sbReadImageUsers"></div>
+    <p class="spotbie-text-gradient text-center">
+        <br/>    
+        Keep them coming back with exclusive rewards.
+        <br/><br/> 
+    </p>   
+
+    <button class="spotbie-button sb-getStarted mt-4 mb-5" (click)="signUp()">
+        <span>GET STARTED</span>
+    </button>
+
+</section> 
+
+<div class="mb-4 sb-readImage" id="sbReadImageUsers"></div>
 
 <div class="sb-footer pt-5 pb-5">
 
     <p [routerLink]="['/terms']">Terms & Privacy Policy</p>
 
-    <img class="mt-3 mb-3" src="assets/images/home_imgs/logo_spotbie-02.svg" />
+    <img class="mt-3 mb-3" src="assets/images/logo_spotbie_green.svg" />
 
     <p [routerLink]="['/terms']">SpotBie, LLC.&copy; Copyright 2021</p>
 

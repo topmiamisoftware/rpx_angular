@@ -9,11 +9,22 @@
 }
 #sbReadImageEvents
 {
-    background: url('../../../assets/images/home_imgs/jpg/spotbie-miami-events.jpg')
+    background: url('../../../assets/images/home_imgs/jpg/spotbie-find-restaurant-customers.jpg')
 }
 #sbReadImageShopping{
     background: url('../../../assets/images/home_imgs/jpg/spotbie-find-customers-near-you.jpg')
 }
 #sbReadImageUsers{
     background: url('../../../assets/images/home_imgs/jpg/spotbie-miami-find-new-friends.jpg')    
+}
+.fa-users,
+.fa-hamburger,
+.fa-dollar-sign,
+.fa-money-bill
+{
+    font-size: 1.2rem;
+    color: white;
+}
+.fa-map-marker-alt{
+    color: white;
 }

@@ -33,10 +33,10 @@ h2{
     position: absolute;
     margin-top: -261px;
     left: -27px;
-    width: 550px;
-    min-width: 550px;
-    max-width: 550px;
-    opacity: 0.2;
+    width: 791px;
+    min-width: 791px;
+    max-width: 791px;
+    opacity: .2;
 }
 .sb-whiteIconBg.right{
     left: unset !important;

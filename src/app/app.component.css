@@ -2,7 +2,7 @@
     position: fixed;
     left: 0;
     right: 0;
-    bottom: 29px;
+    bottom: 15px;
     margin: 0 auto;
     max-width: 228px;
     background-color: rgba(0,0,0,.231);
@@ -11,7 +11,11 @@
     z-index: 99;
     text-align: center;
     padding: 2px;
+    font-size: .8rem;
 }
 .fa-exclamation-triangle{
     color: #ffc107;
+}
+.spotbie-overlay-window{
+    z-index: 99 !important;
 }

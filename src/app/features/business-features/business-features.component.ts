@@ -1,4 +1,5 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-business-features',
@@ -8,10 +9,14 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 export class BusinessFeaturesComponent implements OnInit {
   
   @Output() spawnCategoriesEvt = new EventEmitter()
-
   @Output() signUpEvent = new EventEmitter()
 
-  constructor() { }
+  @ViewChild('awardLoyaltyPointsToCustomers') awardLoyaltyPointsToCustomers: ElementRef
+  @ViewChild('attractNewCustomers') attractNewCustomers: ElementRef
+  @ViewChild('retainCustomers') retainCustomers: ElementRef
+  @ViewChild('engageYourAudience') engageYourAudience: ElementRef
+
+  constructor(private router: Router) { }
 
   public signUp(){
     this.signUpEvent.emit()
@@ -24,6 +29,29 @@ export class BusinessFeaturesComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+  }
+
+  ngAfterViewInit(){
+    
+    switch(this.router.url)
+    {
+      case '/business#awardLoyaltyPointsToCustomers':
+        this.awardLoyaltyPointsToCustomers.nativeElement.scrollIntoView()
+        break
+
+      case '/business#attractNewCustomers':
+        this.engageYourAudience.nativeElement.scrollIntoView()
+        break
+
+      case '/business#engageYourAudience':
+        this.attractNewCustomers.nativeElement.scrollIntoView()
+        break 
+
+      case '/business#retainCustomers':
+        this.retainCustomers.nativeElement.scrollIntoView()
+        break                                   
+    }
 
   }
 

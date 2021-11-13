@@ -1,6 +1,20 @@
 <router-outlet></router-outlet>
 
-<div class="sb-testMode pe-none" *ngIf="testMode">
+<div class="sb-testMode pe-none" *ngIf="testMode" (click)="openTestModeSpecs()">
     <i class="fas fa-exclamation-triangle"></i>
     <span> TEST MODE</span>
+</div>
+
+<div class='spotbie-overlay-window d-flex flex-column align-items-center align-content-center justify-content-center' *ngIf="displayTestModeOptions">
+
+    <div class='d-flex flex-column align-items-center align-content-center justify-content-center'>
+        <p class='spotbie-text-gradient'>TEST MODE</p>
+    
+        <p clas='spotbie-text-gradient'>
+            These are mock locations, models, titles, paragraphs, reward rates, loyalty points, etc.
+        </p>
+    
+        <span (click)="closeTestModeSpecs()">GOT IT</span>
+    </div>
+
 </div>
