@@ -41,11 +41,11 @@ export class BusinessFeaturesComponent implements OnInit {
         break
 
       case '/business#attractNewCustomers':
-        this.engageYourAudience.nativeElement.scrollIntoView()
+        this.attractNewCustomers.nativeElement.scrollIntoView()
         break
 
       case '/business#engageYourAudience':
-        this.attractNewCustomers.nativeElement.scrollIntoView()
+        this.engageYourAudience.nativeElement.scrollIntoView()
         break 
 
       case '/business#retainCustomers':
