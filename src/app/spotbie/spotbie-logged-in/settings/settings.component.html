@@ -152,6 +152,7 @@
                 </tr>
 
                 <tr *ngIf="chosen_account_type != 4">
+                    
                     <td>
 
                         <div *ngIf="submitted && f.spotbie_acc_type.errors else user_account_type_normal" 
@@ -178,6 +179,19 @@
                                 readonly="readonly" />
 
                     </td>
+
+                </tr>
+
+                <tr *ngIf="chosen_account_type != 4" (click)="changeAccType()">
+
+                    <td>
+
+                        <div class="spotbie-input-info text-center spotbie-text-gradient cursor-pointer mt-2 mb-2">            
+                            MANAGE MEMBERSHIP
+                        </div> 
+                        
+                    </td>
+
                 </tr>
 
                 <tr>
@@ -349,19 +363,32 @@
     <div class='sb-vertical-align-wrapper' *ngIf="loadAccountTypes">
         
         <div class="spotbie-select-menu" style="display: table-cell; vertical-align: middle;">            
+            
             <div>
 
-                <h5 *ngIf="!userIsSubscribed && 
-                           !userIsTrial &&
-                           chosen_account_type != 4 && 
-                           user.trial_ends_at !== null"
-                    class="sb-text-light-green-gradient">                
-                    YOUR MEMBERSHIP IS EXPIRED                
-                </h5>
+                <div *ngIf="!userIsSubscribed && 
+                            !userIsTrial &&
+                            chosen_account_type != 4 &&
+                            user.trial_ends_at !== null
+                            else normalSubscriptionTemplate"> 
+                    
+                    <div class="pb-4">
+                        <i class="fa fa-exclamation-triangle"></i>
+                    </div>
 
-                <div *ngIf="(userIsSubscribed || 
-                            userIsTrial) &&
-                            chosen_account_type != 4">
+                    <h5 class="spotbie-text-gradient">                                    
+                        YOUR MEMBERSHIP IS EXPIRED                                    
+                    </h5>
+
+                    <div class='spotbie-button text-uppercase cursor-pointer mt-4'  
+                            (click)="activateFullMembership()">                        
+                        ENABLE MEMBERSHIP
+                    </div>
+            
+                </div>
+                
+                <ng-template #normalSubscriptionTemplate>
+                
 
                     <h5 *ngIf="!userIsSubscribed && 
                                 chosen_account_type != 4 &&
@@ -415,7 +442,8 @@
                         </span>
 
                     </div>
-                </div>
+                    
+                </ng-template>
 
             </div>
         </div>  

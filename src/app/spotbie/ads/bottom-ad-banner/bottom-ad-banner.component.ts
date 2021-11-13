@@ -95,7 +95,7 @@ export class BottomAdBannerComponent implements OnInit {
 
       } else adId = this.ad.id
 
-      accountType = localStorage.getItem('spotbie_userType')
+      accountType = parseInt(localStorage.getItem('spotbie_userType'))
 
       switch(accountType){
         case 1:

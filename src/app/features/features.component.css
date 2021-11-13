@@ -84,9 +84,6 @@ h4{
     font-weight: normal;
     padding-top: 15px;
     padding-bottom: 20px;
-    background: -webkit-linear-gradient(45deg,#64e56f,#35a99f);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
 }
 
 h4::after{
@@ -95,7 +92,6 @@ h4::after{
     min-width: 100%;
     min-height: 1px;
     height: 1px;
-    background: -webkit-linear-gradient(45deg,#64e56f,#35a99f);
 }
 
 h5{
@@ -143,6 +139,9 @@ p{
 }
 .sb-footer p{
     text-align: center !important;
+}
+h1{
+  font-size: 1.5rem;  
 }
 @media (max-width: 840px) {
     p{

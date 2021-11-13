@@ -17,11 +17,12 @@ import { ValidateUniqueEmail } from 'src/app/validators/email-unique.validator'
 
 import { faEye, faEyeSlash, faInfoCircle } from '@fortawesome/free-solid-svg-icons'
 import { UserauthService } from 'src/app/services/userauth.service'
+import { logOutCallback } from 'src/app/helpers/logout-callback'
 
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
-  styleUrls: ['./sign-up.component.css', '../menu-logged-out.component.css', '../../menu.component.css']
+  styleUrls: [ '../../menu.component.css', './sign-up.component.css']
 })
 export class SignUpComponent implements OnInit {
 
@@ -135,9 +136,7 @@ export class SignUpComponent implements OnInit {
         else if(login_status == 'spotbie_account')
           this.signUpFormx.get('spotbieEmail').setErrors({ spotbie_account: true })
         
-        let favorites = localStorage.getItem('spotbie_currentFavorites') 
-        localStorage.clear()
-        localStorage.setItem('', favorites)
+        logOutCallback({success: true}, false)
   
       } 
 

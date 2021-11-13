@@ -208,7 +208,13 @@
     <div (click)="clickGoToSponsored()" 
           class='spotbie-info-object-is-sponsored mt-4'> 
 
-        <span class='sb-text-light-green-gradient'>SPONSORED</span> <i class='fa fa-search-dollar sb-text-light-green-gradient'></i> 
+        <div *ngIf="info_object.is_community_member">
+            <span class='sb-text-light-green-gradient'>SPONSORED</span> <i class='fa fa-search-dollar sb-text-light-green-gradient'></i> 
+        </div>        
+
+        <div *ngIf="!info_object.is_community_member">
+            <span>SPONSORED</span> <i class='fa fa-search-dollar'></i> 
+        </div>
 
     </div>
 

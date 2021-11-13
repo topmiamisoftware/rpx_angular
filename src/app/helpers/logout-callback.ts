@@ -1,6 +1,6 @@
 import { environment } from "src/environments/environment"
 
-export const logOutCallback = function(resp: any): void{
+export const logOutCallback = function(resp: any, locationReload: boolean = true): void{
 
     if(resp.success){
 
@@ -18,7 +18,8 @@ export const logOutCallback = function(resp: any): void{
         localStorage.setItem('spotbie_rememberMeToken', null)
         localStorage.setItem('spotbie_userType', null)
         
-        window.open(environment.baseUrl + 'home', '_self')
+        if(locationReload) 
+            window.open(environment.baseUrl + 'home', '_self')
 
     }
 

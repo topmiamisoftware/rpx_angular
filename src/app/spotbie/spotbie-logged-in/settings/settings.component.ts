@@ -238,11 +238,17 @@ export class SettingsComponent implements OnInit {
 
     public cancelMembership(){
 
-        this.paymentService.cancelBusinessMembership().subscribe(
-            resp =>{
-                console.log("paymentSerivce", resp)
-            }
-        )
+        let r = confirm(`
+            Are you sure you want to delete your subscription? All yours IN-HOUSE Promotions will also be deleted.
+        `)
+        
+        if(r){
+            this.paymentService.cancelBusinessMembership().subscribe(
+                resp =>{
+                    window.location.reload()
+                }
+            )
+        }
 
     }
 

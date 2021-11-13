@@ -11,7 +11,7 @@ import { logOutCallback } from 'src/app/helpers/logout-callback'
 @Component({
   selector: 'app-log-in',
   templateUrl: './log-in.component.html',
-  styleUrls: ['./log-in.component.css', '../../menu.component.css']
+  styleUrls: ['../../menu.component.css', './log-in.component.css']
 })
 export class LogInComponent implements OnInit {
 
@@ -168,7 +168,7 @@ export class LogInComponent implements OnInit {
         else if(login_status == 'spotbie_account')
           this.logInForm.get('spotbieUsername').setErrors({ spotbie_account: true })
 
-        logOutCallback({success: true})
+        logOutCallback({success: true}, false)
   
       } 
 

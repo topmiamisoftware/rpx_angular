@@ -63,31 +63,59 @@ export class MakePaymentComponent implements OnInit {
   }
 
   setPaymentMethod( token: stripe.paymentMethod.PaymentMethod ){
-    
-    let subscriptionRequestItem
-    let serviceUrl
 
     switch(this.paymentType) {
+     
       case 'business-membership':
-        subscriptionRequestItem = {
-          payment_method: token,
-          uuid: this.uuid
-        }
-        serviceUrl = 'user/business-membership'
-        break
-      case 'in-house':
-        subscriptionRequestItem = {
-          payment_method: token,
-          ad: this.ad,
-          business: this.business
-        }
-        serviceUrl = 'ads/save-payment'        
+        
+        this.userPayment(token)
         break
 
-      default: return 
+      case 'in-house':
+      
+        this.adPayment(token)
+        break
+      
+      default:       
+        return 
     
     }
 
+  }
+
+  private userPayment( token: stripe.paymentMethod.PaymentMethod ){
+
+    let subscriptionRequestItem = {
+      payment_method: token,
+      uuid: this.uuid
+    }
+
+    let serviceUrl = 'user/business-membership'    
+    
+    //Store the payment method on Stripe and Spotbie 
+    this.paymentsService.savePayment(subscriptionRequestItem, serviceUrl).subscribe(
+      resp => {
+        
+        if(resp.success) this.membershipPaidFor = true        
+        
+        this.loading = false
+
+      }
+    )    
+
+  }
+
+
+  private adPayment( token: stripe.paymentMethod.PaymentMethod ){
+
+    let subscriptionRequestItem = {
+      payment_method: token,
+      ad: this.ad,
+      business: this.business
+    }
+
+    let serviceUrl = 'in-house/save-payment'    
+    
     //Store the payment method on Stripe and Spotbie 
     this.paymentsService.savePayment(subscriptionRequestItem, serviceUrl).subscribe(
       resp => {
@@ -99,7 +127,7 @@ export class MakePaymentComponent implements OnInit {
         this.loading = false
 
       }
-    )
+    )    
 
   }
 

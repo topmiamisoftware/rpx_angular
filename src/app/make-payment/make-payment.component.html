@@ -26,7 +26,7 @@
             (sourceChange) = "setStripeSource($event)">
         </stripe-card>
         
-        <div *ngIf="paymentType == 'in-house'">
+        <div *ngIf="paymentType == 'in-house'" class="mb-4">
 
             <h4 class="spotbie-text-gradient text-uppercase mt-4">{{ ad.name }}</h4>
 
@@ -36,7 +36,7 @@
 
         </div>
 
-        <div *ngIf="paymentType == 'business-membership'">
+        <div *ngIf="paymentType == 'business-membership'" class="mb-4">
 
             <h4 class="spotbie-text-gradient text-uppercase mt-4">{{ ad.name }}</h4>
 

@@ -72,9 +72,15 @@ export class BusinessDashboardComponent implements OnInit {
       
       resp => {
       
-        if(resp.business == null) 
+        if( resp.business == null || 
+            (
+              resp.is_subscribed == false && 
+              resp.is_trial == false
+            ) 
+          ) 
+        {
           this.displayBusinessSetUp = true 
-        else
+        } else
           this.displayBusinessSetUp = false
 
         this.businessFetched = true

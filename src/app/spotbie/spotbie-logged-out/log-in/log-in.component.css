@@ -54,6 +54,7 @@
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
+    z-index: 97 !important;
 }
 .spotbie-help-text{
     margin-top: 30px;
@@ -115,8 +116,7 @@
     .spotbie-overlay-window {
         width: 102%;
         min-width: 102%;
-        max-width: 102%;        
-        z-index: 95 !important;
+        max-width: 102%;       
     }         
 }
 @media (max-width: 700px) { }
@@ -135,7 +135,7 @@
         min-height: 55px;        
     }  
     .spotbie-overlay-window{
-        padding-bottom: 100px !important;
+        padding-top: 80px !important;
     } 
     .spotbie-forgot-your-pass{
         width: 90%;

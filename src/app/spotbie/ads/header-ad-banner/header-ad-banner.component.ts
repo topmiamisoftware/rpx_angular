@@ -58,7 +58,7 @@ export class HeaderAdBannerComponent implements OnInit {
 
   public genericAdImage: string = PLACE_TO_EAT_AD_IMAGE
 
-  public switchAdInterval: any
+  public switchAdInterval: any = false
   
   constructor(private adsService: AdsService,
               private deviceDetectorService: DeviceDetectorService,
@@ -95,7 +95,7 @@ export class HeaderAdBannerComponent implements OnInit {
 
       } else adId = this.ad.id
 
-      accountType = localStorage.getItem('spotbie_userType')
+      accountType = parseInt(localStorage.getItem('spotbie_userType'))
 
       switch(accountType){
         case 1:

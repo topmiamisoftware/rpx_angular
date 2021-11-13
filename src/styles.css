@@ -302,12 +302,12 @@ a, a:hover, a:active, a:after{
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
+.spotbie-error div,
 .spotbie-error{    
     background: -webkit-linear-gradient(45deg,#e61d1d,#f70505,#ff0000);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
-
 .sb-closeButton{
     position: fixed;
     display: block;

@@ -4,3 +4,10 @@
     background-size: cover !important;
     background-repeat: no-repeat !important;    
 }
+.fa-glass-cheers,
+.fa-hamburger,
+.fa-money-bill
+{
+    font-size: 1.2rem;
+    color: white;
+}

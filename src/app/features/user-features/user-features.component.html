@@ -1,7 +1,9 @@
 
 <div class="sb-top-headerImg"></div>
 
-<h4 class="text-uppercase">SPOTBIE COMMUNITY</h4>
+<h1 class="sb-text-light-green-gradient text-uppercase">
+    COMMUNITY LOYALTY POINTS
+</h1>
 
 <div class="spotbie-button sb-getStarted" (click)="spawnCategories('food')">
     <span>GET STARTED</span>
@@ -10,10 +12,6 @@
 <img class="sb-logo-withStreet mt-4 mb-4" src="assets/images/spotbie-miami-find-places-to-eat.png" />
 
 <p class="text-center">    
-
-    <br/>
-    <a class="spotbie-text-link text-uppercase" [routerLink]="['/earn-loyalty-points']">Earn Loyalty Points</a>
-    <br/><br/>
     
     <i class='fa fa-map-marker-alt'></i>
     <span class="spotbie-text-gradient"> from nearby</span>
@@ -25,8 +23,7 @@
     <span class="spotbie-text-gradient">Food, Shopping, Events</span>
     <br/><br/>
 
-    Exclusive discounts, drinks & food, event merchandise, and more.
-    
+    <span class="spotbie-text-gradient">Exclusive discounts, drinks & food, event merchandise, and more.</span>
     <br/><br/>
 
 </p>
@@ -34,38 +31,53 @@
 <app-download-mobile></app-download-mobile>
 
 <div class="sb-homePageIconsTable mt-5 mb-4">
+
     <div (click)="spawnCategories('food')">
         <img src="assets/images/home_imgs/find-places-to-eat.svg" /><br/>
         <span class='spotbie-text-gradient'>FOOD</span>
     </div>
+
     <div (click)="spawnCategories('events')">
         <img src="assets/images/home_imgs/find-events.svg" /><br/>
         <span class='spotbie-text-gradient'>EVENTS</span>
-    </div>        
+    </div>    
+
     <div (click)="spawnCategories('shopping')">
         <img src="assets/images/home_imgs/find-places-for-shopping.svg" /><br/>
         <span class='spotbie-text-gradient'>RETAIL</span>
-    </div>                        
+    </div>         
+
 </div>
 
 <div class="mb-4 sb-readImage cursor-pointer" [ngStyle]="{ 'background' : 'url(assets/images/home_imgs/jpg/spotbie-find-restaurant-customers-near-you.jpg)' }" (click)="spawnCategories('food')"></div>
 
 <img class='sb-greenIcon' src='assets/images/home_imgs/spotbie-green-icon.svg' (click)="spawnCategories('food')" />            
 
-<h4 class="text-uppercase" (click)="spawnCategories('food')">
-    PLACES TO EAT
-</h4>
+<h2 class="spotbie-text-gradient text-uppercase" (click)="spawnCategories('food')" #placesToEatTitle id="#placesToEatTitle">
+    - PLACES TO EAT -
+</h2>
 
 <img class='sb-whiteIconBg left' src='assets/images/qr/spotbie-white-icon.png' />
 
-<p class="mt-2 mb-2">        
-    Are you looking for <b>places to eat</b>? 
-    Let SpotBie help you find the best <b>places to eat around you</b>. 
-    SpotBie uses GPS technology to help you find <b>places to eat near you</b>. 
-    We show you <b>restaurants around you</b> from YELP and display them neatly in a map 
-    sorted by the best reviews, prices, distances from you, delivery, reservations, or eat in. 
-    With SpotBie, you get to look for <b>restaurants around you</b> by choosing the category you are 
-    feeling hungry for that day.        
+<div class="text-uppercase text-center">
+
+    <br/>
+    <h3 class="sb-text-light-green-gradient">EARN LOYALTY POINTS</h3>
+    <br/>
+    <span><i class="fa fa-hamburger"></i></span>
+    <br/><br/>
+    <h4 class="spotbie-text-gradient">REDEEM REWARDS</h4>
+
+</div>
+
+<p class="spotbie-text-gradient text-center mt-2 mb-2">
+    Looking for something to eat?
+</p>
+
+<p class="spotbie-text-gradient text-center">
+    <br/>    
+    Exclusive rewards as menu items, points, or discounts.
+    <br/><br/> 
 </p>   
 
 <button class="spotbie-button sb-getStarted mt-4 mb-5" (click)="spawnCategories('food')">
@@ -76,21 +88,32 @@
 
 <img class='sb-greenIcon' src='assets/images/home_imgs/spotbie-green-icon.svg' (click)="spawnCategories('shopping')" />
 
-<h4 class="text-uppercase" (click)="spawnCategories('shopping')">
-    SHOPPING
-</h4>
+<h2 class="spotbie-text-gradient text-uppercase" (click)="spawnCategories('shopping')"  #shoppingTitle>
+    - RETAIL STORES -
+</h2>
 
-<p class="mt-2 mb-2">
+<img class='sb-whiteIconBg left' src='assets/images/qr/spotbie-white-icon.png' />
 
-    <img class='sb-whiteIconBg right' src='assets/images/qr/spotbie-white-icon.png' />
+<div class="text-uppercase text-center">
 
-    Let SpotBie help you find the best places to shop with our <b>shopping around you feature</b>. 
-    SpotBie's <b>shopping around you feature</b> uses GPS technology to help you find the best places to shop near you. 
-    SpotBie shows shops around you from YELP and display them neatly in a map sorted by the best reviews, ratings, prices, and distances from you. 
-    With SpotBie, you get to look for shops around you by choosing the category you are looking for. 
-    The <b>shopping around you feature</b> also makes it easier to share places to eat with other people through social media or using your devices native sharing functions (text messages, etc.)
+    <br/>
+    <h3 class="sb-text-light-green-gradient">EARN LOYALTY POINTS</h3>
+    <br/>
+    <span><i class='fa fa-money-bill'></i></span>
+    <br/><br/>
+    <h4 class="spotbie-text-gradient">EVERYTIME YOU SHOP</h4>
+    
+</div>
 
-</p>      
+<p class="spotbie-text-gradient text-center mt-2 mb-2">
+    Earn and spend loyalty points at your favorite retail stores.
+</p>
+
+<p class="spotbie-text-gradient text-center">
+    <br/>    
+    Redeem rewards and discounts.
+    <br/><br/> 
+</p>   
 
 <button class="spotbie-button sb-getStarted mt-4 mb-5" (click)="spawnCategories('shopping')">
     <span>GET STARTED</span>
@@ -100,22 +123,32 @@
 
 <img class='sb-greenIcon' src='assets/images/home_imgs/spotbie-green-icon.svg' (click)="spawnCategories('events')" />
 
-<h4 class="text-uppercase" (click)="spawnCategories('events')">
-    EVENTS NEAR YOU
-</h4>
+<h2 class="spotbie-text-gradient text-uppercase" (click)="spawnCategories('events')"  #eventsTitle>
+    - EVENTS NEAR YOU -
+</h2>
 
-<p class="mt-2 mb-2">
+<img class='sb-whiteIconBg left' src='assets/images/qr/spotbie-white-icon.png' />
 
-    <img class='sb-whiteIconBg' src='assets/images/qr/spotbie-white-icon.png' *ngIf="!isMobile" />
-
-    Are you looking for <b>events around you</b>? 
-    Let SpotBie help you find the best events around you. 
-    SpotBie uses GPS technology to help you find events near you. 
-    We show you <b>events around you</b> from TicketMaster and display them neatly in a map sorted by prices and distances from you. 
-    With SpotBie, you get to look for <b>events around you</b> by choosing the category you feel like vibing to today, tonight, or this week. 
-    SpotBie also makes it easier to share events near you with other people through social media or using your devices native sharing functions (text messages, etc.)
+<div class="text-uppercase text-center">
     
-</p>      
+    <br/>
+    <h3 class="spotbie-text-gradient sb-text-light-green-gradient">EARN LOYALTY POINTS</h3>
+    <br/>
+    <span><i class='fa fa-glass-cheers'></i></span>
+    <br/><br/>
+    <h4 class="spotbie-text-gradient">AT EVENTS</h4>
+    
+</div>
+
+<p class="spotbie-text-gradient text-center mt-4 mb-2">
+    Spend Loyalty Points at Events
+</p>
+
+<p class="spotbie-text-gradient text-center">
+    <br/>    
+    Redeem on-site event merchandise, products, and more.
+    <br/><br/> 
+</p>     
 
 <button class="spotbie-button sb-getStarted mt-4 mb-5" (click)="spawnCategories('events')">
     <span>GET STARTED</span>

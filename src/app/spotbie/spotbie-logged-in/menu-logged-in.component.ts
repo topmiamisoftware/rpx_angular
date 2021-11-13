@@ -1,5 +1,4 @@
-import { Component, OnInit, Input, ViewChild, EventEmitter, Output, ElementRef } from '@angular/core'
-import { Router } from '@angular/router'
+import { Component, OnInit, ViewChild, EventEmitter, Output, ElementRef } from '@angular/core'
 import { UserauthService } from 'src/app/services/userauth.service'
 import { MapComponent } from '../map/map.component'
 import { DeviceDetectorService } from 'ngx-device-detector'
@@ -61,8 +60,7 @@ export class MenuLoggedInComponent implements OnInit {
 
   public eventMenuOpen: boolean = false
 
-  constructor(private router : Router,
-              private userAuthService : UserauthService,
+  constructor(private userAuthService : UserauthService,
               private deviceService: DeviceDetectorService,
               private loyaltyPointsService: LoyaltyPointsService) {}
 
@@ -95,8 +93,23 @@ export class MenuLoggedInComponent implements OnInit {
   }
 
   public home(){
-    this.spotbieMap.closeCategories()
-    this.spotbieMap.openWelcome()
+    
+    this.settingsWindow.open = false
+    this.foodWindow.open = false
+    this.getRedeemableItems = false
+    this.eventMenuOpen = false
+
+    if(this.userType == AllowedAccountTypes.Personal){
+      
+      this.spotbieMap.openWelcome() 
+      this.spotbieMap.closeCategories()
+
+    } else {
+
+      this.toggleQRScanner();
+
+    }
+
   }
 
   public openBusinessSettings(){

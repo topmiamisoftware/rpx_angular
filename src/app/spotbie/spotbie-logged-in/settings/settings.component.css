@@ -23,6 +23,13 @@
     background-size: cover;
     background-position: center;    
 }
+.fa-exclamation-triangle{
+    position: relative;
+    display: block;
+    margin: 0 auto;
+    font-size: 45px;
+    color: #ffc107;
+}
 .spotbie-select-menu{
     overflow-y: hidden !important;
     min-width: 100%;

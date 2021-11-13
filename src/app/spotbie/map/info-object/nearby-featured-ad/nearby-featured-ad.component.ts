@@ -63,7 +63,7 @@ export class NearbyFeaturedAdComponent implements OnInit {
 
   public businessReady: boolean = false
 
-  public switchAdInterval: any
+  public switchAdInterval: any = false
 
   constructor(private adsService: AdsService,
               private deviceDetectorService: DeviceDetectorService,
@@ -280,8 +280,8 @@ export class NearbyFeaturedAdComponent implements OnInit {
   ngOnDestroy(): void {
     //Called once, before the instance is destroyed.
     //Add 'implements OnDestroy' to the class.
-    clearTimeout(this.switchAdInterval)
-    this.switchAdInterval = null
+    clearInterval(this.switchAdInterval)
+    this.switchAdInterval = false
   }
 
 }

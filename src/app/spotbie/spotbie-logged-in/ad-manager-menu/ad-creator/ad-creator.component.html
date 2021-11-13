@@ -12,11 +12,11 @@
             (click)="activateAdMembership()">
 
             <i class="fas fa-exclamation-triangle"></i>
-            <span class='spotbie-text-gradient text-uppercase '>CLICK & ACTIVATE THIS AD NOW</span>
+            <span class='spotbie-text-gradient text-uppercase '>ACTIVATE PROMOTION</span>
 
         </p>
 
-        <h5 class="spotbie-text-gradient text-center text-uppercase pt-3 mb-4">AD EDITOR</h5>
+        <h5 class="spotbie-text-gradient text-center text-uppercase pt-3 mb-4">PROMOTION EDITOR</h5>
 
         <form [formGroup]="adCreatorForm" *ngIf="adCreatorFormUp">
 
@@ -26,7 +26,7 @@
                   class="spotbie-input-info spotbie-text-gradient spotbie-error mt-4 mb-2">
             
                 <div *ngIf="f.adType.errors.required">
-                    You must pick an ad type!
+                    You must pick a promotion type!
                 </div>
                 
             </div> 
@@ -34,14 +34,14 @@
             <ng-template #adTypeTemplate>
 
                 <label class="spotbie-input-info spotbie-text-gradient mb-2">
-                    Pick Ad Type
+                    Pick Promotion Type
                 </label>     
 
             </ng-template>
 
             <mat-form-field class="sb-input" style="padding-left: 0px;" appearance="fill">
 
-                <mat-label>Ad Format</mat-label>
+                <mat-label>Promotion Format</mat-label>
                 
                 <mat-select formControlName="adType" [(value)]="selected" (selectionChange)="adTypeChange()">
 
@@ -55,11 +55,11 @@
                     class="spotbie-input-info spotbie-text-gradient spotbie-error mt-2 mb-2">
     
                 <div *ngIf="f.adName.errors.required">
-                    Enter ad name.
+                    Enter promotion name.
                 </div>
 
                 <div *ngIf="f.adName.errors.maxlength">
-                    Maximum length - ad name - 50
+                    Maximum length - promotion name - 50
                 </div>
 
             </div> 
@@ -67,7 +67,7 @@
             <ng-template #adNameNormalTemplate>
 
                 <label class="spotbie-input-info spotbie-text-gradient mt-2 mb-2">
-                    Ad Name
+                    Promotion Name
                 </label>     
 
             </ng-template>
@@ -89,7 +89,7 @@
                     class="spotbie-input-info text-uppercase spotbie-text-gradient text-center spotbie-error mt-4 mb-2">
 
                 <div *ngIf="f.adImage.errors.required">
-                    Upload Ad Image
+                    Upload Promotion Image
                 </div>
                 
             </div> 
@@ -118,11 +118,11 @@
             
             </div> 
 
-            <h6 class='sb-text-light-green-gradient'>SPOTBIE AD PREVIEW</h6>
+            <h6 class='sb-text-light-green-gradient'>PROMOTION PREVIEW</h6>
 
             <p style="font-size: .8rem;">
                 <i class="fa fa-map-marker-alt"></i>
-                <span class="spotbie-text-gradient">ADS ARE DISPLAYED TO LOCAL USERS WITHIN A 10 MILE RADIUS</span>
+                <span class="spotbie-text-gradient">PROMOTIONS ARE DISPLAYED TO LOCAL USERS WITHIN A 10 MILE RADIUS</span>
             </p>
 
         </form>
