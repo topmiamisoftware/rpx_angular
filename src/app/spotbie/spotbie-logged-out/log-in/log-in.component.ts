@@ -108,6 +108,7 @@ export class LogInComponent implements OnInit {
 
   }
 
+
   private loginCallback(loginResponse: any): void{
 
     if(loginResponse.error == 'popup_closed_by_user'){

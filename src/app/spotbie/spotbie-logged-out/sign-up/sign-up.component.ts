@@ -105,7 +105,8 @@ export class SignUpComponent implements OnInit {
       localStorage.setItem('spotbie_userId', loginResponse.user.id)
       localStorage.setItem('spotbiecom_session', loginResponse.token_info.original.access_token)
       localStorage.setItem('spotbie_userDefaultImage', loginResponse.spotbie_user.default_picture)
-
+      localStorage.setItem('spotbie_userType', loginResponse.spotbie_user.user_type)
+      
       if( this.userAuthService.userRememberMe == '1' ){
 
         this.rememberMeToken = loginResponse.remember_me_token
