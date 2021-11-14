@@ -395,6 +395,11 @@ img.sb-qr:hover{
     width: 100%;
     max-width: 100%;
 }
+.fa-business-time,
+.fa-user{
+    color: white;
+    font-size: .8rem;
+}
 ::-webkit-scrollbar-button{
     background: transparent
 }

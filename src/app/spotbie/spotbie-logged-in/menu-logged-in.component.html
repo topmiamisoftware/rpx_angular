@@ -4,7 +4,7 @@
         #spotbieMainMenu>
   <tr>  
 
-    <td class="sb-menu-nav" (click)="slideMenu()" *ngIf="isMobile || isTablet">
+    <td class="sb-menu-nav" (click)="slideMenu()" *ngIf="!isDesktop">
       <i class="fa fa-bars" *ngIf="!menuActive"></i>
       <i class="fa fa-times" *ngIf="menuActive"></i>
     </td>  
@@ -17,7 +17,7 @@
       
       <img class='sb-loyalty-points' *ngIf="!isMobile" (click)="toggleLoyaltyPoints()"  src="assets/images/spotbie-loyalty-points.svg" />
 
-      <div class="sb-businessMenu" *ngIf="isMobile">
+      <div class="sb-businessMenu" *ngIf="!isDesktop">
         <img class='sb-loyalty-points' (click)="toggleLoyaltyPoints()" src="assets/images/spotbie-loyalty-points.svg" />
       </div>
 

@@ -4,7 +4,7 @@
         #spotbieMainMenu>
   <tr>    
   
-    <td class="sb-menu-nav" (click)="slideMenu()" *ngIf="isMobile">
+    <td class="sb-menu-nav" (click)="slideMenu()" *ngIf="!isDesktop">
       <i class="fa fa-bars" *ngIf="!menuActive"></i>
       <i class="fa fa-times" *ngIf="menuActive"></i>
     </td>  

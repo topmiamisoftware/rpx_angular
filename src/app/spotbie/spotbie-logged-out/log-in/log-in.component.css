@@ -100,8 +100,17 @@
     max-width: 100%;
 }
 /**WIDTH MEDIA QUERIES */
+@media (max-width: 1650px) {
+    .sb-signUpGeneralInstructions{
+        margin-top: 100px!important;
+    }
+}
 @media (max-width: 1300px) { }
-@media (max-width: 1200px) { }
+@media (max-width: 1200px) {
+    .sb-login-top-padding{
+        padding-top: 100px;
+    }
+ }
 @media (max-width: 1024px) { }
 @media (max-width: 900px)  { }
 @media (max-width: 768px) {

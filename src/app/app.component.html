@@ -1,20 +1,30 @@
 <router-outlet></router-outlet>
 
-<div class="sb-testMode pe-none" *ngIf="testMode" (click)="openTestModeSpecs()">
-    <i class="fas fa-exclamation-triangle"></i>
-    <span> TEST MODE</span>
+<div class="sb-testMode" *ngIf="testMode" (click)="openTestModeSpecs()">
+    <i class="fas fa-exclamation-triangle"></i><br/>
+    <span>TEST MODE</span>
 </div>
 
 <div class='spotbie-overlay-window d-flex flex-column align-items-center align-content-center justify-content-center' *ngIf="displayTestModeOptions">
 
     <div class='d-flex flex-column align-items-center align-content-center justify-content-center'>
-        <p class='spotbie-text-gradient'>TEST MODE</p>
+
+        <h4 class='spotbie-text-gradient'>WE ARE CURRENTLY IN TEST MODE</h4>
     
-        <p clas='spotbie-text-gradient'>
+        <p class='spotbie-text-gradient mt-4'>
             These are mock locations, models, titles, paragraphs, reward rates, loyalty points, etc.
         </p>
     
-        <span (click)="closeTestModeSpecs()">GOT IT</span>
+        <p class='mt-4'>
+            <i class='fa fa-map-marker' style="color: white;"></i>
+            <br/>
+            <span class='spotbie-text-gradient'>
+                Miami, Perez Art Museum.
+            </span>           
+        </p>
+
+        <div class='sb-getStarted' (click)="closeTestModeSpecs()">GOT IT</div>
+
     </div>
 
 </div>

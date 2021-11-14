@@ -181,22 +181,20 @@
         <div class="sb-logo mt-3 mb-3"></div>
 
         <div class="spotbie-rel-div
-                    spotbie-padding
-                    spotbie-text-link"
+                    spotbie-padding"
             *ngIf="business"
             (click)="usersHome()">
 
-            <i class="fas fa-user"></i>  CLICK HERE FOR NON-BUSINESS USERS
+            <i class="fas fa-user"></i><span class='spotbie-text-link'> CLICK HERE FOR NON-BUSINESS USERS</span>
             
         </div>
 
         <div class="spotbie-rel-div
-                    spotbie-padding
-                    spotbie-text-link"
+                    spotbie-padding"
             *ngIf="!business"
             (click)="businessHome()">
             
-            <i class="fas fa-business-time"></i> LOOKING FOR THE BUSINESS PORTAL?
+            <i class="fas fa-business-time"></i><span class='spotbie-text-link'> LOOKING FOR THE BUSINESS PORTAL?</span>
 
         </div>
 

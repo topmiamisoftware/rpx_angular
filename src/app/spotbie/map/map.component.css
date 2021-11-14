@@ -994,12 +994,6 @@ button.gm-ui-hover-effect:focus-within{
         max-width: 200px;
         display: block;
     }
-    .sb-getStarted span{
-        background: unset;
-        -webkit-background-clip: unset;
-        -webkit-text-fill-color: unset;
-        color:  #212529;        
-    }
     .sb-miniLogoIcon{
         margin-top: 1px;
         left: 4px;

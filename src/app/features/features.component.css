@@ -14,21 +14,6 @@ h2{
     background-size: cover !important;
     background-repeat: no-repeat !important;         
 }
-.sb-getStarted{ 
-    max-width: 220px;
-    padding-top: 5px !important;
-    padding-bottom: 5px !important;
-    font-size: 20px;
-    border-radius: 13px!important;
-    background: -webkit-linear-gradient(45deg,#64e56f,#35a99f);
-    background: linear-gradient(45deg,#64e56f,#35a99f);
-}
-.sb-getStarted span{
-    background: linear-gradient(45deg,#212529,#131313);
-    background: -webkit-linear-gradient(45deg,#212529,#131313);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;   
-}
 .sb-whiteIconBg{
     position: absolute;
     margin-top: -261px;
@@ -41,6 +26,8 @@ h2{
 .sb-whiteIconBg.right{
     left: unset !important;
     right: 27px;
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
 }
 .sb-greenIcon{
     position: relative;

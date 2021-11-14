@@ -309,9 +309,18 @@ h6.sb-titleGreen{
     font-size: .8rem;
 }
 .sb-titleGreen{
-    background: -webkit-linear-gradient(45deg,#0eb273, #2ddc5b);
+    background: -webkit-linear-gradient(45deg,#67e76c,#67e76c);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
+    font-weight: bold;
+    font-family: 'Gotham-Bold';
+    font-size: 3rem;
+}
+.sb-text-light-green-gradient {
+    background: -webkit-linear-gradient(90deg,#67e76c,#64e56f);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: 2px;
 }
 .fa-plus, .fa-minus{
     color: #1b1a1e !important;

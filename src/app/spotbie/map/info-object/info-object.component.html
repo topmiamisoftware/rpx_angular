@@ -5,10 +5,10 @@
     </div>
     
     <div class='spotbie-info-object-title' [ngClass]="getFullScreenModeClass()">
-                    
-        <h6 class="spotbie-text-gradient sb-titleGreen text-uppercase" *ngIf="info_object.is_community_member">SPOTBIE COMMUNITY MEMBER</h6>
+        
+        <img class='sb-miniLogoIcon' src="assets/images/spotbie_community_member_star.svg" *ngIf="info_object.is_community_member" />
 
-        <img class='sb-miniLogoIcon' src="assets/images/home_imgs/spotbie-green-icon.svg" *ngIf="info_object.is_community_member" />
+        <h6 class="spotbie-text-gradient sb-titleGreen text-uppercase" *ngIf="info_object.is_community_member">SPOTBIE COMMUNITY MEMBER</h6>
 
         <h1 class="mb-3" [ngClass]="getTitleStyling()">{{ info_object.name }}</h1>
         

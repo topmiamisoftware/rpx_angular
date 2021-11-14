@@ -122,19 +122,21 @@
         max-width: 99%;
         width: 99%;
         min-width: 99%;
+        text-align: center;
     }
     .sb-menuItem,
     .sb-addMenuItem{
         position: relative;
-        margin-left: 1%;
-        max-width: 98%;
-        width: 98%;
-        min-width: 98%;
-        height: 45vw;
-        min-height: 45vw;
-        max-height: 45vw;
+        margin: 0 auto;
+        margin-bottom: 10px;
+        max-width: 290px;
+        width: 290px;
+        min-width: 290px;
+        height: 290px;
+        min-height: 290px;
+        max-height: 290px;
         font-size: .8rem;
-        border-radius: 5px;    
+        border-radius: 5px;   
     }
     .sb-addMenuItem{
         position: relative;
@@ -146,6 +148,7 @@
     }    
     .sb-addMenuItem h6{
         font-size: 1rem;
+        line-height: 1rem;
     }
 }
 @media (max-width: 420px){

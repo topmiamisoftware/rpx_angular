@@ -87,6 +87,10 @@
     width: 100%;
     font-size: .6rem;
     padding-top: 20px;
+    background: url(src/assets/images/home_imgs/spotbie-white-icon.svg);    
+    background-size: cover!important;
+    background-position: center!important;
+    background-repeat: no-repeat!important;        
 }
 
 .spotbie-ad-wrapper-header{
