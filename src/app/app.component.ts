@@ -22,6 +22,9 @@ export class AppComponent {
 
   public displayTestModeOptions: boolean = false
 
+  public lat: number = null
+  public lng: number = null
+
   constructor(private versionCheckService : VersionCheckService, 
               private spotbieMetaService: SpotbieMetaService) {}
   
@@ -44,7 +47,13 @@ export class AppComponent {
 
   ngOnInit(){
 
-    if(environment.staging) this.testMode = true
+    if(environment.staging){
+    
+      this.testMode = true
+      this.lat = environment.myLocX
+      this.lng = environment.myLocY
+
+    }
 
     this.spotbieMetaService.setTitle(SPOTBIE_META_TITLE)
     this.spotbieMetaService.setDescription(SPOTBIE_META_DESCRIPTION)

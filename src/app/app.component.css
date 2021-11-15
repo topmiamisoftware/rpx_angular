@@ -13,8 +13,10 @@
     padding: 2px;
     font-size: .8rem;
 }
-.fa-exclamation-triangle{
-    color: #ffc107;
+
+#sb-testModeTitleTriangle{
+    font-size: 1.4rem !important;
+    color: #ffc107 !important;
 }
 .spotbie-overlay-window{
     z-index: 99 !important;

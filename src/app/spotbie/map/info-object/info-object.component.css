@@ -435,7 +435,8 @@ h6.sb-titleGreen{
         font-size: .9rem;
     } 
     .sb-miniLogoIcon{
-        display: none;
+        max-width: 18px;
+        margin-right: unset;
     }  
     h6.sb-titleGreen{
         font-size: .5rem;

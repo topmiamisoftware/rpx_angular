@@ -136,7 +136,7 @@
         min-height: 290px;
         max-height: 290px;
         font-size: .8rem;
-        border-radius: 5px;   
+        border-radius: 5px;         
     }
     .sb-addMenuItem{
         position: relative;
@@ -145,6 +145,9 @@
         display: block;
         border: unset;    
         background: unset;
+        height: 130px;
+        min-height: 130px;
+        max-height: 130px;          
     }    
     .sb-addMenuItem h6{
         font-size: 1rem;

@@ -197,7 +197,7 @@ export class AdCreatorComponent implements OnInit {
       this.adMediaMessage = 'Upload only one item image.'
       return
     }
-
+    
     this.loading = true
 
     const formData = new FormData()
@@ -247,7 +247,7 @@ export class AdCreatorComponent implements OnInit {
   private adMediaUploadFinished(httpResponse: any): void {
 
     if (httpResponse.success){
-
+      
       this.adUploadImage = httpResponse.image
 
       this.adApp.updateAdImage(this.adUploadImage)

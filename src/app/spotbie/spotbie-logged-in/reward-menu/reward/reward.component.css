@@ -67,12 +67,6 @@ h6.sb-titleGreen {
     font-size: 1.1rem;
 }
 
-.spotbie-info-object-image-thumb.discount{
-    max-height: 150px;
-    min-height: 150px;
-    height: 150px;
-}
-
 .sb-titleGreen {
     background: -webkit-linear-gradient(45deg, #0eb273, #2ddc5b);
     -webkit-background-clip: text;

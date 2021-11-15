@@ -163,6 +163,9 @@ agm-map{
 .sb-input{
     min-width: 500px;
     text-align: left;
+    min-width: 500px;
+    text-align: left;
+    border: unset;    
 }
 textarea{
     height: 300px;

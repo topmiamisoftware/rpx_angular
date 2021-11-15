@@ -8,13 +8,16 @@ import { UserauthService } from 'src/app/services/userauth.service';
 import { environment } from 'src/environments/environment';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { Redeemable } from 'src/app/models/redeemable';
+import { RewardCreatorService } from 'src/app/services/spotbie-logged-in/business-menu/reward-creator/reward-creator.service';
+import { Reward } from 'src/app/models/reward';
 
-const QR_CODE_SCAN_BASE_URL = environment.qrCodeScanBaseUrl
+const QR_CODE_LOYALTY_POINTS_SCAN_BASE_URL = environment.qrCodeLoyaltyPointsScanBaseUrl
+const QR_CODE_CALIM_REWARD_SCAN_BASE_URL = environment.qrCodeRewardScanBaseUrl
 
 @Component({
   selector: 'app-qr',
   templateUrl: './qr.component.html',
-  styleUrls: ['./qr.component.css']
+  styleUrls: ['./qr.component.css', '../reward-menu/reward-menu.component.css']
 })
 export class QrComponent implements OnInit {
 
@@ -52,7 +55,9 @@ export class QrComponent implements OnInit {
 
   public qrCodeLink: string = null
 
-  public qrCodeBaseUrl: string = QR_CODE_SCAN_BASE_URL
+  public qrCodeLoyaltyPointsBaseUrl: string = QR_CODE_LOYALTY_POINTS_SCAN_BASE_URL
+
+  public qrCodeRewardBaseUrl: string = QR_CODE_CALIM_REWARD_SCAN_BASE_URL
 
   public loyaltyPointBalance: LoyaltyPointBalance
 
@@ -64,10 +69,16 @@ export class QrComponent implements OnInit {
 
   public awarded: boolean = false
 
+  public reward: Reward = null
+  public rewarded: boolean = false
+
+  public pointsCharged: number
+
   constructor(private userAuthService: UserauthService,
               private loyaltyPointsService: LoyaltyPointsService,
               private deviceDetectorService: DeviceDetectorService,
-              private formBuilder: FormBuilder) { }
+              private formBuilder: FormBuilder,
+              private rewardService: RewardCreatorService) { }
   
   public getWindowClass(){
 
@@ -158,10 +169,7 @@ export class QrComponent implements OnInit {
 
     if(resp.success){
       
-      this.redeemable.uuid 
-      = `${this.qrCodeBaseUrl}
-      ?&r=${resp.redeemable.uuid}`    
-
+      this.redeemable.uuid = `${this.qrCodeLoyaltyPointsBaseUrl}?&r=${resp.redeemable.uuid}&t=lp`    
       this.promptForRewardTimeout = null
 
       this.rewardPrompt = false
@@ -169,6 +177,47 @@ export class QrComponent implements OnInit {
 
     } else 
       alert(resp.message)    
+
+  }
+
+  public addLp(addLpObj){
+
+    this.loyaltyPointsService.addLoyaltyPoints(addLpObj, 
+      (resp) => {
+        this.scanSuccessHandlerCb(resp)
+      }
+    )   
+     
+  }
+
+  public claimReward(addLpObj){
+
+    this.rewardService.claimReward(addLpObj,       
+      (resp) => {
+        this.claimRewardCb(resp)
+      }
+    ) 
+
+  }
+
+  public claimRewardCb(resp){
+
+    console.log("resp", resp)
+
+    if(resp.success){
+  
+      this.rewarded = true      
+      this.reward = resp.reward 
+      this.pointsCharged = this.reward.point_cost
+      this.sbEarnedPoints.nativeElement.style.display = 'block'
+      
+    } else {
+
+      alert(resp.message)
+
+    }
+
+    this.scanSuccess = false
 
   }
 
@@ -181,16 +230,23 @@ export class QrComponent implements OnInit {
     let url = new URL(urlString)
     let urlParams = new URLSearchParams(url.search)
 
+    let redeemableType = urlParams.get('t')
+
     let addLpObj = {
-      redeemableHash: urlParams.get('r')
+      redeemableHash: urlParams.get('r'),
+      redeemableType: redeemableType
     }
 
-    this.loyaltyPointsService.addLoyaltyPoints(addLpObj, 
-      (resp) => {
-        this.scanSuccessHandlerCb(resp)
-      }
-    )
-
+    switch(redeemableType)
+    {
+      case 'lp':
+        this.addLp(addLpObj)
+        break
+      
+      case 'claim_reward':
+        this.claimReward(addLpObj)
+        break
+    }
   }
 
   public scanSuccessHandlerCb(resp: any){

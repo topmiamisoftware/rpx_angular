@@ -1,12 +1,14 @@
 <app-loading-screen *ngIf="loading"></app-loading-screen>
 
-<div class="spotbie-overlay-window container d-flex">
+<div class="spotbie-overlay-window container">
 
     <div class='sb-scroll'>
 
-        <p class='spotbie-text-gradient text-uppercase text-center mt-4' id="sign_up_general_instructions" #spotbieSignUpIssues>
-            <span  *ngIf="!business">Sign up to earn rewards with spotbie.</span>
-            <span  *ngIf="business">Sign up to find customers.</span>
+        <p class='sb-signUpGeneralInstructions spotbie-text-gradient text-uppercase text-center' id="sign_up_general_instructions" #spotbieSignUpIssues>
+
+            <span *ngIf="!business">Sign up to earn rewards with spotbie.</span>
+            <span *ngIf="business">Sign up to find customers.</span>
+            
         </p>
         
         <form [formGroup]="signUpFormx" (ngSubmit)="initSignUp()">                                               
@@ -185,7 +187,7 @@
             *ngIf="business"
             (click)="usersHome()">
 
-            <i class="fas fa-user"></i><span class='spotbie-text-link'> CLICK HERE FOR NON-BUSINESS USERS</span>
+            <i class="fas fa-user" style="font-size:.5rem;"></i><span class='spotbie-text-link'> CLICK HERE FOR NON-BUSINESS USERS</span>
             
         </div>
 
@@ -194,7 +196,7 @@
             *ngIf="!business"
             (click)="businessHome()">
             
-            <i class="fas fa-business-time"></i><span class='spotbie-text-link'> LOOKING FOR THE BUSINESS PORTAL?</span>
+            <i class="fas fa-business-time" style="font-size:.5rem;"></i><span class='spotbie-text-link'> LOOKING FOR THE BUSINESS PORTAL?</span>
 
         </div>
 

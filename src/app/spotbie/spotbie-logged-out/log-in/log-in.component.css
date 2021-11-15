@@ -88,7 +88,8 @@
 }
 .sb-signUpGeneralInstructions{
     margin: 0 auto;    
-    max-width: 440px;    
+    max-width: 440px; 
+    margin-top: 30px;   
     text-align: center;
     padding-bottom: 10px;
     font-size: .6rem;
@@ -98,6 +99,10 @@
     width: 100%;
     min-width: 100%;
     max-width: 100%;
+}
+.spotbie-button{
+    background: linear-gradient(90deg,#35a99f61,#64e56f8a);
+    border: 1px solid #428c67 
 }
 /**WIDTH MEDIA QUERIES */
 @media (max-width: 1650px) {
@@ -126,7 +131,10 @@
         width: 102%;
         min-width: 102%;
         max-width: 102%;       
-    }         
+    }
+    .sb-signUpGeneralInstructions{
+        margin-top: 40px!important;
+    }             
 }
 @media (max-width: 700px) { }
 @media (max-width: 600px) { 

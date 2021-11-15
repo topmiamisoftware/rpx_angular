@@ -15,13 +15,13 @@
 
       <span class='sb-loyalty-points' (click)="toggleLoyaltyPoints()" >{{ userLoyaltyPoints | number:'1.0':'en-US' }}</span>
       
-      <img class='sb-loyalty-points' *ngIf="!isMobile" (click)="toggleLoyaltyPoints()"  src="assets/images/spotbie-loyalty-points.svg" />
+      <img class='sb-loyalty-points' *ngIf="!isMobile" (click)="toggleRedeemables()"  src="assets/images/spotbie-loyalty-points.svg" />
 
       <div class="sb-businessMenu" *ngIf="!isDesktop">
-        <img class='sb-loyalty-points' (click)="toggleLoyaltyPoints()" src="assets/images/spotbie-loyalty-points.svg" />
+        <img class='sb-loyalty-points' (click)="toggleRedeemables()" src="assets/images/spotbie-loyalty-points.svg" />
       </div>
 
-      <div *ngIf="this.userType == eAllowedAccountTypes.PlaceToEat || 
+      <!--<div *ngIf="this.userType == eAllowedAccountTypes.PlaceToEat || 
                   this.userType == eAllowedAccountTypes.Shopping || 
                   this.userType == eAllowedAccountTypes.Events"
             (click)="toggleRedeemables()" 
@@ -29,12 +29,8 @@
 
         <img class='sb-loyalty-points' src="assets/images/menu spotbie-01.svg" />
 
-      </div>
-
-      <div *ngIf="this.userType == eAllowedAccountTypes.Personal" class="sb-businessMenu" (click)="toggleRedeemables()">
-        <img class='sb-loyalty-points' src="assets/images/menu spotbie-01.svg" />
-      </div>
-
+      </div>-->
+      
       <img class='sb-qr' (click)="toggleQRScanner()"  src="assets/images/spotbie-qr.svg" /> 
 
       <span class='sb-userName' (click)="openWindow(settingsWindow)" *ngIf="userName !== null && isDesktop">{{ userName }}</span>         

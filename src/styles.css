@@ -381,12 +381,11 @@ a, a:hover, a:active, a:after{
 }
 .spotbie-invalid-feedback{
     position: relative;
-    margin: 20px auto;
+    margin: 10px auto;
     max-width: 440px;
     text-align: left;
     letter-spacing: 3px;
-    line-height: 15px;
-    font-size: 15px;
+    font-size: .8rem;
 }
 .spotbie-play-button{
     position: absolute;
@@ -833,7 +832,9 @@ p.sb-helpInfo{
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;   
 }
-
+.fa-exclamation-triangle{
+    color: #ffc107;
+}
 /**WIDTH MEDIA QUERIES */
 @media (max-width: 1440px) {
     

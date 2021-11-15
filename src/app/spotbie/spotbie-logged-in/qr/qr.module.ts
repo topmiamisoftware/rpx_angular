@@ -6,6 +6,7 @@ import { NgxQRCodeModule } from '@techiediaries/ngx-qrcode';
 import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import { NgxMaskModule, IConfig } from 'ngx-mask';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { RewardMenuModule } from '../reward-menu/reward-menu.module';
 
 export const options : Partial<IConfig> | (() => Partial<IConfig>) = null;
 
@@ -18,6 +19,7 @@ export const options : Partial<IConfig> | (() => Partial<IConfig>) = null;
     NgxQRCodeModule,
     ZXingScannerModule,
     ReactiveFormsModule,
+    RewardMenuModule,
     FormsModule,
     NgxMaskModule.forRoot(options)  
   ],

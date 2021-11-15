@@ -48,6 +48,9 @@ h5{
     transform: translateY(-50%);
     font-size: 7rem;
 }  
+.fa-check{
+    color: #2ddc5b;
+}
 .sb-v-wrapper{
     flex-direction: column;
 }
@@ -73,6 +76,7 @@ h5{
     }
     .sb-scanQrTitle{
         margin-top: 15px !important;
+        padding-top: 20px !important;
         margin-bottom: 0px !important;    
     }
     .sb-qrTitleImage{

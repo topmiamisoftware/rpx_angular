@@ -9,21 +9,25 @@
 
     <div class='d-flex flex-column align-items-center align-content-center justify-content-center'>
 
-        <h4 class='spotbie-text-gradient'>WE ARE CURRENTLY IN TEST MODE</h4>
+        <i class="fa-exclamation-triangle" id="sb-testModeTitleTriangle"></i>
+        <br/>
+        <h4 class='spotbie-text-gradient'>TEST MODE</h4>
     
         <p class='spotbie-text-gradient mt-4'>
             These are mock locations, models, titles, paragraphs, reward rates, loyalty points, etc.
         </p>
     
         <p class='mt-4'>
-            <i class='fa fa-map-marker' style="color: white;"></i>
-            <br/>
             <span class='spotbie-text-gradient'>
                 Miami, Perez Art Museum.
-            </span>           
+            </span>
+            <br/> 
+            <i class='fa fa-map-marker-alt' style="color: white;"></i>               
+            <br/>
+            <span class='spotbie-text-gradient' style="font-size: .8rem;">({{ lat }}, {{ lng }})</span>       
         </p>
 
-        <div class='sb-getStarted' (click)="closeTestModeSpecs()">GOT IT</div>
+        <div class='spotbie-button sb-getStarted' (click)="closeTestModeSpecs()">GOT IT</div>
 
     </div>
 

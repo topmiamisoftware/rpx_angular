@@ -6,6 +6,26 @@
 
     <div class='sb-rewardCreatorWrapper'>
         
+        <div *ngIf="reward !== null && reward !== undefined">
+
+            <h5 class="spotbie-text-gradient text-center text-uppercase pt-3 mb-4">USERS SCAN TO CLAIM</h5>
+
+            <ngx-qrcode *ngIf="reward !== null && reward !== undefined"
+                        [value]="rewardClaimUrl"
+                        [width]="qrWidth"
+                        cssClass="spotbie-full-qrCode mt-4 mb-4"
+                        colorDark="#000"
+                        colorLight="#64e56f"
+                        errorCorrectionLevel="H"></ngx-qrcode>
+    
+            <span><i class="fa fa-exclamation-triangle"></i></span>
+            
+            <h5 class="spotbie-text-gradient text-center text-uppercase pt-3 mb-4" style="font-size: .8rem;">
+                LOYALTY POINTS WILL BE DEDUCTED FROM SCANNER'S ACCOUNT
+            </h5>
+
+        </div>
+
         <h5 class="spotbie-text-gradient text-center text-uppercase pt-3 mb-4">REWARD CREATOR</h5>
 
         <form [formGroup]="rewardCreatorForm" *ngIf="rewardCreatorFormUp">
@@ -184,21 +204,13 @@
             <i class='fa fa-check'></i>
         </div>
 
+        <div class='mt-5 mb-5 cursor-pointer' (click)="closeRewardCreator()">
+            <span class="spotbie-text-gradient">CANCEL</span>
+        </div>        
+
         <div class='mt-5 mb-5 sb-deleteMe' *ngIf="reward !== null && reward !== undefined" (click)="deleteMe()">
             <span class="spotbie-text-gradient">DELETE ME </span><i class='fa fa-trash'></i>
         </div>
-
-        <div class='mt-5 mb-5 cursor-pointer' (click)="closeRewardCreator()">
-            <span class="spotbie-text-gradient">CANCEL</span>
-        </div>
-
-        <ngx-qrcode *ngIf="reward !== null && reward !== undefined"
-                    [value]="reward.uuid"
-                    [width]="qrWidth"
-                    cssClass="spotbie-full-qrCode mt-4 mb-4"
-                    colorDark="#000"
-                    colorLight="#64e56f"
-                    errorCorrectionLevel="H"></ngx-qrcode>
 
     </div>
 

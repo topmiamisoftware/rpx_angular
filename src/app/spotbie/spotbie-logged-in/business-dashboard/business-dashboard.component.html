@@ -23,15 +23,15 @@
 
     </div> 
 
+    <div class="sb-dashboardWrapper" #lpAppAnchor *ngIf="!displayBusinessSetUp && businessFetched">
+        <app-loyalty-points [fullScreenWindow]="false" #loyaltyPointsApp></app-loyalty-points>
+    </div>
+
     <div class="sb-dashboardWrapper" #qrCodeAppAnchor *ngIf="!displayBusinessSetUp && businessFetched">
       <app-qr [fullScreenWindow]="false" 
                 (openUserLPBalanceEvt)="openLoyaltyPoints()" 
                 (notEnoughLpEvt)="openLoyaltyPoints()" #qrApp></app-qr>
     </div>    
-
-    <div class="sb-dashboardWrapper" #lpAppAnchor *ngIf="!displayBusinessSetUp && businessFetched">
-        <app-loyalty-points [fullScreenWindow]="false" #loyaltyPointsApp></app-loyalty-points>
-    </div>
     
     <div class="sb-dashboardWrapper" #rewardMenuAppAnchor *ngIf="!displayBusinessSetUp && businessFetched">
         <app-reward-menu [fullScreenMode]="false" (notEnoughLpEvt)="openLoyaltyPoints()" #rewardMenuApp></app-reward-menu>
