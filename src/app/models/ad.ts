@@ -7,6 +7,7 @@ export class Ad {
     public name: string = null    
     public description: string = null
     public images: string = null
+    public images_mobile: string = null
     public dollar_cost: number = null
     public clicks: number = null
     public views: number = null

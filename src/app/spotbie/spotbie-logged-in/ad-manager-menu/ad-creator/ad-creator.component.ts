@@ -13,7 +13,7 @@ import { environment } from 'src/environments/environment'
 import * as spotbieGlobals from '../../../../globals'
 
 const AD_MEDIA_UPLOAD_API_URL = `${spotbieGlobals.API}in-house/upload-media`
-const AD_MEDIA_MAX_UPLOAD_SIZE = 25e+6
+const AD_MEDIA_MAX_UPLOAD_SIZE = 10e+6
 const AD_PAYMENT_URL = `${environment.baseUrl}/make-payment/in-house/`
 
 @Component({
@@ -27,9 +27,11 @@ export class AdCreatorComponent implements OnInit {
 
   @ViewChild('spbInputInfo') spbInputInfo
   @ViewChild('adMediaInput') adMediaInput
+  @ViewChild('adMediaMobileInput') adMediaMobileInput
   @ViewChild('spbTopAnchor') spbTopAnchor
 
   @ViewChild('adApp') adApp: HeaderAdBannerComponent | BottomAdBannerComponent | NearbyFeaturedAdComponent
+  @ViewChild('adAppMobile') adAppMobile: HeaderAdBannerComponent | BottomAdBannerComponent
 
   @Output() closeWindowEvt = new EventEmitter()
   @Output() closeThisEvt = new EventEmitter()
@@ -43,8 +45,9 @@ export class AdCreatorComponent implements OnInit {
   public adFormSubmitted: boolean = false
 
   public adUploadImage: string = null
-
-  public adMediaMessage: string = "Upload Ad Image"
+  public adUploadImageMobile: string = null
+  
+  public adMediaMessage: string = "Upload Image"
 
   public adMediaUploadProgress: number = 0
 
@@ -53,9 +56,9 @@ export class AdCreatorComponent implements OnInit {
   public dollarValueCalculated: boolean = false
   
   public adTypeList: Array<any> = [
-    { name: 'Header Banner ($15.99/monthly)', dimensions: '1200x370'}, 
+    { name: 'Header Banner ($15.99/monthly)', dimensions: '1200x370', dimensionsMobile: '600x600'}, 
     { name: 'Related-Nearby Box ($13.99/monthly)', dimensions: '600x600'}, 
-    { name: 'Footer Banner ($10.99)', dimensions: '1200x370'} 
+    { name: 'Footer Banner ($10.99)', dimensions: '1200x370', dimensionsMobile: '600x600'} 
   ]
 
   public adCreated: boolean = false
@@ -105,7 +108,8 @@ export class AdCreatorComponent implements OnInit {
       adValue: ['', adValueValidators],
       adName: ['', adNameValidators],
       adDescription: ['', adDescriptionValidators],
-      adImage: ['', adImageValidators]
+      adImage: ['', adImageValidators],
+      adImageMobile: ['']
     })
 
     if(this.ad !== null && this.ad !== undefined){
@@ -114,8 +118,10 @@ export class AdCreatorComponent implements OnInit {
       this.adCreatorForm.get('adName').setValue(this.ad.name)
       this.adCreatorForm.get('adDescription').setValue(this.ad.description)     
       this.adCreatorForm.get('adImage').setValue(this.ad.images)
+      this.adCreatorForm.get('adImageMobile').setValue(this.ad.images_mobile)
 
       this.adUploadImage = this.ad.images
+      this.adUploadImageMobile = this.ad.images_mobile
 
       this.selected = this.ad.type
 
@@ -137,6 +143,7 @@ export class AdCreatorComponent implements OnInit {
     adObj.name = this.adName   
     adObj.description = this.adDescription
     adObj.images = this.adUploadImage
+    adObj.images_mobile = this.adUploadImageMobile
     adObj.type = this.adType
 
     if(this.ad === null || this.ad === undefined){
@@ -182,19 +189,23 @@ export class AdCreatorComponent implements OnInit {
 
   }
 
-  public startAdMediaUploader(): void{
-    this.adMediaInput.nativeElement.click()
+  public startAdMediaUploader(type: string): void{
+    if(type == 'mobile'){
+      this.adMediaMobileInput.nativeElement.click()
+    } else {
+      this.adMediaInput.nativeElement.click()
+    }
   }
 
-  public uploadMedia(files): void {
+  public uploadMedia(files, type: string): void {
 
     const file_list_length = files.length
 
     if (file_list_length === 0) {
-      this.adMediaMessage = 'You must upload at least one file.'
+      this.adMediaMessage = 'Upload at least one image.'
       return
     } else if (file_list_length > 1) {
-      this.adMediaMessage = 'Upload only one item image.'
+      this.adMediaMessage = 'Upload only one image.'
       return
     }
     
@@ -212,11 +223,11 @@ export class AdCreatorComponent implements OnInit {
       upload_size += file_to_upload.size
 
       if (upload_size > AD_MEDIA_MAX_UPLOAD_SIZE) {
-        this.adMediaMessage = 'Max upload size is 25MB.'
+        this.adMediaMessage = 'Max upload size is 10MB.'
         this.loading = false
         return
       }
-
+      
       formData.append('image', file_to_upload, file_to_upload.name)
 
     }
@@ -235,8 +246,10 @@ export class AdCreatorComponent implements OnInit {
 
       if (event.type === HttpEventType.UploadProgress)
         this.adMediaUploadProgress = Math.round(100 * event.loaded / event.total)
-      else if (event.type === HttpEventType.Response)
-        this.adMediaUploadFinished(event.body)
+      else if (event.type === HttpEventType.Response){
+        this.adMediaUploadFinished(event.body, type)
+      }
+        
 
     })
 
@@ -244,16 +257,24 @@ export class AdCreatorComponent implements OnInit {
 
   }
 
-  private adMediaUploadFinished(httpResponse: any): void {
+  private adMediaUploadFinished(httpResponse: any, type: string): void {
 
     if (httpResponse.success){
       
-      this.adUploadImage = httpResponse.image
+      if(type == 'desktop'){
+        
+        this.adUploadImage = httpResponse.image
+        this.adCreatorForm.get('adImage').setValue(this.adUploadImage)
+        this.adApp.updateAdImage(this.adUploadImage)
 
-      this.adApp.updateAdImage(this.adUploadImage)
+      } else if(type == 'mobile'){
 
-      this.adCreatorForm.get('adImage').setValue(this.adUploadImage)
-    
+        this.adUploadImageMobile = httpResponse.image
+        this.adCreatorForm.get('adImageMobile').setValue(this.adUploadImageMobile)
+        this.adAppMobile.updateAdImageMobile(this.adUploadImageMobile)
+      
+      }
+      
     } else
       console.log('adMediaUploadFinished', httpResponse)
     
@@ -263,7 +284,13 @@ export class AdCreatorComponent implements OnInit {
 
   public adTypeChange(){
 
-    if(this.adUploadImage !== null) this.adApp.updateAdImage(this.adUploadImage)
+    if(this.adUploadImage !== null) {
+      this.adApp.updateAdImage(this.adUploadImage)      
+    }
+    
+    if(this.adUploadImageMobile !== null){
+      this.adAppMobile.updateAdImageMobile(this.adUploadImageMobile)
+    }
 
   }
 

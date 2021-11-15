@@ -11,8 +11,13 @@ import { LoyaltyPointBalance } from 'src/app/models/loyalty-point-balance';
 import { LoyaltyPointsService } from 'src/app/services/loyalty-points/loyalty-points.service';
 
 const PLACE_TO_EAT_AD_IMAGE = 'assets/images/def/places-to-eat/header_banner_in_house.jpg'
+const PLACE_TO_EAT_AD_IMAGE_MOBILE = 'assets/images/def/places-to-eat/featured_banner_in_house.jpg'
+
 const SHOPPING_AD_IMAGE = 'assets/images/def/shopping/header_banner_in_house.jpg'
+const SHOPPING_AD_IMAGE_MOBILE = 'assets/images/def/shopping/featured_banner_in_house.jpg'
+
 const EVENTS_AD_IMAGE = 'assets/images/def/events/header_banner_in_house.jpg'
+const EVENTS_AD_IMAGE_MOBILE = 'assets/images/def/events/featured_banner_in_house.jpg'
 
 @Component({
   selector: 'app-header-ad-banner',
@@ -30,6 +35,8 @@ export class HeaderAdBannerComponent implements OnInit {
   @Input() editMode: boolean = false
   @Input() eventsClassification: number = null
 
+  @Input() isMobile: boolean = false
+
   public link: string
 
   public displayAd: boolean = false
@@ -46,8 +53,6 @@ export class HeaderAdBannerComponent implements OnInit {
 
   public communityMemberOpen: boolean = false
 
-  public isMobile: boolean = false
-
   public currentCategoryList: Array<string> = []
 
   public categoryListForUi: string = null
@@ -57,6 +62,7 @@ export class HeaderAdBannerComponent implements OnInit {
   public adTypeWithId: boolean = false
 
   public genericAdImage: string = PLACE_TO_EAT_AD_IMAGE
+  public genericAdImageMobile: string = PLACE_TO_EAT_AD_IMAGE_MOBILE
 
   public switchAdInterval: any = false
   
@@ -100,12 +106,15 @@ export class HeaderAdBannerComponent implements OnInit {
       switch(accountType){
         case 1:
           this.genericAdImage = PLACE_TO_EAT_AD_IMAGE
+          this.genericAdImageMobile = PLACE_TO_EAT_AD_IMAGE_MOBILE
           break
         case 2:
           this.genericAdImage = SHOPPING_AD_IMAGE
+          this.genericAdImageMobile = SHOPPING_AD_IMAGE_MOBILE
           break
         case 3:
           this.genericAdImage = EVENTS_AD_IMAGE
+          this.genericAdImageMobile = EVENTS_AD_IMAGE_MOBILE
           this.categories = this.eventsClassification
           break  
       }
@@ -118,14 +127,17 @@ export class HeaderAdBannerComponent implements OnInit {
         case 'food':
           accountType = 1
           this.genericAdImage = PLACE_TO_EAT_AD_IMAGE
+          this.genericAdImageMobile = PLACE_TO_EAT_AD_IMAGE_MOBILE
           break
         case 'shopping':
           accountType = 2
           this.genericAdImage = SHOPPING_AD_IMAGE
+          this.genericAdImageMobile = SHOPPING_AD_IMAGE_MOBILE
           break
         case 'events':
           accountType = 3
           this.genericAdImage = EVENTS_AD_IMAGE
+          this.genericAdImageMobile = EVENTS_AD_IMAGE_MOBILE
           this.categories = this.eventsClassification
           break                          
         
@@ -255,7 +267,7 @@ export class HeaderAdBannerComponent implements OnInit {
   }
 
   public updateAdImage(image: string = ''){
-    
+
     if(image != ''){
       this.ad.images = image
       this.genericAdImage = image
@@ -263,12 +275,31 @@ export class HeaderAdBannerComponent implements OnInit {
 
   }
 
-  ngOnInit(): void {
+  public updateAdImageMobile(image_mobile: string){
 
-    this.isMobile = this.deviceDetectorService.isMobile()
+    if(image_mobile != ''){
+      this.ad.images_mobile = image_mobile
+      this.genericAdImageMobile = image_mobile
+    }
 
+  }
+
+  public getAdWrapperClass(){
+    
+    if(!this.isMobile) return 'spotbie-ad-wrapper-header'
+
+    if(this.isMobile) return 'spotbie-ad-wrapper-header sb-mobileAdWrapper'
+
+  }
+
+  ngOnInit(): void {}
+
+  ngAfterViewInit(): void {
+    //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
+    //Add 'implements AfterViewInit' to the class.
+    console.log("is Mobile", this.isMobile)
+    if(this.isMobile == false) this.isMobile = this.deviceDetectorService.isMobile()
     this.getHeaderBanner()
-
   }
 
   ngOnDestroy(): void {

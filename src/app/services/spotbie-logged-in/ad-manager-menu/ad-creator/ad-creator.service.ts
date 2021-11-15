@@ -23,7 +23,8 @@ export class AdCreatorService {
       name: adObj.name,    
       description: adObj.description,
       type: adObj.type,
-      images: adObj.images
+      images: adObj.images,
+      images_mobile: adObj.images_mobile
     }
 
     return this.http.post<any>(placeToEatAdApi, adObjToSave).pipe(

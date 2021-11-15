@@ -11,8 +11,14 @@ import { EVENT_CATEGORIES, FOOD_CATEGORIES, SHOPPING_CATEGORIES } from '../../ma
 import { AdsService } from '../ads.service';
 
 const PLACE_TO_EAT_AD_IMAGE = 'assets/images/def/places-to-eat/footer_banner_in_house.jpg'
+const PLACE_TO_EAT_AD_IMAGE_MOBILE = 'assets/images/def/places-to-eat/featured_banner_in_house.jpg'
+
 const SHOPPING_AD_IMAGE = 'assets/images/def/shopping/footer_banner_in_house.jpg'
+const SHOPPING_AD_IMAGE_MOBILE = 'assets/images/def/shopping/featured_banner_in_house.jpg'
+
 const EVENTS_AD_IMAGE = 'assets/images/def/events/footer_banner_in_house.jpg'
+const EVENTS_AD_IMAGE_MOBILE = 'assets/images/def/events/featured_banner_in_house.jpg'
+
 
 @Component({
   selector: 'app-bottom-ad-banner',
@@ -30,6 +36,8 @@ export class BottomAdBannerComponent implements OnInit {
   @Input() editMode: boolean = false
   @Input() eventsClassification: number = null
 
+  @Input() isMobile: boolean = false
+
   public link: string
 
   public displayAd: boolean = false
@@ -44,9 +52,7 @@ export class BottomAdBannerComponent implements OnInit {
 
   public adIsOpen: boolean = false
 
-  public communityMemberOpen: boolean = false
-
-  public isMobile: boolean = false
+  public communityMemberOpen: boolean = false  
 
   public currentCategoryList: Array<string> = []
 
@@ -57,6 +63,7 @@ export class BottomAdBannerComponent implements OnInit {
   public adTypeWithId: boolean = false
 
   public genericAdImage: string = PLACE_TO_EAT_AD_IMAGE
+  public genericAdImageMobile: string = PLACE_TO_EAT_AD_IMAGE_MOBILE
 
   public switchAdInterval: any = false
 
@@ -100,13 +107,16 @@ export class BottomAdBannerComponent implements OnInit {
       switch(accountType){
         case 1:
           this.genericAdImage = PLACE_TO_EAT_AD_IMAGE
+          this.genericAdImageMobile = PLACE_TO_EAT_AD_IMAGE_MOBILE
           break
         case 2:
           this.genericAdImage = SHOPPING_AD_IMAGE
+          this.genericAdImageMobile = SHOPPING_AD_IMAGE_MOBILE
           break
         case 3:
-          this.genericAdImage = EVENTS_AD_IMAGE 
-          this.categories = this.eventsClassification         
+          this.genericAdImage = EVENTS_AD_IMAGE
+          this.genericAdImageMobile = EVENTS_AD_IMAGE_MOBILE
+          this.categories = this.eventsClassification
           break  
       }
 
@@ -117,14 +127,17 @@ export class BottomAdBannerComponent implements OnInit {
         case 'food':
           accountType = 1
           this.genericAdImage = PLACE_TO_EAT_AD_IMAGE
+          this.genericAdImageMobile = PLACE_TO_EAT_AD_IMAGE_MOBILE
           break
         case 'shopping':
           accountType = 2
           this.genericAdImage = SHOPPING_AD_IMAGE
+          this.genericAdImageMobile = SHOPPING_AD_IMAGE_MOBILE
           break
         case 'events':
           accountType = 3
           this.genericAdImage = EVENTS_AD_IMAGE
+          this.genericAdImageMobile = EVENTS_AD_IMAGE_MOBILE
           this.categories = this.eventsClassification
           break                          
         
@@ -147,6 +160,28 @@ export class BottomAdBannerComponent implements OnInit {
       }
     )
     
+  }
+
+  public getAdStyle(){
+    
+    if(this.editMode) {
+
+      return { 
+        'position' : 'relative',
+        'margin' : '0 auto',
+        'right': '0'
+      }
+    
+    }
+
+  }
+
+  public getAdWrapperClass(){
+    
+    if(!this.isMobile) return 'spotbie-ad-wrapper-header'
+
+    if(this.isMobile) return 'spotbie-ad-wrapper-header sb-mobileAdWrapper'
+
   }
 
   public async getBottomHeaderCb(resp: any){
@@ -246,7 +281,7 @@ export class BottomAdBannerComponent implements OnInit {
 
   public clickGoToSponsored(){
     
-    window.open("/advertise-my-business", '_blank')
+    window.open("/grow-your-business", '_blank')
 
   }
 
@@ -259,16 +294,25 @@ export class BottomAdBannerComponent implements OnInit {
 
   }
 
+  public updateAdImageMobile(image_mobile: string){
+
+    if(image_mobile != ''){
+      this.ad.images_mobile = image_mobile
+      this.genericAdImageMobile = image_mobile
+    }
+
+  }
+
   ngOnInit(): void {
     
-    this.isMobile = this.deviceDetectorService.isMobile()
+    if(this.isMobile == false) this.isMobile = this.deviceDetectorService.isMobile()
     this.getBottomHeader()
     
   }
 
   ngOnDestroy(): void {
     //Called once, before the instance is destroyed.
-    //Add 'implements OnDestroy' to the class.
+    //Add 'implements OnDestroy' to the class.    
     clearInterval(this.switchAdInterval)
     this.switchAdInterval = false
   }

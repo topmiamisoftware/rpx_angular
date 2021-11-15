@@ -80,6 +80,8 @@
                     maxlength="50" /> 
 
             <input type="hidden" formControlName="adImage" />
+            
+            <input type="hidden" formControlName="adImageMobile" />
 
         </form>
 
@@ -97,7 +99,7 @@
             <ng-template #adMediaUploadInfoTemplate>
 
                 <div class="spotbie-input-info text-uppercase spotbie-text-gradient text-center mt-4 mb-2 cursor-pointer" 
-                    (click)="startAdMediaUploader()" #adMediaUploadInfo>
+                    (click)="startAdMediaUploader('desktop')" #adMediaUploadInfo>
                     {{ adMediaMessage }} ({{ adTypeList[selected].dimensions }})
                 </div>     
 
@@ -106,26 +108,66 @@
             <input type="file" 
                     class='spotbie-background-upload-input' 
                     #adMediaInput 
-                    (change)="uploadMedia(adMediaInput.files)" 
+                    (change)="uploadMedia(adMediaInput.files, 'desktop')" 
                     accept="image/jpeg, image/gif, image/png"
                     multiple=false />
 
-            <div (click)="startAdMediaUploader()" class='cursor-pointer mb-5'>
-
+            <div (click)="startAdMediaUploader('desktop')" class='cursor-pointer mt-2 mb-2'>
                 <app-header-ad-banner #adApp class="pe-none" *ngIf="adType == 0" [ad]="ad" [business]="business" [editMode]="true"></app-header-ad-banner>
-                <app-nearby-featured-ad #adApp class="pe-none" *ngIf="adType == 1" [ad]="ad" [business]="business" [editMode]="true"></app-nearby-featured-ad>
-                <app-bottom-ad-banner #adApp class="pe-none" *ngIf="adType == 2" [ad]="ad" [business]="business" [editMode]="true"></app-bottom-ad-banner>
+                <app-nearby-featured-ad #adApp class="pe-none" *ngIf="adType == 1" [ad]="ad" [business]="business" [editMode]="true"></app-nearby-featured-ad>   
+                
+                <div class='cursor-pointer mt-5 mb-2' *ngIf="adType == 2"></div>
+                <app-bottom-ad-banner #adApp class="pe-none" *ngIf="adType == 2" [ad]="ad" [business]="business" [editMode]="true"></app-bottom-ad-banner>                   
+            </div> 
+
+            <h6 class='sb-text-light-green-gradient' style="font-size: .8rem;">DESKTOP PREVIEW</h6>
+
+        </form>
+
+        <form>                    
+
+            <div *ngIf="adType !== 1">
+                <div *ngIf="adFormSubmitted && f.adImage.errors else adMediaMobileUploadInfoTemplate" 
+                    class="spotbie-input-info text-uppercase spotbie-text-gradient text-center spotbie-error mt-5 mb-2">
+
+                    <div *ngIf="f.adImage.errors.required">
+                        Upload Promotion Image
+                    </div>
+                    
+                </div> 
+                
+                <ng-template #adMediaMobileUploadInfoTemplate>
+
+                    <div class="spotbie-input-info text-uppercase spotbie-text-gradient text-center mt-5 mb-2 cursor-pointer" 
+                        (click)="startAdMediaUploader('mobile')" #adMediaUploadInfo>
+                        {{ adMediaMessage }} - MOBILE - ({{ adTypeList[selected].dimensionsMobile }})
+                    </div>     
+
+                </ng-template>
+            </div>
+
+            <input type="file" 
+                    class='spotbie-background-upload-input' 
+                    #adMediaMobileInput 
+                    (change)="uploadMedia(adMediaMobileInput.files, 'mobile')" 
+                    accept="image/jpeg, image/gif, image/png"
+                    multiple=false />
+
+            <div (click)="startAdMediaUploader('mobile')" class='cursor-pointer mt-3 mb-2'>
+
+                <app-header-ad-banner #adAppMobile class="pe-none" *ngIf="adType == 0" [ad]="ad" [business]="business" [editMode]="true" [isMobile]="true"></app-header-ad-banner>
+                <app-bottom-ad-banner #adAppMobile class="pe-none" *ngIf="adType == 2" [ad]="ad" [business]="business" [editMode]="true" [isMobile]="true"></app-bottom-ad-banner>
             
             </div> 
 
-            <h6 class='sb-text-light-green-gradient'>PROMOTION PREVIEW</h6>
-
-            <p style="font-size: .8rem;">
-                <i class="fa fa-map-marker-alt"></i>
-                <span class="spotbie-text-gradient">PROMOTIONS ARE DISPLAYED TO LOCAL USERS WITHIN A 10 MILE RADIUS</span>
-            </p>
+            <h6 class='sb-text-light-green-gradient' style="font-size: .8rem;" *ngIf="adType !== 1">MOBILE PREVIEW</h6>
 
         </form>
+
+        <p class="mt-4" style="font-size: .8rem;">
+            <i class="fa fa-map-marker-alt"></i>
+            <span class="spotbie-text-gradient">PROMOTIONS ARE DISPLAYED TO LOCAL USERS WITHIN A 10 MILE RADIUS</span>
+        </p>
 
         <div class='spotbie-button text-uppercase mt-5' (click)="saveAd()">
             <span class='spotbie-text-gradient'>SAVE</span>

@@ -13,6 +13,80 @@
     cursor: pointer;
     z-index: 9;
 }
+
+.spotbie-ad-wrapper-header.sb-mobileAdWrapper{
+    position: relative;
+    margin: 0 auto;
+    max-width: 600px;
+    min-width: 600px;
+    width: 600px;
+    min-height: 600px;
+    right: 0%;
+    min-height: unset;
+    height: unset;        
+}
+.sb-mobileAdWrapper .spotbie-ad-image{
+    position: relative;       
+    left: 0;
+    right: 0;
+    min-height: 590px;
+    height: 590px;
+    max-height: 100%;
+    max-width: 100%;
+    box-shadow: unset;   
+}
+.sb-mobileAdWrapper .sb-categoryList{
+    text-align: center;
+}     
+.sb-mobileAdWrapper .sb-sponsored,
+.sb-mobileAdWrapper .sb-perDollar,
+.sb-mobileAdWrapper .sb-totalRewards,
+.sb-mobileAdWrapper .sb-distanceMiles,
+.sb-mobileAdWrapper .sb-categoryList,
+.sb-mobileAdWrapper .sb-address{
+    position: relative;
+    display: block;
+    top: unset;
+    right: unset;
+    bottom: unset;        
+}      
+.sb-mobileAdWrapper .sb-sponsored,
+.sb-mobileAdWrapper .sb-sponsoredName{
+    position: relative;
+    display: block;
+    top: unset;
+    right: unset;
+    left: unset;
+    margin: 0 auto;
+    margin-top: 0px;
+}
+.sb-mobileAdWrapper .sb-sponsored{
+    padding-top: 20px;
+}
+.sb-mobileAdWrapper .sb-perDollar
+.sb-mobileAdWrapper .sb-distanceMiles,
+.sb-mobileAdWrapper .sb-categoryList{
+    margin-bottom: 25px;        
+} 
+.sb-mobileAdWrapper .sb-totalRewards{
+    display: block;
+    margin-bottom: 10px;
+}   
+.sb-mobileAdWrapper .sb-distanceMiles{
+    display: block;
+    margin-top: 10px;
+}      
+.sb-mobileAdWrapper .sb-perDollar{
+    margin-right: 0px;
+}    
+.sb-mobileAdWrapper .sb-ad-bottom{
+    position:relative;
+    padding-top: 15px;
+    padding-bottom: 15px;        
+    top: unset !important;
+    background-color: #1c192459!important;
+}
+
 .fa-map-marker-alt{
     font-size: .5rem;
 }
