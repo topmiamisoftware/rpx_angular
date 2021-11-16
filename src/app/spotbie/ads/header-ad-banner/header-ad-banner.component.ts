@@ -297,7 +297,6 @@ export class HeaderAdBannerComponent implements OnInit {
   ngAfterViewInit(): void {
     //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
     //Add 'implements AfterViewInit' to the class.
-    console.log("is Mobile", this.isMobile)
     if(this.isMobile == false) this.isMobile = this.deviceDetectorService.isMobile()
     this.getHeaderBanner()
   }

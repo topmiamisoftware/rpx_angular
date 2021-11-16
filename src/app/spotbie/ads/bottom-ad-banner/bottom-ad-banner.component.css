@@ -84,7 +84,7 @@
     padding-top: 15px;
     padding-bottom: 15px;        
     top: unset !important;
-    background-color: #1c192459!important;
+    background-color: #1c1924!important;
 }
 
 .fa-map-marker-alt{
@@ -141,6 +141,7 @@
     }
 }
 @media (max-width: 768px) { 
+    .spotbie-ad-wrapper-header.sb-mobileAdWrapper,
     .spotbie-ad-wrapper-header{
         position: relative;
         margin: 0 auto;
@@ -151,6 +152,7 @@
         min-height: unset;
         height: unset;        
     }
+    .sb-mobileAdWrapper .spotbie-ad-image,
     .spotbie-ad-image{
         position: relative;       
         left: 0;

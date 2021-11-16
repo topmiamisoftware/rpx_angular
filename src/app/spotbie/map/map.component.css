@@ -909,8 +909,8 @@ button.gm-ui-hover-effect:focus-within{
     }
     .map-prompt-mobile{
         overflow-y: scroll;
-        width: 102%;
-        min-width: 102%;        
+        width: 103%;
+        min-width: 103%;        
     }    
     .sb-deliverySortImg{
         width: 13px !important;

@@ -691,7 +691,7 @@ export class MapComponent implements OnInit {
       category = obj
     else
       category = obj.category
-    
+
     this.scrollMapAppAnchor.nativeElement.scrollIntoView()
 
     if(!this.locationFound){
@@ -728,6 +728,7 @@ export class MapComponent implements OnInit {
         this.searchApiUrl = YELP_BUSINESS_SEARCH_API
         this.searchCategoriesPlaceHolder = 'Search Places to Eat...'
         this.categories = this.food_categories
+        this.bottom_banner_categories = this.categories.indexOf(this.categories[Math.floor(Math.random()*this.categories.length)]);
         break
 
       case 'shopping':
@@ -735,6 +736,7 @@ export class MapComponent implements OnInit {
         this.searchApiUrl = YELP_BUSINESS_SEARCH_API
         this.searchCategoriesPlaceHolder = 'Search Shopping...'
         this.categories = this.shopping_categories
+        this.bottom_banner_categories = this.categories.indexOf(this.categories[Math.floor(Math.random()*this.categories.length)]);
         break
 
       case 'events':
@@ -742,6 +744,7 @@ export class MapComponent implements OnInit {
         this.event_categories = []
         this.searchCategoriesPlaceHolder = 'Search Events...' 
         this.categories = this.event_categories
+        this.bottom_banner_categories = this.categories.indexOf(this.categories[Math.floor(Math.random()*this.categories.length)]);
         this.classificationSearch()
         return
 
