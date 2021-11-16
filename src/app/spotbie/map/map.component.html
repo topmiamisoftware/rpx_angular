@@ -60,7 +60,6 @@
                     [longitude]="lng"
                     *ngIf="locationFound"
                     [opacity]="0"
-                    (markerClick)="selfMarker()"
                     [agmFitBounds]="true">
 
           <agm-info-window #spotbie_user_marker_info_window [isOpen]="true">
@@ -103,8 +102,7 @@
               </agm-overlay>                    
 
               <agm-marker [latitude]="mapObject.coordinates.latitude" 
-                          [longitude]="mapObject.coordinates.longitude"
-                          [agmFitBounds]="true"
+                          [longitude]="mapObject.coordinates.longitude"                          
                           [visible]="false">
               </agm-marker>
 
@@ -128,6 +126,7 @@
           <agm-marker *ngFor="let communityMember of communityMemberList"
               [latitude]="communityMember.loc_x" 
               [longitude]="communityMember.loc_y"
+              [agmFitBounds]="true"
               [visible]="false"></agm-marker>
                       
         </div>
