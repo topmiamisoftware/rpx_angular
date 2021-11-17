@@ -782,9 +782,15 @@ export class MapComponent implements OnInit {
   }
 
   public goToQrCode(){
+    
     //scroll to qr Code
     this.closeCategories()
-    this.homeDashboard.scrollToQrAppAnchor()
+    this.openWelcome()
+    
+    setTimeout(() =>{
+      this.homeDashboard.scrollToQrAppAnchor()  
+    }, 750)
+
   }
 
   public goToLp(){
