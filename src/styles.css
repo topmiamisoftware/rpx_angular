@@ -835,6 +835,9 @@ p.sb-helpInfo{
 .fa-exclamation-triangle{
     color: #ffc107;
 }
+#tidio-chat-iframe{
+    bottom: 5px;
+}
 /**WIDTH MEDIA QUERIES */
 @media (max-width: 1440px) {
     
@@ -979,6 +982,9 @@ p.sb-helpInfo{
         max-width: 90%;
         font-size: 18px;
     }
+    #tidio-chat-iframe{
+        bottom: 10px;
+    }    
     .spotbie-toast-input-box {
         border-radius: 0px
     }
