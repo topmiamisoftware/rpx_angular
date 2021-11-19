@@ -1,5 +1,6 @@
 {
   "name": "spotbie",
+  "displayName": "SpotBie Web App",
   "version": "1.0.2",
   "scripts": {
     "ng": "ng",
@@ -104,8 +105,8 @@
     "type": "git",
     "url": "git+https://github.com/0456franco/angular_spotbie.git"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "SpotBie, LLC.",
+  "license": "BSD-2-Clause",
   "bugs": {
     "url": "https://github.com/0456franco/angular_spotbie/issues"
   },

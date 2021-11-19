@@ -8,11 +8,12 @@
 
   <div class='sb-scroll'>
 
-    <p class='sb-signUpGeneralInstructions spotbie-text-gradient text-uppercase text-center mt-4' *ngIf="!business">Login to earn rewards</p>
-    
-    <p class='sb-signUpGeneralInstructions spotbie-text-gradient text-uppercase text-center mt-4' *ngIf="business">Login to find customers</p>
-    
-    <p class='sb-signUpGeneralInstructions spotbie-text-gradient text-uppercase text-center mt-4' id="sign_up_general_instructions" #spotbieSignUpIssues></p>
+    <p class='sb-signUpGeneralInstructions spotbie-text-gradient text-uppercase text-center mt-4' id="sign_up_general_instructions" #spotbieSignUpIssues>
+      
+      <span class='spotbie-text-gradient' *ngIf="!business">Login to earn rewards</span>
+      <span class='spotbie-text-gradien' *ngIf="business">Login to find customers</span>
+
+    </p>
 
     <div class='spotbie-loginWrapper'>
 
@@ -30,20 +31,26 @@
     
           <div *ngIf="f.spotbieUsername.errors.illegalChars">
             USERNAME MUST ONLY CONTAIN LETTERS, NUMBERS, AND UNDERSCORES.
-          </div>
+          </div>        
 
-          <div *ngIf="f.spotbieUsername.errors.spotbie_google_account" >
-            You signed up with google.
-          </div>
+        </div> 
 
-          <div *ngIf="f.spotbieUsername.errors.spotbie_fb_account" >
-            You signed up with facebook.
-          </div>
-          
-          <div *ngIf="f.spotbieUsername.errors.spotbie_account" >
-            You signed up with an email address.
-          </div>          
+        <div class="spotbie-invalid-feedback 
+                    text-center text-uppercase
+                    spotbie-text-gradient spotbie-error mb-2" *ngIf="f.spotbieUsername.errors.spotbie_fb_account" >
+          You signed up with facebook.
+        </div>   
 
+        <div class="spotbie-invalid-feedback 
+                    text-center text-uppercase
+                    spotbie-text-gradient spotbie-error mb-2" *ngIf="f.spotbieUsername.errors.spotbie_google_account" >
+          You signed up with google.
+        </div>   
+
+        <div class="spotbie-invalid-feedback 
+                    text-center text-uppercase
+                    spotbie-text-gradient spotbie-error mb-2" *ngIf="f.spotbieUsername.errors.spotbie_account" >
+          You signed up with an email address.
         </div> 
 
         <table class="sb-inputWithIconWrapper">

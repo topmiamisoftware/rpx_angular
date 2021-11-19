@@ -82,10 +82,6 @@
     text-align: right;
     font-size: .6rem;
 }
-
-#sign_up_general_instructions{
-    display: none;
-}
 .sb-signUpGeneralInstructions{
     margin: 0 auto;    
     max-width: 440px; 

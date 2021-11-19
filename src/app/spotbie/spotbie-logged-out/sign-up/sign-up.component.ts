@@ -90,7 +90,7 @@ export class SignUpComponent implements OnInit {
     if(loginResponse === undefined){
 
       this.signUpFormx.setErrors(null)
-      this.spotbieSignUpIssues.nativeElement.innerHTML = "Invalid username or password."
+      this.spotbieSignUpIssues.nativeElement.innerHTML = "<span class='spotbie-text-gradient spotbie-error'>Invalid username or password.</span>"
       this.loading = false
 
     }
@@ -242,12 +242,12 @@ export class SignUpComponent implements OnInit {
         localStorage.setItem('spotbie_userType', resp.spotbie_user.user_type)
         localStorage.setItem('spotbiecom_session', resp.token_info.original.access_token)
 
-        sign_up_instructions.innerHTML = 'Welcome to SpotBie!'
+        sign_up_instructions.innerHTML = "<span class='spotbie-text-gradient'>Welcome to SpotBie!</span>"
   
         window.location.reload()
 
       } else {
-        sign_up_instructions.innerHTML = 'There has been an error signing up.'
+        sign_up_instructions.innerHTML = "<span class='spotbie-text-gradient spotbie-error'>There has been an error signing up.</span>"
       }
 
       this.loading = false

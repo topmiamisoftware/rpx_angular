@@ -3,8 +3,6 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms'
 import { ValidatePassword } from '../../../helpers/password.validator'
 import { MustMatch } from '../../../helpers/must-match.validator'
 import { UserauthService } from 'src/app/services/userauth.service'
-import { Observable } from 'rxjs/internal/Observable'
-import { of } from 'rxjs'
 import { ActivatedRoute, Router } from '@angular/router'
 
 const DEF_INC_PASS_OR_EM_MSG = "Please enter your e-mail address."
