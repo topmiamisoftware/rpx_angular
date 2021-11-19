@@ -1,5 +1,6 @@
 import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-business-features',
@@ -25,6 +26,14 @@ export class BusinessFeaturesComponent implements OnInit {
   public spawnCategories(category: string){
 
     this.spawnCategoriesEvt.emit({ category: category })
+
+  }
+
+  public scheduleDemo(){
+    
+    let frontEnd = environment.baseUrl
+
+    window.open(`${frontEnd}/schedule-demo`, "_blank")
 
   }
 

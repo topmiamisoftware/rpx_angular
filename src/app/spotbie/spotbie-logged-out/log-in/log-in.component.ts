@@ -152,7 +152,8 @@ export class LogInComponent implements OnInit {
       if (login_status == 'invalid_cred' || 
           login_status == 'spotbie_google_account' || 
           login_status == 'spotbie_fb_account' || 
-          login_status == 'spotbie_account'
+          login_status == 'spotbie_account' ||
+          login_status == 'wrong_account_type'
       ) {
         
 
@@ -168,6 +169,8 @@ export class LogInComponent implements OnInit {
           this.logInForm.get('spotbieUsername').setErrors({ spotbie_fb_account: true })         
         else if(login_status == 'spotbie_account')
           this.logInForm.get('spotbieUsername').setErrors({ spotbie_account: true })
+        else if(login_status == 'wrong_account_type')
+          this.logInForm.get('spotbieUsername').setErrors({ wrong_account_type: true })          
 
         logOutCallback({success: true}, false)
   
@@ -195,6 +198,7 @@ export class LogInComponent implements OnInit {
     this.userAuthService.userLogin = this.email
     this.userAuthService.userPassword = this.password
     this.userAuthService.userRememberMe = this.rememberMeState
+    this.userAuthService.route = this.router.url
     // console.log(this.rememberMeState)
 
     this.loginUser()

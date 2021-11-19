@@ -121,7 +121,8 @@ export class SignUpComponent implements OnInit {
       if (login_status == 'invalid_cred' || 
           login_status == 'spotbie_google_account' || 
           login_status == 'spotbie_fb_account' || 
-          login_status == 'spotbie_account'
+          login_status == 'spotbie_account' ||
+          login_status == 'wrong_account_type' 
       ) {
   
         if(login_status == 'invalid_cred'){      
@@ -135,8 +136,10 @@ export class SignUpComponent implements OnInit {
         else if(login_status == 'spotbie_fb_account')
           this.signUpFormx.get('spotbieEmail').setErrors({ spotbie_fb_account: true })         
         else if(login_status == 'spotbie_account')
-          this.signUpFormx.get('spotbieEmail').setErrors({ spotbie_account: true })
-        
+          this.signUpFormx.get('spotbieEmail').setErrors({ spotbie_account: true })        
+        else if(login_status == 'spotbie_account')
+          this.signUpFormx.get('spotbieEmail').setErrors({ wrong_account_type: true })
+
         logOutCallback({success: true}, false)
   
       } 

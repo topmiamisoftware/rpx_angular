@@ -1,6 +1,6 @@
 <div class="d-flex justify-content-center" *ngIf="buttonStyle == 0">
 
-    <span class="spotbie-button" (click)="downloadNow()">
+    <span class="spotbie-button" class="cursor-pointer" (click)="downloadNow()">
         <span>DOWNLOAD NOW</span>
     </span>    
 
@@ -8,7 +8,7 @@
 
 <div class="d-flex justify-content-center" *ngIf="buttonStyle == 1">
 
-    <span (click)="downloadNow()">
+    <span (click)="downloadNow()" class="cursor-pointer">
         <span class="spotbie-text-gradient">DOWNLOAD NOW</span>
     </span>    
 

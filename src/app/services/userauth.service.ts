@@ -28,6 +28,7 @@ export class UserauthService {
   public userRememberMe: string
   public userRememberMeToken: string
   public userTimezone: string
+  public route: string
 
   constructor(private http: HttpClient,
               private router: Router,
@@ -88,7 +89,8 @@ export class UserauthService {
       'login': this.userLogin,
       'password': this.userPassword,
       'remember_me_opt': this.userRememberMe,
-      'timezone': this.userTimezone
+      'timezone': this.userTimezone,
+      'route': this.route
     }
 
     const logInApi = `${USER_API}/login`
