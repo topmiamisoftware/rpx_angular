@@ -211,11 +211,8 @@ export class QrComponent implements OnInit {
       this.pointsCharged = this.reward.point_cost
       this.sbEarnedPoints.nativeElement.style.display = 'block'
       
-    } else {
-
+    } else 
       alert(resp.message)
-
-    }
 
     this.scanSuccess = false
 

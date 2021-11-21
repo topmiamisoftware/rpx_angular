@@ -197,7 +197,7 @@
     background-color: rgba(0,0,0,.1);
 }
 .spotbie-single-cat.single-cat-light{
-    background-color: rgba(0,0,0,.10);
+    background-color: rgb(51 47 62 / 8%);    
 }
 .spotbie-search-results-title{
     position: relative;
@@ -881,9 +881,9 @@ button.gm-ui-hover-effect:focus-within{
 }
 @media (max-width: 840px) {
     .spotbie-search-result{
-        width: 99%;
-        min-width: 99%;
-        max-width: 99%;
+        width: 80%;
+        min-width: 80%;
+        max-width: 80%;
         height: unset;
         min-height: unset;
         max-height: unset;
@@ -964,9 +964,10 @@ button.gm-ui-hover-effect:focus-within{
         background-color: rgba(0,0,0,.25)
     }
     .spotbie-search-results-title{
-        width: 100%;
-        min-width: 100%;
-        max-width: 100%;
+        width: 386px;
+        min-width: 386px;
+        max-width: 386px;
+        text-align: center;
     } 
     .spotbie-single-cat{
         position: relative;
@@ -1014,13 +1015,18 @@ button.gm-ui-hover-effect:focus-within{
         width: 17px;
         max-width: 17px;
         margin-right: 0;
-    }    
+    }
+    .spotbie-search-result{
+        width: 96%;
+        min-width: 96%;
+        max-width: 96%;
+    }        
 }
 @media (max-width: 600px) { 
     .spotbie-overlay-window{
-        width: 105%;
-        min-width: 105%;
-        max-width: 105%;
+        width: 103%;
+        min-width: 103%;
+        max-width: 103%;
         left: 0%;   
     }    
     .spotbie-sorting{
@@ -1066,7 +1072,7 @@ button.gm-ui-hover-effect:focus-within{
         min-width: 200px;
         padding: 8px !important;
         margin-top: 40px;  
-    }   
+    }       
 }
 @media (max-width: 560px) { 
     .spotbie-search-page-number{
@@ -1152,6 +1158,9 @@ button.gm-ui-hover-effect:focus-within{
 @media (max-width: 420px) { 
     .spotbie-search-results-title{
         margin-top: 0px;
+        width: 98%;
+        min-width: 98%;
+        max-width: 98%;
     }
     .spotbie-map-search-by i{
         font-size: 25px;
@@ -1165,7 +1174,7 @@ button.gm-ui-hover-effect:focus-within{
         max-width: 30px;        
     } 
     .spotbie-communityMember-search-result{
-        padding: 20px 12px!important;
+        padding: 15px 12px!important;
     }
     .sb-miniLogoIcon{
         margin-top: -8px;

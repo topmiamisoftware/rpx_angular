@@ -5,39 +5,39 @@
 
     <div class="spotbie-white-iconImg" [ngStyle]="{'background' : 'url(assets/images/qr/spotbie-white-icon.png)'}"></div>
 
-    <div class="spotbie-ad-image" [ngStyle]="{'background' : 'url(' + ad.images + ')'}" *ngIf="!editMode && ad.id != 2 && !isMobile"></div>
+    <div class="spotbie-ad-image" [ngStyle]="{'background' : 'url(' + ad.images + ')'}" *ngIf="!editMode && ad.id != 2 && isDesktop"></div>
 
-    <div class="spotbie-ad-image" [ngStyle]="{'background' : 'url(' + ad.images_mobile + ')'}" *ngIf="!editMode && ad.id != 2 && isMobile"></div>
+    <div class="spotbie-ad-image" [ngStyle]="{'background' : 'url(' + ad.images_mobile + ')'}" *ngIf="!editMode && ad.id != 2 && !isDesktop"></div>
     
-    <div class="spotbie-ad-image" [ngStyle]="{'background' : 'url(' + genericAdImage  + ')'}" *ngIf="editMode && ad.id == 2 && !isMobile"></div>
+    <div class="spotbie-ad-image" [ngStyle]="{'background' : 'url(' + genericAdImage  + ')'}" *ngIf="editMode && ad.id == 2 && isDesktop"></div>
     
-    <div class="spotbie-ad-image" [ngStyle]="{'background' : 'url(' + genericAdImageMobile  + ')'}" *ngIf="editMode && ad.id == 2 && isMobile"></div>
+    <div class="spotbie-ad-image" [ngStyle]="{'background' : 'url(' + genericAdImageMobile  + ')'}" *ngIf="editMode && ad.id == 2 && !isDesktop"></div>
 
-    <div class="spotbie-ad-image" [ngStyle]="{'background' : 'url(' + ad.images  + ')'}" *ngIf="editMode && ad.id != 2 && !isMobile"></div>
+    <div class="spotbie-ad-image" [ngStyle]="{'background' : 'url(' + ad.images  + ')'}" *ngIf="editMode && ad.id != 2 && isDesktop"></div>
 
-    <div class="spotbie-ad-image" [ngStyle]="{'background' : 'url(' + ad.images_mobile  + ')'}" *ngIf="editMode && ad.id != 2 && isMobile"></div>
+    <div class="spotbie-ad-image" [ngStyle]="{'background' : 'url(' + ad.images_mobile  + ')'}" *ngIf="editMode && ad.id != 2 && !isDesktop"></div>
 
     <div class='sb-ad-bottom'>
         
         <span class='spotbie-text-gradient sb-sponsoredName text-uppercase'>{{ business.name }}</span>
 
-        <span class='spotbie-text-gradient m-2 mt-0 mb-0' *ngIf="!isMobile">-</span>
+        <span class='spotbie-text-gradient m-2 mt-0 mb-0' *ngIf="isDesktop">-</span>
         <span class='sb-text-light-green-gradient sb-totalRewards text-uppercase'>{{ totalRewards }} REWARDS</span>
 
-        <span class='spotbie-text-gradient m-2 mt-0 mb-0' *ngIf="!isMobile">-</span>
+        <span class='spotbie-text-gradient m-2 mt-0 mb-0' *ngIf="isDesktop">-</span>
         <span class='sb-text-light-green-gradient sb-distanceMiles text-uppercase'>{{ distance | number:'1.1-2':'en-US' }} miles</span>
 
-        <span class='spotbie-text-gradient m-2 mt-0 mb-0' *ngIf="!editMode && !isMobile">-</span>
+        <span class='spotbie-text-gradient m-2 mt-0 mb-0' *ngIf="!editMode && isDesktop">-</span>
         <span class='sb-text-light-green-gradient sb-perDollar text-uppercase' *ngIf="!editMode">
             {{ (business.loyalty_point_dollar_percent_value / 100) | currency : 'USD' }} per dollar
         </span>
         
-        <span class='spotbie-text-gradient m-2 mt-0 mb-0' *ngIf="editMode && !isMobile">-</span>
+        <span class='spotbie-text-gradient m-2 mt-0 mb-0' *ngIf="editMode && isDesktop">-</span>
         <span class='sb-text-light-green-gradient sb-perDollar text-uppercase' *ngIf="editMode">
             {{ (loyaltyPointBalance.loyalty_point_dollar_percent_value / 100) | currency : 'USD' }} per dollar
         </span>
 
-        <span class='spotbie-text-gradient m-2 mt-0 mb-0' *ngIf="!isMobile">-</span>
+        <span class='spotbie-text-gradient m-2 mt-0 mb-0' *ngIf="isDesktop">-</span>
         <span class='spotbie-text-gradient sb-address text-uppercase'><i class='fas fa-map-marker-alt'></i> {{ business.address }}</span>
 
     </div>
