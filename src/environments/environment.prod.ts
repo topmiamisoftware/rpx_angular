@@ -2,7 +2,6 @@
 let baseUrl = 'https://spotbie-master.netlify.app/'
 
 export const environment = {
-
   production: true,
   staging: true,
   baseUrl: baseUrl,
@@ -15,8 +14,5 @@ export const environment = {
   ngrok: null,
   fakeLocation: true,
   myLocX: 25.786286,
-  myLocY: -80.186562,  
-  imageBucketKey: "AKIAU5SE3CV6KP6EYBII",
-  imageBucket: "spotbie-backend"
-
+  myLocY: -80.186562
 }

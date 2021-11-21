@@ -2,7 +2,7 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-let ngrok = 'https://542a-2600-1700-4804-d5f0-c3c3-cdc2-b680-b056.ngrok.io/'
+let ngrok = 'https://a8ea-2600-1700-4804-d5f0-c3c3-cdc2-b680-b056.ngrok.io/'
 let baseUrl = 'https://192.168.1.65:4200/'
 
 export const environment = {
@@ -23,11 +23,7 @@ export const environment = {
 
   fakeLocation: true,
   myLocX: 25.786286,
-  myLocY: -80.186562,
-
-  imageBucketKey: "AKIAU5SE3CV6KP6EYBII",
-  imageBucket: "spotbie-backend"
-
+  myLocY: -80.186562
 }
 /*
  * For easier debugging in development mode, you can import the following file

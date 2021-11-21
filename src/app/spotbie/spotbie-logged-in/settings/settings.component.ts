@@ -312,8 +312,6 @@ export class SettingsComponent implements OnInit {
                 this.chosen_account_type == AllowedAccountTypes.Shopping || 
                 this.chosen_account_type == AllowedAccountTypes.Events)
                 && settings_response.business !== null){
-                
-                console.log("chosen_account_type", this.chosen_account_type)
 
                 this.settingsForm.get('spotbie_acc_type').setValue(this.account_type_category)
 
@@ -544,8 +542,6 @@ export class SettingsComponent implements OnInit {
 
             this.place = place
 
-            console.log("Place found", this.place)
-
             this.lat = place.geometry.location.lat()
             this.lng = place.geometry.location.lng()
 
@@ -639,8 +635,6 @@ export class SettingsComponent implements OnInit {
 
     private placeToEatMediaUploadFinished(httpResponse: any): void {
 
-        console.log('placeToEatMediaUploadFinished', httpResponse)
-
         if (httpResponse.success)
             this.originPhoto = httpResponse.background_picture
         else
@@ -667,18 +661,16 @@ export class SettingsComponent implements OnInit {
 
             this.ngZone.run(() => {
 
-            console.log("place_changed")
+                // get the place result
+                const place: any = autocomplete.getPlace()
 
-            // get the place result
-            const place: any = autocomplete.getPlace()
+                // verify result
+                if (place.geometry === undefined || place.geometry === null) return
 
-            // verify result
-            if (place.geometry === undefined || place.geometry === null) return
-
-            // set latitude, longitude and zoom
-            this.lat = place.geometry.location.lat()
-            this.lng = place.geometry.location.lng()
-            this.zoom = 18
+                // set latitude, longitude and zoom
+                this.lat = place.geometry.location.lat()
+                this.lng = place.geometry.location.lng()
+                this.zoom = 18
 
             })
 
@@ -788,11 +780,11 @@ export class SettingsComponent implements OnInit {
                 
                 this.address = results[0].formatted_address
 
-                this.city = results[0].address_components[2].long_name
+                this.city = results[0].address_components[3].long_name
                 this.line1 = results[0].address_components[0].long_name + ' ' + results[0].address_components[1].long_name
-                this.state = results[0].address_components[4].short_name
-                this.country = results[0].address_components[5].short_name
-                this.postal_code = results[0].address_components[6].short_name
+                this.state = results[0].address_components[5].short_name
+                this.country = results[0].address_components[6].short_name
+                this.postal_code = results[0].address_components[7].short_name
 
                 this.businessSettingsForm.get('originAddress').setValue(this.address)
                 this.businessSettingsForm.get('spotbieOrigin').setValue(this.lat + ',' + this.lng)
@@ -826,16 +818,12 @@ export class SettingsComponent implements OnInit {
         
         this.spotbiePasswordInfoText.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' })
 
-        console.log("savePassword", this.password_form)
-
         if (this.password_form.invalid) {
-            console.log("password_form invalid error", this.password_form.errors)
             this.spotbiePasswordInfoText.nativeElement.style.display = 'block'            
             return
         }
 
         if (this.password !== this.confirm_password) {
-            console.log("confirm password error")
             this.spotbiePasswordInfoText.nativeElement.style.display = 'block'
             this.spotbiePasswordInfoText.nativeElement.innerHTML = 'Passwords must match.'
             return
@@ -966,7 +954,6 @@ export class SettingsComponent implements OnInit {
 
         }
 
-        console.log("spotbie_acc_type 1", this.account_type_category_friendly_name)
         this.settingsForm.get('spotbie_acc_type').setValue(this.account_type_category_friendly_name)
 
         switch(this.chosen_account_type){
@@ -1126,7 +1113,6 @@ export class SettingsComponent implements OnInit {
                         break            
                 } 
 
-                console.log("spotbie_acc_type", this.account_type_category)
                 this.businessSettingsForm.get('spotbie_acc_type').setValue(this.account_type_category)
 
                 break
@@ -1231,8 +1217,7 @@ export class SettingsComponent implements OnInit {
                 <span class='spotbie-text-gradient spotbie-error'>
                     There was an error saving.     
                 </span>
-            `
-            console.log('Failed Save Settings: ', resp)            
+            `       
 
         }
         
@@ -1328,8 +1313,6 @@ export class SettingsComponent implements OnInit {
     }
 
     public classificationSearchCallback(resp){
-    
-        console.log("classificationSearchCallback", resp)
 
         this.loading = false
 
@@ -1390,7 +1373,7 @@ export class SettingsComponent implements OnInit {
         this.businessCategoryList = this.businessCategoryList.reverse()
 
         } else
-        console.log("getClassifications Error ", resp)
+            console.log("getClassifications Error ", resp)
 
         this.loading = false
       
