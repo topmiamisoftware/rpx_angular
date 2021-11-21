@@ -141,7 +141,7 @@ export class MyFavoritesComponent implements OnInit {
 
       if (favorite.image_url == '') favorite.image_url = '0'
 
-      let friendly_transaction = 'This place offers '
+      let friendly_transaction = ''
 
       favorite.transactions = favorite.transactions.sort()
 
@@ -158,7 +158,7 @@ export class MyFavoritesComponent implements OnInit {
 
           friendly_transaction = favorite.transactions.replace('restaurant_reservation', 'restaurant reservations')
 
-          friendly_transaction = `This place offers ${friendly_transaction}.`
+          friendly_transaction = `${friendly_transaction}.`
           
           break
       }

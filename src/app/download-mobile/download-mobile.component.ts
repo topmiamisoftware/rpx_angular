@@ -4,6 +4,9 @@ import { DeviceDetectorService } from 'ngx-device-detector';
 const ANDROID_LINK = 'https://play.google.com/store/apps/details?id=com.exentriks.spotmee.spotmee&hl=en_US&gl=US'
 const IOS_LINK = 'https://apps.apple.com/us/app/spotbie/id1439327004?app=itunes&ign-mpt=uo%3D4'
 
+const ANDROID_LINK_BUSINESS = 'https://play.google.com/store/apps/details?id=com.exentriks.spotmee.spotmee&hl=en_US&gl=US'
+const IOS_LINK_BUSINESS = 'https://apps.apple.com/us/app/spotbie/id1439327004?app=itunes&ign-mpt=uo%3D4'
+
 @Component({
   selector: 'app-download-mobile',
   templateUrl: './download-mobile.component.html',
@@ -12,8 +15,11 @@ const IOS_LINK = 'https://apps.apple.com/us/app/spotbie/id1439327004?app=itunes&
 export class DownloadMobileComponent implements OnInit {
 
   @Input() buttonStyle: number = 0
+  @Input() business: boolean = false
 
   public os: string = ''
+
+  public isDesktop: boolean = false
 
   constructor(private deviceDetectorService: DeviceDetectorService) { }
 
@@ -21,13 +27,24 @@ export class DownloadMobileComponent implements OnInit {
 
     let url = IOS_LINK
 
-    switch(this.os){
-      case 'Android':
-        url = ANDROID_LINK
-        break
-      case 'ios':
-        url = IOS_LINK
-        break
+    if(this.business){
+      switch(this.os){
+        case 'Android':
+          url = ANDROID_LINK_BUSINESS
+          break
+        case 'ios':
+          url = IOS_LINK_BUSINESS
+          break
+      }
+    } else {
+      switch(this.os){
+        case 'Android':
+          url = ANDROID_LINK
+          break
+        case 'ios':
+          url = IOS_LINK
+          break
+      }
     }
 
     window.open(url, '_blank')
@@ -47,10 +64,27 @@ export class DownloadMobileComponent implements OnInit {
 
   }
 
+  downloadNowGoogle(){
+    if(this.business){
+      window.open(ANDROID_LINK_BUSINESS, '_blank')
+    } else {
+      window.open(ANDROID_LINK, '_blank')
+    }
+    
+  }
+
+  downloadNowiOs(){
+    if(this.business){
+      window.open(IOS_LINK_BUSINESS, '_blank')
+    } else {
+      window.open(IOS_LINK, '_blank')
+    }    
+  }
+
   ngOnInit(): void {
 
     this.os = this.deviceDetectorService.getDeviceInfo().os
-    console.log("OS", this.os)
+    this.isDesktop = this.deviceDetectorService.isDesktop()
 
   }
 

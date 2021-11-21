@@ -825,6 +825,7 @@ p.sb-helpInfo{
     border-radius: 13px!important;
     background: -webkit-linear-gradient(45deg,#64e56f,#35a99f);
     background: linear-gradient(45deg,#64e56f,#35a99f);
+    color: black;
 }
 .sb-getStarted span{
     background: linear-gradient(45deg,#212529,#131313);

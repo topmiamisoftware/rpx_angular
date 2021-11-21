@@ -1248,7 +1248,7 @@ export class MapComponent implements OnInit {
 
       if (business.image_url == '') business.image_url = '0'
 
-      let friendly_transaction = 'This place offers '
+      let friendly_transaction = ''
 
       business.transactions = business.transactions.sort()
 
@@ -1266,7 +1266,7 @@ export class MapComponent implements OnInit {
 
           friendly_transaction = business.transactions.replace('restaurant_reservation', 'restaurant reservations')
 
-          friendly_transaction = "This place offers " + friendly_transaction + '.'
+          friendly_transaction = friendly_transaction + '.'
           
           break
       }

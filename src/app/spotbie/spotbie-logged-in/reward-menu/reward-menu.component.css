@@ -124,7 +124,19 @@
         min-width: 99%;
         text-align: center;
     }
-    .sb-menuItem,
+    .sb-menuItem{
+        position: relative;
+        margin: 0 auto;
+        margin-bottom: 10px;
+        max-width: 350px;
+        width: 350px;
+        min-width: 350px;
+        height: 290px;
+        min-height: 290px;
+        max-height: 290px;
+        font-size: .8rem;
+        border-radius: 5px;
+    }
     .sb-addMenuItem{
         position: relative;
         margin: 0 auto;

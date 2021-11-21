@@ -341,6 +341,9 @@
     margin: 0 auto;
     background-color: #f3f3f3;
 }
+.spotbie-search-result{
+    background-color: rgb(28 25 36 / 14%); 
+}
 .no-results{
     padding-top: 25px;
     padding-bottom: 25px;
@@ -993,9 +996,6 @@ button.gm-ui-hover-effect:focus-within{
     .map-prompt-v-align{   
         width: 600px;
     }
-    .spotbie-search-result{
-        padding: 5px !important;
-    }
 }
 @media (max-width: 650px){
     .map-prompt-mobile h4{
@@ -1153,7 +1153,7 @@ button.gm-ui-hover-effect:focus-within{
     }       
     .spotbie-map-search-wrapper {
         top: 0px;
-    }
+    }    
 }
 @media (max-width: 420px) { 
     .spotbie-search-results-title{
