@@ -46,5 +46,10 @@
         background-repeat: no-repeat !important;            
         box-shadow: inset 0 0px 65px #332f3e;
     }
+    .spotbie-overlay-window{
+        width: 104%;
+        min-width: 104%;
+        max-width: 104%;
+    }
 }
 

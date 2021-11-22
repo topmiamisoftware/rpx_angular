@@ -2,6 +2,8 @@ import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '
 import { Router } from '@angular/router';
 import { environment } from 'src/environments/environment';
 
+import * as calendly from '../../helpers/calendly/calendlyHelper'
+
 @Component({
   selector: 'app-business-features',
   templateUrl: './business-features.component.html',
@@ -16,8 +18,24 @@ export class BusinessFeaturesComponent implements OnInit {
   @ViewChild('attractNewCustomers') attractNewCustomers: ElementRef
   @ViewChild('retainCustomers') retainCustomers: ElementRef
   @ViewChild('engageYourAudience') engageYourAudience: ElementRef
+  
+  public calendlyUp: boolean = false
+
+  public loading: boolean = false
 
   constructor(private router: Router) { }
+
+  public scheduleDemo(){
+        
+    this.loading = true
+    this.calendlyUp = !this.calendlyUp
+
+    if(this.calendlyUp) 
+        calendly.spawnCalendly('', '', () => { this.loading = false } )
+    else
+        this.loading = false
+
+  }
 
   public signUp(){
     this.signUpEvent.emit()
@@ -26,14 +44,6 @@ export class BusinessFeaturesComponent implements OnInit {
   public spawnCategories(category: string){
 
     this.spawnCategoriesEvt.emit({ category: category })
-
-  }
-
-  public scheduleDemo(){
-    
-    let frontEnd = environment.baseUrl
-
-    window.open(`${frontEnd}/schedule-demo`, "_blank")
 
   }
 
