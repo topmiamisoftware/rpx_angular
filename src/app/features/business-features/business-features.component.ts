@@ -25,7 +25,7 @@ export class BusinessFeaturesComponent implements OnInit {
 
   constructor(private router: Router) { }
 
-  public scheduleDemo(){
+  public calendly(){
         
     this.loading = true
     this.calendlyUp = !this.calendlyUp
