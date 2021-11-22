@@ -151,6 +151,10 @@ h2 strong.sep-two {
     background: linear-gradient(90deg,#35a99fdb,#64e56fd9);
     border: 1px solid #428c67 
 }
+.sb-closeButton{
+    top: 75px;
+    right: 1%;
+}
 /**WIDTH MEDIA QUERIES */
 @media (max-width: 1650px) {
     .sb-signUpGeneralInstructions{

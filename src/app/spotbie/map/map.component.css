@@ -110,7 +110,7 @@
 }
 .spotbie-search-result-transactions{
     margin-top: 10px;
-    margin-bottom: 10px;
+    margin-bottom: 0px;
     font-size: .6rem;
 }
 .spotbie-searchbar{
@@ -412,6 +412,12 @@
     text-align: left;
     font-size: .7rem;
     margin-bottom: 0px;
+}
+.sb-community-member-brand .sb-text-light-green-gradient{
+    background: -webkit-linear-gradient(90deg,#25c540,#64e56f);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    letter-spacing: 2px;    
 }
 .sb-miniLogoIcon{
     position: absolute;

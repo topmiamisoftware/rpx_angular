@@ -17,27 +17,47 @@
 
     <div class="spotbie-ad-image" [ngStyle]="{'background' : 'url(' + ad.images_mobile  + ')'}" *ngIf="editMode && ad.id != 2 && !isDesktop"></div>
 
-    <div class='sb-ad-bottom'>
+    <div class='sb-ad-bottom' *ngIf="isDesktop">
         
         <span class='spotbie-text-gradient sb-sponsoredName text-uppercase'>{{ business.name }}</span>
 
-        <span class='spotbie-text-gradient m-2 mt-0 mb-0' *ngIf="isDesktop">-</span>
+        <span class='spotbie-text-gradient m-2 mt-0 mb-0'>-</span>
         <span class='sb-text-light-green-gradient sb-totalRewards text-uppercase'>{{ totalRewards }} REWARDS</span>
 
-        <span class='spotbie-text-gradient m-2 mt-0 mb-0' *ngIf="isDesktop">-</span>
+        <span class='spotbie-text-gradient m-2 mt-0 mb-0'>-</span>
         <span class='sb-text-light-green-gradient sb-distanceMiles text-uppercase'>{{ distance | number:'1.1-2':'en-US' }} miles</span>
 
-        <span class='spotbie-text-gradient m-2 mt-0 mb-0' *ngIf="!editMode && isDesktop">-</span>
+        <span class='spotbie-text-gradient m-2 mt-0 mb-0' *ngIf="!editMode">-</span>
         <span class='sb-text-light-green-gradient sb-perDollar text-uppercase' *ngIf="!editMode">
             {{ (business.loyalty_point_dollar_percent_value / 100) | currency : 'USD' }} per dollar
         </span>
         
-        <span class='spotbie-text-gradient m-2 mt-0 mb-0' *ngIf="editMode && isDesktop">-</span>
+        <span class='spotbie-text-gradient m-2 mt-0 mb-0' *ngIf="editMode">-</span>
         <span class='sb-text-light-green-gradient sb-perDollar text-uppercase' *ngIf="editMode">
-            {{ (loyaltyPointBalance.loyalty_point_dollar_percent_value / 100) | currency : 'USD' }} per dollar
+             {{ (loyaltyPointBalance.loyalty_point_dollar_percent_value / 100) | currency : 'USD' }} per dollar
         </span>
 
-        <span class='spotbie-text-gradient m-2 mt-0 mb-0' *ngIf="isDesktop">-</span>
+        <span class='spotbie-text-gradient m-2 mt-0 mb-0'>-</span>
+        <span class='spotbie-text-gradient sb-address text-uppercase'><i class='fas fa-map-marker-alt'></i> {{ business.address }}</span>
+
+    </div>
+
+    <div class='sb-ad-bottom' *ngIf="!isDesktop || isMobile">
+        
+        <span class='spotbie-text-gradient sb-sponsoredName text-uppercase'>{{ business.name }}</span>
+
+        <span class='sb-text-light-green-gradient sb-totalRewards text-uppercase' style="font-size: 1rem;">{{ totalRewards }} REWARDS</span>
+
+        <span class='spotbie-text-gradient sb-distanceMiles text-uppercase'>{{ distance | number:'1.1-2':'en-US' }} miles</span>
+
+        <span class='sb-text-light-green-gradient sb-perDollar text-uppercase' style="font-size: 1.5rem;" *ngIf="!editMode">
+            {{ (business.loyalty_point_dollar_percent_value / 100) | currency : 'USD' }} per dollar
+        </span>
+    
+        <span class='sb-text-light-green-gradient sb-perDollar text-uppercase' style="font-size: 1.5rem;" *ngIf="editMode">
+             {{ (loyaltyPointBalance.loyalty_point_dollar_percent_value / 100) | currency : 'USD' }} per dollar
+        </span>
+
         <span class='spotbie-text-gradient sb-address text-uppercase'><i class='fas fa-map-marker-alt'></i> {{ business.address }}</span>
 
     </div>

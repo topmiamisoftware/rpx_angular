@@ -37,6 +37,8 @@ export class HeaderAdBannerComponent implements OnInit {
 
   @Input() isMobile: boolean = false
 
+  public isDesktop: boolean = false
+
   public link: string
 
   public displayAd: boolean = false
@@ -260,7 +262,6 @@ export class HeaderAdBannerComponent implements OnInit {
 
   public openAd(): void{
     
-    console.log("Open Ad", this.ad)
     this.communityMemberOpen = true
     //this.router.navigate([`/business-menu/${this.business.qr_code_link}`])
 
@@ -297,6 +298,7 @@ export class HeaderAdBannerComponent implements OnInit {
   ngAfterViewInit(): void {
     //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
     //Add 'implements AfterViewInit' to the class.
+    this.isDesktop = this.deviceDetectorService.isDesktop()
     if(this.isMobile == false) this.isMobile = this.deviceDetectorService.isMobile()
     this.getHeaderBanner()
   }

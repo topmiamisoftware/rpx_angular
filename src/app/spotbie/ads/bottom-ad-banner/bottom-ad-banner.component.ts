@@ -38,6 +38,8 @@ export class BottomAdBannerComponent implements OnInit {
 
   @Input() isMobile: boolean = false
 
+  public isDesktop: boolean = false
+
   public link: string
 
   public displayAd: boolean = false
@@ -304,7 +306,8 @@ export class BottomAdBannerComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    
+
+    this.isDesktop = this.deviceDetectorService.isDesktop()
     if(this.isMobile == false) this.isMobile = this.deviceDetectorService.isMobile()
     this.getBottomHeader()
     
