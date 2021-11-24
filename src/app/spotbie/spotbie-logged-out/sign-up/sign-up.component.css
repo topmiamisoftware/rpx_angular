@@ -87,8 +87,7 @@ h1{
 }
 h2{
     position: absolute;
-    right: 364px; 
-    font-family: 'Josefin Sans', sans-serif;
+    right: 364px;
     font-size: 30px;
     letter-spacing: 4px;
     font-weight: normal;
@@ -131,12 +130,13 @@ h2 strong.sep-two {
 }
 .spotbie-overlay-window{
     padding-bottom: 80px;
+    background-color: #32303e !important;
     background: url('../../../../assets/images/home_imgs/jpg/spotbie-login-background.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
     z-index: 97 !important;
-    overflow-y: scroll;
+    overflow-y: scroll;   
 }
 .sb-signUpGeneralInstructions{
     margin: 0 auto;    
@@ -188,7 +188,12 @@ h2 strong.sep-two {
     }
     .sb-signUpGeneralInstructions{
         margin-top: 40px!important;
-    }    
+    }
+    .sb-scroll{
+        min-width: 102%;
+        width: 102%;
+        max-width: 102%;
+    }        
 }
 @media (max-width: 700px) { 
     .spotbie-flash-card{

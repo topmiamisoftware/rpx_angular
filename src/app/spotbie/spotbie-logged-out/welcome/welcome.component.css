@@ -10,7 +10,6 @@ h1{
 h2{
     position: absolute;
     right: 364px; 
-    font-family: 'Josefin Sans', sans-serif;
     font-size: 30px;
     letter-spacing: 4px;
     font-weight: normal;
@@ -34,9 +33,6 @@ h2 strong.sep-two {
     margin-top: 17px;
 }
 
-p{
-    font-family: 'Josefin Sans', sans-serif;
-}
 .spotbie-welcome-wrapper{
     position: relative;
     margin: 0 auto;

@@ -292,7 +292,7 @@ a, a:hover, a:active, a:after{
     letter-spacing: 2px;
 }
 .sb-text-light-green-gradient{
-    background: -webkit-linear-gradient(90deg, #35a99f, #64e56f);
+    background: -webkit-linear-gradient(0deg, #35a99f, #64e56f);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     letter-spacing: 2px;

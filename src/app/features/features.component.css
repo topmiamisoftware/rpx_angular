@@ -21,7 +21,12 @@ h2{
     width: 791px;
     min-width: 791px;
     max-width: 791px;
+    height: auto;
     opacity: .2;
+    background: url(../../assets/images/qr/spotbie-white-icon.png);
+    background-position: center !important;
+    background-size: cover !important;
+    background-repeat: no-repeat !important;  
 }
 .sb-whiteIconBg.right{
     left: unset !important;
@@ -57,6 +62,7 @@ h2{
     min-height: 650px;
     background: url(../../assets/images/spotbie-miami.jpg);
     box-shadow: inset 0px -80px 65px #332f3e;
+    pointer-events: none;
 }
 .fa-map-marker-alt{
     font-size: .8rem;
@@ -165,16 +171,10 @@ h1{
         min-height: 300px;
     }
     .sb-whiteIconBg{
-        position: absolute;
-        margin-top: -261px;
-        left: 0px;
-        width: 100%;
-        min-width: 100%;
-        max-width: 100%;
-        opacity: .2;        
-    }
+        display: none;
+    }    
 }
-@media (max-width: 700px) { 
+@media (max-width: 300px) { 
     .sb-homePageIconsTable{
         max-width: 90%;
         min-width: 90%;
