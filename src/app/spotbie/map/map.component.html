@@ -102,7 +102,8 @@
               </agm-overlay>                    
 
               <agm-marker [latitude]="mapObject.coordinates.latitude" 
-                          [longitude]="mapObject.coordinates.longitude"                          
+                          [longitude]="mapObject.coordinates.longitude"
+                          [agmFitBounds]="checkSearchResultsFitBounds()"                         
                           [visible]="false">
               </agm-marker>
 
@@ -126,7 +127,7 @@
           <agm-marker *ngFor="let communityMember of communityMemberList"
               [latitude]="communityMember.loc_x" 
               [longitude]="communityMember.loc_y"
-              [agmFitBounds]="true"
+              [agmFitBounds]="checkCommunityMemberFitBounds()"
               [visible]="false"></agm-marker>
                       
         </div>
@@ -330,13 +331,8 @@
           <img src="assets/images/home_imgs/spotbie-green-icon.svg" class="sb-miniLogoIconM">
           SPOTBIE COMMUNITY MEMBERS          
         </div>
-        
-        <div class='spotbie-search-results-title text-uppercase' style="margin-top:0px;" *ngIf="communityMemberList.length == 0">
-          <img src="assets/images/home_imgs/spotbie-green-icon.svg" class="sb-miniLogoIconM">
-          SPOTBIE COMMUNITY MEMBERS          
-        </div>
 
-        <div class='mt-5' style="margin-top:0px;" *ngIf="communityMemberList.length == 0"></div>
+        <div class='mt-5' style="margin-top:0px;" *ngIf="communityMemberList.length != 0 && isDesktop"></div>
 
         <!-- First let's display the spotbie community member list for -->
         <div class='spotbie-search-result spotbie-communityMember-search-result' 

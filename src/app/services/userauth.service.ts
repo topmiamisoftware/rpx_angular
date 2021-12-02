@@ -292,7 +292,7 @@ export class UserauthService {
      * https://developers.facebook.com/docs/reference/javascript/FB.login/v2.11
      */
     const fbLoginOptions = {
-      scope: 'email,public_profile,user_friends',
+      scope: 'email,public_profile',
       return_scopes: true,
       enable_profile_selector: true
     }; 

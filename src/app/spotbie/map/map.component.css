@@ -112,6 +112,7 @@
     margin-top: 10px;
     margin-bottom: 0px;
     font-size: .6rem;
+    text-align: left;
 }
 .spotbie-searchbar{
     position: relative;
@@ -1096,7 +1097,7 @@ button.gm-ui-hover-effect:focus-within{
     }
     .spotbie-search-result-transactions{
         line-height: 27px;
-        text-align: center;
+        text-align: left;
     }
     .spotbie-controls-search-results._mobile{
         padding-left: unset;

@@ -1330,6 +1330,20 @@ export class MapComponent implements OnInit {
 
   }
 
+  public checkSearchResultsFitBounds(){
+    if(this.communityMemberList.length < 3 && this.searchResults.length > 0) 
+      return true
+    else
+      return false
+  }
+
+  public checkCommunityMemberFitBounds(){
+    if(this.searchResults.length < 3 || this.communityMemberList.length >= 3) 
+      return true
+    else
+      return false
+  }
+
   /**
    * Fucntion gets called when the navigator's GPS system has found the user's location.
    * @param position
