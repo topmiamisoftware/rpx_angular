@@ -36,6 +36,7 @@ export class MakePaymentComponent implements OnInit {
   public loading: boolean = false
 
   public adPaidFor: boolean = false
+  public adWasPaidFor: boolean = false
 
   public membershipPaidFor: boolean = false
 
@@ -163,7 +164,7 @@ export class MakePaymentComponent implements OnInit {
 
         this.ad = resp.ad
 
-        if(this.ad.is_live) this.adPaidFor = true
+        if(this.ad.is_live) this.adWasPaidFor = true
 
         this.business = resp.business     
         this.loading = false 
@@ -206,6 +207,8 @@ export class MakePaymentComponent implements OnInit {
 
   ngOnInit(): void {
     
+    this.loading = true
+
     this.paymentType = this.activatedRoute.snapshot.paramMap.get('paymentType')
     this.uuid = this.activatedRoute.snapshot.paramMap.get('uuid')
 

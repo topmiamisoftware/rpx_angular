@@ -66,17 +66,38 @@
         
         <h4 class="spotbie-text-gradient spotbie-r-success-title text-uppercase">PAYMENT SUCCESSFUL</h4>
 
-        <div class="sb-verificationCheck sb-text-light-green-gradient mt-4 mb-4">
-            <i class="fa fa-check"></i>
+        <div class="sb-verificationCheck mt-4 mb-4">
+            <i class="fa fa-check sb-text-light-green-gradient"></i>
         </div>
 
-        <h4 class="spotbie-text-gradient spotbie-r-success-title text-uppercase">YOUR AD IS LIVE</h4>
+        <h4 class="spotbie-text-gradient spotbie-r-success-title text-uppercase">PROMOTION IS LIVE</h4>
 
     </div>
 
     <div class="spotbie-text-gradient text-uppercase mt-4 cursor-pointer" [routerLink]="['/user-home']">RETURN TO HOME PAGE</div>
 
 </div>
+
+<div class='spotbie-overlay-window d-flex align-items-center justify-content-center' *ngIf="adWasPaidFor">
+
+    <div class="sb-logo mt-3 mb-3"></div>
+
+    <div class='sb-makePaymentWrapper' style="box-shadow: unset;">
+        
+        <h4 class="spotbie-text-gradient spotbie-r-success-title text-uppercase">PROMOTION ALREADY PAID</h4>
+
+        <div class="sb-verificationCheck mt-4 mb-4">
+            <i class="fa fa-check sb-text-light-green-gradient"></i>
+        </div>
+
+        <h4 class="spotbie-text-gradient spotbie-r-success-title text-uppercase">PROMOTION IS LIVE</h4>
+
+    </div>
+
+    <div class="spotbie-text-gradient text-uppercase mt-4 cursor-pointer" [routerLink]="['/user-home']">RETURN TO HOME PAGE</div>
+
+</div>
+
 
 <div class='spotbie-overlay-window d-flex align-items-center justify-content-center' *ngIf="membershipPaidFor">
 
@@ -86,8 +107,8 @@
         
         <h4 class="spotbie-text-gradient spotbie-r-success-title text-uppercase">PAYMENT SUCCESSFUL</h4>
 
-        <div class="sb-verificationCheck sb-text-light-green-gradient mt-4 mb-4">
-            <i class="fa fa-users"></i>
+        <div class="sb-verificationCheck mt-4 mb-4">
+            <i class="fa fa-users sb-text-light-green-gradient"></i>
         </div>
 
         <h4 class="spotbie-text-gradient spotbie-r-success-title text-uppercase">YOUR MEMBERSHIP IS LIVE</h4>

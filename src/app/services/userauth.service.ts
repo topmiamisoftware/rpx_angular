@@ -298,12 +298,10 @@ export class UserauthService {
     }; 
 
     this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID, fbLoginOptions).catch(
-
       (error) => {
         loginCallBack(error)
         return
       }
-
     )
     
     this.socialAuthService.authState.subscribe( (user) => {
