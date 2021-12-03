@@ -40,8 +40,6 @@
     max-height: 70vh;
     overflow-x: hidden;
 }
-
-
 @media (max-width: 1600px){
     .sb-top-headerImg{
         height: 550px;

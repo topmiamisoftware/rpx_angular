@@ -308,7 +308,7 @@ export class BottomAdBannerComponent implements OnInit {
   ngOnInit(): void {
 
     this.isDesktop = this.deviceDetectorService.isDesktop()
-    if(this.isMobile == false) this.isMobile = this.deviceDetectorService.isMobile()
+    if(this.isMobile == false) this.isMobile = ( this.deviceDetectorService.isMobile() || this.deviceDetectorService.isTablet() )
     this.getBottomHeader()
     
   }

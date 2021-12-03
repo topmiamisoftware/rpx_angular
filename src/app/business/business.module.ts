@@ -8,18 +8,16 @@ import { MapComponent } from '../spotbie/map/map.component'
 import { HelperModule } from '../helpers/helper.module'
 import { BusinessComponent } from './business.component'
 import { MenuLoggedOutModule } from '../spotbie/spotbie-logged-out/menu-logged-out.module'
-import { ScheduleBusinessDemoComponent } from './schedule-demo/schedule-business-demo.component'
 
 const routes : Routes = [
-  { path : '', component : BusinessComponent }
+  { path: '', component : BusinessComponent, pathMatch: 'full' }
 ]
 
 @NgModule({
   declarations: [
-    BusinessComponent,
-    ScheduleBusinessDemoComponent
+    BusinessComponent
   ],
-  imports: [
+  imports: [  
     CommonModule,
     MenuLoggedOutModule,
     MenuModule,
