@@ -194,14 +194,14 @@ export class MakePaymentComponent implements OnInit {
   public initBusinesMembershipPaymentForm(){
     this.paymentTitle = 'FINISH SUBSCRIPTION'
     this.paymentDescription = `
-      You are about to subscribe to our Busibess Membership. Payments are made automatically on a monthly basis from the card you provide us with.
+      You are about to subscribe to our Business Membership. Payments are made automatically on a monthly basis from the card you provide us with.
     `
   }
 
   public initInHousePaymentForm(){
-    this.paymentTitle = 'FINISH AD SUBSCRIPTION'
+    this.paymentTitle = 'PROMOTION SUBSCRIPTION'
     this.paymentDescription = `
-      You are about to subscribe to our Ads Service. Payments are made automatically on a monthly basis from the card you provide us with.
+      You are about to subscribe to our In-House Promotions Service. Payments are made automatically on a monthly basis from the card you provide us with.
     `    
   }
 
