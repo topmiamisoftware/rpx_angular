@@ -16,26 +16,21 @@ div, table, i, td{
 }
 
 @font-face {
-
     font-family: sitka-italic;
     src: url(../src/assets/fonts/Fluent_SitkaSmall-Italic.ttf);
     font-display: swap;
-
 }
 
 @font-face {
-
     font-family: Gotham-Bold;
     src: url(assets/fonts/Gotham-Bold.otf);
     font-display: swap;
-
 }
 
 @font-face {
     font-family: Gotham-Book;
     src: url(assets/fonts/Gotham-Book.ttf);
     font-display: swap;
-
 }
 
 @font-face {
@@ -901,7 +896,7 @@ p.sb-helpInfo{
         background: unset;
         -webkit-background-clip: unset;
         -webkit-text-fill-color: unset;
-        color:  #212529;        
+        color: #212529;        
     }
 }
 @media (max-width: 600px) { 
@@ -921,12 +916,10 @@ p.sb-helpInfo{
     }    
 }
 @media (max-width: 560px) {
-
     .sb-material-dark .sb-icon,
     .sb-material-light .sb-icon{
         font-size: 1.4rem !important;
     }
-    
     .sb-mainWrapper{
         min-width: 90%;
         max-width: 90%
@@ -1016,27 +1009,27 @@ p.sb-helpInfo{
     }      
 }
 @media (max-width: 420px) { 
-        .spotbie-button{
-            max-width: 65%;
-            width: 65%;
-            min-width: 65%;
-            font-size: .9rem !important;
-            padding-top: 11px!important;
-            padding-bottom: 11px!important;            
-        }     
-        .sb-inputWithIconWrapper{
-            min-width: 90% !important;
-            max-width: 90%;
-        }
-        .sb-input{
-            font-size: 16px;
-        }
-        .spotbie-invalid-feedback{
-            font-size: 11px!important;
-            max-width: 90%;
-            min-width: 90%;
-            margin-bottom: 10px;
-        }                 
+    .spotbie-button{
+        max-width: 65%;
+        width: 65%;
+        min-width: 65%;
+        font-size: .9rem !important;
+        padding-top: 11px!important;
+        padding-bottom: 11px!important;            
+    }     
+    .sb-inputWithIconWrapper{
+        min-width: 90% !important;
+        max-width: 90%;
+    }
+    .sb-input{
+        font-size: 16px;
+    }
+    .spotbie-invalid-feedback{
+        font-size: 11px!important;
+        max-width: 90%;
+        min-width: 90%;
+        margin-bottom: 10px;
+    }                 
 }
 @media (max-width: 360px) { 
     .spotbie-select-table-img{
