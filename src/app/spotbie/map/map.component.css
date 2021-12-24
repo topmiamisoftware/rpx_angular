@@ -875,16 +875,23 @@ button.gm-ui-hover-effect:focus-within{
     }
 }
 @media (max-width: 1024px) { 
-
+    .spotbie-search-results-title{
+        padding-left: 0px;
+        padding-right: 0px;
+        text-align: center;
+    }   
+    .spotbie-controls-search-results{
+        position: relative;
+        margin: 0 auto;
+    }
+    .spotbie-search-result-wrapper{
+        padding-top: 10px;
+    }
 }
 @media (max-width: 900px) { 
     .sb-page-button {
         font-size: 1.4rem !important;
     }
-    .spotbie-search-results-title{
-        padding-left: 0px;
-        padding-right: 0px;
-    }   
     .sb-page-button{
         border-radius: 5px;
     }

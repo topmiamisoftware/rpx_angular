@@ -10,7 +10,9 @@ import { RewardMenuComponent } from './spotbie/spotbie-logged-in/reward-menu/rew
 export const routes: Routes = [
 
   { path: 'home', loadChildren: () => import('./home/home.module').then(m => m.HomeModule) },
+
   { path: 'business', loadChildren: () => import('./business/business.module').then(m => m.BusinessModule) },
+
   { path: 'terms', component: TermsComponent },  
   { path: 'bugs', component: BugsComponent },
   { path: 'earn-loyalty-points', component: BugsComponent },
@@ -31,12 +33,12 @@ export const routes: Routes = [
   { path: 'shopping/:name/:id', component: InfoObjectComponent },
   { path: 'event/:name/:id', component: InfoObjectComponent },
 
-  { path: 'advertise-my-business', loadChildren: () => import('./advertise-my-business/advertise-my-business.module').then(m => m.AdvertiseMyBusinessModule ) }, 
-
   { path: 'make-payment', loadChildren: () => import('./make-payment/make-payment.module').then(m => m.MakePaymentModule ) }, 
 
   { path: 'user-profile', loadChildren: () => import('./user/user.module').then(m => m.UserModule ) }, 
   
+  { path: 'schedule-demo', redirectTo: '/business#scheduleDemo'},
+
   { path: '', redirectTo: '/home', pathMatch: 'full' }
 
 ]

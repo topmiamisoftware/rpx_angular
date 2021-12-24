@@ -18,6 +18,7 @@ export class BusinessFeaturesComponent implements OnInit {
   @ViewChild('attractNewCustomers') attractNewCustomers: ElementRef
   @ViewChild('retainCustomers') retainCustomers: ElementRef
   @ViewChild('engageYourAudience') engageYourAudience: ElementRef
+  @ViewChild('scheduleDemo') scheduleDemo: ElementRef
   
   public calendlyUp: boolean = false
 
@@ -69,7 +70,12 @@ export class BusinessFeaturesComponent implements OnInit {
 
       case '/business#retainCustomers':
         this.retainCustomers.nativeElement.scrollIntoView()
-        break                                   
+        break       
+        
+      case '/business#scheduleDemo':
+        this.scheduleDemo.nativeElement.scrollIntoView()
+        break  
+
     }
 
   }
