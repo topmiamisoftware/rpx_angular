@@ -2,7 +2,7 @@
 
 <div class="spotbie-overlay-window" *ngIf="!adPaidFor && !membershipPaidFor"> 
 
-    <div class='sb-makePaymentWrapper'>
+    <div class='sb-makePaymentWrapper' *ngIf="!loading">
 
         <div class="sb-logo mt-3 mb-3"></div>
 

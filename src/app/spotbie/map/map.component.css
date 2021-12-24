@@ -1038,9 +1038,9 @@ button.gm-ui-hover-effect:focus-within{
 }
 @media (max-width: 600px) { 
     .spotbie-overlay-window{
-        width: 103%;
-        min-width: 103%;
-        max-width: 103%;
+        width: 102%;
+        min-width: 102%;
+        max-width: 102%;
         left: 0%;   
     }    
     .spotbie-sorting{
