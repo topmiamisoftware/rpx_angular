@@ -1,4 +1,3 @@
-
 let baseUrl = 'https://spotbie.com/'
 
 export const environment = {
