@@ -1,9 +1,9 @@
 
-let baseUrl = 'https://spotbie-master.netlify.app/'
+let baseUrl = 'https://spotbie.com/'
 
 export const environment = {
   production: true,
-  staging: true,
+  staging: false,
   baseUrl: baseUrl,
   versionCheckURL : baseUrl + 'version.json',
   google_maps_apiKey: 'AIzaSyC4Su0B2cBzsSpAF-Kphq_78uR8b5eA4_Q',
