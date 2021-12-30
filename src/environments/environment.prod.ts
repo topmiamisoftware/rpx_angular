@@ -12,7 +12,7 @@ export const environment = {
   qrCodeLoyaltyPointsScanBaseUrl : baseUrl + 'loyalty-points',
   qrCodeRewardScanBaseUrl : baseUrl + 'reward',
   ngrok: null,
-  fakeLocation: true,
+  fakeLocation: false,
   myLocX: 25.786286,
   myLocY: -80.186562
 }

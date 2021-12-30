@@ -21,7 +21,7 @@ export const environment = {
    * */
   apiEndpoint: `${ngrok}api/`,
 
-  fakeLocation: true,
+  fakeLocation: false,
   myLocX: 25.786286,
   myLocY: -80.186562
 }

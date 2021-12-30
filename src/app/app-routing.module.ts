@@ -6,6 +6,7 @@ import { InfoObjectComponent } from './spotbie/map/info-object/info-object.compo
 import { BugsComponent } from './bugs/bugs.component'
 import { LoyaltyPointsComponent } from './spotbie/spotbie-logged-in/loyalty-points/loyalty-points.component'
 import { RewardMenuComponent } from './spotbie/spotbie-logged-in/reward-menu/reward-menu.component'
+import { EulaComponent } from './eula/eula.component'
 
 export const routes: Routes = [
 
@@ -13,7 +14,9 @@ export const routes: Routes = [
 
   { path: 'business', loadChildren: () => import('./business/business.module').then(m => m.BusinessModule) },
 
-  { path: 'terms', component: TermsComponent },  
+  { path: 'terms', component: TermsComponent },
+  { path: 'terms', component: EulaComponent },
+
   { path: 'bugs', component: BugsComponent },
   { path: 'earn-loyalty-points', component: BugsComponent },
   { path: 'award-loyalty-points', component: BugsComponent },
