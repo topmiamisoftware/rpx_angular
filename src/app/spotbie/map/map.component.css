@@ -1037,6 +1037,10 @@ button.gm-ui-hover-effect:focus-within{
     }        
 }
 @media (max-width: 600px) { 
+    .map-prompt-mobile{
+        width: 103%;
+        min-width: 103%;        
+    }        
     .spotbie-overlay-window{
         width: 100%;
         min-width: 100%;
