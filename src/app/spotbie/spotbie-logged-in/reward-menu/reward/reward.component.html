@@ -2,14 +2,11 @@
 
 <div class="spotbie-overlay-window">
 
-    <div class='sb-closeButton' (click)="closeThis()">
+    <div class='sb-closeButton' (click)="closeThis()" [ngClass]="getFullScreenModeClass()">
         <i class="fa fa-times"></i>
     </div>
 
-    <div class='spotbie-reward-bg-image' 
-            [ngStyle]="{ 'background' : 'url(' + infoObjectImageUrl + ')'}"></div>
-    
-    <div class='spotbie-info-object-title'>
+    <div class='spotbie-info-object-title' [ngClass]="getFullScreenModeClass()">
                         
         <h6 class="spotbie-text-gradient sb-titleGreen text-uppercase">SPOTBIE COMMUNITY REWARD</h6>
 
@@ -40,11 +37,12 @@
     </div>
 
     <h3 class="sb-text-light-green-gradient text-uppercase mt-5">
-        {{ ( reward.point_cost * (userPointToDollarRatio / 100) ) | currency : 'USD' }}
+        {{ reward.point_cost | number:'1.00':'en-US' }} LP COST
+        
     </h3>
 
     <h5 class="spotbie-text-gradient text-uppercase mt-2">       
-        {{ reward.point_cost | number:'1.00':'en-US' }} LOYALTY POINTS
+        {{ ( reward.point_cost * (userPointToDollarRatio / 100) ) | currency : 'USD' }} VALUE
     </h5>
 
     <div class='spotbie-communityMemberDescription spotbie-text-gradient mt-4 mb-4'>

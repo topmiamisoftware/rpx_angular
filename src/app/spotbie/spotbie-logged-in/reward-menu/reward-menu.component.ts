@@ -20,7 +20,8 @@ export class RewardMenuComponent implements OnInit {
   @ViewChild('rewardCreator') rewardCreator: RewardCreatorComponent
   @ViewChild('appRewardViewer') appRewardViewer: RewardComponent
 
-  @Input() fullScreenWindow: boolean = true
+  @Input() rewardAppFullScreen: boolean = false
+  @Input() fullScreenMode: boolean = true
 
   @Input() loyaltyPoints: string
 
@@ -45,7 +46,7 @@ export class RewardMenuComponent implements OnInit {
   public rewards: Array<Reward> = null
   public reward: Reward
 
-  public userType: string = null
+  public userType: number = null
 
   public business: Business = new Business()
 
@@ -66,7 +67,7 @@ export class RewardMenuComponent implements OnInit {
 
   public getWindowClass(){
 
-    if(this.fullScreenWindow)
+    if(this.fullScreenMode)
       return 'spotbie-overlay-window'
     else
       return ''
@@ -89,12 +90,8 @@ export class RewardMenuComponent implements OnInit {
     
     let fetchRewardsReq = null
 
-    if(qrCodeLink !== null){
-      
-      fetchRewardsReq = {
-        qrCodeLink: qrCodeLink
-      }
-
+    fetchRewardsReq = {
+      qrCodeLink: this.qrCodeLink
     }
 
     this.businessMenuService.fetchRewards(fetchRewardsReq).subscribe(
@@ -110,8 +107,6 @@ export class RewardMenuComponent implements OnInit {
     if(resp.success){
 
       this.rewards = resp.rewards
-
-      console.log("fetchRewardsCb", resp)
 
       if(this.userType === this.eAllowedAccountTypes.Personal || this.isLoggedIn !== '1'){
 
@@ -186,14 +181,11 @@ export class RewardMenuComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.userType = localStorage.getItem('spotbie_userType')
+    this.userType = parseInt(localStorage.getItem('spotbie_userType'))
     this.isLoggedIn = localStorage.getItem('spotbie_loggedIn')
 
-    if( this.userType !== this.eAllowedAccountTypes.Personal && 
-        this.userType !== 'null' &&
-        this.userType !== null
-      ){
-        
+    if( this.userType !== this.eAllowedAccountTypes.Personal)
+    {
       this.getLoyaltyPointBalance()
       this.fetchRewards()
 

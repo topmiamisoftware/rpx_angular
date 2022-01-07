@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import * as $ from 'jquery'
 
 @Component({
@@ -8,6 +8,8 @@ import * as $ from 'jquery'
 })
 export class ScrollToTopComponent implements OnInit {
 
+  @Input('inputWindow') inputWindow: ElementRef
+
   @ViewChild('scrollArrow') scrollArrow: ElementRef
 
   public arrowOn: boolean
@@ -15,7 +17,7 @@ export class ScrollToTopComponent implements OnInit {
   constructor() { }
 
   scrollTop() {
-    $('html, body').animate({ scrollTop: 0 }, 'slow')
+    $('#spotbieMainSpotBieScroll').animate({ scrollTop: 0 }, 'slow')
   }
 
   addScrollEvent() {
@@ -30,24 +32,32 @@ export class ScrollToTopComponent implements OnInit {
 
   ngAfterViewInit(){
 
-    $(window).on('scroll', function() {
+    $('#spotbieMainSpotBieScroll').on('scroll', function() {
       // do your things like logging the Y-axis
-      const scrollTop = $(window).scrollTop()
+      
+      const scrollTop = $('#spotbieMainSpotBieScroll').scrollTop()
+
       if (scrollTop < 50) {
+        
         this.scrollArrow.nativeElement.className = 'spotbie-scroll-top spotbie-arrow-transparent'
         this.arrowOn = false
+
       } else if (this.arrowOn == false) {
+        
         this.arrowOn = true
         this.scrollArrow.nativeElement.className = 'spotbie-scroll-top'
+
       }
 
     }.bind(this))
 
-    const scrollTop = $(window).scrollTop()
+    const scrollTop = $('#spotbieMainSpotBieScroll').scrollTop()
 
     if (scrollTop > 50) {
+
       this.scrollArrow.nativeElement.className = 'spotbie-scroll-top'
       this.arrowOn = true
+
     }
 
   }

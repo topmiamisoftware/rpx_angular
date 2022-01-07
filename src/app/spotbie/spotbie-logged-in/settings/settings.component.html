@@ -2,6 +2,10 @@
 
 <div class='spotbie-overlay-window pt-2 pb-5' #spotbieSettingsWindow>    
     
+    <div class='sb-closeButton' (click)="closeWindow()">
+        <i class="fa fa-times"></i>        
+    </div>
+
     <div class='spotbie-block sb-topSettingsPadding'>
 
         <div #spotbieSettingsInfoText class="spotbie-text-gradient mt-4 mb-4"></div>
@@ -116,26 +120,39 @@
                             </label>
                         </ng-template>
 
-                        <input class="sb-input" (click)="$event.target.select()" formControlName="spotbie_email" type="text" value="email" maxlength="135"/>
+                        <input class="sb-input" 
+                                (click)="$event.target.select()" 
+                                formControlName="spotbie_email" 
+                                type="text" value="email" 
+                                maxlength="135" *ngIf="!isSocialAccount" />
+
+                        <input class="sb-input" (click)="$event.target.select()" 
+                                formControlName="spotbie_email" type="text" readonly 
+                                value="email" maxlength="135" *ngIf="isSocialAccount" />
+
 
                     </td>
                 </tr>       
 
                 <tr>
                     <td>      
+                        
                         <label class="spotbie-input-info spotbie-text-gradient mb-2">
                             Phone number.
-                        </label>                                                    
+                        </label>      
+
                         <input class='sb-input' 
                                 type='tel' 
                                 mask="(000) 000-0000" 
                                 autocomplete="tel" 
                                 placeholder='(555) 555-5555' 
                                 formControlName="spotbie_phone_number" />
+
                     </td>
                 </tr>
 
-                <tr>
+                <tr *ngIf="chosen_account_type != 4">
+                    
                     <td>
 
                         <div *ngIf="submitted && f.spotbie_acc_type.errors else user_account_type_normal" 
@@ -162,6 +179,19 @@
                                 readonly="readonly" />
 
                     </td>
+
+                </tr>
+
+                <tr *ngIf="chosen_account_type != 4" (click)="changeAccType()">
+
+                    <td>
+
+                        <div class="spotbie-input-info text-center spotbie-text-gradient cursor-pointer mt-2 mb-2">            
+                            MANAGE MEMBERSHIP
+                        </div> 
+                        
+                    </td>
+
                 </tr>
 
                 <tr>
@@ -322,43 +352,7 @@
                     Deactivate Account
                 </td>
             </tr>
-        </table>    
-        
-        <form [formGroup]="deactivation_form" *ngIf="account_deactivation">
-    
-            <div class="spotbie-toast-input-overlay">
-        
-                <div class="spotbie-toast-input-box">
-                    
-                    <div *ngIf="deactivation_submitted && h.spotbie_deactivation_password.errors else spotbie_deactivate_normal" class="spotbie-input-info  spotbie-text-gradient spotbie-error">
-        
-                        <div *ngIf="h.spotbie_deactivation_password.errors.required">
-                            Please enter your current password.
-                        </div>            
-                
-                    </div> 
-        
-                    <ng-template #spotbie_deactivate_normal>
-                        <div class="spotbie-toast-info spotbie-text-gradient spotbie-deactivation-info" #spotbie_deactivation_info>
-                            Enter your password to deactivate your account.
-                        </div>
-                    </ng-template>  
-        
-                    <input class="sb-input" (click)="$event.target.select()" type="password" formControlName="spotbie_deactivation_password" autocomplete="false">
-        
-                    <div class="spotbie-button spotbie-button-mini text-uppercase" (click)="deactivateAccount()">
-                        Deactivate
-                    </div>
-                    
-                    <div class="spotbie-text-gradient text-center text-uppercase mt-4" (click)="cancelDeactivateAccount()">
-                        CANCEL
-                    </div>
-
-                </div>
-        
-            </div>
-    
-        </form>
+        </table>        
 
     </div>
 
@@ -367,30 +361,152 @@
     </div>
     
     <div class='sb-vertical-align-wrapper' *ngIf="loadAccountTypes">
+        
         <div class="spotbie-select-menu" style="display: table-cell; vertical-align: middle;">            
+            
             <div>
 
-                <div class="spotbie-input-info spotbie-text-gradient text-center mb-4">
-                    Choose an account type.
-                </div>
+                <div *ngIf="!userIsSubscribed && 
+                            !userIsTrial &&
+                            chosen_account_type != 4 &&
+                            user.trial_ends_at !== null
+                            else normalSubscriptionTemplate"> 
+                    
+                    <div class="pb-4">
+                        <i class="fa fa-exclamation-triangle"></i>
+                    </div>
 
-                <div class="spotbie-select-menu-option mt-1 mb-1 pt-3 pb-3" 
-                     *ngIf="chosen_account_type != 0"
-                     (click)="selectAccountType('PERSONAL')">
-                     <span class='spotbie-text-gradient text-center text-uppercase'>PERSONAL</span>
-                </div> 
+                    <h5 class="spotbie-text-gradient">                                    
+                        YOUR MEMBERSHIP IS EXPIRED                                    
+                    </h5>
 
-                <div class="spotbie-select-menu-option mt-1 mb-1 pt-3 pb-3" 
-                     *ngFor="let account_type of accountTypeList" 
-                     (click)="selectAccountType(account_type)">
-
-                    <span class='spotbie-text-gradient text-center text-uppercase'>{{ account_type }}</span>
-
+                    <div class='spotbie-button text-uppercase cursor-pointer mt-4'  
+                            (click)="activateFullMembership()">                        
+                        ENABLE MEMBERSHIP
+                    </div>
+            
                 </div>
                 
+                <ng-template #normalSubscriptionTemplate>
+                
+
+                    <h5 *ngIf="!userIsSubscribed && 
+                                chosen_account_type != 4 &&
+                                user.trial_ends_at === null"
+                        class="sb-text-light-green-gradient">
+                    
+                        START YOUR 45-DAY TRIAL
+                    
+                    </h5>
+                    
+                    <div class="spotbie-input-info spotbie-text-gradient text-center mt-4 mb-4">
+                        Choose an account type.
+                    </div>
+
+                    <div class="spotbie-select-menu-option mt-1 mb-1 pt-3 pb-3" 
+                        *ngFor="let account_type of accountTypeList" 
+                        (click)="selectAccountType(account_type)">
+
+                        <span class='spotbie-text-gradient text-center text-uppercase'>{{ account_type }}</span>
+
+                    </div>                            
+
+                    <div class="spotbie-input-info spotbie-text-gradient text-center mt-4 mb-4" style="font-size: .8rem;">
+                        "Events" account type is coming soon.
+                    </div>
+
+                    <div class="mt-4" style="font-size: .8rem;" *ngIf="userIsTrial && !userIsSubscribed">
+
+                        <span class='sb-text-light-green-gradient'>TRIAL IS ACTIVE</span>
+
+                        <div class='spotbie-text-gradient text-uppercase mt-2 mb-4' style="font-size: .8rem;">
+                            EXPIRES ON {{ user.trial_ends_at | date:'mediumDate' }}
+                        </div>
+
+                    </div>
+
+                    <div class='spotbie-button text-uppercase cursor-pointer mt-4'  
+                            *ngIf="!userIsSubscribed && 
+                                    chosen_account_type != 4 &&
+                                    userIsTrial" 
+                            (click)="activateFullMembership()">                        
+                        SKIP TRIAL
+                    </div>
+
+                    <div class="mt-4" style="font-size: .8rem;" *ngIf="userIsSubscribed">
+
+                        <span class='sb-text-light-green-gradient'>MEMBERSHIP IS ACTIVE</span>
+
+                        <div class='spotbie-text-gradient text-uppercase mt-2 mb-4' style="font-size: .8rem;">
+                            NEXT PAYMENT {{ user.trial_ends_at | date:'mediumDate' }}
+                        </div>
+
+                        <span class='sb-text-red-gradient text-uppercase cursor-pointer' (click)="cancelMembership()">
+                            CANCEL MEMBERSHIP
+                        </span>
+
+                    </div>
+                    
+                </ng-template>
+
             </div>
         </div>  
     </div>
+
+</div>
+
+<div class='spotbie-overlay-window d-flex flex-column
+            align-content-center justify-content-center align-items-center' *ngIf="account_deactivation && !isSocialAccount">
+    
+    <h5 class="spotbie-text-gradient">DEACTIVATE ACCOUNT</h5>
+
+    <form [formGroup]="deactivation_form">
+
+        <div class="spotbie-toast-input-box">
+            
+            <div *ngIf="deactivation_submitted && h.spotbie_deactivation_password.errors else spotbie_deactivate_normal" class="spotbie-input-info  spotbie-text-gradient spotbie-error">
+
+                <div *ngIf="h.spotbie_deactivation_password.errors.required">
+                    Please enter your current password.
+                </div>            
+        
+            </div> 
+
+            <ng-template #spotbie_deactivate_normal>
+                <div class="spotbie-toast-info spotbie-text-gradient spotbie-deactivation-info" #spotbie_deactivation_info>
+                    Enter your password to deactivate your account.
+                </div>
+            </ng-template>  
+
+            <input class="sb-input" (click)="$event.target.select()" type="password" formControlName="spotbie_deactivation_password" autocomplete="false">
+
+            <div class="spotbie-button spotbie-button-mini text-uppercase" (click)="deactivateAccount()">
+                Deactivate
+            </div>
+            
+            <div class="spotbie-text-gradient text-center text-uppercase mt-4" (click)="cancelDeactivateAccount()">
+                CANCEL
+            </div>
+
+        </div>
+
+    </form>
+
+</div>
+
+<div class='spotbie-overlay-window d-flex flex-column
+            align-content-center justify-content-center align-items-center' *ngIf="account_deactivation && isSocialAccount">
+    
+    <h5 class="spotbie-text-gradient">DEACTIVATE ACCOUNT</h5>
+
+    <div class="spotbie-button spotbie-button-mini text-uppercase" (click)="deactivateAccount()">
+        Deactivate
+    </div>
+
+    <div class="spotbie-text-gradient text-center text-uppercase mt-4" (click)="cancelDeactivateAccount()">
+        CANCEL
+    </div>
+
 
 </div>
 
@@ -534,9 +650,13 @@
                             class="spotbie-input-info spotbie-text-gradient text-center spotbie-error mt-4 mb-2">
     
                         <div *ngIf="i.originTitle.errors.required">
-                            Please enter your {{ account_type_category_friendly_name }} title.
+                            Choose {{ account_type_category_friendly_name }} title.
                         </div>                                                
     
+                        <div *ngIf="i.originTitle.errors.maxlength">
+                            Title must be less than 25 characters long.
+                        </div> 
+
                     </div>   
 
                     <ng-template #originTitleNormal>
@@ -600,6 +720,7 @@
                         class="sb-input mb-4"
                         placeholder="New category..."
                         #businessInput
+                        style="background-color: white;"
                         formControlName="originCategories"
                         [matAutocomplete]="auto"
                         [matChipInputFor]="chipList">
@@ -724,10 +845,7 @@
                 <tr>
                     <td>                                  
                         <input class='sb-input text-center' 
-                               type='text' 
-                               [patterns]="customPatterns" 
-                               mask="A00-A00"
-                               placeholder='A12-B34' 
+                               type='text'  
                                maxlength="7"
                                formControlName="passKey" />
                     </td>
@@ -735,9 +853,9 @@
                 
                 <tr>
                     <td> 
-                        <div class='sb-text-light-green-gradient sb-helpDemoText text-center text-uppercase mt-4'>
+                        <div class='spotbie-text-gradient sb-helpDemoText text-center text-uppercase mt-4'>
                             Don't have one? Book 
-                            <span class='sb-text-light-green-gradient' (click)="calendly()">free demo with SpotBie here.</span>
+                            <span class='sb-text-light-green-gradient cursor-pointer' (click)="calendly()">free demo with SpotBie here.</span>
                         </div>
                     </td>
                 </tr>
@@ -763,7 +881,7 @@
 
 </div>
 
-<div class='spotbie-overlay-window' *ngIf="calendlyUp">
+<div class='spotbie-overlay-window' style="z-index: 99;" *ngIf="calendlyUp">
 
     <div class='sb-v-wrapper' style="display: grid; align-content: center;">  
          

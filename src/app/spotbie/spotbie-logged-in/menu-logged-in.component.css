@@ -14,6 +14,19 @@
 .spotbie-overlay-window{
     z-index: 97;
 }
+.sb-loyalty-points:hover{
+    width: 25px;
+    min-width: 25px;
+    max-width: 25px;    
+}
 .sb-userName{
     text-transform: uppercase;
+}
+@media(max-width:768px){
+    .sb-desktopNavBar{
+        display: none;
+    }
+    .sb-businessMenu{
+        margin-left: 14px;
+    }
 }

@@ -48,11 +48,23 @@
     bottom: 4px;
     margin-right: 10px;
 }
+.sb-rewardImage{
+    position: relative;
+    max-width: 250px;
+    width: 250px;
+    min-width: 250px;
+}
 @media (max-width: 650px){
     .spotbie-redeemItem{
         max-width: 94%;
         min-width: 94%;
         width: 94%;
+    }    
+    .sb-rewardImage{
+        position: relative;
+        max-width: 85px;
+        width: 85px;
+        min-width: 85px;
     }    
 }
 @media (max-width: 460px){

@@ -39,7 +39,7 @@
         </form>
 
         <div class='spotbie-button text-uppercase mt-4' (click)="startAwardProcess()">
-            AWARD<span><i class="fas fa-hamburger"></i></span>
+            AWARD
         </div>        
 
     </div>
@@ -59,7 +59,7 @@
         <p class="spotbie-text-gradient text-center text-uppercase mt-3">scan once per table</p>
 
         <p class="spotbie-text-gradient text-center mt-5 text-uppercase">
-            Total Points<br/><span class='sb-text-light-green-gradient'>{{ loyaltyPointReward | number:'1.0':'en-US' }}</span>
+            Total Points<br/><span class='sb-text-light-green-gradient'>{{ loyaltyPointReward | number:'1.1-2':'en-US' }}</span>
         </p>
 
         <p class="spotbie-text-gradient text-center mt-5 text-uppercase">
@@ -101,7 +101,9 @@
 
 </div>
 
-<div class='spotbie-overlay-window' style="background-color: #0e0e0e;" *ngIf="!isBusiness">    
+<div class='spotbie-overlay-window' 
+        style="background-color: #0e0e0e; padding-top:0px !important;" 
+        *ngIf="!isBusiness">    
 
     <div class='sb-v-wrapper'>
 
@@ -111,26 +113,47 @@
             <h5 class="spotbie-text-gradient sb-scanQrTitle text-center text-uppercase mt-5 pt-5">SCAN AND EARN</h5>
         </div>
 
-        <div class="spotbie-full-qrCode scanner mt-4 mb-4" *ngIf="!awarded">
-
-            <zxing-scanner (scanSuccess)="scanSuccessHandler($event)"           
-                           [formats]="['QR_CODE']"></zxing-scanner>
-                           
+        <div *ngIf="!awarded && !rewarded">
+            <div class="spotbie-full-qrCode scanner mt-4 mb-4">
+                <zxing-scanner (scanSuccess)="scanSuccessHandler($event)"           
+                               [formats]="['QR_CODE']"></zxing-scanner>                               
+            </div>
+    
+            <p class="sb-helpInfo spotbie-text-gradient text-center text-uppercase">
+                Ask for<br/>the<br/><span class='sb-text-light-green-gradient'>SpotBie QR CODE</span>
+            </p>
         </div>
 
-        <h2 class='sb-text-light-green-gradient mt-4' *ngIf="awarded">SUCCESS</h2>
+        <div *ngIf="awarded">
+            <h2 class='sb-text-light-green-gradient mt-4'>SUCCESS</h2>
 
-        <i class='fas fa-check mb-4' *ngIf="awarded"></i>    
-        
-        <p class="sb-helpInfo spotbie-text-gradient text-center text-uppercase" *ngIf="!awarded">
-            Ask for<br/>the<br/><span class='sb-text-light-green-gradient'>SpotBie QR CODE</span>
-        </p>
-        
-        <div class="sb-text-light-green-gradient sb-earnedPoints animated fadeOutUp" #sbEarnedPoints>
-            +{{ userLoyaltyPoints | number:'1.0':'en-US' }}
+            <i class='fas fa-check mb-4'></i>    
+            
+            <h2 class="spotbie-text-gradient text-center text-uppercase pt-4 mb-4">{{ userLoyaltyPoints | number:'1.0':'en-US' }}</h2>
+
         </div>
 
-        <h2 class="spotbie-text-gradient text-center text-uppercase pt-4 mb-4">{{ userLoyaltyPoints | number:'1.0':'en-US' }}</h2>
+        <div *ngIf="rewarded">
+
+            <p class="spotbie-text-gradient mt-4 mb-4">Reward redeemed successfully. Please show your host.</p>
+
+            <div class='sb-menuItem'
+                [ngStyle]="{ 'background' : 'url('+ reward.images +')'}">
+
+                <h6>
+                    <span class="spotbie-text-gradient">
+                        {{ reward.name }}
+                    </span>
+                </h6>
+
+            </div> 
+            
+        </div>        
+
+        <div class="sb-earnedPoints animated fadeOutUp" #sbEarnedPoints>
+            <span class='sb-text-red-gradient' *ngIf="rewarded">-{{ pointsCharged | number:'1.0':'en-US' }}</span>
+            <span class='sb-text-light-green-gradient' *ngIf="awarded">+{{ userLoyaltyPoints | number:'1.0':'en-US' }}</span>
+        </div>   
 
         <button class='spotbie-button text-uppercase mt-3' (click)="closeQrUser()">close</button>
 

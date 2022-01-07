@@ -8,6 +8,8 @@ export class User {
     public username: string = null
     public email: string = null
 
+    public trial_ends_at: string = null
+
     public created_at: string = null
 
     public updated_at: string = null

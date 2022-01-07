@@ -10,14 +10,14 @@ import { BusinessComponent } from './business.component'
 import { MenuLoggedOutModule } from '../spotbie/spotbie-logged-out/menu-logged-out.module'
 
 const routes : Routes = [
-  { path : '', component : BusinessComponent }
+  { path: '', component : BusinessComponent, pathMatch: 'full' }
 ]
 
 @NgModule({
   declarations: [
     BusinessComponent
   ],
-  imports: [
+  imports: [  
     CommonModule,
     MenuLoggedOutModule,
     MenuModule,

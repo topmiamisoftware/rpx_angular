@@ -45,17 +45,14 @@ export class UserDashboardComponent implements OnInit {
     this.lpAppAnchor.nativeElement.scrollIntoView({ behavior: "smooth", block: "start" });
 
   }
-  public scrollToQrAppAnchor(){
-
-    this.qrCodeAppAnchor.nativeElement.scrollIntoView({ behavior: "smooth", block: "start" });
-    this.startQrScanner()
   
+  public scrollToQrAppAnchor(){
+    if(typeof this.qrCodeAppAnchor !== undefined) this.qrCodeAppAnchor.nativeElement.scrollIntoView({ behavior: "smooth", block: "start" })
+    this.startQrScanner()
   }
   
   public scrollToRewardMenuAppAnchor(){
-
     this.rewardMenuAppAnchor.nativeElement.scrollIntoView({ behavior: "smooth", block: "start" });
-
   }
 
   public startQrScanner(){

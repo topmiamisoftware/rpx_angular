@@ -11,7 +11,7 @@ import { MenuLoggedOutComponent } from '../spotbie/spotbie-logged-out/menu-logge
 })
 export class BusinessComponent implements OnInit {
 
-  public arrowOn: boolean = false;
+  public scheduleBusinessDemo: boolean = true
 
   @ViewChild('app_map') app_map: MapComponent
 
@@ -33,10 +33,6 @@ export class BusinessComponent implements OnInit {
 
   public signUp(){
     this.appMenuLoggedOut.signUp()
-  }
-
-  scrollTop() {
-    $('html, body').animate({ scrollTop: 0 }, 'slow')    
   }
 
   async ngOnInit() {

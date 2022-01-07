@@ -6,27 +6,42 @@ import { InfoObjectComponent } from './spotbie/map/info-object/info-object.compo
 import { BugsComponent } from './bugs/bugs.component'
 import { LoyaltyPointsComponent } from './spotbie/spotbie-logged-in/loyalty-points/loyalty-points.component'
 import { RewardMenuComponent } from './spotbie/spotbie-logged-in/reward-menu/reward-menu.component'
+import { EulaComponent } from './eula/eula.component'
 
 export const routes: Routes = [
 
   { path: 'home', loadChildren: () => import('./home/home.module').then(m => m.HomeModule) },
+
   { path: 'business', loadChildren: () => import('./business/business.module').then(m => m.BusinessModule) },
-  { path: 'terms', component: TermsComponent },  
+
+  { path: 'terms', component: TermsComponent },
+  { path: 'terms', component: EulaComponent },
+
   { path: 'bugs', component: BugsComponent },
+  { path: 'earn-loyalty-points', component: BugsComponent },
+  { path: 'award-loyalty-points', component: BugsComponent },
 
   { path: 'password', loadChildren: () => import('./spotbie/spotbie-logged-out/forgot-password/forgot-password.module').then(m => m.ForgotPasswordModule ) },
   
   { path: 'user-home', loadChildren: () => import('./user-home/user-home.module').then(m => m.UserHomeModule), canActivate: [LoginGuardServiceService] }, 
 
   { path: 'business-menu/:qrCode/:rewardUuid', component: RewardMenuComponent},
+  { path: 'business-menu/:qrCode', component: RewardMenuComponent},
+
+  { path: 'community', loadChildren: () => import('./spotbie/community-member/community-member.module').then(m => m.CommunityMemberModule ) },
+
   { path: 'loyalty-points/:qrCode/:totalSpent/:loyaltyPointReward', component: LoyaltyPointsComponent },
-  
+
   { path: 'place-to-eat/:name/:id', component: InfoObjectComponent },
   { path: 'shopping/:name/:id', component: InfoObjectComponent },
   { path: 'event/:name/:id', component: InfoObjectComponent },
 
+  { path: 'make-payment', loadChildren: () => import('./make-payment/make-payment.module').then(m => m.MakePaymentModule ) }, 
+
   { path: 'user-profile', loadChildren: () => import('./user/user.module').then(m => m.UserModule ) }, 
   
+  { path: 'schedule-demo', redirectTo: '/business#scheduleDemo'},
+
   { path: '', redirectTo: '/home', pathMatch: 'full' }
 
 ]

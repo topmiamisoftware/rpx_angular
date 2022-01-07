@@ -14,17 +14,29 @@ export class AdsService {
 
   constructor(private http: HttpClient) { }
 
-  public getSingleAdBanner(): Observable<any>{
+  public getHeaderBanner(headerBannerReqObj: any): Observable<any>{
 
     const getAd = `${ADS_API}/header-banner`
 
-    return this.http.post(getAd, null).pipe(
+    return this.http.post(getAd, headerBannerReqObj).pipe(
       catchError(
-        handleError("getSingleAdBanner")
+        handleError("getHeaderBanner")
       )
     )
 
   }
+
+  public getNearByFeatured(nearByFeaturedReqObj: any): Observable<any>{
+
+    const getAd = `${ADS_API}/featured-ad-list`
+
+    return this.http.post(getAd, nearByFeaturedReqObj).pipe(
+      catchError(
+        handleError("getNearByFeatured")
+      )
+    )
+
+  }  
 
   public getAds():  Observable<any>{
     
@@ -38,4 +50,29 @@ export class AdsService {
 
   }
 
+  public getAdByUUID(searchObjSb: any):  Observable<any>{
+    
+    const getAdsApi = `${ADS_API}/get-by-uuid`
+
+    return this.http.post(getAdsApi, searchObjSb).pipe(
+      catchError(
+        handleError("getAdByUUID")
+      )
+    )
+
+  }
+
+  public getBottomHeader(searchObjSb: any):  Observable<any>{
+
+    const getAdsApi = `${ADS_API}/footer-banner`
+
+    return this.http.post(getAdsApi, searchObjSb).pipe(
+      catchError(
+        handleError("getBottomHeader")
+      )
+    )
+
+  }
+
+  
 }

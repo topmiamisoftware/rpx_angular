@@ -8,8 +8,6 @@
             
             <div class='card-header'>
                 
-                <img [ngSrc]="redeemItem.default_picture" class='rounded-circle' />
-
                 <span class='sb-text-light-green-gradient' *ngIf="!redeemItem.name">{{ redeemItem.username }}</span>
 
                 <span class='sb-text-light-green-gradient text-uppercase' 
@@ -19,38 +17,54 @@
             
             <div class='card-body text-uppercase' *ngIf="!redeemItem.name">
 
+                <div class='mb-2' *ngIf="redeemItem.reward_image !== null">
+                    <img class="sb-rewardImage" [src]="redeemItem.reward_image" />
+                </div>
+
                 <div class='mb-2'>
                     {{ redeemItem.updated_at | date:'mediumDate' }}
                 </div>
 
                 <div class='mb-2'>
                     Loyalty Points:
-                        <span *ngIf="redeemItem.redeemed == 1" class='sb-text-red-gradient'>-{{ redeemItem.amount | number:'1.0':'en-US' }}</span>
-                        <span *ngIf="redeemItem.redeemed != 1" class='spotbie-text-gradient'>{{ redeemItem.amount | number:'1.0':'en-US' }} (not redeemed)</span>
+                        <span *ngIf="redeemItem.redeemed == 1" class='sb-text-red-gradient'>-{{ redeemItem.amount | number:'1.1-2':'en-US' }}</span>
+                        <span *ngIf="redeemItem.redeemed != 1" class='spotbie-text-gradient'>{{ redeemItem.amount | number:'1.1-2':'en-US' }} (not redeemed)</span>
                 </div>      
 
                 <div class='mb-2'>
-                    Customer Spent: <span class='sb-text-light-green-gradient'>${{ redeemItem.total_spent | number:'1.0':'en-US' }}</span>
+                    Customer Spent: <span class='sb-text-light-green-gradient'>${{ redeemItem.total_spent | number:'1.1-2':'en-US' }}</span>
                 </div>        
 
             </div>
             
             <div class='card-body text-uppercase' *ngIf="redeemItem.name">
 
+                <div class='mb-2' *ngIf="redeemItem.reward_name !== null">
+                    {{  redeemItem.reward_name }}
+                </div>
+
+                <div class='mb-2' *ngIf="redeemItem.reward_image !== null">
+                    <img class="sb-rewardImage" [src]="redeemItem.reward_image" />
+                </div>
+
                 <div class='mb-2'>
                     {{ redeemItem.updated_at | date:'mediumDate' }}
                 </div>
 
-                <div class='mb-2'>
-                    Loyalty Points: <span class='sb-text-light-green-gradient'>
-                        +{{ redeemItem.amount | number:'1.0':'en-US' }}
+                <div class='mb-2' *ngIf="redeemItem.point_cost == null">
+                    Loyalty Points <span class='sb-text-light-green-gradient'>
+                        +{{ redeemItem.amount | number:'1.1-2':'en-US' }}
                     </span>
                 </div>      
                          
-                <div class='mb-2'>
-                    Total Spent: <span class='sb-text-light-green-gradient'>${{ redeemItem.total_spent | number:'1.0':'en-US' }}</span>
+                <div class='mb-2' *ngIf="redeemItem.point_cost == null">
+                    Total Spent <span class='sb-text-light-green-gradient'>${{ redeemItem.total_spent | number:'1.1-2':'en-US' }}</span>
                 </div>        
-                            
+                  
+                <div class='mb-2' *ngIf="redeemItem.point_cost !== null">
+                    LP Cost <span class='sb-text-light-green-gradient'>{{ redeemItem.point_cost | number:'1.0':'en-US' }}</span>
+                </div>
+
             </div>
 
             <div class='card-footer text-uppercase text-center'>
@@ -72,11 +86,10 @@
             <i class="fas fa-exclamation-triangle"></i>
             <br/><br/>
             <p class="spotbie-text-gradient">
-                You have no redemeed points.<br/><br/>
-                Find places to eat, events, and retail stores through our map and start redeeming LP points.
+                You have no redemeed points.
             </p>    
-
-            <div class='spotbie-text-gradient mt-3 cursor-pointer' (click)="closeWindow()">
+            <br/><br/>
+            <div class='spotbie-text-gradient mt-4 cursor-pointer' (click)="closeWindow()">
                 CLOSE
             </div>
 

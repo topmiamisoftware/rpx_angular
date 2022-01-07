@@ -5,6 +5,9 @@ import { Observable } from 'rxjs'
 import { handleError } from 'src/app/helpers/error-helper'
 import { catchError } from 'rxjs/operators'
 import { Reward } from 'src/app/models/reward'
+import { Store } from '@ngrx/store'
+import { setValue } from 'src/app/spotbie/spotbie-logged-in/loyalty-points/loyalty-points.actions'
+import { LoyaltyPointBalance } from 'src/app/models/loyalty-point-balance'
 
 const REWARD_API = `${spotbieGlobals.API}reward` 
 
@@ -13,7 +16,7 @@ const REWARD_API = `${spotbieGlobals.API}reward`
 })
 export class RewardCreatorService {
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private store: Store<{ loyaltyPoints }>) {}
 
   public saveItem(itemObj: Reward): Observable<any>{
 
@@ -65,5 +68,23 @@ export class RewardCreatorService {
     ) 
   }
 
+  public claimReward(businessLoyaltyPointsObj: any, callback: Function): any{
 
+    let apiUrl = `${REWARD_API}/claim`
+
+    this.http.post<any>(apiUrl, businessLoyaltyPointsObj).pipe(
+
+      catchError(handleError("addLoyaltyPoints"))
+
+    ).subscribe(
+      resp => {
+        if(resp.success){                
+          let loyaltyPointBalance: LoyaltyPointBalance = resp.loyalty_points 
+          this.store.dispatch( setValue({loyaltyPointBalance}) )              
+        } 
+        callback(resp)
+      }    
+    )
+
+  }
 }

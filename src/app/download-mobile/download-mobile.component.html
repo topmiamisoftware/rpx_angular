@@ -1,0 +1,30 @@
+<div class="d-flex justify-content-center" *ngIf="buttonStyle == 0">
+
+    <span class="spotbie-button" class="cursor-pointer" (click)="downloadNow()">
+        <span>DOWNLOAD NOW</span>
+    </span>    
+
+</div>
+
+<div class="d-flex justify-content-center" *ngIf="buttonStyle == 1 && !isDesktop">
+
+    <span (click)="downloadNow()" class="cursor-pointer">
+        <span class="spotbie-text-gradient">DOWNLOAD NOW</span>
+    </span>    
+
+</div>
+
+<div class="d-flex justify-content-center" *ngIf="buttonStyle == 1 && isDesktop">
+
+    <table class="sb-app">
+        <tr>
+            <td class="cursor-pointer" (click)="downloadNowGoogle()">
+                <img class='sb-imgDownloadApp' src="../../assets/images/home_imgs/png/android_store_download.png" />
+            </td>
+            <td class="cursor-pointer" (click)="downloadNowiOs()"> 
+                <img class='sb-imgDownloadApp' src="../../assets/images/home_imgs/png/apple_store.png" />
+            </td>
+        </tr>
+    </table>    
+
+</div>

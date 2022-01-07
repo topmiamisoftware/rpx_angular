@@ -17,14 +17,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 
 import { UserInfoObjectComponent } from './user-info-object/user-info-object.component'
 import { RouterModule } from '@angular/router'
-import { BusinessFeaturesComponent } from '../features/business-features/business-features.component'
-import { UserFeaturesComponent } from '../features/user-features/user-features.component'
+import { BusinessFeaturesComponent } from '../../features/business-features/business-features.component'
+import { UserFeaturesComponent } from '../../features/user-features/user-features.component'
 import { BusinessDashboardModule } from '../spotbie-logged-in/business-dashboard/business-dashboard.module'
 import { UserDashboardModule } from '../spotbie-logged-in/user-dashboard/user-dashboard.module'
 import { ShareIconsModule } from 'ngx-sharebuttons/icons'
-import { MyFavoritesModule } from '../my-favorites/my-favorites.module'
+//import { MyFavoritesModule } from '../my-favorites/my-favorites.module'
 import { InfoObjectModule } from './info-object/info-object.module'
 import { AdsModule } from '../ads/ads.module'
+import { DownloadMobileModule } from 'src/app/download-mobile/download-mobile.module'
 
 @NgModule({
   declarations: [    
@@ -42,8 +43,9 @@ import { AdsModule } from '../ads/ads.module'
     ReactiveFormsModule,
     FormsModule,
     ShareIconsModule,
-    MyFavoritesModule,
+    //MyFavoritesModule,
     InfoObjectModule,
+    DownloadMobileModule,
     RouterModule,
     AgmCoreModule.forRoot({
       apiKey: environment.google_maps_apiKey,

@@ -4,7 +4,7 @@
         #spotbieMainMenu>
   <tr>  
 
-    <td class="sb-menu-nav" (click)="slideMenu()" *ngIf="isMobile || isTablet">
+    <td class="sb-menu-nav" (click)="slideMenu()" *ngIf="!isDesktop">
       <i class="fa fa-bars" *ngIf="!menuActive"></i>
       <i class="fa fa-times" *ngIf="menuActive"></i>
     </td>  
@@ -17,18 +17,20 @@
       
       <img class='sb-loyalty-points' *ngIf="!isMobile" (click)="toggleRedeemables()"  src="assets/images/spotbie-loyalty-points.svg" />
 
-      <div class="sb-businessMenu" *ngIf="isMobile">
+      <div class="sb-businessMenu" *ngIf="!isDesktop">
         <img class='sb-loyalty-points' (click)="toggleRedeemables()" src="assets/images/spotbie-loyalty-points.svg" />
       </div>
 
-      <div *ngIf="this.userType == '1' || this.userType == '2' || this.userType == '3'" class="sb-businessMenu" (click)="toggleRewardMenu()">
-        <img class='sb-loyalty-points' src="assets/images/menu spotbie-01.svg" />
-      </div>
+      <!--<div *ngIf="this.userType == eAllowedAccountTypes.PlaceToEat || 
+                  this.userType == eAllowedAccountTypes.Shopping || 
+                  this.userType == eAllowedAccountTypes.Events"
+            (click)="toggleRedeemables()" 
+            class="sb-businessMenu">
 
-      <div *ngIf="this.userType == '4'" class="sb-businessMenu" (click)="toggleRewardMenu()">
         <img class='sb-loyalty-points' src="assets/images/menu spotbie-01.svg" />
-      </div>
 
+      </div>-->
+      
       <img class='sb-qr' (click)="toggleQRScanner()"  src="assets/images/spotbie-qr.svg" /> 
 
       <span class='sb-userName' (click)="openWindow(settingsWindow)" *ngIf="userName !== null && isDesktop">{{ userName }}</span>         
@@ -36,10 +38,6 @@
     </td>    
 
     <td *ngIf="isDesktop" class="sb-desktopNavBar" style="text-align: right; cursor: default;"> 
-
-      <span (click)="myFavorites()" *ngIf="this.userType === eAllowedAccountTypes.Personal">
-        <i class="fas fa-star"></i>
-      </span>
 
       <span (click)="spawnCategories('food')" *ngIf="this.userType === eAllowedAccountTypes.Personal">
         PLACES TO EAT
@@ -89,9 +87,9 @@
           EVENTS <i class="fa fa-angle-right"></i>
         </div>
 
-        <div (click)="myFavorites()">
+        <!--<div (click)="myFavorites()">
           MY FAVORITES <i class="fas fa-angle-right"></i>
-        </div>
+        </div>-->
 
         <div (click)="openWindow(settingsWindow)">
           SETTINGS

@@ -1,6 +1,10 @@
 .spotbie-overlay-window{
     z-index: 97;    
 }
+.spotbie-loyaltyMenuDescription{
+    position: relative;
+    margin: 0 auto;
+}
 .sb-menuAdWrapper{
     position: relative;
     margin: 0 auto;
@@ -8,7 +12,7 @@
     width: 900px;
     max-width: 900px;
     display: block;
-    text-align: left;  
+    text-align: center;  
 }
 .sb-addMenuItem{
     position: relative;
@@ -46,7 +50,8 @@
     height: 215px;
     min-height: 215px;
     max-height: 215px;
-    margin-left: 10px;
+    margin-right: 5px;
+    margin-left: 5px;
     background-size: cover !important;
     background-repeat: no-repeat !important;
     background-position: center !important;
@@ -100,12 +105,12 @@
         width: 94%;
     }
     .sb-menuAdWrapper{
-        max-width: 87%;
-        width: 87%;
-        min-width: 87%;
+        max-width: 96%;
+        width: 96%;
+        min-width: 96%;
     }
     .sb-menuAd,
-    .sb-addMenuItem{
+    .sb-{
         max-width: 48%;
         width: 48%;
         min-width: 48%;

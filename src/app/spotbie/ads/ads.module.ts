@@ -1,16 +1,24 @@
 import { NgModule } from '@angular/core'
 import { CommonModule } from '@angular/common'
-import { SingleAdComponent } from './single-ad/single-ad.component'
+import { CommunityMemberModule } from '../community-member/community-member.module'
+import { BottomAdBannerComponent } from './bottom-ad-banner/bottom-ad-banner.component';
+import { NearbyFeaturedAdComponent } from './nearby-featured-ad/nearby-featured-ad.component'
+import { HeaderAdBannerComponent } from './header-ad-banner/header-ad-banner.component';
 
 @NgModule({
   declarations: [
-    SingleAdComponent,
+    HeaderAdBannerComponent,
+    BottomAdBannerComponent,
+    NearbyFeaturedAdComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    CommunityMemberModule
   ],
   exports : [
-    SingleAdComponent
+    HeaderAdBannerComponent,
+    BottomAdBannerComponent,
+    NearbyFeaturedAdComponent
   ]
 })
 export class AdsModule { }

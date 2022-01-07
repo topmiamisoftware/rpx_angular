@@ -16,26 +16,21 @@ div, table, i, td{
 }
 
 @font-face {
-
     font-family: sitka-italic;
     src: url(../src/assets/fonts/Fluent_SitkaSmall-Italic.ttf);
     font-display: swap;
-
 }
 
 @font-face {
-
     font-family: Gotham-Bold;
     src: url(assets/fonts/Gotham-Bold.otf);
     font-display: swap;
-
 }
 
 @font-face {
     font-family: Gotham-Book;
     src: url(assets/fonts/Gotham-Book.ttf);
     font-display: swap;
-
 }
 
 @font-face {
@@ -162,7 +157,7 @@ div:active, div:focus{
 ::-webkit-scrollbar{
     height: 10px;
     width: 10px;
-    background: #332f3e;
+    background: #1c1924;
 }
 ::-webkit-scrollbar-thumb{
     background: linear-gradient(90deg,#35a99f,#64e56f);
@@ -292,7 +287,7 @@ a, a:hover, a:active, a:after{
     letter-spacing: 2px;
 }
 .sb-text-light-green-gradient{
-    background: -webkit-linear-gradient(90deg, #35a99f, #64e56f);
+    background: -webkit-linear-gradient(0deg, #35a99f, #64e56f);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     letter-spacing: 2px;
@@ -302,12 +297,12 @@ a, a:hover, a:active, a:after{
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
+.spotbie-error div,
 .spotbie-error{    
     background: -webkit-linear-gradient(45deg,#e61d1d,#f70505,#ff0000);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
-
 .sb-closeButton{
     position: fixed;
     display: block;
@@ -345,7 +340,6 @@ a, a:hover, a:active, a:after{
     width: 100%;
     min-width: 100%;
     text-align: center;
-    background: -webkit-linear-gradient(45deg,#64e56f,#35a99f);
 }
 .sb-footer img{
     width: 120px;
@@ -354,9 +348,9 @@ a, a:hover, a:active, a:after{
     z-index: 1;
 }
 .sb-footer p{
-    color: #332f3e !important;
+    color: white !important;
     cursor: pointer;
-    font-size: .6rem !important;
+    font-size: .8rem !important;
 }
 .sb-input{
     position: relative;
@@ -382,12 +376,11 @@ a, a:hover, a:active, a:after{
 }
 .spotbie-invalid-feedback{
     position: relative;
-    margin: 20px auto;
+    margin: 10px auto;
     max-width: 440px;
     text-align: left;
     letter-spacing: 3px;
-    line-height: 15px;
-    font-size: 15px;
+    font-size: .8rem;
 }
 .spotbie-play-button{
     position: absolute;
@@ -433,7 +426,7 @@ hr{
     color: inherit;
     font-size: 1rem;
     cursor: pointer;
-    letter-spacing: 2px;
+    letter-spacing: 0px;
     color: white !important;
     border: unset !important;
     padding: 0px;
@@ -818,6 +811,29 @@ p.sb-helpInfo{
     position: relative;
     margin: 0 auto;
 }
+
+.sb-getStarted{ 
+    max-width: 220px;
+    padding-top: 5px !important;
+    padding-bottom: 5px !important;
+    font-size: 20px;
+    border-radius: 13px!important;
+    background: -webkit-linear-gradient(45deg,#64e56f,#35a99f);
+    background: linear-gradient(45deg,#64e56f,#35a99f);
+    color: black;
+}
+.sb-getStarted span{
+    background: linear-gradient(45deg,#212529,#131313);
+    background: -webkit-linear-gradient(45deg,#212529,#131313);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;   
+}
+.fa-exclamation-triangle{
+    color: #ffc107;
+}
+#tidio-chat-iframe{
+    bottom: 5px;
+}
 /**WIDTH MEDIA QUERIES */
 @media (max-width: 1440px) {
     
@@ -875,8 +891,13 @@ p.sb-helpInfo{
         right: 2%;
     }    
 }
-@media (max-width: 700px) { 
-
+@media (max-width: 650px) { 
+    .sb-getStarted span{
+        background: unset;
+        -webkit-background-clip: unset;
+        -webkit-text-fill-color: unset;
+        color: #212529;        
+    }
 }
 @media (max-width: 600px) { 
     .spotbie-el-fixed-bottom{
@@ -895,12 +916,10 @@ p.sb-helpInfo{
     }    
 }
 @media (max-width: 560px) {
-
     .sb-material-dark .sb-icon,
     .sb-material-light .sb-icon{
         font-size: 1.4rem !important;
     }
-    
     .sb-mainWrapper{
         min-width: 90%;
         max-width: 90%
@@ -957,6 +976,9 @@ p.sb-helpInfo{
         max-width: 90%;
         font-size: 18px;
     }
+    #tidio-chat-iframe{
+        bottom: 10px;
+    }    
     .spotbie-toast-input-box {
         border-radius: 0px
     }
@@ -987,27 +1009,27 @@ p.sb-helpInfo{
     }      
 }
 @media (max-width: 420px) { 
-        .spotbie-button{
-            max-width: 65%;
-            width: 65%;
-            min-width: 65%;
-            font-size: .9rem !important;
-            padding-top: 11px!important;
-            padding-bottom: 11px!important;            
-        }     
-        .sb-inputWithIconWrapper{
-            min-width: 90% !important;
-            max-width: 90%;
-        }
-        .sb-input{
-            font-size: 16px;
-        }
-        .spotbie-invalid-feedback{
-            font-size: 11px!important;
-            max-width: 90%;
-            min-width: 90%;
-            margin-bottom: 10px;
-        }                 
+    .spotbie-button{
+        max-width: 65%;
+        width: 65%;
+        min-width: 65%;
+        font-size: .9rem !important;
+        padding-top: 11px!important;
+        padding-bottom: 11px!important;            
+    }     
+    .sb-inputWithIconWrapper{
+        min-width: 90% !important;
+        max-width: 90%;
+    }
+    .sb-input{
+        font-size: 16px;
+    }
+    .spotbie-invalid-feedback{
+        font-size: 11px!important;
+        max-width: 90%;
+        min-width: 90%;
+        margin-bottom: 10px;
+    }                 
 }
 @media (max-width: 360px) { 
     .spotbie-select-table-img{

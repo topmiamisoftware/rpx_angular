@@ -27,6 +27,18 @@ export class InfoObject{
     //Used for spotbie community members
     private _user_type: number
 
+    public price: number = null
+    public phone: string = null
+
+    public distance = null
+
+    public friendly_transactions = null
+
+    public price_on = null
+
+    public loc_x = null
+    public loc_y = null
+
     public set id(value: any){
         this._id = value
     }

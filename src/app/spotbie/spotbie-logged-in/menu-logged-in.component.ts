@@ -1,11 +1,11 @@
-import { Component, OnInit, Input, ViewChild, EventEmitter, Output, ElementRef } from '@angular/core'
-import { Router } from '@angular/router'
+import { Component, OnInit, ViewChild, EventEmitter, Output, ElementRef } from '@angular/core'
 import { UserauthService } from 'src/app/services/userauth.service'
 import { MapComponent } from '../map/map.component'
 import { DeviceDetectorService } from 'ngx-device-detector'
 import { LoyaltyPointsService } from 'src/app/services/loyalty-points/loyalty-points.service'
 import { AllowedAccountTypes } from 'src/app/helpers/enum/account-type.enum'
 import { SettingsComponent } from './settings/settings.component'
+import { logOutCallback } from 'src/app/helpers/logout-callback'
 
 @Component({
   selector: 'app-menu-logged-in',
@@ -46,7 +46,7 @@ export class MenuLoggedInComponent implements OnInit {
   public isDesktop: boolean
   public isTablet: boolean
 
-  public userType: string
+  public userType: number
 
   public userLoyaltyPoints: number = 0
 
@@ -60,8 +60,7 @@ export class MenuLoggedInComponent implements OnInit {
 
   public eventMenuOpen: boolean = false
 
-  constructor(private router : Router,
-              private userAuthService : UserauthService,
+  constructor(private userAuthService : UserauthService,
               private deviceService: DeviceDetectorService,
               private loyaltyPointsService: LoyaltyPointsService) {}
 
@@ -94,8 +93,23 @@ export class MenuLoggedInComponent implements OnInit {
   }
 
   public home(){
-    this.spotbieMap.closeCategories()
-    this.spotbieMap.openWelcome()
+    
+    this.settingsWindow.open = false
+    this.foodWindow.open = false
+    this.getRedeemableItems = false
+    this.eventMenuOpen = false
+
+    if(this.userType == AllowedAccountTypes.Personal){
+      
+      this.spotbieMap.openWelcome() 
+      this.spotbieMap.closeCategories()
+
+    } else {
+
+      this.toggleQRScanner();
+
+    }
+
   }
 
   public openBusinessSettings(){
@@ -133,18 +147,8 @@ export class MenuLoggedInComponent implements OnInit {
 
     this.userAuthService.logOut().subscribe(
       resp => {
-        this.logOutCallback(resp)
+        logOutCallback(resp)
     })
-
-  }
-  
-  private logOutCallback(logOutResponse : any): void{
-
-    if(logOutResponse.success){
-      window.document.body.style.backgroundColor = 'unset'
-      this.router.navigate(['/home'])
-    } else
-      console.log("Log Out Error : ", logOutResponse)
 
   }
 
@@ -177,6 +181,10 @@ export class MenuLoggedInComponent implements OnInit {
 
   ngOnInit() : void {
 
+    this.isMobile = this.deviceService.isMobile()
+    this.isDesktop = this.deviceService.isDesktop()
+    this.isTablet = this.deviceService.isTablet()
+
     this.loyaltyPointsService.userLoyaltyPoints$.subscribe(
 
       loyaltyPointsBalance =>{
@@ -188,11 +196,7 @@ export class MenuLoggedInComponent implements OnInit {
 
     )
 
-    this.isMobile = this.deviceService.isMobile()
-    this.isDesktop = this.deviceService.isDesktop()
-    this.isTablet = this.deviceService.isTablet()
-
-    this.userType = localStorage.getItem('spotbie_userType')
+    this.userType = parseInt(localStorage.getItem('spotbie_userType'))
 
     if(this.userType == AllowedAccountTypes.Personal)
       this.business = false

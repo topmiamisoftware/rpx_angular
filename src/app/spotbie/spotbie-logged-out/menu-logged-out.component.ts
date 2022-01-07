@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, Output, EventEmitter } from '@angular/core'
+import { Component, OnInit, ViewChild, Output, EventEmitter, ElementRef } from '@angular/core'
 import { Location } from '@angular/common'
 
 import { externalBrowserOpen } from 'src/app/helpers/cordova/web-intent'
@@ -15,12 +15,10 @@ export class MenuLoggedOutComponent implements OnInit {
   @Output() spawnCategoriesOut = new EventEmitter()
   @Output() openHome = new EventEmitter()
 
-  @ViewChild('spotbieMainMenu') spotbieMainMenu
+  @ViewChild('spotbieMainMenu') spotbieMainMenu: ElementRef
 
   public logInWindow = { open: false }
   public signUpWindow = { open: false }
-
-  public home_route: boolean = false
 
   public prevScrollpos
   
@@ -86,8 +84,10 @@ export class MenuLoggedOutComponent implements OnInit {
   }
   
   public myFavorites(){
+
     this.menuActive = false
     this.myFavoritesEvt.emit()
+    
   }
 
   home(){
@@ -104,10 +104,10 @@ export class MenuLoggedOutComponent implements OnInit {
     
     const activatedRoute = this.location.path()
 
-    if(activatedRoute.indexOf('/home') > -1)
-      this.home_route = true
-    else
-      this.home_route = false
+    this.isMobile = this.deviceService.isMobile()
+    this.isDesktop = this.deviceService.isDesktop()
+    this.isTablet = this.deviceService.isTablet()
+
     
     // check if we need to auto log-in
     const cookiedRememberMe = localStorage.getItem('spotbie_rememberMe')
@@ -118,11 +118,17 @@ export class MenuLoggedOutComponent implements OnInit {
         && logged_in !== '1'){
       this.logInWindow.open = true
     }
+
+  }
+
+  ngAfterViewInit(): void {
     
-    this.isMobile = this.deviceService.isMobile()
-    this.isDesktop = this.deviceService.isDesktop()
-    this.isTablet = this.deviceService.isTablet()
-    
+    //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
+    //Add 'implements AfterViewInit' to the class.
+    setTimeout(()=>{
+      this.spotbieMainMenu.nativeElement.style.display = 'table'
+    }, 750) 
+
   }
 
 }

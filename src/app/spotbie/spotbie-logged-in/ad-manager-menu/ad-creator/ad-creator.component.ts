@@ -2,13 +2,19 @@ import { HttpClient, HttpEventType } from '@angular/common/http'
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { Ad } from 'src/app/models/ad'
+import { Business } from 'src/app/models/business'
 import { LoyaltyPointBalance } from 'src/app/models/loyalty-point-balance'
 import { LoyaltyPointsService } from 'src/app/services/loyalty-points/loyalty-points.service'
 import { AdCreatorService } from 'src/app/services/spotbie-logged-in/ad-manager-menu/ad-creator/ad-creator.service'
+import { BottomAdBannerComponent } from 'src/app/spotbie/ads/bottom-ad-banner/bottom-ad-banner.component'
+import { HeaderAdBannerComponent } from 'src/app/spotbie/ads/header-ad-banner/header-ad-banner.component'
+import { NearbyFeaturedAdComponent } from 'src/app/spotbie/ads/nearby-featured-ad/nearby-featured-ad.component'
+import { environment } from 'src/environments/environment'
 import * as spotbieGlobals from '../../../../globals'
 
-const AD_MEDIA_UPLOAD_API_URL = `${spotbieGlobals.API}ad/upload-media`
-const AD_MEDIA_MAX_UPLOAD_SIZE = 25e+6
+const AD_MEDIA_UPLOAD_API_URL = `${spotbieGlobals.API}in-house/upload-media`
+const AD_MEDIA_MAX_UPLOAD_SIZE = 10e+6
+const AD_PAYMENT_URL = `${environment.baseUrl}/make-payment/in-house/`
 
 @Component({
   selector: 'app-ad-creator',
@@ -17,11 +23,15 @@ const AD_MEDIA_MAX_UPLOAD_SIZE = 25e+6
 })
 export class AdCreatorComponent implements OnInit {
 
-  @Input() ad: Ad
+  @Input() ad: Ad = null
 
   @ViewChild('spbInputInfo') spbInputInfo
   @ViewChild('adMediaInput') adMediaInput
+  @ViewChild('adMediaMobileInput') adMediaMobileInput
   @ViewChild('spbTopAnchor') spbTopAnchor
+
+  @ViewChild('adApp') adApp: HeaderAdBannerComponent | BottomAdBannerComponent | NearbyFeaturedAdComponent
+  @ViewChild('adAppMobile') adAppMobile: HeaderAdBannerComponent | BottomAdBannerComponent
 
   @Output() closeWindowEvt = new EventEmitter()
   @Output() closeThisEvt = new EventEmitter()
@@ -34,9 +44,10 @@ export class AdCreatorComponent implements OnInit {
 
   public adFormSubmitted: boolean = false
 
-  public adUploadImage: string = '../../assets/images/home_imgs/find-places-to-eat.svg'
-
-  public adMediaMessage: string = "Upload Ad Image"
+  public adUploadImage: string = null
+  public adUploadImageMobile: string = null
+  
+  public adMediaMessage: string = "Upload Image"
 
   public adMediaUploadProgress: number = 0
 
@@ -45,19 +56,19 @@ export class AdCreatorComponent implements OnInit {
   public dollarValueCalculated: boolean = false
   
   public adTypeList: Array<any> = [
-    { name: 'Header Banner ($15.99/monthly)', dimensions: '728x90'}, 
-    { name: 'Related-Nearby Box ($13.99/monthly)', dimensions: '300x250'}, 
-    { name: 'In-Content Related-Nearby ($6.99)', dimensions: '336x280'}, 
+    { name: 'Header Banner ($15.99/monthly)', dimensions: '1200x370', dimensionsMobile: '600x600'}, 
+    { name: 'Related-Nearby Box ($13.99/monthly)', dimensions: '600x600'}, 
+    { name: 'Footer Banner ($10.99)', dimensions: '1200x370', dimensionsMobile: '600x600'} 
   ]
 
   public adCreated: boolean = false
   public adDeleted: boolean = false
 
-  public uploadMediaForm: boolean = false
-
   public loyaltyPointBalance: LoyaltyPointBalance
 
   public selected: number = 0
+
+  public business: Business = null
 
   constructor(private formBuilder: FormBuilder,
               private adCreatorService: AdCreatorService,
@@ -66,7 +77,9 @@ export class AdCreatorComponent implements OnInit {
                 
                 this.loyaltyPointsService.userLoyaltyPoints$.subscribe(
                   loyaltyPointsBalance => {
-                    this.loyaltyPointBalance = loyaltyPointsBalance
+
+                    this.loyaltyPointBalance = loyaltyPointsBalance                    
+
                   }
                 )
 
@@ -95,38 +108,47 @@ export class AdCreatorComponent implements OnInit {
       adValue: ['', adValueValidators],
       adName: ['', adNameValidators],
       adDescription: ['', adDescriptionValidators],
-      adImage: ['', adImageValidators]
+      adImage: ['', adImageValidators],
+      adImageMobile: ['']
     })
 
     if(this.ad !== null && this.ad !== undefined){
       
-      //console.log("ad is ", this.ad)
-
-      this.selected = this.ad.type
       this.adCreatorForm.get('adType').setValue(this.ad.type)
       this.adCreatorForm.get('adName').setValue(this.ad.name)
       this.adCreatorForm.get('adDescription').setValue(this.ad.description)     
+      this.adCreatorForm.get('adImage').setValue(this.ad.images)
+      this.adCreatorForm.get('adImageMobile').setValue(this.ad.images_mobile)
 
-    }
+      this.adUploadImage = this.ad.images
+      this.adUploadImageMobile = this.ad.images_mobile
 
-    this.adCreatorFormUp = true
+      this.selected = this.ad.type
+
+    } else
+      this.selected = 0
+    
+    this.adCreatorFormUp = true 
+
     this.loading = false
 
   }
 
   public saveAd(){
-    
+
     this.adFormSubmitted = true
     this.spbTopAnchor.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' })
     
-    let itemObj = new Ad()
-    itemObj.name = this.adName   
-    itemObj.description = this.adDescription
-    itemObj.type = this.adType
+    let adObj = new Ad()
+    adObj.name = this.adName   
+    adObj.description = this.adDescription
+    adObj.images = this.adUploadImage
+    adObj.images_mobile = this.adUploadImageMobile
+    adObj.type = this.adType
 
     if(this.ad === null || this.ad === undefined){
 
-      this.adCreatorService.saveAd(itemObj).subscribe(
+      this.adCreatorService.saveAd(adObj).subscribe(
         resp =>{        
           this.saveAdCb(resp)
         }
@@ -134,9 +156,9 @@ export class AdCreatorComponent implements OnInit {
 
     } else {
 
-      itemObj.id = this.ad.id
+      adObj.id = this.ad.id
 
-      this.adCreatorService.updateAd(itemObj).subscribe(
+      this.adCreatorService.updateAd(adObj).subscribe(
         resp =>{        
           this.saveAdCb(resp)
         }
@@ -148,33 +170,45 @@ export class AdCreatorComponent implements OnInit {
 
   public saveAdCb(resp: any){
 
-    console.log(resp)
-
     if(resp.success){
+
       this.adCreated = true    
+
+      let ad = resp.newAd
+
       setTimeout(() => {
+        
+        window.open(`${AD_PAYMENT_URL}${ad.uuid}`, '_blank')
+
         this.closeAdCreatorAndRefetchAdList()
-      }, 1500)      
+
+      }, 1500)    
+      
+    
     }
 
   }
 
-  public startAdMediaUploader(): void{
-    this.adMediaInput.nativeElement.click()
+  public startAdMediaUploader(type: string): void{
+    if(type == 'mobile'){
+      this.adMediaMobileInput.nativeElement.click()
+    } else {
+      this.adMediaInput.nativeElement.click()
+    }
   }
 
-  public uploadMedia(files): void {
+  public uploadMedia(files, type: string): void {
 
     const file_list_length = files.length
 
     if (file_list_length === 0) {
-      this.adMediaMessage = 'You must upload at least one file.'
+      this.adMediaMessage = 'Upload at least one image.'
       return
     } else if (file_list_length > 1) {
-      this.adMediaMessage = 'Upload only one item image.'
+      this.adMediaMessage = 'Upload only one image.'
       return
     }
-
+    
     this.loading = true
 
     const formData = new FormData()
@@ -189,11 +223,11 @@ export class AdCreatorComponent implements OnInit {
       upload_size += file_to_upload.size
 
       if (upload_size > AD_MEDIA_MAX_UPLOAD_SIZE) {
-        this.adMediaMessage = 'Max upload size is 25MB.'
+        this.adMediaMessage = 'Max upload size is 10MB.'
         this.loading = false
         return
       }
-
+      
       formData.append('image', file_to_upload, file_to_upload.name)
 
     }
@@ -212,8 +246,10 @@ export class AdCreatorComponent implements OnInit {
 
       if (event.type === HttpEventType.UploadProgress)
         this.adMediaUploadProgress = Math.round(100 * event.loaded / event.total)
-      else if (event.type === HttpEventType.Response)
-        this.adMediaUploadFinished(event.body)
+      else if (event.type === HttpEventType.Response){
+        this.adMediaUploadFinished(event.body, type)
+      }
+        
 
     })
 
@@ -221,13 +257,24 @@ export class AdCreatorComponent implements OnInit {
 
   }
 
-  private adMediaUploadFinished(httpResponse: any): void {
-
-    console.log('adMediaUploadFinished', httpResponse)
+  private adMediaUploadFinished(httpResponse: any, type: string): void {
 
     if (httpResponse.success){
-      this.adUploadImage = httpResponse.image
-      this.adCreatorForm.get('adImage').setValue(this.adUploadImage)
+      
+      if(type == 'desktop'){
+        
+        this.adUploadImage = httpResponse.image
+        this.adCreatorForm.get('adImage').setValue(this.adUploadImage)
+        this.adApp.updateAdImage(this.adUploadImage)
+
+      } else if(type == 'mobile'){
+
+        this.adUploadImageMobile = httpResponse.image
+        this.adCreatorForm.get('adImageMobile').setValue(this.adUploadImageMobile)
+        this.adAppMobile.updateAdImageMobile(this.adUploadImageMobile)
+      
+      }
+      
     } else
       console.log('adMediaUploadFinished', httpResponse)
     
@@ -236,6 +283,14 @@ export class AdCreatorComponent implements OnInit {
   }
 
   public adTypeChange(){
+
+    if(this.adUploadImage !== null) {
+      this.adApp.updateAdImage(this.adUploadImage)      
+    }
+    
+    if(this.adUploadImageMobile !== null){
+      this.adAppMobile.updateAdImageMobile(this.adUploadImageMobile)
+    }
 
   }
 
@@ -253,11 +308,15 @@ export class AdCreatorComponent implements OnInit {
 
   public deleteMe(){
     
-    this.adCreatorService.deleteMe(this.ad).subscribe(
-      resp => {
-        this.deleteMeCb(resp)
-      }
-    )
+    let r = confirm('Are you sure you want to delete this Ad?')
+
+    if(r){
+      this.adCreatorService.deleteMe(this.ad).subscribe(
+        resp => {
+          this.deleteMeCb(resp)
+        }
+      )
+    }
 
   }
 
@@ -276,8 +335,6 @@ export class AdCreatorComponent implements OnInit {
 
   public adFormatClass(){
 
-    console.log("adType", this.adType)
-
     switch(this.adType){
 
       case 0:
@@ -287,9 +344,17 @@ export class AdCreatorComponent implements OnInit {
         return 'related-nearby-box'
         
       case 2:
-        return 'in-content-related-nearby-box'      
+        return 'footer-banner'      
 
     }
+
+  }
+
+  public activateAdMembership(){
+
+    let paymentUrl = `${AD_PAYMENT_URL}${this.ad.uuid}`
+
+    window.open(paymentUrl, '_blank')
 
   }
 

@@ -6,11 +6,12 @@ import { Router } from '@angular/router'
 import { MenuLoggedOutComponent } from '../menu-logged-out.component'
 
 import { faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons'
+import { logOutCallback } from 'src/app/helpers/logout-callback'
 
 @Component({
   selector: 'app-log-in',
   templateUrl: './log-in.component.html',
-  styleUrls: ['./log-in.component.css', '../../menu.component.css']
+  styleUrls: ['../../menu.component.css', './log-in.component.css']
 })
 export class LogInComponent implements OnInit {
 
@@ -107,6 +108,7 @@ export class LogInComponent implements OnInit {
 
   }
 
+
   private loginCallback(loginResponse: any): void{
 
     if(loginResponse.error == 'popup_closed_by_user'){
@@ -115,9 +117,11 @@ export class LogInComponent implements OnInit {
     }
     
     if(loginResponse === undefined){
+
       this.logInForm.setErrors(null)
       this.logInForm.get('spotbieUsername').setErrors({ invalidUorP: true })
       this.loading = false
+      
     }
 
     let login_status = loginResponse.message
@@ -143,12 +147,16 @@ export class LogInComponent implements OnInit {
 
     } else {
 
+      console.log("login_status", login_status)
+
       if (login_status == 'invalid_cred' || 
           login_status == 'spotbie_google_account' || 
           login_status == 'spotbie_fb_account' || 
-          login_status == 'spotbie_account'
+          login_status == 'spotbie_account' ||
+          login_status == 'wrong_account_type'
       ) {
-  
+        
+
         if(login_status == 'invalid_cred'){      
         
           this.spotbieSignUpIssues.nativeElement.scrollIntoView({ behavior: "smooth", block: "start" })
@@ -161,12 +169,10 @@ export class LogInComponent implements OnInit {
           this.logInForm.get('spotbieUsername').setErrors({ spotbie_fb_account: true })         
         else if(login_status == 'spotbie_account')
           this.logInForm.get('spotbieUsername').setErrors({ spotbie_account: true })
+        else if(login_status == 'wrong_account_type')
+          this.logInForm.get('spotbieUsername').setErrors({ wrong_account_type: true })          
 
-        localStorage.setItem('spotbie_userId', null)
-        localStorage.setItem('spotbie_loggedIn', '0')
-        localStorage.setItem('spotbie_userApiKey', null)
-        localStorage.setItem('spotbie_rememberMe', '0')
-        localStorage.setItem('spotbie_rememberMeToken', null)
+        logOutCallback({success: true}, false)
   
       } 
 
@@ -192,6 +198,7 @@ export class LogInComponent implements OnInit {
     this.userAuthService.userLogin = this.email
     this.userAuthService.userPassword = this.password
     this.userAuthService.userRememberMe = this.rememberMeState
+    this.userAuthService.route = this.router.url
     // console.log(this.rememberMeState)
 
     this.loginUser()

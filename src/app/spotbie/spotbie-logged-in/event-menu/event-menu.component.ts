@@ -39,7 +39,7 @@ export class EventMenuComponent implements OnInit {
   public qrCodeLink: string = null
   public userHash: string = null
 
-  public userType: string = null
+  public userType: number = null
 
   public business: Business = new Business()
 
@@ -154,7 +154,7 @@ export class EventMenuComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.userType = localStorage.getItem('spotbie_userType')
+    this.userType = parseInt(localStorage.getItem('spotbie_userType'))
 
     if(this.userType !== AllowedAccountTypes.Personal){
 

@@ -10,6 +10,8 @@ export class RewardComponent implements OnInit {
 
   @Output('closeWindowEvt') closeWindowEvt = new EventEmitter()
 
+  @Input('fullScreenMode') fullScreenMode: boolean = true
+
   @Input('reward') reward: Reward
 
   @Input('userPointToDollarRatio') userPointToDollarRatio: number
@@ -24,8 +26,15 @@ export class RewardComponent implements OnInit {
 
   constructor() { }
 
-  public deleteMe(){
-    
+  public getFullScreenModeClass(){
+
+    console.log("getFullScreenModeClass", this.fullScreenMode)
+
+    if(this.fullScreenMode)
+      return 'fullScreenMode'
+    else
+      return ''
+  
   }
 
   public closeThis(){

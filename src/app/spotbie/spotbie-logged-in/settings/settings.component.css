@@ -18,6 +18,17 @@
     background-size: cover;
     text-align: center;    
     z-index: 97;
+    background: url(src/assets/images/home_imgs/jpg/spotbie-miami-find-new-friends.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;    
+}
+.fa-exclamation-triangle{
+    position: relative;
+    display: block;
+    margin: 0 auto;
+    font-size: 45px;
+    color: #ffc107;
 }
 .spotbie-select-menu{
     overflow-y: hidden !important;
@@ -36,7 +47,6 @@
     max-width: 950px;
     padding: 20px;
     border-radius: 20px;
-    border-bottom: 1px solid #535353;
 }
 .spotbie-place-result td{
     padding: unset;
@@ -153,6 +163,9 @@ agm-map{
 .sb-input{
     min-width: 500px;
     text-align: left;
+    min-width: 500px;
+    text-align: left;
+    border: unset;    
 }
 textarea{
     height: 300px;

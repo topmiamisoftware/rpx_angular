@@ -17,11 +17,12 @@ import { ValidateUniqueEmail } from 'src/app/validators/email-unique.validator'
 
 import { faEye, faEyeSlash, faInfoCircle } from '@fortawesome/free-solid-svg-icons'
 import { UserauthService } from 'src/app/services/userauth.service'
+import { logOutCallback } from 'src/app/helpers/logout-callback'
 
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.component.html',
-  styleUrls: ['./sign-up.component.css', '../menu-logged-out.component.css', '../../menu.component.css']
+  styleUrls: [ '../../menu.component.css', './sign-up.component.css']
 })
 export class SignUpComponent implements OnInit {
 
@@ -87,9 +88,11 @@ export class SignUpComponent implements OnInit {
     }
 
     if(loginResponse === undefined){
+
       this.signUpFormx.setErrors(null)
-      this.spotbieSignUpIssues.nativeElement.innerHTML = "Invalid username or password."
+      this.spotbieSignUpIssues.nativeElement.innerHTML = "<span class='spotbie-text-gradient spotbie-error'>Invalid username or password.</span>"
       this.loading = false
+
     }
 
     let login_status = loginResponse.message
@@ -100,9 +103,10 @@ export class SignUpComponent implements OnInit {
       localStorage.setItem('spotbie_loggedIn', '1')
       localStorage.setItem('spotbie_rememberMe', this.userAuthService.userRememberMe)
       localStorage.setItem('spotbie_userId', loginResponse.user.id)
-      localStorage.setItem('spotbiecom_session', loginResponse.user.original.access_token)
+      localStorage.setItem('spotbiecom_session', loginResponse.token_info.original.access_token)
       localStorage.setItem('spotbie_userDefaultImage', loginResponse.spotbie_user.default_picture)
-
+      localStorage.setItem('spotbie_userType', loginResponse.spotbie_user.user_type)
+      
       if( this.userAuthService.userRememberMe == '1' ){
 
         this.rememberMeToken = loginResponse.remember_me_token
@@ -114,27 +118,33 @@ export class SignUpComponent implements OnInit {
 
     } else {
 
-      if (login_status == 'invalid_cred' || login_status == 'social_media_account' || login_status == 'spotbie_account') {
+      if (login_status == 'invalid_cred' || 
+          login_status == 'spotbie_google_account' || 
+          login_status == 'spotbie_fb_account' || 
+          login_status == 'spotbie_account' ||
+          login_status == 'wrong_account_type' 
+      ) {
   
-        if(login_status == 'invalid_cred')      
-          this.spotbieSignUpIssues.nativeElement.innerHTML = "Invalid username or password."   
-        else if(login_status == 'social_media_account')
-          this.spotbieSignUpIssues.nativeElement.innerHTML = "You signed up with social media."
-        else if(login_status == 'spotbie_account')
-          this.spotbieSignUpIssues.nativeElement.innerHTML = "You signed up with an email address."
+        if(login_status == 'invalid_cred'){      
+        
+          this.spotbieSignUpIssues.nativeElement.scrollIntoView({ behavior: "smooth", block: "start" })
+          this.spotbieSignUpIssues.nativeElement.innerHTML = `<span class='spotbie-text-gradient spotbie-error'>INVALID USERNAME OR PASSWORD.</span>`
+          this.spotbieSignUpIssues.nativeElement.style.display = 'block'
 
-        this.spotbieSignUpIssues.nativeElement.className = 'spotbie-invalid-feedback spotbie-text-gradient spotbie-error text-uppercase'
-        this.spotbieSignUpIssues.nativeElement.style.display = 'block'
-  
-        localStorage.setItem('spotbie_userId', null)
-        localStorage.setItem('spotbie_loggedIn', '0')
-        localStorage.setItem('spotbie_userApiKey', null)
-        localStorage.setItem('spotbie_rememberMe', '0')
-        localStorage.setItem('spotbie_rememberMeToken', null)
+        } else if(login_status == 'spotbie_google_account')
+          this.signUpFormx.get('spotbieEmail').setErrors({ spotbie_google_account: true })
+        else if(login_status == 'spotbie_fb_account')
+          this.signUpFormx.get('spotbieEmail').setErrors({ spotbie_fb_account: true })         
+        else if(login_status == 'spotbie_account')
+          this.signUpFormx.get('spotbieEmail').setErrors({ spotbie_account: true })        
+        else if(login_status == 'spotbie_account')
+          this.signUpFormx.get('spotbieEmail').setErrors({ wrong_account_type: true })
+
+        logOutCallback({success: true}, false)
   
       } 
 
-    }
+    } 
 
     this.loading = false
 
@@ -235,12 +245,12 @@ export class SignUpComponent implements OnInit {
         localStorage.setItem('spotbie_userType', resp.spotbie_user.user_type)
         localStorage.setItem('spotbiecom_session', resp.token_info.original.access_token)
 
-        sign_up_instructions.innerHTML = 'Welcome to SpotBie!'
+        sign_up_instructions.innerHTML = "<span class='spotbie-text-gradient'>Welcome to SpotBie!</span>"
   
         window.location.reload()
 
       } else {
-        sign_up_instructions.innerHTML = 'There has been an error signing up.'
+        sign_up_instructions.innerHTML = "<span class='spotbie-text-gradient spotbie-error'>There has been an error signing up.</span>"
       }
 
       this.loading = false

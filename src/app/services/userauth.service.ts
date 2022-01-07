@@ -10,6 +10,8 @@ import { User } from '../models/user'
 
 import { SocialAuthService } from "angularx-social-login";
 import { FacebookLoginProvider, GoogleLoginProvider } from "angularx-social-login";
+import { AllowedAccountTypes } from '../helpers/enum/account-type.enum'
+import { logOutCallback } from '../helpers/logout-callback'
 
 const USER_API = spotbieGlobals.API + 'user'
 
@@ -26,6 +28,7 @@ export class UserauthService {
   public userRememberMe: string
   public userRememberMeToken: string
   public userTimezone: string
+  public route: string
 
   constructor(private http: HttpClient,
               private router: Router,
@@ -52,12 +55,10 @@ export class UserauthService {
       
   }
 
-  public getOAuthBearer(){
-    return this.socialAuthService.authState.subscribe(
-      (user) => {
-        console.log("user", user)
-      }
-    )
+  public getOAuthBearer(): Observable<any>{
+
+    return this.socialAuthService.authState
+
   }
 
   private reRouteFromSpotBie(){
@@ -68,9 +69,7 @@ export class UserauthService {
 
     const logOutApi = `${USER_API}/logout`
 
-    return this.http.post<any>(logOutApi, null).pipe(
-      tap( resp => { this.logOutCallback(resp) })
-    )
+    return this.http.post<any>(logOutApi, null)
 
   }
 
@@ -78,31 +77,7 @@ export class UserauthService {
 
     const logOutApi = `${USER_API}/close-browser`
 
-    return this.http.post<any>(logOutApi, null).pipe(
-      tap( resp => { this.logOutCallback(resp) })
-    )
-
-  }
-
-  private logOutCallback(logOutResponse: any): void {
-
-      if(logOutResponse.success){
-
-        let loggedOutFavorites = localStorage.getItem('spotbie_currentFavorites')
-
-        localStorage.clear()
-        
-        localStorage.setItem('spotbie_currentFavorites', loggedOutFavorites)
-
-        localStorage.setItem('spotbie_locationPrompted', '1')
-        localStorage.setItem('spotbie_userId', '0')
-        localStorage.setItem('spotbie_loggedIn', '0')
-        localStorage.setItem('spotbie_userApiKey', null)
-        localStorage.setItem('spotbie_rememberMe', '0')
-        localStorage.setItem('spotbie_rememberMeToken', null)
-        localStorage.setItem('spotbie_userType', null)
-        
-      }
+    return this.http.post<any>(logOutApi, null)
 
   }
 
@@ -114,7 +89,8 @@ export class UserauthService {
       'login': this.userLogin,
       'password': this.userPassword,
       'remember_me_opt': this.userRememberMe,
-      'timezone': this.userTimezone
+      'timezone': this.userTimezone,
+      'route': this.route
     }
 
     const logInApi = `${USER_API}/login`
@@ -192,7 +168,7 @@ export class UserauthService {
 
     const resetPasswordApi = `${USER_API}/send-pass-email`
     const setPassResetObj = {
-      email_or_phone: emailOrPhone
+      email: emailOrPhone
     }
 
     return this.http.post<any>(resetPasswordApi, setPassResetObj).pipe(
@@ -238,13 +214,14 @@ export class UserauthService {
 
   }
 
-  public deactivateAccount(password: string): Observable<any>{
+  public deactivateAccount(password: string, is_social_account: boolean): Observable<any>{
 
     const resetPasswordApi = `${USER_API}/deactivate`
 
     const passResetObj = {
       _method: 'DELETE',
-      password
+      password,
+      is_social_account 
     }
 
     return this.http.post<any>(resetPasswordApi, passResetObj).pipe(
@@ -264,8 +241,9 @@ export class UserauthService {
     this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID, gLoginOptions).catch(
       (error) => {
         loginCallBack(error)
+        return
       }
-    );
+    )
     
     this.socialAuthService.authState.subscribe((user) => {
 
@@ -314,7 +292,7 @@ export class UserauthService {
      * https://developers.facebook.com/docs/reference/javascript/FB.login/v2.11
      */
     const fbLoginOptions = {
-      scope: 'email,public_profile,user_friends',
+      scope: 'email,public_profile',
       return_scopes: true,
       enable_profile_selector: true
     }; 
@@ -322,6 +300,7 @@ export class UserauthService {
     this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID, fbLoginOptions).catch(
       (error) => {
         loginCallBack(error)
+        return
       }
     )
     
@@ -330,9 +309,9 @@ export class UserauthService {
       this.userLogin = user.email
       this.userPassword = null 
       this.userRememberMe = '1'
-      
+
       localStorage.setItem('spotbiecom_social_session', user.authToken)
-      localStorage.setItem('spotbiecom_social_id_session', user.idToken)
+      localStorage.setItem('spotbiecom_social_id', user.id)
 
       this.saveCurrentFbProfile(user, route).subscribe(
         (resp) => {
@@ -367,13 +346,15 @@ export class UserauthService {
   public verifyBusiness(businessInfo: any): Observable<any>{
 
     let apiUrl
-
+    
     switch(businessInfo.accountType){
-      case 1:
+      
+      case AllowedAccountTypes.PlaceToEat:
+      case AllowedAccountTypes.Shopping:
+      case AllowedAccountTypes.Events:
         apiUrl = `${BUSINESS_API}/verify`
         break
-      default:
-        return
+
     }
     
     const businessInfoObj = {
@@ -384,10 +365,14 @@ export class UserauthService {
       loc_x: businessInfo.loc_x,
       loc_y: businessInfo.loc_y,
       passkey: businessInfo.passkey,
-      categories: businessInfo.categories
+      categories: businessInfo.categories,
+      city: businessInfo.city,
+      country: businessInfo.country,
+      line1: businessInfo.line1,
+      line2: businessInfo.line2,
+      postal_code: businessInfo.postal_code,
+      state: businessInfo.state      
     }
-
-    console.log("businessInfoObj", businessInfoObj)
 
     return this.http.post<any>(apiUrl, businessInfoObj).pipe(
       catchError(handleError("verifyBusiness"))

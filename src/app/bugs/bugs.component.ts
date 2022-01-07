@@ -24,7 +24,7 @@ export class BugsComponent implements OnInit {
 
   public initForm(){
 
-    const description_validators = [Validators.maxLength(500), Validators.required]
+    const description_validators = [Validators.minLength(100), Validators.maxLength(500), Validators.required]
 
     this.bugsForm = this.formBuilder.group({
       description: ['', description_validators]
@@ -34,6 +34,11 @@ export class BugsComponent implements OnInit {
 
   public insertBug(): void{
     
+    this.submitted = true
+
+    if(this.bugsForm.invalid)
+      return
+
     const bugsObj = {
       description: this.description
     }

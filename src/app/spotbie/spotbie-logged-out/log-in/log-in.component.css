@@ -50,10 +50,12 @@
 }
 .spotbie-overlay-window{
     padding-bottom: 80px;
+    background-color: #32303e !important;
     background: url('../../../../assets/images/home_imgs/jpg/spotbie-login-background.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
+    z-index: 97 !important;
 }
 .spotbie-help-text{
     margin-top: 30px;
@@ -81,13 +83,10 @@
     text-align: right;
     font-size: .6rem;
 }
-
-#sign_up_general_instructions{
-    display: none;
-}
 .sb-signUpGeneralInstructions{
     margin: 0 auto;    
-    max-width: 440px;    
+    max-width: 440px; 
+    margin-top: 30px;   
     text-align: center;
     padding-bottom: 10px;
     font-size: .6rem;
@@ -98,9 +97,26 @@
     min-width: 100%;
     max-width: 100%;
 }
+.spotbie-button{
+    background: linear-gradient(90deg,#35a99fdb,#64e56fd9);
+    border: 1px solid #428c67 
+}
+.sb-closeButton{
+    top: 75px;
+    right: 1%;
+}
 /**WIDTH MEDIA QUERIES */
+@media (max-width: 1650px) {
+    .sb-signUpGeneralInstructions{
+        margin-top: 100px!important;
+    }
+}
 @media (max-width: 1300px) { }
-@media (max-width: 1200px) { }
+@media (max-width: 1200px) {
+    .sb-login-top-padding{
+        padding-top: 100px;
+    }
+ }
 @media (max-width: 1024px) { }
 @media (max-width: 900px)  { }
 @media (max-width: 768px) {
@@ -115,15 +131,20 @@
     .spotbie-overlay-window {
         width: 102%;
         min-width: 102%;
-        max-width: 102%;        
-        z-index: 95 !important;
-    }         
+        max-width: 102%;       
+    }
+    .sb-signUpGeneralInstructions{
+        margin-top: 40px!important;
+    }             
 }
 @media (max-width: 700px) { }
 @media (max-width: 600px) { 
     .sb-login-top-padding{
         padding-top: 40px;
     }
+    .fa-eye{
+        top: 23%;
+    }    
 }
 @media (max-width: 560px) { }
 @media (max-width: 460px) {     
@@ -135,7 +156,7 @@
         min-height: 55px;        
     }  
     .spotbie-overlay-window{
-        padding-bottom: 100px !important;
+        padding-top: 80px !important;
     } 
     .spotbie-forgot-your-pass{
         width: 90%;

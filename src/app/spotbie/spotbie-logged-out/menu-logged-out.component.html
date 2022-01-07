@@ -4,7 +4,7 @@
         #spotbieMainMenu>
   <tr>    
   
-    <td class="sb-menu-nav" (click)="slideMenu()" *ngIf="isMobile">
+    <td class="sb-menu-nav" (click)="slideMenu()" *ngIf="!isDesktop">
       <i class="fa fa-bars" *ngIf="!menuActive"></i>
       <i class="fa fa-times" *ngIf="menuActive"></i>
     </td>  
@@ -14,10 +14,6 @@
     </td>   
     
     <td *ngIf="isDesktop" class="sb-desktopNavBar" style="text-align: right; cursor: default;">
-      
-      <span (click)="myFavorites()">
-        <i class="fas fa-star"></i>
-      </span>
 
       <span (click)="home()">
         HOME
@@ -51,7 +47,7 @@
 <div class="spotbie-slider-menu-background" *ngIf="menuActive">
 
   <table class="spotbie-slider-menu
-                animated slideInLeft" #spotbieMainMenu *ngIf="menuActive">
+                animated slideInLeft">
 
     <tr><td>
       
@@ -70,11 +66,7 @@
       <div (click)="spawnCategories('events')">
         EVENTS <i class="fa fa-angle-right"></i>
       </div>
-
-      <div (click)="myFavorites()">
-        MY FAVORITES <i class="fas fa-angle-right"></i>
-      </div>
-
+      
       <div (click)="openWindow(signUpWindow)">
         SIGN UP
       </div>

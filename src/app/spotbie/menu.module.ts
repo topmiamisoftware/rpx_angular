@@ -12,7 +12,7 @@ import { MenuLoggedOutModule } from './spotbie-logged-out/menu-logged-out.module
 @NgModule({
   declarations: [
     MenuComponent,
-    EmailConfirmationComponent
+    EmailConfirmationComponent,
   ],
   imports: [
     CommonModule,

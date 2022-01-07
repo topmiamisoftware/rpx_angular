@@ -18,6 +18,13 @@ export class AppComponent {
   
   title = 'spotbie';
 
+  public testMode: boolean = true
+
+  public displayTestModeOptions: boolean = false
+
+  public lat: number = null
+  public lng: number = null
+
   constructor(private versionCheckService : VersionCheckService, 
               private spotbieMetaService: SpotbieMetaService) {}
   
@@ -26,12 +33,28 @@ export class AppComponent {
     this.versionCheckService.initVersionCheck(environment.versionCheckURL);
   }
 
-  public dismissToast() : void{
+  public dismissToast(): void{
     dismissToast()
   }
 
+  public openTestModeSpecs(): void{
+    this.displayTestModeOptions = true
+  }
+
+  public closeTestModeSpecs(): void{
+    this.displayTestModeOptions = false
+  }
+
   ngOnInit(){
+
+    if(environment.staging){
     
+      this.testMode = true
+      this.lat = environment.myLocX
+      this.lng = environment.myLocY
+
+    }
+
     this.spotbieMetaService.setTitle(SPOTBIE_META_TITLE)
     this.spotbieMetaService.setDescription(SPOTBIE_META_DESCRIPTION)
     this.spotbieMetaService.setImage(SPOTBIE_META_IMAGE)

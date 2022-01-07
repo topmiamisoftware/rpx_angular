@@ -14,13 +14,33 @@ h2,h3{
 body{
     background-color: white !important;
 }
+.sb-top-headerImg{
+    position: relative;
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    height: 650px;
+    min-height: 650px;
+    background: url(../../../assets/images/spotbie-miami.jpg);
+    background-position: center !important;
+    background-size: cover !important;
+    background-repeat: no-repeat !important;    
+    box-shadow: inset 0px -80px 65px #332f3e;
+}
 .spotbie-overlay-window{
-    padding: 50px;
-    background-color: #332f3e;
+    padding: 0px;
+    background-color: white;
     overflow-y: scroll;
     text-align: left;
 }
-
+p{
+    color: black;
+}
+.termsBody{
+    position: relative;
+    margin: 0 auto;
+    max-width: 1600px;    
+}
 /**WIDTH MEDIA QUERIES */
 @media (max-width: 1300px) { 
 

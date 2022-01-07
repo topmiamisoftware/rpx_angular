@@ -1,9 +1,10 @@
 <app-loading-screen *ngIf="loading"></app-loading-screen>
 
-<div class='spotbie-overlay-window'>  
+<div class='spotbie-overlay-window' #parentWindow id="spotbieMainSpotBieScroll">  
 
   <div [ngClass]="getMapWrapperClass()">
     
+    <div #singleAdAppAnchor></div>
     <div #scrollMapAppAnchor></div>
 
     <div class="sb-dashboardWrapper sb-v-wrapper" 
@@ -32,7 +33,7 @@
           <span class="spotbie-text-gradient text-uppercase mt-5 cursor-pointer">TRY LOCATION</span>
         </div>        
 
-    </div> 
+    </div>     
 
     <agm-map  [ngClass]="getMapClass()"
               [streetViewControl]="false"
@@ -42,6 +43,7 @@
               [longitude]="lng"
               [styles]="map_styles"
               [zoom]="zoom"
+              [gestureHandling]="cooperative"
               [fitBounds]="fitBounds">
 
         <agm-overlay [latitude]="lat" [longitude]="lng" *ngIf="locationFound">
@@ -58,7 +60,6 @@
                     [longitude]="lng"
                     *ngIf="locationFound"
                     [opacity]="0"
-                    (markerClick)="selfMarker()"
                     [agmFitBounds]="true">
 
           <agm-info-window #spotbie_user_marker_info_window [isOpen]="true">
@@ -78,35 +79,62 @@
               title="{{ mapObject.username }}"
               [ngStyle]="{ 'background' : 'url(' + mapObject.map_icon + ')' }">
           </div>
-
+          
         </agm-overlay>  
 
         </div>
 
         <div *ngIf="show_search_box && searchResults.length > 0">
 
-          <agm-overlay *ngFor="let mapObject of searchResults"
-                        [latitude]="mapObject.coordinates.latitude" 
-                        [longitude]="mapObject.coordinates.longitude">
+          <div *ngFor="let mapObject of searchResults">
 
-          <div class='spotbie-marker-bg'
-              (click)="pullSearchMarker(mapObject)"
-              [ngStyle]="{ 'background' : 'url(' + mapObject.icon + ')' }">
+            <div *ngIf="mapObject.business_id == undefined">
+
+              <agm-overlay
+                [latitude]="mapObject.coordinates.latitude" 
+                [longitude]="mapObject.coordinates.longitude">
+
+                <div class='spotbie-marker-bg'
+                    (click)="pullSearchMarker(mapObject)"
+                    [ngStyle]="{ 'background' : 'url(' + mapObject.icon + ')' }">
+                </div>
+
+              </agm-overlay>                    
+
+              <agm-marker [latitude]="mapObject.coordinates.latitude" 
+                          [longitude]="mapObject.coordinates.longitude"
+                          [agmFitBounds]="checkSearchResultsFitBounds()"                         
+                          [visible]="false">
+              </agm-marker>
+
+            </div>
+
           </div>
 
-          </agm-overlay>                    
+          <agm-overlay *ngFor="let communityMember of communityMemberList"
+                        [latitude]="communityMember.loc_x" 
+                        [longitude]="communityMember.loc_y">
 
-          <agm-marker *ngFor="let mapObject of searchResults"
-                      [latitude]="mapObject.coordinates.latitude" 
-                      [longitude]="mapObject.coordinates.longitude"
-                      [agmFitBounds]="true"
-                      [visible]="false"></agm-marker>
+            
+            <div class='spotbie-marker-bg sb-communityMember pulse'
+                (click)="pullSearchMarker(communityMember)"
+                [ngStyle]="{ 'background' : 'url(' + communityMember.photo + ')' }">
+                <img src="assets/images/home_imgs/spotbie-green-icon.svg" />
+            </div>
 
+          </agm-overlay>    
+
+          <agm-marker *ngFor="let communityMember of communityMemberList"
+              [latitude]="communityMember.loc_x" 
+              [longitude]="communityMember.loc_y"
+              [agmFitBounds]="checkCommunityMemberFitBounds()"
+              [visible]="false"></agm-marker>
+                      
         </div>
 
     </agm-map>    
 
-    <div class='spotbie-categoryPull' *ngIf="isMobile && map">
+    <div class='spotbie-categoryPull' *ngIf="!isDesktop && map">
 
       <div class='sb-optionGet' (click)="spawnCategories('food')">
         <img src="assets/images/home_imgs/find-places-to-eat.svg" />
@@ -122,13 +150,26 @@
 
     </div>
 
+    <app-bottom-ad-banner 
+            class='mt-4' 
+            *ngIf="map && locationFound && searchResults.length < 1 && isMobile"
+            [eventsClassification]="eventsClassification"
+            [accountType]="searchCategory" 
+            [categories]="bottom_banner_categories"  
+            [lat]="lat" 
+            [lng]="lng">
+    </app-bottom-ad-banner>
+
     <div class='spotbie-search-results' *ngIf="show_search_box && searchResults.length > 0">
 
       <div #scrollMapAppAnchor></div>
       
-      <app-single-ad class='spotbie-ad' [category]="this.search_keyword"></app-single-ad>
-
-      <div class='spotbie-close-results' (click)="closeSearchResults()">close</div>
+      <app-header-ad-banner #singleAdApp class='spotbie-ad' 
+                              [eventsClassification]="eventsClassification"
+                              [accountType]="searchCategory" 
+                              [categories]="number_categories" 
+                              [lat]="lat" 
+                              [lng]="lng"></app-header-ad-banner>
 
       <div class='spotbie-search-results-title text-uppercase' *ngIf="type_of_info_object == 'yelp_business'">
 
@@ -282,17 +323,18 @@
           <span class='fa fa-circle spotbie-is-closed' *ngIf="showOpened == false" [ngStyle]="{ 'margin-left' : '5px' }"></span>
         </ng-template>
     
-      </div>
-    
+      </div>      
+
       <div class='spotbie-search-result-wrapper' *ngIf="showSearchResults">
     
-        <div class='spotbie-search-results-title text-uppercase'>
-    
-          <span *ngIf="searchCategory !== 'events'">Showing results within {{ maxDistance }} miles. </span>
-
+        <div class='spotbie-search-results-title text-uppercase' style="margin-top:0px;" *ngIf="communityMemberList.length > 0">
+          <img src="assets/images/home_imgs/spotbie-green-icon.svg" class="sb-miniLogoIconM">
+          SPOTBIE COMMUNITY MEMBERS          
         </div>
-        
-        <!-- First let's display the member list for -->
+
+        <div class='mt-5' style="margin-top:0px;" *ngIf="communityMemberList.length == 0 && isDesktop"></div>
+
+        <!-- First let's display the spotbie community member list for -->
         <div class='spotbie-search-result spotbie-communityMember-search-result' 
               *ngFor='let communityMember of communityMemberList' 
               (click)="pullSearchMarker(communityMember)">
@@ -307,16 +349,16 @@
 
               <td>
     
-                <h6 class='spotbie-search-result-title' style='font-size: .8rem;'>
-                  {{ communityMember.name  | truncateText:[20, '...'] }}                   
+                <h6 class='spotbie-search-result-title sb-text-light-green-gradient' style='font-size: .8rem;'>
+                  {{ communityMember.name | truncateText:[20, '...'] }}                   
                 </h6>
                 
                 <p style='font-size: .5rem; text-overflow: ellipsis; max-height: 30px' class='spotbie-text-gradient mt-3'>
                   {{ communityMember.description | truncateText:[20, '...'] }}
                 </p>
 
-                <p style='font-size: .4rem;' class="spotbie-text-gradient mt-3">
-                  {{ communityMember.categories | truncateText:[20, '...']}}
+                <p style='font-size: .5rem;' class="spotbie-text-gradient mt-3">
+                  {{ communityMember.cleanCategories | truncateText:[20, '...']}}
                 </p>
 
                 <div class='sb-community-member-brand'>
@@ -331,8 +373,8 @@
       
         </div>       
 
-        <div class='spotbie-no-results' *ngIf='searchResults.length == 0'>No YELP Results Available.</div>
-    
+        <div class='spotbie-no-results mt-4 mb-4 text-uppercase' *ngIf="searchResults.length == 0">No results available.</div>
+
         <div class='spotbie-search-result' *ngFor='let search_result of searchResults' (click)="pullSearchMarker(search_result)">
           
           <table class='spotbie-search-result-table'>
@@ -348,18 +390,19 @@
             
                   {{ search_result.name }} 
                   
-                  <span class='spotbie-search-result-price' *ngIf="search_result.price_on == '1'">({{ search_result.price }})</span>
-          
                 </div>
     
                 <table class='spotbie-yelp-rating-table'>
                   <tr>
+
                     <td>
                       <div class='spotbie-search-result-rating-img' [ngStyle]="{ 'background' : 'url(' + search_result.rating_image + ')' }"></div>
                     </td>
+
                     <td>
                       <div class='spotbie-search-result-yelp-logo' [ngStyle]="{ 'background' : 'url(assets/images/yelp/yelp_logo.png)' }"></div>
                     </td>
+
                   </tr>
                 </table>
       
@@ -402,7 +445,7 @@
                 <div class='spotbie-event-code' *ngIf="search_result.dates.status.code">
                   Status: {{ search_result.dates.status.code }}
                 </div>      
-    
+
               </td>
     
             </tr>
@@ -412,9 +455,10 @@
           <div class='spotbie-search-result-transactions' *ngIf="search_result.transactions_on == '1'">{{ search_result.friendly_transactions }}</div>
     
         </div>
-    
-        <div>
-    
+        
+        <!--Page Number Wrapper -->
+        <div class='mt-5 pb-5'>
+
           <span class='sb-page-button text-uppercase cursor-pointer' (click)="goToPage(1)" *ngIf="allPages > 1">
             <i class="fa fa-angle-double-left"></i>
           </span> 
@@ -454,7 +498,15 @@
           <span class='spotbie-search-page-number'>{{ around_me_search_page }}/{{ allPages - 1 }}</span>
     
         </div>
-    
+
+        <app-bottom-ad-banner class='mt-4' 
+                              #bottomAdBanner 
+                              [eventsClassification]="eventsClassification"
+                              [accountType]="searchCategory" 
+                              [categories]="number_categories" 
+                              [lat]="lat" 
+                              [lng]="lng"></app-bottom-ad-banner>
+        
       </div>
 
     </div>
@@ -473,7 +525,15 @@
     
     </div>
 
-    <div [ngClass]="getMapPromptMobileClass()" *ngIf="business" #featureWrapper>
+    <div class="sb-footer pt-5 pb-5" *ngIf="showSearchResults || (showSearchResults && isLoggedIn !== '1' )">
+
+      <p [routerLink]="['/terms']">Terms & Privacy Policy</p>
+      <img class="mt-3 mb-3" src="assets/images/logo_spotbie_green.svg" />
+      <p [routerLink]="['/terms']">SpotBie, LLC.&copy; Copyright 2021</p>
+
+    </div>
+
+    <div [ngClass]="getMapPromptMobileClass()" *ngIf="business && !showSearchResults && !map" #featureWrapper>
 
       <div [ngClass]="getMapPromptMobileInnerWrapperClassOne()">
 
@@ -491,15 +551,7 @@
 
     </div>    
 
-    <div class="sb-footer pt-5 pb-5" *ngIf="business">
-
-      <p [routerLink]="['/terms']">Terms & Privacy Policy</p>
-      <img class="mt-3 mb-3" src="assets/images/home_imgs/logo_spotbie-02.svg" />
-      <p [routerLink]="['/terms']">SpotBie, LLC.&copy; Copyright 2021</p>
-  
-    </div>
-
-    <div [ngClass]="getMapPromptMobileClass()" *ngIf="!business" #featureWrapper>
+    <div [ngClass]="getMapPromptMobileClass()" *ngIf="!business && !showSearchResults && !map" #featureWrapper>
 
       <div [ngClass]="getMapPromptMobileInnerWrapperClassOne()">
 
@@ -515,7 +567,7 @@
     </div>
 
   </div>
-  
+
   <div class='spotbie-categories animated slideInRight' *ngIf="catsUp && searchCategory != 'events'">
   
     <div *ngFor="let category of categories; let i = index" [ngClass]="getSingleCatClass(i)" (click)="apiSearch(category)">
@@ -595,12 +647,23 @@
   
   </div>
 
-  <app-info-object [info_object]="infoObject" (closeWindow)="infoObjectWindow.open = false" *ngIf="infoObjectWindow.open"></app-info-object>
+  <app-info-object [info_object]="infoObject" 
+                    [eventsClassification]="eventsClassification"
+                    [accountType]="searchCategory" 
+                    [categories]="number_categories" 
+                    [lat]="lat" 
+                    [lng]="lng"
+                    (closeWindow)="infoObjectWindow.open = false" 
+                    *ngIf="infoObjectWindow.open">
+  </app-info-object>
 
-  <app-user-info-object [currentMarker]="currentMarker" *ngIf="sliderRight" (close)="sliderRight = false"></app-user-info-object>
+  <app-user-info-object [currentMarker]="currentMarker" 
+                      *ngIf="sliderRight" 
+                      [lat]="lat" [lng]="lng" 
+                      (close)="sliderRight = false"></app-user-info-object>
 
-  <app-my-favorites *ngIf="myFavoritesWindow.open" (closeWindow)="closeFavorites()"></app-my-favorites>
+  <!--<app-my-favorites *ngIf="myFavoritesWindow.open" (closeWindow)="closeFavorites()"></app-my-favorites>-->
 
-  <app-scroll-to-top></app-scroll-to-top>
+  <app-scroll-to-top [inputWindow]="parentWindow"></app-scroll-to-top>
 
 </div>

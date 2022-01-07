@@ -18,9 +18,12 @@ import { BusinessDashboardComponent } from '../spotbie-logged-in/business-dashbo
 import { UserDashboardComponent } from '../spotbie-logged-in/user-dashboard/user-dashboard.component'
 import { SortOrderPipe } from 'src/app/pipes/sort-order.pipe'
 import { Business } from 'src/app/models/business'
+import { BottomAdBannerComponent } from '../ads/bottom-ad-banner/bottom-ad-banner.component'
+import { EVENT_CATEGORIES, FOOD_CATEGORIES, SHOPPING_CATEGORIES } from './map_extras/map_extras'
+import { HeaderAdBannerComponent } from '../ads/header-ad-banner/header-ad-banner.component'
+import { environment } from 'src/environments/environment'
 
 const YELP_BUSINESS_SEARCH_API = 'https://api.yelp.com/v3/businesses/search'
-
 const BANNED_YELP_IDS = map_extras.BANNED_YELP_IDS
 
 @Component({
@@ -45,8 +48,12 @@ export class MapComponent implements OnInit {
   @ViewChild('homeDashboard') homeDashboard: BusinessDashboardComponent | UserDashboardComponent
 
   @ViewChild('featureWrapper') featureWrapper: ElementRef
+  @ViewChild('featureWrapperAnchor') featureWrapperAnchor: ElementRef
 
   @ViewChild('scrollMapAppAnchor') scrollMapAppAnchor: ElementRef
+
+  @ViewChild('bottomAdBanner') bottomAdBanner: BottomAdBannerComponent = null
+  @ViewChild('singleAdApp') singleAdApp: HeaderAdBannerComponent = null
 
   public isLoggedIn: string
   public iconUrl:  string
@@ -118,8 +125,12 @@ export class MapComponent implements OnInit {
   private searchResultsOriginal: Array<any> = []
 
   public event_categories
+  public event_classifications = map_extras.EVENT_CATEGORIES
   public food_categories = map_extras.FOOD_CATEGORIES
   public shopping_categories = map_extras.SHOPPING_CATEGORIES
+
+  public number_categories: number
+  public bottom_banner_categories: number
 
   public map_styles = map_extras.MAP_STYLES
 
@@ -154,6 +165,12 @@ export class MapComponent implements OnInit {
   public bannedYelpIDs = BANNED_YELP_IDS
 
   public communityMemberList: Array<Business> = []
+
+  public eventsClassification: number = null
+
+  public getSpotBieCommunityMemberListInterval: any = false
+
+  currentCategoryList: any
 
   constructor(private locationService: LocationService,
               private deviceService: DeviceDetectorService,
@@ -532,7 +549,18 @@ export class MapComponent implements OnInit {
 
   public showEventSub(classification: any){
 
+    this.eventsClassification = this.event_classifications.indexOf(classification.name)
     classification.show_sub = !classification.show_sub 
+
+  }
+
+  public newKeyWord(){
+    
+      this.totalResults = 0
+      this.allPages = 0
+      this.current_offset = 0
+      this.around_me_search_page = 1
+      this.searchResults = []
 
   }
 
@@ -543,15 +571,9 @@ export class MapComponent implements OnInit {
 
     keyword = encodeURIComponent(keyword)
 
-    if(this.search_keyword !== keyword){
+    this.communityMemberList = []
 
-      this.totalResults = 0
-      this.allPages = 0
-      this.current_offset = 0
-      this.around_me_search_page = 1
-      this.searchResults = []
-
-    }
+    if(this.search_keyword !== keyword) this.newKeyWord()
 
     if(resetEventSorter){
 
@@ -565,12 +587,26 @@ export class MapComponent implements OnInit {
     switch(this.searchCategory){
 
       case 'events':
-        apiUrl = `size=2&latlong=${this.lat},${this.lng}&classificationName=${keyword}&radius=45&${this.eventDateParam}`      
+        
+        apiUrl = `size=2&latlong=${this.lat},${this.lng}&classificationName=${keyword}&radius=45&${this.eventDateParam}`
+        
+        this.number_categories = this.event_categories.indexOf(this.search_keyword) 
+
         break
 
       case 'food':
-      case 'shopping':
+
         apiUrl = `${this.searchApiUrl}?latitude=${this.lat}&longitude=${this.lng}&term=${keyword}&categories=${keyword}&${this.showOpenedParam}&radius=40000&sort_by=rating&limit=20&offset=${this.current_offset}` 
+
+        this.number_categories = this.food_categories.indexOf(this.search_keyword)
+        
+        break
+
+      case 'shopping':
+        
+        apiUrl = `${this.searchApiUrl}?latitude=${this.lat}&longitude=${this.lng}&term=${keyword}&categories=${keyword}&${this.showOpenedParam}&radius=40000&sort_by=rating&limit=20&offset=${this.current_offset}` 
+
+        this.number_categories = this.shopping_categories.indexOf(this.search_keyword)
 
     }
 
@@ -581,7 +617,7 @@ export class MapComponent implements OnInit {
     const searchObjSb = {
       loc_x: this.lat,
       loc_y: this.lng,
-      categories: keyword
+      categories: JSON.stringify(this.number_categories)
     }
 
     switch(this.searchCategory){
@@ -629,11 +665,15 @@ export class MapComponent implements OnInit {
 
   public openWelcome(){
 
+    this.scrollMapAppAnchor.nativeElement.scrollIntoView({ behavior: "smooth", block: "start" })
+
     this.catsUp = false
+    this.map = false
     this.show_search_box = false 
+    this.showSearchResults = false
     this.infoObject = null
+    this.searchResults = []
     this.infoObjectWindow.open = false
-    this.featureWrapper.nativeElement.scrollIntoView({ behavior: "smooth", block: "start" })
 
   }
 
@@ -646,13 +686,13 @@ export class MapComponent implements OnInit {
   public spawnCategories(obj: any): void {
 
     let category
-
+    
     if(obj.category == undefined)
       category = obj
     else
       category = obj.category
 
-    this.scrollMapAppAnchor.nativeElement.scrollIntoView({ behavior: "smooth", block: "start" })
+    this.scrollMapAppAnchor.nativeElement.scrollIntoView()
 
     if(!this.locationFound){
       
@@ -688,6 +728,7 @@ export class MapComponent implements OnInit {
         this.searchApiUrl = YELP_BUSINESS_SEARCH_API
         this.searchCategoriesPlaceHolder = 'Search Places to Eat...'
         this.categories = this.food_categories
+        this.bottom_banner_categories = this.categories.indexOf(this.categories[Math.floor(Math.random()*this.categories.length)]);
         break
 
       case 'shopping':
@@ -695,6 +736,7 @@ export class MapComponent implements OnInit {
         this.searchApiUrl = YELP_BUSINESS_SEARCH_API
         this.searchCategoriesPlaceHolder = 'Search Shopping...'
         this.categories = this.shopping_categories
+        this.bottom_banner_categories = this.categories.indexOf(this.categories[Math.floor(Math.random()*this.categories.length)]);
         break
 
       case 'events':
@@ -702,6 +744,7 @@ export class MapComponent implements OnInit {
         this.event_categories = []
         this.searchCategoriesPlaceHolder = 'Search Events...' 
         this.categories = this.event_categories
+        this.bottom_banner_categories = this.categories.indexOf(this.categories[Math.floor(Math.random()*this.categories.length)]);
         this.classificationSearch()
         return
 
@@ -739,9 +782,15 @@ export class MapComponent implements OnInit {
   }
 
   public goToQrCode(){
+    
     //scroll to qr Code
     this.closeCategories()
-    this.homeDashboard.scrollToQrAppAnchor()
+    this.openWelcome()
+    
+    setTimeout(() =>{
+      this.homeDashboard.scrollToQrAppAnchor()  
+    }, 750)
+
   }
 
   public goToLp(){
@@ -793,7 +842,15 @@ export class MapComponent implements OnInit {
       } else {
 
         //Used for loading places to eat and shopping from yelp
-        api_url = `${this.searchApiUrl}?latitude=${this.lat}&longitude=${this.lng}&term=${search_term}&${this.showOpenedParam}&radius=40000&sort_by=best_match&limit=20&offset=${this.current_offset}`
+        api_url = `${this.searchApiUrl}
+          ?latitude=${this.lat}
+          &longitude=${this.lng}
+          &term=${search_term}
+          &${this.showOpenedParam}
+          &radius=40000
+          &sort_by=best_match
+          &limit=20
+          &offset=${this.current_offset}`
 
         const search_obj = {
           config_url: api_url
@@ -802,6 +859,19 @@ export class MapComponent implements OnInit {
         this.locationService.getBusinesses(search_obj).subscribe(
           resp => {
             this.getBusinessesSearchCallback(resp)
+          }
+        )
+
+        const searchObjSb = {
+          loc_x: this.lat,
+          loc_y: this.lng,
+          categories: this.search_keyword
+        }    
+
+        //Retrieve the SpotBie Community Member Results
+        this.locationService.getSpotBieCommunityMemberList(searchObjSb).subscribe(
+          resp => {
+            this.getSpotBieCommunityMemberListCb(resp)
           }
         )
 
@@ -837,6 +907,8 @@ export class MapComponent implements OnInit {
 
     this.apiSearch(this.search_keyword)
 
+    this.scrollMapAppAnchor.nativeElement.scrollIntoView({ behavior: "smooth", block: "start" })
+    
   }
 
   public loadMoreResults(action: number){
@@ -868,6 +940,8 @@ export class MapComponent implements OnInit {
     this.current_offset = (this.around_me_search_page * this.itemsPerPage) - this.itemsPerPage
 
     this.apiSearch(this.search_keyword)
+
+    this.scrollMapAppAnchor.nativeElement.scrollIntoView({ behavior: "smooth", block: "start" })
 
   }
 
@@ -912,9 +986,11 @@ export class MapComponent implements OnInit {
     
     if(this.showSearchResults)
       return 'spotbie-agm-map sb-map-results-open'
-    else{
+    else {
+      
       if(this.isMobile) return 'spotbie-agm-map sb-map-results-open'
       return 'spotbie-agm-map'    
+    
     }
     
   }
@@ -1032,43 +1108,73 @@ export class MapComponent implements OnInit {
   }
 
   public getSpotBieCommunityMemberListCb(httpResponse: any){
-
+    
     if(httpResponse.success){
-
-      let communityMemberList: Array<Business> = httpResponse.data.data
       
-      communityMemberList.forEach(business => {        
+      let communityMemberList: Array<Business> = httpResponse.data
+      
+      communityMemberList.forEach( (business: Business) => {        
 
         business.type_of_info_object = 'spotbie_community'
-        business.is_community_member = true
-
-        if(business.photo == ''){
-
-          switch(this.searchCategory){
-            case 'food':
-              business.photo = 'assets/images/home_imgs/find-places-to-eat.svg'
-              break
-      
-            case 'shopping':
-              business.photo = 'assets/images/home_imgs/find-places-for-shopping.svg'
-              break
+        business.is_community_member = true       
+        
+        switch(this.searchCategory){
+          
+          case 'food':
+            if(business.photo == '') business.photo = 'assets/images/home_imgs/find-places-to-eat.svg'
+            this.currentCategoryList = FOOD_CATEGORIES    
+            break
     
-            case 'events':
-              business.photo = 'assets/images/home_imgs/find-events.svg'
-              
-          }
-
+          case 'shopping':
+            if(business.photo == '') business.photo = 'assets/images/home_imgs/find-places-for-shopping.svg'
+            this.currentCategoryList = SHOPPING_CATEGORIES 
+            break
+  
+          case 'events':
+            if(business.photo == '') business.photo = 'assets/images/home_imgs/find-events.svg'
+            this.currentCategoryList = EVENT_CATEGORIES    
+            
         }
 
-        business.categories = JSON.parse(
-          business.categories.toString().replace(',', ', ')
-        )
+        let cleanCategories = []
 
-        business.rewardRate = (business.loyalty_point_dollar_percent_value / 100)
+        this.currentCategoryList.reduce((previousValue: string, currentValue: string, currentIndex: number, array: string[]) => {
+          
+          if(business.categories.indexOf(currentIndex) > -1)
+            cleanCategories.push(this.currentCategoryList[currentIndex])
+                    
+          return currentValue
+  
+        })
 
-        this.communityMemberList.push(business)    
+        business.cleanCategories = cleanCategories.toString()    
 
-      });
+        business.rewardRate = (business.loyalty_point_dollar_percent_value / 100)      
+
+      })
+
+      this.communityMemberList = communityMemberList
+      
+      if(!this.getSpotBieCommunityMemberListInterval){
+
+        this.getSpotBieCommunityMemberListInterval = setInterval(() => {
+
+          const searchObjSb = {
+            loc_x: this.lat,
+            loc_y: this.lng,
+            categories: JSON.stringify(this.number_categories)
+          }
+
+          //Retrieve the SpotBie Community Member Results
+          this.locationService.getSpotBieCommunityMemberList(searchObjSb).subscribe(
+            resp => {              
+              this.getSpotBieCommunityMemberListCb(resp)
+            }
+          )
+
+        }, 10000)
+        
+      }
 
     }
 
@@ -1142,7 +1248,7 @@ export class MapComponent implements OnInit {
 
       if (business.image_url == '') business.image_url = '0'
 
-      let friendly_transaction = 'This place offers '
+      let friendly_transaction = ''
 
       business.transactions = business.transactions.sort()
 
@@ -1160,7 +1266,7 @@ export class MapComponent implements OnInit {
 
           friendly_transaction = business.transactions.replace('restaurant_reservation', 'restaurant reservations')
 
-          friendly_transaction = "This place offers " + friendly_transaction + '.'
+          friendly_transaction = friendly_transaction + '.'
           
           break
       }
@@ -1224,6 +1330,20 @@ export class MapComponent implements OnInit {
 
   }
 
+  public checkSearchResultsFitBounds(){
+    if(this.communityMemberList.length < 3 && this.searchResults.length > 0) 
+      return true
+    else
+      return false
+  }
+
+  public checkCommunityMemberFitBounds(){
+    if(this.searchResults.length < 3 || this.communityMemberList.length >= 3) 
+      return true
+    else
+      return false
+  }
+
   /**
    * Fucntion gets called when the navigator's GPS system has found the user's location.
    * @param position
@@ -1233,10 +1353,21 @@ export class MapComponent implements OnInit {
     this.locationFound = true
     this.displayLocationEnablingInstructions = false
 
-    this.lat = position.coords.latitude
-    this.lng = position.coords.longitude
-    this.ogLat = position.coords.latitude
-    this.ogLng = position.coords.longitude
+    if(environment.fakeLocation){
+
+      this.lat = environment.myLocX
+      this.lng = environment.myLocY
+      this.ogLat = environment.myLocX
+      this.ogLng = environment.myLocY
+
+    } else {
+
+      this.lat = position.coords.latitude
+      this.lng = position.coords.longitude
+      this.ogLat = position.coords.latitude
+      this.ogLng = position.coords.longitude  
+
+    }
 
     this.spotbie_map.triggerResize(true)
 

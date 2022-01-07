@@ -11,6 +11,8 @@ import * as spotbieGlobals from '../../../../globals'
 const REWARD_MEDIA_UPLOAD_API_URL = `${spotbieGlobals.API}reward/upload-media`
 const REWARD_MEDIA_MAX_UPLOAD_SIZE = 25e+6
 
+const QR_CODE_CALIM_REWARD_SCAN_BASE_URL = environment.qrCodeRewardScanBaseUrl
+
 @Component({
   selector: 'app-reward-creator',
   templateUrl: './reward-creator.component.html',
@@ -33,6 +35,8 @@ export class RewardCreatorComponent implements OnInit {
   public rewardCreatorForm: FormGroup
   public rewardCreatorFormUp: boolean = false
 
+  public rewardClaimUrl: string = null
+
   public rewardFormSubmitted: boolean = false
 
   public rewardUploadImage: string = '../../assets/images/home_imgs/find-places-to-eat.svg'
@@ -53,6 +57,8 @@ export class RewardCreatorComponent implements OnInit {
   public uploadMediaForm: boolean = false
 
   public loyaltyPointBalance: LoyaltyPointBalance
+
+  public qrCodeClaimReward = QR_CODE_CALIM_REWARD_SCAN_BASE_URL
 
   constructor(private formBuilder: FormBuilder,
               private rewardCreatorService: RewardCreatorService,
@@ -105,6 +111,8 @@ export class RewardCreatorComponent implements OnInit {
 
       this.rewardUploadImage = this.reward.images
 
+      this.setRewardLink()
+
       this.calculateDollarValue()
 
     }
@@ -115,8 +123,12 @@ export class RewardCreatorComponent implements OnInit {
   }
 
   public setReward(reward: Reward){
-    this.reward = reward
-    
+    this.reward = reward    
+    this.setRewardLink()
+  }
+
+  private setRewardLink(){
+    this.rewardClaimUrl = `${this.qrCodeClaimReward}?&r=${this.reward.uuid}&t=claim_reward`
   }
 
   public calculateDollarValue(){
@@ -139,6 +151,7 @@ export class RewardCreatorComponent implements OnInit {
     this.spbTopAnchor.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' })
     
     let itemObj = new Reward()
+
     itemObj.name = this.rewardName   
     itemObj.description = this.rewardDescription
     itemObj.images = this.rewardImage
@@ -243,8 +256,6 @@ export class RewardCreatorComponent implements OnInit {
   }
 
   private rewardMediaUploadFinished(httpResponse: any): void {
-
-    console.log('rewardMediaUploadFinished', httpResponse)
 
     if (httpResponse.success){
 

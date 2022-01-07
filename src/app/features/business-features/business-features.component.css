@@ -1,0 +1,84 @@
+.sb-top-headerImg{
+    background: url('../../../assets/images/home_imgs/spotbie-grow-your-business-with-loyalty-points.jpg') !important;
+    background-position: center !important;
+    background-size: cover !important;
+    background-repeat: no-repeat !important;    
+}
+#sbReadImageRestaurants{
+    background: url('../../../assets/images/home_imgs/jpg/spotbie-find-restaurant-customers-near-you.jpg')
+}
+#sbReadImageEvents
+{
+    background: url('../../../assets/images/home_imgs/jpg/spotbie-find-restaurant-customers.jpg')
+}
+#sbReadImageShopping{
+    background: url('../../../assets/images/home_imgs/jpg/spotbie-find-customers-near-you.jpg')
+}
+#sbReadImageUsers{
+    background: url('../../../assets/images/home_imgs/jpg/spotbie-miami-find-new-friends.jpg')    
+}
+.fa-users,
+.fa-hamburger,
+.fa-dollar-sign,
+.fa-money-bill
+{
+    font-size: 1.2rem;
+    color: white;
+}
+.fa-map-marker-alt{
+    color: white;
+}
+.sb-getStarted{
+    color: black !important;
+}
+.calendly-inline-widget{
+    min-width: 90vw;
+    width: 90vw;
+    max-width: 90vw;
+    height: 70vh;
+    min-height: 70vh;
+    max-height: 70vh;
+    overflow-x: hidden;
+}
+@media (max-width: 1600px){
+    .sb-top-headerImg{
+        height: 550px;
+        min-height: 550px;
+    }
+}
+@media (max-width: 1250px){
+    .sb-top-headerImg{
+        height: 450px;
+        min-height: 450px;
+    }
+}
+@media (max-width: 1000px){
+    .sb-top-headerImg{
+        height: 400px;
+        min-height: 400px;
+    }
+}
+@media (max-width: 768px){
+    .sb-top-headerImg {
+        box-shadow: inset 0 0px 65px #332f3e;
+    }
+}
+
+@media (max-width: 650px){
+    .sb-top-headerImg {
+        background: url('../../../assets/images/home_imgs/spotbie-miami.jpg') !important;
+        background-position: center !important;
+        background-size: cover !important;
+        background-repeat: no-repeat !important;            
+        box-shadow: inset 0px -80px 65px #332f3e;
+        max-height: 300px;
+        min-height: 300px;
+        height: 300px;     
+    }
+    .spotbie-overlay-window{
+        width: 104%;
+        min-width: 104%;
+        max-width: 104%;
+    }
+}
+

@@ -7,7 +7,9 @@
         <h5 id="sp-lpTitle" class="spotbie-text-gradient text-center text-uppercase mt-4 mb-5">SPOTBIE LOYALTY POINTS</h5>
 
         <div class="spotbie-lpResetInfo spotbie-text-gradient text-uppercase mt-3 mb-3" 
-              *ngIf="userType !== eAllowedAccountTypes.Personal && loyaltyPointBalance.end_of_month !== null">
+              *ngIf="userType !== eAllowedAccountTypes.Personal && 
+                     loyaltyPointBalance.end_of_month !== null &&
+                     loyaltyPointBalance.balance !== null">
             POINTS RESET ON        
         </div>
 
@@ -22,13 +24,9 @@
                 {{ loyaltyPointBalance.balance | number:'1.0':'en-US' }}
             </span>
 
-            <span [ngClass]="loyaltyPointsClass()" *ngIf="loyaltyPointBalance.balance === null">
-                0
-            </span>
-
             <span class="sb-added-loyalty-points sb-text-light-green-gradient animated fadeOutUp" 
                     *ngIf="newUserLoyaltyPoints !== null"
-                    #newBalanceLoyaltyPoints>+{{ newUserLoyaltyPoints | number:'1.0':'en-US' }}</span>
+                    #newBalanceLoyaltyPoints>+{{ newUserLoyaltyPoints | number:'1.1-2':'en-US' }}</span>
 
         </p>    
 
@@ -115,8 +113,9 @@
         
         </form>               
         
-        <p class="spotbie-text-gradient text-uppercase mt-4" style="font-size: .8rem !important;" *ngIf="monthlyDollarValueCalculated">
-            monthly dollar value ${{ userPointToDollarRatio | number:'1.0':'en-US' }}
+        <p class="text-uppercase mt-4" style="font-size: .8rem !important;" *ngIf="monthlyDollarValueCalculated">
+            <span class='spotbie-text-gradient'>monthly dollar value </span>
+            <span class='sb-text-light-green-gradient'>${{ userPointToDollarRatio | number:'1.1-2':'en-US' }}</span>
         </p>
 
         <div class='spotbie-howDoesItWork spotbie-text-gradient text-center text-uppercase mt-4' (click)="toggleHelp()" style="cursor: pointer;">

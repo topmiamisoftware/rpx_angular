@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core'
 import { Router, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router'
+import { logOutCallback } from 'src/app/helpers/logout-callback'
 import { UserauthService } from '../userauth.service'
 
 @Injectable({
@@ -20,28 +21,12 @@ export class LoginGuardServiceService {
       
       } else {
 
-        let loggedOutFavorites = localStorage.getItem('spotbie_currentFavorites')
-        let isCordova = localStorage.getItem('isCordova')
+        let resp = {
+          success : true
+        }
 
-        localStorage.clear()
-        
-        localStorage.setItem('spotbie_currentFavorites', loggedOutFavorites)
-        localStorage.setItem('spotbie_locationPrompted', '1')
-        localStorage.setItem('spotbie_userId', '0')
-        localStorage.setItem('spotbie_loggedIn', '0')
-        localStorage.setItem('spotbie_rememberMe', '0')
-        localStorage.setItem('spotbie_rememberMeToken', null)      
-
-        localStorage.setItem('isCordova', isCordova)      
-
-        window.document.body.style.backgroundColor = 'unset'
-
-        this.router.navigate(['/home'], {
-          queryParams: {
-            return: state.url
-          }
-        })
-        
+        logOutCallback(resp)
+       
         return false
 
       }
