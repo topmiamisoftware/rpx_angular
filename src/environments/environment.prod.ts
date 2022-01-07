@@ -1,4 +1,4 @@
-let baseUrl = 'https://spotbie.com/'
+let baseUrl = 'https://spotbie-demo.netlify.com/'
 
 export const environment = {
   production: true,
@@ -11,7 +11,7 @@ export const environment = {
   qrCodeLoyaltyPointsScanBaseUrl : baseUrl + 'loyalty-points',
   qrCodeRewardScanBaseUrl : baseUrl + 'reward',
   ngrok: null,
-  fakeLocation: false,
+  fakeLocation: true,
   myLocX: 25.786286,
   myLocY: -80.186562
 }
