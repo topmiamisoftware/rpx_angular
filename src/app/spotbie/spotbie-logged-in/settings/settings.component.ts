@@ -352,7 +352,7 @@ export class SettingsComponent implements OnInit {
 
         }
 
-        const passKeyValidators = [Validators.required, Validators.minLength(6)]
+        const passKeyValidators = [Validators.required, Validators.minLength(4)]
 
         this.passKeyVerificationForm = this.formBuilder.group({
             passKey: ['', passKeyValidators]
