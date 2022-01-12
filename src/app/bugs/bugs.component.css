@@ -1,45 +1,33 @@
 h1, a {
-
     color: #4a8b00
-
 }
-
 h1, p {
-
     text-align: center
-
 }
-
 textarea{
     position: relative;
     display: block;
     margin: 0 auto;
 }
-
 .sb-mainWrapper {
+    min-width: 100%;
+    max-width: 100%;        
+    min-height: 100vh;
+    background-color: rgba(0,0,0,.902);
     background: url('../../assets/images/home_imgs/jpg/spotbie-login-background.jpg');
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;    
+    text-align: center;
+    padding-top: 75px !important;
 }
-
 .termsWrapper{
-    
     position: relative;
     margin: 0 auto;
     width: 96%;
     min-width: 96%;
     max-width: 96%
-
 }
-
-.sb-mainWrapper {
-    min-width: 100%;
-    max-width: 100%;        
-    min-height: 100vh;
-    background-color: rgba(255,255,255,.902);
-}
-
 /**WIDTH MEDIA QUERIES */
 @media (max-width: 1300px) { 
 
