@@ -2,7 +2,7 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-let ngrok = 'https://92fa-2600-1700-4804-d5f0-2a94-49f1-7969-6a84.ngrok.io/'
+let ngrok = 'https://0c44-2600-1700-4804-d5f0-73ea-17da-f75-b6dc.ngrok.io/'
 let baseUrl = 'https://192.168.1.65:4200/'
 
 export const environment = {
@@ -12,8 +12,8 @@ export const environment = {
   baseUrl: baseUrl,
   google_maps_apiKey: 'AIzaSyBg9GGAv2rRn8WQbylRbpF4j6u-9TFxBG8',
   google_places_apiAkey: 'AIzaSyChSn9IE6Dp0Jv8TS013np1b4X1rCsQt_E',
-  qrCodeLoyaltyPointsScanBaseUrl : baseUrl + 'loyalty-points',
-  qrCodeRewardScanBaseUrl : baseUrl + 'reward',
+  qrCodeLoyaltyPointsScanBaseUrl: baseUrl + 'loyalty-points',
+  qrCodeRewardScanBaseUrl: baseUrl + 'reward',
   /**
    * Enter the IP and PORT you are serving your Laravel App on. 
    * format: https://192.168.1.65:443/api/
