@@ -19,7 +19,6 @@ const SHOPPING_AD_IMAGE_MOBILE = 'assets/images/def/shopping/featured_banner_in_
 const EVENTS_AD_IMAGE = 'assets/images/def/events/footer_banner_in_house.jpg'
 const EVENTS_AD_IMAGE_MOBILE = 'assets/images/def/events/featured_banner_in_house.jpg'
 
-
 @Component({
   selector: 'app-bottom-ad-banner',
   templateUrl: './bottom-ad-banner.component.html',
@@ -196,7 +195,7 @@ export class BottomAdBannerComponent implements OnInit {
 
       this.business = resp.business
 
-      if(!this.editMode){
+      if(!this.editMode && this.business !== null){
 
         switch(this.business.user_type){
 
@@ -226,12 +225,11 @@ export class BottomAdBannerComponent implements OnInit {
         
       }
       
-      console.log("Your Footer Ad:", resp)
-      console.log("Footer Banner caretgory list", this.categoriesListFriendly)
-      
-      this.business.is_community_member = true
-      this.business.type_of_info_object = InfoObjectType.SpotBieCommunity
-      
+      if(this.business !== null){
+        this.business.is_community_member = true
+        this.business.type_of_info_object = InfoObjectType.SpotBieCommunity
+      }
+
       this.displayAd = true
 
       this.totalRewards = resp.totalRewards

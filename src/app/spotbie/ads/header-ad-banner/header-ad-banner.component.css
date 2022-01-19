@@ -190,14 +190,16 @@
 @media (max-width: 768px) { 
     .sb-mobileAdWrapper .spotbie-ad-image,
     .spotbie-ad-image{
-        position: relative;       
+        position: relative;
         left: 0;
         right: 0;
         min-height: 250px;
-        height: 250px;
-        max-height: 100%;
+        height: 375px;
+        max-height: 375px;    
         max-width: 100%;
-        box-shadow: unset;   
+        box-shadow: unset;
+        background-color: #26232e !important;
+        background-size: contain !important; 
     }
     .sb-categoryList{
         text-align: center;
@@ -251,4 +253,12 @@
         padding-bottom: 15px;        
         background-color: rgb(28 25 36) !important;
     }
+}
+@media (max-width: 420px) { 
+    .sb-mobileAdWrapper .spotbie-ad-image,
+    .spotbie-ad-image{
+        min-height: 250px;
+        height: 410px;
+        max-height: 410px;  
+    } 
 }

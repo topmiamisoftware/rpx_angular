@@ -108,10 +108,8 @@ export class SignUpComponent implements OnInit {
       localStorage.setItem('spotbie_userType', loginResponse.spotbie_user.user_type)
       
       if( this.userAuthService.userRememberMe == '1' ){
-
         this.rememberMeToken = loginResponse.remember_me_token
         localStorage.setItem('spotbie_rememberMeToken', this.rememberMeToken)
-
       }
       
       this.router.navigate(['/user-home'])
@@ -141,13 +139,10 @@ export class SignUpComponent implements OnInit {
           this.signUpFormx.get('spotbieEmail').setErrors({ wrong_account_type: true })
 
         logOutCallback({success: true}, false)
-  
       } 
-
     } 
 
     this.loading = false
-
   }
 
   public closeWindowX(): void {
