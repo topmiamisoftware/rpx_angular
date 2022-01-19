@@ -167,14 +167,11 @@ export class HeaderAdBannerComponent implements OnInit {
   public async getHeaderBannerAdCallback(resp: any){
 
     if(resp.success){
-
       this.ad = resp.ad      
       this.business = resp.business
-      
-      if(!this.editMode){
-        
-        switch(this.business.user_type){
 
+      if(!this.editMode && resp.business !== null){
+        switch(this.business.user_type){
           case AllowedAccountTypes.PlaceToEat:
             this.currentCategoryList = FOOD_CATEGORIES          
             break
@@ -186,7 +183,6 @@ export class HeaderAdBannerComponent implements OnInit {
           case AllowedAccountTypes.Shopping:
             this.currentCategoryList = SHOPPING_CATEGORIES          
             break     
-
         }
 
         this.categoriesListFriendly = []
@@ -197,39 +193,38 @@ export class HeaderAdBannerComponent implements OnInit {
             this.categoriesListFriendly.push(this.currentCategoryList[currentIndex])
                   
           return currentValue
-  
         })
-  
       }
 
       console.log("Your Ad:", resp)
       console.log("Header Banner caretgory list", this.categoriesListFriendly)
 
-      this.business.is_community_member = true
-      this.business.type_of_info_object = InfoObjectType.SpotBieCommunity
+      if(resp.business !== null){
+        this.business.is_community_member = true
+        this.business.type_of_info_object = InfoObjectType.SpotBieCommunity
+      }
 
       this.displayAd = true
 
       this.totalRewards = resp.totalRewards
 
-      if(!this.editMode)
-        this.distance = getDistanceFromLatLngInMiles(this.business.loc_x, this.business.loc_y, this.lat, this.lng)
-      else
-        this.distance = 5
+      if(resp.business !== null){
+        if(!this.editMode)
+          this.distance = getDistanceFromLatLngInMiles(this.business.loc_x, this.business.loc_y, this.lat, this.lng)
+        else
+          this.distance = 5
+      }
 
     } else
       console.log("getHeaderBannerAdCallback", resp)
 
     if(!this.switchAdInterval){
-
       this.switchAdInterval = setInterval(()=>{
     
         if(!this.editMode) this.getHeaderBanner()
 
-      }, 8000)
-      
+      }, 8000)      
     }
-
   }
 
   public getAdStyle(){

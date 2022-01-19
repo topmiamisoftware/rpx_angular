@@ -5,9 +5,9 @@
 
     <div class="spotbie-white-iconImg" [ngStyle]="{'background' : 'url(assets/images/qr/spotbie-white-icon.png)'}"></div>
 
-    <div class="spotbie-ad-image" [ngStyle]="{'background' : 'url(' + ad.images + ')'}" *ngIf="!editMode && ad.id != 2 && isDesktop"></div>
+    <div class="spotbie-ad-image" [ngStyle]="{'background' : 'url(' + ad.images + ')'}" *ngIf="!editMode && isDesktop"></div>
 
-    <div class="spotbie-ad-image" [ngStyle]="{'background' : 'url(' + ad.images_mobile + ')'}" *ngIf="!editMode && ad.id != 2 && !isDesktop"></div>
+    <div class="spotbie-ad-image" [ngStyle]="{'background' : 'url(' + ad.images_mobile + ')'}" *ngIf="!editMode && !isDesktop"></div>
     
     <div class="spotbie-ad-image" [ngStyle]="{'background' : 'url(' + genericAdImage  + ')'}" *ngIf="editMode && ad.id == 2 && isDesktop"></div>
     
@@ -17,7 +17,7 @@
 
     <div class="spotbie-ad-image" [ngStyle]="{'background' : 'url(' + ad.images_mobile  + ')'}" *ngIf="editMode && ad.id != 2 && !isDesktop"></div>
 
-    <div class='sb-ad-bottom' *ngIf="isDesktop">
+    <div class='sb-ad-bottom' *ngIf="isDesktop && business !== null">
         
         <span class='spotbie-text-gradient sb-sponsoredName text-uppercase'>{{ business.name }}</span>
 
@@ -42,7 +42,7 @@
 
     </div>
 
-    <div class='sb-ad-bottom' *ngIf="!isDesktop || isMobile">
+    <div class='sb-ad-bottom' *ngIf="(!isDesktop || isMobile) && business !== null">
         
         <span class='spotbie-text-gradient sb-sponsoredName text-uppercase'>{{ business.name }}</span>
 
