@@ -1,4 +1,4 @@
-let baseUrl = 'https://spotbie-demo.netlify.com/'
+let baseUrl = 'https://spotbie.com/'
 
 export const environment = {
   production: true,

@@ -2,16 +2,12 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-<<<<<<< HEAD
 let ngrok = 'https://d5d0-2600-1700-4804-d5f0-cf12-77bf-fccf-bc99.ngrok.io/'
-=======
-let ngrok = 'https://0c44-2600-1700-4804-d5f0-73ea-17da-f75-b6dc.ngrok.io/'
->>>>>>> Uploaded new Ad Images for desktop and mobile demo.
 let baseUrl = 'https://192.168.1.65:4200/'
 
 export const environment = {
   production: false,
-  staging: false,
+  staging: true,
   baseUrl: baseUrl,
   google_maps_apiKey: 'AIzaSyBg9GGAv2rRn8WQbylRbpF4j6u-9TFxBG8',
   google_places_apiAkey: 'AIzaSyChSn9IE6Dp0Jv8TS013np1b4X1rCsQt_E',
