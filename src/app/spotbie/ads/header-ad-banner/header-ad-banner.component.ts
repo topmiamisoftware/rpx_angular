@@ -121,11 +121,9 @@ export class HeaderAdBannerComponent implements OnInit {
           break  
       }
 
-
     } else {
 
       switch(this.accountType){
-
         case 'food':
           accountType = 1
           this.genericAdImage = PLACE_TO_EAT_AD_IMAGE
@@ -142,7 +140,6 @@ export class HeaderAdBannerComponent implements OnInit {
           this.genericAdImageMobile = EVENTS_AD_IMAGE_MOBILE
           this.categories = this.eventsClassification
           break                          
-        
       }
 
     }
@@ -167,6 +164,7 @@ export class HeaderAdBannerComponent implements OnInit {
   public async getHeaderBannerAdCallback(resp: any){
 
     if(resp.success){
+
       this.ad = resp.ad      
       this.business = resp.business
 
@@ -196,9 +194,6 @@ export class HeaderAdBannerComponent implements OnInit {
         })
       }
 
-      console.log("Your Ad:", resp)
-      console.log("Header Banner caretgory list", this.categoriesListFriendly)
-
       if(resp.business !== null){
         this.business.is_community_member = true
         this.business.type_of_info_object = InfoObjectType.SpotBieCommunity
@@ -219,26 +214,21 @@ export class HeaderAdBannerComponent implements OnInit {
       console.log("getHeaderBannerAdCallback", resp)
 
     if(!this.switchAdInterval){
-      this.switchAdInterval = setInterval(()=>{
-    
+      this.switchAdInterval = setInterval( () => {
         if(!this.editMode) this.getHeaderBanner()
-
       }, 8000)      
     }
+    
   }
 
-  public getAdStyle(){
-    
+  public getAdStyle(){    
     if(this.editMode) {
-
       return { 
         'position' : 'relative',
         'margin' : '0 auto',
         'right': '0'
-      }
-    
+      }    
     }
-
   }
 
   public closeRewardMenu(){
@@ -246,7 +236,7 @@ export class HeaderAdBannerComponent implements OnInit {
   }
 
   public clickGoToSponsored(){
-    window.open("/advertise-my-business", '_blank')
+    window.open("/business", '_blank')
   }
 
   public switchAd(){
@@ -254,38 +244,32 @@ export class HeaderAdBannerComponent implements OnInit {
     this.categoryListForUi = null
     this.getHeaderBanner()
   }
-
-  public openAd(): void{
     
-    this.communityMemberOpen = true
-    //this.router.navigate([`/business-menu/${this.business.qr_code_link}`])
-
+  public openAd(): void{    
+    if(this.business != null){
+      this.communityMemberOpen = true
+    } else {
+      window.open("/business", '_blank')
+    }
   }
 
   public updateAdImage(image: string = ''){
-
     if(image != ''){
       this.ad.images = image
       this.genericAdImage = image
     }
-
   }
 
   public updateAdImageMobile(image_mobile: string){
-
     if(image_mobile != ''){
       this.ad.images_mobile = image_mobile
       this.genericAdImageMobile = image_mobile
     }
-
   }
 
   public getAdWrapperClass(){
-    
     if(!this.isMobile) return 'spotbie-ad-wrapper-header'
-
     if(this.isMobile) return 'spotbie-ad-wrapper-header sb-mobileAdWrapper'
-
   }
 
   ngOnInit(): void {}
@@ -304,5 +288,4 @@ export class HeaderAdBannerComponent implements OnInit {
     clearInterval(this.switchAdInterval)
     this.switchAdInterval = false
   }
-
 }

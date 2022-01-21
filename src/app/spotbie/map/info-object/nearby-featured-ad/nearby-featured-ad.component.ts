@@ -244,10 +244,8 @@ export class NearbyFeaturedAdComponent implements OnInit {
     this.rewardMenuOpen = false    
   }
 
-  public clickGoToSponsored(){
-    
-    window.open("/advertise-my-business", '_blank')
-
+  public clickGoToSponsored(){    
+    window.open("/business", '_blank')
   }
 
   public switchAd(){

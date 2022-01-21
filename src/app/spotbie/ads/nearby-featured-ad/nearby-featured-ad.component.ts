@@ -244,7 +244,7 @@ export class NearbyFeaturedAdComponent implements OnInit {
 
   public clickGoToSponsored(){
     
-    window.open("/advertise-my-business", '_blank')
+    window.open("/business", '_blank')
 
   }
 

@@ -546,6 +546,7 @@ export class InfoObjectComponent implements OnInit {
   }
 
   getInputClass(){
+    
     if(this.info_object.is_community_member)
       return 'sb-infoObjectInputLight'
     else
@@ -553,10 +554,8 @@ export class InfoObjectComponent implements OnInit {
     
   }
 
-  clickGoToSponsored(){
-    
-    window.open("/advertise-my-business", '_blank')
-
+  clickGoToSponsored(){    
+    window.open("/business", '_blank')
   }
 
   public showPosition(position: any): void {
