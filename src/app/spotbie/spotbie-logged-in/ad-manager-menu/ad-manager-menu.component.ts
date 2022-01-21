@@ -72,30 +72,24 @@ export class AdManagerMenuComponent implements OnInit {
       loyaltyPointsBalance => {
         this.loyaltyPointsBalance = loyaltyPointsBalance
       }
-
+      
     )
     
   }
   
   public fetchAds(){
-
     this.adCreatorService.getAds().subscribe(
-
       resp => {
         this.fetchAdsCb(resp)
       }
-
     )
-
   }
 
   private fetchAdsCb(resp){
 
     if(resp.success){
-
       this.adList = resp.adList
-
-    } else
+    } else 
       console.log("fetchAdsCb", resp)
     
   }
@@ -109,10 +103,8 @@ export class AdManagerMenuComponent implements OnInit {
   }
 
   public openAd(ad: Ad){
-
     this.ad = ad
     this.itemCreator = true
-
   }
 
   public closeAdCreator(){

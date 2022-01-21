@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { AllowedAccountTypes } from 'src/app/helpers/enum/account-type.enum';
 import { InfoObjectType } from 'src/app/helpers/enum/info-object-type.enum';
@@ -70,7 +71,8 @@ export class BottomAdBannerComponent implements OnInit {
 
   constructor(private adsService: AdsService,
               private deviceDetectorService: DeviceDetectorService,
-              private loyaltyPointsService: LoyaltyPointsService) { 
+              private loyaltyPointsService: LoyaltyPointsService,
+              private router: Router) { 
                 
                 this.loyaltyPointsService.userLoyaltyPoints$.subscribe(
                   loyaltyPointsBalance => {
@@ -228,32 +230,25 @@ export class BottomAdBannerComponent implements OnInit {
       if(this.business !== null){
         this.business.is_community_member = true
         this.business.type_of_info_object = InfoObjectType.SpotBieCommunity
+
+        this.totalRewards = resp.totalRewards
+
+        if(!this.editMode)
+          this.distance = getDistanceFromLatLngInMiles(this.business.loc_x, this.business.loc_y, this.lat, this.lng)
+        else
+          this.distance = 5      
       }
 
-      this.displayAd = true
-
-      this.totalRewards = resp.totalRewards
-
-      if(!this.editMode)
-        this.distance = getDistanceFromLatLngInMiles(this.business.loc_x, this.business.loc_y, this.lat, this.lng)
-      else
-        this.distance = 5
-      
+      this.displayAd = true      
 
     } else
       console.log("getSingleAdListCb", resp)
 
-      
     if(!this.switchAdInterval){
-
       this.switchAdInterval = setInterval(()=>{
-    
         if(!this.editMode) this.getBottomHeader()
-
-      }, 8000)
-      
+      }, 8000) 
     }
-
   }
 
   public spotbieAdWrapperStyles(){
@@ -264,9 +259,12 @@ export class BottomAdBannerComponent implements OnInit {
 
   public openAd(): void{
     
-    this.communityMemberOpen = true
-    //this.router.navigate([`/business-menu/${this.business.qr_code_link}`])
+    if(this.business != null)
+      this.communityMemberOpen = true
+    else
+      window.open("/business", '_blank')
     
+    //this.router.navigate([`/business-menu/${this.business.qr_code_link}`])    
   }
 
   public closeRewardMenu(){
@@ -280,27 +278,25 @@ export class BottomAdBannerComponent implements OnInit {
   }
 
   public clickGoToSponsored(){
-    
-    window.open("/grow-your-business", '_blank')
-
+    window.open("/business", '_blank')
   }
 
   public updateAdImage(image: string = ''){
-
+  
     if(image != ''){
       this.ad.images = image
       this.genericAdImage = image
     }
-
+  
   }
 
   public updateAdImageMobile(image_mobile: string){
-
+  
     if(image_mobile != ''){
       this.ad.images_mobile = image_mobile
       this.genericAdImageMobile = image_mobile
     }
-
+  
   }
 
   ngOnInit(): void {
@@ -308,7 +304,7 @@ export class BottomAdBannerComponent implements OnInit {
     this.isDesktop = this.deviceDetectorService.isDesktop()
     if(this.isMobile == false) this.isMobile = ( this.deviceDetectorService.isMobile() || this.deviceDetectorService.isTablet() )
     this.getBottomHeader()
-    
+  
   }
 
   ngOnDestroy(): void {
