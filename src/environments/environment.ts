@@ -7,7 +7,7 @@ let baseUrl = 'https://192.168.1.65:4200/'
 
 export const environment = {
   production: false,
-  staging: true,
+  staging: false,
   baseUrl: baseUrl,
   google_maps_apiKey: 'AIzaSyBg9GGAv2rRn8WQbylRbpF4j6u-9TFxBG8',
   google_places_apiAkey: 'AIzaSyChSn9IE6Dp0Jv8TS013np1b4X1rCsQt_E',

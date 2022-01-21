@@ -374,6 +374,7 @@
     text-align: left;
     text-transform: uppercase;
     font-size: .8rem;
+    min-height: 225px;
 }
 .spotbie-communityMember-search-result{
     background-color: #1c1924!important;
