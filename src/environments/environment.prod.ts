@@ -1,8 +1,8 @@
-let baseUrl = 'https://demo.spotbie.com/'
+let baseUrl = 'https://spotbie.com/'
 
 export const environment = {
   production: true,
-  staging: true,
+  staging: false,
   baseUrl: baseUrl,
   versionCheckURL: baseUrl+'version.json',
   google_maps_apiKey: 'AIzaSyC4Su0B2cBzsSpAF-Kphq_78uR8b5eA4_Q',
@@ -11,7 +11,7 @@ export const environment = {
   qrCodeLoyaltyPointsScanBaseUrl: baseUrl+'loyalty-points',
   qrCodeRewardScanBaseUrl: baseUrl+'reward',
   ngrok: null,
-  fakeLocation: true,
+  fakeLocation: false,
   myLocX: 25.786286,
   myLocY: -80.186562
 }
