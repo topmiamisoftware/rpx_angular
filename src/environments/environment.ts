@@ -2,8 +2,8 @@
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 
-let ngrok = 'https://d5d0-2600-1700-4804-d5f0-cf12-77bf-fccf-bc99.ngrok.io/'
-let baseUrl = 'https://192.168.1.65:4200/'
+let ngrok = 'https://a68f-2600-1700-4804-d5f0-5e90-bdef-1f30-b96e.ngrok.io/'
+let baseUrl = 'https://192.168.1.66:4200/'
 
 export const environment = {
   production: false,
@@ -21,8 +21,8 @@ export const environment = {
   apiEndpoint: `${ngrok}api/`,
 
   fakeLocation: true,
-  myLocX: 26.020044,
-  myLocY: -80.326884
+  myLocX: 25.786286,
+  myLocY: -80.186562
 }
 /*
  * For easier debugging in development mode, you can import the following file

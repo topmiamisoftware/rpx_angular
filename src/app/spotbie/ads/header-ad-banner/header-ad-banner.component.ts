@@ -19,6 +19,8 @@ const SHOPPING_AD_IMAGE_MOBILE = 'assets/images/def/shopping/featured_banner_in_
 const EVENTS_AD_IMAGE = 'assets/images/def/events/header_banner_in_house.jpg'
 const EVENTS_AD_IMAGE_MOBILE = 'assets/images/def/events/featured_banner_in_house.jpg'
 
+const HEADER_TIMER_INTERVAL = 16000
+
 @Component({
   selector: 'app-header-ad-banner',
   templateUrl: './header-ad-banner.component.html',
@@ -169,7 +171,9 @@ export class HeaderAdBannerComponent implements OnInit {
       this.business = resp.business
 
       if(!this.editMode && resp.business !== null){
+        
         switch(this.business.user_type){
+
           case AllowedAccountTypes.PlaceToEat:
             this.currentCategoryList = FOOD_CATEGORIES          
             break
@@ -181,22 +185,28 @@ export class HeaderAdBannerComponent implements OnInit {
           case AllowedAccountTypes.Shopping:
             this.currentCategoryList = SHOPPING_CATEGORIES          
             break     
+            
         }
 
         this.categoriesListFriendly = []
 
-        this.currentCategoryList.reduce((previousValue: string, currentValue: string, currentIndex: number, array: string[]) => {
-        
+        this.currentCategoryList.reduce((previousValue: string, currentValue: string, currentIndex: number, array: string[]) => {        
+         
           if(resp.business.categories.indexOf(currentIndex) > -1)
             this.categoriesListFriendly.push(this.currentCategoryList[currentIndex])
                   
           return currentValue
-        })
-      }
 
-      if(resp.business !== null){
+        })
+
         this.business.is_community_member = true
         this.business.type_of_info_object = InfoObjectType.SpotBieCommunity
+
+        if(!this.editMode)
+          this.distance = getDistanceFromLatLngInMiles(this.business.loc_x, this.business.loc_y, this.lat, this.lng)
+        else
+          this.distance = 5
+
       }
 
       this.displayAd = true
@@ -204,10 +214,7 @@ export class HeaderAdBannerComponent implements OnInit {
       this.totalRewards = resp.totalRewards
 
       if(resp.business !== null){
-        if(!this.editMode)
-          this.distance = getDistanceFromLatLngInMiles(this.business.loc_x, this.business.loc_y, this.lat, this.lng)
-        else
-          this.distance = 5
+
       }
 
     } else
@@ -216,7 +223,7 @@ export class HeaderAdBannerComponent implements OnInit {
     if(!this.switchAdInterval){
       this.switchAdInterval = setInterval( () => {
         if(!this.editMode) this.getHeaderBanner()
-      }, 8000)      
+      }, HEADER_TIMER_INTERVAL)      
     }
     
   }

@@ -14,6 +14,8 @@ const PLACE_TO_EAT_AD_IMAGE = 'assets/images/def/places-to-eat/featured_banner_i
 const SHOPPING_AD_IMAGE = 'assets/images/def/shopping/featured_banner_in_house.jpg'
 const EVENTS_AD_IMAGE = 'assets/images/def/events/featured_banner_in_house.jpg'
 
+const FEATURED_BANNER_TIMER_INTERVAL = 16000
+
 @Component({
   selector: 'app-nearby-featured-ad',
   templateUrl: './nearby-featured-ad.component.html',
@@ -135,7 +137,6 @@ export class NearbyFeaturedAdComponent implements OnInit {
           break                          
         
       }
-
     }
 
     const nearByFeaturedObj = {
@@ -152,7 +153,6 @@ export class NearbyFeaturedAdComponent implements OnInit {
         this.getNearByFeaturedCallback(resp)
       }
     )
-
   }
 
   public async getNearByFeaturedCallback(resp: any){
@@ -189,13 +189,8 @@ export class NearbyFeaturedAdComponent implements OnInit {
             this.categoriesListFriendly.push(this.currentCategoryList[currentIndex])
                     
           return currentValue
-  
         })
-
       }
-
-      console.log("Your Ad:", resp)
-      console.log("Featured Banner caretgory list", this.categoriesListFriendly)
 
       this.business.is_community_member = true
       this.business.type_of_info_object = InfoObjectType.SpotBieCommunity
@@ -204,24 +199,25 @@ export class NearbyFeaturedAdComponent implements OnInit {
 
       this.totalRewards = resp.totalRewards
 
-      if(!this.editMode)
-        this.distance = getDistanceFromLatLngInMiles(this.business.loc_x, this.business.loc_y, this.lat, this.lng)
-      else
+      if(!this.editMode){
+        this.distance = getDistanceFromLatLngInMiles(
+            this.business.loc_x, this.business.loc_y, 
+            this.lat, 
+            this.lng
+        )
+      } else
         this.distance = 5
 
       if(!this.switchAdInterval){
 
-        this.switchAdInterval = setInterval(()=>{
+        this.switchAdInterval = setInterval( () => {
       
           if(!this.editMode) this.getNearByFeatured()
   
-        }, 8000)
-        
+        }, FEATURED_BANNER_TIMER_INTERVAL)        
       }
-
     } else
       console.log("getNearByFeaturedCallback", resp)
-
   }
 
   public getAdStyle(){

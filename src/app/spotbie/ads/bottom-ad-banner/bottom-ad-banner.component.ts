@@ -20,6 +20,8 @@ const SHOPPING_AD_IMAGE_MOBILE = 'assets/images/def/shopping/featured_banner_in_
 const EVENTS_AD_IMAGE = 'assets/images/def/events/footer_banner_in_house.jpg'
 const EVENTS_AD_IMAGE_MOBILE = 'assets/images/def/events/featured_banner_in_house.jpg'
 
+const BOTTOM_BANNER_TIMER_INTERVAL = 16000
+
 @Component({
   selector: 'app-bottom-ad-banner',
   templateUrl: './bottom-ad-banner.component.html',
@@ -228,6 +230,7 @@ export class BottomAdBannerComponent implements OnInit {
       }
       
       if(this.business !== null){
+
         this.business.is_community_member = true
         this.business.type_of_info_object = InfoObjectType.SpotBieCommunity
 
@@ -236,7 +239,8 @@ export class BottomAdBannerComponent implements OnInit {
         if(!this.editMode)
           this.distance = getDistanceFromLatLngInMiles(this.business.loc_x, this.business.loc_y, this.lat, this.lng)
         else
-          this.distance = 5      
+          this.distance = 5     
+           
       }
 
       this.displayAd = true      
@@ -247,7 +251,7 @@ export class BottomAdBannerComponent implements OnInit {
     if(!this.switchAdInterval){
       this.switchAdInterval = setInterval(()=>{
         if(!this.editMode) this.getBottomHeader()
-      }, 8000) 
+      }, BOTTOM_BANNER_TIMER_INTERVAL) 
     }
   }
 

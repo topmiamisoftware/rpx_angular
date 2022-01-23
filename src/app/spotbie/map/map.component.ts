@@ -26,6 +26,8 @@ import { environment } from 'src/environments/environment'
 const YELP_BUSINESS_SEARCH_API = 'https://api.yelp.com/v3/businesses/search'
 const BANNED_YELP_IDS = map_extras.BANNED_YELP_IDS
 
+const SBCM_INTERVAL = 16000
+
 @Component({
   selector:    'app-map',
   templateUrl: './map.component.html',
@@ -1172,7 +1174,7 @@ export class MapComponent implements OnInit {
             }
           )
 
-        }, 10000)
+        }, SBCM_INTERVAL)
         
       }
 
