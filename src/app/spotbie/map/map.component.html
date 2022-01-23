@@ -332,8 +332,15 @@
           SPOTBIE COMMUNITY MEMBERS          
         </div>
 
-        <div class='mt-5' style="margin-top:0px;" *ngIf="communityMemberList.length == 0 && isDesktop"></div>
+        <div class='spotbie-search-results-title text-uppercase' style="margin-top:0px;" *ngIf="communityMemberList.length == 0">
+          <img src="assets/images/home_imgs/spotbie-green-icon.svg" class="sb-miniLogoIconM">
+          NO SPOTBIE COMMUNITY MEMBERS NEAR YOU          
+        </div>
 
+        <div class='spotbie-search-results-title text-uppercase' style="margin-top:0px;" *ngIf="communityMemberList.length == 0">
+          HOWEVER, CHECK OUT THESE YELP RESULTS. MAYBE YOU CAN GET THEM TO JOIN OUR LOYALTY POINTS SYSTEM!         
+        </div>
+        
         <!-- First let's display the spotbie community member list for -->
         <div class='spotbie-search-result spotbie-communityMember-search-result' 
               *ngFor='let communityMember of communityMemberList' 

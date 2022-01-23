@@ -19,10 +19,9 @@ export const environment = {
    * Laravel App will not work if it's not served on over SSL.
    * */
   apiEndpoint: `${ngrok}api/`,
-
   fakeLocation: true,
-  myLocX: 25.786286,
-  myLocY: -80.186562
+  myLocX: 26.0192674,
+  myLocY: -80.371275
 }
 /*
  * For easier debugging in development mode, you can import the following file

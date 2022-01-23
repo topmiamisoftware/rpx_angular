@@ -164,14 +164,15 @@ export class NearbyFeaturedAdComponent implements OnInit {
 
       this.businessReady = true
 
-      if(!this.editMode){
+      console.log("business", this.business)
+
+      if(!this.editMode && this.business != null){
 
         switch(this.business.user_type){
-
           case AllowedAccountTypes.PlaceToEat:
             this.currentCategoryList = FOOD_CATEGORIES          
             break
-  
+
           case AllowedAccountTypes.Events:
             this.currentCategoryList = EVENT_CATEGORIES          
             break
@@ -183,30 +184,28 @@ export class NearbyFeaturedAdComponent implements OnInit {
         
         this.categoriesListFriendly = []
 
-        this.currentCategoryList.reduce((previousValue: string, currentValue: string, currentIndex: number, array: string[]) => {
-          
+        this.business.is_community_member = true
+        this.business.type_of_info_object = InfoObjectType.SpotBieCommunity
+  
+        this.totalRewards = resp.totalRewards
+
+        this.currentCategoryList.reduce((previousValue: string, currentValue: string, currentIndex: number, array: string[]) => {          
           if(resp.business.categories.indexOf(currentIndex) > -1)
             this.categoriesListFriendly.push(this.currentCategoryList[currentIndex])
                     
           return currentValue
         })
-      }
 
-      this.business.is_community_member = true
-      this.business.type_of_info_object = InfoObjectType.SpotBieCommunity
-
-      this.displayAd = true
-
-      this.totalRewards = resp.totalRewards
-
-      if(!this.editMode){
         this.distance = getDistanceFromLatLngInMiles(
-            this.business.loc_x, this.business.loc_y, 
-            this.lat, 
-            this.lng
+          this.business.loc_x, this.business.loc_y, 
+          this.lat, 
+          this.lng
         )
+
       } else
         this.distance = 5
+
+      this.displayAd = true
 
       if(!this.switchAdInterval){
 
@@ -220,18 +219,14 @@ export class NearbyFeaturedAdComponent implements OnInit {
       console.log("getNearByFeaturedCallback", resp)
   }
 
-  public getAdStyle(){
-    
-    if(this.adTypeWithId) {
-      
+  public getAdStyle(){  
+    if(this.adTypeWithId) {      
       return { 
         'position' : 'relative',
         'margin' : '0 auto',
         'right': '0'
       }
-    
     }
-
   }
 
   public closeRewardMenu(){

@@ -54,13 +54,12 @@
 .spotbie-ad-image{
     position: relative;
     margin: 0 auto;
-    min-height: 300px;
-    height: 300px;
-    max-height: 300px;
-    max-width: 300px;
+    min-height: 400px;
+    height: 400px;
+    max-height: 400px;
     background-repeat: no-repeat!important;
-    background-size: cover!important;
-    background-position: center!important; 
+    background-size: contain!important;
+    background-position: center!important;
 }
 .spotbie-white-iconImg{
     position: absolute;
@@ -110,10 +109,9 @@
     display: inline-block;
     max-width: 300px;
     min-width: 300px;
-    height: 300px;
-    max-height: 300px;
-    min-height: 300px;
-    height: 300px;    
+    height: 400px;
+    max-height: 400px;
+    min-height: 400px;
     margin-left: 20px;
     margin-right: 20px;     
 }
