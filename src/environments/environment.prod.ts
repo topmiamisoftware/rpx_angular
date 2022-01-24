@@ -13,5 +13,6 @@ export const environment = {
   ngrok: null,
   fakeLocation: false,
   myLocX: 25.786286,
-  myLocY: -80.186562
+  myLocY: -80.186562,
+  publishableStripeKey: 'pk_live_51JrUwnGFcsifY4UhqQVtkwnats9SfiUseYMsCBpoa7361hvxq4uWNZcxL2nZnhhrqtX5vLs9EUFACK3VR60svKyc00BSbooqh8'
 }

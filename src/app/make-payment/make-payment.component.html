@@ -2,11 +2,11 @@
 
 <div class="spotbie-overlay-window" *ngIf="!adPaidFor && !membershipPaidFor"> 
 
-    <div class='sb-makePaymentWrapper' *ngIf="!loading">
+    <div class='sb-makePaymentWrapper' [ngStyle]="getPaymentFormStyles()">
 
         <div class="sb-logo mt-3 mb-3"></div>
 
-        <h3 class="spotbie-text-gradient text-uppercase  mb-4">{{ paymentTitle }}</h3>
+        <h3 class="spotbie-text-gradient text-uppercase mb-4">{{ paymentTitle }}</h3>
 
         <p class="spotbie-text-gradient">
             {{ paymentDescription }}

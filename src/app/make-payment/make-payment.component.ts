@@ -9,6 +9,9 @@ import { BottomAdBannerComponent } from '../spotbie/ads/bottom-ad-banner/bottom-
 import { NearbyFeaturedAdComponent } from '../spotbie/ads/nearby-featured-ad/nearby-featured-ad.component'
 import { HeaderAdBannerComponent } from '../spotbie/ads/header-ad-banner/header-ad-banner.component'
 import { SpotbiePaymentsService } from '../services/spotbie-payments/spotbie-payments.service'
+import { environment } from 'src/environments/environment'
+
+const STRIPE_PK = environment.publishableStripeKey
 
 @Component({
   selector: 'app-make-payment',
@@ -51,7 +54,7 @@ export class MakePaymentComponent implements OnInit {
   ) {
     
     if (!this.stripeScriptTag.StripeInstance)
-      this.stripeScriptTag.setPublishableKey('pk_test_51JrUwnGFcsifY4UhCCJp023Q1dWwv5AabBTsMDwiJ7RycEVLyP1EBpwbXRsfn07qpw5lovv9CGfvfhQ82Zt3Be8U00aH3hD9pj')
+      this.stripeScriptTag.setPublishableKey(STRIPE_PK)
 
   }
 
@@ -97,8 +100,7 @@ export class MakePaymentComponent implements OnInit {
     this.paymentsService.savePayment(subscriptionRequestItem, serviceUrl).subscribe(
       resp => {
         
-        if(resp.success) this.membershipPaidFor = true        
-        
+        if(resp.success) this.membershipPaidFor = true                
         this.loading = false
 
       }
@@ -129,6 +131,16 @@ export class MakePaymentComponent implements OnInit {
 
       }
     )    
+
+  }
+  
+  public getPaymentFormStyles(){
+
+    if(this.loading){
+      return { 'display' : 'none' }
+    } else {
+      return { 'display' : 'block' }
+    }
 
   }
 

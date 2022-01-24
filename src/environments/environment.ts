@@ -13,6 +13,7 @@ export const environment = {
   google_places_apiAkey: 'AIzaSyChSn9IE6Dp0Jv8TS013np1b4X1rCsQt_E',
   qrCodeLoyaltyPointsScanBaseUrl: baseUrl + 'loyalty-points',
   qrCodeRewardScanBaseUrl: baseUrl + 'reward',
+  publishableStripeKey: 'pk_test_51JrUwnGFcsifY4UhCCJp023Q1dWwv5AabBTsMDwiJ7RycEVLyP1EBpwbXRsfn07qpw5lovv9CGfvfhQ82Zt3Be8U00aH3hD9pj',
   /**
    * Enter the IP and PORT you are serving your Laravel App on. 
    * format: https://192.168.1.65:443/api/
