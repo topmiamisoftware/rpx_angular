@@ -56,9 +56,9 @@ export class AdCreatorComponent implements OnInit {
   public dollarValueCalculated: boolean = false
   
   public adTypeList: Array<any> = [
-    { name: 'Header Banner ($15.99/monthly)', dimensions: '1200x370', dimensionsMobile: '600x600'}, 
-    { name: 'Related-Nearby Box ($13.99/monthly)', dimensions: '600x600'}, 
-    { name: 'Footer Banner ($10.99)', dimensions: '1200x370', dimensionsMobile: '600x600'} 
+    { name: 'Header Banner ($19.99/monthly)', dimensions: '1200x370', dimensionsMobile: '600x600'}, 
+    { name: 'Featured Nearby Banner ($13.99/monthly)', dimensions: '600x600'}, 
+    { name: 'Footer Banner ($16.99)', dimensions: '1200x370', dimensionsMobile: '600x600'} 
   ]
 
   public adCreated: boolean = false
