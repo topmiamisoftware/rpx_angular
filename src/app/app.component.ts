@@ -18,7 +18,7 @@ export class AppComponent {
   
   title = 'spotbie';
 
-  public testMode: boolean = true
+  public testMode: boolean = false
 
   public displayTestModeOptions: boolean = false
 
