@@ -397,6 +397,17 @@ img.sb-qr:hover{
     color: white;
     font-size: .8rem;
 }
+
+.fab.fa-instagram,
+.fab.fa-twitter,
+.fab.fa-youtube{
+    color: white;
+    font-size: 1rem;
+    margin-left: 5px;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
 ::-webkit-scrollbar-button{
     background: transparent
 }

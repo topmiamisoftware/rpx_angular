@@ -1,6 +1,6 @@
 <app-loading-screen *ngIf="loading"></app-loading-screen>
 
-<div class="spotbie-overlay-window d-flex container">
+<div class="spotbie-overlay-window d-flex container" [ngClass]="getCurrentWindowBg()">
 
   <div class="sb-closeButton" (click)="closeWindow()">
     <i class="fa fa-times"></i>
@@ -159,14 +159,14 @@
     </p>
 
     <div class="sb-logo mt-3 mb-3"></div>
-
+    
     <div class="spotbie-rel-div
                 spotbie-padding"
                 *ngIf="business"
                 (click)="usersHome()">
           <i class="fas fa-user" style="font-size:.5rem;"></i><span class='spotbie-text-link'> CLICK HERE FOR NON-BUSINESS USERS</span>
     </div>
-
+    
     <div class="spotbie-rel-div
                 spotbie-padding"
                 *ngIf="!business"
@@ -174,7 +174,11 @@
           <i class="fas fa-business-time" style="font-size:.5rem;"></i><span class='spotbie-text-link'> LOOKING FOR THE BUSINESS PORTAL?</span>
     </div>
 
-    <div></div>
+    <div>
+      <i class="fab fa-instagram" (click)="openIg()"></i>
+      <i class="fab fa-twitter" (click)="openTwitter()"></i>
+      <i class="fab fa-youtube" (click)="openYoutube()"></i>
+    </div>
 
     <div class='sb-closeButton' (click)="closeWindow()">
       <i class="fa fa-times"></i>

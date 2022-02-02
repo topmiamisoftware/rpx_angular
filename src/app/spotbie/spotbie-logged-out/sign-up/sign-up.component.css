@@ -76,7 +76,6 @@
     min-width: 50%;
     max-width: 50%;
 }
-
 h1{
     font-family: sitka-italic, cursive;
     font-size: 103px;
@@ -131,12 +130,17 @@ h2 strong.sep-two {
 .spotbie-overlay-window{
     padding-bottom: 80px;
     background-color: #32303e !important;
-    background: url('../../../../assets/images/home_imgs/jpg/spotbie-login-background.jpg');
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    background-position: center !important;
     z-index: 97 !important;
     overflow-y: scroll;   
+}
+.sb-regularBg{
+    background: url('../../../../assets/images/home_imgs/jpg/spotbie-login-background.jpg');
+}
+.sb-businessBg{
+    background: url('../../../../assets/images/home_imgs/jpg/spotbie-find-restaurant-customers-near-you.jpg');
 }
 .sb-signUpGeneralInstructions{
     margin: 0 auto;    
@@ -155,6 +159,7 @@ h2 strong.sep-two {
     top: 75px;
     right: 1%;
 }
+
 /**WIDTH MEDIA QUERIES */
 @media (max-width: 1650px) {
     .sb-signUpGeneralInstructions{

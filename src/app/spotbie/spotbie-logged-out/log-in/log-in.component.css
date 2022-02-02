@@ -51,11 +51,16 @@
 .spotbie-overlay-window{
     padding-bottom: 80px;
     background-color: #32303e !important;
-    background: url('../../../../assets/images/home_imgs/jpg/spotbie-login-background.jpg');
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center;
+    background-repeat: no-repeat !important;
+    background-size: cover !important;
+    background-position: center !important; 
     z-index: 97 !important;
+}
+.sb-regularBg{
+    background: url('../../../../assets/images/home_imgs/jpg/spotbie-login-background.jpg');
+}
+.sb-businessBg{
+    background: url('../../../../assets/images/home_imgs/jpg/spotbie-find-restaurant-customers-near-you.jpg');
 }
 .spotbie-help-text{
     margin-top: 30px;

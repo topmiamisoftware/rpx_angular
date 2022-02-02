@@ -263,6 +263,30 @@ export class LogInComponent implements OnInit {
     this.router.navigate(['/business'])
   }
 
+  public getCurrentWindowBg(){
+    if(this.business){
+      return 'sb-businessBg'
+    } else {
+      return 'sb-regularBg'
+    }
+  }
+
+  public openIg(){
+    if(this.business){
+      window.open("https://www.instagram.com/spotbie.business/","_blank")
+    } else {
+      window.open("https://www.instagram.com/spotbie.loyalty.points/","_blank")   
+    }    
+  }
+
+  public openYoutube(){
+    window.open("https://www.youtube.com/channel/UCtxkgw0SYiihwR7O8f-xIYA","_blank")     
+  }
+
+  public openTwitter(){
+      window.open("https://twitter.com/SpotBie","_blank")
+  }
+
   ngOnInit() {
 
     this.loading = true

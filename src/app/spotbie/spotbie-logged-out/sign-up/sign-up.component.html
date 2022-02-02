@@ -1,6 +1,6 @@
 <app-loading-screen *ngIf="loading"></app-loading-screen>
 
-<div class="spotbie-overlay-window container">
+<div class="spotbie-overlay-window container" [ngClass]="getCurrentWindowBg()">
 
     <div class='sb-scroll'>
 
@@ -222,6 +222,12 @@
         <button class="btn spotbie-button sb-google-logIn-btn spotbie-padding text-uppercase" (click)="signInWithGoogle()">
             SIGN-UP with Google
         </button>    
+
+        <div class="mt-4">
+            <i class="fab fa-instagram" (click)="openIg()"></i>
+            <i class="fab fa-twitter" (click)="openTwitter()"></i>
+            <i class="fab fa-youtube" (click)="openYoutube()"></i>
+        </div>
 
         <div class="mt-4"></div>
 
