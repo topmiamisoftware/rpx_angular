@@ -24,6 +24,8 @@ export class BusinessFeaturesComponent implements OnInit {
 
   public loading: boolean = false
 
+  public business: boolean = false
+
   constructor(private router: Router) { }
 
   public calendly(){
@@ -48,7 +50,25 @@ export class BusinessFeaturesComponent implements OnInit {
 
   }
 
+  public openIg(){
+    if(this.business){
+      window.open("https://www.instagram.com/spotbie.business/","_blank")
+    } else {
+      window.open("https://www.instagram.com/spotbie.loyalty.points/","_blank")   
+    }    
+  }
+
+  public openYoutube(){
+    window.open("https://www.youtube.com/channel/UCtxkgw0SYiihwR7O8f-xIYA","_blank")     
+  }
+
+  public openTwitter(){
+      window.open("https://twitter.com/SpotBie","_blank")
+  }
+
   ngOnInit(): void {
+
+    this.router.url === '/business' ? this.business = true : this.business = false
 
   }
 

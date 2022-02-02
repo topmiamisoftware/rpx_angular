@@ -25,6 +25,16 @@
     font-size: 1.2rem;
     color: white;
 }
+.fab.fa-instagram,
+.fab.fa-twitter,
+.fab.fa-youtube{
+    color: white;
+    font-size: 1rem;
+    margin-left: 5px;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
 .fa-map-marker-alt{
     color: white;
 }
