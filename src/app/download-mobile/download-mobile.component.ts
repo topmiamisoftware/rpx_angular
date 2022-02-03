@@ -1,11 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { DeviceDetectorService } from 'ngx-device-detector';
 
 const ANDROID_LINK = 'https://play.google.com/store/apps/details?id=com.exentriks.spotmee.spotmee&hl=en_US&gl=US'
 const IOS_LINK = 'https://apps.apple.com/us/app/spotbie/id1439327004?app=itunes&ign-mpt=uo%3D4'
 
-const ANDROID_LINK_BUSINESS = 'https://play.google.com/store/apps/details?id=com.exentriks.spotmee.spotmee&hl=en_US&gl=US'
-const IOS_LINK_BUSINESS = 'https://apps.apple.com/us/app/spotbie/id1439327004?app=itunes&ign-mpt=uo%3D4'
+const ANDROID_LINK_BUSINESS = 'https://play.google.com/store/apps/details?id=com.spotbie.business.spotmee'
+const IOS_LINK_BUSINESS = 'https://apps.apple.com/us/app/sb-business/id1598189950'
 
 @Component({
   selector: 'app-download-mobile',
@@ -21,7 +22,8 @@ export class DownloadMobileComponent implements OnInit {
 
   public isDesktop: boolean = false
 
-  constructor(private deviceDetectorService: DeviceDetectorService) { }
+  constructor(private deviceDetectorService: DeviceDetectorService,
+              private router: Router) { }
 
   downloadNow(){
 
@@ -85,6 +87,8 @@ export class DownloadMobileComponent implements OnInit {
 
     this.os = this.deviceDetectorService.getDeviceInfo().os
     this.isDesktop = this.deviceDetectorService.isDesktop()
+
+    this.router.url === '/business' ? this.business = true : this.business = false
 
   }
 
