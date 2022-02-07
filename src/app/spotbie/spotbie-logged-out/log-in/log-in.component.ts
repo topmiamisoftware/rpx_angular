@@ -287,6 +287,10 @@ export class LogInComponent implements OnInit {
       window.open("https://twitter.com/SpotBie","_blank")
   }
 
+  public openBlog(){
+    window.open("https://blog.spotbie.com/","_blank")
+  } 
+
   ngOnInit() {
 
     this.loading = true

@@ -28,6 +28,10 @@ export class UserFeaturesComponent implements OnInit {
 
   }
 
+  public openBlog(){
+    window.open("https://blog.spotbie.com/","_blank")
+  } 
+
   public openIg(){
     if(this.business){
       window.open("https://www.instagram.com/spotbie.business/","_blank")
