@@ -44,7 +44,7 @@
       </span>
 
       <span (click)="spawnCategories('shopping')" *ngIf="this.userType === eAllowedAccountTypes.Personal"> 
-        SHOPPING
+        RETAIL
       </span>
 
       <span (click)="spawnCategories('events')" *ngIf="this.userType === eAllowedAccountTypes.Personal">
@@ -80,7 +80,7 @@
         </div>
 
         <div (click)="spawnCategories('shopping')">
-          SHOPPING <i class="fa fa-angle-right"></i>
+          RETAIL <i class="fa fa-angle-right"></i>
         </div>
 
         <div (click)="spawnCategories('events')">
