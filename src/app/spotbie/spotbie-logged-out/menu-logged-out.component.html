@@ -39,6 +39,10 @@
         LOGIN
       </span>
 
+      <span (click)="goToBusiness()" *ngIf="!business">
+        <i class="fa fa-business-time"></i> BUSINESS
+      </span>
+
     </td>
 
   </tr>
@@ -50,7 +54,7 @@
                 animated slideInLeft">
 
     <tr><td>
-      
+
       <div (click)="home()">
         HOME
       </div>
@@ -75,9 +79,9 @@
         LOGIN
       </div>
 
-      <!--<div (click)="goToBlog()">
-        BLOG
-      </div>-->
+      <div (click)="goToBlog()" *ngIf="!business">
+        BUSINESS PLATFORM
+      </div>
 
     </td></tr>
 
