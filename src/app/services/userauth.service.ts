@@ -380,4 +380,40 @@ export class UserauthService {
 
   }
 
+  public saveBusiness(businessInfo: any): Observable<any>{
+
+    let apiUrl
+    
+    switch(businessInfo.accountType){
+      
+      case AllowedAccountTypes.PlaceToEat:
+      case AllowedAccountTypes.Shopping:
+      case AllowedAccountTypes.Events:
+        apiUrl = `${BUSINESS_API}/save-business`
+        break
+
+    }
+    
+    const businessInfoObj = {
+      name: businessInfo.name,
+      description: businessInfo.description,
+      address: businessInfo.address,
+      photo: businessInfo.photo,
+      loc_x: businessInfo.loc_x,
+      loc_y: businessInfo.loc_y,
+      categories: businessInfo.categories,
+      city: businessInfo.city,
+      country: businessInfo.country,
+      line1: businessInfo.line1,
+      line2: businessInfo.line2,
+      postal_code: businessInfo.postal_code,
+      state: businessInfo.state      
+    }
+
+    return this.http.post<any>(apiUrl, businessInfoObj).pipe(
+      catchError(handleError("verifyBusiness"))
+    ) 
+
+  }
+
 }
