@@ -34,7 +34,8 @@
     box-shadow: 10px 5px 5px rgba(0, 0, 0, 0.226);    
 }
 .sb-your-news.marginLeft{
-    left: 80px;
+    left: 70px;
+    bottom: 32px;
 }
 @media (max-width: 460px) { 
     .spotbie-scroll-top{
