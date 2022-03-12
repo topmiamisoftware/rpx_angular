@@ -21,7 +21,7 @@
 }
 .sb-your-news{
     position: fixed;
-    bottom: 10px;
+    bottom: 33px;
     left: 30px;
     z-index: 95;
     background-color: #332f3e;
@@ -34,13 +34,16 @@
     box-shadow: 10px 5px 5px rgba(0, 0, 0, 0.226);    
 }
 .sb-your-news.marginLeft{
-    left: 150px;
+    left: 70px;
 }
 @media (max-width: 460px) { 
     .spotbie-scroll-top{
         padding-top: 5px;
         padding-bottom: 5px;
         bottom: 27px;
+        left: 13px;
+    }
+    .sb-your-news{
         left: 13px;
     }
     .spotbie-scroll-top i {
