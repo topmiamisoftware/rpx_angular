@@ -1,5 +1,15 @@
-<div class="spotbie-scroll-top spotbie-arrow-transparent" 
+<div class="spotbie-scroll-top sb-your-news" 
         (click)="scrollTop()"
          #scrollArrow>
     <i class="fa fa-angle-double-up" aria-hidden="true"></i>
+</div>
+
+<div class="sb-your-news" #ourNews (click)="goToNews()">
+    <p class="mt-0 mb-0"> 
+        <a class="spotbie-text-gradient" 
+            style="font-size: .7rem;"
+            [href]="myNewsLink">
+          We stand with Ukraine.
+        </a>
+    </p>
 </div>
