@@ -35,6 +35,7 @@
 }
 .sb-your-news.marginLeft{
     left: 85px;
+    bottom: 27px;
 }
 @media (max-width: 460px) { 
     .spotbie-scroll-top{
