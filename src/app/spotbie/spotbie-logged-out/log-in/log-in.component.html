@@ -8,14 +8,14 @@
 
   <div class='sb-scroll'>
 
-    <p class='sb-signUpGeneralInstructions text-uppercase text-center mt-4' id="sign_up_general_instructions" #spotbieSignUpIssues>
-      
-      <span class='spotbie-text-gradient' *ngIf="!business">Login to earn rewards</span>
-      <span class='spotbie-text-gradient' *ngIf="business">Login to find customers</span>
-
-    </p>
-
     <div class='spotbie-loginWrapper'>
+
+      <p class='sb-signUpGeneralInstructions text-uppercase text-center mt-4' id="sign_up_general_instructions" #spotbieSignUpIssues>
+      
+        <span class='spotbie-text-gradient' *ngIf="!business">Login to earn rewards</span>
+        <span class='spotbie-text-gradient' *ngIf="business">Login to find customers</span>
+  
+      </p>
 
       <form [formGroup]="logInForm">
 

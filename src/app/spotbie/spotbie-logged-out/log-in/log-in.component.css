@@ -98,6 +98,7 @@
     text-align: left;
 }
 .spotbie-loginWrapper{
+    padding-top: 60px;
     width: 100%;
     min-width: 100%;
     max-width: 100%;
@@ -137,6 +138,7 @@
         width: 102%;
         min-width: 102%;
         max-width: 102%;       
+        padding-top: 80px;
     }
     .sb-signUpGeneralInstructions{
         margin-top: 40px!important;
@@ -161,7 +163,7 @@
         min-height: 55px;        
     }  
     .spotbie-overlay-window{
-        padding-top: 80px !important;
+        padding-top: 0px !important;
     } 
     .spotbie-forgot-your-pass{
         width: 90%;
