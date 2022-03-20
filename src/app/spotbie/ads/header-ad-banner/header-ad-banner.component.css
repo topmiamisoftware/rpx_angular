@@ -1,7 +1,7 @@
 .spotbie-ad-wrapper-header{
     position: relative;
     text-align: center;
-    margin: 5px auto;
+    margin-left: 20px;
     min-height: 370px;
     background-repeat: no-repeat!important;
     background-size: contain!important;
@@ -178,10 +178,10 @@
     .spotbie-ad-wrapper-header{
         position: relative;
         margin: 0 auto;
-        max-width: 100%;
-        min-width: 100%;    
-        width: 100%;
-        right: 0%;
+        max-width: 102%;
+        min-width: 102%;    
+        width: 102%;
+        right: 1%;
         min-height: unset;
         height: unset;        
     }
