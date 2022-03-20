@@ -15,7 +15,7 @@ export class ScrollToTopComponent implements OnInit {
   @ViewChild('scrollArrow') scrollArrow: ElementRef
   @ViewChild('ourNews') ourNews: ElementRef
   
-  public arrowOn: boolean
+  public arrowOn: boolean = false
 
   public myNewsLink = MY_NEWS_LINK
 
@@ -46,11 +46,11 @@ export class ScrollToTopComponent implements OnInit {
       
       const scrollTop = $('#spotbieMainSpotBieScroll').scrollTop()
 
-      if (scrollTop < 50) {        
+      if (scrollTop < 119) {        
         this.scrollArrow.nativeElement.className = 'spotbie-scroll-top spotbie-arrow-transparent'
         this.ourNews.nativeElement.className = 'sb-your-news'
         this.arrowOn = false
-      } else if (this.arrowOn == false) {        
+      } else if (this.arrowOn == false && scrollTop > 120) {        
         this.arrowOn = true
         this.scrollArrow.nativeElement.className = 'spotbie-scroll-top'
         this.ourNews.nativeElement.className = 'sb-your-news marginLeft'

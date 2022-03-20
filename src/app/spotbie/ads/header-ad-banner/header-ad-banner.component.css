@@ -1,6 +1,5 @@
 .spotbie-ad-wrapper-header{
-    position: absolute;
-    right: 2%;
+    position: relative;
     text-align: center;
     margin: 5px auto;
     min-height: 370px;
