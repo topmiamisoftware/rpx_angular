@@ -427,7 +427,7 @@
                                     chosen_account_type != 4 &&
                                     userIsTrial" 
                             (click)="activateFullMembership()">                        
-                        SKIP TRIAL
+                        END TRIAL
                     </div>
 
                     <div class="mt-4" style="font-size: .8rem;" *ngIf="userIsSubscribed">
@@ -843,7 +843,7 @@
                     <td>                                  
                         <input class='sb-input text-center' 
                                type='text'  
-                               maxlength="7"
+                               maxlength="20"
                                formControlName="passKey" />
                     </td>
                 </tr>

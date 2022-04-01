@@ -832,7 +832,7 @@ p.sb-helpInfo{
     color: #ffc107;
 }
 #tidio-chat-iframe{
-    bottom: 5px;
+    bottom: 5px !important;
 }
 /**WIDTH MEDIA QUERIES */
 @media (max-width: 1440px) {
@@ -977,7 +977,7 @@ p.sb-helpInfo{
         font-size: 18px;
     }
     #tidio-chat-iframe{
-        bottom: 10px;
+        bottom: 10px !important;
     }    
     .spotbie-toast-input-box {
         border-radius: 0px

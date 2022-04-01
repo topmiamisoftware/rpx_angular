@@ -339,6 +339,7 @@
     position: relative;
     margin: 0 auto;
     background-color: #f3f3f3;
+    text-align: left;
 }
 .spotbie-search-result{
     background-color: rgb(28 25 36 / 14%); 
@@ -353,8 +354,7 @@
 .spotbie-search-result-wrapper{
     position: relative;
     margin: 0 auto;
-    text-align: center;
-    padding-top: 100px;
+    text-align: left;
 }
 .spotbie-search-result{
     position: relative;
@@ -837,6 +837,11 @@ button.gm-ui-hover-effect:focus-within{
 }
 .sb-eventsResultsTitle{
     padding-top: 100px;
+}
+.sb-sorterHead{
+    position: relative;
+    padding-left: 20px;
+    min-width: 100%;
 }
 ::-webkit-scrollbar{
     height: 10px;

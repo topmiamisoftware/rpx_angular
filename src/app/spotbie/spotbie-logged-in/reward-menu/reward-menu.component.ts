@@ -103,20 +103,14 @@ export class RewardMenuComponent implements OnInit {
   }
 
   private async fetchRewardsCb(resp){
-
     if(resp.success){
-
       this.rewards = resp.rewards
 
       if(this.userType === this.eAllowedAccountTypes.Personal || this.isLoggedIn !== '1'){
-
         this.userPointToDollarRatio = resp.loyalty_point_dollar_percent_value	
         this.business = resp.business
-
       }
-
     }
-
   }
 
   public addItem(){
@@ -180,7 +174,6 @@ export class RewardMenuComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
     this.userType = parseInt(localStorage.getItem('spotbie_userType'))
     this.isLoggedIn = localStorage.getItem('spotbie_loggedIn')
 
@@ -188,13 +181,8 @@ export class RewardMenuComponent implements OnInit {
     {
       this.getLoyaltyPointBalance()
       this.fetchRewards()
-
-    } else {
-
+    } else 
       this.fetchRewards(this.qrCodeLink)
-  
-    }
-
+    
   }
-
 }

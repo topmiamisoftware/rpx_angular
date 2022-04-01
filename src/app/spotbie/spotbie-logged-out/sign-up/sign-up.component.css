@@ -134,7 +134,6 @@ h2 strong.sep-two {
     background-size: cover !important;
     background-position: center !important;
     z-index: 97 !important;
-    overflow-y: scroll;   
 }
 .sb-regularBg{
     background: url('../../../../assets/images/home_imgs/jpg/spotbie-login-background.jpg');

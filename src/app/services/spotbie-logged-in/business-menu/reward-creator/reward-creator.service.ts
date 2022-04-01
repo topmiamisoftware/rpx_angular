@@ -33,7 +33,6 @@ export class RewardCreatorService {
     return this.http.post<any>(placeToEatRewardApi, itemObjToSave).pipe(
       catchError(handleError("completeReset"))
     ) 
-
   }
 
   public updateItem(itemObj: Reward): Observable<any>{

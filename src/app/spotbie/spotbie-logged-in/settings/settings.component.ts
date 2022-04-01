@@ -343,6 +343,32 @@ export class SettingsComponent implements OnInit {
         this.loading = true
         this.placeFormSubmitted = true
 
+        let numberCategories = []
+
+        this.activeBusinessCategories.forEach(element => {            
+            let categoryIndex = this.businessCategoryList.indexOf(element)
+            if( categoryIndex > 0 ) numberCategories.push(categoryIndex)                                
+        })
+
+        let businessInfo = {
+            accountType: this.chosen_account_type,
+            name: this.originTitle,
+            description: this.originDescription,
+            address: this.originAddress,
+            city: this.city,
+            country: this.country,
+            line1: this.line1,
+            line2: this.line2,
+            postal_code: this.postal_code,
+            state: this.state,
+            photo: this.originPhoto,
+            loc_x: this.lat,
+            loc_y: this.lng,
+            categories: JSON.stringify(numberCategories),
+        }
+
+        this.userAuthService.saveBusiness(businessInfo).subscribe()
+
         if (this.businessSettingsForm.invalid) {
 
             this.loading = false

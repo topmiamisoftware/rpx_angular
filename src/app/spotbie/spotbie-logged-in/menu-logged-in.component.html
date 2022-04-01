@@ -5,8 +5,10 @@
   <tr>  
 
     <td class="sb-menu-nav" (click)="slideMenu()" *ngIf="!isDesktop">
+
       <i class="fa fa-bars" *ngIf="!menuActive"></i>
       <i class="fa fa-times" *ngIf="menuActive"></i>
+
     </td>  
   
     <td [ngStyle]="getPointsWrapperStyle()">
@@ -65,7 +67,7 @@
 </table>
 
 <div class="spotbie-slider-menu-background" *ngIf="menuActive">
-
+  
   <table class="spotbie-slider-menu
                 animated slideInLeft" #spotbieMainMenu>
     <tr>

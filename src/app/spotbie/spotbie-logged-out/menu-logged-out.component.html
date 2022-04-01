@@ -39,6 +39,10 @@
         LOGIN
       </span>
 
+      <span (click)="goToBusiness()" *ngIf="!business">
+        <i class="fa fa-business-time"></i> BUSINESS
+      </span>
+
     </td>
 
   </tr>
@@ -48,39 +52,39 @@
 
   <table class="spotbie-slider-menu
                 animated slideInLeft">
+    <tr>      
+      <td>
 
-    <tr><td>
-      
-      <div (click)="home()">
-        HOME
-      </div>
-      
-      <div (click)="spawnCategories('food')">
-        PLACES TO EAT <i class="fa fa-angle-right"></i>
-      </div>
+        <div (click)="home()">
+          HOME
+        </div>
+        
+        <div (click)="spawnCategories('food')">
+          PLACES TO EAT <i class="fa fa-angle-right"></i>
+        </div>
 
-      <div (click)="spawnCategories('shopping')">
-        RETAIL <i class="fa fa-angle-right"></i>
-      </div>
+        <div (click)="spawnCategories('shopping')">
+          RETAIL <i class="fa fa-angle-right"></i>
+        </div>
 
-      <div (click)="spawnCategories('events')">
-        EVENTS <i class="fa fa-angle-right"></i>
-      </div>
-      
-      <div (click)="openWindow(signUpWindow)">
-        SIGN UP
-      </div>
+        <div (click)="spawnCategories('events')">
+          EVENTS <i class="fa fa-angle-right"></i>
+        </div>
+        
+        <div (click)="openWindow(signUpWindow)">
+          SIGN UP
+        </div>
 
-      <div (click)="openWindow(logInWindow)">
-        LOGIN
-      </div>
+        <div (click)="openWindow(logInWindow)">
+          LOGIN
+        </div>
 
-      <!--<div (click)="goToBlog()">
-        BLOG
-      </div>-->
+        <div (click)="goToBlog()" *ngIf="!business">
+          BUSINESS PLATFORM
+        </div>
 
-    </td></tr>
-
+      </td>
+    </tr>
   </table>
 
 </div>

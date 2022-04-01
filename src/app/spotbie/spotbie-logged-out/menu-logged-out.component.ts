@@ -3,6 +3,7 @@ import { Location } from '@angular/common'
 
 import { externalBrowserOpen } from 'src/app/helpers/cordova/web-intent'
 import { DeviceDetectorService } from 'ngx-device-detector'
+import { Router } from '@angular/router'
 
 @Component({
   selector: 'app-menu-logged-out',
@@ -28,8 +29,11 @@ export class MenuLoggedOutComponent implements OnInit {
   public isDesktop: boolean
   public isTablet: boolean
 
+  public business: boolean = false
+
   constructor(private location: Location,
-              private deviceService: DeviceDetectorService) { }
+              private deviceService: DeviceDetectorService,
+              private router: Router) { }
 
   public spawnCategories(type: any, slideMenu: boolean = true): void{
 
@@ -90,45 +94,43 @@ export class MenuLoggedOutComponent implements OnInit {
     
   }
 
+  goToBusiness(){
+    this.router.navigate(['/business'])
+  }
+
   home(){
-    
     this.menuActive = false
 
     this.signUpWindow.open = false
     this.logInWindow.open = false
     this.openHome.emit()
-
   }
 
-  ngOnInit(): void {
-    
+  ngOnInit(): void { 
     const activatedRoute = this.location.path()
 
     this.isMobile = this.deviceService.isMobile()
     this.isDesktop = this.deviceService.isDesktop()
     this.isTablet = this.deviceService.isTablet()
-
     
     // check if we need to auto log-in
     const cookiedRememberMe = localStorage.getItem('spotbie_rememberMe')
     const logged_in = localStorage.getItem('spotbie_rememberMe')
 
+    if(activatedRoute.indexOf('/business') > -1) this.business = true
+    
     if (cookiedRememberMe == '1' 
         && activatedRoute.indexOf('/home') > -1
         && logged_in !== '1'){
       this.logInWindow.open = true
     }
-
   }
 
-  ngAfterViewInit(): void {
-    
+  ngAfterViewInit(): void {    
     //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
     //Add 'implements AfterViewInit' to the class.
     setTimeout(()=>{
       this.spotbieMainMenu.nativeElement.style.display = 'table'
     }, 750) 
-
   }
-
 }
