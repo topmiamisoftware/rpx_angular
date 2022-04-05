@@ -2,11 +2,11 @@
     *ngIf="ad !== null"
     (click)="openAd()">
 
-    <div class="spotbie-ad-image" [ngStyle]="{'background' : 'url(' + ad.images + ')'}" *ngIf="!editMode && ad.id != 2"></div>
+    <img class="spotbie-ad-image" [src]=" ad.images| safe" *ngIf="!editMode && ad.id != 2" />
     
-    <div class="spotbie-ad-image" [ngStyle]="{'background' : 'url(' + genericAdImage  + ')'}" *ngIf="editMode && ad.id == 2"></div>
+    <img class="spotbie-ad-image" [src]=" genericAdImage | safe" *ngIf="editMode && ad.id == 2" />
 
-    <div class="spotbie-ad-image" [ngStyle]="{'background' : 'url(' + ad.images  + ')'}" *ngIf="editMode && ad.id != 2"></div>
+    <img class="spotbie-ad-image" [src]=" ad.images | safe" *ngIf="editMode && ad.id != 2" />
 
     <div class='sb-ad-bottom' *ngIf="businessReady && business !== null">
         

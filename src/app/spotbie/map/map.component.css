@@ -151,7 +151,7 @@
 }
 .spotbie-controls-search-results td{
     border-right: 1px solid white;
-    padding: 0px 10px; 
+    padding: 0px 10px !important; 
     color: #332f3e;   
 }
 .spotbie-categories{
@@ -354,7 +354,10 @@
 .spotbie-search-result-wrapper{
     position: relative;
     margin: 0 auto;
-    text-align: left;
+    text-align: center;
+    min-width: 100%;
+    width: 100%;
+    max-width: 100%;
 }
 .spotbie-search-result{
     position: relative;
@@ -843,6 +846,9 @@ button.gm-ui-hover-effect:focus-within{
     padding-left: 20px;
     min-width: 100%;
 }
+.sb-sorterHead td{
+    padding: 0px;
+}
 ::-webkit-scrollbar{
     height: 10px;
     width: 10px;
@@ -1008,7 +1014,10 @@ button.gm-ui-hover-effect:focus-within{
         width: 100%;
         min-width: 100%;
         max-width: 100%;         
-    }    
+    } 
+    .spotbie-search-result-wrapper{
+        text-align: center;
+    }   
 }
 @media (max-width: 700px) { 
     .map-prompt-v-align{   

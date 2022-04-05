@@ -1,14 +1,13 @@
 .spotbie-ad-wrapper-header{
     position: relative;
     text-align: center;
-    margin-left: 20px;
     min-height: 370px;
     background-repeat: no-repeat!important;
     background-size: contain!important;
     background-position: center!important;
-    max-width: 1200px;
-    min-width: 1200px;
-    width: 1200px;
+    max-width: 100%;
+    min-width: 100%;
+    width: 100%;
     background-color: #1c1924!important;
     cursor: pointer;
     z-index: 9;
@@ -17,10 +16,9 @@
 .spotbie-ad-wrapper-header.sb-mobileAdWrapper{
     position: relative;
     margin: 0 auto;
-    max-width: 600px;
-    min-width: 600px;
-    width: 600px;
-    min-height: 600px;
+    max-height: 100%;
+    min-width: 100%;
+    max-width: 100%;
     right: 0%;
     min-height: unset;
     height: unset;        
@@ -30,9 +28,8 @@
     position: relative;       
     left: 0;
     right: 0;
-    min-height: 590px;
-    height: 590px;
     max-height: 100%;
+    min-width: 100%;
     max-width: 100%;
     box-shadow: unset;   
 }
@@ -94,19 +91,13 @@
 }
 
 .spotbie-ad-image{
-    position: absolute;
+    position: relative;
     left: 0;
     right: 0;
-    margin-left: 0;
-    min-height: 370px;
-    height: 370px;
-    max-height: 370px;
+    height: auto;
     width: 100%;
     max-width: 100%;
     min-width: 100%;
-    background-repeat: no-repeat!important;
-    background-size: cover!important;
-    background-position: center!important; 
 }
 
 .spotbie-white-iconImg{
@@ -192,10 +183,8 @@
         position: relative;
         left: 0;
         right: 0;
-        min-height: 250px;
-        height: 375px;
-        max-height: 375px;    
-        max-width: 100%;
+        width: 100%;
+        min-width: 100%;   
         box-shadow: unset;
         background-color: #26232e !important;
         background-size: contain !important; 
@@ -256,8 +245,6 @@
 @media (max-width: 420px) { 
     .sb-mobileAdWrapper .spotbie-ad-image,
     .spotbie-ad-image{
-        min-height: 250px;
-        height: 410px;
-        max-height: 410px;  
+        min-width: 100%;
     } 
 }

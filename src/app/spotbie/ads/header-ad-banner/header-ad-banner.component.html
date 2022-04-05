@@ -6,17 +6,17 @@
 
     <div class="spotbie-white-iconImg" [ngStyle]="{'background' : 'url(assets/images/qr/spotbie-white-icon.png)'}"></div>
 
-    <div class="spotbie-ad-image" [ngStyle]="{'background' : 'url(' + ad.images + ')'}" *ngIf="!editMode && isDesktop"></div>
+    <img class="spotbie-ad-image" [src]="ad.images | safe" *ngIf="!editMode && isDesktop" />
 
-    <div class="spotbie-ad-image" [ngStyle]="{'background' : 'url(' + ad.images_mobile + ')'}" *ngIf="!editMode && !isDesktop"></div>
+    <img class="spotbie-ad-image" [src]="ad.images_mobile | safe" *ngIf="!editMode && !isDesktop" />
     
-    <div class="spotbie-ad-image" [ngStyle]="{'background' : 'url(' + genericAdImage  + ')'}" *ngIf="editMode && ad.id == 2 && isDesktop"></div>
+    <img class="spotbie-ad-image" [src]="genericAdImage | safe" *ngIf="editMode && ad.id == 2 && isDesktop" />
     
-    <div class="spotbie-ad-image" [ngStyle]="{'background' : 'url(' + genericAdImageMobile  + ')'}" *ngIf="editMode && ad.id == 2 && !isDesktop"></div>
+    <img class="spotbie-ad-image" [src]="genericAdImageMobile | safe" *ngIf="editMode && ad.id == 2 && !isDesktop" />
 
-    <div class="spotbie-ad-image" [ngStyle]="{'background' : 'url(' + ad.images + ')'}" *ngIf="editMode && ad.id != 2 && isDesktop"></div>
+    <img class="spotbie-ad-image" [src]="ad.images | safe" *ngIf="editMode && ad.id != 2 && isDesktop" />
 
-    <div class="spotbie-ad-image" [ngStyle]="{'background' : 'url(' + ad.images_mobile  + ')'}" *ngIf="editMode && ad.id != 2 && !isDesktop"></div>
+    <img class="spotbie-ad-image" [src]="ad.images_mobile | safe" *ngIf="editMode && ad.id != 2 && !isDesktop" />
     
     <div class='sb-ad-bottom' *ngIf="isDesktop && business !== null">
         

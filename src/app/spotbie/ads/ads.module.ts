@@ -4,6 +4,7 @@ import { CommunityMemberModule } from '../community-member/community-member.modu
 import { BottomAdBannerComponent } from './bottom-ad-banner/bottom-ad-banner.component';
 import { NearbyFeaturedAdComponent } from './nearby-featured-ad/nearby-featured-ad.component'
 import { HeaderAdBannerComponent } from './header-ad-banner/header-ad-banner.component';
+import { SpotbiePipesModule } from 'src/app/spotbie-pipes/spotbie-pipes.module';
 
 @NgModule({
   declarations: [
@@ -13,6 +14,7 @@ import { HeaderAdBannerComponent } from './header-ad-banner/header-ad-banner.com
   ],
   imports: [
     CommonModule,
+    SpotbiePipesModule,
     CommunityMemberModule
   ],
   exports : [

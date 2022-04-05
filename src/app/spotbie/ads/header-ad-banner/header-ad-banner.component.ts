@@ -108,6 +108,7 @@ export class HeaderAdBannerComponent implements OnInit {
       accountType = parseInt(localStorage.getItem('spotbie_userType'))
 
       switch(accountType){
+
         case 1:
           this.genericAdImage = PLACE_TO_EAT_AD_IMAGE
           this.genericAdImageMobile = PLACE_TO_EAT_AD_IMAGE_MOBILE
@@ -121,6 +122,7 @@ export class HeaderAdBannerComponent implements OnInit {
           this.genericAdImageMobile = EVENTS_AD_IMAGE_MOBILE
           this.categories = this.eventsClassification
           break  
+          
       }
 
     } else {

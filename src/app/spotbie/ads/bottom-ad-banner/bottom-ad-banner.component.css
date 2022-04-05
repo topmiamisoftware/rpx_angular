@@ -29,9 +29,8 @@
     position: relative;       
     left: 0;
     right: 0;
-    min-height: 590px;
-    height: 590px;
-    max-height: 100%;
+    min-width: 100%;
+    width: 100%;
     max-width: 100%;
     box-shadow: unset;   
 }
@@ -159,9 +158,7 @@
         position: relative;
         left: 0;
         right: 0;
-        min-height: 250px;
-        height: 375px;
-        max-height: 375px;
+        min-width: 100%;
         max-width: 100%;
         box-shadow: unset;
         background-color: #26232e !important;
@@ -221,8 +218,7 @@
 @media (max-width: 420px) { 
     .sb-mobileAdWrapper .spotbie-ad-image,
     .spotbie-ad-image{
-        min-height: 250px;
-        height: 410px;
-        max-height: 410px;  
+        min-width: 100%;
+        height: auto;
     } 
 }
