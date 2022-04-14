@@ -1,4 +1,4 @@
 [build]
-  command = "ng build --configuration production && ng run spotbie:serverless:production"
+  command = "npm run prerender"
   functions = "./functions"
   publish = "dist/spotbie/browser"
