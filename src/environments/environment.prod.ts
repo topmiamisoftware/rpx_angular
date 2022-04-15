@@ -1,7 +1,7 @@
 let baseUrl = 'https://demo.spotbie.com/'
 
 export const environment = {
-  production: true,
+  production: false,
   staging: true,
   baseUrl: baseUrl,
   versionCheckURL: baseUrl+'version.json',
