@@ -1,11 +1,11 @@
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 
 // reg expression for matching names
 const regName = /^[a-zA-Z]+$/;
 
 // custom validator to check that two fields match
 export function ValidatePersonName(name_control_name: string) {
-    return (formGroup: FormGroup) => {
+    return (formGroup: UntypedFormGroup) => {
         const person_name = formGroup.controls[name_control_name];
 
         // return if another validator has already found an error on the name

@@ -3,7 +3,7 @@ import { Router } from '@angular/router'
 
 import * as $ from 'jquery'
 
-import { Validators, FormGroup, FormBuilder } from '@angular/forms'
+import { Validators, UntypedFormGroup, UntypedFormBuilder } from '@angular/forms'
 
 import { ValidateUsername } from '../../../helpers/username.validator'
 import { ValidatePassword } from '../../../helpers/password.validator'
@@ -40,7 +40,7 @@ export class SignUpComponent implements OnInit {
   public faInfo = faInfoCircle
   public faEyeSlash = faEyeSlash
 
-  public signUpFormx: FormGroup
+  public signUpFormx: UntypedFormGroup
 
   public signing_up: boolean = false
 
@@ -62,7 +62,7 @@ export class SignUpComponent implements OnInit {
 
   constructor(private router: Router,
               private sign_up_service: SignUpService,
-              private formBuilder: FormBuilder,
+              private formBuilder: UntypedFormBuilder,
               private emailUniqueCheckService: EmailConfirmationService,
               private userAuthService: UserauthService) { }
 

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { BugsService } from './bugs.service';
 
 @Component({
@@ -13,11 +13,11 @@ export class BugsComponent implements OnInit {
 
   public submitted: boolean = false
 
-  public bugsForm: FormGroup
+  public bugsForm: UntypedFormGroup
 
   public showSubmitBug: boolean = true
 
-  constructor(private formBuilder: FormBuilder, private bugsService: BugsService) {}
+  constructor(private formBuilder: UntypedFormBuilder, private bugsService: BugsService) {}
 
   get f() { return this.bugsForm.controls }
   get description() {return this.bugsForm.get('description').value }

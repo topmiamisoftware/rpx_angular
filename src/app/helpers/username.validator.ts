@@ -1,11 +1,11 @@
-import { FormGroup } from '@angular/forms';
+import { UntypedFormGroup } from '@angular/forms';
 
 //allow letters, numbers, and underscores
 const illegalChars = /^[0-9A-Za-z_.-]+$/;
 
 //custom validator to check that two fields match
 export function ValidateUsername(username_control_name: string) {
-    return (formGroup: FormGroup) => {
+    return (formGroup: UntypedFormGroup) => {
 
         const username = formGroup.controls[username_control_name];
 

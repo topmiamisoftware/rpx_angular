@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { EmailConfirmationError } from 'src/app/errors/user.errors';
 import { logErrorMessage } from 'src/app/helpers/retry.operators';
@@ -23,15 +23,15 @@ export class EmailConfirmationComponent implements OnInit {
   public confirmEmail: boolean = false
   public codeCheckTried: boolean = false
 
-  public confirmEmailForm: FormGroup
-  public pinForm: FormGroup
+  public confirmEmailForm: UntypedFormGroup
+  public pinForm: UntypedFormGroup
 
   public loading: boolean = false
 
   constructor(private dialogRef: MatDialogRef<EmailConfirmationComponent>,
               @Inject(MAT_DIALOG_DATA) private dat,
               private emailConfirmationService: EmailConfirmationService,
-              private formBuilder: FormBuilder,
+              private formBuilder: UntypedFormBuilder,
               private matDialog: MatDialog) {}  
 
   public sendCode(): void{

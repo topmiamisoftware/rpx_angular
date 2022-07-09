@@ -1,6 +1,6 @@
 import { HttpClient, HttpEventType } from '@angular/common/http'
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core'
-import { FormBuilder, FormGroup, Validators } from '@angular/forms'
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms'
 import { LoyaltyPointBalance } from 'src/app/models/loyalty-point-balance'
 import { Reward } from 'src/app/models/reward'
 import { LoyaltyPointsService } from 'src/app/services/loyalty-points/loyalty-points.service'
@@ -32,7 +32,7 @@ export class RewardCreatorComponent implements OnInit {
 
   public loading: boolean = false
 
-  public rewardCreatorForm: FormGroup
+  public rewardCreatorForm: UntypedFormGroup
   public rewardCreatorFormUp: boolean = false
 
   public rewardClaimUrl: string = null
@@ -60,7 +60,7 @@ export class RewardCreatorComponent implements OnInit {
 
   public qrCodeClaimReward = QR_CODE_CALIM_REWARD_SCAN_BASE_URL
 
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private rewardCreatorService: RewardCreatorService,
               private http: HttpClient,
               private loyaltyPointsService: LoyaltyPointsService) { 

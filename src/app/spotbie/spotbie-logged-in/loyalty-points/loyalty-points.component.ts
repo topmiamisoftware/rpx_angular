@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core'
-import { FormBuilder, FormGroup, Validators } from '@angular/forms'
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router'
 import { AllowedAccountTypes } from 'src/app/helpers/enum/account-type.enum'
 import { LoyaltyPointBalance } from 'src/app/models/loyalty-point-balance'
@@ -35,7 +35,7 @@ export class LoyaltyPointsComponent implements OnInit {
   public businessLoyaltyPointsOpen: boolean = false
   public personalLoyaltyPointsOpen: boolean = false
 
-  public businessLoyaltyPointsForm: FormGroup
+  public businessLoyaltyPointsForm: UntypedFormGroup
   public businessLoyaltyPointsFormUp: boolean = false
   public businessLoyaltyPointsSubmitted: boolean = false
 
@@ -55,7 +55,7 @@ export class LoyaltyPointsComponent implements OnInit {
   public loyaltyPointBalance: LoyaltyPointBalance = new LoyaltyPointBalance()
 
   constructor(private loyaltyPointsService: LoyaltyPointsService,
-              private formBuilder: FormBuilder,
+              private formBuilder: UntypedFormBuilder,
               private router: Router,
               route: ActivatedRoute){
                 

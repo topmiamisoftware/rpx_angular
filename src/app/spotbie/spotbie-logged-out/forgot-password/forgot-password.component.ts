@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core'
-import { FormGroup, FormBuilder, Validators } from '@angular/forms'
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms'
 import { ValidatePassword } from '../../../helpers/password.validator'
 import { MustMatch } from '../../../helpers/must-match.validator'
 import { UserauthService } from 'src/app/services/userauth.service'
@@ -22,9 +22,9 @@ export class ForgotPasswordComponent implements OnInit {
 
   @ViewChild('getLinkMessage') getLinkMessage
 
-  public passwordResetForm: FormGroup
-  public passwordResetForm_2: FormGroup
-  public passwordForm: FormGroup
+  public passwordResetForm: UntypedFormGroup
+  public passwordResetForm_2: UntypedFormGroup
+  public passwordForm: UntypedFormGroup
 
   public passResetSubmitted: boolean = false
 
@@ -56,7 +56,7 @@ export class ForgotPasswordComponent implements OnInit {
   public userEmail: string
 
   constructor(private activatedRoute: ActivatedRoute,
-              private formBuilder: FormBuilder,
+              private formBuilder: UntypedFormBuilder,
               private userAuthService: UserauthService,
               private router: Router) { }
 

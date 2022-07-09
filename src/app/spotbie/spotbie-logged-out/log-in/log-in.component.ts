@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core'
-import { FormGroup, FormBuilder, Validators } from '@angular/forms'
+import { UntypedFormGroup, UntypedFormBuilder, Validators } from '@angular/forms'
 import { UserauthService } from '../../../services/userauth.service'
 import { HttpResponse } from '../../../models/http-reponse'
 import { Router } from '@angular/router'
@@ -26,7 +26,7 @@ export class LogInComponent implements OnInit {
   public current_login_photo: string
   public current_login_username: string
 
-  public logInForm: FormGroup
+  public logInForm: UntypedFormGroup
 
   // will be used to know if the user clicked submit or not.
   public loggingIn: boolean = false
@@ -49,7 +49,7 @@ export class LogInComponent implements OnInit {
   public business: boolean = false
 
   constructor(private host: MenuLoggedOutComponent = null,
-              private formBuilder: FormBuilder,
+              private formBuilder: UntypedFormBuilder,
               private userAuthService: UserauthService,
               private router: Router) { }
 

@@ -1,5 +1,5 @@
 import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms';
 import { AllowedAccountTypes } from 'src/app/helpers/enum/account-type.enum';
 import { LoyaltyPointBalance } from 'src/app/models/loyalty-point-balance';
 import { Business } from 'src/app/models/business';
@@ -43,7 +43,7 @@ export class QrComponent implements OnInit {
   public userLoyaltyPoints: number = 0
   public loyaltyPointWorth: number = 0
 
-  public businessLoyaltyPointsForm: FormGroup
+  public businessLoyaltyPointsForm: UntypedFormGroup
   public businessLoyaltyPointsFormUp: boolean = false
 
   public rewardPrompted: boolean = false
@@ -77,7 +77,7 @@ export class QrComponent implements OnInit {
   constructor(private userAuthService: UserauthService,
               private loyaltyPointsService: LoyaltyPointsService,
               private deviceDetectorService: DeviceDetectorService,
-              private formBuilder: FormBuilder,
+              private formBuilder: UntypedFormBuilder,
               private rewardService: RewardCreatorService) { }
   
   public getWindowClass(){

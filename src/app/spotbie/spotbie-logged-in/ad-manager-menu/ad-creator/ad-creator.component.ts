@@ -1,6 +1,6 @@
 import { HttpClient, HttpEventType } from '@angular/common/http'
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core'
-import { FormBuilder, FormGroup, Validators } from '@angular/forms'
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms'
 import { Ad } from 'src/app/models/ad'
 import { Business } from 'src/app/models/business'
 import { LoyaltyPointBalance } from 'src/app/models/loyalty-point-balance'
@@ -39,7 +39,7 @@ export class AdCreatorComponent implements OnInit {
 
   public loading: boolean = false
 
-  public adCreatorForm: FormGroup
+  public adCreatorForm: UntypedFormGroup
   public adCreatorFormUp: boolean = false
 
   public adFormSubmitted: boolean = false
@@ -70,7 +70,7 @@ export class AdCreatorComponent implements OnInit {
 
   public business: Business = null
 
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private adCreatorService: AdCreatorService,
               private http: HttpClient,
               private loyaltyPointsService: LoyaltyPointsService) { 

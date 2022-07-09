@@ -1,12 +1,12 @@
 
-  import { FormGroup } from '@angular/forms';
+  import { UntypedFormGroup } from '@angular/forms';
 
   // allow letters, numbers, and underscores
   const illegalChars = /\W/;
 
   // custom validator to check that two fields match
   export function ValidatePassword(password_control_name: string) {
-    return (formGroup: FormGroup) => {
+    return (formGroup: UntypedFormGroup) => {
         const password = formGroup.controls[password_control_name];
 
         // return if another validator has already found an error on the username

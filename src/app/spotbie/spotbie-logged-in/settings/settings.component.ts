@@ -1,7 +1,7 @@
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 
 import { Component, OnInit, ViewChild, NgZone, ElementRef, Output, EventEmitter } from '@angular/core'
-import { FormBuilder, Validators, FormGroup, FormControl } from '@angular/forms'
+import { UntypedFormBuilder, Validators, UntypedFormGroup, UntypedFormControl } from '@angular/forms'
 import * as spotbieGlobals from '../../../globals'
 import { User } from '../../../models/user'
 import { AgmMap, MapsAPILoader, MouseEvent } from '@agm/core'
@@ -73,16 +73,16 @@ export class SettingsComponent implements OnInit {
 
     public personal_account = true
 
-    public settingsForm: FormGroup
-    public businessSettingsForm: FormGroup
+    public settingsForm: UntypedFormGroup
+    public businessSettingsForm: UntypedFormGroup
 
     public originPhoto: string = '../../assets/images/home_imgs/find-places-to-eat.svg'
 
-    public password_form: FormGroup
+    public password_form: UntypedFormGroup
 
     public save_password = false
 
-    public deactivation_form: FormGroup
+    public deactivation_form: UntypedFormGroup
     public account_deactivation = false
     public deactivation_submitted = false
 
@@ -135,7 +135,7 @@ export class SettingsComponent implements OnInit {
     public claimBusiness: boolean = false
 
     public passKeyVerificationFormUp: boolean = false
-    public passKeyVerificationForm: FormGroup
+    public passKeyVerificationForm: UntypedFormGroup
     public passKeyVerificationSubmitted: boolean = false
 
     public businessVerified: boolean = false
@@ -174,7 +174,7 @@ export class SettingsComponent implements OnInit {
     @ViewChild('businessInput') businessInput: ElementRef<HTMLInputElement>;
 
     constructor(private http: HttpClient,
-                private formBuilder: FormBuilder,
+                private formBuilder: UntypedFormBuilder,
                 private mapsAPILoader: MapsAPILoader,
                 private ngZone: NgZone,
                 private userAuthService: UserauthService,
@@ -862,7 +862,7 @@ export class SettingsComponent implements OnInit {
 
         const current_password_validators = [Validators.required]
 
-        this.password_form.addControl('spotbie_current_password', new FormControl('', current_password_validators))
+        this.password_form.addControl('spotbie_current_password', new UntypedFormControl('', current_password_validators))
 
         this.password_form.get('spotbie_current_password').setValue('123456789')
 

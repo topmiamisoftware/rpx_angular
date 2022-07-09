@@ -1,6 +1,6 @@
 import { HttpClient, HttpEventType } from '@angular/common/http'
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core'
-import { FormBuilder, FormGroup, Validators } from '@angular/forms'
+import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms'
 import { SpEvent } from 'src/app/models/event'
 import { LoyaltyPointBalance } from 'src/app/models/loyalty-point-balance'
 import { EventCreatorService } from 'src/app/services/spotbie-logged-in/event-menu/event-creator/event-creator.service'
@@ -28,7 +28,7 @@ export class EventCreatorComponent implements OnInit {
 
   public loading: boolean = false
 
-  public eventCreatorForm: FormGroup
+  public eventCreatorForm: UntypedFormGroup
   public eventCreatorFormUp: boolean = false
 
   public eventFormSubmitted: boolean = false
@@ -52,7 +52,7 @@ export class EventCreatorComponent implements OnInit {
 
   public loyaltyPointBalance: LoyaltyPointBalance
 
-  constructor(private formBuilder: FormBuilder,
+  constructor(private formBuilder: UntypedFormBuilder,
               private eventCreatorService: EventCreatorService,
               private http: HttpClient) {}
 
