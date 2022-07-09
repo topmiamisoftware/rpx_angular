@@ -200,7 +200,6 @@
       }
     }
   },
-  "defaultProject": "spotbie",
   "cli": {
     "analytics": false
   }
