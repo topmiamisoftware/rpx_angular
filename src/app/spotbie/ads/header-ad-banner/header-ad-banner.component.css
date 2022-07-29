@@ -1,7 +1,6 @@
 .spotbie-ad-wrapper-header{
     position: relative;
     text-align: center;
-    min-height: 370px;
     background-repeat: no-repeat!important;
     background-size: contain!important;
     background-position: center!important;
@@ -12,7 +11,6 @@
     cursor: pointer;
     z-index: 9;
 }
-
 .spotbie-ad-wrapper-header.sb-mobileAdWrapper{
     position: relative;
     margin: 0 auto;
@@ -21,21 +19,21 @@
     max-width: 100%;
     right: 0%;
     min-height: unset;
-    height: unset;        
+    height: unset;
     background: #1c1924c9!important;
 }
 .sb-mobileAdWrapper .spotbie-ad-image{
-    position: relative;       
+    position: relative;
     left: 0;
     right: 0;
     max-height: 100%;
     min-width: 100%;
     max-width: 100%;
-    box-shadow: unset;   
+    box-shadow: unset;
 }
 .sb-mobileAdWrapper .sb-categoryList{
     text-align: center;
-}     
+}
 .sb-mobileAdWrapper .sb-sponsored,
 .sb-mobileAdWrapper .sb-perDollar,
 .sb-mobileAdWrapper .sb-totalRewards,
@@ -46,8 +44,8 @@
     display: block;
     top: unset;
     right: unset;
-    bottom: unset;        
-}      
+    bottom: unset;
+}
 .sb-mobileAdWrapper .sb-sponsored,
 .sb-mobileAdWrapper .sb-sponsoredName{
     position: relative;
@@ -64,32 +62,30 @@
 .sb-mobileAdWrapper .sb-perDollar
 .sb-mobileAdWrapper .sb-distanceMiles,
 .sb-mobileAdWrapper .sb-categoryList{
-    margin-bottom: 25px;        
-} 
+    margin-bottom: 25px;
+}
 .sb-mobileAdWrapper .sb-totalRewards{
     display: block;
     margin-bottom: 10px;
-}   
+}
 .sb-mobileAdWrapper .sb-distanceMiles{
     display: block;
     margin-top: 10px;
-}      
+}
 .sb-mobileAdWrapper .sb-perDollar{
     margin-right: 0px;
-}    
+}
 .sb-mobileAdWrapper .sb-ad-bottom{
     position:relative;
     position: relative;
     background-color: #1c1924!important;
     padding-top: 15px;
-    padding-bottom: 15px;        
+    padding-bottom: 15px;
     background-color: rgb(28 25 36) !important;
 }
-
 .fa-map-marker-alt{
     font-size: .5rem;
 }
-
 .spotbie-ad-image{
     position: relative;
     left: 0;
@@ -99,7 +95,6 @@
     max-width: 100%;
     min-width: 100%;
 }
-
 .spotbie-white-iconImg{
     position: absolute;
     top: 0;
@@ -114,9 +109,8 @@
     background-position: center!important;
     background-repeat: no-repeat!important;
     z-index: 0;
-    pointer-events: none;   
+    pointer-events: none;
 }
-
 .sb-ad-top{
     position: absolute;
     top: 0;
@@ -124,7 +118,6 @@
     width: 100%;
     z-index: 2;
 }
-
 .sb-ad-bottom{
     position: absolute;
     bottom: 0;
@@ -134,64 +127,60 @@
     padding-top: 5px;
     padding-bottom: 5px;
     font-size: .6rem;
-    background-color:rgb(51 47 62 / 60%);    
+    background-color:rgb(51 47 62 / 60%);
 }
-
-@media (max-width: 1635px) { 
+@media (max-width: 1635px) {
     .spotbie-ad-wrapper-header{
         max-width: 72%;
         min-width: 72%;
         width: 72%;
-        right: 4%;         
+        right: 4%;
     }
-
 }
-
-@media (max-width: 1540px) { 
+@media (max-width: 1540px) {
     .spotbie-ad-wrapper-header{
         max-width: 68%;
         min-width: 68%;
         width: 68%;
-        right: 4%;         
+        right: 4%;
     }
 }
-
-@media (max-width: 1100px) { 
+@media (max-width: 1100px) {
     .spotbie-ad-wrapper-header{
         max-width: 55%;
         min-width: 55%;
         width: 55%;
-        right: 6%;         
+        right: 6%;
     }
 }
-@media (max-width: 1024px) { 
+@media (max-width: 1024px) {
     .spotbie-ad-wrapper-header.sb-mobileAdWrapper,
     .spotbie-ad-wrapper-header{
         position: relative;
         margin: 0 auto;
         max-width: 102%;
-        min-width: 102%;    
+        min-width: 102%;
         width: 102%;
         right: 1%;
         min-height: unset;
-        height: unset;        
+        height: unset;
     }
 }
-@media (max-width: 768px) { 
+@media (max-width: 768px) {
     .sb-mobileAdWrapper .spotbie-ad-image,
     .spotbie-ad-image{
         position: relative;
         left: 0;
         right: 0;
         width: 100%;
-        min-width: 100%;   
+        min-width: 100%;
         box-shadow: unset;
         background-color: #26232e !important;
-        background-size: contain !important; 
+        background-size: contain !important;
     }
     .sb-categoryList{
         text-align: center;
-    }     
+    }
     .sb-sponsored,
     .sb-perDollar,
     .sb-totalRewards,
@@ -202,8 +191,8 @@
         display: block;
         top: unset;
         right: unset;
-        bottom: unset;        
-    }      
+        bottom: unset;
+    }
     .sb-sponsored,
     .sb-sponsoredName{
         position: relative;
@@ -220,31 +209,31 @@
     .sb-perDollar
     .sb-distanceMiles,
     .sb-categoryList{
-        margin-bottom: 25px;        
-    } 
+        margin-bottom: 25px;
+    }
     .sb-totalRewards{
         display: block;
         margin-bottom: 10px;
-    }   
+    }
     .sb-distanceMiles{
         display: block;
         margin-top: 10px;
-    }      
+    }
     .sb-perDollar{
         margin-right: 0px;
-    }    
+    }
     .sb-ad-bottom{
         position:relative;
         position: relative;
         background-color: #1c1924!important;
         padding-top: 15px;
-        padding-bottom: 15px;        
+        padding-bottom: 15px;
         background-color: rgb(28 25 36) !important;
     }
 }
-@media (max-width: 420px) { 
+@media (max-width: 420px) {
     .sb-mobileAdWrapper .spotbie-ad-image,
     .spotbie-ad-image{
         min-width: 100%;
-    } 
+    }
 }

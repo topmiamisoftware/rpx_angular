@@ -23,18 +23,14 @@ import { BugsComponent } from './bugs/bugs.component'
 import { TransferHttpCacheModule } from '@nguniversal/common'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 
-import { SocialAuthServiceConfig, SocialLoginModule } from 'angularx-social-login';
-import {
-  GoogleLoginProvider,
-  FacebookLoginProvider
-} from 'angularx-social-login'
+import { SocialAuthServiceConfig, SocialLoginModule, GoogleLoginProvider } from '@abacritt/angularx-social-login';
 
 import { UserauthService } from './services/userauth.service'
 
 import { StoreModule } from '@ngrx/store'
 import { loyaltyPointsReducer } from './spotbie/spotbie-logged-in/loyalty-points/loyalty-points.reducer'
 
-import { StripeModule } from "stripe-angular"
+import { StripeModule } from 'stripe-angular'
 import { MakePaymentModule } from './make-payment/make-payment.module'
 
 @NgModule({
@@ -45,8 +41,8 @@ import { MakePaymentModule } from './make-payment/make-payment.module'
     BugsComponent
   ],
   imports: [
-    FormsModule, 
-    ReactiveFormsModule,        
+    FormsModule,
+    ReactiveFormsModule,
     AppRoutingModule,
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
     BrowserTransferStateModule,
@@ -58,13 +54,13 @@ import { MakePaymentModule } from './make-payment/make-payment.module'
     HelperModule,
     MakePaymentModule,
     BrowserAnimationsModule,
-    SocialLoginModule, 
-    StripeModule.forRoot(""),
-    StoreModule.forRoot({ 
+    SocialLoginModule,
+    StripeModule.forRoot(''),
+    StoreModule.forRoot({
       loyaltyPoints: loyaltyPointsReducer
-    }),       
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }), 
-  ],  
+    }),
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+  ],
   providers: [
     {
       provide: 'SocialAuthServiceConfig',
@@ -77,13 +73,9 @@ import { MakePaymentModule } from './make-payment/make-payment.module'
               '1054707215391-kpl49vuhak0mpma4cdqesa39tntgs0rb.apps.googleusercontent.com'
             )
           },
-          {
-            id: FacebookLoginProvider.PROVIDER_ID,
-            provider: new FacebookLoginProvider('413076816928369')
-          }
         ]
       } as SocialAuthServiceConfig,
-    },      
+    },
     DeviceDetectorService,
     VersionCheckService,
     UserauthService,

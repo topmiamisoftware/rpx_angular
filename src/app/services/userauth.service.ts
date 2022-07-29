@@ -7,11 +7,9 @@ import { Observable } from 'rxjs'
 import { catchError, tap } from 'rxjs/operators'
 import { handleError } from '../helpers/error-helper'
 import { User } from '../models/user'
-
-import { SocialAuthService } from "angularx-social-login";
-import { FacebookLoginProvider, GoogleLoginProvider } from "angularx-social-login";
+import { SocialAuthService } from '@abacritt/angularx-social-login';
+import { FacebookLoginProvider, GoogleLoginProvider } from '@abacritt/angularx-social-login';
 import { AllowedAccountTypes } from '../helpers/enum/account-type.enum'
-import { logOutCallback } from '../helpers/logout-callback'
 
 const USER_API = spotbieGlobals.API + 'user'
 
@@ -52,7 +50,7 @@ export class UserauthService {
       })
 
     })
-      
+
   }
 
   public getOAuthBearer(): Observable<any>{
@@ -111,10 +109,10 @@ export class UserauthService {
       catchError( err => {
         throw err
       })
-    )  
+    )
 
   }
-  
+
   public saveSettings(user: User): Observable<any>{
 
     const saveSettingsApi = `${USER_API}/update`
@@ -122,7 +120,7 @@ export class UserauthService {
     let saveSettingsObj
 
     if(user.business === undefined){
-      
+
       saveSettingsObj = {
         _method: 'PUT',
         username: user.username,
@@ -160,7 +158,7 @@ export class UserauthService {
       catchError( err => {
         throw err
       })
-    )  
+    )
 
   }
 
@@ -175,7 +173,7 @@ export class UserauthService {
       catchError( err => {
         throw err
       })
-    ) 
+    )
 
   }
 
@@ -193,7 +191,7 @@ export class UserauthService {
 
     return this.http.post<any>(resetPasswordApi, passResetObj).pipe(
       catchError(handleError("completeReset"))
-    ) 
+    )
 
   }
 
@@ -210,7 +208,7 @@ export class UserauthService {
 
     return this.http.post<any>(resetPasswordApi, passResetObj).pipe(
       catchError(handleError("passwordChange"))
-    ) 
+    )
 
   }
 
@@ -221,21 +219,21 @@ export class UserauthService {
     const passResetObj = {
       _method: 'DELETE',
       password,
-      is_social_account 
+      is_social_account
     }
 
     return this.http.post<any>(resetPasswordApi, passResetObj).pipe(
       catchError(handleError("deactivateAccount"))
-    ) 
+    )
 
   }
 
-  public signInWithGoogle(loginCallBack, route): void {    
-    
+  public signInWithGoogle(loginCallBack, route): void {
+
     const gLoginOptions = {
       scope: 'https://www.googleapis.com/auth/business.manage https://www.googleapis.com/auth/plus.business.manage',
       return_scopes: true,
-      enable_profile_selector: true      
+      enable_profile_selector: true
     }
 
     this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID, gLoginOptions).catch(
@@ -244,11 +242,11 @@ export class UserauthService {
         return
       }
     )
-    
+
     this.socialAuthService.authState.subscribe((user) => {
 
       this.userLogin = user.email
-      this.userPassword = null 
+      this.userPassword = null
       this.userRememberMe = '1'
 
       localStorage.setItem('spotbiecom_social_id', user.id)
@@ -260,7 +258,7 @@ export class UserauthService {
           loginCallBack(resp)
         }
       )
-    
+
     })
 
   }
@@ -281,12 +279,12 @@ export class UserauthService {
 
     return this.http.post<any>(googleLoginApi, googleLoginObj).pipe(
       catchError(handleError("signInWithGoogle"))
-    ) 
+    )
 
   }
 
   public signInWithFB(loginCallBack, route: string) {
-    
+
     /**
      * Please look at this document for extra fbLoginOptions
      * https://developers.facebook.com/docs/reference/javascript/FB.login/v2.11
@@ -295,7 +293,7 @@ export class UserauthService {
       scope: 'email,public_profile',
       return_scopes: true,
       enable_profile_selector: true
-    }; 
+    };
 
     this.socialAuthService.signIn(FacebookLoginProvider.PROVIDER_ID, fbLoginOptions).catch(
       (error) => {
@@ -303,11 +301,11 @@ export class UserauthService {
         return
       }
     )
-    
+
     this.socialAuthService.authState.subscribe( (user) => {
 
       this.userLogin = user.email
-      this.userPassword = null 
+      this.userPassword = null
       this.userRememberMe = '1'
 
       localStorage.setItem('spotbiecom_social_session', user.authToken)
@@ -326,7 +324,7 @@ export class UserauthService {
   public saveCurrentFbProfile(userObj: any, route: string): Observable<any> {
 
     const fbLoginApi = `${USER_API}/fb-login`
-    
+
     const facebookLoginObj = {
       userID: userObj.id,
       firstName: userObj.firstName,
@@ -339,16 +337,16 @@ export class UserauthService {
 
     return this.http.post<any>(fbLoginApi, facebookLoginObj).pipe(
       catchError(handleError("signInWithFB"))
-    ) 
+    )
 
   }
 
   public verifyBusiness(businessInfo: any): Observable<any>{
 
     let apiUrl
-    
+
     switch(businessInfo.accountType){
-      
+
       case AllowedAccountTypes.PlaceToEat:
       case AllowedAccountTypes.Shopping:
       case AllowedAccountTypes.Events:
@@ -356,7 +354,7 @@ export class UserauthService {
         break
 
     }
-    
+
     const businessInfoObj = {
       name: businessInfo.name,
       description: businessInfo.description,
@@ -371,21 +369,21 @@ export class UserauthService {
       line1: businessInfo.line1,
       line2: businessInfo.line2,
       postal_code: businessInfo.postal_code,
-      state: businessInfo.state      
+      state: businessInfo.state
     }
 
     return this.http.post<any>(apiUrl, businessInfoObj).pipe(
       catchError(handleError("verifyBusiness"))
-    ) 
+    )
 
   }
 
   public saveBusiness(businessInfo: any): Observable<any>{
 
     let apiUrl
-    
+
     switch(businessInfo.accountType){
-      
+
       case AllowedAccountTypes.PlaceToEat:
       case AllowedAccountTypes.Shopping:
       case AllowedAccountTypes.Events:
@@ -393,7 +391,7 @@ export class UserauthService {
         break
 
     }
-    
+
     const businessInfoObj = {
       name: businessInfo.name,
       description: businessInfo.description,
@@ -407,12 +405,12 @@ export class UserauthService {
       line1: businessInfo.line1,
       line2: businessInfo.line2,
       postal_code: businessInfo.postal_code,
-      state: businessInfo.state      
+      state: businessInfo.state
     }
 
     return this.http.post<any>(apiUrl, businessInfoObj).pipe(
       catchError(handleError("verifyBusiness"))
-    ) 
+    )
 
   }
 

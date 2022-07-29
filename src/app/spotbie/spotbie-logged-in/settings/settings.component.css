@@ -16,12 +16,12 @@
     background: #332f3e;
     background-attachment: fixed;
     background-size: cover;
-    text-align: center;    
+    text-align: center;
     z-index: 97;
     background: url(src/assets/images/home_imgs/jpg/spotbie-miami-find-new-friends.jpg);
     background-repeat: no-repeat;
     background-size: cover;
-    background-position: center;    
+    background-position: center;
 }
 .fa-exclamation-triangle{
     position: relative;
@@ -37,7 +37,7 @@
     top: 0;
     bottom: 0;
     left: 0%;
-    right: 0;    
+    right: 0;
 }
 .spotbie-settings-table{
     position: relative;
@@ -57,7 +57,7 @@
     margin-top: 20px;
     width: 350px;
     min-width: unset;
-    max-width: 350px;     
+    max-width: 350px;
 }
 .spotbie-button-mini {
     margin-top: 20px;
@@ -155,7 +155,7 @@ agm-map{
 .map-prompt-mobile .title{
     position: absolute;
     left: 0;
-    right: 0;    
+    right: 0;
     transform: translateY(-50%);
     top: 50%;
     text-align: center;
@@ -165,7 +165,7 @@ agm-map{
     text-align: left;
     min-width: 500px;
     text-align: left;
-    border: unset;    
+    border: unset;
 }
 textarea{
     height: 300px;
@@ -272,7 +272,7 @@ textarea{
     background-position: center !important;
     background-repeat: no-repeat !important;
     background-size: contain !important;
-    cursor: pointer; 
+    cursor: pointer;
     border-radius: 27px;
     border: 1px solid #eee;
 }
@@ -293,9 +293,12 @@ textarea{
     width: 100%;
 }
 .spotbie-category-pick input{
-    width: 100%;
-    min-width: 100%;
-    max-width:  100%;
+    width: 96%;
+    min-width: 96%;
+    max-width: 96%;
+    min-height: 60px;
+    padding: 0 10px;
+    margin-bottom: 0px !important;
 }
 .spotbie-select-menu-option{
     max-width: 350px;
@@ -325,18 +328,18 @@ textarea{
     font-size: .8rem;
 }
 /**WIDTH MEDIA QUERIES */
-@media (max-width: 1300px) { 
+@media (max-width: 1300px) {
 
 }
-@media (max-width: 1200px) {   
+@media (max-width: 1200px) {
 
 }
-@media (max-width: 1024px) { 
+@media (max-width: 1024px) {
 }
-@media (max-width: 900px) { 
+@media (max-width: 900px) {
 
 }
-@media (max-width: 768px) { 
+@media (max-width: 768px) {
     .spotbie-block{
         margin: 0 auto;
         margin-bottom: 30px;
@@ -353,7 +356,7 @@ textarea{
         max-width: 100%;
         padding-left: 0%;
         padding-right: 0%;
-        border-radius: 0;    
+        border-radius: 0;
     }
     .sb-originPhoto-sm{
         width: 150px;
@@ -364,12 +367,12 @@ textarea{
         width: 94%;
         min-width: 94%;
         max-width: 94%;
-    }        
+    }
 }
-@media (max-width: 700px) { 
+@media (max-width: 700px) {
 
 }
-@media (max-width: 600px) { 
+@media (max-width: 600px) {
     .spotbie-select-menu-option{
         font-size: .8rem;
         max-width: 90%;
@@ -380,7 +383,7 @@ textarea{
         font-size: .8rem;
     }
 }
-@media (max-width: 560px) { 
+@media (max-width: 560px) {
     .spotbie-settings-ghost-icon{
         display: none;
     }
@@ -401,32 +404,32 @@ textarea{
         font-size: .9rem !important;
         max-width: 90%;
         width: 90%;
-        min-width: 90%;            
+        min-width: 90%;
     }
     .spotbie-settings-table td{
         padding-top: 7px !important;
     }
     .spotbie-settings-table td.deactivate-account{
         padding-top: 30px !important;
-    }    
+    }
     .spotbie-save-settings-button {
-        margin-top: 0px;        
-    } 
+        margin-top: 0px;
+    }
     .spotbie-map{
         width: 96%;
         min-width: 96%;
         max-width: 96%;
-    } 
+    }
     .sb-business-image{
         width: 90%;
         max-width: 90%;
-        min-width: 90%;        
-    }  
+        min-width: 90%;
+    }
     .sb-origin-address-input{
         max-width: 80%;
         width: 80%;
         min-width: 80%;
-    }    
+    }
     .sb-search-icon{
         max-width: 15%;
         width: 15%;
@@ -440,11 +443,11 @@ textarea{
     }
     textarea{
         width: 94%;
-        min-width: 94%;        
+        min-width: 94%;
     }
     .helpDemoText{
         width: 94%;
-        min-width: 94%; 
+        min-width: 94%;
         font-size: .8rem;
     }
     .sb-topSettingsPadding{
@@ -460,7 +463,7 @@ textarea{
         width: 98%;
         min-width: 98%;
         max-width: 98%;
-    } 
+    }
     .spotbie-help-text {
         width: 98%;
         min-width: 98%;
@@ -478,21 +481,21 @@ textarea{
     .spotbie-current-password-info{
         margin-bottom: 20px;
     }
-    
+
 }
-@media (max-width: 420px) { 
-                   
+@media (max-width: 420px) {
+
 }
-@media (max-width: 360px) { 
- 
+@media (max-width: 360px) {
+
 }
 
 @media (max-width: 320px) {
 
 }
-@media (max-width: 220px) { 
+@media (max-width: 220px) {
 
 }
-@media (max-width: 120px) { 
+@media (max-width: 120px) {
 
 }

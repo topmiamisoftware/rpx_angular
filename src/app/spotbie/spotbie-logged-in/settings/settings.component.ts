@@ -1,30 +1,30 @@
-import {COMMA, ENTER} from '@angular/cdk/keycodes';
+import {COMMA, ENTER} from '@angular/cdk/keycodes'
 
-import { Component, OnInit, ViewChild, NgZone, ElementRef, Output, EventEmitter } from '@angular/core'
-import { UntypedFormBuilder, Validators, UntypedFormGroup, UntypedFormControl } from '@angular/forms'
+import {Component, OnInit, ViewChild, NgZone, ElementRef, Output, EventEmitter} from '@angular/core'
+import {UntypedFormBuilder, Validators, UntypedFormGroup, UntypedFormControl} from '@angular/forms'
 import * as spotbieGlobals from '../../../globals'
-import { User } from '../../../models/user'
-import { AgmMap, MapsAPILoader, MouseEvent } from '@agm/core'
-import { ValidatePassword } from '../../../helpers/password.validator'
-import { MustMatch } from '../../../helpers/must-match.validator'
-import { ValidateUsername } from 'src/app/helpers/username.validator'
-import { ValidatePersonName } from 'src/app/helpers/name.validator'
-import { UserauthService } from 'src/app/services/userauth.service'
+import {User} from '../../../models/user'
+import {AgmMap, MapsAPILoader} from '@agm/core'
+import {ValidatePassword} from '../../../helpers/password.validator'
+import {MustMatch} from '../../../helpers/must-match.validator'
+import {ValidateUsername} from 'src/app/helpers/username.validator'
+import {ValidatePersonName} from 'src/app/helpers/name.validator'
+import {UserauthService} from 'src/app/services/userauth.service'
 
 import * as calendly from '../../../helpers/calendly/calendlyHelper'
 import * as map_extras from 'src/app/spotbie/map/map_extras/map_extras'
 
-import { Business } from 'src/app/models/business'
-import { HttpClient, HttpEventType } from '@angular/common/http'
-import { MatChipInputEvent } from '@angular/material/chips'
-import { map, startWith } from 'rxjs/operators'
+import {Business} from 'src/app/models/business'
+import {HttpClient, HttpEventType} from '@angular/common/http'
+import {MatChipInputEvent} from '@angular/material/chips'
+import {map, startWith} from 'rxjs/operators'
 
-import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
-import { Observable } from 'rxjs/internal/Observable';
-import { LocationService } from 'src/app/services/location-service/location.service';
-import { environment } from 'src/environments/environment';
-import { AllowedAccountTypes } from 'src/app/helpers/enum/account-type.enum';
-import { SpotbiePaymentsService } from 'src/app/services/spotbie-payments/spotbie-payments.service';
+import {MatAutocompleteSelectedEvent} from '@angular/material/autocomplete'
+import {Observable} from 'rxjs/internal/Observable'
+import {LocationService} from 'src/app/services/location-service/location.service'
+import {environment} from 'src/environments/environment'
+import {AllowedAccountTypes} from 'src/app/helpers/enum/account-type.enum'
+import {SpotbiePaymentsService} from 'src/app/services/spotbie-payments/spotbie-payments.service'
 
 const PLACE_TO_EAT_API = spotbieGlobals.API + 'place-to-eat'
 
@@ -41,1373 +41,1302 @@ declare const google: any
 })
 export class SettingsComponent implements OnInit {
 
-    @ViewChild('spotbieSettingsInfoText') spotbieSettingsInfoText: ElementRef
+  @ViewChild('spotbieSettingsInfoText') spotbieSettingsInfoText: ElementRef
 
-    @ViewChild('spotbie_password_change_info_text') spotbiePasswordInfoText: ElementRef
-    @ViewChild('current_password_info') spotbieCurrentPasswordInfoText: ElementRef
+  @ViewChild('spotbie_password_change_info_text') spotbiePasswordInfoText: ElementRef
+  @ViewChild('current_password_info') spotbieCurrentPasswordInfoText: ElementRef
 
-    @ViewChild('spotbie_deactivation_info') spotbieAccountDeactivationInfo
+  @ViewChild('spotbie_deactivation_info') spotbieAccountDeactivationInfo
 
-    @ViewChild('addressSearch') addressSearch
+  @ViewChild('addressSearch') addressSearch
 
-    @ViewChild('userAccountTypeNormalScroll') userAccountTypeNormalScroll
+  @ViewChild('userAccountTypeNormalScroll') userAccountTypeNormalScroll
 
-    @ViewChild('spotbie_map') spotbie_map: AgmMap
+  @ViewChild('spotbie_map') spotbie_map: AgmMap
 
-    @ViewChild('spotbieSettingsWindow') spotbieSettingsWindow
+  @ViewChild('spotbieSettingsWindow') spotbieSettingsWindow
 
-    @ViewChild('placeToEatMediaUploadInfo') placeToEatMediaUploadInfo
-    @ViewChild('placeToEatMediaInput') placeToEatMediaInput
-    
-    @Output('closeWindowEvt') closeWindowEvt = new EventEmitter()
+  @ViewChild('placeToEatMediaUploadInfo') placeToEatMediaUploadInfo
+  @ViewChild('placeToEatMediaInput') placeToEatMediaInput
 
-    public bg_color: string
+  @Output('closeWindowEvt') closeWindowEvt = new EventEmitter()
 
-    public lat: number
-    public lng: number
-    public zoom: number = 12
-    public fitBounds: boolean = false
-    public iconUrl: string
+  public bgColor: string
 
-    public locationFound = false
+  public lat: number
+  public lng: number
+  public zoom: number = 12
+  public fitBounds: boolean = false
+  public iconUrl: string
 
-    public personal_account = true
+  public locationFound = false
 
-    public settingsForm: UntypedFormGroup
-    public businessSettingsForm: UntypedFormGroup
+  public personalAccount = true
 
-    public originPhoto: string = '../../assets/images/home_imgs/find-places-to-eat.svg'
+  public settingsForm: UntypedFormGroup
+  public businessSettingsForm: UntypedFormGroup
 
-    public password_form: UntypedFormGroup
+  public originPhoto: string = '../../assets/images/home_imgs/find-places-to-eat.svg'
 
-    public save_password = false
+  public passwordForm: UntypedFormGroup
 
-    public deactivation_form: UntypedFormGroup
-    public account_deactivation = false
-    public deactivation_submitted = false
+  public savePasswordShow: boolean = false
 
-    public loading = false
+  public deactivationForm: UntypedFormGroup
+  public accountDeactivation: boolean = false
+  public deactivationSubmitted: boolean = false
 
-    public accountTypePhotos = [
-        '../../assets/images/home_imgs/find-users.svg',
-        '../../assets/images/home_imgs/find-places-to-eat.svg',
-        '../../assets/images/home_imgs/find-events.svg',
-        '../../assets/images/home_imgs/find-places-for-shopping.svg'
-    ]
+  public loading = false
 
-    public accountTypeList = ['PLACE TO EAT', 'RETAIL STORE']
-    public chosen_account_type: number
-    public loadAccountTypes = false
+  public accountTypePhotos = [
+    '../../assets/images/home_imgs/find-users.svg',
+    '../../assets/images/home_imgs/find-places-to-eat.svg',
+    '../../assets/images/home_imgs/find-events.svg',
+    '../../assets/images/home_imgs/find-places-for-shopping.svg'
+  ]
 
-    public account_type_category: string
-    public account_type_category_friendly_name: string
+  public accountTypeList = ['PLACE TO EAT', 'RETAIL STORE']
+  public chosenAccountType: number
+  public loadAccountTypes = false
 
-    public help_text = ''
+  public accountTypeCategory: string
+  public accountTypeCategoryFriendlyName: string
 
-    public user: User
-    
-    public userIsSubscribed: boolean = false
-    public userIsTrial: boolean = false
+  public helpText = ''
 
-    public submitted: boolean = false
-    public placeFormSubmitted: boolean = false
+  public user: User
 
-    public adSettingsWindow = {open: false}
+  public userIsSubscribed: boolean = false
+  public userIsTrial: boolean = false
 
-    public geoCoder: any
-    public address: any
-    public address_results: any
-    public password_submitted: boolean = false
-    
-    public settingsFormInitiated: boolean = false
-    
-    public map_styles = map_extras.MAP_STYLES
+  public submitted: boolean = false
+  public placeFormSubmitted: boolean = false
 
-    public locationPrompt: boolean = true
-    public showNoResultsBox: boolean = false
-    public showMobilePrompt: boolean = false
-    public showMobilePrompt2: boolean = false
+  public adSettingsWindow = {open: false}
 
-    public placeSettingsFormUp: boolean = false
+  public geoCoder: any
+  public address: any
+  public addressResults: any
+  public passwordSubmitted: boolean = false
 
-    public place: any 
+  public settingsFormInitiated: boolean = false
 
-    public claimBusiness: boolean = false
+  public mapStyles = map_extras.MAP_STYLES
 
-    public passKeyVerificationFormUp: boolean = false
-    public passKeyVerificationForm: UntypedFormGroup
-    public passKeyVerificationSubmitted: boolean = false
+  public locationPrompt: boolean = true
+  public showNoResultsBox: boolean = false
+  public showMobilePrompt: boolean = false
+  public showMobilePrompt2: boolean = false
 
-    public businessVerified: boolean = false
+  public placeSettingsFormUp: boolean = false
 
-    public placeToEatMediaMessage: string
-    public placeToEatMediaUploadProgress: number = 0
+  public place: any
 
-    public customPatterns = { 
-                                '0': { pattern: new RegExp('\[0-9\]')},
-                                'A': { pattern: new RegExp('\[A-Z\]')}
-                            }
-        
-    public calendlyUp: boolean = false
-    
-    public businessCategoryList: Array<string> = []
+  public claimBusiness: boolean = false
 
-    public selectable = true
-    public removable = true
-    public separatorKeysCodes: number[] = [ENTER, COMMA]
+  public passKeyVerificationFormUp: boolean = false
+  public passKeyVerificationForm: UntypedFormGroup
+  public passKeyVerificationSubmitted: boolean = false
 
-    public filteredBusinessCategories: Observable<string[]>
+  public businessVerified: boolean = false
 
-    public activeBusinessCategories: string[] = []
+  public placeToEatMediaMessage: string
+  public placeToEatMediaUploadProgress: number = 0
 
-    public city: string = null
-    public country: string = null
-    public line1: string = null
-    public line2: string = null
-    public postal_code: string = null
-    public state: string = null
+  public customPatterns = {
+    0: {pattern: new RegExp('\[0-9\]')},
+    A: {pattern: new RegExp('\[A-Z\]')}
+  }
 
-    public friendlyCategories: string = null
+  public calendlyUp: boolean = false
 
-    public isSocialAccount: boolean = false 
+  public businessCategoryList: Array<string> = []
 
-    @ViewChild('businessInput') businessInput: ElementRef<HTMLInputElement>;
+  public selectable = true
+  public removable = true
+  public separatorKeysCodes: number[] = [ENTER, COMMA]
 
-    constructor(private http: HttpClient,
-                private formBuilder: UntypedFormBuilder,
-                private mapsAPILoader: MapsAPILoader,
-                private ngZone: NgZone,
-                private userAuthService: UserauthService,
-                private locationService: LocationService,
-                private paymentService: SpotbiePaymentsService){ }
+  public filteredBusinessCategories: Observable<string[]>
 
-    add(event: MatChipInputEvent): void {
+  public activeBusinessCategories: string[] = []
 
-        const value = (event.value || '').trim()
+  public city: string = null
+  public country: string = null
+  public line1: string = null
+  public line2: string = null
+  public postalCode: string = null
+  public state: string = null
 
-        // Add our category 
+  public friendlyCategories: string = null
 
-        if (value) this.activeBusinessCategories.push(value)
+  public isSocialAccount: boolean = false
 
-        this.businessSettingsForm.get('originCategories').setValue(null)
+  @ViewChild('businessInput') businessInput: ElementRef<HTMLInputElement>
 
-    }
+  constructor(private http: HttpClient,
+              private formBuilder: UntypedFormBuilder,
+              private mapsAPILoader: MapsAPILoader,
+              private ngZone: NgZone,
+              private userAuthService: UserauthService,
+              private locationService: LocationService,
+              private paymentService: SpotbiePaymentsService) {
+  }
 
-    remove(category: string): void {
+  add(event: MatChipInputEvent): void {
 
-        const index = this.activeBusinessCategories.indexOf(category)
+    const value = (event.value || '').trim()
 
-        if (index >= 0) this.activeBusinessCategories.splice(index, 1)
-        
-        this.businessSettingsForm.get('originCategories').setValue(null)
+    // Add our category
 
-    }
+    if (value) this.activeBusinessCategories.push(value)
 
-    selected(event: MatAutocompleteSelectedEvent): void {
+    this.businessSettingsForm.get('originCategories').setValue(null)
 
-        if(this.activeBusinessCategories.indexOf(event.option.viewValue) > -1) return
+  }
 
-        this.activeBusinessCategories.push(event.option.viewValue)
-        this.businessInput.nativeElement.value = ''
+  remove(category: string): void {
 
-        this.businessSettingsForm.get('originCategories').setValue( null )
+    const index = this.activeBusinessCategories.indexOf(category)
 
-    }
+    if (index >= 0) this.activeBusinessCategories.splice(index, 1)
 
-    private _filter(value: string): string[] {
-        const filterValue = value.toLowerCase()
-        return this.activeBusinessCategories.filter(category => category.toLowerCase().includes(filterValue))
-    }
+    this.businessSettingsForm.get('originCategories').setValue(null)
 
-    private fetchCurrentSettings(): any {
+  }
 
-        this.userAuthService.getSettings().subscribe(
-            resp =>{
-                this.populateSettings(resp)
-            },
-            error =>{
-                console.log("Error", error)
-            }
-        )
+  selected(event: MatAutocompleteSelectedEvent): void {
 
-    }
+    if (this.activeBusinessCategories.indexOf(event.option.viewValue) > -1) return
 
-    public cancelPlaceSettings(){
-        this.placeSettingsFormUp = false
-    }
+    this.activeBusinessCategories.push(event.option.viewValue)
+    this.businessInput.nativeElement.value = ''
 
-    public cancelMembership(){
+    this.businessSettingsForm.get('originCategories').setValue(null)
 
-        let r = confirm(`
+  }
+
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase()
+    return this.activeBusinessCategories.filter(category => category.toLowerCase().includes(filterValue))
+  }
+
+  private fetchCurrentSettings(): any {
+
+    this.userAuthService.getSettings().subscribe(
+      resp => {
+        this.populateSettings(resp)
+      },
+      error => {
+        console.log('Error', error)
+      }
+    )
+
+  }
+
+  public cancelPlaceSettings() {
+    this.placeSettingsFormUp = false
+  }
+
+  public cancelMembership() {
+
+    const r = confirm(`
             Are you sure you want to delete your subscription? All yours IN-HOUSE Promotions will also be deleted.
         `)
-        
-        if(r){
-            this.paymentService.cancelBusinessMembership().subscribe(
-                resp =>{
-                    window.location.reload()
-                }
-            )
+
+    if (r) {
+      this.paymentService.cancelBusinessMembership().subscribe(
+        resp => {
+          window.location.reload()
         }
-
+      )
     }
 
-    private populateSettings(settings_response: any) {
+  }
 
-        if (settings_response.success) {
-            
-            this.user = settings_response.user
-            
-            this.user.spotbie_user = settings_response.spotbie_user
-            this.user.trial_ends_at = settings_response.trial_ends_at
-            this.user.uuid = settings_response.user.hash
+  private populateSettings(settingsResponse: any) {
 
-            this.userIsSubscribed = settings_response.is_subscribed
-            this.userIsTrial = settings_response.is_trial
+    if (settingsResponse.success) {
 
-            if( this.user.spotbie_user.user_type == AllowedAccountTypes.Unset && 
-               !this.settingsFormInitiated){
-                //User type has not been set, so we must prompt the user for it.
-                this.loadAccountTypes = true        
-            }
+      this.user = settingsResponse.user
 
-            this.chosen_account_type = this.user.spotbie_user.user_type
-                    
-            switch(this.chosen_account_type){
+      this.user.spotbie_user = settingsResponse.spotbie_user
+      this.user.trial_ends_at = settingsResponse.trial_ends_at
+      this.user.uuid = settingsResponse.user.hash
 
-                case AllowedAccountTypes.PlaceToEat:  
-                    this.account_type_category = 'PLACE TO EAT'
-                    this.account_type_category_friendly_name = 'PLACE TO EAT'         
-                    break
+      this.userIsSubscribed = settingsResponse.is_subscribed
+      this.userIsTrial = settingsResponse.is_trial
 
-                case AllowedAccountTypes.Events:
-                    this.account_type_category = 'EVENTS'
-                    this.account_type_category_friendly_name = 'EVENTS BUSINESS'  
-                    break
-                    
-                case AllowedAccountTypes.Shopping:
-                    this.account_type_category = 'RETAIL STORE' 
-                    this.account_type_category_friendly_name = 'RETAIL STORE'  
-                    break
-
-                case AllowedAccountTypes.Personal:
-                case AllowedAccountTypes.Unset:
-                    this.account_type_category = 'PERSONAL'
-                    this.account_type_category_friendly_name = 'PERSONAL' 
-                    break
-
-            }
-
-            this.settingsFormInitiated = true 
-
-            this.settingsForm.get('spotbie_username').setValue(this.user.username)
-            this.settingsForm.get('spotbie_first_name').setValue(this.user.spotbie_user.first_name)
-            this.settingsForm.get('spotbie_last_name').setValue(this.user.spotbie_user.last_name)
-            this.settingsForm.get('spotbie_email').setValue(this.user.email)
-            this.settingsForm.get('spotbie_phone_number').setValue(this.user.spotbie_user.phone_number)
-            this.password_form.get('spotbie_password').setValue('userpassword')
-            this.password_form.get('spotbie_confirm_password').setValue('123456789')
-                                
-            if ((this.chosen_account_type == AllowedAccountTypes.PlaceToEat || 
-                this.chosen_account_type == AllowedAccountTypes.Shopping || 
-                this.chosen_account_type == AllowedAccountTypes.Events)
-                && settings_response.business !== null){
-
-                this.settingsForm.get('spotbie_acc_type').setValue(this.account_type_category)
-
-                this.user.business = new Business()
-                
-                this.user.business.loc_x = settings_response.business.loc_x
-                this.user.business.loc_y = settings_response.business.loc_y
-                this.user.business.name = settings_response.business.name
-                this.user.business.description = settings_response.business.description
-                this.user.business.address = settings_response.business.address
-                this.user.business.photo = settings_response.business.photo
-
-                this.originPhoto = this.user.business.photo 
-
-            }      
-        
-        } else
-            console.log('Settings Error: ', settings_response)
-
-        this.loading = false
-
-    }
-
-    get passKey() { return this.passKeyVerificationForm.get('passKey').value }
-    get j() { return this.passKeyVerificationForm.controls }
-
-    public startBusinessVerification(){    
-
-        this.loading = true
-        this.placeFormSubmitted = true
-
-        let numberCategories = []
-
-        this.activeBusinessCategories.forEach(element => {            
-            let categoryIndex = this.businessCategoryList.indexOf(element)
-            if( categoryIndex > 0 ) numberCategories.push(categoryIndex)                                
-        })
-
-        let businessInfo = {
-            accountType: this.chosen_account_type,
-            name: this.originTitle,
-            description: this.originDescription,
-            address: this.originAddress,
-            city: this.city,
-            country: this.country,
-            line1: this.line1,
-            line2: this.line2,
-            postal_code: this.postal_code,
-            state: this.state,
-            photo: this.originPhoto,
-            loc_x: this.lat,
-            loc_y: this.lng,
-            categories: JSON.stringify(numberCategories),
-        }
-
-        this.userAuthService.saveBusiness(businessInfo).subscribe()
-
-        if (this.businessSettingsForm.invalid) {
-
-            this.loading = false
-            this.spotbieSettingsWindow.nativeElement.scrollTo(0,0)
-            
-            return
-
-        }
-
-        const passKeyValidators = [Validators.required, Validators.minLength(4)]
-
-        this.passKeyVerificationForm = this.formBuilder.group({
-            passKey: ['', passKeyValidators]
-        })
-
-        this.passKeyVerificationFormUp = true
-        this.loading = false
-
-    }
-
-    public activateFullMembership(){
-
-        let activateMembershipUrl = `${environment.baseUrl}make-payment/business-membership/${this.user.uuid}`
-
-        window.open(activateMembershipUrl, '_blank')
-
-    }
-
-    public closePassKey(){
-        this.passKeyVerificationForm = null
-        this.passKeyVerificationFormUp = false
-    }
-
-    public calendly(){
-        
-        this.loading = true
-        this.calendlyUp = !this.calendlyUp
-
-        if(this.calendlyUp) 
-            calendly.spawnCalendly(this.originTitle, this.originAddress, () => { this.loading = false } )
-        else
-            this.loading = false
-
-    }
-
-    public claimThisBusiness(){   
-
-        this.loading = true
-        this.passKeyVerificationSubmitted = true
-
-        if(this.passKeyVerificationForm.invalid){
-            this.loading = false
-            return
-        }
-        
-        let numberCategories = []
-
-        this.activeBusinessCategories.forEach(element => {            
-            let categoryIndex = this.businessCategoryList.indexOf(element)
-            if( categoryIndex > 0 ) numberCategories.push(categoryIndex)                                
-        })
-
-        let businessInfo = {
-            accountType: this.chosen_account_type,
-            name: this.originTitle,
-            description: this.originDescription,
-            address: this.originAddress,
-            city: this.city,
-            country: this.country,
-            line1: this.line1,
-            line2: this.line2,
-            postal_code: this.postal_code,
-            state: this.state,
-            photo: this.originPhoto,
-            loc_x: this.lat,
-            loc_y: this.lng,
-            categories: JSON.stringify(numberCategories),
-            passkey: this.passKey
-        }
-
-        this.userAuthService.verifyBusiness(businessInfo).subscribe(
-            (resp) => {
-                this.claimThisBusinessCB(resp)
-            }
-        )
-
-    } 
-
-    private claimThisBusinessCB(resp: any){
-
-        if(resp.message == 'passkey_mismatch'){
-        
-            this.passKeyVerificationForm.get('passKey').setErrors({'invalid': true})
-
-        } else if(resp.message == 'success'){
-
-            this.passKeyVerificationSubmitted = false
-            this.passKeyVerificationForm = null
-            this.passKeyVerificationFormUp = false      
-
-            localStorage.setItem('spotbie_userType', this.chosen_account_type.toString())
-
-            this.businessVerified = true
-
-            setTimeout(()=>{
-                window.location.reload()
-            }, 500)
-
-        }
-
-        this.loading = false 
-
-    }
-
-    public claimWithGoogle(){
-
-        let businessInfo = {
-            accountType: this.chosen_account_type
-        }
-
-        this.userAuthService.verifyBusiness(businessInfo).subscribe(
-            (resp) => {
-                this.claimThisBusinessCB(resp)
-            }
-        )
-
-    } 
-
-    openWindow(window: any){
-        window.open = true
-    }
-
-    public searchMapsKeyDown(evt){
-        
-        if(evt.key == 'Enter') this.searchMaps()
-
-    }
-
-    searchMaps() {
-        //console.log('searching')
-        // this function will search for an address
-        
-        const inputAddress = this.addressSearch.nativeElement
-
-        const service = new google.maps.places.AutocompleteService()
-
-        let location = new google.maps.LatLng(this.lat, this.lng)
-
-        service.getQueryPredictions({ 
-            input: inputAddress.value,
-            componentRestrictions: { country: "us"},
-            radius: MAX_DISTANCE, 
-            location, 
-            types: ['establishment']
-        }, (predictions, status) => {
-
-            if (status != google.maps.places.PlacesServiceStatus.OK)
-                return      
-
-            let filteredPredictions = []
-
-            for(let i = 0; i < predictions.length; i++){
-
-                if(predictions[i].place_id !== null && predictions[i].place_id !== undefined)
-                filteredPredictions.push(predictions[i])        
-
-            }
-
-            this.ngZone.run(() => {            
-                this.address_results = filteredPredictions  
-            })
-
-        })
-        
-    }
-
-    public focusPlace(place) {
-
-        this.loading = true
-        this.place = place
-        this.locationFound = false
-        this.getPlaceDetails()
-        
-    }
-
-    public getPlaceDetails(){
-
-        const request = {
-            placeId: this.place.place_id,
-            fields: ["name", "photo", "geometry", "adr_address", "formatted_address"],
-        };
-        
-        const map = document.getElementById('spotbieMapG')
-        const mapService = new google.maps.places.PlacesService(map)    
-        
-        mapService.getDetails(request, (place, status) => {          
-
-            this.place = place
-
-            this.lat = place.geometry.location.lat()
-            this.lng = place.geometry.location.lng()
-
-            this.zoom = 18
-
-            this.businessSettingsForm.get('spotbieOrigin').setValue(this.lat + ',' + this.lng)      
-            this.businessSettingsForm.get('originTitle').setValue(place.name)
-            this.businessSettingsForm.get('originAddress').setValue(place.formatted_address)
-
-            this.locationFound = true
-            this.claimBusiness = true
-
-            if(place.photos)
-                this.originPhoto = place.photos[0].getUrl()
-            else
-                this.originPhoto = '../../assets/images/home_imgs/find-places-to-eat.svg'
-
-            this.loading = false          
-
-        })    
-
-        //Clear Address/Place Predictions
-        this.address_results = []
-
-    }
-
-    public getBusinessImgStyle(){
-
-        if(this.originPhoto === null) return
-
-        if(this.originPhoto.includes('home_imgs'))
-            return 'sb-originPhoto-sm'
-        else
-            return 'sb-originPhoto-lg'
-        
-    }
-
-    public startRewardMediaUploader(): void{
-        this.placeToEatMediaInput.nativeElement.click()
-    }
-
-    public uploadMedia(files): void {
-
-        const file_list_length = files.length
-
-        if (file_list_length === 0) {
-            this.placeToEatMediaMessage = 'You must upload at least one file.'
-            return
-        } else if (file_list_length > 1) {
-            this.placeToEatMediaMessage = 'Upload only one background image.'
-            return
-        }
-
-        this.loading = true
-
-        const formData = new FormData()
-        
-        let file_to_upload
-        let upload_size = 0
-
-        for (let i = 0; i < file_list_length; i++) {
-
-        file_to_upload = files[i] as File
-
-        upload_size += file_to_upload.size
-
-        if (upload_size > PLACE_TO_EAT_MEDIA_MAX_UPLOAD_SIZE) {
-            this.placeToEatMediaMessage = 'Max upload size is 25MB.'
-            this.loading = false
-            return
-        }
-
-        formData.append('background_picture', file_to_upload, file_to_upload.name)
-
-        }
-        
-        let endPoint = `${PLACE_TO_EAT_API}/upload-photo`
-
-        this.http.post(endPoint, formData, {reportProgress: true, observe: 'events'}).subscribe(event => {
-
-        if (event.type === HttpEventType.UploadProgress)
-            this.placeToEatMediaUploadProgress = Math.round(100 * event.loaded / event.total)
-        else if (event.type === HttpEventType.Response)
-            this.placeToEatMediaUploadFinished(event.body)
-
-        })
-
-        return
-
-    }
-
-    private placeToEatMediaUploadFinished(httpResponse: any): void {
-
-        if (httpResponse.success)
-            this.originPhoto = httpResponse.background_picture
-        else
-            console.log('placeToEatMediaUploadFinished', httpResponse)
-        
-        this.loading = false
-
-    }
-
-    mapsAutocomplete() {
-
-        this.mapsAPILoader.load().then(() => {
-
-        this.geoCoder = new google.maps.Geocoder
-
-        const inputAddress = this.addressSearch.nativeElement
-
-        const autocomplete = new google.maps.places.Autocomplete(inputAddress, {
-            componentRestrictions: { country: "us", distance_meters: MAX_DISTANCE },
-            types: ['establishment']
-        })
-
-        autocomplete.addListener('place_changed', () => {
-
-            this.ngZone.run(() => {
-
-                // get the place result
-                const place: any = autocomplete.getPlace()
-
-                // verify result
-                if (place.geometry === undefined || place.geometry === null) return
-
-                // set latitude, longitude and zoom
-                this.lat = place.geometry.location.lat()
-                this.lng = place.geometry.location.lng()
-                this.zoom = 18
-
-            })
-
-        })
-
-        })
-    
-    }
-
-
-    public promptForLocation(){
-
-        let locationPrompted = localStorage.getItem('spotbie_locationPrompted');
-
-        this.locationPrompt = false
-
-        if (locationPrompted == '1')
-        this.startLocation() 
-        else
-        this.locationPrompt = true
-        
-    }
-
-    public acceptLocationPrompt(){
-
-        this.locationPrompt = false
-        localStorage.setItem('spotbie_locationPrompted', '0')
-        this.startLocation()
-
-    }
-
-    public mobilePrompt2Toggle(){
-
-        this.loading = false
-        this.showMobilePrompt2 = false
-
-    }
-
-    public mobilePrompt2ToggleOff(){
-
-        this.loading = false
-        this.showMobilePrompt2 = false
-
-    }
-
-    public mobileStartLocation(){
-        
-        this.setCurrentLocation()
-        this.showMobilePrompt = false
-        this.showMobilePrompt2 = true
-    
-    }
-
-    public startLocation(){
-        this.showMobilePrompt = true
-    }  
-
-    // Get Current Location Coordinates
-    private setCurrentLocation() {
-
-        if ('geolocation' in navigator) {
-
-        navigator.geolocation.getCurrentPosition((position) => {
-
-            if(environment.fakeLocation){
-                this.lat = environment.myLocX
-                this.lng = environment.myLocY
-            } else {
-                this.lat = position.coords.latitude
-                this.lng = position.coords.longitude                
-            }
-
-            this.zoom = 18
-            this.locationFound = true
-            this.getAddress(this.lat, this.lng)
-        
-        })
-
-        }
-
-    }
-
-    markerDragEnd($event: MouseEvent) {
-
-        console.log($event)
-        this.lat = $event.coords.lat
-        this.lng = $event.coords.lng
-        this.getAddress(this.lat, this.lng)
-        
-    }
-
-    async getAddress(latitude, longitude) {
-
-        await this.mapsAPILoader.load().then(() => {
-        
-        this.geoCoder = new google.maps.Geocoder
-        
-        })
-
-        await this.geoCoder.geocode({ location: { lat: latitude, lng: longitude } }, (results, status) => {
-            
-        if (status === 'OK') {
-
-            if (results[0]) {
-
-                this.zoom = 18
-                
-                this.address = results[0].formatted_address
-
-                this.city = results[0].address_components[3].long_name
-                this.line1 = results[0].address_components[0].long_name + ' ' + results[0].address_components[1].long_name
-                this.state = results[0].address_components[5].short_name
-                this.country = results[0].address_components[6].short_name
-                this.postal_code = results[0].address_components[7].short_name
-
-                this.businessSettingsForm.get('originAddress').setValue(this.address)
-                this.businessSettingsForm.get('spotbieOrigin').setValue(this.lat + ',' + this.lng)
-
-            } else
-                window.alert('No results found')
-            
-        } else
-            window.alert('Geocoder failed due to: ' + status)
-        })
-
-    }
-
-    showPosition(position: any) {
-
-        this.locationFound = true
-
-        if(environment.fakeLocation){
-            this.lat = environment.myLocX
-            this.lng = environment.myLocY            
-        } else {
-            this.lat = position.coords.latitude
-            this.lng = position.coords.longitude
-        }
-            
-        this.showMobilePrompt2 = false
-
-    }
-
-    public savePassword(): void {
-        
-        this.spotbiePasswordInfoText.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' })
-
-        if (this.password_form.invalid) {
-            this.spotbiePasswordInfoText.nativeElement.style.display = 'block'            
-            return
-        }
-
-        if (this.password !== this.confirm_password) {
-            this.spotbiePasswordInfoText.nativeElement.style.display = 'block'
-            this.spotbiePasswordInfoText.nativeElement.innerHTML = 'Passwords must match.'
-            return
-        }
-
-        this.spotbiePasswordInfoText.nativeElement.style.display = 'block'
-        this.spotbiePasswordInfoText.nativeElement.innerHTML = 'Great, your passwords match!'
-
-        this.save_password = true
-
-        const current_password_validators = [Validators.required]
-
-        this.password_form.addControl('spotbie_current_password', new UntypedFormControl('', current_password_validators))
-
-        this.password_form.get('spotbie_current_password').setValue('123456789')
-
-    }
-
-    public completeSavePassword(): void {
-
-        if(this.loading) return
-        
-        this.loading = true
-
-        if (this.password_form.invalid) return
-
-        const savePasswordObj = {
-            password: this.password,
-            passwordConfirmation: this.confirm_password,
-            currentPassword: this.current_password
-        }
-
-        this.userAuthService.passwordChange(savePasswordObj).subscribe( 
-            resp => {
-                this.passwordChangeCallback(resp)
-            },
-            error => {
-                console.log('error', error)
-            }
-        )
-
-    }
-
-    private passwordChangeCallback(resp: any) {
-
-        if (resp.success) {
-
-            switch (resp.message) {
-
-                case 'saved':
-
-                    this.spotbieCurrentPasswordInfoText.nativeElement.innerHTML = 'Your password was updated.'
-
-                    this.password_form.get('spotbie_current_password').setValue('123456789')
-                    this.password_form.get('spotbie_password').setValue('asdrqweee')
-                    this.password_form.get('spotbie_confirm_password').setValue('asdeqweqq')
-                    
-                    this.spotbiePasswordInfoText.nativeElement.style.display = 'block'
-                    this.spotbiePasswordInfoText.nativeElement.innerHTML = 'Would you like to change your password?'
-
-                    setTimeout(function() {
-                        this.password_submitted = false
-                        this.save_password = false
-                    }.bind(this), 2000)
-
-                    break
-
-                    case 'SB-E-000':
-                    // server error
-                    this.save_password = false
-                    this.password_submitted = false
-                    this.spotbiePasswordInfoText.nativeElement.style.display = 'block'            
-                    this.spotbiePasswordInfoText.nativeElement.innerHTML = 'There was an error with the server. Try again.'
-                    break
-                
-            }
-
-            this.spotbieSettingsWindow.nativeElement.scrollTo(0,0)
-
-        } else
-            console.log(resp)
-
-        this.loading = false
-
-    }
-
-    public cancelPasswordSet() {
-        this.password_submitted = false
-        this.save_password = false
-    }
-
-    public changeAccType() {
+      if (this.user.spotbie_user.user_type === AllowedAccountTypes.Unset && !this.settingsFormInitiated) {
         this.loadAccountTypes = true
+      }
+
+      this.chosenAccountType = this.user.spotbie_user.user_type
+
+      switch (this.chosenAccountType) {
+
+        case AllowedAccountTypes.PlaceToEat:
+          this.accountTypeCategory = 'PLACE TO EAT'
+          this.accountTypeCategoryFriendlyName = 'PLACE TO EAT'
+          break
+
+        case AllowedAccountTypes.Events:
+          this.accountTypeCategory = 'EVENTS'
+          this.accountTypeCategoryFriendlyName = 'EVENTS BUSINESS'
+          break
+
+        case AllowedAccountTypes.Shopping:
+          this.accountTypeCategory = 'RETAIL STORE'
+          this.accountTypeCategoryFriendlyName = 'RETAIL STORE'
+          break
+
+        case AllowedAccountTypes.Personal:
+        case AllowedAccountTypes.Unset:
+          this.accountTypeCategory = 'PERSONAL'
+          this.accountTypeCategoryFriendlyName = 'PERSONAL'
+          break
+
+      }
+
+      this.settingsFormInitiated = true
+
+      this.settingsForm.get('spotbie_username').setValue(this.user.username)
+      this.settingsForm.get('spotbie_first_name').setValue(this.user.spotbie_user.first_name)
+      this.settingsForm.get('spotbie_last_name').setValue(this.user.spotbie_user.last_name)
+      this.settingsForm.get('spotbie_email').setValue(this.user.email)
+      this.settingsForm.get('spotbie_phone_number').setValue(this.user.spotbie_user.phone_number)
+      this.passwordForm.get('spotbie_password').setValue('userpassword')
+      this.passwordForm.get('spotbie_confirm_password').setValue('123456789')
+
+      if ((this.chosenAccountType === AllowedAccountTypes.PlaceToEat ||
+          this.chosenAccountType === AllowedAccountTypes.Shopping ||
+          this.chosenAccountType === AllowedAccountTypes.Events)
+        && settingsResponse.business !== null) {
+
+        this.settingsForm.get('spotbie_acc_type').setValue(this.accountTypeCategory)
+
+        this.user.business = new Business()
+
+        this.user.business.loc_x = settingsResponse.business.loc_x
+        this.user.business.loc_y = settingsResponse.business.loc_y
+        this.user.business.name = settingsResponse.business.name
+        this.user.business.description = settingsResponse.business.description
+        this.user.business.address = settingsResponse.business.address
+        this.user.business.photo = settingsResponse.business.photo
+
+        this.originPhoto = this.user.business.photo
+      }
+
+    } else {
+      console.log('Settings Error: ', settingsResponse)
+    }
+    this.loading = false
+  }
+
+  get passKey() {
+    return this.passKeyVerificationForm.get('passKey').value
+  }
+
+  get j() {
+    return this.passKeyVerificationForm.controls
+  }
+
+  public startBusinessVerification() {
+
+    this.loading = true
+    this.placeFormSubmitted = true
+
+    const numberCategories = []
+
+    this.activeBusinessCategories.forEach(element => {
+      const categoryIndex = this.businessCategoryList.indexOf(element)
+      if (categoryIndex > 0) numberCategories.push(categoryIndex)
+    })
+
+    const businessInfo = {
+      accountType: this.chosenAccountType,
+      name: this.originTitle,
+      description: this.originDescription,
+      address: this.originAddress,
+      city: this.city,
+      country: this.country,
+      line1: this.line1,
+      line2: this.line2,
+      postal_code: this.postalCode,
+      state: this.state,
+      photo: this.originPhoto,
+      loc_x: this.lat,
+      loc_y: this.lng,
+      categories: JSON.stringify(numberCategories),
     }
 
-    public selectAccountType(account_type: string) {
+    this.userAuthService.saveBusiness(businessInfo).subscribe()
 
-        this.account_type_category = account_type
+    if (this.businessSettingsForm.invalid) {
+      this.loading = false
+      this.spotbieSettingsWindow.nativeElement.scrollTo(0, 0)
 
-        switch(this.account_type_category){
-        
-            case 'PERSONAL':
-                this.chosen_account_type = AllowedAccountTypes.Personal
-                this.originPhoto = this.accountTypePhotos[0]
-                this.account_type_category_friendly_name = 'PERSONAL'
-                break
-
-            case 'PLACE TO EAT':
-                this.chosen_account_type = AllowedAccountTypes.PlaceToEat
-                this.originPhoto = this.accountTypePhotos[1]
-                this.account_type_category_friendly_name = 'PLACE TO EAT'
-                this.mobileStartLocation()
-                break
-            
-            case 'EVENTS':
-                this.chosen_account_type = AllowedAccountTypes.Events
-                this.originPhoto = this.accountTypePhotos[2]
-                this.account_type_category_friendly_name = 'EVENTS BUSINESS'
-                this.mobileStartLocation()
-                break
-            
-            case 'RETAIL STORE':
-                this.chosen_account_type = AllowedAccountTypes.Shopping
-                this.originPhoto = this.accountTypePhotos[3]
-                this.account_type_category_friendly_name = 'RETAIL STORE'
-                this.mobileStartLocation()
-                break
-
-        }
-
-        this.settingsForm.get('spotbie_acc_type').setValue(this.account_type_category_friendly_name)
-
-        switch(this.chosen_account_type){
-
-            case AllowedAccountTypes.Personal://personal account
-                this.initSettingsForm('personal')
-                break
-
-            case AllowedAccountTypes.PlaceToEat://place to eat account
-                this.initSettingsForm('place_to_eat')
-                break
-
-            case AllowedAccountTypes.Events://events account type
-                this.initSettingsForm('events')
-                break
-
-            case AllowedAccountTypes.Shopping://shopping account type
-                this.initSettingsForm('shopping')
-                break
-
-            default:
-                this.initSettingsForm('personal')
-
-        }
-
-        this.loadAccountTypes = false    
-
+      return
     }
 
-    private async initSettingsForm(action: string) {
+    const passKeyValidators = [Validators.required, Validators.minLength(4)]
 
-        // will set validators for form and take care of animations
-        const username_validators = [Validators.required, Validators.maxLength(135)]
-        const first_name_validators = [Validators.required, Validators.maxLength(72)]
-        const last_name_validators = [Validators.required, Validators.maxLength(72)]
-        const email_validators = [Validators.email, Validators.required, Validators.maxLength(135)]
-        const phone_validators = []
-        const account_type_validators = [Validators.required]
+    this.passKeyVerificationForm = this.formBuilder.group({
+      passKey: ['', passKeyValidators]
+    })
 
-        const password_validators = [Validators.required]
-        const password_confirm_validators = [Validators.required]
+    this.passKeyVerificationFormUp = true
+    this.loading = false
 
-        let settingsFormInputObj: any = 
-        {
-            spotbie_username: ['', username_validators],
-            spotbie_first_name: ['', first_name_validators],
-            spotbie_last_name: ['', last_name_validators],
-            spotbie_email: ['', email_validators],
-            spotbie_phone_number: ['', phone_validators]
+  }
+
+  public activateFullMembership() {
+    window.open(`${environment.baseUrl}make-payment/business-membership/${this.user.uuid}`, '_blank')
+  }
+
+  public closePassKey() {
+    this.passKeyVerificationForm = null
+    this.passKeyVerificationFormUp = false
+  }
+
+  public calendly(): void {
+    this.loading = true
+    this.calendlyUp = !this.calendlyUp
+
+    if (this.calendlyUp)
+      calendly.spawnCalendly(this.originTitle, this.originAddress, () => {
+        this.loading = false
+      })
+    else {
+      this.loading = false
+    }
+  }
+
+  public claimThisBusiness() {
+    this.loading = true
+    this.passKeyVerificationSubmitted = true
+
+    if (this.passKeyVerificationForm.invalid) {
+      this.loading = false
+      return
+    }
+
+    const numberCategories = []
+
+    this.activeBusinessCategories.forEach(element => {
+      const categoryIndex = this.businessCategoryList.indexOf(element)
+      if (categoryIndex > 0) numberCategories.push(categoryIndex)
+    })
+
+    const businessInfo = {
+      accountType: this.chosenAccountType,
+      name: this.originTitle,
+      description: this.originDescription,
+      address: this.originAddress,
+      city: this.city,
+      country: this.country,
+      line1: this.line1,
+      line2: this.line2,
+      postal_code: this.postalCode,
+      state: this.state,
+      photo: this.originPhoto,
+      loc_x: this.lat,
+      loc_y: this.lng,
+      categories: JSON.stringify(numberCategories),
+      passkey: this.passKey
+    }
+
+    this.userAuthService.verifyBusiness(businessInfo).subscribe(
+      (resp) => {
+        this.claimThisBusinessCB(resp)
+      }
+    )
+
+  }
+
+  private claimThisBusinessCB(resp: any) {
+    if (resp.message === 'passkey_mismatch') {
+      this.passKeyVerificationForm.get('passKey').setErrors({invalid: true})
+    } else if (resp.message === 'success') {
+      this.passKeyVerificationSubmitted = false
+      this.passKeyVerificationForm = null
+      this.passKeyVerificationFormUp = false
+
+      localStorage.setItem('spotbie_userType', this.chosenAccountType.toString())
+
+      this.businessVerified = true
+
+      setTimeout(() => {
+        window.location.reload()
+      }, 500)
+    }
+
+    this.loading = false
+  }
+
+  public claimWithGoogle() {
+    const businessInfo = {
+      accountType: this.chosenAccountType
+    }
+
+    this.userAuthService.verifyBusiness(businessInfo).subscribe(
+      (resp) => {
+        this.claimThisBusinessCB(resp)
+      }
+    )
+  }
+
+  openWindow(window: any) {
+    window.open = true
+  }
+
+  public searchMapsKeyDown(evt) {
+    if (evt.key === 'Enter') this.searchMaps()
+  }
+
+  searchMaps() {
+    const inputAddress = this.addressSearch.nativeElement
+
+    const service = new google.maps.places.AutocompleteService()
+
+    const location = new google.maps.LatLng(this.lat, this.lng)
+
+    service.getQueryPredictions({
+      input: inputAddress.value,
+      componentRestrictions: {country: 'us'},
+      radius: MAX_DISTANCE,
+      location,
+      types: ['establishment']
+    }, (predictions, status) => {
+      if (status !== google.maps.places.PlacesServiceStatus.OK) {
+        return
+      }
+      const filteredPredictions = []
+
+      for (const item of predictions) {
+        if (item.place_id !== null && item.place_id !== undefined) {
+          filteredPredictions.push(item)
+        }
+      }
+
+      this.ngZone.run(() => {
+        this.addressResults = filteredPredictions
+      })
+    })
+  }
+
+  public focusPlace(place) {
+    this.loading = true
+    this.place = place
+    this.locationFound = false
+    this.getPlaceDetails()
+  }
+
+  public getPlaceDetails() {
+
+    const request = {
+      placeId: this.place.place_id,
+      fields: ['name', 'photo', 'geometry', 'adr_address', 'formatted_address'],
+    }
+
+    const map: HTMLDivElement = document.getElementById('spotbie_map') as HTMLDivElement
+    const mapService = new google.maps.places.PlacesService(map)
+
+    mapService.getDetails(request, (place, status) => {
+      this.place = place
+
+      this.lat = place.geometry.location.lat()
+      this.lng = place.geometry.location.lng()
+
+      this.zoom = 18
+
+      this.businessSettingsForm.get('spotbieOrigin').setValue(this.lat + ',' + this.lng)
+      this.businessSettingsForm.get('originTitle').setValue(place.name)
+      this.businessSettingsForm.get('originAddress').setValue(place.formatted_address)
+
+      this.locationFound = true
+      this.claimBusiness = true
+
+      if (place.photos)
+        this.originPhoto = place.photos[0].getUrl()
+      else
+        this.originPhoto = '../../assets/images/home_imgs/find-places-to-eat.svg'
+
+      this.loading = false
+    })
+    this.addressResults = []
+  }
+
+  public getBusinessImgStyle() {
+
+    if (this.originPhoto === null) return
+
+    if (this.originPhoto.includes('home_imgs'))
+      return 'sb-originPhoto-sm'
+    else
+      return 'sb-originPhoto-lg'
+
+  }
+
+  public startRewardMediaUploader(): void {
+    this.placeToEatMediaInput.nativeElement.click()
+  }
+
+  public uploadMedia(files): void {
+
+    const fileListLength = files.length
+
+    if (fileListLength === 0) {
+      this.placeToEatMediaMessage = 'You must upload at least one file.'
+      return
+    } else if (fileListLength > 1) {
+      this.placeToEatMediaMessage = 'Upload only one background image.'
+      return
+    }
+
+    this.loading = true
+
+    const formData = new FormData()
+
+    let fileToUpload
+    let uploadSize = 0
+
+    for (let i = 0; i < fileListLength; i++) {
+      fileToUpload = files[i] as File
+
+      uploadSize += fileToUpload.size
+
+      if (uploadSize > PLACE_TO_EAT_MEDIA_MAX_UPLOAD_SIZE) {
+        this.placeToEatMediaMessage = 'Max upload size is 25MB.'
+        this.loading = false
+        return
+      }
+
+      formData.append('background_picture', fileToUpload, fileToUpload.name)
+    }
+
+    const endPoint = `${PLACE_TO_EAT_API}/upload-photo`
+
+    this.http.post(endPoint, formData, {reportProgress: true, observe: 'events'}).subscribe(event => {
+      if (event.type === HttpEventType.UploadProgress)
+        this.placeToEatMediaUploadProgress = Math.round(100 * event.loaded / event.total)
+      else if (event.type === HttpEventType.Response)
+        this.placeToEatMediaUploadFinished(event.body)
+    })
+
+    return
+  }
+
+  private placeToEatMediaUploadFinished(httpResponse: any): void {
+
+    if (httpResponse.success)
+      this.originPhoto = httpResponse.background_picture
+    else
+      console.log('placeToEatMediaUploadFinished', httpResponse)
+
+    this.loading = false
+
+  }
+
+  mapsAutocomplete() {
+
+    this.mapsAPILoader.load().then(() => {
+
+      this.geoCoder = new google.maps.Geocoder()
+
+      const inputAddress = this.addressSearch.nativeElement
+
+      const autocomplete = new google.maps.places.Autocomplete(inputAddress, {
+        componentRestrictions: {country: 'us', distance_meters: MAX_DISTANCE},
+        types: ['establishment']
+      })
+
+      autocomplete.addListener('place_changed', () => {
+
+        this.ngZone.run(() => {
+
+          // get the place result
+          const place: any = autocomplete.getPlace()
+
+          // verify result
+          if (place.geometry === undefined || place.geometry === null) return
+
+          // set latitude, longitude and zoom
+          this.lat = place.geometry.location.lat()
+          this.lng = place.geometry.location.lng()
+          this.zoom = 18
+
+        })
+
+      })
+
+    })
+
+  }
+
+
+  public promptForLocation() {
+    this.locationPrompt = false
+
+    if (localStorage.getItem('spotbie_locationPrompted') === '1') {
+      this.startLocation()
+    } else {
+      this.locationPrompt = true
+    }
+  }
+
+  public acceptLocationPrompt() {
+    this.locationPrompt = false
+    localStorage.setItem('spotbie_locationPrompted', '0')
+    this.startLocation()
+  }
+
+  public mobilePrompt2Toggle() {
+    this.loading = false
+    this.showMobilePrompt2 = false
+  }
+
+  public mobilePrompt2ToggleOff() {
+    this.loading = false
+    this.showMobilePrompt2 = false
+  }
+
+  public mobileStartLocation() {
+    this.setCurrentLocation()
+    this.showMobilePrompt = false
+    this.showMobilePrompt2 = true
+  }
+
+  public startLocation() {
+    this.showMobilePrompt = true
+  }
+
+
+  private setCurrentLocation() {
+    if ('geolocation' in navigator) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        if (environment.fakeLocation) {
+          this.lat = environment.myLocX
+          this.lng = environment.myLocY
+        } else {
+          this.lat = position.coords.latitude
+          this.lng = position.coords.longitude
         }
 
-        let userType = parseInt( localStorage.getItem('spotbie_userType') )
+        this.zoom = 18
+        this.locationFound = true
+        this.getAddress(this.lat, this.lng)
+      })
+    }
+  }
 
-        if(userType != AllowedAccountTypes.Personal)
-            settingsFormInputObj.spotbie_acc_type = ['', account_type_validators]
-        
+  markerDragEnd($event) {
+    console.log($event)
+    this.lat = $event.coords.lat
+    this.lng = $event.coords.lng
+    this.getAddress(this.lat, this.lng)
+  }
+
+  async getAddress(latitude, longitude) {
+    await this.mapsAPILoader.load().then(() => {
+      this.geoCoder = new google.maps.Geocoder()
+    })
+
+    await this.geoCoder.geocode({location: {lat: latitude, lng: longitude}}, (results, status) => {
+      if (status === 'OK') {
+        if (results[0]) {
+          this.zoom = 18
+          this.address = results[0].formatted_address
+          this.city = results[0].address_components[3].long_name
+          this.line1 = results[0].address_components[0].long_name + ' ' + results[0].address_components[1].long_name
+          this.state = results[0].address_components[5].short_name
+          this.country = results[0].address_components[6].short_name
+          this.postalCode = results[0].address_components[7].short_name
+
+          this.businessSettingsForm.get('originAddress').setValue(this.address)
+          this.businessSettingsForm.get('spotbieOrigin').setValue(this.lat + ',' + this.lng)
+        } else {
+          window.alert('No results found')
+        }
+      } else {
+        window.alert('Geocoder failed due to: ' + status)
+      }
+    })
+
+  }
+
+  showPosition(position: any) {
+
+    this.locationFound = true
+
+    if (environment.fakeLocation) {
+      this.lat = environment.myLocX
+      this.lng = environment.myLocY
+    } else {
+      this.lat = position.coords.latitude
+      this.lng = position.coords.longitude
+    }
+
+    this.showMobilePrompt2 = false
+
+  }
+
+  public savePassword(): void {
+
+    this.spotbiePasswordInfoText.nativeElement.scrollIntoView({behavior: 'smooth', block: 'start'})
+
+    if (this.passwordForm.invalid) {
+      this.spotbiePasswordInfoText.nativeElement.style.display = 'block'
+      return
+    }
+
+    if (this.password !== this.confirm_password) {
+      this.spotbiePasswordInfoText.nativeElement.style.display = 'block'
+      this.spotbiePasswordInfoText.nativeElement.innerHTML = 'Passwords must match.'
+      return
+    }
+
+    this.spotbiePasswordInfoText.nativeElement.style.display = 'block'
+    this.spotbiePasswordInfoText.nativeElement.innerHTML = 'Great, your passwords match!'
+
+    this.savePasswordShow = true
+
+    this.passwordForm.addControl('spotbie_current_password', new UntypedFormControl('', [Validators.required]))
+
+    this.passwordForm.get('spotbie_current_password').setValue('123456789')
+  }
+
+  public completeSavePassword(): void {
+
+    if (this.loading) return
+
+    this.loading = true
+
+    if (this.passwordForm.invalid) return
+
+    const savePasswordObj = {
+      password: this.password,
+      passwordConfirmation: this.confirm_password,
+      currentPassword: this.current_password
+    }
+
+    this.userAuthService.passwordChange(savePasswordObj).subscribe(
+      resp => {
+        this.passwordChangeCallback(resp)
+      },
+      error => {
+        console.log('error', error)
+      }
+    )
+
+  }
+
+  private passwordChangeCallback(resp: any) {
+
+    if (resp.success) {
+
+      switch (resp.message) {
+
+        case 'saved':
+
+          this.spotbieCurrentPasswordInfoText.nativeElement.innerHTML = 'Your password was updated.'
+
+          this.passwordForm.get('spotbie_current_password').setValue('123456789')
+          this.passwordForm.get('spotbie_password').setValue('asdrqweee')
+          this.passwordForm.get('spotbie_confirm_password').setValue('asdeqweqq')
+
+          this.spotbiePasswordInfoText.nativeElement.style.display = 'block'
+          this.spotbiePasswordInfoText.nativeElement.innerHTML = 'Would you like to change your password?'
+
+          setTimeout(function () {
+            this.password_submitted = false
+            this.save_password = false
+          }.bind(this), 2000)
+
+          break
+
+        case 'SB-E-000':
+          // server error
+          this.savePasswordShow = false
+          this.passwordSubmitted = false
+          this.spotbiePasswordInfoText.nativeElement.style.display = 'block'
+          this.spotbiePasswordInfoText.nativeElement.innerHTML = 'There was an error with the server. Try again.'
+          break
+
+      }
+
+      this.spotbieSettingsWindow.nativeElement.scrollTo(0, 0)
+
+    } else
+      console.log(resp)
+
+    this.loading = false
+
+  }
+
+  public cancelPasswordSet() {
+    this.passwordSubmitted = false
+    this.savePasswordShow = false
+  }
+
+  public changeAccType() {
+    this.loadAccountTypes = true
+  }
+
+  public selectAccountType(accountType: string) {
+    this.accountTypeCategory = accountType
+
+    switch (this.accountTypeCategory) {
+      case 'PERSONAL':
+        this.chosenAccountType = AllowedAccountTypes.Personal
+        this.originPhoto = this.accountTypePhotos[0]
+        this.accountTypeCategoryFriendlyName = 'PERSONAL'
+        break
+
+      case 'PLACE TO EAT':
+        this.chosenAccountType = AllowedAccountTypes.PlaceToEat
+        this.originPhoto = this.accountTypePhotos[1]
+        this.accountTypeCategoryFriendlyName = 'PLACE TO EAT'
+        this.mobileStartLocation()
+        break
+
+      case 'EVENTS':
+        this.chosenAccountType = AllowedAccountTypes.Events
+        this.originPhoto = this.accountTypePhotos[2]
+        this.accountTypeCategoryFriendlyName = 'EVENTS BUSINESS'
+        this.mobileStartLocation()
+        break
+
+      case 'RETAIL STORE':
+        this.chosenAccountType = AllowedAccountTypes.Shopping
+        this.originPhoto = this.accountTypePhotos[3]
+        this.accountTypeCategoryFriendlyName = 'RETAIL STORE'
+        this.mobileStartLocation()
+        break
+    }
+
+    this.settingsForm.get('spotbie_acc_type').setValue(this.accountTypeCategory)
+
+    switch (this.chosenAccountType) {
+      case AllowedAccountTypes.Personal:
+        this.initSettingsForm('personal')
+        break
+
+      case AllowedAccountTypes.PlaceToEat:
+        this.initSettingsForm('place_to_eat')
+        break
+
+      case AllowedAccountTypes.Events:
+        this.initSettingsForm('events')
+        break
+
+      case AllowedAccountTypes.Shopping:
+        this.initSettingsForm('shopping')
+        break
+
+      default:
+        this.initSettingsForm('personal')
+    }
+
+    this.loadAccountTypes = false
+  }
+
+  private async initSettingsForm(action: string) {
+
+    // will set validators for form and take care of animations
+    const usernameValidators = [Validators.required, Validators.maxLength(135)]
+    const firstNameValidators = [Validators.required, Validators.maxLength(72)]
+    const lastNameValidators = [Validators.required, Validators.maxLength(72)]
+    const emailValidators = [Validators.email, Validators.required, Validators.maxLength(135)]
+    const phoneValidators = []
+    const accountTypeValidators = [Validators.required]
+
+    const passwordValidators = [Validators.required]
+    const passwordConfirmValidators = [Validators.required]
+
+    const settingsFormInputObj: any =
+      {
+        spotbie_username: ['', usernameValidators],
+        spotbie_first_name: ['', firstNameValidators],
+        spotbie_last_name: ['', lastNameValidators],
+        spotbie_email: ['', emailValidators],
+        spotbie_phone_number: ['', phoneValidators]
+      }
+
+    const userType = parseInt(localStorage.getItem('spotbie_userType'), 10)
+
+    if (userType !== AllowedAccountTypes.Personal)
+      settingsFormInputObj.spotbie_acc_type = ['', accountTypeValidators]
+
+    switch (action) {
+
+      case 'personal':
+
+        this.settingsForm = this.formBuilder.group(settingsFormInputObj, {
+          validators: [ValidateUsername('spotbie_username'),
+            ValidatePersonName('spotbie_first_name'),
+            ValidatePersonName('spotbie_last_name')]
+        })
+
+        this.passwordForm = this.formBuilder.group({
+          spotbie_password: ['', passwordValidators],
+          spotbie_confirm_password: ['', passwordConfirmValidators]
+        }, {
+          validators: [ValidatePassword('spotbie_password'),
+            MustMatch('spotbie_password', 'spotbie_confirm_password')]
+        })
+
+        this.accountTypeCategory = 'PERSONAL'
+
+        this.fetchCurrentSettings()
+
+        break
+
+      case 'events':
+      case 'shopping':
+      case 'place_to_eat':
+
+        const originTitleValidators = [Validators.required, Validators.maxLength(25)]
+        const originAddressValidators = [Validators.required]
+        const originValidators = [Validators.required]
+        const originDescriptionValidators = [Validators.required, Validators.maxLength(350), Validators.minLength(100)]
+
+        this.businessSettingsForm = this.formBuilder.group({
+          originAddress: ['', originAddressValidators],
+          originTitle: ['', originTitleValidators],
+          originDescription: ['', originDescriptionValidators],
+          spotbieOrigin: ['', originValidators],
+          originCategories: ['']
+        })
+
+        if (this.user.business !== undefined) {
+
+          this.businessSettingsForm.get('originAddress').setValue(this.user.business.address)
+
+          this.businessSettingsForm.get('spotbieOrigin').setValue(`${this.user.business.loc_x},${this.user.business.loc_y}`)
+
+          const position = {
+            coords: {latitude: this.user.business.loc_x, longitude: this.user.business.loc_y}
+          }
+
+          this.showPosition(position)
+          this.originPhoto = this.user.business.photo
+          this.businessSettingsForm.get('originDescription').setValue(this.user.business.description)
+          this.businessSettingsForm.get('originTitle').setValue(this.user.business.name)
+
+        } else {
+
+          this.businessSettingsForm.get('originAddress').setValue('SEARCH FOR LOCATION')
+          this.businessSettingsForm.get('spotbieOrigin').setValue(this.lat + ',' + this.lng)
+
+        }
+
+        this.filteredBusinessCategories = this.businessSettingsForm.get('originCategories').valueChanges.pipe(
+          startWith(null),
+          map((fruit: string | null) => fruit ? this._filter(fruit) : this.businessCategoryList.slice())
+        )
+
+        this.placeSettingsFormUp = true
+
         switch (action) {
 
-            case 'personal':
-                
-                this.settingsForm = this.formBuilder.group(settingsFormInputObj, {
-                    validators: [ValidateUsername('spotbie_username'),
-                                 ValidatePersonName('spotbie_first_name'),
-                                 ValidatePersonName('spotbie_last_name')]
-                })
+          case 'events':
 
-                this.password_form = this.formBuilder.group({
-                    spotbie_password: ['', password_validators],
-                    spotbie_confirm_password: ['', password_confirm_validators]
-                }, {
-                    validators: [ ValidatePassword('spotbie_password'),
-                                  MustMatch('spotbie_password', 'spotbie_confirm_password')]
-                })
+            this.accountTypeCategory = 'EVENTS'
+            this.accountTypeCategoryFriendlyName = 'EVENTS BUSINESS'
 
-                this.account_type_category = 'PERSONAL'
-                
-                this.fetchCurrentSettings()               
+            await this.classificationSearch().subscribe(
+              resp => {
+                this.classificationSearchCallback(resp)
+              }
+            )
 
-                break
-            
-            case 'events':
-            case 'shopping':
-            case 'place_to_eat':
+            break
 
-                const originTitleValidators = [Validators.required, Validators.maxLength(25)]
-                const originAddressValidators = [Validators.required]
-                const originValidators = [Validators.required]
-                const originDescriptionValidators = [Validators.required, Validators.maxLength(350), Validators.minLength(100)]
+          case 'place_to_eat':
 
-                this.businessSettingsForm = this.formBuilder.group({
-                    originAddress: ['', originAddressValidators],
-                    originTitle: ['', originTitleValidators],
-                    originDescription: ['', originDescriptionValidators],
-                    spotbieOrigin: ['', originValidators],
-                    originCategories: ['']
-                })
+            this.accountTypeCategory = 'PLACE TO EAT'
+            this.accountTypeCategoryFriendlyName = 'PLACE TO EAT'
+            this.businessCategoryList = map_extras.FOOD_CATEGORIES
 
-                if(this.user.business !== undefined){
+            break
 
-                    this.businessSettingsForm.get('originAddress').setValue(this.user.business.address)
-                    
-                    this.businessSettingsForm.get('spotbieOrigin').setValue(`${this.user.business.loc_x},${this.user.business.loc_y}`)    
+          case 'shopping':
 
-                    let position = {
-                        coords : { latitude : this.user.business.loc_x, longitude : this.user.business.loc_y }
-                    }
+            this.accountTypeCategory = 'RETAIL STORE'
+            this.accountTypeCategoryFriendlyName = 'RETAIL STORE'
+            this.businessCategoryList = map_extras.SHOPPING_CATEGORIES
 
-                    this.showPosition(position)
-                    this.originPhoto = this.user.business.photo
-                    this.businessSettingsForm.get('originDescription').setValue(this.user.business.description)
-                    this.businessSettingsForm.get('originTitle').setValue(this.user.business.name)
-                
-                } else {
-
-                    this.businessSettingsForm.get('originAddress').setValue('SEARCH FOR LOCATION')
-                    this.businessSettingsForm.get('spotbieOrigin').setValue( this.lat + ',' + this.lng)
-
-                }        
-
-                //Set the filtered places to eat categories event listener.
-                this.filteredBusinessCategories = this.businessSettingsForm.get('originCategories').valueChanges.pipe(
-                    startWith(null),
-                    map((fruit: string | null) => fruit ? this._filter(fruit) : this.businessCategoryList.slice())
-                )
-
-                this.placeSettingsFormUp = true
-
-                switch(action){
-
-                    case 'events':
-                        
-                        this.account_type_category = 'EVENTS'
-                        this.account_type_category_friendly_name = 'EVENTS BUSINESS'
-
-                        await this.classificationSearch().subscribe(
-                            resp =>{
-                                this.classificationSearchCallback(resp)
-                            }
-                        )
-
-                        break
-
-                    case 'place_to_eat':
-                    
-                        this.account_type_category = 'PLACE TO EAT'
-                        this.account_type_category_friendly_name = 'PLACE TO EAT'
-                        this.businessCategoryList = map_extras.FOOD_CATEGORIES
-                    
-                        break
-                    
-                    case 'shopping':   
-
-                        this.account_type_category = 'RETAIL STORE'
-                        this.account_type_category_friendly_name = 'RETAIL STORE'
-                        this.businessCategoryList = map_extras.SHOPPING_CATEGORIES
-
-                        break            
-                } 
-
-                this.businessSettingsForm.get('spotbie_acc_type').setValue(this.account_type_category)
-
-                break
+            break
         }
+
+        this.businessSettingsForm.get('spotbie_acc_type').setValue(this.accountTypeCategory)
+
+        break
+    }
+  }
+
+  get username() {
+    return this.settingsForm.get('spotbie_username').value
+  }
+
+  get first_name() {
+    return this.settingsForm.get('spotbie_first_name').value
+  }
+
+  get last_name() {
+    return this.settingsForm.get('spotbie_last_name').value
+  }
+
+  get email() {
+    return this.settingsForm.get('spotbie_email').value
+  }
+
+  get spotbie_phone_number() {
+    return this.settingsForm.get('spotbie_phone_number').value
+  }
+
+  get account_type() {
+    return this.settingsForm.get('spotbie_acc_type').value
+  }
+
+  get f() {
+    return this.settingsForm.controls
+  }
+
+  get password() {
+    return this.passwordForm.get('spotbie_password').value
+  }
+
+  get confirm_password() {
+    return this.passwordForm.get('spotbie_confirm_password').value
+  }
+
+  get current_password() {
+    return this.passwordForm.get('spotbie_current_password').value
+  }
+
+  get g() {
+    return this.passwordForm.controls
+  }
+
+  get deactivationPassword() {
+    return this.deactivationForm.get('spotbie_deactivation_password').value
+  }
+
+  get h() {
+    return this.deactivationForm.controls
+  }
+
+  get originAddress() {
+    return this.businessSettingsForm.get('originAddress').value
+  }
+
+  get spotbieOrigin() {
+    return this.businessSettingsForm.get('spotbieOrigin').value
+  }
+
+  get originTitle() {
+    return this.businessSettingsForm.get('originTitle').value
+  }
+
+  get originDescription() {
+    return this.businessSettingsForm.get('originDescription').value
+  }
+
+  get originCategories() {
+    return this.businessSettingsForm.get('originCategories').value
+  }
+
+  get i() {
+    return this.businessSettingsForm.controls
+  }
+
+  public saveSettings() {
+
+    this.loading = true
+    this.submitted = true
+
+    if (this.settingsForm.invalid) {
+
+      this.loading = false
+      this.spotbieSettingsWindow.nativeElement.scrollTo(0, 0)
+
+      return
+
     }
 
-    get username() { return this.settingsForm.get('spotbie_username').value }
-    get first_name() { return this.settingsForm.get('spotbie_first_name').value }
-    get last_name() { return this.settingsForm.get('spotbie_last_name').value }
-    get email() { return this.settingsForm.get('spotbie_email').value }
-    get spotbie_phone_number() { return this.settingsForm.get('spotbie_phone_number').value }
-    get account_type() { return this.settingsForm.get('spotbie_acc_type').value }
-    get f() { return this.settingsForm.controls }
+    this.user.username = this.username
+    this.user.email = this.email
 
-    get password() { return this.password_form.get('spotbie_password').value }
-    get confirm_password() { return this.password_form.get('spotbie_confirm_password').value }
-    get current_password() { return this.password_form.get('spotbie_current_password').value }
-    get g() { return this.password_form.controls }
+    this.user.spotbie_user.first_name = this.first_name
+    this.user.spotbie_user.last_name = this.last_name
+    this.user.spotbie_user.phone_number = this.spotbie_phone_number
+    this.user.spotbie_user.user_type = this.chosenAccountType
 
-    get deactivation_password() { return this.deactivation_form.get('spotbie_deactivation_password').value }
-    get h() { return this.deactivation_form.controls }
-
-    get originAddress() {return this.businessSettingsForm.get('originAddress').value }
-    get spotbieOrigin() { return this.businessSettingsForm.get('spotbieOrigin').value }
-    get originTitle() { return this.businessSettingsForm.get('originTitle').value }
-    get originDescription() { return this.businessSettingsForm.get('originDescription').value }
-    get originCategories() { return this.businessSettingsForm.get('originCategories').value }
-    get i() { return this.businessSettingsForm.controls }
-
-    public saveSettings() {
-
-        this.loading = true
-        this.submitted = true
-
-        if (this.settingsForm.invalid) {
-
-            this.loading = false
-            this.spotbieSettingsWindow.nativeElement.scrollTo(0,0)
-            
-            return
-
+    this.userAuthService.saveSettings(this.user).subscribe({
+      next: (resp) => {
+        this.saveSettingsCallback(resp)
+      },
+      error: (error: any) => {
+        if (error.error.errors.email[0] === 'notUnique') {
+          this.settingsForm.get('spotbie_email').setErrors({notUnique: true})
         }
 
-        this.user.username = this.username
-        this.user.email = this.email
-
-        this.user.spotbie_user.first_name = this.first_name
-        this.user.spotbie_user.last_name = this.last_name        
-        this.user.spotbie_user.phone_number = this.spotbie_phone_number
-        this.user.spotbie_user.user_type = this.chosen_account_type
-
-        this.userAuthService.saveSettings(this.user).subscribe({
-
-            next: (resp) => {
-                this.saveSettingsCallback(resp)   
-            },
-            
-            error:(error: any) => {
-                
-                if(error.error.errors.email[0] == 'notUnique')
-                    this.settingsForm.get('spotbie_email').setErrors({ notUnique: true })
-
-                    
-                this.spotbieSettingsInfoText.nativeElement.innerHTML = `
+        this.spotbieSettingsInfoText.nativeElement.innerHTML = `
                     <span class='spotbie-text-gradient spotbie-error'>
                         There was an error saving.
                     </span>
                 `
+        this.spotbieSettingsWindow.nativeElement.scrollTo(0, 0)
 
-                this.spotbieSettingsWindow.nativeElement.scrollTo(0,0)
-
-                this.loading = false
-                this.placeSettingsFormUp = false 
-                
-            }
-
-        })
-
-    }
-
-    private saveSettingsCallback(resp: any) {
-        
         this.loading = false
-        this.placeSettingsFormUp = false 
+        this.placeSettingsFormUp = false
+      }
+    })
+  }
 
-        if (resp.success) {
+  private saveSettingsCallback(resp: any) {
+    this.loading = false
+    this.placeSettingsFormUp = false
 
-            this.spotbieSettingsInfoText.nativeElement.innerHTML = `
+    if (resp.success) {
+      this.spotbieSettingsInfoText.nativeElement.innerHTML = `
                 <span class='sb-text-light-green-gradient'>
-                Your settings were saved.       
+                Your settings were saved.
                 </span>
             `
-            
-            this.spotbieSettingsWindow.nativeElement.scrollTo(0,0)
 
-            localStorage.setItem('spotbie_userLogin', resp.user.username)
-            localStorage.setItem('spotbie_userType', resp.user.spotbie_user.user_type)
+      this.spotbieSettingsWindow.nativeElement.scrollTo(0, 0)
 
-        } else {
-
-            this.spotbieSettingsInfoText.nativeElement.innerHTML = `
+      localStorage.setItem('spotbie_userLogin', resp.user.username)
+      localStorage.setItem('spotbie_userType', resp.user.spotbie_user.user_type)
+    } else {
+      this.spotbieSettingsInfoText.nativeElement.innerHTML = `
                 <span class='spotbie-text-gradient spotbie-error'>
-                    There was an error saving.     
+                    There was an error saving.
                 </span>
-            `       
+            `
+    }
+  }
 
+  public cancelDeactivateAccount() {
+    this.accountDeactivation = false
+  }
+
+  public startDeactivateAccount(): void {
+    this.accountDeactivation = true
+
+    const socialId = localStorage.getItem('spotbiecom_social_id')
+
+    if (socialId != null && socialId !== undefined && socialId.length > 0) {
+      this.isSocialAccount = true
+    } else {
+      this.isSocialAccount = false
+    }
+
+    if (!this.isSocialAccount) {
+      const deactivationPasswordValidator = [Validators.required]
+
+      this.deactivationForm = this.formBuilder.group({
+        spotbie_deactivation_password: ['', deactivationPasswordValidator]
+      })
+
+      this.deactivationForm.get('spotbie_deactivation_password').setValue('123456789')
+    }
+  }
+
+  public deactivateAccount() {
+    const r = confirm('Are you sure you want to deactivate your account?')
+
+    if (!r) return
+    if (this.loading) return
+
+    this.loading = true
+
+    let deactivationPassword = null
+
+    if (!this.isSocialAccount) {
+      if (this.deactivationForm.invalid) {
+        this.spotbieAccountDeactivationInfo.nativeElement.scrollIntoView({behavior: 'smooth', block: 'start'})
+        return
+      }
+      deactivationPassword = this.deactivationPassword
+    }
+
+    this.userAuthService.deactivateAccount(deactivationPassword, this.isSocialAccount).subscribe(
+      resp => {
+        this.deactivateCallback(resp)
+      })
+  }
+
+  private deactivateCallback(resp: any) {
+    this.loading = false
+    if (resp.success) {
+    } else {
+      console.log('deactivateCallback', resp)
+    }
+  }
+
+  public closeWindow() {
+    window.location.reload()
+  }
+
+  public classificationSearch(): Observable<any> {
+    this.loading = true
+    return this.locationService.getClassifications()
+  }
+
+  public classificationSearchCallback(resp) {
+    this.loading = false
+
+    if (resp.success) {
+      const classifications: Array<any> = resp.data._embedded.classifications
+
+      classifications.forEach(classification => {
+        if (classification.type && classification.type.name && classification.type.name !== 'Undefined') {
+          classification.name = classification.type.name
+        } else if (classification.segment && classification.segment.name && classification.segment.name !== 'Undefined') {
+          classification.name = classification.segment.name
+
+          classification.segment._embedded.genres.forEach(genre => {
+            genre.show_sub_sub = false
+
+            if (genre.name === 'Chanson Francaise' ||
+                genre.name === 'Medieval/Renaissance' ||
+                genre.name === 'Religious' ||
+                genre.name === 'Undefined' ||
+                genre.name === 'World') {
+              classification.segment._embedded.genres.splice(classification.segment._embedded.genres.indexOf(genre), 1)
+            }
+          })
         }
-        
 
-    }
+        if (classification.name !== undefined) {
+          classification.show_sub = false
 
-    public cancelDeactivateAccount() {
-        this.account_deactivation = false
-    }
-
-    public startDeactivateAccount(): void {
-
-        this.account_deactivation = true
-
-        let socialId = localStorage.getItem('spotbiecom_social_id')
-        
-        if(socialId != null && socialId !== undefined && socialId.length > 0)
-            this.isSocialAccount = true
-        else
-            this.isSocialAccount = false
-
-        if(!this.isSocialAccount){
-
-            const deactivation_password_validator = [Validators.required]
-
-            this.deactivation_form = this.formBuilder.group({
-                spotbie_deactivation_password: ['', deactivation_password_validator]
-            })
-    
-            this.deactivation_form.get('spotbie_deactivation_password').setValue('123456789')
-
-        } else {
-
-
-
+          if (classification.name !== 'Donation' &&
+              classification.name !== 'Parking' &&
+              classification.name !== 'Transportation' &&
+              classification.name !== 'Upsell' &&
+              classification.name !== 'Venue Based' &&
+              classification.name !== 'Event Style' &&
+              classification.name !== 'Individual' &&
+              classification.name !== 'Merchandise' &&
+              classification.name !== 'Group') {
+            this.businessCategoryList.push(classification.name)
+          }
         }
-
+      })
+      this.businessCategoryList = this.businessCategoryList.reverse()
+    } else {
+      console.log('getClassifications Error ', resp)
     }
 
-    public deactivateAccount() {
-        
-        let r = confirm('Are you sure you want to deactivate your account?')
+    this.loading = false
+  }
 
-        if(!r) return
-
-        if(this.loading) return
-
-        this.loading = true
-
-        let deactivation_password = null
-
-        if(!this.isSocialAccount){
-
-            if (this.deactivation_form.invalid) {
-                this.spotbieAccountDeactivationInfo.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' })
-                return
-            }
-
-            deactivation_password = this.deactivation_password
-
-        }
-
-        this.userAuthService.deactivateAccount(deactivation_password, this.isSocialAccount).subscribe(
-            resp => {
-                this.deactivateCallback(resp)
-            }
-        )
-
-    }
-
-    private deactivateCallback(resp: any) {
-
-        this.loading = false
-
-        if (resp.success) {
-            
-            
-
-        } else 
-            console.log('deactivateCallback', resp)
-        
-    }
-
-    public closeWindow() {
-        window.location.reload()
-    }
-
-    public classificationSearch(): Observable<any>{
-
-        this.loading = true    
-        return this.locationService.getClassifications()
-
-    }
-
-    public classificationSearchCallback(resp){
-
-        this.loading = false
-
-        if(resp.success){
-
-        let classifications: Array<any> = resp.data._embedded.classifications
-        
-        classifications.forEach( classification => {
-
-            if(classification.type && classification.type.name && classification.type.name !== "Undefined"){
-
-            classification.name = classification.type.name        
-
-            } else if(classification.segment && classification.segment.name && classification.segment.name !== "Undefined"){
-
-            classification.name = classification.segment.name
-
-            classification.segment._embedded.genres.forEach(genre => {
-
-                genre.show_sub_sub = false
-
-                if(genre.name === "Chanson Francaise" ||
-                genre.name === "Medieval/Renaissance" ||
-                genre.name === "Religious" ||
-                genre.name === "Undefined" ||
-                genre.name === "World"){
-
-                    classification.segment._embedded.genres.splice(classification.segment._embedded.genres.indexOf(genre), 1)
-
-                }
-
-            });          
-
-            }
-
-            if(classification.name !== undefined){
-
-            classification.show_sub = false
-
-            if(classification.name !== 'Donation' &&
-            classification.name !== 'Parking' &&
-            classification.name !== 'Transportation' &&
-            classification.name !== 'Upsell' &&
-            classification.name !== 'Venue Based' &&
-            classification.name !== 'Event Style' &&
-            classification.name !== 'Individual' &&
-            classification.name !== 'Merchandise' &&
-            classification.name !== 'Group'){
-            
-                this.businessCategoryList.push(classification.name)
-            
-            }
-
-            }
-
-        })
-
-        this.businessCategoryList = this.businessCategoryList.reverse()
-
-        } else
-            console.log("getClassifications Error ", resp)
-
-        this.loading = false
-      
-    }
-
-    ngOnInit(): void {
-        this.loading = true
-        this.initSettingsForm('personal')
-    }
-
+  ngOnInit(): void {
+    this.loading = true
+    this.initSettingsForm('personal')
+  }
 }

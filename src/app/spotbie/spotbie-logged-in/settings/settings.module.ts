@@ -17,6 +17,7 @@ import { NgxMaskModule, IConfig } from 'ngx-mask'
 import { environment } from 'src/environments/environment'
 import { SettingsComponent } from './settings.component'
 import { HelperModule } from 'src/app/helpers/helper.module';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 export const options : Partial<IConfig> | (() => Partial<IConfig>) = null
 
@@ -24,22 +25,23 @@ export const options : Partial<IConfig> | (() => Partial<IConfig>) = null
   declarations: [
     SettingsComponent
   ],
-  imports: [
-    CommonModule,
-    FormsModule, 
-    ReactiveFormsModule,
-    HttpClientModule,
-    HelperModule,
-    RouterModule,
-    MatChipsModule,
-    MatAutocompleteModule,
-    AgmCoreModule.forRoot({
-      apiKey: environment.google_maps_apiKey,
-      language: 'en',
-      libraries: ['geometry', 'places']
-    }),       
-    NgxMaskModule.forRoot(options)
-  ],
+    imports: [
+        CommonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        HttpClientModule,
+        HelperModule,
+        RouterModule,
+        MatChipsModule,
+        MatAutocompleteModule,
+        MatFormFieldModule,
+        AgmCoreModule.forRoot({
+            apiKey: environment.google_maps_apiKey,
+            language: 'en',
+            libraries: ['geometry', 'places']
+        }),
+        NgxMaskModule.forRoot(options),
+    ],
   providers: [
     GoogleMapsAPIWrapper
   ],
