@@ -7,7 +7,7 @@
 
     <img class="spotbie-ad-image" [src]="ad.images" *ngIf="!editMode && isDesktop" />
 
-    <img class="spotbie-ad-image" [src="ad.images_mobile" *ngIf="!editMode && !isDesktop" />
+    <img class="spotbie-ad-image" [src]="ad.images_mobile" *ngIf="!editMode && !isDesktop" />
 
     <img class="spotbie-ad-image" [src]="genericAdImage" *ngIf="editMode && ad.id == 2 && isDesktop" />
 
