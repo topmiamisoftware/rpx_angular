@@ -131,26 +131,23 @@
 }
 @media (max-width: 1635px) {
     .spotbie-ad-wrapper-header{
-        max-width: 72%;
-        min-width: 72%;
-        width: 72%;
-        right: 4%;
+        max-width: 102%;
+        min-width: 102%;
+        width: 102%;
     }
 }
 @media (max-width: 1540px) {
     .spotbie-ad-wrapper-header{
-        max-width: 68%;
-        min-width: 68%;
-        width: 68%;
-        right: 4%;
+        max-width: 102%;
+        min-width: 102%;
+        width: 102%;
     }
 }
 @media (max-width: 1100px) {
     .spotbie-ad-wrapper-header{
-        max-width: 55%;
-        min-width: 55%;
-        width: 55%;
-        right: 6%;
+        max-width: 102%;
+        min-width: 102%;
+        width: 102%;
     }
 }
 @media (max-width: 1024px) {
