@@ -20,23 +20,22 @@
     max-width: 600px;
     min-width: 600px;
     width: 600px;
-    min-height: 600px;
     right: 0%;
     min-height: unset;
-    height: unset;        
+    height: unset;
 }
 .sb-mobileAdWrapper .spotbie-ad-image{
-    position: relative;       
+    position: relative;
     left: 0;
     right: 0;
     min-width: 100%;
     width: 100%;
     max-width: 100%;
-    box-shadow: unset;   
+    box-shadow: unset;
 }
 .sb-mobileAdWrapper .sb-categoryList{
     text-align: center;
-}     
+}
 .sb-mobileAdWrapper .sb-sponsored,
 .sb-mobileAdWrapper .sb-perDollar,
 .sb-mobileAdWrapper .sb-totalRewards,
@@ -47,8 +46,8 @@
     display: block;
     top: unset;
     right: unset;
-    bottom: unset;        
-}      
+    bottom: unset;
+}
 .sb-mobileAdWrapper .sb-sponsored,
 .sb-mobileAdWrapper .sb-sponsoredName{
     position: relative;
@@ -65,23 +64,23 @@
 .sb-mobileAdWrapper .sb-perDollar
 .sb-mobileAdWrapper .sb-distanceMiles,
 .sb-mobileAdWrapper .sb-categoryList{
-    margin-bottom: 25px;        
-} 
+    margin-bottom: 25px;
+}
 .sb-mobileAdWrapper .sb-totalRewards{
     display: block;
     margin-bottom: 10px;
-}   
+}
 .sb-mobileAdWrapper .sb-distanceMiles{
     display: block;
     margin-top: 10px;
-}      
+}
 .sb-mobileAdWrapper .sb-perDollar{
     margin-right: 0px;
-}    
+}
 .sb-mobileAdWrapper .sb-ad-bottom{
     position:relative;
     padding-top: 15px;
-    padding-bottom: 15px;        
+    padding-bottom: 15px;
     top: unset !important;
     background-color: #1c1924!important;
 }
@@ -102,7 +101,7 @@
     min-width: 100%;
     background-repeat: no-repeat!important;
     background-size: cover!important;
-    background-position: center!important; 
+    background-position: center!important;
 }
 .spotbie-white-iconImg{
     position: absolute;
@@ -118,7 +117,7 @@
     background-position: center!important;
     background-repeat: no-repeat!important;
     z-index: 0;
-    pointer-events: none;   
+    pointer-events: none;
 }
 .sb-ad-bottom{
     position: absolute;
@@ -128,31 +127,31 @@
     z-index: 2;
     padding-top: 5px;
     padding-bottom: 5px;
-    font-size: .6rem;
-    background-color: rgb(51 47 62);    
+    font-size: .7rem;
+    background-color: rgb(51 47 62);
 }
-@media (max-width: 1100px) { 
+@media (max-width: 1100px) {
     .spotbie-ad-wrapper-header{
         max-width: 55%;
         min-width: 55%;
         width: 55%;
-        right: 6%;         
+        right: 6%;
     }
 }
-@media (max-width: 1024px) { 
+@media (max-width: 1024px) {
     .spotbie-ad-wrapper-header.sb-mobileAdWrapper,
     .spotbie-ad-wrapper-header{
         position: relative;
         margin: 0 auto;
         max-width: 100%;
-        min-width: 100%;    
+        min-width: 100%;
         width: 100%;
         right: 0%;
         min-height: unset;
-        height: unset;        
+        height: unset;
     }
 }
-@media (max-width: 768px) { 
+@media (max-width: 768px) {
     .sb-mobileAdWrapper .spotbie-ad-image,
     .spotbie-ad-image{
         position: relative;
@@ -162,11 +161,11 @@
         max-width: 100%;
         box-shadow: unset;
         background-color: #26232e !important;
-        background-size: contain !important; 
+        background-size: contain !important;
     }
     .sb-categoryList{
         text-align: center;
-    }     
+    }
     .sb-sponsored,
     .sb-perDollar,
     .sb-totalRewards,
@@ -177,8 +176,8 @@
         display: block;
         top: unset;
         right: unset;
-        bottom: unset;        
-    }      
+        bottom: unset;
+    }
     .sb-sponsored,
     .sb-sponsoredName{
         position: relative;
@@ -195,19 +194,19 @@
     .sb-perDollar
     .sb-distanceMiles,
     .sb-categoryList{
-        margin-bottom: 25px;        
-    } 
+        margin-bottom: 25px;
+    }
     .sb-totalRewards{
         display: block;
         margin-bottom: 10px;
-    }   
+    }
     .sb-distanceMiles{
         display: block;
         margin-top: 10px;
-    }      
+    }
     .sb-perDollar{
         margin-right: 0px;
-    }    
+    }
     .sb-ad-bottom,
     .sb-ad-top{
         position:relative;
@@ -215,10 +214,10 @@
         top: unset;
     }
 }
-@media (max-width: 420px) { 
+@media (max-width: 420px) {
     .sb-mobileAdWrapper .spotbie-ad-image,
     .spotbie-ad-image{
         min-width: 100%;
         height: auto;
-    } 
+    }
 }

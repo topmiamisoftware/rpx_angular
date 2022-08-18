@@ -57,10 +57,10 @@
     max-width: 100%;
     min-height: 400px;
     height: 400px;
-    max-height: 400px;    
+    max-height: 400px;
     background-repeat: no-repeat!important;
     background-size: contain !important;
-    background-position: center!important; 
+    background-position: center!important;
 }
 .spotbie-white-iconImg{
     position: absolute;
@@ -76,7 +76,7 @@
     background-position: center!important;
     background-repeat: no-repeat!important;
     z-index: 0;
-    pointer-events: none;   
+    pointer-events: none;
 }
 
 .sb-ad-bottom{
@@ -87,10 +87,10 @@
     width: 100%;
     font-size: .6rem;
     padding-top: 20px;
-    background: url(src/assets/images/home_imgs/spotbie-white-icon.svg);    
+    background: url(src/assets/images/home_imgs/spotbie-white-icon.svg);
     background-size: cover!important;
     background-position: center!important;
-    background-repeat: no-repeat!important;        
+    background-repeat: no-repeat!important;
 }
 
 .spotbie-ad-wrapper-header{
@@ -102,7 +102,7 @@
     max-height: 400px;
     min-height: 400px;
     margin-left: 2px;
-    margin-right: 2px;     
+    margin-right: 2px;
 }
 
 .sb-sponsored,
@@ -116,43 +116,43 @@
     display: block;
     top: unset;
     right: unset;
-    bottom: unset;        
-}      
+    bottom: unset;
+}
 .sb-sponsored,
 .sb-sponsoredName{
     margin-top: 18px;
 }
 
 .sb-categoryList{
-    margin-bottom: 25px;        
-} 
+    margin-bottom: 25px;
+}
 .sb-totalRewards{
     display: block;
-}   
+}
 .sb-distanceMiles{
     display: block;
     margin-top: 10px;
-}      
+}
 .sb-perDollar{
     padding-bottom: 25px;
     font-size: 1rem;
-} 
+}
 
-@media (max-width: 1250px) { 
+@media (max-width: 1250px) {
     .spotbie-ad-wrapper-header{
         width: 32%;
         min-width: 32%;
         max-width: 32%;
     }
 }
-@media (max-width: 768px) { 
+@media (max-width: 768px) {
     .spotbie-ad-wrapper-header{
         width: 100%;
         min-width: 100%;
         max-width: 100%;
     }
 }
-@media (max-width: 460px) { 
+@media (max-width: 460px) {
     .spotbie-ad-image{
         width: 100%;
         min-width: 100%;
@@ -162,5 +162,5 @@
         width: 98%;
         min-width: 98%;
         max-width: 98%;
-    }    
+    }
 }

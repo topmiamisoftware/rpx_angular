@@ -4,7 +4,7 @@
     width: 100%;
     min-width: 100%;
     max-width: 100%;
-    left: 0%;  
+    left: 0%;
 }
 .sb-miniLogoIconM{
     position: relative;
@@ -51,7 +51,7 @@
     height: 60vh;
     max-height: 60vh;
     min-height: 60vh;
-    margin-top: 50px;    
+    margin-top: 50px;
 }
 .spotbie-agm-map.sb-map-results-open{
     height: 60vh;
@@ -89,7 +89,7 @@
     margin-top: 10px;
     background-position: center !important;
     background-repeat: no-repeat !important;
-    background-size: contain !important;     
+    background-size: contain !important;
 }
 .spotbie-search-result-price{
     font-size: 16px;
@@ -126,7 +126,7 @@
     margin: 0 auto;
     width: 90%;
     min-width: 90%;
-    max-width: 90%; 
+    max-width: 90%;
 }
 .spotbie-close-categories{
     position: absolute;
@@ -151,8 +151,8 @@
 }
 .spotbie-controls-search-results td{
     border-right: 1px solid white;
-    padding: 0px 10px !important; 
-    color: #332f3e;   
+    padding: 0px 10px !important;
+    color: #332f3e;
 }
 .spotbie-categories{
     position: fixed;
@@ -196,7 +196,7 @@
     background-color: rgba(0,0,0,.1);
 }
 .spotbie-single-cat.single-cat-light{
-    background-color: rgb(51 47 62 / 8%);    
+    background-color: rgb(51 47 62 / 8%);
 }
 .spotbie-search-results-title{
     position: relative;
@@ -239,6 +239,13 @@
     margin-top: 7px;
     font-size: 15px;
 }
+.spotbie-search-result-table{
+  table-layout: fixed;
+  width: 100%;
+}
+.spotbie-search-result-table td:nth-child(1){
+  width: 165px;
+}
 .spotbie-search-result-title{
     position: relative;
     width: 100%;
@@ -246,8 +253,10 @@
     padding-top: 5px;
     padding-bottom: 5px;
     font-family: 'Gotham-Bold';
-    color: 'white';
     font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .spotbie-review-count{
     position: relative;
@@ -280,7 +289,7 @@
 .spotbie-search-result-phone{
     position: relative;
     padding-top: 5px;
-    padding-bottom: 5px;  
+    padding-bottom: 5px;
 }
 .spotbie-search-result-rating{
     position: relative;
@@ -296,10 +305,10 @@
     max-height: 24px;
     width: 132px;
     min-width: 132px;
-    max-width: 132px;   
+    max-width: 132px;
     background-position: center !important;
     background-repeat: no-repeat !important;
-    background-size: contain !important;      
+    background-size: contain !important;
 }
 .spotbie-search-result-yelp-logo{
     position: relative;
@@ -309,10 +318,10 @@
     max-height: 24px;
     width: 48px;
     min-width: 48px;
-    max-width: 48px;       
+    max-width: 48px;
     background-position: center !important;
     background-repeat: no-repeat !important;
-    background-size: contain !important;      
+    background-size: contain !important;
 }
 .spotbie-yelp-rating-table td{
     vertical-align: middle;
@@ -328,12 +337,12 @@
     max-height: 150px;
     width: 150px;
     min-width: 150px;
-    max-width: 150px;    
+    max-width: 150px;
     margin-right: 15px;
     background-position: center !important;
     background-repeat: no-repeat !important;
     background-size: cover !important;
-    border-radius: 5px;     
+    border-radius: 5px;
 }
 .spotbie-search-results {
     position: relative;
@@ -342,7 +351,7 @@
     text-align: left;
 }
 .spotbie-search-result{
-    background-color: rgb(28 25 36 / 14%); 
+    background-color: rgb(28 25 36 / 14%);
 }
 .no-results{
     padding-top: 25px;
@@ -377,14 +386,14 @@
     text-align: left;
     text-transform: uppercase;
     font-size: .8rem;
-    min-height: 225px;
+    min-height: 209px;
 }
 .spotbie-communityMember-search-result{
     background-color: #1c1924!important;
     background: url(../../../assets/images/home_imgs/spotbie-white-icon.svg);
     background-repeat: no-repeat!important;
     background-size: cover;
-    background-position: center;     
+    background-position: center;
 }
 .spotbie-communityMember-search-result .spotbie-search-result-title{
     word-break: break-word;
@@ -420,7 +429,7 @@
     background: -webkit-linear-gradient(90deg,#25c540,#64e56f);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    letter-spacing: 2px;    
+    letter-spacing: 2px;
 }
 .sb-miniLogoIcon{
     position: absolute;
@@ -486,17 +495,17 @@ span.spotbie-button{
     background-color:black;
     padding-top: 10px;
     padding-bottom: 10px;
-    cursor: pointer;    
+    cursor: pointer;
 }
 .spotbie-profile-right-visit-profile{
     position: relative;
     width: 100%;
     min-width: 100%;
     max-width: 100%;
-    background-color: rgba(0,0,0,.23);    
+    background-color: rgba(0,0,0,.23);
     padding-top: 10px;
     padding-bottom: 10px;
-    cursor: pointer;     
+    cursor: pointer;
     text-align: center;
     margin-top: 10px;
     border-radius: 10px;
@@ -508,7 +517,7 @@ span.spotbie-button{
     min-width: 100%;
     max-width: 100%;
     overflow-x: scroll;
-    overflow-y: hidden;    
+    overflow-y: hidden;
     display: none;
 }
 .spotbie-map-search-by{
@@ -516,7 +525,7 @@ span.spotbie-button{
     margin: 0 auto;
     width: 100%;
     min-width: 100%;
-    max-width: 100%;    
+    max-width: 100%;
     min-height:40px;
     height: 40px;
     max-height: 40px;
@@ -544,7 +553,7 @@ span.spotbie-button{
     max-width: 50px;
     background-position: center !important;
     background-repeat: no-repeat !important;
-    background-size: contain !important;    
+    background-size: contain !important;
 }
 .spotbie-controls-search-results img{
     width: 20px;
@@ -588,7 +597,7 @@ span.spotbie-button{
 }
 
 .gm-style-iw-c{
-    background: linear-gradient(#64e56f, #35a99f);  
+    background: linear-gradient(#64e56f, #35a99f);
 }
 .agm_infowindow_color{
     color: black;
@@ -676,7 +685,7 @@ span.spotbie-button{
     padding: 10px;
     padding-left: 0px;
 }
-.spotbie-pull-from td{    
+.spotbie-pull-from td{
     padding-left: 15px;
     padding-right: 15px;
     padding-top: 5px;
@@ -706,12 +715,12 @@ span.spotbie-button{
     min-width: 800px;
 }
 .map-prompt-v-align{
-    position: relative;    
+    position: relative;
     display: table;
     height: 100%;
     margin: 0 auto;
     left: 0;
-    right: 0;    
+    right: 0;
     width: 650px;
     max-width: 100%;
 }
@@ -737,7 +746,7 @@ swiper{
 
 .map-prompt-mobile .title{
     position: absolute;
-    cursor: pointer;    
+    cursor: pointer;
     left: 0;
     right: 0;
     top: 20%;
@@ -753,7 +762,7 @@ swiper{
 .swiper-button-next{
     color:white;
     background-image: unset;
-} 
+}
 .sb-mapWrapper{
     overflow-y: scroll;
 }
@@ -817,7 +826,7 @@ swiper{
     cursor: pointer;
 }
 .sb-optionGet:hover{
-    opacity: 0.8; 
+    opacity: 0.8;
 }
 .sb-optionGet .fa-star{
     color:rgb(43, 194, 136);
@@ -864,17 +873,17 @@ button.gm-ui-hover-effect:focus-within{
     background: linear-gradient(90deg,#35a99f,#64e56f);
 }
 /**WIDTH MEDIA QUERIES */
-@media (max-width: 1583px) { 
+@media (max-width: 1583px) {
     .spotbie-search-result{
         width: 30%;
         min-width: 30%;
         max-width: 30%;
     }
 }
-@media (max-width: 1300px) { 
+@media (max-width: 1300px) {
 
 }
-@media (max-width: 1200px) {   
+@media (max-width: 1200px) {
 
 }
 @media (max-width: 1169px) {
@@ -884,12 +893,12 @@ button.gm-ui-hover-effect:focus-within{
         max-width: 45%;
     }
 }
-@media (max-width: 1024px) { 
+@media (max-width: 1024px) {
     .spotbie-search-results-title{
         padding-left: 0px;
         padding-right: 0px;
         text-align: center;
-    }   
+    }
     .spotbie-controls-search-results{
         position: relative;
         margin: 0 auto;
@@ -898,7 +907,7 @@ button.gm-ui-hover-effect:focus-within{
         padding-top: 10px;
     }
 }
-@media (max-width: 900px) { 
+@media (max-width: 900px) {
     .sb-page-button {
         font-size: 1.4rem !important;
     }
@@ -927,23 +936,23 @@ button.gm-ui-hover-effect:focus-within{
         font-size: 0.9rem;
         min-width: 90%;
         width: 90%;
-        max-width: 90%;        
+        max-width: 90%;
     }
 }
-@media (max-width: 768px) { 
+@media (max-width: 768px) {
     .spotbie-controls-search-results{
         width: 100%;
         min-width: 100%
     }
     .spotbie-profile-right-close-slider{
-        padding-bottom: env(safe-area-inset-bottom);   
-    } 
+        padding-bottom: env(safe-area-inset-bottom);
+    }
     .sb-top-headerImg {
         height: 250px;
         min-height: 250px;
         background-position: center !important;
         background-size: cover !important;
-        background-repeat: no-repeat;       
+        background-repeat: no-repeat;
     }
     .sb-eventsResultsTitle{
         padding-top: unset;
@@ -951,8 +960,8 @@ button.gm-ui-hover-effect:focus-within{
     .map-prompt-mobile{
         overflow-y: scroll;
         width: 100%;
-        min-width: 100%;        
-    }    
+        min-width: 100%;
+    }
     .sb-deliverySortImg{
         width: 13px !important;
         min-width: 13px !important;
@@ -970,8 +979,8 @@ button.gm-ui-hover-effect:focus-within{
     }
     .sb-locationList{
         min-width: 90%;
-        max-width: 90%;        
-        font-size: .9rem;        
+        max-width: 90%;
+        font-size: .9rem;
     }
     .spotbie-sub-cat{
         margin-top: 3px;
@@ -979,11 +988,11 @@ button.gm-ui-hover-effect:focus-within{
         padding-top: 10px;
         padding-bottom: 10px;
     }
-    .sb-optionGet{ 
+    .sb-optionGet{
         min-width: 45px;
         width: 45px;
-        max-width: 45px; 
-    }  
+        max-width: 45px;
+    }
     .spotbie-categoryPull{
         width: 100%;
         min-width: 100%;
@@ -995,7 +1004,7 @@ button.gm-ui-hover-effect:focus-within{
         min-width: 386px;
         max-width: 386px;
         text-align: center;
-    } 
+    }
     .spotbie-single-cat{
         position: relative;
         padding: 15px 10px;
@@ -1009,18 +1018,18 @@ button.gm-ui-hover-effect:focus-within{
         height: 50vh;
         max-height: 50vh;
         min-height: 50vh;
-    }               
+    }
     .spotbie-map{
         width: 100%;
         min-width: 100%;
-        max-width: 100%;         
-    } 
+        max-width: 100%;
+    }
     .spotbie-search-result-wrapper{
         text-align: center;
-    }   
+    }
 }
-@media (max-width: 700px) { 
-    .map-prompt-v-align{   
+@media (max-width: 700px) {
+    .map-prompt-v-align{
         width: 600px;
     }
 }
@@ -1047,19 +1056,19 @@ button.gm-ui-hover-effect:focus-within{
         width: 96%;
         min-width: 96%;
         max-width: 96%;
-    }        
+    }
 }
-@media (max-width: 600px) { 
+@media (max-width: 600px) {
     .map-prompt-mobile{
         width: 103%;
-        min-width: 103%;        
-    }        
+        min-width: 103%;
+    }
     .spotbie-overlay-window{
         width: 100%;
         min-width: 100%;
         max-width: 100%;
-        left: 0%;   
-    }    
+        left: 0%;
+    }
     .spotbie-sorting{
         font-size: 9px;
     }
@@ -1067,7 +1076,7 @@ button.gm-ui-hover-effect:focus-within{
         top: -42px;
         bottom: unset;
         left: 21px;
-        right: unset;        
+        right: unset;
     }
     .spotbie-map-search-by td{
         padding-top: 10px;
@@ -1086,26 +1095,29 @@ button.gm-ui-hover-effect:focus-within{
         height: 100%;
         min-height: 100%;
         top: 0%;
-        bottom: 0%; 
+        bottom: 0%;
         width: 96%;
         min-width: 96%;
         max-width: 96%;
         padding: 2%;
         border-radius: 0px;
         padding-top: env(safe-area-inset-top);
-    }  
-    .map-prompt-v-align{   
+    }
+    .map-prompt-v-align{
         width: 100%;
-    }   
+    }
     .sb-getStarted{
         font-size: 15px;
         max-width: 200px;
         min-width: 200px;
         padding: 8px !important;
-        margin-top: 40px;  
-    }       
+        margin-top: 40px;
+    }
+    .spotbie-search-result-table td:nth-child(1){
+      width: 130px;
+    }
 }
-@media (max-width: 560px) { 
+@media (max-width: 560px) {
     .spotbie-search-page-number{
         display: none;
     }
@@ -1129,7 +1141,7 @@ button.gm-ui-hover-effect:focus-within{
     }
     .spotbie-controls-search-results td{
         border: unset;
-    }    
+    }
     .spotbie-controls-search-results img{
         width: 22px;
         min-width: 22px;
@@ -1137,13 +1149,13 @@ button.gm-ui-hover-effect:focus-within{
     }
     .spotbie-close-results{
         display: none;
-    }     
+    }
     .spotbie-close-results-mobile{
         display: block;
     }
     .spotbie-search-results-title{
         text-align: center;
-    }  
+    }
     span.spotbie-button{
         max-width: 46%;
         width: 46%;
@@ -1163,12 +1175,12 @@ button.gm-ui-hover-effect:focus-within{
     .spotbie-categories{
         padding-top: 70px;
         padding-bottom: 90px;
-    }    
+    }
 }
 @media (max-width: 460px) {
     .spotbie-single-cat{
         font-size: .7rem;
-    } 
+    }
     .spotbie-category-search-yelp{
         min-width: 100%;
         max-width: 100%;
@@ -1181,12 +1193,12 @@ button.gm-ui-hover-effect:focus-within{
     }
     .spotbie-map-search-by{
         margin-bottom: 0px;
-    }       
+    }
     .spotbie-map-search-wrapper {
         top: 0px;
-    }    
+    }
 }
-@media (max-width: 420px) { 
+@media (max-width: 420px) {
     .spotbie-search-results-title{
         margin-top: 0px;
         width: 98%;
@@ -1202,17 +1214,17 @@ button.gm-ui-hover-effect:focus-within{
         max-height: 30px;
         width: 30px;
         min-width: 30px;
-        max-width: 30px;        
-    } 
+        max-width: 30px;
+    }
     .spotbie-communityMember-search-result{
         padding: 15px 12px!important;
     }
     .sb-miniLogoIcon{
         margin-top: -8px;
         left: 4px;
-    }        
+    }
 }
-@media (max-width: 375px) { 
+@media (max-width: 375px) {
     .spotbie-search-result-image{
         height: 100px;
         min-height: 100px;
@@ -1225,20 +1237,20 @@ button.gm-ui-hover-effect:focus-within{
         width: 18px;
         min-width: 18px;
         max-width: 18px;
-    }    
+    }
 }
-@media (max-width: 360px) { 
+@media (max-width: 360px) {
     .spotbie-search-result-image{
         height: 75px;
         min-height: 75px;
         max-height: 75px;
         width: 75px;
         min-width: 75px;
-        max-width: 75px;     
+        max-width: 75px;
     }
     .spotbie-close-results{
         top: 16px;
-    }  
+    }
 }
 @media (max-width: 340px) {
     .spotbie-search-result-image{
@@ -1248,8 +1260,8 @@ button.gm-ui-hover-effect:focus-within{
         width: 65px;
         min-width: 65px;
         max-width: 65px;
-        margin-right: 5px; 
-    }    
+        margin-right: 5px;
+    }
 }
 @media (max-width: 320px) {
     .spotbie-search-result-image{
@@ -1259,20 +1271,20 @@ button.gm-ui-hover-effect:focus-within{
         width: 60px;
         min-width: 60px;
         max-width: 60px;
-        margin-right: 3px;    
-    } 
+        margin-right: 3px;
+    }
     .spotbie-controls-search-results img {
         width: 13px;
         min-width: 13px;
         max-width: 13px;
-    } 
+    }
     .spotbie-search-results-title{
         margin-bottom: 10px;
     }
 }
-@media (max-width: 220px) { 
+@media (max-width: 220px) {
 
 }
-@media (max-width: 120px) { 
+@media (max-width: 120px) {
 
 }
