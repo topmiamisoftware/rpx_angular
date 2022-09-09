@@ -8,7 +8,7 @@
     background-position: center !important;
     background-repeat: no-repeat !important;
     background-attachment: fixed;
-    z-index: 90 !important;    
+    z-index: 90 !important;
 }
 .communityMemberWindow{
     background-color: #1b1822;
@@ -57,7 +57,7 @@
     border-radius: 0px;
     border-bottom: 1px solid #332f3e;
     border-top: 1px solid #332f3e;
-    text-align: center;    
+    text-align: center;
 }
 .spotbie-share-button{
     margin-left: 10px;
@@ -82,7 +82,7 @@
     margin-bottom: 30px;
     white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis;    
+    text-overflow: ellipsis;
 }
 .spotbie-media-description{
     position: relative;
@@ -93,7 +93,7 @@
     margin-bottom: 30px;
     white-space: nowrap;
     overflow: hidden;
-    text-overflow: ellipsis;    
+    text-overflow: ellipsis;
 }
 .spotbie-album-media-image{
     position: relative;
@@ -126,8 +126,8 @@
     margin: 0 auto;
     width: 100%;
     min-width: 100%;
-    max-width: 100%; 
-    z-index: -1;       
+    max-width: 100%;
+    z-index: -1;
 }
 .spotbie-info-object-image.communityMember{
     position: absolute;
@@ -191,12 +191,15 @@
 .spotbie-info-object-title.fullScreenMode{
     margin-top: 50px;
 }
-
 .spotbie-info-object-image-list{
     position: relative;
     margin: 0 auto;
     margin-top: 15px;
     text-align: center;
+}
+.spotbie-info-object-image-list img{
+  max-width: 100%;
+  max-height: 500px;
 }
 .spotbie-info-object-image-thumb{
     position: relative;
@@ -210,7 +213,7 @@
     min-height: 30vw;
     background-size: cover!important;
     background-position: center!important;
-    border-radius: 5px;     
+    border-radius: 5px;
 }
 .spotbie-search-result-yelp-logo{
     position: relative;
@@ -220,10 +223,10 @@
     max-height: 24px;
     width: 48px;
     min-width: 48px;
-    max-width: 48px;       
+    max-width: 48px;
     background-position: center !important;
     background-repeat: no-repeat !important;
-    background-size: contain !important;      
+    background-size: contain !important;
 }
 .spotbie-yelp-rating-table{
     position: relative;
@@ -250,10 +253,10 @@
     max-height: 24px;
     width: 132px;
     min-width: 132px;
-    max-width: 132px;   
+    max-width: 132px;
     background-position: center !important;
     background-repeat: no-repeat !important;
-    background-size: contain !important;      
+    background-size: contain !important;
 }
 .spotbie-distance{
     position: relative;
@@ -304,7 +307,7 @@
     max-width: 31px;
     margin-right: 15px;
     top: -10px;
-}    
+}
 h6.sb-titleGreen{
     font-size: .8rem;
 }
@@ -349,30 +352,30 @@ h6.sb-titleGreen{
     font-size: .8rem;
     margin-left: 5px;
 }
-@media (max-width: 1583px) { 
+@media (max-width: 1583px) {
 
 }
-@media (max-width: 1300px) { 
+@media (max-width: 1300px) {
 
 }
-@media (max-width: 1200px) {   
+@media (max-width: 1200px) {
 
 }
 @media (max-width: 1169px) {
 
 }
-@media (max-width: 1024px) { 
+@media (max-width: 1024px) {
     .spotbie-communityMemberDescription{
         max-width: 90%;
         width: 90%;
         min-width: 90%;
     }
 }
-@media (max-width: 900px) { 
+@media (max-width: 900px) {
     .sb-input{
         width: 92%;
         min-width: 92%;
-        max-width: 92%;        
+        max-width: 92%;
     }
 }
 @media (max-width: 840px) {
@@ -389,16 +392,16 @@ h6.sb-titleGreen{
         background-position: center!important;
     }
 }
-@media (max-width: 768px) { 
+@media (max-width: 768px) {
 
 }
-@media (max-width: 700px) { 
+@media (max-width: 700px) {
 
 }
-@media (max-width: 600px) { 
-  
+@media (max-width: 600px) {
+
 }
-@media (max-width: 560px) { 
+@media (max-width: 560px) {
     .spotbie-info-object-title {
         font-size: 18px;
         max-width: 90%;
@@ -413,7 +416,7 @@ h6.sb-titleGreen{
     .spotbie-overlay-window{
         padding-top: env(safe-area-inset-top, 20px);
         padding-bottom: 50px !important;
-        background-attachment: scroll !important;  
+        background-attachment: scroll !important;
     }
     .spotbie-share-post-link{
         margin-bottom: 20px !important;
@@ -421,23 +424,23 @@ h6.sb-titleGreen{
     .sb-input{
         width: 92%;
         min-width: 92%;
-        max-width: 92%;        
-    } 
+        max-width: 92%;
+    }
     .spotbie-time-event,
     .spotbie-distance,
     .spotbie-event-code,
     .spotbie-price-ranges,
     .spotbie-venue-name{
         font-size: .9rem;
-    }    
+    }
     .spotbie-communityMemberDescription{
         max-width: 92%;
         font-size: .9rem;
-    } 
+    }
     .sb-miniLogoIcon{
         max-width: 18px;
         margin-right: unset;
-    }  
+    }
     h6.sb-titleGreen{
         font-size: .5rem;
     }
@@ -448,31 +451,31 @@ h6.sb-titleGreen{
         max-width: 90%;
         width: 90%;
         min-width: 90%;
-    }       
+    }
 }
-@media (max-width: 460px) { 
+@media (max-width: 460px) {
     .spotbie-info-object-open{
        font-size: 15px !important;
     }
 }
-@media (max-width: 420px) { 
-  
+@media (max-width: 420px) {
+
 }
-@media (max-width: 375px) { 
-  
+@media (max-width: 375px) {
+
 }
-@media (max-width: 360px) { 
+@media (max-width: 360px) {
 
 }
 @media (max-width: 340px) {
-   
+
 }
 @media (max-width: 320px) {
 
 }
-@media (max-width: 220px) { 
+@media (max-width: 220px) {
 
 }
-@media (max-width: 120px) { 
+@media (max-width: 120px) {
 
 }
