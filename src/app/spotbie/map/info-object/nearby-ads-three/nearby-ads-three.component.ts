@@ -9,19 +9,16 @@ const EDIT_MODE = false
   styleUrls: ['./nearby-ads-three.component.css']
 })
 export class NearbyAdsThreeComponent implements OnInit {
+  @Input() lat: number = null
+  @Input() lng: number = null
+  @Input() accountType: string = null
+  @Input() eventsClassification: number = null
+  @Input() categories: any
 
-  @Input('lat') lat: number = null
-  @Input('lng') lng: number = null
-  @Input('accountType') accountType: number = null
-  @Input('eventsClassification') eventsClassification: number = null
-  @Input('categories') categories: any
-
-  public editMode = EDIT_MODE
-
-  public adList = [new Ad, new Ad, new Ad]
+  public editMode = EDIT_MODE;
+  public adList = [new Ad(), new Ad(), new Ad()];
 
   constructor() { }
 
   ngOnInit(): void {}
-
 }

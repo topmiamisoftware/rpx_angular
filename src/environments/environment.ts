@@ -1,8 +1,8 @@
-// This file can be replaced during build by using the `fileReplacements` array.
-// `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
-// The list of file replacements can be found in `angular.json`.
 const ngrok = 'https://7f1e-2600-1700-4804-d5f0-358c-da77-4ce8-ca41.ngrok.io/'
-const baseUrl = 'https://192.168.1.66:4200/'
+
+const url = window.location.toString();
+const { hostname,protocol }  = new URL(url);
+const baseUrl = `${protocol}//${hostname}:4200/`
 
 export const environment = {
   production: false,
@@ -18,12 +18,5 @@ export const environment = {
   myLocX: 25.786286,
   myLocY: -80.186562
 }
-/*
- * For easier debugging in development mode, you can import the following file
- * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
- *
- * This import should be commented out in production mode because it will have a negative impact
- * on performance if an error is thrown.
- */
 
 import 'zone.js/dist/zone-error'; // Included with Angular CLI.

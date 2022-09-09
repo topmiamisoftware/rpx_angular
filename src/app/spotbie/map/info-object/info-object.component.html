@@ -33,19 +33,15 @@
   <div class='spotbie-info-object-image-list'
        *ngIf="(info_object.type_of_info_object != eInfoObjectType.TicketMaster &&
                     info_object.type_of_info_object != eInfoObjectType.SpotBieCommunity)">
-
     <div class='spotbie-info-object-image-thumb'
          *ngFor="let thumbnail of info_object.photos"
          [ngStyle]="{ 'background' : 'url(' + thumbnail + ')'}"></div>
-
   </div>
 
   <div class='spotbie-info-object-image-list'
-       *ngIf="info_object.type_of_info_object == eInfoObjectType.SpotBieCommunity && ad === undefined">
-
+       *ngIf="info_object.type_of_info_object === eInfoObjectType.SpotBieCommunity && ad === undefined">
     <div class='spotbie-info-object-image-thumb'
          [ngStyle]="{ 'background' : 'url(' + info_object.photo + ')'}"></div>
-
   </div>
 
   <div class='spotbie-info-object-image-list'

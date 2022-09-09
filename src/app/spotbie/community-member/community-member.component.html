@@ -1,9 +1,9 @@
-<app-info-object [info_object]="business" 
+<app-info-object [info_object]="business"
                     [ad]="ad"
                     [lat]="lat"
                     [lng]="lng"
                     [categories]="categories"
-                    [accountType]="accountType"
-                    (closeWindow)="closeWindow()"                    
-                    *ngIf="infoObjectLoaded" 
+                    [accountType]="business.user_type"
+                    (closeWindow)="closeWindow()"
+                    *ngIf="infoObjectLoaded"
                     [fullScreenMode]="fullScreenMode"></app-info-object>
