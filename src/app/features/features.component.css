@@ -3,7 +3,7 @@ h2{
 }
 .sb-readImage{
     position: relative;
-    top: 3px;                
+    top: 3px;
     margin: 0 auto;
     width: 100%;
     min-width: 100%;
@@ -12,7 +12,7 @@ h2{
     min-height: 650px;
     background-position: center !important;
     background-size: cover !important;
-    background-repeat: no-repeat !important;         
+    background-repeat: no-repeat !important;
 }
 .sb-whiteIconBg{
     position: absolute;
@@ -26,7 +26,7 @@ h2{
     background: url(../../assets/images/qr/spotbie-white-icon.png);
     background-position: center !important;
     background-size: cover !important;
-    background-repeat: no-repeat !important;  
+    background-repeat: no-repeat !important;
 }
 .sb-whiteIconBg.right{
     left: unset !important;
@@ -89,9 +89,9 @@ h4::after{
 
 h5{
     position: relative;
-    margin: 0 auto; 
+    margin: 0 auto;
     min-width: 450px;
-    width: 450px;   
+    width: 450px;
     max-width: 450px;
     color: white;
     text-align: center;
@@ -123,7 +123,7 @@ p{
     color: white;
     width: 25%;
     min-width: 25%;
-    font-size: .6rem;
+    font-size: .7rem;
     cursor: pointer;
 }
 .sb-homePageIconsTable img{
@@ -134,7 +134,7 @@ p{
     text-align: center !important;
 }
 h1{
-  font-size: 1.5rem;  
+  font-size: 1.5rem;
 }
 @media (max-width: 840px) {
     p{
@@ -149,13 +149,13 @@ h1{
         font-size: 0.9rem;
         min-width: 90%;
         width: 90%;
-        max-width: 90%;        
+        max-width: 90%;
     }
     .sb-logo-withStreet {
         max-width: 150px!important;
         min-width: 150px!important;
         width: 150px!important;
-    }  
+    }
 }
 @media (max-width: 768px){
     .sb-top-headerImg{
@@ -172,9 +172,9 @@ h1{
     }
     .sb-whiteIconBg{
         display: none;
-    }    
+    }
 }
-@media (max-width: 300px) { 
+@media (max-width: 300px) {
     .sb-homePageIconsTable{
         max-width: 90%;
         min-width: 90%;
@@ -182,7 +182,7 @@ h1{
     }
     .sb-homePageIconsTable img{
         width: 70px;
-        min-width: 70px        
+        min-width: 70px
     }
 }
 

@@ -1,4 +1,4 @@
-const url = window.location.toString();
+const url = location.toString();
 const { hostname,protocol }  = new URL(url);
 const baseUrl = `${protocol}//${hostname}/`
 
