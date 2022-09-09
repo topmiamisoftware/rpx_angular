@@ -1,5 +1,3 @@
-const url = location.toString();
-const { hostname,protocol }  = new URL(url);
 const baseUrl = `https://demo.spotbie.com/`
 
 export const environment = {
