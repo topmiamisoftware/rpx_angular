@@ -2,12 +2,12 @@
     padding-bottom: 50px;
     padding-top: 100px;
     background-color: #1b1822 !important;
-    text-align: center;   
+    text-align: center;
     background: url(src/assets/images/home_imgs/spotbie-white-icon.svg);
     background-size: cover !important;
     background-position: center !important;
     background-repeat: no-repeat !important;
-    background-attachment: fixed;         
+    background-attachment: fixed;
     z-index: 97 !important;
 }
 .sb-adCreatorWrapper{
@@ -40,8 +40,14 @@
     background-position: center !important;
     background-repeat: no-repeat !important;
     background-size: cover !important;
-    cursor: pointer; 
+    cursor: pointer;
     border: 1px solid #e7e7e7;
+}
+
+.spotbie-mobile-ad{
+  position: relative;
+  margin: 0 auto;
+  max-width: 400px;
 }
 
 .fa-exclamation-triangle{
@@ -106,7 +112,7 @@ img.sb-loyalty-points{
 img.sb-loyalty-points:hover{
     width: 15px;
     min-width: 15px;
-    max-width: 15px;  
+    max-width: 15px;
 }
 h5{
     font-size: 1rem;
@@ -124,7 +130,7 @@ h5{
         min-height: 27vh;
         height: 27vh;
         max-height: 27vh;
-    }   
+    }
     .footer-banner{
         min-width: 100%;
         width: 100%;
@@ -132,7 +138,7 @@ h5{
         min-height: 250px;
         height: 250px;
         max-height: 250px;
-    } 
+    }
 }
 @media (max-width: 768px){
     .spotbie-upload-new-background-holder,
@@ -158,13 +164,13 @@ h5{
         min-height: 300px;
         max-height: 300px;
         border-radius: 5px;
-    }    
+    }
     .spotbie-input-info{
         font-size: .8rem;
-    } 
+    }
     .spotbie-upload-new-background-holder{
         border: 1px solid #eeeeee24;
-    }   
+    }
     .spotbie-click-or-drag-upload{
         padding-top: 15px;
         padding-bottom: 15px;
@@ -172,8 +178,8 @@ h5{
         min-width: 100%;
         text-align: center;
         background-color: rgb(0 0 0 / 41%);
-        font-size: 15px;        
-    }   
+        font-size: 15px;
+    }
     .spotbie-r-success-title{
         font-size: 1rem;
     }
@@ -181,7 +187,7 @@ h5{
         width: 92%;
         min-width: 92%;
         max-width: 92%;
-    } 
+    }
 }
 
 @media (width: 340px){

@@ -55,8 +55,6 @@
     position: relative;
     margin: 0 auto;
     max-width: 100%;
-    min-height: 400px;
-    height: 400px;
     max-height: 400px;
     background-repeat: no-repeat!important;
     background-size: contain !important;
@@ -98,9 +96,7 @@
     display: inline-block;
     max-width: 400px;
     min-width: 400px;
-    height: 400px;
     max-height: 400px;
-    min-height: 400px;
     margin-left: 2px;
     margin-right: 2px;
 }
@@ -157,6 +153,8 @@
         width: 100%;
         min-width: 100%;
         max-width: 100%;
+        height: unset;
+        min-height: unset;
     }
     .spotbie-ad-wrapper-header{
         width: 98%;

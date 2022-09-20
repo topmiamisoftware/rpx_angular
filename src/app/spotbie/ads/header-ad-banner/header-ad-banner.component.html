@@ -17,7 +17,7 @@
 
     <img class="spotbie-ad-image" [src]="ad.images_mobile" *ngIf="editMode && ad.id != 2 && !isDesktop" />
 
-    <div class='sb-ad-bottom' *ngIf="isDesktop && business !== null">
+    <div class='sb-ad-bottom' *ngIf="isDesktop && !isMobile && business !== null">
 
         <span class='spotbie-text-gradient sb-sponsoredName text-uppercase'>{{ business.name }}</span>
 
@@ -50,11 +50,11 @@
 
         <span class='spotbie-text-gradient sb-distanceMiles text-uppercase'>{{ distance | number:'1.1-2':'en-US' }} miles</span>
 
-        <span class='sb-text-light-green-gradient sb-perDollar text-uppercase' style="font-size: 1.5rem;" *ngIf="!editMode">
+        <span class='sb-text-light-green-gradient sb-perDollar text-uppercase' style="font-size: 1rem;" *ngIf="!editMode">
             {{ (business.loyalty_point_dollar_percent_value / 100) | currency : 'USD' }} per dollar
         </span>
 
-        <span class='sb-text-light-green-gradient sb-perDollar text-uppercase' style="font-size: 1.5rem;" *ngIf="editMode">
+        <span class='sb-text-light-green-gradient sb-perDollar text-uppercase' style="font-size: 1rem;" *ngIf="editMode">
              {{ (loyaltyPointBalance.loyalty_point_dollar_percent_value / 100) | currency : 'USD' }} per dollar
         </span>
 

@@ -7,6 +7,7 @@
   max-width: 100%;
   min-width: 100%;
   width: 100%;
+  max-height: 600px;
   background-color: #1c1924!important;
   cursor: pointer;
   z-index: 9;
@@ -24,13 +25,18 @@
 }
 .sb-mobileAdWrapper .spotbie-ad-image{
   position: relative;
-  left: 0;
-  right: 0;
-  max-height: 100%;
-  min-width: 100%;
+  max-height: 370px;
   max-width: 100%;
   box-shadow: unset;
 }
+.spotbie-ad-image{
+  position: relative;
+  margin: 0 auto;
+  max-height: 600px;
+  max-width: 100%;
+  box-shadow: unset;
+}
+
 .sb-mobileAdWrapper .sb-categoryList{
   text-align: center;
 }
@@ -86,15 +92,7 @@
 .fa-map-marker-alt{
   font-size: .5rem;
 }
-.spotbie-ad-image{
-  position: relative;
-  left: 0;
-  right: 0;
-  height: auto;
-  width: 100%;
-  max-width: 100%;
-  min-width: 100%;
-}
+
 .spotbie-white-iconImg{
   position: absolute;
   top: 0;
@@ -129,30 +127,7 @@
   font-size: .7rem;
   background-color:rgb(51 47 62 / 60%);
 }
-@media (max-width: 1635px) {
-  .spotbie-ad-wrapper-header{
-    max-width: 72%;
-    min-width: 72%;
-    width: 72%;
-    right: 4%;
-  }
-}
-@media (max-width: 1540px) {
-  .spotbie-ad-wrapper-header{
-    max-width: 68%;
-    min-width: 68%;
-    width: 68%;
-    right: 4%;
-  }
-}
-@media (max-width: 1100px) {
-  .spotbie-ad-wrapper-header{
-    max-width: 55%;
-    min-width: 55%;
-    width: 55%;
-    right: 6%;
-  }
-}
+
 @media (max-width: 1024px) {
   .spotbie-ad-wrapper-header.sb-mobileAdWrapper,
   .spotbie-ad-wrapper-header{
@@ -169,9 +144,6 @@
 @media (max-width: 768px) {
   .sb-mobileAdWrapper .spotbie-ad-image,
   .spotbie-ad-image{
-    position: relative;
-    left: 0;
-    right: 0;
     width: 100%;
     min-width: 100%;
     box-shadow: unset;

@@ -3,13 +3,13 @@
     (click)="openAd()">
 
     <img class="spotbie-ad-image" [src]=" ad.images| safe" *ngIf="!editMode && ad.id != 2" />
-    
+
     <img class="spotbie-ad-image" [src]=" genericAdImage | safe" *ngIf="editMode && ad.id == 2" />
 
     <img class="spotbie-ad-image" [src]=" ad.images | safe" *ngIf="editMode && ad.id != 2" />
 
     <div class='sb-ad-bottom' *ngIf="businessReady && business !== null">
-        
+
         <span class='spotbie-text-gradient sb-sponsoredName text-uppercase'>{{ business.name }}</span>
 
         <br/>
@@ -22,11 +22,11 @@
         </span>
 
         <br/>
-        <span class='sb-text-light-green-gradient sb-perDollar text-uppercase' style="font-size: 1.5rem;" *ngIf="!editMode">
+        <span class='sb-text-light-green-gradient sb-perDollar text-uppercase' style="font-size: 1rem;" *ngIf="!editMode">
             {{ (business.loyalty_point_dollar_percent_value / 100) | currency : 'USD' }} per dollar
         </span>
-        
-        <span class='sb-text-light-green-gradient sb-perDollar text-uppercase' style="font-size: 1.5rem;" *ngIf="editMode">
+
+        <span class='sb-text-light-green-gradient sb-perDollar text-uppercase' style="font-size: 1rem;" *ngIf="editMode">
             {{ (loyaltyPointBalance.loyalty_point_dollar_percent_value / 100) | currency : 'USD' }} per dollar
         </span>
 
@@ -40,8 +40,8 @@
                         [lng]="lng"
                         [accountType]="accountType"
                         [eventsClassification]="eventsClassification"
-                        [categories]="categories"                        
-                        [qrCodeLink]="business.qr_code_link" 
+                        [categories]="categories"
+                        [qrCodeLink]="business.qr_code_link"
                         [editMode]="false"
-                        (closeWindowEvt)="closeRewardMenu()" 
+                        (closeWindowEvt)="closeRewardMenu()"
                         *ngIf="rewardMenuOpen"></app-community-member>

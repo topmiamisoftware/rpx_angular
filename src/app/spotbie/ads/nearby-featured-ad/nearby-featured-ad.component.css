@@ -51,15 +51,7 @@
 .fa-map-marker-alt{
     font-size: .5rem;
 }
-.spotbie-ad-image{
-    position: relative;
-    margin: 0 auto;
-    min-width: 100%;
-    height: auto;
-    background-repeat: no-repeat!important;
-    background-size: contain!important;
-    background-position: center!important;
-}
+
 .spotbie-white-iconImg{
     position: absolute;
     top: 0;
@@ -74,7 +66,7 @@
     background-position: center!important;
     background-repeat: no-repeat!important;
     z-index: 0;
-    pointer-events: none;   
+    pointer-events: none;
 }
 .sb-ad-top{
     position: relative;
@@ -91,10 +83,10 @@
     width: 100%;
     font-size: .6rem;
     padding-top: 20px;
-    background: url(src/assets/images/home_imgs/spotbie-white-icon.svg);    
+    background: url(src/assets/images/home_imgs/spotbie-white-icon.svg);
     background-size: cover!important;
     background-position: center!important;
-    background-repeat: no-repeat!important;    
+    background-repeat: no-repeat!important;
 }
 .sb-perDollarTopAd{
     position: absolute;
@@ -102,7 +94,6 @@
     right: 14px;
     font-size: 1rem;
 }
-
 .spotbie-ad-wrapper-header{
     position: relative;
     display: inline-block;
@@ -112,9 +103,15 @@
     max-height: 400px;
     min-height: 400px;
     margin-left: 20px;
-    margin-right: 20px;     
+    margin-right: 20px;
 }
-
+.spotbie-ad-image{
+  position: relative;
+  margin: 0 auto;
+  min-width: 100%;
+  max-width: 100%;
+  height: auto;
+}
 .sb-sponsored,
 .sb-sponsoredName,
 .sb-perDollar,
@@ -126,8 +123,8 @@
     display: inline-block;
     top: unset;
     right: unset;
-    bottom: unset;        
-}      
+    bottom: unset;
+}
 .sb-sponsored,
 .sb-sponsoredName{
     margin-top: 18px;
@@ -135,23 +132,23 @@
 
 .sb-perDollar
 .sb-categoryList{
-    margin-bottom: 25px;        
-} 
+    margin-bottom: 25px;
+}
 .sb-totalRewards{
     display: block;
-}   
+}
 .sb-distanceMiles{
     display: block;
     margin-top: 10px;
-}      
+}
 .sb-perDollar{
    padding-bottom: 5px;
-} 
+}
 
-@media (max-width: 1100px) { 
+@media (max-width: 1100px) {
 
 }
-@media (max-width: 768px) { 
+@media (max-width: 768px) {
     .spotbie-ad-wrapper-header{
         width: 100%;
         min-width: 100%;

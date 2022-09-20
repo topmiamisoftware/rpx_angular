@@ -1,4 +1,4 @@
-<div [ngClass]="getAdWrapperClass()" 
+<div [ngClass]="getAdWrapperClass()"
     *ngIf="displayAd"
     [ngStyle]="getAdStyle()"
     (click)="openAd()">
@@ -8,17 +8,17 @@
     <img class="spotbie-ad-image" [src]="ad.images | safe" *ngIf="!editMode && isDesktop" />
 
     <img class="spotbie-ad-image" [src]="ad.images_mobile | safe" *ngIf="!editMode && !isDesktop" />
-    
+
     <img class="spotbie-ad-image" [src]="genericAdImage | safe" *ngIf="editMode && ad.id == 2 && isDesktop" />
-    
+
     <img class="spotbie-ad-image" [src]="genericAdImageMobile | safe" *ngIf="editMode && ad.id == 2 && !isDesktop" />
 
     <img class="spotbie-ad-image" [src]="ad.images | safe" *ngIf="editMode && ad.id != 2 && isDesktop" />
 
     <img class="spotbie-ad-image" [src]="ad.images_mobile | safe" *ngIf="editMode && ad.id != 2 && !isDesktop" />
 
-    <div class='sb-ad-bottom' *ngIf="isDesktop && business !== null">
-        
+    <div class='sb-ad-bottom' *ngIf="isDesktop && !isMobile && business !== null">
+
         <span class='spotbie-text-gradient sb-sponsoredName text-uppercase'>{{ business.name }}</span>
 
         <span class='spotbie-text-gradient m-2 mt-0 mb-0'>-</span>
@@ -31,7 +31,7 @@
         <span class='sb-text-light-green-gradient sb-perDollar text-uppercase' *ngIf="!editMode">
             {{ (business.loyalty_point_dollar_percent_value / 100) | currency : 'USD' }} per dollar
         </span>
-        
+
         <span class='spotbie-text-gradient m-2 mt-0 mb-0' *ngIf="editMode">-</span>
         <span class='sb-text-light-green-gradient sb-perDollar text-uppercase' *ngIf="editMode">
              {{ (loyaltyPointBalance.loyalty_point_dollar_percent_value / 100) | currency : 'USD' }} per dollar
@@ -43,18 +43,18 @@
     </div>
 
     <div class='sb-ad-bottom' *ngIf="(!isDesktop || isMobile) && business !== null">
-        
+
         <span class='spotbie-text-gradient sb-sponsoredName text-uppercase'>{{ business.name }}</span>
 
         <span class='sb-text-light-green-gradient sb-totalRewards text-uppercase' style="font-size: 1rem;">{{ totalRewards }} REWARDS</span>
 
         <span class='spotbie-text-gradient sb-distanceMiles text-uppercase'>{{ distance | number:'1.1-2':'en-US' }} miles</span>
 
-        <span class='sb-text-light-green-gradient sb-perDollar text-uppercase' style="font-size: 1.5rem;" *ngIf="!editMode">
+        <span class='sb-text-light-green-gradient sb-perDollar text-uppercase' style="font-size: 1rem;" *ngIf="!editMode">
             {{ (business.loyalty_point_dollar_percent_value / 100) | currency : 'USD' }} per dollar
         </span>
-    
-        <span class='sb-text-light-green-gradient sb-perDollar text-uppercase' style="font-size: 1.5rem;" *ngIf="editMode">
+
+        <span class='sb-text-light-green-gradient sb-perDollar text-uppercase' style="font-size: 1rem;" *ngIf="editMode">
              {{ (loyaltyPointBalance.loyalty_point_dollar_percent_value / 100) | currency : 'USD' }} per dollar
         </span>
 
@@ -70,6 +70,6 @@
                       [lng]="lng"
                       [accountType]="accountType"
                       [categories]="categories"
-                      [qrCodeLink]="business.qr_code_link" 
-                      (closeWindowEvt)="closeRewardMenu()" 
+                      [qrCodeLink]="business.qr_code_link"
+                      (closeWindowEvt)="closeRewardMenu()"
                       *ngIf="communityMemberOpen"></app-community-member>

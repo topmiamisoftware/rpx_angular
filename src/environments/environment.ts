@@ -1,4 +1,4 @@
-const ngrok = 'https://7f1e-2600-1700-4804-d5f0-358c-da77-4ce8-ca41.ngrok.io/'
+const ngrok = 'https://182e-2600-1700-4804-d5f0-f79d-adb-e7d6-a3d5.ngrok.io/'
 
 const url = window.location.toString();
 const { hostname,protocol }  = new URL(url);
