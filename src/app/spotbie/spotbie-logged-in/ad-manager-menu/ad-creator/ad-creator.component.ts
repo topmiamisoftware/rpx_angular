@@ -208,16 +208,18 @@ export class AdCreatorComponent implements OnInit {
   }
 
   private adMediaUploadFinished(httpResponse: any, type: string): void {
-    if (httpResponse.success){
-      console.log('adMediaUploadFinished', httpResponse);
-      if(type === 'desktop'){
+    if (httpResponse.success) {
+      if (type === 'desktop') {
         this.adUploadImage = httpResponse.image
         this.adCreatorForm.get('adImage').setValue(this.adUploadImage)
         this.adApp.updateAdImage(this.adUploadImage)
-      } else if(type === 'mobile'){
+      }
+      if (type === 'mobile' || this.adType === 1) {
         this.adUploadImageMobile = httpResponse.image
         this.adCreatorForm.get('adImageMobile').setValue(this.adUploadImageMobile)
-        this.adAppMobile.updateAdImageMobile(this.adUploadImageMobile)
+        if (this.adAppMobile) {
+          this.adAppMobile.updateAdImageMobile(this.adUploadImageMobile)
+        }
       }
     } else {
       console.log('adMediaUploadFinished', httpResponse);
@@ -232,7 +234,7 @@ export class AdCreatorComponent implements OnInit {
       this.adApp.updateAdImage(this.adUploadImage)
     }
 
-    if(this.adUploadImageMobile !== null){
+    if(this.adUploadImageMobile !== null && this.adAppMobile){
       this.adAppMobile.updateAdImageMobile(this.adUploadImageMobile)
     }
   }
