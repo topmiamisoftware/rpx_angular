@@ -37,23 +37,15 @@ export class AdCreatorComponent implements OnInit {
   @Output() closeThisEvt = new EventEmitter()
   @Output() closeAdCreatorAndRefetchAdListEvt = new EventEmitter()
 
-  public loading: boolean = false
-
+  public loading: boolean
   public adCreatorForm: UntypedFormGroup
-  public adCreatorFormUp: boolean = false
-
-  public adFormSubmitted: boolean = false
-
+  public adCreatorFormUp: boolean
+  public adFormSubmitted: boolean
+  public showErrors: boolean
   public adUploadImage: string = null
   public adUploadImageMobile: string = null
-
-  public adMediaMessage: string = "Upload Image"
-
+  public adMediaMessage: string = 'Upload Image'
   public adMediaUploadProgress: number = 0
-
-  public businessPointsDollarValue: string = '0'
-
-  public dollarValueCalculated: boolean = false
 
   public adTypeList: Array<any> = [
     { name: 'Header Banner ($19.99/monthly)', dimensions: '1200x370', dimensionsMobile: '600x600'},
@@ -61,32 +53,23 @@ export class AdCreatorComponent implements OnInit {
     { name: 'Footer Banner ($16.99)', dimensions: '1200x370', dimensionsMobile: '600x600'}
   ]
 
-  public adCreated: boolean = false
-  public adDeleted: boolean = false
-
+  public adCreated: boolean
+  public adDeleted: boolean
   public loyaltyPointBalance: LoyaltyPointBalance
-
   public selected: number = 0
-
   public business: Business = null
 
   constructor(private formBuilder: UntypedFormBuilder,
               private adCreatorService: AdCreatorService,
               private http: HttpClient,
               private loyaltyPointsService: LoyaltyPointsService) {
-
                 this.loyaltyPointsService.userLoyaltyPoints$.subscribe(
                   loyaltyPointsBalance => {
-
                     this.loyaltyPointBalance = loyaltyPointsBalance
-
-                  }
-                )
-
+                  })
               }
 
   get adType() {return this.adCreatorForm.get('adType').value }
-  get adValue() {return this.adCreatorForm.get('adValue').value }
   get adName() {return this.adCreatorForm.get('adName').value }
   get adDescription() {return this.adCreatorForm.get('adDescription').value }
   get adImage() {return this.adCreatorForm.get('adImage').value }
@@ -94,18 +77,13 @@ export class AdCreatorComponent implements OnInit {
   get f() { return this.adCreatorForm.controls }
 
   public initAdForm(){
-
     const adTypeValidators = [Validators.required]
-    const adValueValidators = [Validators.required]
-
     const adNameValidators = [Validators.required, Validators.maxLength(50)]
     const adDescriptionValidators = [Validators.required, Validators.maxLength(250), Validators.minLength(50)]
-
     const adImageValidators = [Validators.required]
 
     this.adCreatorForm = this.formBuilder.group({
       adType: ['', adTypeValidators],
-      adValue: ['', adValueValidators],
       adName: ['', adNameValidators],
       adDescription: ['', adDescriptionValidators],
       adImage: ['', adImageValidators],
@@ -113,7 +91,6 @@ export class AdCreatorComponent implements OnInit {
     })
 
     if(this.ad !== null && this.ad !== undefined){
-
       this.adCreatorForm.get('adType').setValue(this.ad.type)
       this.adCreatorForm.get('adName').setValue(this.ad.name)
       this.adCreatorForm.get('adDescription').setValue(this.ad.description)
@@ -124,22 +101,19 @@ export class AdCreatorComponent implements OnInit {
       this.adUploadImageMobile = this.ad.images_mobile
 
       this.selected = this.ad.type
-
-    } else
+    } else {
       this.selected = 0
+    }
 
     this.adCreatorFormUp = true
-
     this.loading = false
-
   }
 
   public saveAd(){
-
     this.adFormSubmitted = true
     this.spbTopAnchor.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' })
 
-    let adObj = new Ad()
+    const adObj = new Ad()
     adObj.name = this.adName
     adObj.description = this.adDescription
     adObj.images = this.adUploadImage
@@ -147,50 +121,39 @@ export class AdCreatorComponent implements OnInit {
     adObj.type = this.adType
 
     if(this.ad === null || this.ad === undefined){
-
       this.adCreatorService.saveAd(adObj).subscribe(
         resp =>{
           this.saveAdCb(resp)
-        }
-      )
-
+        })
     } else {
-
       adObj.id = this.ad.id
-
-      this.adCreatorService.updateAd(adObj).subscribe(
-        resp =>{
+      this.adCreatorService.updateAd(adObj).subscribe(resp => {
           this.saveAdCb(resp)
-        }
-      )
-
+        })
     }
-
   }
 
   public saveAdCb(resp: any){
-
     if(resp.success){
-
       this.adCreated = true
-
-      let ad = resp.newAd
+      const ad = resp.newAd
 
       setTimeout(() => {
-
         window.open(`${AD_PAYMENT_URL}${ad.uuid}`, '_blank')
-
         this.closeAdCreatorAndRefetchAdList()
-
       }, 1500)
-
-
     }
-
   }
 
-  public startAdMediaUploader(type: string): void{
-    if(type == 'mobile'){
+  public startAdMediaUploader(type: string): void {
+    console.log('adType', this.adType);
+    if (this.adType === '') {
+      this.spbTopAnchor.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      this.adCreatorForm.get('adType').setErrors({ required: true });
+      this.showErrors = true;
+      return;
+    }
+    if (type === 'mobile') {
       this.adMediaMobileInput.nativeElement.click()
     } else {
       this.adMediaInput.nativeElement.click()
@@ -198,13 +161,12 @@ export class AdCreatorComponent implements OnInit {
   }
 
   public uploadMedia(files, type: string): void {
+    const fileListLength = files.length
 
-    const file_list_length = files.length
-
-    if (file_list_length === 0) {
+    if (fileListLength === 0) {
       this.adMediaMessage = 'Upload at least one image.'
       return
-    } else if (file_list_length > 1) {
+    } else if (fileListLength > 1) {
       this.adMediaMessage = 'Upload only one image.'
       return
     }
@@ -213,77 +175,59 @@ export class AdCreatorComponent implements OnInit {
 
     const formData = new FormData()
 
-    let file_to_upload
-    let upload_size = 0
+    let fileToUpload
+    let uploadSize = 0
 
-    for (let i = 0; i < file_list_length; i++) {
+    for (let i = 0; i < fileListLength; i++) {
+      fileToUpload = files[i] as File
+      uploadSize += fileToUpload.size
 
-      file_to_upload = files[i] as File
-
-      upload_size += file_to_upload.size
-
-      if (upload_size > AD_MEDIA_MAX_UPLOAD_SIZE) {
+      if (uploadSize > AD_MEDIA_MAX_UPLOAD_SIZE) {
         this.adMediaMessage = 'Max upload size is 10MB.'
         this.loading = false
         return
       }
-
-      formData.append('image', file_to_upload, file_to_upload.name)
-
+      formData.append('image', fileToUpload, fileToUpload.name)
     }
 
-    let token = localStorage.getItem('spotbiecom_session')
-
+    const token = localStorage.getItem('spotbiecom_session')
     this.http.post(AD_MEDIA_UPLOAD_API_URL, formData,
-                    {
-                      reportProgress: true,
-                      observe: 'events',
-                      withCredentials: true, headers: {
-                        'Authorization' : `Bearer ${token}`
-                      }
-                    }
-                  ).subscribe(event => {
-
-      if (event.type === HttpEventType.UploadProgress)
-        this.adMediaUploadProgress = Math.round(100 * event.loaded / event.total)
-      else if (event.type === HttpEventType.Response){
-        this.adMediaUploadFinished(event.body, type)
-      }
-
-
-    })
-
+        {
+          reportProgress: true,
+          observe: 'events',
+          withCredentials: true, headers: {
+            'Authorization' : `Bearer ${token}`
+          }}).subscribe(event => {
+            if (event.type === HttpEventType.UploadProgress) {
+              this.adMediaUploadProgress = Math.round(100 * event.loaded / event.total)
+            } else if (event.type === HttpEventType.Response){
+              this.adMediaUploadFinished(event.body, type)
+            }
+          });
     return
-
   }
 
   private adMediaUploadFinished(httpResponse: any, type: string): void {
-
     if (httpResponse.success){
-
-      if(type == 'desktop'){
-
+      console.log('adMediaUploadFinished', httpResponse);
+      if(type === 'desktop'){
         this.adUploadImage = httpResponse.image
         this.adCreatorForm.get('adImage').setValue(this.adUploadImage)
         this.adApp.updateAdImage(this.adUploadImage)
-
-      } else if(type == 'mobile'){
-
+      } else if(type === 'mobile'){
         this.adUploadImageMobile = httpResponse.image
         this.adCreatorForm.get('adImageMobile').setValue(this.adUploadImageMobile)
         this.adAppMobile.updateAdImageMobile(this.adUploadImageMobile)
-
       }
-
-    } else
-      console.log('adMediaUploadFinished', httpResponse)
-
-    this.loading = false
-
+    } else {
+      console.log('adMediaUploadFinished', httpResponse);
+    }
+    this.loading = false;
   }
 
   public adTypeChange(){
-
+    this.adCreatorForm.get('adType').setErrors(null);
+    this.showErrors = false;
     if(this.adUploadImage !== null) {
       this.adApp.updateAdImage(this.adUploadImage)
     }
@@ -291,7 +235,6 @@ export class AdCreatorComponent implements OnInit {
     if(this.adUploadImageMobile !== null){
       this.adAppMobile.updateAdImageMobile(this.adUploadImageMobile)
     }
-
   }
 
   public closeThis(){
@@ -307,61 +250,41 @@ export class AdCreatorComponent implements OnInit {
   }
 
   public deleteMe(){
-
-    let r = confirm('Are you sure you want to delete this Ad?')
+    const r = confirm('Are you sure you want to delete this Ad?')
 
     if(r){
       this.adCreatorService.deleteMe(this.ad).subscribe(
         resp => {
           this.deleteMeCb(resp)
-        }
-      )
+        })
     }
-
   }
 
   private deleteMeCb(resp){
-
-    if(resp.success){
-
+    if(resp.success) {
       this.adDeleted = true
       setTimeout(() => {
         this.closeAdCreatorAndRefetchAdList()
       }, 1500)
-
     }
-
   }
 
   public adFormatClass(){
-
     switch(this.adType){
-
       case 0:
         return 'header-banner'
-
       case 1:
         return 'related-nearby-box'
-
       case 2:
         return 'footer-banner'
-
     }
-
   }
 
   public activateAdMembership(){
-
-    let paymentUrl = `${AD_PAYMENT_URL}${this.ad.uuid}`
-
-    window.open(paymentUrl, '_blank')
-
+    window.open(`${AD_PAYMENT_URL}${this.ad.uuid}`, '_blank')
   }
 
   ngOnInit(): void {
-
     this.initAdForm()
-
   }
-
 }

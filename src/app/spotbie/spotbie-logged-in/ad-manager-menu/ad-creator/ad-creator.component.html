@@ -22,13 +22,11 @@
 
             <div class='spotbie-text-gradient text-uppercase text-center' #spbInputInfo></div>
 
-            <div *ngIf="adFormSubmitted && f.adType.errors else adTypeTemplate"
+            <div *ngIf="(adFormSubmitted || showErrors) && f.adType.errors else adTypeTemplate"
                   class="spotbie-input-info spotbie-text-gradient spotbie-error mt-4 mb-2">
-
                 <div *ngIf="f.adType.errors.required">
                     You must pick a promotion type!
                 </div>
-
             </div>
 
             <ng-template #adTypeTemplate>

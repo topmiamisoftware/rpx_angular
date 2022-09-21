@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import { AdsService } from '../ads.service';
 import { Business } from 'src/app/models/business';
 import { getDistanceFromLatLngInMiles } from 'src/app/helpers/measure-units.helper';
@@ -26,7 +26,7 @@ const HEADER_TIMER_INTERVAL = 16000
   templateUrl: './header-ad-banner.component.html',
   styleUrls: ['./header-ad-banner.component.css']
 })
-export class HeaderAdBannerComponent implements OnInit {
+export class HeaderAdBannerComponent implements OnInit, OnDestroy {
 
   @Input() lat: number
   @Input() lng: number
@@ -36,79 +36,55 @@ export class HeaderAdBannerComponent implements OnInit {
   @Input() categories: number
   @Input() editMode: boolean = false
   @Input() eventsClassification: number = null
-
   @Input() isMobile: boolean = false
 
   public isDesktop: boolean = false
-
   public link: string
-
   public displayAd: boolean = false
-
-  public whiteIconSvg = 'assets/images/home_imgs/spotbie-white-icon.svg'
-
   public distance: number = 0
-
   public totalRewards: number = 0
-
   public categoriesListFriendly: string[] = []
-
-  public adIsOpen: boolean = false
-
   public communityMemberOpen: boolean = false
-
   public currentCategoryList: Array<string> = []
-
   public categoryListForUi: string = null
-
   public loyaltyPointBalance: LoyaltyPointBalance
-
-  public adTypeWithId: boolean = false
-
   public genericAdImage: string = PLACE_TO_EAT_AD_IMAGE
   public genericAdImageMobile: string = PLACE_TO_EAT_AD_IMAGE_MOBILE
-
   public switchAdInterval: any = false
-  
+
   constructor(private adsService: AdsService,
               private deviceDetectorService: DeviceDetectorService,
-              private loyaltyPointsService: LoyaltyPointsService) { 
-                
+              private loyaltyPointsService: LoyaltyPointsService) {
                 this.loyaltyPointsService.userLoyaltyPoints$.subscribe(
                   loyaltyPointsBalance => {
                     this.loyaltyPointBalance = loyaltyPointsBalance
-                  }
-                )
-
+                  })
               }
-              
+
   public getHeaderBanner(){
-
     let adId = null
-    let accountType 
+    let accountType
 
-    //Stop the service if there's a window on top of the ad component.    
-    let needleElement = document.getElementsByClassName('sb-closeButton')
-  
+    // Stop the service if there's a window on top of the ad component.
+    const needleElement = document.getElementsByClassName('sb-closeButton')
+
     if(needleElement.length > 0){
-      //There's a componenet on top of the bottom header.
-      return//bounce this request
+      // There's a componenet on top of the bottom header.
+      return
     }
 
-    if(this.editMode){
-      
-      if(this.ad == null){
-        
+    if(this.editMode) {
+      if(this.ad == null) {
         this.ad = new Ad()
         this.ad.id = 2
         adId = this.ad.id
+      } else {
+        adId = this.ad.id
+      }
 
-      } else adId = this.ad.id
-
-      accountType = parseInt(localStorage.getItem('spotbie_userType'))
+      accountType = parseInt(localStorage.getItem('spotbie_userType'), 10)
 
       switch(accountType){
-
         case 1:
           this.genericAdImage = PLACE_TO_EAT_AD_IMAGE
           this.genericAdImageMobile = PLACE_TO_EAT_AD_IMAGE_MOBILE
@@ -121,12 +97,9 @@ export class HeaderAdBannerComponent implements OnInit {
           this.genericAdImage = EVENTS_AD_IMAGE
           this.genericAdImageMobile = EVENTS_AD_IMAGE_MOBILE
           this.categories = this.eventsClassification
-          break  
-          
+          break;
       }
-
     } else {
-
       switch(this.accountType){
         case 'food':
           accountType = 1
@@ -143,9 +116,8 @@ export class HeaderAdBannerComponent implements OnInit {
           this.genericAdImage = EVENTS_AD_IMAGE
           this.genericAdImageMobile = EVENTS_AD_IMAGE_MOBILE
           this.categories = this.eventsClassification
-          break                          
+          break
       }
-
     }
 
     const headerBannerReqObj = {
@@ -155,50 +127,39 @@ export class HeaderAdBannerComponent implements OnInit {
       id: adId,
       account_type: accountType
     }
-    
-    //Retrieve the SpotBie Ads
+
+    // Retrieve the SpotBie Ads
     this.adsService.getHeaderBanner(headerBannerReqObj).subscribe(
       resp => {
         this.getHeaderBannerAdCallback(resp)
-      }
-    )
-
+      })
   }
 
   public async getHeaderBannerAdCallback(resp: any){
-
-    if(resp.success){
-
-      this.ad = resp.ad      
+    if(resp.success) {
+      this.ad = resp.ad
       this.business = resp.business
 
-      if(!this.editMode && resp.business !== null){
-        
+      if(!this.editMode && resp.business !== null) {
         switch(this.business.user_type){
-
           case AllowedAccountTypes.PlaceToEat:
-            this.currentCategoryList = FOOD_CATEGORIES          
+            this.currentCategoryList = FOOD_CATEGORIES
             break
-  
           case AllowedAccountTypes.Events:
-            this.currentCategoryList = EVENT_CATEGORIES          
+            this.currentCategoryList = EVENT_CATEGORIES
             break
-  
           case AllowedAccountTypes.Shopping:
-            this.currentCategoryList = SHOPPING_CATEGORIES          
-            break     
-            
+            this.currentCategoryList = SHOPPING_CATEGORIES
+            break
         }
 
         this.categoriesListFriendly = []
 
-        this.currentCategoryList.reduce((previousValue: string, currentValue: string, currentIndex: number, array: string[]) => {        
-         
+        this.currentCategoryList.reduce((previousValue: string, currentValue: string, currentIndex: number, array: string[]) => {
+
           if(resp.business.categories.indexOf(currentIndex) > -1)
             this.categoriesListFriendly.push(this.currentCategoryList[currentIndex])
-                  
           return currentValue
-
         })
 
         this.business.is_community_member = true
@@ -208,44 +169,36 @@ export class HeaderAdBannerComponent implements OnInit {
           this.distance = getDistanceFromLatLngInMiles(this.business.loc_x, this.business.loc_y, this.lat, this.lng)
         else
           this.distance = 5
-
       }
 
       this.displayAd = true
-
       this.totalRewards = resp.totalRewards
-
-      if(resp.business !== null){
-
-      }
-
     } else
-      console.log("getHeaderBannerAdCallback", resp)
+      console.log('getHeaderBannerAdCallback', resp)
 
     if(!this.switchAdInterval){
       this.switchAdInterval = setInterval( () => {
         if(!this.editMode) this.getHeaderBanner()
-      }, HEADER_TIMER_INTERVAL)      
+      }, HEADER_TIMER_INTERVAL)
     }
-    
   }
 
-  public getAdStyle(){    
+  public getAdStyle(){
     if(this.editMode) {
-      return { 
-        'position' : 'relative',
-        'margin' : '0 auto',
-        'right': '0'
-      }    
+      return {
+        position : 'relative',
+        margin : '0 auto',
+        right: '0'
+      }
     }
   }
 
   public closeRewardMenu(){
-    this.communityMemberOpen = false    
+    this.communityMemberOpen = false
   }
 
   public clickGoToSponsored(){
-    window.open("/business", '_blank')
+    window.open('/business', '_blank')
   }
 
   public switchAd(){
@@ -253,26 +206,26 @@ export class HeaderAdBannerComponent implements OnInit {
     this.categoryListForUi = null
     this.getHeaderBanner()
   }
-    
-  public openAd(): void{    
+
+  public openAd(): void{
     if(this.business != null){
       this.communityMemberOpen = true
     } else {
-      window.open("/business", '_blank')
+      window.open('/business', '_blank')
     }
   }
 
   public updateAdImage(image: string = ''){
-    if(image != ''){
+    if(image !== '') {
       this.ad.images = image
       this.genericAdImage = image
     }
   }
 
-  public updateAdImageMobile(image_mobile: string){
-    if(image_mobile != ''){
-      this.ad.images_mobile = image_mobile
-      this.genericAdImageMobile = image_mobile
+  public updateAdImageMobile(image: string){
+    if(image !== ''){
+      this.ad.images_mobile = image
+      this.genericAdImageMobile = image
     }
   }
 
@@ -284,16 +237,20 @@ export class HeaderAdBannerComponent implements OnInit {
   ngOnInit(): void {}
 
   ngAfterViewInit(): void {
-    //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
-    //Add 'implements AfterViewInit' to the class.
+    // Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
+    // Add 'implements AfterViewInit' to the class.
     this.isDesktop = this.deviceDetectorService.isDesktop()
-    if(this.isMobile == false) this.isMobile = ( this.deviceDetectorService.isMobile() || this.deviceDetectorService.isTablet() )
+    if(this.isMobile === false){
+      this.isMobile = ( this.deviceDetectorService.isMobile() || this.deviceDetectorService.isTablet() )
+    } else {
+        this.isDesktop = false;
+    }
     this.getHeaderBanner()
   }
 
   ngOnDestroy(): void {
-    //Called once, before the instance is destroyed.
-    //Add 'implements OnDestroy' to the class.
+    // Called once, before the instance is destroyed.
+    // Add 'implements OnDestroy' to the class.
     clearInterval(this.switchAdInterval)
     this.switchAdInterval = false
   }

@@ -1,9 +1,6 @@
 <div class="wrapper">
-
     <!-- Check if user has any pending steps to start using their account -->
-    
     <div class="sb-dashboardWrapper">
-
         <h6 class='sb-text-light-green-gradient mb-3'>GET WHAT YOU WANT</h6>
 
         <div class='sb-optionGet' (click)="spawnCategories('food')">
@@ -14,46 +11,40 @@
         <div class='sb-optionGet' (click)="spawnCategories('events')">
             <img src="assets/images/home_imgs/find-events.svg" /><br/>
             <span class='spotbie-text-gradient'>EVENTS</span>
-        </div>  
+        </div>
 
         <div class='sb-optionGet' (click)="spawnCategories('shopping')">
             <img src="assets/images/home_imgs/find-places-for-shopping.svg" /><br/>
             <span class='spotbie-text-gradient'>RETAIL</span>
-        </div>                        
-
+        </div>
     </div>
 
     <div class="sb-dashboardWrapper" #qrCodeAppAnchor>
-        
         <img src="assets/images/spotbie-qr.svg" class="sb-qrImage" (click)="startQrScanner()" />
 
         <div class="spotbie-button" (click)="startQrScanner()">
             <i class="fas fa-qrcode" style="margin-right: 5px;"></i>
             <span class="spotbie-text-gradient">SCAN NOW</span>
         </div>
-        
-        <app-qr [fullScreenWindow]="false" 
-                *ngIf="scannerStarted" 
+
+        <app-qr [fullScreenWindow]="false"
+                *ngIf="scannerStarted"
                 (openLoyaltyPoints)="openLoyaltyPoints()"
-                (openUserLPBalanceEvt)="openLoyaltyPoints()" 
+                (openUserLPBalanceEvt)="openLoyaltyPoints()"
                 (closeQrUserEvt)="closeQrScanner()"
                 #qrApp>
         </app-qr>
-
-    </div>    
+    </div>
 
     <div class="sb-dashboardWrapper" #lpAppAnchor>
         <app-loyalty-points [fullScreenWindow]="false" (openRedeemed)="redeemedLp()" #loyaltyPointsApp></app-loyalty-points>
     </div>
 
     <app-redeemable *ngIf="getRedeemableItems" (closeWindowEvt)="closeRedeemables()"></app-redeemable>
-
 </div>
 
 <div class="sb-footer pt-5 pb-5">
-
     <p [routerLink]="['/terms']">Terms & Privacy Policy</p>
     <img class="mt-3 mb-3" src="assets/images/logo_spotbie_green.svg" />
-    <p [routerLink]="['/terms']">SpotBie, LLC.&copy; Copyright 2021</p>
-
+    <p [routerLink]="['/terms']">SpotBie, LLC.&copy; Copyright 2022</p>
 </div>

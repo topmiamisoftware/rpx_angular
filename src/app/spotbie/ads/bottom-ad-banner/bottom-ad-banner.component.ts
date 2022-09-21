@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { AllowedAccountTypes } from 'src/app/helpers/enum/account-type.enum';
@@ -27,7 +27,7 @@ const BOTTOM_BANNER_TIMER_INTERVAL = 16000
   templateUrl: './bottom-ad-banner.component.html',
   styleUrls: ['./bottom-ad-banner.component.css']
 })
-export class BottomAdBannerComponent implements OnInit {
+export class BottomAdBannerComponent implements OnInit, OnDestroy {
 
   @Input() lat: number
   @Input() lng: number
@@ -37,77 +37,53 @@ export class BottomAdBannerComponent implements OnInit {
   @Input() categories: number
   @Input() editMode: boolean = false
   @Input() eventsClassification: number = null
-
   @Input() isMobile: boolean = false
 
   public isDesktop: boolean = false
-
   public link: string
-
   public displayAd: boolean = false
-
-  public whiteIconSvg = 'assets/images/home_imgs/spotbie-white-icon.svg'
-
   public distance: number = 0
-
   public totalRewards: number = 0
-
   public categoriesListFriendly: string[] = []
-
-  public adIsOpen: boolean = false
-
-  public communityMemberOpen: boolean = false  
-
+  public communityMemberOpen: boolean = false
   public currentCategoryList: Array<string> = []
-
   public categoryListForUi: string = null
-
   public loyaltyPointBalance: LoyaltyPointBalance
-
-  public adTypeWithId: boolean = false
-
   public genericAdImage: string = PLACE_TO_EAT_AD_IMAGE
   public genericAdImageMobile: string = PLACE_TO_EAT_AD_IMAGE_MOBILE
-
   public switchAdInterval: any = false
 
   constructor(private adsService: AdsService,
               private deviceDetectorService: DeviceDetectorService,
-              private loyaltyPointsService: LoyaltyPointsService,
-              private router: Router) { 
-                
+              private loyaltyPointsService: LoyaltyPointsService) {
                 this.loyaltyPointsService.userLoyaltyPoints$.subscribe(
                   loyaltyPointsBalance => {
                     this.loyaltyPointBalance = loyaltyPointsBalance
-                  }
-                )
-
+                  })
               }
 
   public getBottomHeader(){
-    
     let adId = null
     let accountType
 
-    //Stop the service if there's a window on top of the ad component.    
-    let needleElement = document.getElementsByClassName('sb-closeButton')
-      
+    // Stop the service if there's a window on top of the ad component.
+    const needleElement = document.getElementsByClassName('sb-closeButton')
+
     if(needleElement.length > 0){
-      //There's a componenet on top of the bottom header.
-      return//bounce this request
+      // There's a componenet on top of the bottom header.
+      return
     }
 
-    if(this.editMode){
-      
-      if(this.ad == null){
-        
+    if(this.editMode) {
+      if(this.ad == null) {
         this.ad = new Ad()
         this.ad.id = 2
         adId = this.ad.id
+      } else {
+        adId = this.ad.id
+      }
 
-      } else adId = this.ad.id
-
-      accountType = parseInt(localStorage.getItem('spotbie_userType'))
+      accountType = parseInt(localStorage.getItem('spotbie_userType'), 10);
 
       switch(accountType){
         case 1:
@@ -122,13 +98,11 @@ export class BottomAdBannerComponent implements OnInit {
           this.genericAdImage = EVENTS_AD_IMAGE
           this.genericAdImageMobile = EVENTS_AD_IMAGE_MOBILE
           this.categories = this.eventsClassification
-          break  
+          break
       }
-
     } else {
 
       switch(this.accountType){
-
         case 'food':
           accountType = 1
           this.genericAdImage = PLACE_TO_EAT_AD_IMAGE
@@ -144,13 +118,11 @@ export class BottomAdBannerComponent implements OnInit {
           this.genericAdImage = EVENTS_AD_IMAGE
           this.genericAdImageMobile = EVENTS_AD_IMAGE_MOBILE
           this.categories = this.eventsClassification
-          break                          
-        
+          break
       }
-
     }
 
-    let searchObjSb = {      
+    let searchObjSb = {
       loc_x: this.lat,
       loc_y: this.lng,
       categories: this.categories,
@@ -158,164 +130,141 @@ export class BottomAdBannerComponent implements OnInit {
       account_type: accountType
     }
 
-    //Retrieve the SpotBie Ads
+    // Retrieve the SpotBie Ads
     this.adsService.getBottomHeader(searchObjSb).subscribe(
       resp => {
-        this.getBottomHeaderCb(resp)             
-      }
-    )
-    
+        this.getBottomHeaderCb(resp)
+      })
   }
 
   public getAdStyle(){
-    
     if(this.editMode) {
-
-      return { 
+      return {
         'position' : 'relative',
         'margin' : '0 auto',
         'right': '0'
       }
-    
     }
-
   }
 
   public getAdWrapperClass(){
-    
     if(!this.isMobile) return 'spotbie-ad-wrapper-header'
-
     if(this.isMobile) return 'spotbie-ad-wrapper-header sb-mobileAdWrapper'
-
   }
 
   public async getBottomHeaderCb(resp: any){
-    
-    if(resp.success){
-
+    if(resp.success) {
       this.ad = resp.ad
-      
-      if(this.editMode) this.ad.name = "Harry's"
+
+      if (this.editMode) {
+        this.ad.name = 'Harry\'s'
+      }
 
       this.business = resp.business
 
-      if(!this.editMode && this.business !== null){
-
-        switch(this.business.user_type){
-
+      if (!this.editMode && this.business !== null) {
+        switch(this.business.user_type) {
           case AllowedAccountTypes.PlaceToEat:
-            this.currentCategoryList = FOOD_CATEGORIES          
+            this.currentCategoryList = FOOD_CATEGORIES
             break
-  
           case AllowedAccountTypes.Events:
-            this.currentCategoryList = EVENT_CATEGORIES          
+            this.currentCategoryList = EVENT_CATEGORIES
             break
-  
           case AllowedAccountTypes.Shopping:
-            this.currentCategoryList = SHOPPING_CATEGORIES          
-            break            
+            this.currentCategoryList = SHOPPING_CATEGORIES
+            break
         }
-        
+
         this.categoriesListFriendly = []
 
         await this.currentCategoryList.reduce((previousValue: string, currentValue: string, currentIndex: number, array: string[]) => {
-          
-          if(resp.business.categories.indexOf(currentIndex) > -1)
-            this.categoriesListFriendly.push(this.currentCategoryList[currentIndex])          
-          
-          return currentValue
-  
-        })
-        
+          if(resp.business.categories.indexOf(currentIndex) > -1) {
+            this.categoriesListFriendly.push(this.currentCategoryList[currentIndex]);
+          }
+          return currentValue;
+        });
       }
-      
-      if(this.business !== null){
 
+      if(this.business !== null){
         this.business.is_community_member = true
         this.business.type_of_info_object = InfoObjectType.SpotBieCommunity
 
         this.totalRewards = resp.totalRewards
 
-        if(!this.editMode)
+        if(!this.editMode) {
           this.distance = getDistanceFromLatLngInMiles(this.business.loc_x, this.business.loc_y, this.lat, this.lng)
-        else
-          this.distance = 5     
-           
+        } else {
+          this.distance = 5;
+        }
       }
 
-      this.displayAd = true      
+      this.displayAd = true
+    } else {
+      console.log('getSingleAdListCb', resp)
 
-    } else
-      console.log("getSingleAdListCb", resp)
-
-    if(!this.switchAdInterval){
-      this.switchAdInterval = setInterval(()=>{
-        if(!this.editMode) this.getBottomHeader()
-      }, BOTTOM_BANNER_TIMER_INTERVAL) 
+      if (!this.switchAdInterval) {
+        this.switchAdInterval = setInterval(() => {
+          if (!this.editMode) this.getBottomHeader()
+        }, BOTTOM_BANNER_TIMER_INTERVAL)
+      }
     }
   }
 
   public spotbieAdWrapperStyles(){
-    
     if(this.editMode) return { 'margin-top' : '45px' }
-
   }
 
   public openAd(): void{
-    
-    if(this.business != null)
+    if(this.business != null) {
       this.communityMemberOpen = true
-    else
-      window.open("/business", '_blank')
-    
-    //this.router.navigate([`/business-menu/${this.business.qr_code_link}`])    
+    } else {
+      window.open('/business', '_blank')
+    }
+    // this.router.navigate([`/business-menu/${this.business.qr_code_link}`])
   }
 
   public closeRewardMenu(){
-    this.communityMemberOpen = false    
+    this.communityMemberOpen = false
   }
-  
-  public switchAd(){
+
+  public switchAd() {
     this.categoriesListFriendly = []
     this.categoryListForUi = null
     this.getBottomHeader()
   }
 
-  public clickGoToSponsored(){
-    window.open("/business", '_blank')
+  public clickGoToSponsored() {
+    window.open('/business', '_blank')
   }
 
   public updateAdImage(image: string = ''){
-  
-    if(image != ''){
+    if(image !== '') {
       this.ad.images = image
       this.genericAdImage = image
     }
-  
   }
 
-  public updateAdImageMobile(image_mobile: string){
-  
-    if(image_mobile != ''){
-      this.ad.images_mobile = image_mobile
-      this.genericAdImageMobile = image_mobile
+  public updateAdImageMobile(image: string){
+    if(image !== ''){
+      this.ad.images_mobile = image
+      this.genericAdImageMobile = image
     }
-  
   }
 
   ngOnInit(): void {
-
     this.isDesktop = this.deviceDetectorService.isDesktop()
-    if(this.isMobile == false) this.isMobile = ( this.deviceDetectorService.isMobile() || this.deviceDetectorService.isTablet() )
+    if(this.isMobile === false) {
+      this.isMobile = this.deviceDetectorService.isMobile() || this.deviceDetectorService.isTablet();
+    } else {
+      this.isDesktop = false;
+    }
     this.getBottomHeader()
-  
   }
 
   ngOnDestroy(): void {
-    //Called once, before the instance is destroyed.
-    //Add 'implements OnDestroy' to the class.    
+    // Called once, before the instance is destroyed.
+    // Add 'implements OnDestroy' to the class.
     clearInterval(this.switchAdInterval)
     this.switchAdInterval = false
   }
-
 }

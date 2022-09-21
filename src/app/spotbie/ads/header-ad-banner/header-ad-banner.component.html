@@ -6,19 +6,15 @@
     <div class="spotbie-white-iconImg" [ngStyle]="{'background' : 'url(assets/images/qr/spotbie-white-icon.png)'}"></div>
 
     <img class="spotbie-ad-image" [src]="ad.images" *ngIf="!editMode && isDesktop" />
-
     <img class="spotbie-ad-image" [src]="ad.images_mobile" *ngIf="!editMode && !isDesktop" />
 
     <img class="spotbie-ad-image" [src]="genericAdImage" *ngIf="editMode && ad.id == 2 && isDesktop" />
-
     <img class="spotbie-ad-image" [src]="genericAdImageMobile" *ngIf="editMode && ad.id == 2 && !isDesktop" />
 
     <img class="spotbie-ad-image" [src]="ad.images" *ngIf="editMode && ad.id != 2 && isDesktop" />
-
     <img class="spotbie-ad-image" [src]="ad.images_mobile" *ngIf="editMode && ad.id != 2 && !isDesktop" />
 
     <div class='sb-ad-bottom' *ngIf="isDesktop && !isMobile && business !== null">
-
         <span class='spotbie-text-gradient sb-sponsoredName text-uppercase'>{{ business.name }}</span>
 
         <span class='spotbie-text-gradient m-2 mt-0 mb-0'>-</span>
@@ -39,15 +35,11 @@
 
         <span class='spotbie-text-gradient m-2 mt-0 mb-0'>-</span>
         <span class='spotbie-text-gradient sb-address text-uppercase'><i class='fas fa-map-marker-alt'></i> {{ business.address }}</span>
-
     </div>
 
     <div class='sb-ad-bottom' *ngIf="(!isDesktop || isMobile) && business !== null">
-
         <span class='spotbie-text-gradient sb-sponsoredName text-uppercase'>{{ business.name }}</span>
-
         <span class='sb-text-light-green-gradient sb-totalRewards text-uppercase' style="font-size: 1rem;">{{ totalRewards }} REWARDS</span>
-
         <span class='spotbie-text-gradient sb-distanceMiles text-uppercase'>{{ distance | number:'1.1-2':'en-US' }} miles</span>
 
         <span class='sb-text-light-green-gradient sb-perDollar text-uppercase' style="font-size: 1rem;" *ngIf="!editMode">
@@ -59,9 +51,7 @@
         </span>
 
         <span class='spotbie-text-gradient sb-address text-uppercase'><i class='fas fa-map-marker-alt'></i> {{ business.address }}</span>
-
     </div>
-
 </div>
 
 <app-community-member [business]="business"
