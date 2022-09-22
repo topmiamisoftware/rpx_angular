@@ -1,24 +1,23 @@
 <table class="spotbie-el-100
               spotbie-menu
-              spotbie-menu-fixed"        
+              spotbie-menu-fixed"
         #spotbieMainMenu>
-  <tr>    
-  
+  <tr>
     <td class="sb-menu-nav" (click)="slideMenu()" *ngIf="!isDesktop">
       <i class="fa fa-bars" *ngIf="!menuActive"></i>
       <i class="fa fa-times" *ngIf="menuActive"></i>
-    </td>  
-  
+    </td>
+
     <td style="width: 25%;">
-      <img class="spotbie-header-mini-logo" (click)="home()" src="assets/images/spotbie_logo_header.svg" /> 
-    </td>   
-    
+      <img class="spotbie-header-mini-logo" (click)="home()" src="assets/images/spotbie_logo_header.svg" />
+    </td>
+
     <td *ngIf="isDesktop" class="sb-desktopNavBar" style="text-align: right; cursor: default;">
 
       <span (click)="home()">
         HOME
       </span>
-      
+
       <span (click)="spawnCategories('food', false)">
         PLACES TO EAT
       </span>
@@ -42,23 +41,19 @@
       <span (click)="goToBusiness()" *ngIf="!business">
         <i class="fa fa-business-time"></i> BUSINESS
       </span>
-
     </td>
-
   </tr>
 </table>
 
 <div class="spotbie-slider-menu-background" *ngIf="menuActive">
-
   <table class="spotbie-slider-menu
                 animated slideInLeft">
-    <tr>      
+    <tr>
       <td>
-
         <div (click)="home()">
           HOME
         </div>
-        
+
         <div (click)="spawnCategories('food')">
           PLACES TO EAT <i class="fa fa-angle-right"></i>
         </div>
@@ -70,7 +65,7 @@
         <div (click)="spawnCategories('events')">
           EVENTS <i class="fa fa-angle-right"></i>
         </div>
-        
+
         <div (click)="openWindow(signUpWindow)">
           SIGN UP
         </div>
@@ -82,13 +77,11 @@
         <div (click)="goToBlog()" *ngIf="!business">
           BUSINESS PLATFORM
         </div>
-
       </td>
     </tr>
   </table>
-
 </div>
 
-<app-log-in *ngIf="logInWindow.open" (openWindow)="openWindow($event)" (closeWindow)="closeWindow($event)"></app-log-in>
+<app-log-in *ngIf="logInWindow.open"></app-log-in>
 
-<app-sign-up *ngIf="signUpWindow.open" [window_obj]="signUpWindow" (closeWindow)="closeWindow($event)" (logInEvent)="logIn()"></app-sign-up>
+<app-sign-up *ngIf="signUpWindow.open" [windowObj]="signUpWindow" (closeWindow)="closeWindow($event)" (logInEvent)="logIn()"></app-sign-up>

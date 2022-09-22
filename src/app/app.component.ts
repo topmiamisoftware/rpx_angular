@@ -15,19 +15,16 @@ const SPOTBIE_META_IMAGE = spotbieMetaImage
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  
+
   title = 'spotbie';
-
   public testMode: boolean = false
-
   public displayTestModeOptions: boolean = false
-
   public lat: number = null
   public lng: number = null
 
-  constructor(private versionCheckService : VersionCheckService, 
+  constructor(private versionCheckService : VersionCheckService,
               private spotbieMetaService: SpotbieMetaService) {}
-  
+
   @HostListener('window:load', [])
   onWindowLoaded() {
     this.versionCheckService.initVersionCheck(environment.versionCheckURL);
@@ -46,19 +43,14 @@ export class AppComponent {
   }
 
   ngOnInit(){
-
     if(environment.staging){
-    
       this.testMode = true
       this.lat = environment.myLocX
       this.lng = environment.myLocY
-
     }
 
     this.spotbieMetaService.setTitle(SPOTBIE_META_TITLE)
     this.spotbieMetaService.setDescription(SPOTBIE_META_DESCRIPTION)
     this.spotbieMetaService.setImage(SPOTBIE_META_IMAGE)
-
   }
-
 }

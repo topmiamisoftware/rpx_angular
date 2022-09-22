@@ -20,7 +20,6 @@
   },
   "private": true,
   "dependencies": {
-    "@abacritt/angularx-social-login": "^1.2.1",
     "@agm/core": "^3.0.0-beta.0",
     "@angular-devkit/build-angular": "14.0.5",
     "@angular/animations": "^14.0.5",

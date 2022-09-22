@@ -3,15 +3,11 @@ import { NgModule } from '@angular/core'
 import { AppRoutingModule } from './app-routing.module'
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
 import { DeviceDetectorService } from 'ngx-device-detector'
-
 import { AppComponent } from './app.component'
-
 import { HomeModule } from './home/home.module'
 import { UserHomeModule } from './user-home/user-home.module'
 import { UserModule } from './user/user.module'
-
 import { UrlSanitizerPipe } from './pipes/url-sanitizer.pipe'
-
 import { VersionCheckService } from './services/version-check.service'
 import { HelperModule } from './helpers/helper.module'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
@@ -22,14 +18,9 @@ import { TermsComponent } from './spotbie/terms/terms.component'
 import { BugsComponent } from './bugs/bugs.component'
 import { TransferHttpCacheModule } from '@nguniversal/common'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
-
-import { SocialAuthServiceConfig, SocialLoginModule, GoogleLoginProvider } from '@abacritt/angularx-social-login';
-
 import { UserauthService } from './services/userauth.service'
-
 import { StoreModule } from '@ngrx/store'
 import { loyaltyPointsReducer } from './spotbie/spotbie-logged-in/loyalty-points/loyalty-points.reducer'
-
 import { StripeModule } from 'stripe-angular'
 import { MakePaymentModule } from './make-payment/make-payment.module'
 
@@ -54,7 +45,6 @@ import { MakePaymentModule } from './make-payment/make-payment.module'
     HelperModule,
     MakePaymentModule,
     BrowserAnimationsModule,
-    SocialLoginModule,
     StripeModule.forRoot(''),
     StoreModule.forRoot({
       loyaltyPoints: loyaltyPointsReducer
@@ -62,20 +52,6 @@ import { MakePaymentModule } from './make-payment/make-payment.module'
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
   ],
   providers: [
-    {
-      provide: 'SocialAuthServiceConfig',
-      useValue: {
-        autoLogin: false,
-        providers: [
-          {
-            id: GoogleLoginProvider.PROVIDER_ID,
-            provider: new GoogleLoginProvider(
-              '1054707215391-kpl49vuhak0mpma4cdqesa39tntgs0rb.apps.googleusercontent.com'
-            )
-          },
-        ]
-      } as SocialAuthServiceConfig,
-    },
     DeviceDetectorService,
     VersionCheckService,
     UserauthService,

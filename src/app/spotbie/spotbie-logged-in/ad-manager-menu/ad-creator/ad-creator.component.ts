@@ -29,7 +29,6 @@ export class AdCreatorComponent implements OnInit {
   @ViewChild('adMediaInput') adMediaInput
   @ViewChild('adMediaMobileInput') adMediaMobileInput
   @ViewChild('spbTopAnchor') spbTopAnchor
-
   @ViewChild('adApp') adApp: HeaderAdBannerComponent | BottomAdBannerComponent | NearbyFeaturedAdComponent
   @ViewChild('adAppMobile') adAppMobile: HeaderAdBannerComponent | BottomAdBannerComponent
 
