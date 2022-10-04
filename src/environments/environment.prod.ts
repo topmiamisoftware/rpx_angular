@@ -6,7 +6,7 @@ export const environment = {
   baseUrl,
   versionCheckURL: baseUrl+'version.json',
   google_maps_apiKey: 'AIzaSyC4Su0B2cBzsSpAF-Kphq_78uR8b5eA4_Q',
-  google_places_apiAkey: 'AIzaSyChSn9IE6Dp0Jv8TS013np1b4X1rCsQt_E',
+  google_places_apiAkey: 'AIzaSyBJ92ICDSvm_MVvwU-8fkPF62rWy-9xrL0',
   apiEndpoint: null,
   qrCodeLoyaltyPointsScanBaseUrl: baseUrl+'loyalty-points',
   qrCodeRewardScanBaseUrl: baseUrl+'reward',

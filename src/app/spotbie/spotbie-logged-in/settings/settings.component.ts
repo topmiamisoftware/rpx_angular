@@ -1,6 +1,5 @@
 import {COMMA, ENTER} from '@angular/cdk/keycodes'
-
-import {Component, OnInit, ViewChild, NgZone, ElementRef, Output, EventEmitter} from '@angular/core'
+import {Component, OnInit, ViewChild, NgZone, ElementRef, Output, EventEmitter, Injector} from '@angular/core'
 import {UntypedFormBuilder, Validators, UntypedFormGroup, UntypedFormControl} from '@angular/forms'
 import * as spotbieGlobals from '../../../globals'
 import {User} from '../../../models/user'
@@ -10,15 +9,12 @@ import {MustMatch} from '../../../helpers/must-match.validator'
 import {ValidateUsername} from 'src/app/helpers/username.validator'
 import {ValidatePersonName} from 'src/app/helpers/name.validator'
 import {UserauthService} from 'src/app/services/userauth.service'
-
 import * as calendly from '../../../helpers/calendly/calendlyHelper'
 import * as map_extras from 'src/app/spotbie/map/map_extras/map_extras'
-
 import {Business} from 'src/app/models/business'
 import {HttpClient, HttpEventType} from '@angular/common/http'
 import {MatChipInputEvent} from '@angular/material/chips'
 import {map, startWith} from 'rxjs/operators'
-
 import {MatAutocompleteSelectedEvent} from '@angular/material/autocomplete'
 import {Observable} from 'rxjs/internal/Observable'
 import {LocationService} from 'src/app/services/location-service/location.service'
@@ -27,9 +23,7 @@ import {AllowedAccountTypes} from 'src/app/helpers/enum/account-type.enum'
 import {SpotbiePaymentsService} from 'src/app/services/spotbie-payments/spotbie-payments.service'
 
 const PLACE_TO_EAT_API = spotbieGlobals.API + 'place-to-eat'
-
 const PLACE_TO_EAT_MEDIA_MAX_UPLOAD_SIZE = 25e+6
-
 const MAX_DISTANCE = 80467
 
 declare const google: any
@@ -42,134 +36,85 @@ declare const google: any
 export class SettingsComponent implements OnInit {
 
   @ViewChild('spotbieSettingsInfoText') spotbieSettingsInfoText: ElementRef
-
   @ViewChild('spotbie_password_change_info_text') spotbiePasswordInfoText: ElementRef
   @ViewChild('current_password_info') spotbieCurrentPasswordInfoText: ElementRef
-
   @ViewChild('spotbie_deactivation_info') spotbieAccountDeactivationInfo
-
   @ViewChild('addressSearch') addressSearch
-
   @ViewChild('userAccountTypeNormalScroll') userAccountTypeNormalScroll
-
   @ViewChild('spotbie_map') spotbie_map: AgmMap
-
   @ViewChild('spotbieSettingsWindow') spotbieSettingsWindow
-
   @ViewChild('placeToEatMediaUploadInfo') placeToEatMediaUploadInfo
   @ViewChild('placeToEatMediaInput') placeToEatMediaInput
 
-  @Output('closeWindowEvt') closeWindowEvt = new EventEmitter()
+  @Output() closeWindowEvt = new EventEmitter()
 
-  public bgColor: string
-
-  public lat: number
-  public lng: number
-  public zoom: number = 12
-  public fitBounds: boolean = false
-  public iconUrl: string
-
-  public locationFound = false
-
-  public personalAccount = true
-
-  public settingsForm: UntypedFormGroup
-  public businessSettingsForm: UntypedFormGroup
-
-  public originPhoto: string = '../../assets/images/home_imgs/find-places-to-eat.svg'
-
-  public passwordForm: UntypedFormGroup
-
-  public savePasswordShow: boolean = false
-
-  public deactivationForm: UntypedFormGroup
-  public accountDeactivation: boolean = false
-  public deactivationSubmitted: boolean = false
-
-  public loading = false
-
-  public accountTypePhotos = [
+  lat: number
+  lng: number
+  zoom: number = 12
+  fitBounds: boolean = false
+  locationFound = false
+  settingsForm: UntypedFormGroup
+  businessSettingsForm: UntypedFormGroup
+  originPhoto: string = '../../assets/images/home_imgs/find-places-to-eat.svg'
+  passwordForm: UntypedFormGroup
+  savePasswordShow: boolean = false
+  deactivationForm: UntypedFormGroup
+  accountDeactivation: boolean = false
+  deactivationSubmitted: boolean = false
+  loading = false
+  accountTypePhotos = [
     '../../assets/images/home_imgs/find-users.svg',
     '../../assets/images/home_imgs/find-places-to-eat.svg',
     '../../assets/images/home_imgs/find-events.svg',
     '../../assets/images/home_imgs/find-places-for-shopping.svg'
   ]
-
-  public accountTypeList = ['PLACE TO EAT', 'RETAIL STORE']
-  public chosenAccountType: number
-  public loadAccountTypes = false
-
-  public accountTypeCategory: string
-  public accountTypeCategoryFriendlyName: string
-
-  public helpText = ''
-
-  public user: User
-
-  public userIsSubscribed: boolean = false
-  public userIsTrial: boolean = false
-
-  public submitted: boolean = false
-  public placeFormSubmitted: boolean = false
-
-  public adSettingsWindow = {open: false}
-
-  public geoCoder: any
-  public address: any
-  public addressResults: any
-  public passwordSubmitted: boolean = false
-
-  public settingsFormInitiated: boolean = false
-
-  public mapStyles = map_extras.MAP_STYLES
-
-  public locationPrompt: boolean = true
-  public showNoResultsBox: boolean = false
-  public showMobilePrompt: boolean = false
-  public showMobilePrompt2: boolean = false
-
-  public placeSettingsFormUp: boolean = false
-
-  public place: any
-
-  public claimBusiness: boolean = false
-
-  public passKeyVerificationFormUp: boolean = false
-  public passKeyVerificationForm: UntypedFormGroup
-  public passKeyVerificationSubmitted: boolean = false
-
-  public businessVerified: boolean = false
-
-  public placeToEatMediaMessage: string
-  public placeToEatMediaUploadProgress: number = 0
-
-  public customPatterns = {
+  accountTypeList = ['PLACE TO EAT', 'RETAIL STORE']
+  chosenAccountType: number
+  loadAccountTypes = false
+  accountTypeCategory: string
+  accountTypeCategoryFriendlyName: string
+  user: User
+  userIsSubscribed: boolean = false
+  userIsTrial: boolean = false
+  submitted: boolean = false
+  placeFormSubmitted: boolean = false
+  geoCoder: any
+  address: any
+  addressResults: any
+  passwordSubmitted: boolean = false
+  settingsFormInitiated: boolean = false
+  mapStyles = map_extras.MAP_STYLES
+  locationPrompt: boolean = true
+  showMobilePrompt: boolean = false
+  showMobilePrompt2: boolean = false
+  placeSettingsFormUp: boolean = false
+  place: any
+  claimBusiness: boolean = false
+  passKeyVerificationFormUp: boolean = false
+  passKeyVerificationForm: UntypedFormGroup
+  passKeyVerificationSubmitted: boolean = false
+  businessVerified: boolean = false
+  placeToEatMediaMessage: string
+  placeToEatMediaUploadProgress: number = 0
+  customPatterns = {
     0: {pattern: new RegExp('\[0-9\]')},
     A: {pattern: new RegExp('\[A-Z\]')}
   }
-
-  public calendlyUp: boolean = false
-
-  public businessCategoryList: Array<string> = []
-
-  public selectable = true
-  public removable = true
-  public separatorKeysCodes: number[] = [ENTER, COMMA]
-
-  public filteredBusinessCategories: Observable<string[]>
-
-  public activeBusinessCategories: string[] = []
-
-  public city: string = null
-  public country: string = null
-  public line1: string = null
-  public line2: string = null
-  public postalCode: string = null
-  public state: string = null
-
-  public friendlyCategories: string = null
-
-  public isSocialAccount: boolean = false
+  calendlyUp: boolean = false
+  businessCategoryList: Array<string> = []
+  selectable = true
+  removable = true
+  separatorKeysCodes: number[] = [ENTER, COMMA]
+  filteredBusinessCategories: Observable<string[]>
+  activeBusinessCategories: string[] = []
+  city: string = null
+  country: string = null
+  line1: string = null
+  line2: string = null
+  postalCode: string = null
+  state: string = null
+  friendlyCategories: string = null
+  isSocialAccount: boolean = false
 
   @ViewChild('businessInput') businessInput: ElementRef<HTMLInputElement>
 
@@ -179,40 +124,33 @@ export class SettingsComponent implements OnInit {
               private ngZone: NgZone,
               private userAuthService: UserauthService,
               private locationService: LocationService,
+              private injector: Injector,
               private paymentService: SpotbiePaymentsService) {
   }
 
   add(event: MatChipInputEvent): void {
-
     const value = (event.value || '').trim()
 
     // Add our category
-
     if (value) this.activeBusinessCategories.push(value)
-
     this.businessSettingsForm.get('originCategories').setValue(null)
-
   }
 
   remove(category: string): void {
-
     const index = this.activeBusinessCategories.indexOf(category)
 
     if (index >= 0) this.activeBusinessCategories.splice(index, 1)
 
     this.businessSettingsForm.get('originCategories').setValue(null)
-
   }
 
   selected(event: MatAutocompleteSelectedEvent): void {
-
     if (this.activeBusinessCategories.indexOf(event.option.viewValue) > -1) return
 
     this.activeBusinessCategories.push(event.option.viewValue)
     this.businessInput.nativeElement.value = ''
 
     this.businessSettingsForm.get('originCategories').setValue(null)
-
   }
 
   private _filter(value: string): string[] {
@@ -221,23 +159,18 @@ export class SettingsComponent implements OnInit {
   }
 
   private fetchCurrentSettings(): any {
-
-    this.userAuthService.getSettings().subscribe(
-      resp => {
+    this.userAuthService.getSettings().subscribe(resp => {
         this.populateSettings(resp)
-      },
-      error => {
+      }, error => {
         console.log('Error', error)
-      }
-    )
-
+      })
   }
 
-  public cancelPlaceSettings() {
+  cancelPlaceSettings() {
     this.placeSettingsFormUp = false
   }
 
-  public cancelMembership() {
+  cancelMembership() {
 
     const r = confirm(`
             Are you sure you want to delete your subscription? All yours IN-HOUSE Promotions will also be deleted.
@@ -247,22 +180,16 @@ export class SettingsComponent implements OnInit {
       this.paymentService.cancelBusinessMembership().subscribe(
         resp => {
           window.location.reload()
-        }
-      )
+        })
     }
-
   }
 
   private populateSettings(settingsResponse: any) {
-
     if (settingsResponse.success) {
-
       this.user = settingsResponse.user
-
       this.user.spotbie_user = settingsResponse.spotbie_user
       this.user.trial_ends_at = settingsResponse.trial_ends_at
       this.user.uuid = settingsResponse.user.hash
-
       this.userIsSubscribed = settingsResponse.is_subscribed
       this.userIsTrial = settingsResponse.is_trial
 
@@ -273,22 +200,18 @@ export class SettingsComponent implements OnInit {
       this.chosenAccountType = this.user.spotbie_user.user_type
 
       switch (this.chosenAccountType) {
-
         case AllowedAccountTypes.PlaceToEat:
           this.accountTypeCategory = 'PLACE TO EAT'
           this.accountTypeCategoryFriendlyName = 'PLACE TO EAT'
           break
-
         case AllowedAccountTypes.Events:
           this.accountTypeCategory = 'EVENTS'
           this.accountTypeCategoryFriendlyName = 'EVENTS BUSINESS'
           break
-
         case AllowedAccountTypes.Shopping:
           this.accountTypeCategory = 'RETAIL STORE'
           this.accountTypeCategoryFriendlyName = 'RETAIL STORE'
           break
-
         case AllowedAccountTypes.Personal:
         case AllowedAccountTypes.Unset:
           this.accountTypeCategory = 'PERSONAL'
@@ -315,7 +238,6 @@ export class SettingsComponent implements OnInit {
         this.settingsForm.get('spotbie_acc_type').setValue(this.accountTypeCategory)
 
         this.user.business = new Business()
-
         this.user.business.loc_x = settingsResponse.business.loc_x
         this.user.business.loc_y = settingsResponse.business.loc_y
         this.user.business.name = settingsResponse.business.name
@@ -340,8 +262,7 @@ export class SettingsComponent implements OnInit {
     return this.passKeyVerificationForm.controls
   }
 
-  public startBusinessVerification() {
-
+  startBusinessVerification() {
     this.loading = true
     this.placeFormSubmitted = true
 
@@ -374,7 +295,6 @@ export class SettingsComponent implements OnInit {
     if (this.businessSettingsForm.invalid) {
       this.loading = false
       this.spotbieSettingsWindow.nativeElement.scrollTo(0, 0)
-
       return
     }
 
@@ -386,19 +306,18 @@ export class SettingsComponent implements OnInit {
 
     this.passKeyVerificationFormUp = true
     this.loading = false
-
   }
 
-  public activateFullMembership() {
+  activateFullMembership() {
     window.open(`${environment.baseUrl}make-payment/business-membership/${this.user.uuid}`, '_blank')
   }
 
-  public closePassKey() {
+  closePassKey() {
     this.passKeyVerificationForm = null
     this.passKeyVerificationFormUp = false
   }
 
-  public calendly(): void {
+  calendly(): void {
     this.loading = true
     this.calendlyUp = !this.calendlyUp
 
@@ -411,7 +330,7 @@ export class SettingsComponent implements OnInit {
     }
   }
 
-  public claimThisBusiness() {
+  claimThisBusiness() {
     this.loading = true
     this.passKeyVerificationSubmitted = true
 
@@ -448,9 +367,7 @@ export class SettingsComponent implements OnInit {
     this.userAuthService.verifyBusiness(businessInfo).subscribe(
       (resp) => {
         this.claimThisBusinessCB(resp)
-      }
-    )
-
+      })
   }
 
   private claimThisBusinessCB(resp: any) {
@@ -473,7 +390,7 @@ export class SettingsComponent implements OnInit {
     this.loading = false
   }
 
-  public claimWithGoogle() {
+  claimWithGoogle() {
     const businessInfo = {
       accountType: this.chosenAccountType
     }
@@ -489,15 +406,13 @@ export class SettingsComponent implements OnInit {
     window.open = true
   }
 
-  public searchMapsKeyDown(evt) {
+  searchMapsKeyDown(evt) {
     if (evt.key === 'Enter') this.searchMaps()
   }
 
   searchMaps() {
     const inputAddress = this.addressSearch.nativeElement
-
     const service = new google.maps.places.AutocompleteService()
-
     const location = new google.maps.LatLng(this.lat, this.lng)
 
     service.getQueryPredictions({
@@ -524,49 +439,55 @@ export class SettingsComponent implements OnInit {
     })
   }
 
-  public focusPlace(place) {
+  focusPlace(place) {
     this.loading = true
     this.place = place
     this.locationFound = false
     this.getPlaceDetails()
   }
 
-  public getPlaceDetails() {
+  getPlaceDetails() {
+    const ngZone = this.injector.get(NgZone);
 
     const request = {
       placeId: this.place.place_id,
       fields: ['name', 'photo', 'geometry', 'adr_address', 'formatted_address'],
     }
 
-    const map: HTMLDivElement = document.getElementById('spotbie_map') as HTMLDivElement
+    const map: HTMLDivElement = document.getElementById('spotbieMapG') as HTMLDivElement
     const mapService = new google.maps.places.PlacesService(map)
 
     mapService.getDetails(request, (place, status) => {
-      this.place = place
+      ngZone.run(() => {
+        this.place = place
 
-      this.lat = place.geometry.location.lat()
-      this.lng = place.geometry.location.lng()
+        console.log('place', place);
 
-      this.zoom = 18
+        this.lat = place.geometry.location.lat()
+        this.lng = place.geometry.location.lng()
 
-      this.businessSettingsForm.get('spotbieOrigin').setValue(this.lat + ',' + this.lng)
-      this.businessSettingsForm.get('originTitle').setValue(place.name)
-      this.businessSettingsForm.get('originAddress').setValue(place.formatted_address)
+        this.zoom = 18
 
-      this.locationFound = true
-      this.claimBusiness = true
+        this.businessSettingsForm.get('spotbieOrigin').setValue(this.lat + ',' + this.lng)
+        this.businessSettingsForm.get('originTitle').setValue(place.name)
+        this.businessSettingsForm.get('originAddress').setValue(place.formatted_address)
 
-      if (place.photos)
-        this.originPhoto = place.photos[0].getUrl()
-      else
-        this.originPhoto = '../../assets/images/home_imgs/find-places-to-eat.svg'
+        this.locationFound = true
+        this.claimBusiness = true
 
-      this.loading = false
+        if (place.photos) {
+          this.originPhoto = place.photos[0].getUrl();
+        } else {
+          this.originPhoto = '../../assets/images/home_imgs/find-places-to-eat.svg'
+        }
+
+        this.loading = false
+      })
     })
     this.addressResults = []
   }
 
-  public getBusinessImgStyle() {
+  getBusinessImgStyle() {
 
     if (this.originPhoto === null) return
 
@@ -577,11 +498,11 @@ export class SettingsComponent implements OnInit {
 
   }
 
-  public startRewardMediaUploader(): void {
+  startRewardMediaUploader(): void {
     this.placeToEatMediaInput.nativeElement.click()
   }
 
-  public uploadMedia(files): void {
+  uploadMedia(files): void {
 
     const fileListLength = files.length
 
@@ -674,7 +595,7 @@ export class SettingsComponent implements OnInit {
   }
 
 
-  public promptForLocation() {
+  promptForLocation() {
     this.locationPrompt = false
 
     if (localStorage.getItem('spotbie_locationPrompted') === '1') {
@@ -684,29 +605,29 @@ export class SettingsComponent implements OnInit {
     }
   }
 
-  public acceptLocationPrompt() {
+  acceptLocationPrompt() {
     this.locationPrompt = false
     localStorage.setItem('spotbie_locationPrompted', '0')
     this.startLocation()
   }
 
-  public mobilePrompt2Toggle() {
+  mobilePrompt2Toggle() {
     this.loading = false
     this.showMobilePrompt2 = false
   }
 
-  public mobilePrompt2ToggleOff() {
+  mobilePrompt2ToggleOff() {
     this.loading = false
     this.showMobilePrompt2 = false
   }
 
-  public mobileStartLocation() {
+  mobileStartLocation() {
     this.setCurrentLocation()
     this.showMobilePrompt = false
     this.showMobilePrompt2 = true
   }
 
-  public startLocation() {
+  startLocation() {
     this.showMobilePrompt = true
   }
 
@@ -780,7 +701,7 @@ export class SettingsComponent implements OnInit {
 
   }
 
-  public savePassword(): void {
+  savePassword(): void {
 
     this.spotbiePasswordInfoText.nativeElement.scrollIntoView({behavior: 'smooth', block: 'start'})
 
@@ -805,7 +726,7 @@ export class SettingsComponent implements OnInit {
     this.passwordForm.get('spotbie_current_password').setValue('123456789')
   }
 
-  public completeSavePassword(): void {
+  completeSavePassword(): void {
 
     if (this.loading) return
 
@@ -873,16 +794,16 @@ export class SettingsComponent implements OnInit {
 
   }
 
-  public cancelPasswordSet() {
+  cancelPasswordSet() {
     this.passwordSubmitted = false
     this.savePasswordShow = false
   }
 
-  public changeAccType() {
+  changeAccType() {
     this.loadAccountTypes = true
   }
 
-  public selectAccountType(accountType: string) {
+  selectAccountType(accountType: string) {
     this.accountTypeCategory = accountType
 
     switch (this.accountTypeCategory) {
@@ -1151,7 +1072,7 @@ export class SettingsComponent implements OnInit {
     return this.businessSettingsForm.controls
   }
 
-  public saveSettings() {
+  saveSettings() {
 
     this.loading = true
     this.submitted = true
@@ -1219,11 +1140,11 @@ export class SettingsComponent implements OnInit {
     }
   }
 
-  public cancelDeactivateAccount() {
+  cancelDeactivateAccount() {
     this.accountDeactivation = false
   }
 
-  public startDeactivateAccount(): void {
+  startDeactivateAccount(): void {
     this.accountDeactivation = true
 
     const socialId = localStorage.getItem('spotbiecom_social_id')
@@ -1245,7 +1166,7 @@ export class SettingsComponent implements OnInit {
     }
   }
 
-  public deactivateAccount() {
+  deactivateAccount() {
     const r = confirm('Are you sure you want to deactivate your account?')
 
     if (!r) return
@@ -1277,16 +1198,16 @@ export class SettingsComponent implements OnInit {
     }
   }
 
-  public closeWindow() {
+  closeWindow() {
     window.location.reload()
   }
 
-  public classificationSearch(): Observable<any> {
+  classificationSearch(): Observable<any> {
     this.loading = true
     return this.locationService.getClassifications()
   }
 
-  public classificationSearchCallback(resp) {
+  classificationSearchCallback(resp) {
     this.loading = false
 
     if (resp.success) {

@@ -14,7 +14,7 @@ import { environment } from 'src/environments/environment'
 import { Ad } from 'src/app/models/ad'
 import { InfoObjectType } from 'src/app/helpers/enum/info-object-type.enum'
 
-const YELP_BUSINESS_DETAILS_API = "https://api.yelp.com/v3/businesses/"
+const YELP_BUSINESS_DETAILS_API = 'https://api.yelp.com/v3/businesses/'
 
 const SPOTBIE_META_DESCRIPTION = spotbieMetaDescription
 const SPOTBIE_META_TITLE = spotbieMetaTitle

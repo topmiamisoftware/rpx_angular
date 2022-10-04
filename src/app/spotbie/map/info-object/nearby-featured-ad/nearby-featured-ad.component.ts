@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import { Router } from '@angular/router';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { AllowedAccountTypes } from 'src/app/helpers/enum/account-type.enum';
@@ -22,7 +22,7 @@ const FEATURED_BANNER_TIMER_INTERVAL = 16000
   templateUrl: './nearby-featured-ad.component.html',
   styleUrls: ['./nearby-featured-ad.component.css']
 })
-export class NearbyFeaturedAdComponent implements OnInit {
+export class NearbyFeaturedAdComponent implements OnInit, OnDestroy {
 
   @Input() lat: number
   @Input() lng: number
