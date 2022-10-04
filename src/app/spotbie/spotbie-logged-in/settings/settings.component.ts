@@ -21,6 +21,7 @@ import {LocationService} from 'src/app/services/location-service/location.servic
 import {environment} from 'src/environments/environment'
 import {AllowedAccountTypes} from 'src/app/helpers/enum/account-type.enum'
 import {SpotbiePaymentsService} from 'src/app/services/spotbie-payments/spotbie-payments.service'
+import GeocoderResult = google.maps.GeocoderResult;
 
 const PLACE_TO_EAT_API = spotbieGlobals.API + 'place-to-eat'
 const PLACE_TO_EAT_MEDIA_MAX_UPLOAD_SIZE = 25e+6
@@ -631,7 +632,6 @@ export class SettingsComponent implements OnInit {
     this.showMobilePrompt = true
   }
 
-
   private setCurrentLocation() {
     if ('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition((position) => {
@@ -657,21 +657,31 @@ export class SettingsComponent implements OnInit {
     this.getAddress(this.lat, this.lng)
   }
 
+  getAddressCompoenent(results, field){
+    for(let j=0;j < results.address_components.length; j++){
+      for(let k=0; k < results.address_components[j].types.length; k++){
+        if(results.address_components[j].types[k] === field){
+          return results.address_components[j].short_name;
+        }
+      }
+    }
+  }
+
   async getAddress(latitude, longitude) {
     await this.mapsAPILoader.load().then(() => {
       this.geoCoder = new google.maps.Geocoder()
     })
 
-    await this.geoCoder.geocode({location: {lat: latitude, lng: longitude}}, (results, status) => {
+    await this.geoCoder.geocode({location: {lat: latitude, lng: longitude}}, (results: GeocoderResult, status) => {
       if (status === 'OK') {
         if (results[0]) {
           this.zoom = 18
           this.address = results[0].formatted_address
-          this.city = results[0].address_components[3].long_name
+          this.city = this.getAddressCompoenent(results[0], 'locality');
           this.line1 = results[0].address_components[0].long_name + ' ' + results[0].address_components[1].long_name
-          this.state = results[0].address_components[5].short_name
-          this.country = results[0].address_components[6].short_name
-          this.postalCode = results[0].address_components[7].short_name
+          this.state = this.getAddressCompoenent(results[0], 'administrative_area_level_1');
+          this.country = this.getAddressCompoenent(results[0], 'country');
+          this.postalCode = this.getAddressCompoenent(results[0], 'postal_code');
 
           this.businessSettingsForm.get('originAddress').setValue(this.address)
           this.businessSettingsForm.get('spotbieOrigin').setValue(this.lat + ',' + this.lng)
