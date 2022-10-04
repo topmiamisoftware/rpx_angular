@@ -208,7 +208,8 @@ export class UserauthService {
       line1: businessInfo.line1,
       line2: businessInfo.line2,
       postal_code: businessInfo.postal_code,
-      state: businessInfo.state
+      state: businessInfo.state,
+      accountType: businessInfo.accountType
     }
 
     return this.http.post<any>(apiUrl, businessInfoObj)
@@ -241,12 +242,13 @@ export class UserauthService {
       line1: businessInfo.line1,
       line2: businessInfo.line2,
       postal_code: businessInfo.postal_code,
-      state: businessInfo.state
+      state: businessInfo.state,
+      accountType: businessInfo.accountType
     }
 
     return this.http.post<any>(apiUrl, businessInfoObj)
       .pipe(
-        catchError(handleError('verifyBusiness'))
+        catchError(handleError('saveBusiness'))
       )
   }
 

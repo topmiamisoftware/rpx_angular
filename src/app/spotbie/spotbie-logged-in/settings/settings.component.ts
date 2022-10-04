@@ -172,7 +172,6 @@ export class SettingsComponent implements OnInit {
   }
 
   cancelMembership() {
-
     const r = confirm(`
             Are you sure you want to delete your subscription? All yours IN-HOUSE Promotions will also be deleted.
         `)
@@ -396,11 +395,9 @@ export class SettingsComponent implements OnInit {
       accountType: this.chosenAccountType
     }
 
-    this.userAuthService.verifyBusiness(businessInfo).subscribe(
-      (resp) => {
+    this.userAuthService.verifyBusiness(businessInfo).subscribe((resp) => {
         this.claimThisBusinessCB(resp)
-      }
-    )
+      })
   }
 
   openWindow(window: any) {
@@ -461,17 +458,19 @@ export class SettingsComponent implements OnInit {
     mapService.getDetails(request, (place, status) => {
       ngZone.run(() => {
         this.place = place
-
-        console.log('place', place);
-
         this.lat = place.geometry.location.lat()
         this.lng = place.geometry.location.lng()
-
         this.zoom = 18
 
-        this.businessSettingsForm.get('spotbieOrigin').setValue(this.lat + ',' + this.lng)
-        this.businessSettingsForm.get('originTitle').setValue(place.name)
-        this.businessSettingsForm.get('originAddress').setValue(place.formatted_address)
+        if(!this.user.business){
+          this.businessSettingsForm.get('spotbieOrigin').setValue(this.user.business.loc_y + ',' + this.user.business.loc_y)
+          this.businessSettingsForm.get('originTitle').setValue(this.user.business.name)
+          this.businessSettingsForm.get('originAddress').setValue(this.user.business.address)
+        } else {
+          this.businessSettingsForm.get('spotbieOrigin').setValue(this.lat + ',' + this.lng)
+          this.businessSettingsForm.get('originTitle').setValue(place.name)
+          this.businessSettingsForm.get('originAddress').setValue(place.formatted_address)
+        }
 
         this.locationFound = true
         this.claimBusiness = true
@@ -489,14 +488,12 @@ export class SettingsComponent implements OnInit {
   }
 
   getBusinessImgStyle() {
-
     if (this.originPhoto === null) return
 
     if (this.originPhoto.includes('home_imgs'))
       return 'sb-originPhoto-sm'
     else
       return 'sb-originPhoto-lg'
-
   }
 
   startRewardMediaUploader(): void {
@@ -504,7 +501,6 @@ export class SettingsComponent implements OnInit {
   }
 
   uploadMedia(files): void {
-
     const fileListLength = files.length
 
     if (fileListLength === 0) {
@@ -516,7 +512,6 @@ export class SettingsComponent implements OnInit {
     }
 
     this.loading = true
-
     const formData = new FormData()
 
     let fileToUpload
@@ -524,7 +519,6 @@ export class SettingsComponent implements OnInit {
 
     for (let i = 0; i < fileListLength; i++) {
       fileToUpload = files[i] as File
-
       uploadSize += fileToUpload.size
 
       if (uploadSize > PLACE_TO_EAT_MEDIA_MAX_UPLOAD_SIZE) {
@@ -532,7 +526,6 @@ export class SettingsComponent implements OnInit {
         this.loading = false
         return
       }
-
       formData.append('background_picture', fileToUpload, fileToUpload.name)
     }
 
@@ -549,36 +542,27 @@ export class SettingsComponent implements OnInit {
   }
 
   private placeToEatMediaUploadFinished(httpResponse: any): void {
-
     if (httpResponse.success)
       this.originPhoto = httpResponse.background_picture
     else
       console.log('placeToEatMediaUploadFinished', httpResponse)
 
     this.loading = false
-
   }
 
   mapsAutocomplete() {
-
     this.mapsAPILoader.load().then(() => {
-
       this.geoCoder = new google.maps.Geocoder()
-
       const inputAddress = this.addressSearch.nativeElement
-
       const autocomplete = new google.maps.places.Autocomplete(inputAddress, {
         componentRestrictions: {country: 'us', distance_meters: MAX_DISTANCE},
         types: ['establishment']
       })
 
       autocomplete.addListener('place_changed', () => {
-
         this.ngZone.run(() => {
-
           // get the place result
           const place: any = autocomplete.getPlace()
-
           // verify result
           if (place.geometry === undefined || place.geometry === null) return
 
@@ -586,15 +570,10 @@ export class SettingsComponent implements OnInit {
           this.lat = place.geometry.location.lat()
           this.lng = place.geometry.location.lng()
           this.zoom = 18
-
         })
-
       })
-
     })
-
   }
-
 
   promptForLocation() {
     this.locationPrompt = false
@@ -635,12 +614,17 @@ export class SettingsComponent implements OnInit {
   private setCurrentLocation() {
     if ('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition((position) => {
-        if (environment.fakeLocation) {
+        if (environment.fakeLocation && !this.user.business) {
           this.lat = environment.myLocX
           this.lng = environment.myLocY
         } else {
-          this.lat = position.coords.latitude
-          this.lng = position.coords.longitude
+          if(this.user.business){
+            this.lat = this.user.business.loc_x
+            this.lng = this.user.business.loc_y
+          } else {
+            this.lat = position.coords.latitude
+            this.lng = position.coords.longitude
+          }
         }
 
         this.zoom = 18
@@ -692,14 +676,11 @@ export class SettingsComponent implements OnInit {
         window.alert('Geocoder failed due to: ' + status)
       }
     })
-
   }
 
-  showPosition(position: any) {
-
+  showPosition(position: any, override: boolean = false) {
     this.locationFound = true
-
-    if (environment.fakeLocation) {
+    if (environment.fakeLocation && !override) {
       this.lat = environment.myLocX
       this.lng = environment.myLocY
     } else {
@@ -708,11 +689,9 @@ export class SettingsComponent implements OnInit {
     }
 
     this.showMobilePrompt2 = false
-
   }
 
   savePassword(): void {
-
     this.spotbiePasswordInfoText.nativeElement.scrollIntoView({behavior: 'smooth', block: 'start'})
 
     if (this.passwordForm.invalid) {
@@ -728,11 +707,8 @@ export class SettingsComponent implements OnInit {
 
     this.spotbiePasswordInfoText.nativeElement.style.display = 'block'
     this.spotbiePasswordInfoText.nativeElement.innerHTML = 'Great, your passwords match!'
-
     this.savePasswordShow = true
-
     this.passwordForm.addControl('spotbie_current_password', new UntypedFormControl('', [Validators.required]))
-
     this.passwordForm.get('spotbie_current_password').setValue('123456789')
   }
 
@@ -750,41 +726,28 @@ export class SettingsComponent implements OnInit {
       currentPassword: this.current_password
     }
 
-    this.userAuthService.passwordChange(savePasswordObj).subscribe(
-      resp => {
+    this.userAuthService.passwordChange(savePasswordObj).subscribe(resp => {
         this.passwordChangeCallback(resp)
-      },
-      error => {
+      }, error => {
         console.log('error', error)
-      }
-    )
-
+      })
   }
 
   private passwordChangeCallback(resp: any) {
-
     if (resp.success) {
-
       switch (resp.message) {
-
         case 'saved':
-
           this.spotbieCurrentPasswordInfoText.nativeElement.innerHTML = 'Your password was updated.'
-
           this.passwordForm.get('spotbie_current_password').setValue('123456789')
           this.passwordForm.get('spotbie_password').setValue('asdrqweee')
           this.passwordForm.get('spotbie_confirm_password').setValue('asdeqweqq')
-
           this.spotbiePasswordInfoText.nativeElement.style.display = 'block'
           this.spotbiePasswordInfoText.nativeElement.innerHTML = 'Would you like to change your password?'
-
           setTimeout(function () {
             this.password_submitted = false
             this.save_password = false
           }.bind(this), 2000)
-
           break
-
         case 'SB-E-000':
           // server error
           this.savePasswordShow = false
@@ -792,16 +755,12 @@ export class SettingsComponent implements OnInit {
           this.spotbiePasswordInfoText.nativeElement.style.display = 'block'
           this.spotbiePasswordInfoText.nativeElement.innerHTML = 'There was an error with the server. Try again.'
           break
-
       }
-
       this.spotbieSettingsWindow.nativeElement.scrollTo(0, 0)
-
     } else
       console.log(resp)
 
     this.loading = false
-
   }
 
   cancelPasswordSet() {
@@ -822,21 +781,18 @@ export class SettingsComponent implements OnInit {
         this.originPhoto = this.accountTypePhotos[0]
         this.accountTypeCategoryFriendlyName = 'PERSONAL'
         break
-
       case 'PLACE TO EAT':
         this.chosenAccountType = AllowedAccountTypes.PlaceToEat
         this.originPhoto = this.accountTypePhotos[1]
         this.accountTypeCategoryFriendlyName = 'PLACE TO EAT'
         this.mobileStartLocation()
         break
-
       case 'EVENTS':
         this.chosenAccountType = AllowedAccountTypes.Events
         this.originPhoto = this.accountTypePhotos[2]
         this.accountTypeCategoryFriendlyName = 'EVENTS BUSINESS'
         this.mobileStartLocation()
         break
-
       case 'RETAIL STORE':
         this.chosenAccountType = AllowedAccountTypes.Shopping
         this.originPhoto = this.accountTypePhotos[3]
@@ -851,19 +807,15 @@ export class SettingsComponent implements OnInit {
       case AllowedAccountTypes.Personal:
         this.initSettingsForm('personal')
         break
-
       case AllowedAccountTypes.PlaceToEat:
         this.initSettingsForm('place_to_eat')
         break
-
       case AllowedAccountTypes.Events:
         this.initSettingsForm('events')
         break
-
       case AllowedAccountTypes.Shopping:
         this.initSettingsForm('shopping')
         break
-
       default:
         this.initSettingsForm('personal')
     }
@@ -872,18 +824,14 @@ export class SettingsComponent implements OnInit {
   }
 
   private async initSettingsForm(action: string) {
-
-    // will set validators for form and take care of animations
     const usernameValidators = [Validators.required, Validators.maxLength(135)]
     const firstNameValidators = [Validators.required, Validators.maxLength(72)]
     const lastNameValidators = [Validators.required, Validators.maxLength(72)]
     const emailValidators = [Validators.email, Validators.required, Validators.maxLength(135)]
     const phoneValidators = []
     const accountTypeValidators = [Validators.required]
-
     const passwordValidators = [Validators.required]
     const passwordConfirmValidators = [Validators.required]
-
     const settingsFormInputObj: any =
       {
         spotbie_username: ['', usernameValidators],
@@ -899,15 +847,12 @@ export class SettingsComponent implements OnInit {
       settingsFormInputObj.spotbie_acc_type = ['', accountTypeValidators]
 
     switch (action) {
-
       case 'personal':
-
         this.settingsForm = this.formBuilder.group(settingsFormInputObj, {
           validators: [ValidateUsername('spotbie_username'),
             ValidatePersonName('spotbie_first_name'),
             ValidatePersonName('spotbie_last_name')]
         })
-
         this.passwordForm = this.formBuilder.group({
           spotbie_password: ['', passwordValidators],
           spotbie_confirm_password: ['', passwordConfirmValidators]
@@ -915,17 +860,13 @@ export class SettingsComponent implements OnInit {
           validators: [ValidatePassword('spotbie_password'),
             MustMatch('spotbie_password', 'spotbie_confirm_password')]
         })
-
         this.accountTypeCategory = 'PERSONAL'
-
         this.fetchCurrentSettings()
-
         break
 
       case 'events':
       case 'shopping':
       case 'place_to_eat':
-
         const originTitleValidators = [Validators.required, Validators.maxLength(25)]
         const originAddressValidators = [Validators.required]
         const originValidators = [Validators.required]
@@ -939,26 +880,20 @@ export class SettingsComponent implements OnInit {
           originCategories: ['']
         })
 
-        if (this.user.business !== undefined) {
-
+        if (this.user.business) {
+          console.log(this.user.business);
           this.businessSettingsForm.get('originAddress').setValue(this.user.business.address)
-
           this.businessSettingsForm.get('spotbieOrigin').setValue(`${this.user.business.loc_x},${this.user.business.loc_y}`)
-
           const position = {
             coords: {latitude: this.user.business.loc_x, longitude: this.user.business.loc_y}
           }
-
-          this.showPosition(position)
+          this.showPosition(position, true)
           this.originPhoto = this.user.business.photo
           this.businessSettingsForm.get('originDescription').setValue(this.user.business.description)
           this.businessSettingsForm.get('originTitle').setValue(this.user.business.name)
-
         } else {
-
           this.businessSettingsForm.get('originAddress').setValue('SEARCH FOR LOCATION')
           this.businessSettingsForm.get('spotbieOrigin').setValue(this.lat + ',' + this.lng)
-
         }
 
         this.filteredBusinessCategories = this.businessSettingsForm.get('originCategories').valueChanges.pipe(
@@ -969,157 +904,81 @@ export class SettingsComponent implements OnInit {
         this.placeSettingsFormUp = true
 
         switch (action) {
-
           case 'events':
-
             this.accountTypeCategory = 'EVENTS'
             this.accountTypeCategoryFriendlyName = 'EVENTS BUSINESS'
-
-            await this.classificationSearch().subscribe(
-              resp => {
-                this.classificationSearchCallback(resp)
-              }
+            await this.classificationSearch().subscribe(resp => {
+                this.classificationSearchCallback(resp)}
             )
-
             break
-
           case 'place_to_eat':
-
             this.accountTypeCategory = 'PLACE TO EAT'
             this.accountTypeCategoryFriendlyName = 'PLACE TO EAT'
             this.businessCategoryList = map_extras.FOOD_CATEGORIES
-
             break
-
           case 'shopping':
-
             this.accountTypeCategory = 'RETAIL STORE'
             this.accountTypeCategoryFriendlyName = 'RETAIL STORE'
             this.businessCategoryList = map_extras.SHOPPING_CATEGORIES
-
             break
         }
-
         this.businessSettingsForm.get('spotbie_acc_type').setValue(this.accountTypeCategory)
-
         break
     }
   }
 
-  get username() {
-    return this.settingsForm.get('spotbie_username').value
-  }
+  get username() { return this.settingsForm.get('spotbie_username').value }
+  get first_name() { return this.settingsForm.get('spotbie_first_name').value }
+  get last_name() { return this.settingsForm.get('spotbie_last_name').value }
+  get email() { return this.settingsForm.get('spotbie_email').value }
+  get spotbie_phone_number() { return this.settingsForm.get('spotbie_phone_number').value }
+  get account_type() { return this.settingsForm.get('spotbie_acc_type').value }
+  get f() { return this.settingsForm.controls }
 
-  get first_name() {
-    return this.settingsForm.get('spotbie_first_name').value
-  }
+  get password() { return this.passwordForm.get('spotbie_password').value }
+  get confirm_password() { return this.passwordForm.get('spotbie_confirm_password').value }
+  get current_password() { return this.passwordForm.get('spotbie_current_password').value }
+  get g() { return this.passwordForm.controls }
 
-  get last_name() {
-    return this.settingsForm.get('spotbie_last_name').value
-  }
+  get deactivationPassword() { return this.deactivationForm.get('spotbie_deactivation_password').value}
+  get h() { return this.deactivationForm.controls }
 
-  get email() {
-    return this.settingsForm.get('spotbie_email').value
-  }
-
-  get spotbie_phone_number() {
-    return this.settingsForm.get('spotbie_phone_number').value
-  }
-
-  get account_type() {
-    return this.settingsForm.get('spotbie_acc_type').value
-  }
-
-  get f() {
-    return this.settingsForm.controls
-  }
-
-  get password() {
-    return this.passwordForm.get('spotbie_password').value
-  }
-
-  get confirm_password() {
-    return this.passwordForm.get('spotbie_confirm_password').value
-  }
-
-  get current_password() {
-    return this.passwordForm.get('spotbie_current_password').value
-  }
-
-  get g() {
-    return this.passwordForm.controls
-  }
-
-  get deactivationPassword() {
-    return this.deactivationForm.get('spotbie_deactivation_password').value
-  }
-
-  get h() {
-    return this.deactivationForm.controls
-  }
-
-  get originAddress() {
-    return this.businessSettingsForm.get('originAddress').value
-  }
-
-  get spotbieOrigin() {
-    return this.businessSettingsForm.get('spotbieOrigin').value
-  }
-
-  get originTitle() {
-    return this.businessSettingsForm.get('originTitle').value
-  }
-
-  get originDescription() {
-    return this.businessSettingsForm.get('originDescription').value
-  }
-
-  get originCategories() {
-    return this.businessSettingsForm.get('originCategories').value
-  }
-
-  get i() {
-    return this.businessSettingsForm.controls
-  }
+  get originAddress() { return this.businessSettingsForm.get('originAddress').value }
+  get spotbieOrigin() { return this.businessSettingsForm.get('spotbieOrigin').value }
+  get originTitle() { return this.businessSettingsForm.get('originTitle').value }
+  get originDescription() { return this.businessSettingsForm.get('originDescription').value }
+  get originCategories() { return this.businessSettingsForm.get('originCategories').value}
+  get i() { return this.businessSettingsForm.controls }
 
   saveSettings() {
-
     this.loading = true
     this.submitted = true
 
     if (this.settingsForm.invalid) {
-
       this.loading = false
       this.spotbieSettingsWindow.nativeElement.scrollTo(0, 0)
-
       return
-
     }
 
     this.user.username = this.username
     this.user.email = this.email
-
     this.user.spotbie_user.first_name = this.first_name
     this.user.spotbie_user.last_name = this.last_name
     this.user.spotbie_user.phone_number = this.spotbie_phone_number
     this.user.spotbie_user.user_type = this.chosenAccountType
 
-    this.userAuthService.saveSettings(this.user).subscribe({
-      next: (resp) => {
+    this.userAuthService.saveSettings(this.user).subscribe({ next: (resp) => {
         this.saveSettingsCallback(resp)
-      },
-      error: (error: any) => {
+      },  error: (error: any) => {
         if (error.error.errors.email[0] === 'notUnique') {
           this.settingsForm.get('spotbie_email').setErrors({notUnique: true})
         }
-
         this.spotbieSettingsInfoText.nativeElement.innerHTML = `
-                    <span class='spotbie-text-gradient spotbie-error'>
-                        There was an error saving.
-                    </span>
-                `
+            <span class='spotbie-text-gradient spotbie-error'>
+                There was an error saving.
+            </span>
+        `
         this.spotbieSettingsWindow.nativeElement.scrollTo(0, 0)
-
         this.loading = false
         this.placeSettingsFormUp = false
       }
