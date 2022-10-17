@@ -1,4 +1,5 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild, Inject, Injectable } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 
 const MY_NEWS_LINK = 'https://help.rescue.org/donate/ukraine-acq?ms=gs_ppc_fy22_ukraine_mmus_feb&initialms=gs_ppc_fy22_ukraine_mmus_feb&gclid=CjwKCAiAg6yRBhBNEiwAeVyL0OZ3fFQMEO9dXqlmjgq1bGD-Xa8uKKQm-H-NiJeC_ag1juzzAX26XRoColMQAvD_BwE'
 
@@ -17,7 +18,7 @@ export class ScrollToTopComponent implements OnInit {
   public arrowOn: boolean = false
   public myNewsLink = MY_NEWS_LINK
 
-  constructor() { }
+  constructor(@Inject(DOCUMENT) private document: Document) { }
 
   scrollTop() {
     document.getElementById('spotbieMainSpotBieScroll').scrollTop = 0;
@@ -30,8 +31,8 @@ export class ScrollToTopComponent implements OnInit {
   ngOnInit(): void {}
 
   ngAfterViewInit(){
-    document.getElementById('spotbieMainSpotBieScroll').addEventListener('scroll', function() {
-      const scrollTop = document.getElementById('spotbieMainSpotBieScroll').scrollTop
+    this.document.getElementById('spotbieMainSpotBieScroll').addEventListener('scroll', function() {
+      const scrollTop = this.document.getElementById('spotbieMainSpotBieScroll').scrollTop
       if (scrollTop < 119) {
         this.scrollArrow.nativeElement.className = 'spotbie-scroll-top spotbie-arrow-transparent'
         // this.ourNews.nativeElement.className = 'sb-your-news'
@@ -43,7 +44,7 @@ export class ScrollToTopComponent implements OnInit {
       }
     }.bind(this))
 
-    const scrollTop = document.getElementById('spotbieMainSpotBieScroll').scrollTop
+    const scrollTop = this.document.getElementById('spotbieMainSpotBieScroll').scrollTop
     if (scrollTop > 50) {
       this.scrollArrow.nativeElement.className = 'spotbie-scroll-top'
       this.arrowOn = true

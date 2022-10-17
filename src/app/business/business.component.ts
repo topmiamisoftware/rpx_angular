@@ -10,10 +10,9 @@ import { MenuLoggedOutComponent } from '../spotbie/spotbie-logged-out/menu-logge
 })
 export class BusinessComponent implements OnInit {
 
-  public scheduleBusinessDemo: boolean = true
+  scheduleBusinessDemo: boolean = true
 
   @ViewChild('app_map') app_map: MapComponent
-
   @ViewChild('appMenuLoggedOut') appMenuLoggedOut: MenuLoggedOutComponent
 
   constructor(private router: Router, private route: ActivatedRoute) { }
@@ -35,11 +34,8 @@ export class BusinessComponent implements OnInit {
   }
 
   async ngOnInit() {
-
     const isLoggedIn = localStorage.getItem("spotbie_loggedIn")
 
-    if (isLoggedIn == '1') this.router.navigate(['/user-home'])
-
+    if (isLoggedIn === '1') this.router.navigate(['/user-home'])
   }
-
 }
