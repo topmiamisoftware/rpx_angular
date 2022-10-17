@@ -1,7 +1,6 @@
 
 
 <div *ngIf="isLoggedIn == '1' && (userType !== eAllowedAccountTypes.Personal && userType !== eAllowedAccountTypes.Unset)">
-
   <h4 id="sp-loyaltyMenuTitle" class="spotbie-text-gradient text-center text-uppercase mb-5">REWARD MENU</h4>
 
   <p class="spotbie-loyaltyMenuDescription spotbie-text-gradient text-center mt-2">
@@ -9,7 +8,6 @@
   </p>
 
   <div class='sb-menuItemWrapper'>
-
     <div class='sb-addMenuItem'
          (click)="addItem()"
          *ngIf="rewards !== null && rewards.length < 8">
@@ -21,28 +19,25 @@
          [ngStyle]="rewardTileStyling(reward)"
          (click)="editReward(reward)">
 
-      <h6 *ngIf="reward.type == '0'">
-                <span class="spotbie-text-gradient">
-                    {{ reward.name }}
-                </span>
+      <h6 *ngIf="reward.type === 0">
+          <span class="spotbie-text-gradient">
+              {{ reward.name }}
+          </span>
       </h6>
 
-      <h6 *ngIf="reward.type == '1'">
-                <span class='sb-text-light-green-gradient'>
-                    {{ (reward.point_cost * (loyaltyPointsBalance.loyalty_point_dollar_percent_value / 100)) | currency : 'USD' }}
-                </span>
+      <h6 *ngIf="reward.type === 1">
+        <span class='sb-text-light-green-gradient'>
+            {{ (reward.point_cost * (loyaltyPointsBalance.loyalty_point_dollar_percent_value / 100)) | currency : 'USD' }}
+        </span>
         <br/>
         <span class='spotbie-text-gradient' style='font-size: .5rem;'>
-                    DISCOUNT
-                </span>
+            DISCOUNT
+        </span>
       </h6>
-
     </div>
-
   </div>
 
   <div class='spotbie-text-gradient text-uppercase' (click)="closeWindow()" *ngIf="fullScreenMode">CLOSE</div>
-
 </div>
 
 <div *ngIf="(userType === eAllowedAccountTypes.Personal || isLoggedIn !== '1')" [ngClass]="getWindowClass()">
@@ -60,26 +55,25 @@
            (click)="openReward(reward)">
       </div>
 
-      <h6 *ngIf="reward.type == '0'">
+      <h6 *ngIf="reward.type === 0">
           <span class="spotbie-text-gradient">
               {{ reward.name }}
           </span>
       </h6>
 
-      <h6 *ngIf="reward.type == '1'">
+      <h6 *ngIf="reward.type === 1">
           <span class='sb-text-light-green-gradient'>
               {{  reward.point_cost * (userPointToDollarRatio / 100) | currency : 'USD' }}
           </span>
         <br/>
         <span class='spotbie-text-gradient sb-discountTitle' style='font-size: .5rem;'>
-              DISCOUNT
-          </span>
+            DISCOUNT
+        </span>
       </h6>
     </div>
   </div>
 
   <div class='spotbie-text-gradient text-uppercase cursor-pointer mt-5' (click)="closeWindow()" *ngIf="fullScreenMode">CLOSE</div>
-
 </div>
 
 <app-reward-creator *ngIf="itemCreator"

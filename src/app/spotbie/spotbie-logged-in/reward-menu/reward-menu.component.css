@@ -10,18 +10,18 @@
   width: 900px;
   max-width: 900px;
   display: block;
-  text-align: left;
+  text-align: center;
 }
-
 .sb-addMenuItem{
   position: relative;
-  width: 215px;
-  min-width: 215px;
-  max-width:215px;
-  height: 215px;
-  min-height: 215px;
-  max-height: 215px;
-  background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='27' ry='27' stroke='white' stroke-width='5' stroke-dasharray='21%2c 12%2c 15' stroke-dashoffset='15' stroke-linecap='round'/%3e%3c/svg%3e");
+  width: 210px;
+  min-width: 210px;
+  max-width:210px;
+  height: 210px;
+  min-height: 210px;
+  max-height: 210px;
+  margin-right: 5px;
+  background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' rx='27' ry='27' stroke='white' stroke-width='3' stroke-dasharray='21%2c 12%2c 15' stroke-dashoffset='15' stroke-linecap='round'/%3e%3c/svg%3e");
   border-radius: 27px;
   display: inline-block;
   cursor: pointer;

@@ -3,7 +3,6 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angu
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms'
 import { Ad } from 'src/app/models/ad'
 import { Business } from 'src/app/models/business'
-import { LoyaltyPointBalance } from 'src/app/models/loyalty-point-balance'
 import { LoyaltyPointsService } from 'src/app/services/loyalty-points/loyalty-points.service'
 import { AdCreatorService } from 'src/app/services/spotbie-logged-in/ad-manager-menu/ad-creator/ad-creator.service'
 import { BottomAdBannerComponent } from 'src/app/spotbie/ads/bottom-ad-banner/bottom-ad-banner.component'
@@ -11,6 +10,7 @@ import { HeaderAdBannerComponent } from 'src/app/spotbie/ads/header-ad-banner/he
 import { NearbyFeaturedAdComponent } from 'src/app/spotbie/ads/nearby-featured-ad/nearby-featured-ad.component'
 import { environment } from 'src/environments/environment'
 import * as spotbieGlobals from '../../../../globals'
+import {map} from 'rxjs/operators';
 
 const AD_MEDIA_UPLOAD_API_URL = `${spotbieGlobals.API}in-house/upload-media`
 const AD_MEDIA_MAX_UPLOAD_SIZE = 10e+6
@@ -45,16 +45,14 @@ export class AdCreatorComponent implements OnInit {
   public adUploadImageMobile: string = null
   public adMediaMessage: string = 'Upload Image'
   public adMediaUploadProgress: number = 0
-
   public adTypeList: Array<any> = [
     { name: 'Header Banner ($19.99/monthly)', dimensions: '1200x370', dimensionsMobile: '600x600'},
     { name: 'Featured Nearby Banner ($13.99/monthly)', dimensions: '600x600'},
     { name: 'Footer Banner ($16.99)', dimensions: '1200x370', dimensionsMobile: '600x600'}
   ]
-
   public adCreated: boolean
   public adDeleted: boolean
-  public loyaltyPointBalance: LoyaltyPointBalance
+  public loyaltyPointBalance: number
   public selected: number = 0
   public business: Business = null
 
@@ -62,11 +60,18 @@ export class AdCreatorComponent implements OnInit {
               private adCreatorService: AdCreatorService,
               private http: HttpClient,
               private loyaltyPointsService: LoyaltyPointsService) {
-                this.loyaltyPointsService.userLoyaltyPoints$.subscribe(
-                  loyaltyPointsBalance => {
-                    this.loyaltyPointBalance = loyaltyPointsBalance
-                  })
-              }
+          this.loyaltyPointsService.userLoyaltyPoints$.pipe(
+            map((loyaltyPointBalance): number => {
+              let loyaltyPoints = 0;
+              loyaltyPointBalance.forEach((loyaltyPointsObj) => {
+                loyaltyPoints += loyaltyPointsObj.balance;
+              });
+              return loyaltyPoints;
+            })
+          ).subscribe(loyaltyPointBalance => {
+            this.loyaltyPointBalance = loyaltyPointBalance
+          })
+  }
 
   get adType() {return this.adCreatorForm.get('adType').value }
   get adName() {return this.adCreatorForm.get('adName').value }

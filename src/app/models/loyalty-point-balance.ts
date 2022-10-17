@@ -1,9 +1,13 @@
+import {Business} from "./business";
+
 export class LoyaltyPointBalance {
 
     private _balance: number = null
     private _reset_balance: number = null
     private _loyalty_point_dollar_percent_value: number = null
     private _end_of_month: string = null
+    updated_at: string
+    from_business: Business
 
     get balance(): number {
         return this._balance

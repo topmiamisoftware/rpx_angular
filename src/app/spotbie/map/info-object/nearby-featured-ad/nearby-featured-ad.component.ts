@@ -33,36 +33,34 @@ export class NearbyFeaturedAdComponent implements OnInit, OnDestroy {
   @Input() categories: number
   @Input() eventsClassification: number = null
 
-  public link: string
-  public displayAd: boolean = false
-  public whiteIconSvg = 'assets/images/home_imgs/spotbie-white-icon.svg'
-  public distance: number = 0
-  public totalRewards: number = 0
-  public categoriesListFriendly: string[] = []
-  public adIsOpen: boolean = false
-  public rewardMenuOpen: boolean = false
-  public isMobile: boolean = false
-  public currentCategoryList: Array<string> = []
-  public categoryListForUi: string = null
-  public loyaltyPointBalance: LoyaltyPointBalance
-  public adTypeWithId: boolean = false
-  public adList: Array<Ad> = []
-  public genericAdImage: string = PLACE_TO_EAT_AD_IMAGE
-  public businessReady: boolean = false
-  public switchAdInterval: any = false
+  link: string
+  displayAd: boolean = false
+  whiteIconSvg = 'assets/images/home_imgs/spotbie-white-icon.svg'
+  distance: number = 0
+  totalRewards: number = 0
+  categoriesListFriendly: string[] = []
+  adIsOpen: boolean = false
+  rewardMenuOpen: boolean = false
+  isMobile: boolean = false
+  currentCategoryList: Array<string> = []
+  categoryListForUi: string = null
+  loyaltyPointBalance: LoyaltyPointBalance
+  adTypeWithId: boolean = false
+  adList: Array<Ad> = []
+  genericAdImage: string = PLACE_TO_EAT_AD_IMAGE
+  businessReady: boolean = false
+  switchAdInterval: any = false
 
   constructor(private adsService: AdsService,
               private deviceDetectorService: DeviceDetectorService,
               private loyaltyPointsService: LoyaltyPointsService,
               private router: Router) {
-                this.loyaltyPointsService.userLoyaltyPoints$
-                  .subscribe(
-                  loyaltyPointsBalance => {
-                    this.loyaltyPointBalance = loyaltyPointsBalance
+                this.loyaltyPointsService.userLoyaltyPoints$.subscribe(loyaltyPointsBalance => {
+                    this.loyaltyPointBalance = loyaltyPointsBalance[0]
                   })
               }
 
-  public getNearByFeatured(){
+  getNearByFeatured(){
     let adId = null
     let accountType
 
@@ -129,7 +127,7 @@ export class NearbyFeaturedAdComponent implements OnInit, OnDestroy {
       })
   }
 
-  public async getNearByFeaturedCallback(resp: any){
+  async getNearByFeaturedCallback(resp: any){
     if(resp.success){
       this.ad = resp.ad
       this.business = resp.business
@@ -177,7 +175,7 @@ export class NearbyFeaturedAdComponent implements OnInit, OnDestroy {
       console.log("getNearByFeaturedCallback", resp)
   }
 
-  public getAdStyle() {
+  getAdStyle() {
     if(this.adTypeWithId) {
       return {
         position: 'relative',
@@ -187,23 +185,23 @@ export class NearbyFeaturedAdComponent implements OnInit, OnDestroy {
     }
   }
 
-  public closeRewardMenu(){
+  closeRewardMenu(){
     this.rewardMenuOpen = false;
   }
 
-  public clickGoToSponsored(){
+  clickGoToSponsored(){
     window.open("/business", '_blank');
   }
 
-  public switchAd(){
+  switchAd(){
     this.getNearByFeatured()
   }
 
-  public openAd(): void{
+  openAd(): void{
     window.open(`/business-menu/${this.business.qr_code_link}`, '_blank')
   }
 
-  public updateAdImage(image: string = ''){
+  updateAdImage(image: string = ''){
     if(image !== ''){
       this.ad.images = image
       this.genericAdImage = image

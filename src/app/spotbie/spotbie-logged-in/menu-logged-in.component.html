@@ -2,50 +2,44 @@
               spotbie-menu
               spotbie-menu-fixed"
         #spotbieMainMenu>
-  <tr>  
-
+  <tr>
     <td class="sb-menu-nav" (click)="slideMenu()" *ngIf="!isDesktop">
-
       <i class="fa fa-bars" *ngIf="!menuActive"></i>
       <i class="fa fa-times" *ngIf="menuActive"></i>
+    </td>
 
-    </td>  
-  
     <td [ngStyle]="getPointsWrapperStyle()">
-      
       <img class="spotbie-header-mini-logo" src="assets/images/spotbie_logo_header.svg" *ngIf="isDesktop" (click)="home()"/>
 
       <span class='sb-loyalty-points' (click)="toggleLoyaltyPoints()" >{{ userLoyaltyPoints | number:'1.0':'en-US' }}</span>
-      
+
       <img class='sb-loyalty-points' *ngIf="!isMobile" (click)="toggleRedeemables()"  src="assets/images/spotbie-loyalty-points.svg" />
 
       <div class="sb-businessMenu" *ngIf="!isDesktop">
         <img class='sb-loyalty-points' (click)="toggleRedeemables()" src="assets/images/spotbie-loyalty-points.svg" />
       </div>
 
-      <!--<div *ngIf="this.userType == eAllowedAccountTypes.PlaceToEat || 
-                  this.userType == eAllowedAccountTypes.Shopping || 
+      <!--<div *ngIf="this.userType == eAllowedAccountTypes.PlaceToEat ||
+                  this.userType == eAllowedAccountTypes.Shopping ||
                   this.userType == eAllowedAccountTypes.Events"
-            (click)="toggleRedeemables()" 
+            (click)="toggleRedeemables()"
             class="sb-businessMenu">
 
         <img class='sb-loyalty-points' src="assets/images/menu spotbie-01.svg" />
 
       </div>-->
-      
-      <img class='sb-qr' (click)="toggleQRScanner()"  src="assets/images/spotbie-qr.svg" /> 
 
-      <span class='sb-userName' (click)="openWindow(settingsWindow)" *ngIf="userName !== null && isDesktop">{{ userName }}</span>         
-      
-    </td>    
+      <img class='sb-qr' (click)="toggleQRScanner()"  src="assets/images/spotbie-qr.svg" />
 
-    <td *ngIf="isDesktop" class="sb-desktopNavBar" style="text-align: right; cursor: default;"> 
+      <span class='sb-userName' (click)="openWindow(settingsWindow)" *ngIf="userName !== null && isDesktop">{{ userName }}</span>
+    </td>
 
+    <td *ngIf="isDesktop" class="sb-desktopNavBar" style="text-align: right; cursor: default;">
       <span (click)="spawnCategories('food')" *ngIf="this.userType === eAllowedAccountTypes.Personal">
         PLACES TO EAT
       </span>
 
-      <span (click)="spawnCategories('shopping')" *ngIf="this.userType === eAllowedAccountTypes.Personal"> 
+      <span (click)="spawnCategories('shopping')" *ngIf="this.userType === eAllowedAccountTypes.Personal">
         RETAIL
       </span>
 
@@ -60,19 +54,15 @@
       <span (click)="logOut()">
         LOG OUT
       </span>
-
-    </td>     
+    </td>
   </tr>
-
 </table>
 
 <div class="spotbie-slider-menu-background" *ngIf="menuActive">
-  
   <table class="spotbie-slider-menu
                 animated slideInLeft" #spotbieMainMenu>
     <tr>
       <td>
-
         <div (click)="home()" *ngIf="this.userType !== eAllowedAccountTypes.Personal">
           HOME
         </div>
@@ -100,16 +90,12 @@
         <div (click)="logOut()">
           LOG OUT
         </div>
-
       </td>
     </tr>
   </table>
-
 </div>
 
 <app-redeemable *ngIf="getRedeemableItems" (closeWindowEvt)="closeRedeemables()"></app-redeemable>
-
-<app-event-menu *ngIf="eventMenuOpen"></app-event-menu>
 
 <app-map [business]="business" *ngIf="mapApp.open" #spotbieMap (openBusinessSettingsEvt)="openBusinessSettings()"></app-map>
 

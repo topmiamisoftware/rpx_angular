@@ -9,6 +9,7 @@ import { LoyaltyPointBalance } from 'src/app/models/loyalty-point-balance';
 import { LoyaltyPointsService } from 'src/app/services/loyalty-points/loyalty-points.service';
 import { EVENT_CATEGORIES, FOOD_CATEGORIES, SHOPPING_CATEGORIES } from '../../map/map_extras/map_extras';
 import { AdsService } from '../ads.service';
+import {map} from "rxjs/operators";
 
 const PLACE_TO_EAT_AD_IMAGE = 'assets/images/def/places-to-eat/featured_banner_in_house.jpg'
 const SHOPPING_AD_IMAGE = 'assets/images/def/shopping/featured_banner_in_house.jpg'
@@ -50,11 +51,10 @@ export class NearbyFeaturedAdComponent implements OnInit, OnDestroy {
   constructor(private adsService: AdsService,
               private deviceDetectorService: DeviceDetectorService,
               private loyaltyPointsService: LoyaltyPointsService) {
-                this.loyaltyPointsService.userLoyaltyPoints$.subscribe(
-                  loyaltyPointsBalance => {
-                    this.loyaltyPointBalance = loyaltyPointsBalance
-                  })
-              }
+    this.loyaltyPointsService.userLoyaltyPoints$.subscribe(loyaltyPointBalance => {
+      this.loyaltyPointBalance = loyaltyPointBalance[0]
+    })
+  }
 
   public getNearByFeatured(){
     let adId = null

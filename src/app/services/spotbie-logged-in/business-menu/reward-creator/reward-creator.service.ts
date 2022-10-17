@@ -9,21 +9,18 @@ import { Store } from '@ngrx/store'
 import { setValue } from 'src/app/spotbie/spotbie-logged-in/loyalty-points/loyalty-points.actions'
 import { LoyaltyPointBalance } from 'src/app/models/loyalty-point-balance'
 
-const REWARD_API = `${spotbieGlobals.API}reward` 
+const REWARD_API = `${spotbieGlobals.API}reward`
 
 @Injectable({
   providedIn: 'root'
 })
 export class RewardCreatorService {
-
   constructor(private http: HttpClient, private store: Store<{ loyaltyPoints }>) {}
 
   public saveItem(itemObj: Reward): Observable<any>{
-
     const placeToEatRewardApi = `${REWARD_API}/create`
-
     const itemObjToSave = {
-      name: itemObj.name,    
+      name: itemObj.name,
       description: itemObj.description,
       images: itemObj.images,
       point_cost: itemObj.point_cost,
@@ -31,16 +28,14 @@ export class RewardCreatorService {
     }
 
     return this.http.post<any>(placeToEatRewardApi, itemObjToSave).pipe(
-      catchError(handleError("completeReset"))
-    ) 
+      catchError(handleError('completeReset'))
+    )
   }
 
   public updateItem(itemObj: Reward): Observable<any>{
-
     const placeToEatRewardApi = `${REWARD_API}/update`
-
     const itemObjToSave = {
-      name: itemObj.name,    
+      name: itemObj.name,
       description: itemObj.description,
       images: itemObj.images,
       point_cost: itemObj.point_cost,
@@ -49,41 +44,32 @@ export class RewardCreatorService {
     }
 
     return this.http.post<any>(placeToEatRewardApi, itemObjToSave).pipe(
-      catchError(handleError("completeReset"))
-    ) 
-
+      catchError(handleError('completeReset'))
+    )
   }
 
   public deleteMe(itemObj: Reward): Observable<any>{
-
     const placeToEatRewardApi = `${REWARD_API}/delete`
-
     const itemObjToSave = {
       id: itemObj.id
     }
 
     return this.http.post<any>(placeToEatRewardApi, itemObjToSave).pipe(
-      catchError(handleError("completeReset"))
-    ) 
+      catchError(handleError('completeReset'))
+    )
   }
 
-  public claimReward(businessLoyaltyPointsObj: any, callback: Function): any{
-
-    let apiUrl = `${REWARD_API}/claim`
+  public claimReward(businessLoyaltyPointsObj: any, callback): any{
+    const apiUrl = `${REWARD_API}/claim`
 
     this.http.post<any>(apiUrl, businessLoyaltyPointsObj).pipe(
-
-      catchError(handleError("addLoyaltyPoints"))
-
-    ).subscribe(
-      resp => {
-        if(resp.success){                
-          let loyaltyPointBalance: LoyaltyPointBalance = resp.loyalty_points 
-          this.store.dispatch( setValue({loyaltyPointBalance}) )              
-        } 
+      catchError(handleError('claimReward'))
+    ).subscribe(resp => {
+        if(resp.success){
+          const loyaltyPointBalance: LoyaltyPointBalance[] = resp.loyalty_points
+          this.store.dispatch( setValue({loyaltyPointBalance}) )
+        }
         callback(resp)
-      }    
-    )
-
+      })
   }
 }

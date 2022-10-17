@@ -58,7 +58,7 @@ export class InfoObjectComponent implements OnInit {
   public displayAds: boolean
 
   constructor(private infoObjectService: InfoObjectServiceService,
-              //private myFavoritesService: MyFavoritesService,
+              // private myFavoritesService: MyFavoritesService,
               public share: ShareService,
               private router: Router,
               private activatedRoute: ActivatedRoute,
@@ -106,10 +106,10 @@ export class InfoObjectComponent implements OnInit {
     }
   }
 
-  public linkCopy(input_element) {
-    input_element.select();
+  public linkCopy(inputElement) {
+    inputElement.select();
     document.execCommand('copy');
-    input_element.setSelectionRange(0, input_element.value.length);
+    inputElement.setSelectionRange(0, inputElement.value.length);
     this.successful_url_copy = true;
 
     setTimeout(function() {

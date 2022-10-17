@@ -40,7 +40,9 @@ export class BusinessDashboardComponent implements OnInit {
 
   scrollToLpAppAnchor(){
     this.lpAppAnchor.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    this.loyaltyPointsApp.initBusinessLoyaltyPoints();
   }
+
   scrollToQrAppAnchor(){
     this.qrCodeAppAnchor.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
@@ -57,15 +59,13 @@ export class BusinessDashboardComponent implements OnInit {
 
   checkIfBusinessIsSet(){
     this.userAuthServe.getSettings().subscribe(resp => {
-        console.log('getSettings', resp);
         if(resp.business === null || (resp.is_subscribed === false && resp.is_trial === false)) {
           this.displayBusinessSetUp = true
         } else {
           this.displayBusinessSetUp = false
         }
         this.businessFetched = true
-      }
-    )
+      })
   }
 
   openSettings(){
@@ -75,5 +75,4 @@ export class BusinessDashboardComponent implements OnInit {
   ngOnInit(): void {
     this.checkIfBusinessIsSet()
   }
-
 }

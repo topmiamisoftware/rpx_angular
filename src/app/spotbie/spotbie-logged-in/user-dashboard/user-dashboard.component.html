@@ -29,15 +29,14 @@
 
         <app-qr [fullScreenWindow]="false"
                 *ngIf="scannerStarted"
-                (openLoyaltyPoints)="openLoyaltyPoints()"
                 (openUserLPBalanceEvt)="openLoyaltyPoints()"
                 (closeQrUserEvt)="closeQrScanner()"
                 #qrApp>
         </app-qr>
     </div>
 
-    <div class="sb-dashboardWrapper" #lpAppAnchor>
-        <app-loyalty-points [fullScreenWindow]="false" (openRedeemed)="redeemedLp()" #loyaltyPointsApp></app-loyalty-points>
+    <div class="sb-dashboardWrapper" #lpAppAnchor (click)="redeemedLp()" style="cursor: pointer;">
+        <app-loyalty-points [fullScreenWindow]="false" #loyaltyPointsApp></app-loyalty-points>
     </div>
 
     <app-redeemable *ngIf="getRedeemableItems" (closeWindowEvt)="closeRedeemables()"></app-redeemable>

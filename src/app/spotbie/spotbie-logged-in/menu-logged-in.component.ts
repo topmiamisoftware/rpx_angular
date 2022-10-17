@@ -6,6 +6,7 @@ import { LoyaltyPointsService } from 'src/app/services/loyalty-points/loyalty-po
 import { AllowedAccountTypes } from 'src/app/helpers/enum/account-type.enum'
 import { SettingsComponent } from './settings/settings.component'
 import { logOutCallback } from 'src/app/helpers/logout-callback'
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-menu-logged-in',
@@ -17,113 +18,83 @@ export class MenuLoggedInComponent implements OnInit {
   @Output() userBackgroundEvent = new EventEmitter()
 
   @ViewChild('spotbieMainMenu') spotbieMainMenu: ElementRef
-  
-  @ViewChild('spotbieMap') spotbieMap: MapComponent  
-  
+  @ViewChild('spotbieMap') spotbieMap: MapComponent
   @ViewChild('spotbieSettings') spotbieSettings: SettingsComponent
 
-  public eAllowedAccountTypes = AllowedAccountTypes
-
-  public spotbieBackgroundImage: string
-  
-  public foodWindow = { open : false }
-
-  public mapApp = { open : false }
-
-  public settingsWindow =  { open : false }
-
-  public home_route: boolean = true
-
-  public prevScrollpos
-
-  public bg_image_ready: boolean = false
-
-  public menuActive: boolean = false
-  
-  public spotType: string
-  
-  public isMobile: boolean
-  public isDesktop: boolean
-  public isTablet: boolean
-
-  public userType: number
-
-  public userLoyaltyPoints: number = 0
-
-  public userName: string = null
-
-  public qrCode: boolean = false
-
-  public business: boolean = false
-
-  public getRedeemableItems: boolean = false
-
-  public eventMenuOpen: boolean = false
+  eAllowedAccountTypes = AllowedAccountTypes
+  spotbieBackgroundImage: string
+  foodWindow = { open : false }
+  mapApp = { open : false }
+  settingsWindow =  { open : false }
+  home_route: boolean = true
+  prevScrollpos
+  bg_image_ready: boolean = false
+  menuActive: boolean = false
+  spotType: string
+  isMobile: boolean
+  isDesktop: boolean
+  isTablet: boolean
+  userType: number
+  userLoyaltyPoints: number = 0
+  userName: string = null
+  qrCode: boolean = false
+  business: boolean = false
+  getRedeemableItems: boolean = false
+  eventMenuOpen: boolean = false
 
   constructor(private userAuthService : UserauthService,
               private deviceService: DeviceDetectorService,
               private loyaltyPointsService: LoyaltyPointsService) {}
 
-  public myFavorites(){
+  myFavorites(){
     this.menuActive = false
-    this.spotbieMap.myFavorites()    
+    this.spotbieMap.myFavorites()
   }
 
-  public toggleLoyaltyPoints(){
+  toggleLoyaltyPoints(){
     this.spotbieMap.goToLp()
   }
-  
-  public toggleQRScanner(){
+
+  toggleQRScanner(){
     this.spotbieMap.goToQrCode()
   }
 
-  public toggleRewardMenu(ac: string){    
+  toggleRewardMenu(ac: string){
     this.spotbieMap.goToRewardMenu()
   }
 
-  public spawnCategories(category: string): void{
-
+  spawnCategories(category: string): void{
     if(!this.isDesktop) this.slideMenu()
-
-    let obj = {
-      category: category
+    const obj = {
+      category
     }
-    this.spotbieMap.spawnCategories(obj)
 
+    this.spotbieMap.spawnCategories(obj)
   }
 
-  public home(){
-    
+  home(){
     this.settingsWindow.open = false
     this.foodWindow.open = false
     this.getRedeemableItems = false
     this.eventMenuOpen = false
 
-    if(this.userType == AllowedAccountTypes.Personal){
-      
-      this.spotbieMap.openWelcome() 
+    if(this.userType === AllowedAccountTypes.Personal){
+      this.spotbieMap.openWelcome()
       this.spotbieMap.closeCategories()
-
     } else {
-
       this.toggleQRScanner();
-
     }
-
   }
 
-  public openBusinessSettings(){
-    
+  openBusinessSettings(){
     this.settingsWindow.open = true
 
     setTimeout(() => {
       this.spotbieSettings.changeAccType()
     }, 500)
-    
   }
 
-  slideMenu(){    
-
+  slideMenu(){
     if(this.settingsWindow.open)
       this.settingsWindow.open = false
     else
@@ -131,94 +102,86 @@ export class MenuLoggedInComponent implements OnInit {
   }
 
   getMenuStyle(){
-    if(this.menuActive == false){
+    if(this.menuActive === false){
       return {'background-color' : 'transparent'};
     }
   }
 
-  public openWindow(window : any) : void {
+  openWindow(window : any) : void {
     window.open = true
   }
 
-  public closeWindow(window : any) : void {
+  closeWindow(window : any) : void {
     window.open = false
   }
-  public logOut() : void {
 
+  logOut() : void {
     this.userAuthService.logOut().subscribe(
       resp => {
         logOutCallback(resp)
     })
-
   }
 
   usersAroundYou(){
     this.spotbieMap.mobileStartLocation()
   }
 
-  public async getLoyaltyPointBalance(){
-
+  async getLoyaltyPointBalance(){
     await this.loyaltyPointsService.getLoyaltyPointBalance()
-
   }
 
-  public getPointsWrapperStyle(){
-
+  getPointsWrapperStyle(){
     if(this.isMobile)
       return { 'width:' : '85%', 'text-align' : 'right' }
     else
-      return { 'width' : '45%' }
-    
+      return { width : '45%' }
   }
 
-  public openEvents(){
+  openEvents(){
     this.eventMenuOpen = true
   }
 
-  public closeEvents(){
+  closeEvents(){
     this.eventMenuOpen = false
   }
 
   ngOnInit() : void {
-
     this.isMobile = this.deviceService.isMobile()
     this.isDesktop = this.deviceService.isDesktop()
     this.isTablet = this.deviceService.isTablet()
 
-    this.loyaltyPointsService.userLoyaltyPoints$.subscribe(
+    this.loyaltyPointsService.userLoyaltyPoints$.pipe(
+      map((loyaltyPointBalance): number => {
+        let loyaltyPoints = 0;
+        loyaltyPointBalance.forEach((loyaltyPointsObj) => {
+          loyaltyPoints += loyaltyPointsObj.balance;
+        });
+        return loyaltyPoints;
+      })
+    ).subscribe(loyaltyPointBalance => {
+      this.userLoyaltyPoints = loyaltyPointBalance
+    })
 
-      loyaltyPointsBalance =>{
-        
-        if(loyaltyPointsBalance.balance != null)
-          this.userLoyaltyPoints = loyaltyPointsBalance.balance                
+    this.userType = parseInt(localStorage.getItem('spotbie_userType'), 10)
 
-      }
-
-    )
-
-    this.userType = parseInt(localStorage.getItem('spotbie_userType'))
-
-    if(this.userType == AllowedAccountTypes.Personal)
+    if(this.userType === AllowedAccountTypes.Personal)
       this.business = false
     else
       this.business = true
 
     this.userName = localStorage.getItem('spotbie_userLogin')
-
     this.getLoyaltyPointBalance()
-
   }
 
   toggleRedeemables(){
     this.getRedeemableItems = !this.getRedeemableItems
   }
-  
+
   closeRedeemables(){
     this.getRedeemableItems = false
   }
 
   ngAfterViewInit(){
-    this.mapApp.open = true 
+    this.mapApp.open = true
   }
-  
 }

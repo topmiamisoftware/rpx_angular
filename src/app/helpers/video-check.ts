@@ -17,9 +17,9 @@ export function videoEmbedCheck(stream_content : string, _sanitizer : DomSanitiz
             video_url : 'https://www.youtube.com/embed/' + match[1] + '?autoplay=0',
             url_embed : url_embed
           }
-          
+
           return youtube_san_obj;
-          
+
         } else {
           return 'no_video';
         }
@@ -43,14 +43,10 @@ export async function checkStreamText(e ?: any){
 
   this.check_stream_text_timeout = setTimeout(async function(){
 
-    //console.log("asd : ", text)
-
     let youtube_obj : any = await videoEmbedCheck(text, this._sanitizer)
 
     if(youtube_obj.video_url == this.current_video_url) return
 
-    //console.log("Youtube Embed", youtube_obj)
-    
     if(youtube_obj !== 'no_video'){
       this.embed_content = true
       this.current_video_url =  youtube_obj.video_url
@@ -58,9 +54,9 @@ export async function checkStreamText(e ?: any){
     } else {
       this.embed_content = false
       this.current_video_url = null
-      this.current_embed_video = null             
+      this.current_embed_video = null
     }
-    
+
   }.bind(this, text), 700)
 
   this.checkFriendTags(text)

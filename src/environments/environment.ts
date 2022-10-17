@@ -1,4 +1,4 @@
-const ngrok = 'https://e627-2600-1700-4804-d5f0-4395-a32c-ee52-f3ad.ngrok.io/'
+const apiEndpoint = 'https://1cb7-2600-1700-4804-d5f0-3ae3-9e40-f25e-ac9d.ngrok.io/'
 
 const url = window.location.toString();
 const { hostname,protocol }  = new URL(url);
@@ -13,10 +13,8 @@ export const environment = {
   qrCodeLoyaltyPointsScanBaseUrl: baseUrl + 'loyalty-points',
   qrCodeRewardScanBaseUrl: baseUrl + 'reward',
   publishableStripeKey: 'pk_test_51JrUwnGFcsifY4UhCCJp023Q1dWwv5AabBTsMDwiJ7RycEVLyP1EBpwbXRsfn07qpw5lovv9CGfvfhQ82Zt3Be8U00aH3hD9pj',
-  apiEndpoint: `${ngrok}api/`,
+  apiEndpoint: `${apiEndpoint}api/`,
   fakeLocation: true,
   myLocX: 25.786286,
   myLocY: -80.186562
 }
-
-import 'zone.js/dist/zone-error'; // Included with Angular CLI.

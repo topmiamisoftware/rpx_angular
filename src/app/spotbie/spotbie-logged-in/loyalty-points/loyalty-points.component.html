@@ -1,34 +1,34 @@
 <app-loading-screen *ngIf="loading"></app-loading-screen>
 
 <div [ngClass]="getWindowClass()">
-
     <div>
-
         <h5 id="sp-lpTitle" class="spotbie-text-gradient text-center text-uppercase mt-4 mb-5">SPOTBIE LOYALTY POINTS</h5>
 
-        <div class="spotbie-lpResetInfo spotbie-text-gradient text-uppercase mt-3 mb-3" 
-              *ngIf="userType !== eAllowedAccountTypes.Personal && 
-                     loyaltyPointBalance.end_of_month !== null &&
-                     loyaltyPointBalance.balance !== null">
-            POINTS RESET ON        
+        <div class="spotbie-lpResetInfo spotbie-text-gradient text-uppercase mt-3 mb-3"
+              *ngIf="userType !== eAllowedAccountTypes.Personal &&
+                     loyaltyPointBalanceBusiness.end_of_month !== null &&
+                     loyaltyPointBalanceBusiness.balance !== null">
+            POINTS RESET ON
         </div>
 
-        <div class="spotbie-lpResetInfo spotbie-text-gradient text-uppercase" 
-              *ngIf="userType !== eAllowedAccountTypes.Personal && loyaltyPointBalance.end_of_month !== null">
-            {{ (loyaltyPointBalance.end_of_month | date : 'mediumDate') || loyaltyPointBalance.end_of_month }}        
+        <div class="spotbie-lpResetInfo spotbie-text-gradient text-uppercase"
+              *ngIf="userType !== eAllowedAccountTypes.Personal && loyaltyPointBalanceBusiness.end_of_month !== null">
+            {{ (loyaltyPointBalanceBusiness.end_of_month | date : 'mediumDate') || loyaltyPointBalanceBusiness.end_of_month }}
         </div>
 
-        <p class="mt-4 mb-4" (click)="initBusinessLoyaltyPoints()">   
-            
-            <span [ngClass]="loyaltyPointsClass()" *ngIf="loyaltyPointBalance.balance !== null">
-                {{ loyaltyPointBalance.balance | number:'1.0':'en-US' }}
+        <p class="mt-4 mb-4" (click)="initBusinessLoyaltyPoints()">
+            <span [ngClass]="loyaltyPointsClass()" *ngIf="loyaltyPointBalance">
+                {{ loyaltyPointBalance | number:'1.0':'en-US' }}
             </span>
 
-            <span class="sb-added-loyalty-points sb-text-light-green-gradient animated fadeOutUp" 
-                    *ngIf="newUserLoyaltyPoints !== null"
-                    #newBalanceLoyaltyPoints>+{{ newUserLoyaltyPoints | number:'1.1-2':'en-US' }}</span>
+            <span [ngClass]="loyaltyPointsClass()" *ngIf="loyaltyPointBalanceBusiness">
+                {{ loyaltyPointBalanceBusiness.balance | number:'1.0':'en-US' }}
+            </span>
 
-        </p>    
+            <span class="sb-added-loyalty-points sb-text-light-green-gradient animated fadeOutUp"
+                    *ngIf="newUserLoyaltyPoints"
+                    #newBalanceLoyaltyPoints>+{{ newUserLoyaltyPoints | number:'1.1-2':'en-US' }}</span>
+        </p>
 
         <div style="cursor: pointer; display: inline-block;"
             *ngIf="userType !== eAllowedAccountTypes.Personal"
@@ -36,83 +36,73 @@
             <span class='spotbie-text-gradient'>RESET BALANCE</span><i class='fa fa-refresh'></i>
         </div>
 
-        <div class='sb-text-light-green-gradient mt-2 mb-4' 
+        <div class='sb-text-light-green-gradient mt-2 mb-4'
                 *ngIf="userType !== eAllowedAccountTypes.Personal">
-                {{ loyaltyPointBalance.reset_balance | number:'1.0':'en-US' }}
-        </div> 
+                {{ loyaltyPointBalanceBusiness.reset_balance | number:'1.0':'en-US' }}
+        </div>
 
         <div class='spotbie-text-gradient text-uppercase cursor-pointer' (click)="closeThis()" *ngIf="fullScreenWindow">
             CLOSE
         </div>
-
     </div>
-    
 </div>
 
 <div class="spotbie-overlay-window pt-5 d-flex align-items-center justify-content-center" *ngIf="businessLoyaltyPointsOpen">
-
     <div style="overflow-y: scroll; min-width: 100%;">
-
         <div #businessLoyaltyPointsInfo class="spotbie-loyaltyPointsInfo spotbie-text-gradient text-center text-uppercase">
             <h4 class="spotbie-text-gradient text-center text-uppercase">MONTHLY BUDGET</h4>
         </div>
 
         <form [formGroup]="businessLoyaltyPointsForm" *ngIf="businessLoyaltyPointsFormUp">
-
-            <div *ngIf="businessLoyaltyPointsSubmitted && f.businessCoinPercentage.errors else percentage_normal" 
+            <div *ngIf="businessLoyaltyPointsSubmitted && f.businessCoinPercentage.errors else percentage_normal"
                     class="spotbie-input-info spotbie-text-gradient spotbie-error mt-4 mb-2">
-        
                 <div *ngIf="f.businessCoinPercentage.errors.required">
                     ENTER REWARD RATE %
                 </div>
-                
-            </div> 
-            
+            </div>
+
             <ng-template #percentage_normal>
                 <label class="spotbie-input-info spotbie-text-gradient mb-2">
                     REWARD RATE %
-                </label>          
+                </label>
             </ng-template>
 
-            <input class="sb-input" 
-                    (click)="$event.target.select()" 
+            <input class="sb-input"
+                    (click)="$event.target.select()"
                     (keyup)="calculateDollarValue()"
                     [dropSpecialCharacters]="false"
-                    formControlName="businessCoinPercentage" 
-                    type="text" 
+                    formControlName="businessCoinPercentage"
+                    type="text"
                     placeholder="1.5%"
                     separatorLimit="1000"
                     suffix="%"
                     maxlength="6"
-                    mask="percent" />     
+                    mask="percent" />
 
-            <div *ngIf="businessLoyaltyPointsSubmitted && f.businessLoyaltyPoints.errors else loyalty_points_normal" 
+            <div *ngIf="businessLoyaltyPointsSubmitted && f.businessLoyaltyPoints.errors else loyalty_points_normal"
                     class="spotbie-input-info spotbie-text-gradient spotbie-error mt-4 mb-2">
-        
                 <div *ngIf="f.businessLoyaltyPoints.errors.required">
                     Loyalty Points per Month
                 </div>
-                
-            </div> 
-            
+            </div>
+
             <ng-template #loyalty_points_normal>
                 <label class="spotbie-input-info spotbie-text-gradient mt-4 mb-2">
                     Loyalty Points per Month
-                </label>          
+                </label>
             </ng-template>
 
-            <input class="sb-input" 
-                    (click)="$event.target.select()" 
+            <input class="sb-input"
+                    (click)="$event.target.select()"
                     (keyup)="calculateDollarValue()"
-                    formControlName="businessLoyaltyPoints" 
-                    type="text" 
-                    placeholder="0" 
+                    formControlName="businessLoyaltyPoints"
+                    type="text"
+                    placeholder="0"
                     maxlength="7"
-                    thousandSeparator="," 
-                    mask="separator.0" />            
-        
-        </form>               
-        
+                    thousandSeparator=","
+                    mask="separator.0" />
+        </form>
+
         <p class="text-uppercase mt-4" style="font-size: .8rem !important;" *ngIf="monthlyDollarValueCalculated">
             <span class='spotbie-text-gradient'>monthly dollar value </span>
             <span class='sb-text-light-green-gradient'>${{ userPointToDollarRatio | number:'1.1-2':'en-US' }}</span>
@@ -123,7 +113,6 @@
         </div>
 
         <div class='sb-helpBlock mt-4' *ngIf="helpEnabled" style="text-align: center;">
-
             <p class='spotbie-text-gradient mb-3'>
                 Input the dollar value of each of your loyalty points.
             </p>
@@ -134,24 +123,21 @@
 
             <p class='spotbie-text-gradient mb-3'>
                 When your customers <b>scan your QR code</b>, they will get an amount of loyalty points directly proportional to their bill.
-            </p>     
+            </p>
 
             <p class='spotbie-text-gradient mb-3'>
                 Let's say your customer spent <b>$200</b> on their bill. If your <b>loyalty points are worth 2.5% of a dollar</b>, then your customer will gain
-                <br/><b>$200.00 * (2.5%/100) = 5 Loyalty Points</b>!
-            </p> 
-
+                <br/><b>a $5.00 Reward in Loyalty Points</b>!
+            </p>
         </div>
 
         <div class='spotbie-button text-uppercase mt-3' (click)="submitBusinessLoyaltyPoints()">
             SAVE
-        </div>    
+        </div>
 
-        <div class='spotbie-text-gradient text-center text-uppercase mt-4' 
+        <div class='spotbie-text-gradient text-center text-uppercase mt-4'
                 style="cursor: pointer;" (click)="closeBusinessLoyaltyPoints()">
             <span class='spotbie-text-gradient text-center text-uppercase'>CLOSE</span>
         </div>
-
     </div>
-
 </div>

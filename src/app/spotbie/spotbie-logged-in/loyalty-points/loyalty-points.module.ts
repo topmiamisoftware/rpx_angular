@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { LoyaltyPointsComponent } from './loyalty-points.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxMaskModule, IConfig } from 'ngx-mask';
+import {HelperModule} from '../../../helpers/helper.module';
 
 export const options : Partial<IConfig> | (() => Partial<IConfig>) = null;
 
@@ -13,8 +14,9 @@ export const options : Partial<IConfig> | (() => Partial<IConfig>) = null;
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    HelperModule,
     FormsModule,
-    NgxMaskModule.forRoot(options)    
+    NgxMaskModule.forRoot(options)
   ],
   exports : [
     LoyaltyPointsComponent

@@ -6,6 +6,7 @@ import { Ad } from 'src/app/models/ad'
 import { LoyaltyPointsService } from 'src/app/services/loyalty-points/loyalty-points.service'
 import { AdCreatorComponent } from './ad-creator/ad-creator.component'
 import { AdsService } from '../../ads/ads.service'
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-ad-manager-menu',
@@ -17,67 +18,55 @@ export class AdManagerMenuComponent implements OnInit {
   @ViewChild('adCreator') adCreator: AdCreatorComponent
 
   @Input() fullScreenWindow: boolean = true
-
   @Input() loyaltyPoints: string
 
   @Output() closeWindowEvt = new EventEmitter()
-
   @Output() notEnoughLpEvt = new EventEmitter()
 
-  public eAllowedAccountTypes = AllowedAccountTypes
-
-  public menuItemList: Array<any>
-
-  public itemCreator: boolean = false
-
-  public userLoyaltyPoints
-  public userResetBalance
-  public userPointToDollarRatio
-
-  public adList: Array<Ad> = []
-  public ad: Ad
-
-  public qrCodeLink: string = null
-  public userHash: string = null
-
-  public loyaltyPointsBalance: LoyaltyPointBalance
+  eAllowedAccountTypes = AllowedAccountTypes
+  menuItemList: Array<any>
+  itemCreator: boolean = false
+  userLoyaltyPoints: number
+  userResetBalance
+  userPointToDollarRatio
+  adList: Array<Ad> = []
+  ad: Ad
+  qrCodeLink: string = null
+  userHash: string = null
+  loyaltyPointsBalance: LoyaltyPointBalance
 
   constructor(private loyaltyPointsService: LoyaltyPointsService,
               private adCreatorService: AdsService,
               private router: Router,
-              route: ActivatedRoute){
-
-      if(this.router.url.indexOf('business-menu') > -1){     
-
+              route: ActivatedRoute) {
+      if(this.router.url.indexOf('business-menu') > -1){
         this.qrCodeLink = route.snapshot.params.qrCode
         this.userHash   = route.snapshot.params.userHash
-
-      }        
-
+      }
   }
 
-  public getWindowClass(){
-
+  getWindowClass(){
     if(this.fullScreenWindow)
       return 'spotbie-overlay-window'
     else
       return ''
-
   }
 
-  public getLoyaltyPointBalance(){    
-
-    this.loyaltyPointsService.userLoyaltyPoints$.subscribe(
-
-      loyaltyPointsBalance => {
-        this.loyaltyPointsBalance = loyaltyPointsBalance
-      }
-      
-    )
-    
+  getLoyaltyPointBalance(){
+    this.loyaltyPointsService.userLoyaltyPoints$.pipe(
+      map((loyaltyPointBalance): number => {
+        let loyaltyPoints = 0;
+        loyaltyPointBalance.forEach((loyaltyPointsObj) => {
+          loyaltyPoints += loyaltyPointsObj.balance;
+        });
+        return loyaltyPoints;
+      })
+    ).subscribe(loyaltyPointBalance => {
+      this.userLoyaltyPoints = loyaltyPointBalance
+    })
   }
-  
-  public fetchAds(){
+
+  fetchAds(){
     this.adCreatorService.getAds().subscribe(
       resp => {
         this.fetchAdsCb(resp)
@@ -86,48 +75,42 @@ export class AdManagerMenuComponent implements OnInit {
   }
 
   private fetchAdsCb(resp){
-
     if(resp.success){
       this.adList = resp.adList
-    } else 
-      console.log("fetchAdsCb", resp)
-    
+    } else {
+      console.log('fetchAdsCb', resp)
+    }
   }
 
-  public addAd(){        
-    this.itemCreator = !this.itemCreator  
+  addAd(){
+    this.itemCreator = !this.itemCreator
   }
 
-  public closeWindow(){
+  closeWindow(){
     this.closeWindowEvt.emit()
   }
 
-  public openAd(ad: Ad){
+  openAd(ad: Ad){
     this.ad = ad
     this.itemCreator = true
   }
 
-  public closeAdCreator(){
+  closeAdCreator(){
     this.ad = null
     this.itemCreator = false
   }
 
-  public closeAdCreatorAndRefetchAdList(){
-
+  closeAdCreatorAndRefetchAdList(){
     this.closeAdCreator()
     this.fetchAds()
-
   }
 
-  public adTileStyling(ad: Ad){
-    return  { 'background': 'url(' + ad.images + ')' }  
+  adTileStyling(ad: Ad){
+    return  { background: 'url(' + ad.images + ')' }
   }
 
   ngOnInit(): void {
-
     this.getLoyaltyPointBalance()
     this.fetchAds()
-
   }
-
 }

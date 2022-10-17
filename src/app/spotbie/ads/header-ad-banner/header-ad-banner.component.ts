@@ -38,30 +38,29 @@ export class HeaderAdBannerComponent implements OnInit, OnDestroy {
   @Input() eventsClassification: number = null
   @Input() isMobile: boolean = false
 
-  public isDesktop: boolean = false
-  public link: string
-  public displayAd: boolean = false
-  public distance: number = 0
-  public totalRewards: number = 0
-  public categoriesListFriendly: string[] = []
-  public communityMemberOpen: boolean = false
-  public currentCategoryList: Array<string> = []
-  public categoryListForUi: string = null
-  public loyaltyPointBalance: LoyaltyPointBalance
-  public genericAdImage: string = PLACE_TO_EAT_AD_IMAGE
-  public genericAdImageMobile: string = PLACE_TO_EAT_AD_IMAGE_MOBILE
-  public switchAdInterval: any = false
+  isDesktop: boolean = false
+  link: string
+  displayAd: boolean = false
+  distance: number = 0
+  totalRewards: number = 0
+  categoriesListFriendly: string[] = []
+  communityMemberOpen: boolean = false
+  currentCategoryList: Array<string> = []
+  categoryListForUi: string = null
+  loyaltyPointBalance: LoyaltyPointBalance
+  genericAdImage: string = PLACE_TO_EAT_AD_IMAGE
+  genericAdImageMobile: string = PLACE_TO_EAT_AD_IMAGE_MOBILE
+  switchAdInterval: any = false
 
   constructor(private adsService: AdsService,
               private deviceDetectorService: DeviceDetectorService,
               private loyaltyPointsService: LoyaltyPointsService) {
-                this.loyaltyPointsService.userLoyaltyPoints$.subscribe(
-                  loyaltyPointsBalance => {
-                    this.loyaltyPointBalance = loyaltyPointsBalance
-                  })
-              }
+                this.loyaltyPointsService.userLoyaltyPoints$.subscribe(loyaltyPointBalance => {
+                  this.loyaltyPointBalance = loyaltyPointBalance[0]
+                })
+  }
 
-  public getHeaderBanner(){
+  getHeaderBanner(){
     let adId = null
     let accountType
 
@@ -129,13 +128,12 @@ export class HeaderAdBannerComponent implements OnInit, OnDestroy {
     }
 
     // Retrieve the SpotBie Ads
-    this.adsService.getHeaderBanner(headerBannerReqObj).subscribe(
-      resp => {
+    this.adsService.getHeaderBanner(headerBannerReqObj).subscribe(resp => {
         this.getHeaderBannerAdCallback(resp)
       })
   }
 
-  public async getHeaderBannerAdCallback(resp: any){
+  async getHeaderBannerAdCallback(resp: any){
     if(resp.success) {
       this.ad = resp.ad
       this.business = resp.business
@@ -154,7 +152,6 @@ export class HeaderAdBannerComponent implements OnInit, OnDestroy {
         }
 
         this.categoriesListFriendly = []
-
         this.currentCategoryList.reduce((previousValue: string, currentValue: string, currentIndex: number, array: string[]) => {
 
           if(resp.business.categories.indexOf(currentIndex) > -1)
@@ -183,7 +180,7 @@ export class HeaderAdBannerComponent implements OnInit, OnDestroy {
     }
   }
 
-  public getAdStyle(){
+  getAdStyle(){
     if(this.editMode) {
       return {
         position : 'relative',
@@ -193,21 +190,21 @@ export class HeaderAdBannerComponent implements OnInit, OnDestroy {
     }
   }
 
-  public closeRewardMenu(){
+  closeRewardMenu(){
     this.communityMemberOpen = false
   }
 
-  public clickGoToSponsored(){
+  clickGoToSponsored(){
     window.open('/business', '_blank')
   }
 
-  public switchAd(){
+  switchAd(){
     this.categoriesListFriendly = []
     this.categoryListForUi = null
     this.getHeaderBanner()
   }
 
-  public openAd(): void{
+  openAd(): void{
     if(this.business != null){
       this.communityMemberOpen = true
     } else {
@@ -215,21 +212,21 @@ export class HeaderAdBannerComponent implements OnInit, OnDestroy {
     }
   }
 
-  public updateAdImage(image: string = ''){
+  updateAdImage(image: string = ''){
     if(image !== '') {
       this.ad.images = image
       this.genericAdImage = image
     }
   }
 
-  public updateAdImageMobile(image: string){
+  updateAdImageMobile(image: string){
     if(image !== ''){
       this.ad.images_mobile = image
       this.genericAdImageMobile = image
     }
   }
 
-  public getAdWrapperClass(){
+  getAdWrapperClass(){
     if(!this.isMobile) return 'spotbie-ad-wrapper-header'
     if(this.isMobile) return 'spotbie-ad-wrapper-header sb-mobileAdWrapper'
   }

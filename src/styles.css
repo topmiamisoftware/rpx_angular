@@ -1,7 +1,7 @@
 /*
 *   Welcome to the SpotBie main stylesheet.
 *   Prefix all classes with "sb-"
-*      
+*
 *
 */
 html
@@ -10,9 +10,9 @@ html
 }
 div, table, i, td{
     user-select: none;
-    -webkit-user-select: none; /* Chrome/Safari */ 
+    -webkit-user-select: none; /* Chrome/Safari */
     -moz-user-select: none; /* Firefox */
-    -ms-user-select: none; /* IE10+ */    
+    -ms-user-select: none; /* IE10+ */
 }
 
 @font-face {
@@ -40,7 +40,7 @@ div, table, i, td{
 }
 
 .gm-style-iw-c{
-    background: linear-gradient(#64e56f, #35a99f);  
+    background: linear-gradient(#64e56f, #35a99f);
 }
 .gm-style .gm-style-iw-t::after {
     background: linear-gradient(45deg,#35a99e 50%,rgba(255,255,255,0) 51%,rgba(255,255,255,0) 100%);
@@ -50,7 +50,7 @@ html {
 
     position: relative;
     font-size: 19px;
-    cursor: default; 
+    cursor: default;
     color: white;
     height: unset !important;
 
@@ -64,7 +64,7 @@ body {
     color: white;
     overflow-x : hidden;
     overflow-y: hidden;
-    height: unset !important; 
+    height: unset !important;
     font-family: Gotham-Book !important;
 }
 a {
@@ -80,11 +80,11 @@ textarea {
     height: 240px;
     min-height: 240px;
     resize: vertical;
-    max-height: 650px;    
+    max-height: 650px;
     padding-top: 11px;
     padding-bottom: 11px;
     padding-left: 10px;
-    padding-right: 10px;        
+    padding-right: 10px;
     color: white;
     border: none;
     background-color: rgba(0,0,0,.23);
@@ -121,7 +121,7 @@ textarea:active {
     padding-top: 140px;
     padding-bottom: 140px;
     padding-left: 20px;
-    padding-right: 20px;    
+    padding-right: 20px;
 
 }
 img.sb-loyalty-points{
@@ -133,7 +133,7 @@ img.sb-loyalty-points{
 img.sb-loyalty-points:hover{
     width: 28px;
     min-width: 28px;
-    max-width: 28px;    
+    max-width: 28px;
 }
 .sb-deleteMe{
     margin: 0 auto;
@@ -181,11 +181,11 @@ a, a:hover, a:active, a:after{
 }
 .spotbie-margin{
     margin-top: 50px !important;
-    margin-bottom: 50px !important;    
+    margin-bottom: 50px !important;
 }
 .spotbie-padding{
     padding-top: 20px !important;
-    padding-bottom: 20px !important;    
+    padding-bottom: 20px !important;
 }
 .spotbie-rel-div{
     position: relative;
@@ -225,7 +225,7 @@ a, a:hover, a:active, a:after{
 .spotbie-no-repeat-bg-contain{
     background-position: center !important;
     background-repeat: no-repeat !important;
-    background-size: contain !important;     
+    background-size: contain !important;
 }
 .spotbie-img{
     position: relative;
@@ -233,9 +233,9 @@ a, a:hover, a:active, a:after{
     width: 450px;
     min-width: 450px;
     max-width: 450px;
-    height: 350px;   
+    height: 350px;
     min-height: 350px;
-    max-height: 350px;    
+    max-height: 350px;
     margin: 0 auto;
 }
 .spotbie-el-fixed-bottom{
@@ -292,13 +292,13 @@ a, a:hover, a:active, a:after{
     -webkit-text-fill-color: transparent;
     letter-spacing: 2px;
 }
-.sb-text-red-gradient{    
+.sb-text-red-gradient{
     background: -webkit-linear-gradient(45deg,#e61d1d,#f70505,#ff0000);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 .spotbie-error div,
-.spotbie-error{    
+.spotbie-error{
     background: -webkit-linear-gradient(45deg,#e61d1d,#f70505,#ff0000);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -316,7 +316,7 @@ a, a:hover, a:active, a:after{
     cursor: pointer;
     color: #FFF;
     font-size: 25px;
-    border-radius: 999px;  
+    border-radius: 999px;
 }
 .spotbie-overlay-window{
     position: fixed;
@@ -324,13 +324,13 @@ a, a:hover, a:active, a:after{
     text-align: center;
     width: 100%;
     min-width: 100%;
-    max-width: 100%;   
+    max-width: 100%;
     top: 0;
     bottom: 0;
-    margin: 0 auto;  
+    margin: 0 auto;
     z-index: 97;
     overflow-y: scroll;
-    background-color: #332f3e;    
+    background-color: #332f3e;
     padding-top: 20px;
     padding-bottom: 20px;
     -webkit-overflow-scrolling: touch;
@@ -444,7 +444,7 @@ hr{
     margin: 0 auto;
     width: 100%;
     min-width: 100%;
-    max-width: 100%; 
+    max-width: 100%;
     padding: 20px;
     margin-top: 20px;
     margin-bottom: 20px;
@@ -473,10 +473,10 @@ hr{
     left: -1%;
     right: 0;
     background-color: #332f3e;
-    text-align: center;  
+    text-align: center;
     z-index: 98;
     text-align: center;
-    overflow-y: scroll;    
+    overflow-y: scroll;
 }
 .spotbie-select-menu-option{
     position: relative;
@@ -485,7 +485,7 @@ hr{
     min-width: 450px;
     max-width: 450px;
     background-color: rgba(0,0,0,.23);
-    margin-bottom: 10px;    
+    margin-bottom: 10px;
 }
 .spotbie-select-menu-option:hover{
     background-color: rgba(0, 0, 0, 0.16);
@@ -498,18 +498,18 @@ hr{
     max-width: 100%;
     height: 80px;
     min-height: 80px;
-    max-height: 80px;    
-    cursor: pointer;  
+    max-height: 80px;
+    cursor: pointer;
 }
 .spotbie-select-table td{
     padding: 0px;
 }
 .spotbie-select-table td:hover{
     background-color: rgba(0,0,0,.13);
-    cursor: pointer; 
+    cursor: pointer;
 }
 .spotbie-select-table-text{
-    text-align: left;    
+    text-align: left;
 }
 .spotbie-select-table-img{
     width: 120px;
@@ -521,7 +521,7 @@ hr{
     background-position: center !important;
     background-repeat: no-repeat !important;
     background-size: cover !important;
-    background-color: white !important;    
+    background-color: white !important;
 }
 .spotbie-toast-input-overlay{
     position: fixed;
@@ -587,7 +587,7 @@ hr{
     padding-top: 20px;
     padding-bottom: 20px;
     font-size: 22px;
-    z-index: 2;
+    z-index: 99;
     border-radius: 20px;
     padding-left: 2%;
     padding-right: 2%;
@@ -662,7 +662,7 @@ hr{
     top: 0%;
     bottom: 0%;
     left: 0%;
-    right: 0%;    
+    right: 0%;
     background-color: rgba(0, 0, 0, .32);
 }
 .spotbie-confirm-box{
@@ -682,7 +682,7 @@ hr{
     position: absolute;
     left: 0;
     right: 0;
-    margin: 0 auto;    
+    margin: 0 auto;
     top: 50%;
     transform: translateY(-50%);
     border-radius: 20px;
@@ -705,7 +705,7 @@ hr{
     font-size: 16px;
     width: 100%;
     min-width: 100%;
-    max-width: 100%;    
+    max-width: 100%;
 }
 .gm-style .gm-style-iw-c{
     overflow: hidden !important;
@@ -718,13 +718,13 @@ hr{
     background: linear-gradient(90deg,#35a99f,#64e56f);
 }
 
-.mat-slider.mat-accent .mat-slider-track-fill, 
-.mat-slider.mat-accent .mat-slider-thumb, 
+.mat-slider.mat-accent .mat-slider-track-fill,
+.mat-slider.mat-accent .mat-slider-thumb,
 .mat-slider.mat-accent .mat-slider-thumb-label {
     background-color: #332f3e;
 }
-.spotbie-ad-wrapper a, 
-.spotbie-ad-wrapper img, 
+.spotbie-ad-wrapper a,
+.spotbie-ad-wrapper img,
 .spotbie-ad-wrapper div{
     width: 100% !important;
     min-width: 100% !important;
@@ -778,7 +778,7 @@ hr{
 }
 .mat-form-field-type-mat-native-select.mat-focused:not(.mat-form-field-invalid).mat-warn .mat-form-field-infix:after, .mat-form-field.mat-form-field-invalid .mat-form-field-label, .mat-form-field.mat-form-field-invalid .mat-form-field-label.mat-accent, .mat-form-field.mat-form-field-invalid .mat-form-field-label .mat-form-field-required-marker {
     color: #332f3e;
-}    
+}
 .spotbie-full-qrCode{
     position: relative;
     margin: 0 auto;
@@ -786,7 +786,7 @@ hr{
     width: 450px;
     min-height: 450px;
     height: 450px;
-    overflow: hidden;   
+    overflow: hidden;
 }
 .spotbie-full-qrCode.scanner{
     border-radius: 20px;
@@ -815,7 +815,7 @@ p.sb-helpInfo{
     margin: 0 auto;
 }
 
-.sb-getStarted{ 
+.sb-getStarted{
     max-width: 220px;
     padding-top: 5px !important;
     padding-bottom: 5px !important;
@@ -829,7 +829,7 @@ p.sb-helpInfo{
     background: linear-gradient(45deg,#212529,#131313);
     background: -webkit-linear-gradient(45deg,#212529,#131313);
     -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;   
+    -webkit-text-fill-color: transparent;
 }
 .fa-exclamation-triangle{
     color: #ffc107;
@@ -839,34 +839,34 @@ p.sb-helpInfo{
 }
 /**WIDTH MEDIA QUERIES */
 @media (max-width: 1440px) {
-    
+
     .spotbie-full-qrCode{
         border-radius: 20px;
         min-width: 400px;
         width: 400px;
         min-height: 400px;
-        height: 400px; 
+        height: 400px;
     }
 
 }
 
-@media (max-width: 1300px) { 
+@media (max-width: 1300px) {
 
 }
 
-@media (max-width: 1200px) {   
+@media (max-width: 1200px) {
 
     .sb-mainWrapper{
         min-width: 95%;
         max-width: 95%;
     }
-    
+
 }
-@media (max-width: 1024px) { 
+@media (max-width: 1024px) {
     .spotbie-paragraph{
         color: #ffffff;
         background-color: #696969;
-        box-shadow: 0 0 4px #000;        
+        box-shadow: 0 0 4px #000;
     }
     .spotbie-overlay-window{
         width: 100%;
@@ -874,17 +874,17 @@ p.sb-helpInfo{
         max-width: 100%;
     }
 }
-@media (max-width: 900px) {     
+@media (max-width: 900px) {
     .spotbie-img{
         height: unset;
         min-height: unset;
         max-height: unset;
         width: 100%;
         min-width: 100%;
-        max-width: 100%;  
+        max-width: 100%;
     }
 }
-@media (max-width: 768px) { 
+@media (max-width: 768px) {
     .spotbie-overlay-window{
         padding-top: 20px;
         padding-bottom: 20px;
@@ -892,31 +892,31 @@ p.sb-helpInfo{
     .sb-closeButton{
         top: 68px;
         right: 2%;
-    }    
+    }
 }
-@media (max-width: 650px) { 
+@media (max-width: 650px) {
     .sb-getStarted span{
         background: unset;
         -webkit-background-clip: unset;
         -webkit-text-fill-color: unset;
-        color: #212529;        
+        color: #212529;
     }
 }
-@media (max-width: 600px) { 
+@media (max-width: 600px) {
     .spotbie-el-fixed-bottom{
         width: 90%;
         min-width: 90%;
-        max-width: 90%;  
+        max-width: 90%;
         padding-top: 15px;
         padding-bottom: 15px;
-        font-size: 26px;              
+        font-size: 26px;
     }
     .mat-slider-horizontal {
         height: 48px;
         width: 95%;
         min-width: 95%;
         max-width: 95%;
-    }    
+    }
 }
 @media (max-width: 560px) {
     .sb-material-dark .sb-icon,
@@ -937,7 +937,7 @@ p.sb-helpInfo{
         width: 100%;
         min-height: 245px;
         height: 243px;
-    }    
+    }
     .sb-closeButton{
         max-width: 50px;
         font-size: 20px;
@@ -960,7 +960,7 @@ p.sb-helpInfo{
     p.sb-helpInfo{
         width: 90%;
         min-width: 90%;
-        max-width: 90%;        
+        max-width: 90%;
     }
     .mat-chip-list-wrapper {
         margin: 0 auto !important;
@@ -969,10 +969,10 @@ p.sb-helpInfo{
         min-width: 90%;
     }
 }
-@media (max-width: 460px) { 
+@media (max-width: 460px) {
     html {
-        font-size: 17px    
-    } 
+        font-size: 17px
+    }
     textarea {
         width: 90%;
         min-width:  90%;
@@ -981,7 +981,7 @@ p.sb-helpInfo{
     }
     #tidio-chat-iframe{
         bottom: 10px !important;
-    }    
+    }
     .spotbie-toast-input-box {
         border-radius: 0px
     }
@@ -1009,17 +1009,17 @@ p.sb-helpInfo{
         width: 90%;
         height: 90vw;
         min-height: 90vw;
-    }      
+    }
 }
-@media (max-width: 420px) { 
+@media (max-width: 420px) {
     .spotbie-button{
         max-width: 65%;
         width: 65%;
         min-width: 65%;
         font-size: .9rem !important;
         padding-top: 11px!important;
-        padding-bottom: 11px!important;            
-    }     
+        padding-bottom: 11px!important;
+    }
     .sb-inputWithIconWrapper{
         min-width: 90% !important;
         max-width: 90%;
@@ -1032,29 +1032,29 @@ p.sb-helpInfo{
         max-width: 90%;
         min-width: 90%;
         margin-bottom: 10px;
-    }                 
+    }
 }
-@media (max-width: 360px) { 
+@media (max-width: 360px) {
     .spotbie-select-table-img{
         width: 15%;
         min-width: 15%;
         max-width: 15%;
         height: 60px;
         min-height: 60px;
-        max-height: 60px;        
+        max-height: 60px;
     }
     .spotbie-text-link{
         font-size: 11px;
-    }  
+    }
     .sb-logo {
         min-width: 200px;
         width: 200px;
         max-height: 100px;
         min-height: 100px;
-    } 
+    }
     .spotbie-invalid-feedback{
         font-size: 11px;
-    }   
+    }
 }
 
 html, body { height: 100%; }

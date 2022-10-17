@@ -22,84 +22,58 @@ export class RewardMenuComponent implements OnInit {
 
   @Input() rewardAppFullScreen: boolean = false
   @Input() fullScreenMode: boolean = true
-
   @Input() loyaltyPoints: string
-
   @Input() qrCodeLink: string = null
 
   @Output() closeWindowEvt = new EventEmitter()
-
   @Output() notEnoughLpEvt = new EventEmitter()
 
-  public eAllowedAccountTypes = AllowedAccountTypes
-
-  public menuItemList: Array<any>
-
-  public itemCreator: boolean = false
-
-  public rewardApp: boolean = false
-
-  public userLoyaltyPoints
-  public userResetBalance
-  public userPointToDollarRatio
-
-  public rewards: Array<Reward> = null
-  public reward: Reward
-
-  public userType: number = null
-
-  public business: Business = new Business()
-
-  public loyaltyPointsBalance: LoyaltyPointBalance
-
-  public isLoggedIn: string = null
+  eAllowedAccountTypes = AllowedAccountTypes
+  menuItemList: Array<any>
+  itemCreator: boolean = false
+  rewardApp: boolean = false
+  userLoyaltyPoints
+  userResetBalance
+  userPointToDollarRatio
+  rewards: Array<Reward> = null
+  reward: Reward
+  userType: number = null
+  business: Business = new Business()
+  loyaltyPointsBalance: LoyaltyPointBalance
+  isLoggedIn: string = null
 
   constructor(private loyaltyPointsService: LoyaltyPointsService,
               private businessMenuService: BusinessMenuServiceService,
               private router: Router,
               route: ActivatedRoute){
-
-      if(this.router.url.indexOf('business-menu') > -1){               
+      if(this.router.url.indexOf('business-menu') > -1){
         this.qrCodeLink = route.snapshot.params.qrCode
-      }        
-
+      }
   }
 
-  public getWindowClass(){
-
+  getWindowClass(){
     if(this.fullScreenMode)
       return 'spotbie-overlay-window'
     else
       return ''
-
   }
 
-  public getLoyaltyPointBalance(){    
-
-    this.loyaltyPointsService.userLoyaltyPoints$.subscribe(
-
-      loyaltyPointsBalance => {
-        this.loyaltyPointsBalance = loyaltyPointsBalance
-      }
-
-    )
-    
+  getLoyaltyPointBalance(){
+    this.loyaltyPointsService.userLoyaltyPoints$.subscribe(loyaltyPointsBalance => {
+        this.loyaltyPointsBalance = loyaltyPointsBalance[0]
+      })
   }
-  
-  public fetchRewards(qrCodeLink: string = null){
-    
+
+  fetchRewards(qrCodeLink: string = null){
     let fetchRewardsReq = null
 
     fetchRewardsReq = {
       qrCodeLink: this.qrCodeLink
     }
 
-    this.businessMenuService.fetchRewards(fetchRewardsReq).subscribe(
-      resp => {
+    this.businessMenuService.fetchRewards(fetchRewardsReq).subscribe(resp => {
         this.fetchRewardsCb(resp)
-      }
-    )
-
+      })
   }
 
   private async fetchRewardsCb(resp){
@@ -107,14 +81,13 @@ export class RewardMenuComponent implements OnInit {
       this.rewards = resp.rewards
 
       if(this.userType === this.eAllowedAccountTypes.Personal || this.isLoggedIn !== '1'){
-        this.userPointToDollarRatio = resp.loyalty_point_dollar_percent_value	
+        this.userPointToDollarRatio = resp.loyalty_point_dollar_percent_value
         this.business = resp.business
       }
     }
   }
 
-  public addItem(){
-    
+  addItem(){
     if(this.loyaltyPointsBalance.balance === 0){
       this.notEnoughLpEvt.emit()
       this.closeWindow()
@@ -122,67 +95,54 @@ export class RewardMenuComponent implements OnInit {
     }
 
     this.itemCreator = !this.itemCreator
-  
   }
 
-  public closeWindow(){
+  closeWindow(){
     this.closeWindowEvt.emit()
   }
 
-  public openReward(reward: Reward){
-    
-    console.log("reward", reward )
-
+  openReward(reward: Reward){
     this.reward = reward
     this.reward.link = `${environment.baseUrl}business-menu/${this.qrCodeLink}/${this.reward.uuid}`
     this.rewardApp = true
-    
   }
 
-  public closeReward(){
+  closeReward(){
     this.reward = null
     this.rewardApp = false
   }
 
-  public editReward(reward: Reward){
-
+  editReward(reward: Reward){
     this.reward = reward
     this.itemCreator = true
-
   }
 
-  public closeRewardCreator(){
+  closeRewardCreator(){
     this.reward = null
     this.itemCreator = false
   }
 
-  public closeRewardCreatorAndRefetchRewardList(){
-
+  closeRewardCreatorAndRefetchRewardList(){
     this.closeRewardCreator()
     this.fetchRewards()
-
   }
 
-  public rewardTileStyling(reward: Reward)
-  {
-
-    if(reward.type == '0')
-      return { 'background': 'url(' + reward.images + ')' }
+  rewardTileStyling(reward: Reward) {
+    if(reward.type === 0)
+      return { background: 'url(' + reward.images + ')' }
     else
-      return { 'background': 'linear-gradient(90deg,#35a99f,#64e56f)' }
-       
+      return { background: 'linear-gradient(90deg,#35a99f,#64e56f)' }
   }
 
   ngOnInit(): void {
-    this.userType = parseInt(localStorage.getItem('spotbie_userType'))
+    this.userType = parseInt(localStorage.getItem('spotbie_userType'), 10)
     this.isLoggedIn = localStorage.getItem('spotbie_loggedIn')
 
-    if( this.userType !== this.eAllowedAccountTypes.Personal)
-    {
+    if( this.userType !== this.eAllowedAccountTypes.Personal) {
       this.getLoyaltyPointBalance()
       this.fetchRewards()
-    } else 
+    } else {
       this.fetchRewards(this.qrCodeLink)
-    
+    }
   }
 }

@@ -7,6 +7,7 @@ import { Reward } from 'src/app/models/reward'
 import { LoyaltyPointsService } from 'src/app/services/loyalty-points/loyalty-points.service'
 import { BusinessMenuServiceService } from 'src/app/services/spotbie-logged-in/business-menu/business-menu-service.service'
 import { EventCreatorComponent } from './event-creator/event-creator.component'
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-event-menu',
@@ -18,66 +19,56 @@ export class EventMenuComponent implements OnInit {
   @ViewChild('eventCreator') eventCreator: EventCreatorComponent
 
   @Input() fullScreenWindow: boolean = true
-
   @Input() loyaltyPoints: string
 
   @Output() closeWindowEvt = new EventEmitter()
-
   @Output() notEnoughLpEvt = new EventEmitter()
 
-  public menuItemList: Array<any>
-
-  public itemCreator: boolean = false
-
-  public userLoyaltyPoints
-  public userResetBalance
-  public userPointToDollarRatio
-
-  public rewards: Array<Reward>
-  public reward: Reward
-
-  public qrCodeLink: string = null
-  public userHash: string = null
-
-  public userType: number = null
-
-  public business: Business = new Business()
-
-  public loyaltyPointsBalance: LoyaltyPointBalance
+  menuItemList: Array<any>
+  itemCreator: boolean = false
+  userLoyaltyPoints
+  userResetBalance
+  userPointToDollarRatio
+  rewards: Array<Reward>
+  reward: Reward
+  qrCodeLink: string = null
+  userHash: string = null
+  userType: number = null
+  business: Business = new Business()
+  loyaltyPointsBalance: LoyaltyPointBalance
 
   constructor(private loyaltyPointsService: LoyaltyPointsService,
               private businessMenuService: BusinessMenuServiceService,
               private router: Router,
               route: ActivatedRoute){
-
-      if(this.router.url.indexOf('business-menu') > -1){               
+      if(this.router.url.indexOf('business-menu') > -1){
         this.qrCodeLink = route.snapshot.params.qrCode
         this.userHash   = route.snapshot.params.userHash
-      }        
-
+      }
   }
 
-  public getWindowClass(){
-
+  getWindowClass(){
     if(this.fullScreenWindow)
       return 'spotbie-overlay-window'
     else
       return ''
-
   }
 
-  public getLoyaltyPointBalance(){    
-
-    this.loyaltyPointsService.userLoyaltyPoints$.subscribe(
-      loyaltyPointsBalance => {
-        this.loyaltyPointsBalance = loyaltyPointsBalance
-      }
-    )
-    
+  getLoyaltyPointBalance(){
+    this.loyaltyPointsService.userLoyaltyPoints$.pipe(
+      map((loyaltyPointBalance): number => {
+        let loyaltyPoints = 0;
+        loyaltyPointBalance.forEach((loyaltyPointsObj) => {
+          loyaltyPoints += loyaltyPointsObj.balance;
+        });
+        return loyaltyPoints;
+      })
+    ).subscribe(loyaltyPointBalance => {
+      this.userLoyaltyPoints = loyaltyPointBalance
+    })
   }
-  
-  public fetchRewards(qrCodeLink: string = null, userHash: string = null){
-    
+
+  fetchRewards(qrCodeLink: string = null, userHash: string = null){
     let fetchRewardsReq = null
 
     if(qrCodeLink !== null && userHash !== null){
@@ -87,90 +78,65 @@ export class EventMenuComponent implements OnInit {
       }
     }
 
-    this.businessMenuService.fetchRewards(fetchRewardsReq).subscribe(
-      resp => {
+    this.businessMenuService.fetchRewards(fetchRewardsReq).subscribe(resp => {
         this.fetchRewardsCb(resp)
-      }
-    )
-
+      })
   }
 
   private fetchRewardsCb(resp){
-
     if(resp.success){
-
       this.rewards = resp.rewards
 
       if(this.userType === AllowedAccountTypes.Personal){
-        this.userPointToDollarRatio = resp.loyalty_point_dollar_percent_value	
+        this.userPointToDollarRatio = resp.loyalty_point_dollar_percent_value
         this.business.name = resp.placeToEatName
       }
-
     }
-
   }
 
-  public addEvent(){
-  
-
+  addEvent(){
     this.itemCreator = !this.itemCreator
-  
   }
 
-  public closeWindow(){
+  closeWindow(){
     this.closeWindowEvt.emit()
   }
 
-  public editReward(reward: Reward){
-
+  editReward(reward: Reward){
     this.reward = reward
     this.itemCreator = true
-    
-    this.eventCreator
 
+    // this.eventCreator
   }
 
-  public closeeventCreator(){
+  closeeventCreator(){
     this.reward = null
     this.itemCreator = false
   }
 
-  public closeeventCreatorAndRefetchRewardList(){
-
+  closeeventCreatorAndRefetchRewardList(){
     this.closeeventCreator()
     this.fetchRewards()
-
   }
 
-  public placeToEatTileStyling(reward: Reward)
+  placeToEatTileStyling(reward: Reward)
   {
-
-    if(reward.type == '0')
+    if(reward.type === 0)
       return { 'background': 'url(' + reward.images + ')' }
     else
       return { 'background': 'linear-gradient(90deg,#35a99f,#64e56f)' }
-       
   }
 
   ngOnInit(): void {
-
-    this.userType = parseInt(localStorage.getItem('spotbie_userType'))
+    this.userType = parseInt(localStorage.getItem('spotbie_userType'), 10)
 
     if(this.userType !== AllowedAccountTypes.Personal){
-
       this.getLoyaltyPointBalance()
       this.fetchRewards()
-
     } else {
-
       if(this.qrCodeLink !== null && this.userHash !== null){
-        
         this.fetchRewards(this.qrCodeLink, this.userHash)
-
       }
-  
     }
-
   }
-
 }

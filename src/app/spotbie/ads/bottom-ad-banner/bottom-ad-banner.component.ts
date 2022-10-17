@@ -1,15 +1,14 @@
 import {Component, Input, OnDestroy, OnInit} from '@angular/core';
-import { Router } from '@angular/router';
 import { DeviceDetectorService } from 'ngx-device-detector';
 import { AllowedAccountTypes } from 'src/app/helpers/enum/account-type.enum';
 import { InfoObjectType } from 'src/app/helpers/enum/info-object-type.enum';
 import { getDistanceFromLatLngInMiles } from 'src/app/helpers/measure-units.helper';
 import { Ad } from 'src/app/models/ad';
 import { Business } from 'src/app/models/business';
-import { LoyaltyPointBalance } from 'src/app/models/loyalty-point-balance';
 import { LoyaltyPointsService } from 'src/app/services/loyalty-points/loyalty-points.service';
 import { EVENT_CATEGORIES, FOOD_CATEGORIES, SHOPPING_CATEGORIES } from '../../map/map_extras/map_extras';
 import { AdsService } from '../ads.service';
+import {LoyaltyPointBalance} from '../../../models/loyalty-point-balance';
 
 const PLACE_TO_EAT_AD_IMAGE = 'assets/images/def/places-to-eat/footer_banner_in_house.jpg'
 const PLACE_TO_EAT_AD_IMAGE_MOBILE = 'assets/images/def/places-to-eat/featured_banner_in_house.jpg'
@@ -39,30 +38,29 @@ export class BottomAdBannerComponent implements OnInit, OnDestroy {
   @Input() eventsClassification: number = null
   @Input() isMobile: boolean = false
 
-  public isDesktop: boolean = false
-  public link: string
-  public displayAd: boolean = false
-  public distance: number = 0
-  public totalRewards: number = 0
-  public categoriesListFriendly: string[] = []
-  public communityMemberOpen: boolean = false
-  public currentCategoryList: Array<string> = []
-  public categoryListForUi: string = null
-  public loyaltyPointBalance: LoyaltyPointBalance
-  public genericAdImage: string = PLACE_TO_EAT_AD_IMAGE
-  public genericAdImageMobile: string = PLACE_TO_EAT_AD_IMAGE_MOBILE
-  public switchAdInterval: any = false
+  isDesktop: boolean = false
+  link: string
+  displayAd: boolean = false
+  distance: number = 0
+  totalRewards: number = 0
+  categoriesListFriendly: string[] = []
+  communityMemberOpen: boolean = false
+  currentCategoryList: Array<string> = []
+  categoryListForUi: string = null
+  loyaltyPointBalance: LoyaltyPointBalance
+  genericAdImage: string = PLACE_TO_EAT_AD_IMAGE
+  genericAdImageMobile: string = PLACE_TO_EAT_AD_IMAGE_MOBILE
+  switchAdInterval: any = false
 
   constructor(private adsService: AdsService,
               private deviceDetectorService: DeviceDetectorService,
               private loyaltyPointsService: LoyaltyPointsService) {
-                this.loyaltyPointsService.userLoyaltyPoints$.subscribe(
-                  loyaltyPointsBalance => {
-                    this.loyaltyPointBalance = loyaltyPointsBalance
-                  })
+                this.loyaltyPointsService.userLoyaltyPoints$.subscribe(loyaltyPointBalance => {
+                  this.loyaltyPointBalance = loyaltyPointBalance[0]
+                })
               }
 
-  public getBottomHeader(){
+  getBottomHeader(){
     let adId = null
     let accountType
 
@@ -122,7 +120,7 @@ export class BottomAdBannerComponent implements OnInit, OnDestroy {
       }
     }
 
-    let searchObjSb = {
+    const searchObjSb = {
       loc_x: this.lat,
       loc_y: this.lng,
       categories: this.categories,
@@ -137,7 +135,7 @@ export class BottomAdBannerComponent implements OnInit, OnDestroy {
       })
   }
 
-  public getAdStyle(){
+  getAdStyle(){
     if(this.editMode) {
       return {
         'position' : 'relative',
@@ -147,12 +145,12 @@ export class BottomAdBannerComponent implements OnInit, OnDestroy {
     }
   }
 
-  public getAdWrapperClass(){
+  getAdWrapperClass(){
     if(!this.isMobile) return 'spotbie-ad-wrapper-header'
     if(this.isMobile) return 'spotbie-ad-wrapper-header sb-mobileAdWrapper'
   }
 
-  public async getBottomHeaderCb(resp: any){
+  async getBottomHeaderCb(resp: any){
     if(resp.success) {
       this.ad = resp.ad
 
@@ -210,11 +208,11 @@ export class BottomAdBannerComponent implements OnInit, OnDestroy {
     }
   }
 
-  public spotbieAdWrapperStyles(){
+  spotbieAdWrapperStyles(){
     if(this.editMode) return { 'margin-top' : '45px' }
   }
 
-  public openAd(): void{
+  openAd(): void{
     if(this.business != null) {
       this.communityMemberOpen = true
     } else {
@@ -223,28 +221,28 @@ export class BottomAdBannerComponent implements OnInit, OnDestroy {
     // this.router.navigate([`/business-menu/${this.business.qr_code_link}`])
   }
 
-  public closeRewardMenu(){
+  closeRewardMenu(){
     this.communityMemberOpen = false
   }
 
-  public switchAd() {
+  switchAd() {
     this.categoriesListFriendly = []
     this.categoryListForUi = null
     this.getBottomHeader()
   }
 
-  public clickGoToSponsored() {
+  clickGoToSponsored() {
     window.open('/business', '_blank')
   }
 
-  public updateAdImage(image: string = ''){
+  updateAdImage(image: string = ''){
     if(image !== '') {
       this.ad.images = image
       this.genericAdImage = image
     }
   }
 
-  public updateAdImageMobile(image: string){
+  updateAdImageMobile(image: string){
     if(image !== ''){
       this.ad.images_mobile = image
       this.genericAdImageMobile = image

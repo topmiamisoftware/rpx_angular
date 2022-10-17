@@ -1,17 +1,14 @@
 <div [ngClass]="getOverlayWindowStyling()">
-
   <div class='sb-closeButton' (click)="closeWindowX()" [ngStyle]="getCloseButtonStyling()" [ngClass]="getFullScreenModeClass()">
     <i class="fa fa-times"></i>
   </div>
 
   <div class='spotbie-info-object-title' [ngClass]="getFullScreenModeClass()">
-
     <img class='sb-miniLogoIcon' src="assets/images/spotbie_community_member_star.svg" *ngIf="info_object.is_community_member" />
 
     <h6 class="spotbie-text-gradient sb-titleGreen text-uppercase" *ngIf="info_object.is_community_member">SPOTBIE COMMUNITY MEMBER</h6>
 
     <h1 class="mb-3" [ngClass]="getTitleStyling()">{{ info_object.name }}</h1>
-
   </div>
 
   <div class='spotbie-communityMemberDescription spotbie-text-gradient mb-4' *ngIf="info_object.is_community_member">
@@ -19,7 +16,6 @@
   </div>
 
   <div *ngIf="info_object !== null && info_object.hours !== undefined">
-
     <div class='spotbie-info-object-open' *ngIf="!info_object.isOpenNow">
       <span [ngClass]="getFontClasses()">CLOSED </span><span class='fa fa-circle spotbie-is-closed'></span>
     </div>
@@ -27,7 +23,6 @@
     <div class='spotbie-info-object-open' *ngIf="info_object.isOpenNow">
       <span [ngClass]="getFontClasses()">OPEN </span><span class='fa fa-circle spotbie-is-open'></span>
     </div>
-
   </div>
 
   <div class='spotbie-info-object-image-list'
@@ -50,10 +45,8 @@
   </div>
 
   <div class='spotbie-info-object-image-list' *ngIf="info_object.type_of_info_object == eInfoObjectType.TicketMaster">
-
     <div class='spotbie-info-object-image-thumb'
          [ngStyle]="{ 'background' : 'url(' + info_object.image_url + ')'}"></div>
-
   </div>
 
   <!--<div class='spotbie-button spotbie-add-to-favorites'
@@ -66,7 +59,6 @@
       <i class="fa fa-star"></i>
 
       <span class="text-uppercase"> FAVORITE</span>
-
   </div>
 
   <div class='spotbie-button spotbie-add-to-favorites'
@@ -79,7 +71,6 @@
       <i class="fa fa-minus"></i>
 
       <span class="text-uppercase"> UNFAVORITE</span>
-
   </div>-->
 
   <div class='spotbie-search-result-phone' *ngIf="info_object.phone !== ''">
@@ -104,11 +95,9 @@
     <span class='sb-text-light-green-gradient mt-4 mb-4' style='font-size: 1.8rem;'>{{ info_object.rewardRate | currency : 'USD' }}</span><br/>
     <span class='spotbie-text-gradient' style='font-size: .8rem;'> PER DOLLAR SPENT</span><br/>
     <span class='sb-text-light-green-gradient mt-4'> {{ info_object.loyalty_point_dollar_percent_value | number:'1.1-2':'en-US' }}% REWARD RATE</span>
-
   </div>
 
   <div class='spotbie-info-object-rating' [ngClass]="getFontClasses()" *ngIf="info_object.type_of_info_object == eInfoObjectType.Yelp" (click)="visitInfoObjectPage()">
-
     <table class='spotbie-yelp-rating-table'>
       <tr>
         <td>
@@ -119,7 +108,6 @@
         </td>
       </tr>
     </table>
-
   </div>
 
   <div class='spotbie-review-count mt-2' [ngClass]="getFontClasses()" *ngIf="info_object.type_of_info_object == eInfoObjectType.Yelp" (click)="visitInfoObjectPage()">

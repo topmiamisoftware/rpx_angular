@@ -2,12 +2,12 @@
     display: flex!important;
     flex-direction: column;
     flex-wrap: nowrap;
-    align-content: center;    
+    align-content: center;
     background: #332f3e;
-    text-align: center;    
+    text-align: center;
     z-index: 97;
 }
-.spotbie-redeemItem{
+.spotbie-redeemedItem{
     position: relative;
     margin: 0 auto 5px;
     border-radius: 5px;
@@ -17,6 +17,9 @@
     color: white;
     background-color: rgba(0,0,0,.2);
     text-align: left;
+}
+.sb-closeButton{
+  color: #332f3e !important;
 }
 .card-header{
     font-size: .9rem;
@@ -31,7 +34,7 @@
     position: fixed;
     left: 0;
     right: 0;
-    margin: 0 auto;    
+    margin: 0 auto;
     top: 50%;
     width: 650px;
     min-width: 650px;
@@ -39,7 +42,7 @@
     transform: translateY(-50%);
     padding-top: 50px;
     padding-bottom: 50px;
-    border-radius: 10px;       
+    border-radius: 10px;
 }
 .fa-exclamation-triangle{
     position: relative;
@@ -54,23 +57,104 @@
     width: 250px;
     min-width: 250px;
 }
+.nav{
+  position: fixed;
+  top: 71px;
+  min-width: 100%;
+  width: 100%;
+  max-width: 100%;
+  background-color: #fff;
+  margin-top: 0;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  z-index: 2;
+  text-align: center;
+  display: flex;
+  flex-wrap: wrap;
+  padding-left: 0;
+  margin-bottom: 0;
+  list-style: none;
+  justify-content: center;
+}
+div.nav > table {
+  border-spacing: 5px;
+}
+div.nav > table td {
+  padding: 10px 16px;
+  padding-top: 14px;
+  text-align: center;
+  font-size: .8rem;
+  cursor: pointer;
+  border-radius: 5px;
+  border-bottom: 1px solid rgba(0,0,0,.32);
+  border-right: 1px solid rgba(0,0,0,.38);
+}
+.spotbie-redeemListWrapper{
+  position: relative;
+  margin: 125px auto 0;
+  max-width: 99%;
+}
+.card-header > img {
+  position: absolute;
+  margin-left: 10px;
+  max-width: 25px;
+  max-height: 25px;
+}
 @media (max-width: 650px){
-    .spotbie-redeemItem{
-        max-width: 94%;
-        min-width: 94%;
-        width: 94%;
-    }    
+    .spotbie-redeemedItem{
+        max-width: 98%;
+        min-width: 98%;
+        width: 98%;
+    }
+    .spotbie-redeemListWrapper{
+      width: 99%;
+      min-width: 99%;
+    }
     .sb-rewardImage{
         position: relative;
         max-width: 85px;
         width: 85px;
         min-width: 85px;
-    }    
+    }
+    .spotbie-no-notis-box{
+      max-width: 99%;
+      min-width: 99%;
+      width: 99%;
+    }
+}
+@media (max-width: 560px) {
+  .sb-closeButton {
+    right: 3px;
+    top: 79px;
+  }
 }
 @media (max-width: 460px){
+    .sb-closeButton {
+      right: 3px;
+      top: 64px;
+    }
     .spotbie-no-notis-box{
         width: 94%;
         min-width: 94%;
         max-width: 94%;
+    }
+    .spotbie-redeemListWrapper{
+      margin-top: 95px;
+    }
+    .nav {
+      top: 63px;
+      justify-content: flex-start;
+      padding-top: 5px;
+      padding-bottom: 5px;
+    }
+    .nav > table {
+      max-width: 90%;
+      width: 90%;
+      min-width: 90%;
+    }
+    .nav > table td{
+      border-radius: 0 !important;
+      font-size: .6rem !important;
+      padding: 9px 10px 5px !important;
     }
 }
