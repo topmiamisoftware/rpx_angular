@@ -4,16 +4,10 @@ import { CommonModule } from '@angular/common'
 import { RouterModule } from '@angular/router'
 import { HttpClientModule } from '@angular/common/http'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
-
-/* Angular Material Packages */
 import { MatChipsModule } from '@angular/material/chips'
 import { MatAutocompleteModule } from '@angular/material/autocomplete'
-
-/* 3rd Party Packages */
 import { AgmCoreModule, GoogleMapsAPIWrapper } from '@agm/core'
 import { NgxMaskModule, IConfig } from 'ngx-mask'
-
-/* SpotBie Imports */
 import { environment } from 'src/environments/environment'
 import { SettingsComponent } from './settings.component'
 import { HelperModule } from 'src/app/helpers/helper.module';

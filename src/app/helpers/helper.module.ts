@@ -21,7 +21,7 @@ import { PersonNameDirective } from '../directives/person-name.directive'
   imports : [CommonModule],
   exports : [
     LoadingScreenComponent,
-    OnScrollDirective, 
+    OnScrollDirective,
     StopClickPropagationDirective,
     PersonNameDirective,
     UsernameDirective,

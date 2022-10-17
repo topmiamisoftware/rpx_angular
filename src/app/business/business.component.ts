@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { MapComponent } from '../spotbie/map/map.component';
-import * as $ from 'jquery';
 import { MenuLoggedOutComponent } from '../spotbie/spotbie-logged-out/menu-logged-out.component';
 
 @Component({
@@ -38,9 +37,9 @@ export class BusinessComponent implements OnInit {
   async ngOnInit() {
 
     const isLoggedIn = localStorage.getItem("spotbie_loggedIn")
-  
+
     if (isLoggedIn == '1') this.router.navigate(['/user-home'])
-    
+
   }
 
 }
