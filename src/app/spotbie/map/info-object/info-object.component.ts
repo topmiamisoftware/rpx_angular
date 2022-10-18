@@ -302,7 +302,7 @@ export class InfoObjectComponent implements OnInit {
     let locX = null
     let locY = null
 
-    if(this.info_object.type_of_info_object == InfoObjectType.SpotBieCommunity){
+    if(this.info_object.type_of_info_object === InfoObjectType.SpotBieCommunity){
       locX = this.info_object.loc_x
       locY = this.info_object.loc_y
     } else {
@@ -312,14 +312,14 @@ export class InfoObjectComponent implements OnInit {
 
     const favoriteObj = {
       third_party_id: id,
-      name: name,
+      name,
       description: null,
       loc_x: locX,
       loc_y: locY,
       type_of_info_object_category: this.info_object.type_of_info_object_category
     }
 
-    if(this.isLoggedIn == '1'){
+    if(this.isLoggedIn === '1'){
       /*this.myFavoritesService.addFavorite(favoriteObj).subscribe(
         resp => {
           this.addFavoriteCb(resp)

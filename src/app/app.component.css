@@ -1,7 +1,7 @@
 .sb-testMode{
     position: fixed;
-    right: 20px;
-    bottom: 15px;
+    left: 20px;
+    bottom: 25px;
     max-width: 228px;
     background-color: rgba(0,0,0,.231);
     border-radius: 5px;
