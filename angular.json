@@ -13,6 +13,10 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "allowedCommonJsDependencies": [
+              "jquery",
+              "qrcode"
+            ],
             "aot": true,
             "outputPath": "dist/spotbie/browser",
             "index": "src/index.html",
@@ -27,7 +31,7 @@
                 "glob": "_redirects",
                 "input": "src",
                 "output": "/"
-              }                
+              }
             ],
             "styles": [
               "src/custom-theme.scss",
