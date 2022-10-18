@@ -167,7 +167,8 @@
             "serverTarget": "spotbie:server:production",
             "routes": [
               "/"
-            ]
+            ],
+            "guessRoutes": false
           },
           "configurations": {
             "production": {}
