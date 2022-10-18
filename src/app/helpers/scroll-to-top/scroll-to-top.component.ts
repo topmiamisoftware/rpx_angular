@@ -1,4 +1,5 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import * as $ from 'jquery'
 
 const MY_NEWS_LINK = 'https://help.rescue.org/donate/ukraine-acq?ms=gs_ppc_fy22_ukraine_mmus_feb&initialms=gs_ppc_fy22_ukraine_mmus_feb&gclid=CjwKCAiAg6yRBhBNEiwAeVyL0OZ3fFQMEO9dXqlmjgq1bGD-Xa8uKKQm-H-NiJeC_ag1juzzAX26XRoColMQAvD_BwE'
 
@@ -20,7 +21,7 @@ export class ScrollToTopComponent implements OnInit {
   constructor() { }
 
   scrollTop() {
-     // $('#spotbieMainSpotBieScroll').animate({ scrollTop: 0 }, 'slow')
+    $('#spotbieMainSpotBieScroll').animate({ scrollTop: 0 }, 'slow')
   }
 
   goToNews() {
@@ -30,10 +31,8 @@ export class ScrollToTopComponent implements OnInit {
   ngOnInit(): void {}
 
   ngAfterViewInit(){
-/*    const spotbieMainScroll = $('#spotbieMainSpotBieScroll');
-    const scrollTop =  spotbieMainScroll.scrollTop();
-
-    spotbieMainScroll.on('scroll', () => {
+    $('#spotbieMainSpotBieScroll').on('scroll', function() {
+      const scrollTop = $('#spotbieMainSpotBieScroll').scrollTop()
       if (scrollTop < 119) {
         this.scrollArrow.nativeElement.className = 'spotbie-scroll-top spotbie-arrow-transparent'
         // this.ourNews.nativeElement.className = 'sb-your-news'
@@ -43,11 +42,13 @@ export class ScrollToTopComponent implements OnInit {
         this.scrollArrow.nativeElement.className = 'spotbie-scroll-top'
         // this.ourNews.nativeElement.className = 'sb-your-news marginLeft'
       }
-    });
+    }.bind(this))
+
+    const scrollTop =  $('#spotbieMainSpotBieScroll').scrollTop()
 
     if (scrollTop > 50) {
       this.scrollArrow.nativeElement.className = 'spotbie-scroll-top'
       this.arrowOn = true
-    }*/
+    }
   }
 }
