@@ -1,4 +1,4 @@
-const baseUrl = `https://demo.spotbie.com/`
+const baseUrl = `https://spotbie.com/`
 
 export const environment = {
   production: null,
