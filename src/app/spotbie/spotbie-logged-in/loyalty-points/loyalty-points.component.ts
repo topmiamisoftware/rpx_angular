@@ -40,7 +40,7 @@ export class LoyaltyPointsComponent implements OnInit {
   totalSpent: number = null
   newUserLoyaltyPoints: number
   userType: number = null
-  loyaltyPointBalance: number;
+  loyaltyPointBalance: number = 0;
   loyaltyPointBalanceBusiness: LoyaltyPointBalance = new LoyaltyPointBalance();
 
   constructor(private loyaltyPointsService: LoyaltyPointsService,
@@ -187,12 +187,15 @@ export class LoyaltyPointsComponent implements OnInit {
       this.loyaltyPointsService.userLoyaltyPoints$.pipe(
         map((loyaltyPointBalance): number => {
           let loyaltyPoints = 0;
+          if(loyaltyPointBalance.length === 0) {
+            return loyaltyPoints;
+          }
           loyaltyPointBalance.forEach((loyaltyPointsObj) => {
             loyaltyPoints += loyaltyPointsObj.balance;
           });
           return loyaltyPoints;
         })).subscribe(loyaltyPointBalance => {
-        this.loyaltyPointBalance = loyaltyPointBalance
+        this.loyaltyPointBalance = loyaltyPointBalance;
       })
     } else {
       this.loyaltyPointsService.userLoyaltyPoints$.subscribe(loyaltyPointBalance => {

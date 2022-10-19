@@ -200,6 +200,8 @@ export class RedeemableComponent implements OnInit {
       return true;
     } else if (this.ledger && this.lpLedgerTotal > 0){
       return true;
+    } else if (this.balanceList && this.balanceListTotal > 0){
+      return true;
     }
   }
 
