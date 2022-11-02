@@ -1,4 +1,4 @@
-import {Business} from "./business";
+import {Business} from './business';
 
 export class LoyaltyPointBalance {
 

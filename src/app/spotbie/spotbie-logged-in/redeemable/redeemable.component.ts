@@ -4,6 +4,7 @@ import { LoyaltyPointsService } from 'src/app/services/loyalty-points/loyalty-po
 import {LoyaltyPointsLedger} from '../../../models/loyalty-points-ledger';
 import {Redeemable} from '../../../models/redeemable';
 import {LoyaltyPointBalance} from '../../../models/loyalty-point-balance';
+import * as $ from 'jquery'
 
 @Component({
   selector: 'app-redeemable',
@@ -170,9 +171,9 @@ export class RedeemableComponent implements OnInit {
         const lastPage = resp.redeemedList.last_page
 
         if (this.lpRedeemedPage === lastPage) {
-         this.loadMore = false;
+          this.loadMore = false;
         }  else {
-         this.loadMore = true;
+          this.loadMore = true;
         }
 
         redeemItemData.forEach((redeemItem: Redeemable) => {
@@ -247,5 +248,13 @@ export class RedeemableComponent implements OnInit {
     this.userType = localStorage.getItem('spotbie_userType');
     this.showBalanceList = true;
     this.getBalanceList();
+  }
+
+  ngAfterViewInit() {
+    const menuHeight = document.getElementById('spotbie-topMenu').offsetHeight;
+    document.getElementById('redeemWindow').style.paddingTop = menuHeight+'px';
+
+    const redeemWindowNavItem = $('#redeemWindowNav').height();
+    document.getElementById('redeemWindowNavMargin').style.marginBottom = parseInt(redeemWindowNavItem, 10)+20+'px';
   }
 }

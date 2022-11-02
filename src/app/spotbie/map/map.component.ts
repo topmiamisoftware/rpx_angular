@@ -630,21 +630,27 @@ export class MapComponent implements OnInit {
   goToLp(){
     // scroll to loyalty points
     this.closeCategories()
-    if(this.business) {
-      this.businessHomeDashboard.scrollToLpAppAnchor()
-    } else {
-      this.userHomeDashboard.scrollToLpAppAnchor()
-    }
+    this.openWelcome()
+
+    setTimeout(() => {
+      if(this.business) {
+        this.businessHomeDashboard.scrollToLpAppAnchor()
+      } else {
+        this.userHomeDashboard.scrollToLpAppAnchor()
+      }}, 750);
   }
 
   goToRewardMenu(){
     // scroll to reward menu
     this.closeCategories()
-    if(this.business){
-      this.businessHomeDashboard.scrollToRewardMenuAppAnchor()
-    } else {
-      this.userHomeDashboard.scrollToRewardMenuAppAnchor()
-    }
+    this.openWelcome()
+
+    setTimeout(() => {
+      if(this.business){
+        this.businessHomeDashboard.scrollToRewardMenuAppAnchor()
+      } else {
+        this.userHomeDashboard.scrollToRewardMenuAppAnchor()
+      }}, 750);
   }
 
   closeCategories(): void {

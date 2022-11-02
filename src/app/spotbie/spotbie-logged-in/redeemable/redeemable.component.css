@@ -1,65 +1,66 @@
 .spotbie-overlay-window{
-    display: flex!important;
-    flex-direction: column;
-    flex-wrap: nowrap;
-    align-content: center;
-    background: #332f3e;
-    text-align: center;
-    z-index: 97;
+  display: flex!important;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-content: center;
+  background: #332f3e;
+  text-align: center;
+  z-index: 97;
 }
 .spotbie-redeemedItem{
-    position: relative;
-    margin: 0 auto 5px;
-    border-radius: 5px;
-    max-width: 650px;
-    min-width: 650px;
-    width: 650px;
-    color: white;
-    background-color: rgba(0,0,0,.2);
-    text-align: left;
+  position: relative;
+  margin: 0 auto 5px;
+  border-radius: 5px;
+  max-width: 650px;
+  min-width: 650px;
+  width: 650px;
+  color: white;
+  background-color: rgba(0,0,0,.2);
+  text-align: left;
 }
-.sb-closeButton{
+.redeemed-closeButton{
+  border-right: unset !important;
   color: #332f3e !important;
 }
 .card-header{
-    font-size: .9rem;
+  font-size: .9rem;
 }
 .card-body{
-    font-size: .7rem;
+  font-size: .7rem;
 }
 .card-footer{
-    font-size: .6rem;
+  font-size: .6rem;
 }
 .spotbie-no-notis-box{
-    position: fixed;
-    left: 0;
-    right: 0;
-    margin: 0 auto;
-    top: 50%;
-    width: 650px;
-    min-width: 650px;
-    max-width: 650px;
-    transform: translateY(-50%);
-    padding-top: 50px;
-    padding-bottom: 50px;
-    border-radius: 10px;
+  position: fixed;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  top: 50%;
+  width: 650px;
+  min-width: 650px;
+  max-width: 650px;
+  transform: translateY(-50%);
+  padding-top: 50px;
+  padding-bottom: 50px;
+  border-radius: 10px;
 }
 .fa-exclamation-triangle{
-    position: relative;
-    color: #ffc107;
-    font-size: 1rem;
-    bottom: 4px;
-    margin-right: 10px;
+  position: relative;
+  color: #ffc107;
+  font-size: 1rem;
+  bottom: 4px;
+  margin-right: 10px;
 }
 .sb-rewardImage{
-    position: relative;
-    max-width: 250px;
-    width: 250px;
-    min-width: 250px;
+  position: relative;
+  max-width: 250px;
+  width: 250px;
+  min-width: 250px;
 }
 .nav{
   position: fixed;
-  top: 71px;
+  left: 0px;
   min-width: 100%;
   width: 100%;
   max-width: 100%;
@@ -91,7 +92,7 @@ div.nav > table td {
 }
 .spotbie-redeemListWrapper{
   position: relative;
-  margin: 125px auto 0;
+  margin: 0 auto;
   max-width: 99%;
 }
 .card-header > img {
@@ -101,60 +102,55 @@ div.nav > table td {
   max-height: 25px;
 }
 @media (max-width: 650px){
-    .spotbie-redeemedItem{
-        max-width: 98%;
-        min-width: 98%;
-        width: 98%;
-    }
-    .spotbie-redeemListWrapper{
-      width: 99%;
-      min-width: 99%;
-    }
-    .sb-rewardImage{
-        position: relative;
-        max-width: 85px;
-        width: 85px;
-        min-width: 85px;
-    }
-    .spotbie-no-notis-box{
-      max-width: 99%;
-      min-width: 99%;
-      width: 99%;
-    }
+  .spotbie-redeemedItem{
+    max-width: 98%;
+    min-width: 98%;
+    width: 98%;
+  }
+  .spotbie-redeemListWrapper{
+    width: 99%;
+    min-width: 99%;
+  }
+  .sb-rewardImage{
+    position: relative;
+    max-width: 85px;
+    width: 85px;
+    min-width: 85px;
+  }
+  .spotbie-no-notis-box{
+    max-width: 99%;
+    min-width: 99%;
+    width: 99%;
+  }
 }
 @media (max-width: 560px) {
-  .sb-closeButton {
-    right: 3px;
-    top: 79px;
+  div.nav > table {
+    border-spacing: 5px;
+    min-width: 100%;
+  }
+  .redeemed-closeButton {
+    min-width: 10%;
   }
 }
 @media (max-width: 460px){
-    .sb-closeButton {
-      right: 3px;
-      top: 64px;
-    }
-    .spotbie-no-notis-box{
-        width: 94%;
-        min-width: 94%;
-        max-width: 94%;
-    }
-    .spotbie-redeemListWrapper{
-      margin-top: 95px;
-    }
-    .nav {
-      top: 63px;
-      justify-content: flex-start;
-      padding-top: 5px;
-      padding-bottom: 5px;
-    }
-    .nav > table {
-      max-width: 90%;
-      width: 90%;
-      min-width: 90%;
-    }
-    .nav > table td{
-      border-radius: 0 !important;
-      font-size: .6rem !important;
-      padding: 9px 10px 5px !important;
-    }
+  .spotbie-no-notis-box{
+    width: 94%;
+    min-width: 94%;
+    max-width: 94%;
+  }
+  .nav {
+    justify-content: flex-start;
+    padding-top: 5px;
+    padding-bottom: 5px;
+  }
+  .nav > table {
+    max-width: 90%;
+    width: 90%;
+    min-width: 90%;
+  }
+  .nav > table td{
+    border-radius: 0 !important;
+    font-size: .6rem !important;
+    padding: 9px 10px 5px !important;
+  }
 }

@@ -24,13 +24,12 @@ export class UserDashboardComponent implements OnInit {
 
   scannerStarted: boolean = false
   isMobile: boolean = false
-  getRedeemableItems: boolean =  false
+  getRedeemableItems: boolean = false
 
   constructor(private deviceDetectorService: DeviceDetectorService) { }
 
   redeemedLp(){
     this.getRedeemableItems = true
-    this.redeemablesApp.getRedeemed()
   }
 
   openLoyaltyPoints(){

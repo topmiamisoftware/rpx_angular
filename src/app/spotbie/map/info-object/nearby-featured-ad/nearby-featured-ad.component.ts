@@ -119,8 +119,6 @@ export class NearbyFeaturedAdComponent implements OnInit, OnDestroy {
       account_type: accountType
     }
 
-    console.log('response', nearByFeaturedObj);
-
     this.adsService.getNearByFeatured(nearByFeaturedObj)
       .subscribe(resp => {
         this.getNearByFeaturedCallback(resp)

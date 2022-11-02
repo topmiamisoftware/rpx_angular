@@ -1,7 +1,8 @@
 <table class="spotbie-el-100
               spotbie-menu
               spotbie-menu-fixed"
-        #spotbieMainMenu>
+       id="spotbie-topMenu"
+       #spotbieMainMenu>
   <tr>
     <td class="sb-menu-nav" (click)="slideMenu()" *ngIf="!isDesktop">
       <i class="fa fa-bars" *ngIf="!menuActive"></i>
@@ -94,8 +95,6 @@
     </tr>
   </table>
 </div>
-
-<app-redeemable *ngIf="getRedeemableItems" (closeWindowEvt)="closeRedeemables()"></app-redeemable>
 
 <app-map [business]="business" *ngIf="mapApp.open" #spotbieMap (openBusinessSettingsEvt)="openBusinessSettings()"></app-map>
 
