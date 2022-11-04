@@ -43,11 +43,10 @@ export class CommunityMemberComponent implements OnInit {
 
     this.businessMenuService.getCommunityMember(getCommunityMemberReqObj)
       .subscribe(resp => {
-        console.log('business', resp);
         this.business = resp.business
         this.business.is_community_member = true
         this.business.type_of_info_object = 'spotbie_community'
-
+        this.business.loyalty_point_dollar_percent_value = this.business.loyalty_point_balance.loyalty_point_dollar_percent_value;
         this.business.rewardRate = (this.business.loyalty_point_dollar_percent_value / 100)
 
         this.infoObjectLoaded = true
