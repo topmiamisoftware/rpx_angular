@@ -36,6 +36,5 @@ export class LoyaltyPointBalance {
     set end_of_month(value: string) {
         this._end_of_month = value
     }
-
 }
 

@@ -35,7 +35,7 @@ export class QrComponent implements OnInit {
   userHash: string = null
   qrType: string = 'url'
   isBusiness: boolean = false
-  userLoyaltyPoints: number = 0
+  userLoyaltyPoints: any = 0
   loyaltyPointWorth: number = 0
   businessLoyaltyPointsForm: UntypedFormGroup
   businessLoyaltyPointsFormUp: boolean = false
@@ -46,7 +46,7 @@ export class QrComponent implements OnInit {
   loyaltyPointRewardDollarValue: number = null
   qrCodeLink: string = null
   qrCodeLoyaltyPointsBaseUrl: string = QR_CODE_LOYALTY_POINTS_SCAN_BASE_URL
-  loyaltyPointBalance: LoyaltyPointBalance
+  loyaltyPointBalance: any;
   businessLoyaltyPointsSubmitted: boolean = false
   qrWidth: number = 0
   scanSuccess: boolean = false
@@ -253,21 +253,13 @@ export class QrComponent implements OnInit {
     const accountType = parseInt(localStorage.getItem('spotbie_userType'), 10)
 
     if (accountType === AllowedAccountTypes.Personal) {
-      this.loyaltyPointsService.userLoyaltyPoints$.pipe(
-        map((loyaltyPointBalance): number => {
-          let loyaltyPoints = 0;
-          loyaltyPointBalance.forEach((loyaltyPointsObj) => {
-            loyaltyPoints += loyaltyPointsObj.balance;
-          });
-          return loyaltyPoints;
-        })
-      ).subscribe(loyaltyPointBalance => {
+      this.loyaltyPointsService.userLoyaltyPoints$.subscribe(loyaltyPointBalance => {
         this.userLoyaltyPoints = loyaltyPointBalance
       });
       this.startQrCodeScanner()
     } else {
       this.loyaltyPointsService.userLoyaltyPoints$.subscribe(loyaltyPointBalance => {
-        this.loyaltyPointBalance = loyaltyPointBalance[0]
+        this.loyaltyPointBalance = loyaltyPointBalance
       });
       this.isBusiness = true
       this.getQrCode()

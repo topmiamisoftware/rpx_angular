@@ -1,8 +1,7 @@
 import { createReducer, on } from '@ngrx/store';
 import { setValue } from './loyalty-points.actions';
-import { LoyaltyPointBalance } from '../../../models/loyalty-point-balance'
 
-export const initialState: LoyaltyPointBalance[] = []
+export const initialState: number = 0;
 
 const _loyaltyPointsReducer = createReducer(
   initialState,

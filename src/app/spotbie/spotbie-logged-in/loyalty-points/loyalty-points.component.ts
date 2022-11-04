@@ -4,7 +4,6 @@ import { ActivatedRoute, Router } from '@angular/router'
 import { AllowedAccountTypes } from 'src/app/helpers/enum/account-type.enum'
 import { LoyaltyPointBalance } from 'src/app/models/loyalty-point-balance'
 import { LoyaltyPointsService } from 'src/app/services/loyalty-points/loyalty-points.service'
-import {map} from "rxjs/operators";
 
 @Component({
   selector: 'app-loyalty-points',
@@ -40,8 +39,8 @@ export class LoyaltyPointsComponent implements OnInit {
   totalSpent: number = null
   newUserLoyaltyPoints: number
   userType: number = null
-  loyaltyPointBalance: number = 0;
-  loyaltyPointBalanceBusiness: LoyaltyPointBalance = new LoyaltyPointBalance();
+  loyaltyPointBalance: any = 0;
+  loyaltyPointBalanceBusiness: any = new LoyaltyPointBalance();
 
   constructor(private loyaltyPointsService: LoyaltyPointsService,
               private formBuilder: UntypedFormBuilder,
@@ -184,22 +183,12 @@ export class LoyaltyPointsComponent implements OnInit {
     this.userType = parseInt(localStorage.getItem('spotbie_userType'), 10)
 
     if(this.userType === AllowedAccountTypes.Personal){
-      this.loyaltyPointsService.userLoyaltyPoints$.pipe(
-        map((loyaltyPointBalance): number => {
-          let loyaltyPoints = 0;
-          if(loyaltyPointBalance.length === 0) {
-            return loyaltyPoints;
-          }
-          loyaltyPointBalance.forEach((loyaltyPointsObj) => {
-            loyaltyPoints += loyaltyPointsObj.balance;
-          });
-          return loyaltyPoints;
-        })).subscribe(loyaltyPointBalance => {
+      this.loyaltyPointsService.userLoyaltyPoints$.subscribe(loyaltyPointBalance => {
         this.loyaltyPointBalance = loyaltyPointBalance;
       })
     } else {
       this.loyaltyPointsService.userLoyaltyPoints$.subscribe(loyaltyPointBalance => {
-        this.loyaltyPointBalanceBusiness = loyaltyPointBalance[0]
+        this.loyaltyPointBalanceBusiness = loyaltyPointBalance
       })
     }
 

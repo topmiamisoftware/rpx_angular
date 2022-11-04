@@ -66,7 +66,7 @@ export class RewardCreatorService {
       catchError(handleError('claimReward'))
     ).subscribe(resp => {
         if(resp.success){
-          const loyaltyPointBalance: LoyaltyPointBalance[] = resp.loyalty_points
+          const loyaltyPointBalance: number = resp.loyalty_points
           this.store.dispatch( setValue({loyaltyPointBalance}) )
         }
         callback(resp)

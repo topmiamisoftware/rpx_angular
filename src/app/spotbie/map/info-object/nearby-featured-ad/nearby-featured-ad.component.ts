@@ -44,7 +44,7 @@ export class NearbyFeaturedAdComponent implements OnInit, OnDestroy {
   isMobile: boolean = false
   currentCategoryList: Array<string> = []
   categoryListForUi: string = null
-  loyaltyPointBalance: LoyaltyPointBalance
+  loyaltyPointBalance: any
   adTypeWithId: boolean = false
   adList: Array<Ad> = []
   genericAdImage: string = PLACE_TO_EAT_AD_IMAGE
@@ -56,7 +56,7 @@ export class NearbyFeaturedAdComponent implements OnInit, OnDestroy {
               private loyaltyPointsService: LoyaltyPointsService,
               private router: Router) {
                 this.loyaltyPointsService.userLoyaltyPoints$.subscribe(loyaltyPointsBalance => {
-                    this.loyaltyPointBalance = loyaltyPointsBalance[0]
+                    this.loyaltyPointBalance = loyaltyPointsBalance
                   })
               }
 

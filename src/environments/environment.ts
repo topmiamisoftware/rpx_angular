@@ -1,4 +1,4 @@
-const apiEndpoint = 'https://api-demo.spotbie.com/'
+const apiEndpoint = 'https://7ba0-2600-1700-4804-d5f0-db1b-b46e-510d-ae5c.ngrok.io/'
 
 const url = window.location.toString();
 const { hostname,protocol }  = new URL(url);

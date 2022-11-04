@@ -26,7 +26,7 @@ export class AdManagerMenuComponent implements OnInit {
   eAllowedAccountTypes = AllowedAccountTypes
   menuItemList: Array<any>
   itemCreator: boolean = false
-  userLoyaltyPoints: number
+  userLoyaltyPoints: any
   userResetBalance
   userPointToDollarRatio
   adList: Array<Ad> = []
@@ -53,15 +53,7 @@ export class AdManagerMenuComponent implements OnInit {
   }
 
   getLoyaltyPointBalance(){
-    this.loyaltyPointsService.userLoyaltyPoints$.pipe(
-      map((loyaltyPointBalance): number => {
-        let loyaltyPoints = 0;
-        loyaltyPointBalance.forEach((loyaltyPointsObj) => {
-          loyaltyPoints += loyaltyPointsObj.balance;
-        });
-        return loyaltyPoints;
-      })
-    ).subscribe(loyaltyPointBalance => {
+    this.loyaltyPointsService.userLoyaltyPoints$.subscribe(loyaltyPointBalance => {
       this.userLoyaltyPoints = loyaltyPointBalance
     })
   }

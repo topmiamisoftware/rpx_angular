@@ -47,7 +47,7 @@ export class HeaderAdBannerComponent implements OnInit, OnDestroy {
   communityMemberOpen: boolean = false
   currentCategoryList: Array<string> = []
   categoryListForUi: string = null
-  loyaltyPointBalance: LoyaltyPointBalance
+  loyaltyPointBalance: any
   genericAdImage: string = PLACE_TO_EAT_AD_IMAGE
   genericAdImageMobile: string = PLACE_TO_EAT_AD_IMAGE_MOBILE
   switchAdInterval: any = false
@@ -56,7 +56,7 @@ export class HeaderAdBannerComponent implements OnInit, OnDestroy {
               private deviceDetectorService: DeviceDetectorService,
               private loyaltyPointsService: LoyaltyPointsService) {
                 this.loyaltyPointsService.userLoyaltyPoints$.subscribe(loyaltyPointBalance => {
-                  this.loyaltyPointBalance = loyaltyPointBalance[0]
+                  this.loyaltyPointBalance = loyaltyPointBalance
                 })
   }
 

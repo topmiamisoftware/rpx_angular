@@ -52,7 +52,7 @@ export class AdCreatorComponent implements OnInit {
   ]
   public adCreated: boolean
   public adDeleted: boolean
-  public loyaltyPointBalance: number
+  public loyaltyPointBalance: any
   public selected: number = 0
   public business: Business = null
 
@@ -60,15 +60,7 @@ export class AdCreatorComponent implements OnInit {
               private adCreatorService: AdCreatorService,
               private http: HttpClient,
               private loyaltyPointsService: LoyaltyPointsService) {
-          this.loyaltyPointsService.userLoyaltyPoints$.pipe(
-            map((loyaltyPointBalance): number => {
-              let loyaltyPoints = 0;
-              loyaltyPointBalance.forEach((loyaltyPointsObj) => {
-                loyaltyPoints += loyaltyPointsObj.balance;
-              });
-              return loyaltyPoints;
-            })
-          ).subscribe(loyaltyPointBalance => {
+          this.loyaltyPointsService.userLoyaltyPoints$.subscribe(loyaltyPointBalance => {
             this.loyaltyPointBalance = loyaltyPointBalance
           })
   }

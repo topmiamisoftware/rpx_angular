@@ -16,7 +16,7 @@ const REDEEMABLE_API = spotbieGlobals.API+'redeemable'
 })
 export class LoyaltyPointsService {
 
-  userLoyaltyPoints$: Observable<LoyaltyPointBalance[]> = this.store.select('loyaltyPoints')
+  userLoyaltyPoints$: Observable<LoyaltyPointBalance | number> = this.store.select('loyaltyPoints')
   loyaltyPointBalance: LoyaltyPointBalance
 
   constructor(private http: HttpClient,
@@ -62,7 +62,7 @@ export class LoyaltyPointsService {
       catchError(handleError('getLoyaltyPointBalance'))
     ).subscribe(resp => {
           if(resp.success){
-            const loyaltyPointBalance: LoyaltyPointBalance[] = resp.loyalty_points
+            const loyaltyPointBalance: number = resp.loyalty_points
             this.store.dispatch( setValue({loyaltyPointBalance}) )
           }
         })
@@ -83,7 +83,7 @@ export class LoyaltyPointsService {
       catchError(handleError('saveLoyaltyPoint'))
     ).subscribe(resp => {
         if(resp.success){
-          const loyaltyPointBalance: LoyaltyPointBalance[] = resp.loyalty_points
+          const loyaltyPointBalance: number = resp.loyalty_points
           this.store.dispatch( setValue({loyaltyPointBalance}) )
         }
         callback(resp)
@@ -105,7 +105,7 @@ export class LoyaltyPointsService {
       catchError(handleError('resetMyBalance'))
     ).subscribe(resp => {
         if(resp.success){
-          const loyaltyPointBalance: LoyaltyPointBalance[] = resp.loyalty_points
+          const loyaltyPointBalance: number = resp.loyalty_points
           this.store.dispatch( setValue({loyaltyPointBalance}) )
         }
       })

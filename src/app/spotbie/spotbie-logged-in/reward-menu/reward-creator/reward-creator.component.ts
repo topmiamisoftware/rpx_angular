@@ -43,16 +43,15 @@ export class RewardCreatorComponent implements OnInit {
   rewardCreated: boolean = false
   rewardDeleted: boolean = false
   uploadMediaForm: boolean = false
-  loyaltyPointBalance: LoyaltyPointBalance
+  loyaltyPointBalance: any
   qrCodeClaimReward = QR_CODE_CALIM_REWARD_SCAN_BASE_URL
 
   constructor(private formBuilder: UntypedFormBuilder,
               private rewardCreatorService: RewardCreatorService,
               private http: HttpClient,
               private loyaltyPointsService: LoyaltyPointsService) {
-                this.loyaltyPointsService.userLoyaltyPoints$.subscribe(
-                  loyaltyPointsBalance => {
-                    this.loyaltyPointBalance = loyaltyPointsBalance[0]
+                this.loyaltyPointsService.userLoyaltyPoints$.subscribe(loyaltyPointsBalance => {
+                    this.loyaltyPointBalance = loyaltyPointsBalance
                   })
               }
 

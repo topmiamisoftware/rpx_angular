@@ -39,7 +39,7 @@ export class RewardMenuComponent implements OnInit {
   reward: Reward
   userType: number = null
   business: Business = new Business()
-  loyaltyPointsBalance: LoyaltyPointBalance
+  loyaltyPointsBalance: any
   isLoggedIn: string = null
 
   constructor(private loyaltyPointsService: LoyaltyPointsService,
@@ -60,7 +60,7 @@ export class RewardMenuComponent implements OnInit {
 
   getLoyaltyPointBalance(){
     this.loyaltyPointsService.userLoyaltyPoints$.subscribe(loyaltyPointsBalance => {
-        this.loyaltyPointsBalance = loyaltyPointsBalance[0]
+        this.loyaltyPointsBalance = loyaltyPointsBalance
       })
   }
 

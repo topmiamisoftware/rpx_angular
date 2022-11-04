@@ -47,7 +47,7 @@ export class BottomAdBannerComponent implements OnInit, OnDestroy {
   communityMemberOpen: boolean = false
   currentCategoryList: Array<string> = []
   categoryListForUi: string = null
-  loyaltyPointBalance: LoyaltyPointBalance
+  loyaltyPointBalance: any
   genericAdImage: string = PLACE_TO_EAT_AD_IMAGE
   genericAdImageMobile: string = PLACE_TO_EAT_AD_IMAGE_MOBILE
   switchAdInterval: any = false
@@ -56,7 +56,7 @@ export class BottomAdBannerComponent implements OnInit, OnDestroy {
               private deviceDetectorService: DeviceDetectorService,
               private loyaltyPointsService: LoyaltyPointsService) {
                 this.loyaltyPointsService.userLoyaltyPoints$.subscribe(loyaltyPointBalance => {
-                  this.loyaltyPointBalance = loyaltyPointBalance[0]
+                  this.loyaltyPointBalance = loyaltyPointBalance
                 })
               }
 
@@ -153,15 +153,10 @@ export class BottomAdBannerComponent implements OnInit, OnDestroy {
   async getBottomHeaderCb(resp: any){
     if(resp.success) {
       this.ad = resp.ad
-
-      if (this.editMode) {
-        this.ad.name = 'Harry\'s'
-      }
-
       this.business = resp.business
 
-      if (!this.editMode && this.business !== null) {
-        switch(this.business.user_type) {
+      if(!this.editMode && resp.business !== null) {
+        switch(this.business.user_type){
           case AllowedAccountTypes.PlaceToEat:
             this.currentCategoryList = FOOD_CATEGORIES
             break
@@ -174,28 +169,23 @@ export class BottomAdBannerComponent implements OnInit, OnDestroy {
         }
 
         this.categoriesListFriendly = []
+        this.currentCategoryList.reduce((previousValue: string, currentValue: string, currentIndex: number, array: string[]) => {
 
-        await this.currentCategoryList.reduce((previousValue: string, currentValue: string, currentIndex: number, array: string[]) => {
-          if(resp.business.categories.indexOf(currentIndex) > -1) {
-            this.categoriesListFriendly.push(this.currentCategoryList[currentIndex]);
-          }
-          return currentValue;
-        });
-      }
+          if(resp.business.categories.indexOf(currentIndex) > -1)
+            this.categoriesListFriendly.push(this.currentCategoryList[currentIndex])
+          return currentValue
+        })
 
-      if(this.business !== null){
         this.business.is_community_member = true
         this.business.type_of_info_object = InfoObjectType.SpotBieCommunity
 
-        this.totalRewards = resp.totalRewards
-
-        if(!this.editMode) {
+        if(!this.editMode)
           this.distance = getDistanceFromLatLngInMiles(this.business.loc_x, this.business.loc_y, this.lat, this.lng)
-        } else {
-          this.distance = 5;
-        }
+        else
+          this.distance = 5
       }
 
+      this.totalRewards = resp.totalRewards
       this.displayAd = true
     } else {
       console.log('getSingleAdListCb', resp)

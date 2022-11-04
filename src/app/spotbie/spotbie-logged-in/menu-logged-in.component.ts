@@ -7,6 +7,7 @@ import { AllowedAccountTypes } from 'src/app/helpers/enum/account-type.enum'
 import { SettingsComponent } from './settings/settings.component'
 import { logOutCallback } from 'src/app/helpers/logout-callback'
 import { map } from 'rxjs/operators';
+import {LoyaltyPointBalance} from "../../models/loyalty-point-balance";
 
 @Component({
   selector: 'app-menu-logged-in',
@@ -35,7 +36,7 @@ export class MenuLoggedInComponent implements OnInit {
   isDesktop: boolean
   isTablet: boolean
   userType: number
-  userLoyaltyPoints: number = 0
+  userLoyaltyPoints: any = 0
   userName: string = null
   qrCode: boolean = false
   business: boolean = false
@@ -150,24 +151,20 @@ export class MenuLoggedInComponent implements OnInit {
     this.isDesktop = this.deviceService.isDesktop()
     this.isTablet = this.deviceService.isTablet()
 
-    this.loyaltyPointsService.userLoyaltyPoints$.pipe(
-      map((loyaltyPointBalance): number => {
-        let loyaltyPoints = 0;
-        loyaltyPointBalance.forEach((loyaltyPointsObj) => {
-          loyaltyPoints += loyaltyPointsObj.balance;
-        });
-        return loyaltyPoints;
-      })
-    ).subscribe(loyaltyPointBalance => {
-      this.userLoyaltyPoints = loyaltyPointBalance
-    })
-
     this.userType = parseInt(localStorage.getItem('spotbie_userType'), 10)
 
     if(this.userType === AllowedAccountTypes.Personal)
       this.business = false
     else
       this.business = true
+
+    this.loyaltyPointsService.userLoyaltyPoints$.subscribe((loyaltyPointBalance: LoyaltyPointBalance) => {
+      if(this.business){
+        this.userLoyaltyPoints = loyaltyPointBalance.balance
+      } else {
+        this.userLoyaltyPoints = loyaltyPointBalance
+      }
+    })
 
     this.userName = localStorage.getItem('spotbie_userLogin')
     this.getLoyaltyPointBalance()
