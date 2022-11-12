@@ -62,26 +62,6 @@
                 </div>
             </div>
 
-            <div *ngIf="f.spotbieEmail.errors">
-                <div class="spotbie-invalid-feedback
-                            text-center text-uppercase
-                            spotbie-text-gradient spotbie-error mb-2" *ngIf="f.spotbieEmail.errors.spotbie_google_account" >
-                    You signed up with google.
-                </div>
-
-                <div class="spotbie-invalid-feedback
-                            text-center text-uppercase
-                            spotbie-text-gradient spotbie-error mb-2" *ngIf="f.spotbieEmail.errors.spotbie_account" >
-                    You signed up with an email address.
-                </div>
-
-                <div class="spotbie-invalid-feedback
-                            text-center text-uppercase mb-2" *ngIf="f.spotbieUsername.errors.wrong_account_type" >
-                    <span class='spotbie-text-gradient spotbie-error cursor-pointer text-decoration-underline' *ngIf="!business" [routerLink]="['/business']">login with business account</span>
-                    <span class='spotbie-text-gradient spotbie-error cursor-pointer text-decoration-underline' *ngIf="business" [routerLink]="['/home']">login with personal account</span>
-                </div>
-            </div>
-
             <table class="sb-inputWithIconWrapper">
                 <td class="sb-iconInInputWrapper">
                     <i class="fa fa-envelope"></i>

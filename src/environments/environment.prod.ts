@@ -1,4 +1,4 @@
-const baseUrl = `https://demo.spotbie.com/`
+const baseUrl = `https://spotbie.com/`
 
 export const environment = {
   production: null,
@@ -24,7 +24,7 @@ function setEnvironmentVariables(frontEndUrl: string){
     environment.production = false;
     environment.staging = true;
     environment.fakeLocation = true;
-    environment.apiEndpoint = 'https://e00b-2600-1700-4804-d5f0-afcb-f108-6ab4-516.ngrok.io/api/';
+    environment.apiEndpoint = 'https://api-demo.spotbie.com/api/';
   }
 
   if(frontEndUrl.indexOf('https://spotbie.com/') > -1){

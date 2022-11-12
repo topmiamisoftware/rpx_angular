@@ -1,6 +1,6 @@
 <app-loading-screen *ngIf="loading"></app-loading-screen>
 
-<div class="spotbie-overlay-window" *ngIf="!adPaidFor && !membershipPaidFor"> 
+<div class="spotbie-overlay-window" *ngIf="!adPaidFor && !membershipPaidFor">
 
     <div class='sb-makePaymentWrapper' [ngStyle]="getPaymentFormStyles()">
 
@@ -15,7 +15,7 @@
         <div *ngIf="invalidError" style="color:red">
             {{ invalidError.message }}
         </div>
-        
+
         <stripe-card #stripeCard
             (catch) = "onStripeError($event)"
             [(complete)] = "cardDetailsFilledOut"
@@ -25,13 +25,13 @@
             (tokenChange) = "setStripeToken($event)"
             (sourceChange) = "setStripeSource($event)">
         </stripe-card>
-        
+
         <div *ngIf="paymentType == 'in-house'" class="mb-4">
 
             <h4 class="spotbie-text-gradient text-uppercase mt-4">{{ ad.name }}</h4>
 
             <h3 class="sb-text-light-green-gradient mt-4">{{ ad.dollar_cost | currency: 'USD'}}/month</h3>
-    
+
             <img class="sb-adImage" [src]="ad.images" />
 
         </div>
@@ -40,8 +40,8 @@
 
             <h4 class="spotbie-text-gradient text-uppercase mt-4">{{ ad.name }}</h4>
 
-            <h3 class="sb-text-light-green-gradient mt-4">$29.99/month</h3>
-    
+            <h3 class="sb-text-light-green-gradient mt-4">$99.99/month</h3>
+
             <img class="sb-adImage" [src]="ad.images" />
 
         </div>
@@ -63,7 +63,7 @@
     <div class="sb-logo mt-3 mb-3"></div>
 
     <div class='sb-makePaymentWrapper' style="box-shadow: unset;">
-        
+
         <h4 class="spotbie-text-gradient spotbie-r-success-title text-uppercase">PAYMENT SUCCESSFUL</h4>
 
         <div class="sb-verificationCheck mt-4 mb-4">
@@ -83,7 +83,7 @@
     <div class="sb-logo mt-3 mb-3"></div>
 
     <div class='sb-makePaymentWrapper' style="box-shadow: unset;">
-        
+
         <h4 class="spotbie-text-gradient spotbie-r-success-title text-uppercase">PROMOTION ALREADY PAID</h4>
 
         <div class="sb-verificationCheck mt-4 mb-4">
@@ -104,7 +104,7 @@
     <div class="sb-logo mt-3 mb-3"></div>
 
     <div class='sb-makePaymentWrapper' style="box-shadow: unset;">
-        
+
         <h4 class="spotbie-text-gradient spotbie-r-success-title text-uppercase">PAYMENT SUCCESSFUL</h4>
 
         <div class="sb-verificationCheck mt-4 mb-4">
