@@ -1,4 +1,4 @@
-const baseUrl = `https://demo.spotbie.com/`
+const baseUrl = `https://spotbie.com/`
 
 export const environment = {
   production: null,
@@ -14,7 +14,8 @@ export const environment = {
   fakeLocation: null,
   myLocX: 25.786286,
   myLocY: -80.186562,
-  publishableStripeKey: null
+  publishableStripeKey: null,
+  dsn: null // Sentry client key
 }
 
 setEnvironmentVariables(baseUrl);
@@ -25,7 +26,8 @@ function setEnvironmentVariables(frontEndUrl: string){
     environment.staging = true;
     environment.fakeLocation = true;
     environment.apiEndpoint = 'https://api-demo.spotbie.com/api/';
-    environment.publishableStripeKey = 'pk_test_51JrUwnGFcsifY4UhCCJp023Q1dWwv5AabBTsMDwiJ7RycEVLyP1EBpwbXRsfn07qpw5lovv9CGfvfhQ82Zt3Be8U00aH3hD9pj'
+    environment.publishableStripeKey = 'pk_test_51JrUwnGFcsifY4UhCCJp023Q1dWwv5AabBTsMDwiJ7RycEVLyP1EBpwbXRsfn07qpw5lovv9CGfvfhQ82Zt3Be8U00aH3hD9pj';
+    environment.dsn = null;
   }
 
   if(frontEndUrl.indexOf('https://spotbie.com/') > -1){
@@ -34,5 +36,6 @@ function setEnvironmentVariables(frontEndUrl: string){
     environment.fakeLocation = false;
     environment.apiEndpoint = 'https://api.spotbie.com/api/';
     environment.publishableStripeKey = 'pk_live_51JrUwnGFcsifY4UhqQVtkwnats9SfiUseYMsCBpoa7361hvxq4uWNZcxL2nZnhhrqtX5vLs9EUFACK3VR60svKyc00BSbooqh8';
+    environment.dsn = 'https://c6d5bdc07a204911a0af930dbc444c5e@o4504285868523520.ingest.sentry.io/4504285940809728';
   }
 }

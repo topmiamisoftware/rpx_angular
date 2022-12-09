@@ -1,39 +1,42 @@
 .spotbie-ad-wrapper-header{
   position: relative;
   text-align: center;
+  margin: 0 auto;
+  max-height: 600px;
   background-repeat: no-repeat!important;
   background-size: contain!important;
   background-position: center!important;
-  max-width: 100%;
+  max-width: 1600px;
   min-width: 100%;
   width: 100%;
-  max-height: 600px;
   background-color: #1c1924!important;
   cursor: pointer;
   z-index: 9;
 }
+
 .spotbie-ad-wrapper-header.sb-mobileAdWrapper{
   position: relative;
   margin: 0 auto;
-  max-height: 100%;
-  min-width: 100%;
-  max-width: 100%;
-  right: 0%;
+  max-width: 400px;
+  min-width: 400px;
+  width: 400px;
   min-height: unset;
   height: unset;
-  background: #1c1924c9!important;
 }
 .sb-mobileAdWrapper .spotbie-ad-image{
   position: relative;
-  max-height: 370px;
+  left: 0;
+  right: 0;
   max-width: 100%;
+  max-height: 370px;
   box-shadow: unset;
 }
+
 .spotbie-ad-image{
   position: relative;
   margin: 0 auto;
-  max-height: 600px;
   max-width: 100%;
+  max-height: 600px;
   box-shadow: unset;
 }
 
@@ -83,12 +86,12 @@
 }
 .sb-mobileAdWrapper .sb-ad-bottom{
   position:relative;
-  position: relative;
-  background-color: #1c1924!important;
   padding-top: 15px;
   padding-bottom: 15px;
-  background-color: rgb(28 25 36) !important;
+  bottom: unset !important;
+  background-color: #1c1924!important;
 }
+
 .fa-map-marker-alt{
   font-size: .5rem;
 }
@@ -109,34 +112,26 @@
   z-index: 0;
   pointer-events: none;
 }
-.sb-ad-top{
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  z-index: 2;
-}
 .sb-ad-bottom{
   position: absolute;
-  bottom: 0;
+  bottom: 0px;
   left: 0;
   width: 100%;
   z-index: 2;
   padding-top: 5px;
   padding-bottom: 5px;
   font-size: .7rem;
-  background-color:rgb(51 47 62 / 60%);
+  background-color: rgb(51 47 62);
 }
-
 @media (max-width: 1024px) {
   .spotbie-ad-wrapper-header.sb-mobileAdWrapper,
   .spotbie-ad-wrapper-header{
     position: relative;
     margin: 0 auto;
-    max-width: 102%;
-    min-width: 102%;
-    width: 102%;
-    right: 1%;
+    max-width: 100%;
+    min-width: 100%;
+    width: 100%;
+    right: 0%;
     min-height: unset;
     height: unset;
   }
@@ -144,8 +139,11 @@
 @media (max-width: 768px) {
   .sb-mobileAdWrapper .spotbie-ad-image,
   .spotbie-ad-image{
-    width: 100%;
+    position: relative;
+    left: 0;
+    right: 0;
     min-width: 100%;
+    max-width: 100%;
     box-shadow: unset;
     background-color: #26232e !important;
     background-size: contain !important;
@@ -194,18 +192,17 @@
   .sb-perDollar{
     margin-right: 0px;
   }
-  .sb-ad-bottom{
+  .sb-ad-bottom,
+  .sb-ad-top{
     position:relative;
-    position: relative;
-    background-color: #1c1924!important;
-    padding-top: 15px;
-    padding-bottom: 15px;
     background-color: rgb(28 25 36) !important;
+    bottom: unset;
   }
 }
 @media (max-width: 420px) {
   .sb-mobileAdWrapper .spotbie-ad-image,
   .spotbie-ad-image{
     min-width: 100%;
+    height: auto;
   }
 }

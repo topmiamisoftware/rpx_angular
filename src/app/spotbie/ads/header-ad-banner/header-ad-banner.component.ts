@@ -7,7 +7,6 @@ import { DeviceDetectorService } from 'ngx-device-detector';
 import { FOOD_CATEGORIES, SHOPPING_CATEGORIES, EVENT_CATEGORIES } from '../../map/map_extras/map_extras';
 import { AllowedAccountTypes } from 'src/app/helpers/enum/account-type.enum';
 import { InfoObjectType } from 'src/app/helpers/enum/info-object-type.enum';
-import { LoyaltyPointBalance } from 'src/app/models/loyalty-point-balance';
 import { LoyaltyPointsService } from 'src/app/services/loyalty-points/loyalty-points.service';
 
 const PLACE_TO_EAT_AD_IMAGE = 'assets/images/def/places-to-eat/header_banner_in_house.jpg'
@@ -170,8 +169,9 @@ export class HeaderAdBannerComponent implements OnInit, OnDestroy {
 
       this.displayAd = true
       this.totalRewards = resp.totalRewards
-    } else
+    } else {
       console.log('getHeaderBannerAdCallback', resp)
+    }
 
     if(!this.switchAdInterval){
       this.switchAdInterval = setInterval( () => {

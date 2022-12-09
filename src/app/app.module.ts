@@ -1,5 +1,5 @@
 import { BrowserModule, BrowserTransferStateModule } from '@angular/platform-browser'
-import { NgModule } from '@angular/core'
+import {APP_INITIALIZER, ErrorHandler, NgModule} from '@angular/core'
 import { AppRoutingModule } from './app-routing.module'
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
 import { DeviceDetectorService } from 'ngx-device-detector'
@@ -20,9 +20,11 @@ import { TransferHttpCacheModule } from '@nguniversal/common'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { UserauthService } from './services/userauth.service'
 import { StoreModule } from '@ngrx/store'
-import { loyaltyPointsReducer } from './spotbie/spotbie-logged-in/loyalty-points/loyalty-points.reducer'
-import { StripeModule } from 'stripe-angular'
-import { MakePaymentModule } from './make-payment/make-payment.module'
+import { loyaltyPointsReducer } from './spotbie/spotbie-logged-in/loyalty-points/loyalty-points.reducer';
+import { StripeModule } from 'stripe-angular';
+import { MakePaymentModule } from './make-payment/make-payment.module';
+import * as Sentry from '@sentry/angular';
+import {Router} from '@angular/router';
 
 @NgModule({
   declarations: [
@@ -55,6 +57,22 @@ import { MakePaymentModule } from './make-payment/make-payment.module'
     DeviceDetectorService,
     VersionCheckService,
     UserauthService,
+    {
+      provide: ErrorHandler,
+      useValue: Sentry.createErrorHandler({
+        showDialog: false,
+      }),
+    },
+    {
+      provide: Sentry.TraceService,
+      deps: [Router],
+    },
+    {
+      provide: APP_INITIALIZER,
+      useFactory: () => () => {},
+      deps: [Sentry.TraceService],
+      multi: true,
+    },
     { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
   ],
   bootstrap: [AppComponent]

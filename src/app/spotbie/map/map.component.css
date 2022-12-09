@@ -174,7 +174,6 @@
   padding-top: 80px;
   padding-bottom: 150px;
 }
-
 .search-spotbie-categories{
   direction: ltr;
   position: fixed;
@@ -186,7 +185,6 @@
   padding: 5px;
   background-color: white;
 }
-
 .spotbie-single-cat{
   position: relative;
   padding: 15px 38px;
@@ -853,6 +851,10 @@ button.gm-ui-hover-effect:focus-within{
   margin-top: 4px;
   position: absolute;
   margin-left: 4px;
+}
+.sb-sorterHead{
+  min-width: 100%;
+  width: 100%;
 }
 ::-webkit-scrollbar{
   height: 10px;

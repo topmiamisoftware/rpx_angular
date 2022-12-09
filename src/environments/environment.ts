@@ -1,4 +1,4 @@
-const apiEndpoint = 'https://d934-2600-1700-4804-d5f0-97b1-b32f-10d2-5a88.ngrok.io/'
+const apiEndpoint = 'https://9578-2600-1700-4804-d5f0-97b4-6f4b-bb8c-545f.ngrok.io/'
 
 const url = window.location.toString();
 const { hostname,protocol }  = new URL(url);
@@ -15,6 +15,7 @@ export const environment = {
   publishableStripeKey: 'pk_test_51JrUwnGFcsifY4UhCCJp023Q1dWwv5AabBTsMDwiJ7RycEVLyP1EBpwbXRsfn07qpw5lovv9CGfvfhQ82Zt3Be8U00aH3hD9pj',
   apiEndpoint: `${apiEndpoint}api/`,
   fakeLocation: true,
+  dsn: null,
   myLocX: 25.786286,
   myLocY: -80.186562
 }
