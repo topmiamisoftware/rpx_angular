@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core'
+import {Component, NgZone, OnInit, ViewChild} from '@angular/core'
 import { StripeCard, StripeScriptTag } from 'stripe-angular'
 import { ActivatedRoute } from '@angular/router'
 import { Ad } from '../models/ad'
@@ -35,12 +35,15 @@ export class MakePaymentComponent implements OnInit {
   membershipPaidFor: boolean = false
   paymentTitle: string = ''
   paymentDescription: string = ''
+  stripeCardToken: stripe.Token;
+  paymentMethod: stripe.paymentMethod.PaymentMethod | void;
 
   constructor(
     private stripeScriptTag: StripeScriptTag,
     private activatedRoute: ActivatedRoute,
     private adsService: AdsService,
-    private paymentsService: SpotbiePaymentsService
+    private paymentsService: SpotbiePaymentsService,
+    private ngZone: NgZone,
   ) {
     if (!this.stripeScriptTag.StripeInstance)
       this.stripeScriptTag.setPublishableKey(STRIPE_PK)
@@ -54,22 +57,9 @@ export class MakePaymentComponent implements OnInit {
     this.loading = false
   }
 
-  setPaymentMethod( token: stripe.paymentMethod.PaymentMethod ){
-    switch(this.paymentType) {
-      case 'business-membership':
-        this.userPayment(token)
-        break
-      case 'in-house':
-        this.adPayment(token)
-        break
-      default:
-        return
-    }
-  }
-
-  private userPayment( token: stripe.paymentMethod.PaymentMethod ){
+  private userPayment(){
     const subscriptionRequestItem = {
-      payment_method: token,
+      payment_method: this.paymentMethod,
       uuid: this.uuid
     }
 
@@ -77,16 +67,19 @@ export class MakePaymentComponent implements OnInit {
 
     // Store the payment method on Stripe and Spotbie
     this.paymentsService.savePayment(subscriptionRequestItem, serviceUrl).subscribe(resp => {
-        if(resp.success) this.membershipPaidFor = true
-        this.loading = false
+        this.ngZone.run(() => {
+          if(resp.success) {
+            this.membershipPaidFor = true
+          }
+          this.loading = false
+        });
       });
   }
 
 
-  private adPayment( token: stripe.paymentMethod.PaymentMethod ){
-
+  private adPayment(){
     const subscriptionRequestItem = {
-      payment_method: token,
+      payment_method: this.paymentMethod,
       ad: this.ad,
       business: this.business
     }
@@ -111,12 +104,29 @@ export class MakePaymentComponent implements OnInit {
     }
   }
 
-  stripeCreatePaymentMethod(){
-    this.loading = true
-    this.stripeCard.createPaymentMethod({})
+  stripeSendPayment(){
+    this.loading = true;
+
+    if(this.stripeCard.complete){
+      this.stripeCard.createToken({}).then((token) => {
+        this.stripeCard.createPaymentMethod({}).then((pm) =>{
+            this.paymentMethod = pm;
+            this.setStripeToken(token);
+            switch(this.paymentType) {
+              case 'in-house':
+                this.adPayment();
+                break
+              default:
+                this.userPayment();
+                return
+            }
+          });
+      });
+    }
   }
 
   setStripeToken( token: stripe.Token ){
+    this.stripeCardToken = token;
   }
 
   setStripeSource( source: stripe.Source ){

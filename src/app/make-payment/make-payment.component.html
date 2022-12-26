@@ -20,10 +20,7 @@
             (catch) = "onStripeError($event)"
             [(complete)] = "cardDetailsFilledOut"
             [(invalid)] = "invalidError"
-            (cardMounted) = "onCardCaptureReady()"
-            (paymentMethodChange) = "setPaymentMethod($event)"
-            (tokenChange) = "setStripeToken($event)"
-            (sourceChange) = "setStripeSource($event)">
+            (cardMounted) = "onCardCaptureReady()">
         </stripe-card>
 
         <div *ngIf="paymentType == 'in-house'" class="mb-4">
@@ -50,7 +47,7 @@
             By clicking "Pay Now", you are agreeing to<br/><a [routerLink]="['/terms']">OUR TERMS & PRIVACY POLICY.</a>
         </p>
 
-        <button class="spotbie-button text-uppercase" type="button" (click)="stripeCreatePaymentMethod()">
+        <button class="spotbie-button text-uppercase" type="button" (click)="stripeSendPayment()">
             SUBSCRIBE
         </button>
 
