@@ -1,23 +1,24 @@
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import {environment} from '../../../environments/environment.prod';
 
 @Injectable()
 export class TokenInterceptor implements HttpInterceptor {
-  
+
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
-    let token = localStorage.getItem('spotbiecom_session')
+    const token = localStorage.getItem('spotbiecom_session')
 
     let modifiedReq
 
-    if(token !== '' && token !== null && token !== 'null'){
-      
+    if(token && token !== '' && token !== 'null'){
+
       modifiedReq = req.clone({
         withCredentials: true,
         setHeaders: {
-          'Authorization' : `Bearer ${token}`
-        }
+          Authorization : `Bearer ${token}`
+        },
       });
 
     } else {
@@ -25,7 +26,7 @@ export class TokenInterceptor implements HttpInterceptor {
         withCredentials: true,
       });
     }
-    
+
     return next.handle(modifiedReq);
 
   }

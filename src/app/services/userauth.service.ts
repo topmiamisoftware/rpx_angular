@@ -28,17 +28,22 @@ export class UserauthService {
               private router: Router) { }
 
   public async checkIfLoggedIn(): Promise<any>{
-    const check_login_object = {}
+    const checkLoginObject = {}
     const loginApi = `${USER_API}/check-user-auth`
 
     return new Promise((resolve, reject) => {
-      this.http.post<String>(loginApi, check_login_object)
-      .subscribe( resp => {
+      this.http.post<string>(loginApi, checkLoginObject)
+      .subscribe((resp) => {
+        console.log('strill logged in', resp);
         resolve(resp)
-      }, error => {
+      },
+(error) => {
         console.log('checkIfLoggedIn Error', error)
         this.logOut()
         reject()
+      },
+() => {
+          console.log('checkIfLoggedIn Error')
       })
     })
   }

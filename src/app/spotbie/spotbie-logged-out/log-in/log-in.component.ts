@@ -14,35 +14,35 @@ import { logOutCallback } from 'src/app/helpers/logout-callback'
 export class LogInComponent implements OnInit {
   @ViewChild('spotbieSignUpIssues') spotbieSignUpIssues: ElementRef
 
-  public faEye = faEye
-  public faEyeSlash = faEyeSlash
-  public loading: boolean = false
-  public bg_color: string
-  public current_login_photo: string
-  public current_login_username: string
-  public logInForm: UntypedFormGroup
-  public submitted: boolean = false
-  public helpToggle: boolean = false
-  public rememberMeState: string = '0'
-  public rememberMeLight: string = 'red'
-  public rememberMeTextOff: string = 'Remember Me is set to OFF.'
-  public rememberMeTextOn: string = 'Remember Me is set to ON.'
-  public rememberMeToggleStateText: string = this.rememberMeTextOff
-  public rememberMeToken: string
-  public forgotPasswordWindow = { open : false }
-  public passwordShow: boolean = false
-  public business: boolean = false
+  faEye = faEye
+  faEyeSlash = faEyeSlash
+  loading: boolean = false
+  bg_color: string
+  current_login_photo: string
+  current_login_username: string
+  logInForm: UntypedFormGroup
+  submitted: boolean = false
+  helpToggle: boolean = false
+  rememberMeState: string = '0'
+  rememberMeLight: string = 'red'
+  rememberMeTextOff: string = 'Remember Me is set to OFF.'
+  rememberMeTextOn: string = 'Remember Me is set to ON.'
+  rememberMeToggleStateText: string = this.rememberMeTextOff
+  rememberMeToken: string
+  forgotPasswordWindow = { open : false }
+  passwordShow: boolean = false
+  business: boolean = false
 
   constructor(private host: MenuLoggedOutComponent = null,
               private formBuilder: UntypedFormBuilder,
               private userAuthService: UserauthService,
               private router: Router) { }
 
-  public togglePassword(){
+  togglePassword(){
     this.passwordShow = !this.passwordShow
   }
 
-  public toggleRememberMe(): void{
+  toggleRememberMe(): void{
     if (this.rememberMeState === '0') {
       this.rememberMeState = '1'
       this.rememberMeLight = '#7bb126'
@@ -54,11 +54,11 @@ export class LogInComponent implements OnInit {
     }
   }
 
-  public toggleRememberMeHelp(): void{
+  toggleRememberMeHelp(): void{
     this.helpToggle = !this.helpToggle
   }
 
-  public loginUser(){
+  loginUser(){
     this.spotbieSignUpIssues.nativeElement.style.display = 'none'
 
     this.userAuthService.initLogin().subscribe({
@@ -129,7 +129,7 @@ export class LogInComponent implements OnInit {
     this.loading = false
   }
 
-  public initLogIn(): void{
+  initLogIn(): void{
     this.loading = true
     this.submitted = true
 
@@ -163,7 +163,7 @@ export class LogInComponent implements OnInit {
     this.loading = false
   }
 
-  public initTokenLogin(): void {
+  initTokenLogin(): void {
     const savedRememberMeToken = localStorage.getItem('spotbie_rememberMeToken')
     const savedUsername = localStorage.getItem('spotbie_userLogin')
 
@@ -179,28 +179,28 @@ export class LogInComponent implements OnInit {
   get password() { return this.logInForm.get('spotbiePassword').value }
   get f() { return this.logInForm.controls }
 
-  public closeWindow(){
+  closeWindow(){
     this.host.closeWindow(this.host.logInWindow)
   }
 
-  public openWindow(window: any): void{
+  openWindow(window: any): void{
     window.open = true
   }
 
-  public signUp(){
+  signUp(){
     this.host.openWindow(this.host.signUpWindow)
     this.host.closeWindow(this.host.logInWindow)
   }
 
-  public usersHome(){
+  usersHome(){
     this.router.navigate(['/home'])
   }
 
-  public businessHome(){
+  businessHome(){
     this.router.navigate(['/business'])
   }
 
-  public getCurrentWindowBg(){
+  getCurrentWindowBg(){
     if(this.business){
       return 'sb-businessBg'
     } else {
@@ -208,7 +208,7 @@ export class LogInComponent implements OnInit {
     }
   }
 
-  public openIg(){
+  openIg(){
     if(this.business){
       window.open('https://www.instagram.com/spotbie.business/','_blank')
     } else {
@@ -216,15 +216,15 @@ export class LogInComponent implements OnInit {
     }
   }
 
-  public openYoutube(){
+  openYoutube(){
     window.open('https://www.youtube.com/channel/UCtxkgw0SYiihwR7O8f-xIYA','_blank')
   }
 
-  public openTwitter(){
+  openTwitter(){
       window.open('https://twitter.com/SpotBie','_blank')
   }
 
-  public openBlog(){
+  openBlog(){
     window.open('https://blog.spotbie.com/','_blank')
   }
 
