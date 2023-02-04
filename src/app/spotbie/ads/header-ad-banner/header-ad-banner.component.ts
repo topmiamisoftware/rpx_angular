@@ -66,7 +66,7 @@ export class HeaderAdBannerComponent implements OnInit, OnDestroy {
     // Stop the service if there's a window on top of the ad component.
     const needleElement = document.getElementsByClassName('sb-closeButton')
 
-    if(needleElement.length > 0){
+    if(needleElement.length > 1){
       // There's a componenet on top of the bottom header.
       return
     }

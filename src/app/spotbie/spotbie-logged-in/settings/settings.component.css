@@ -31,7 +31,9 @@
     color: #ffc107;
 }
 .spotbie-select-menu{
-    overflow-y: hidden !important;
+    position: absolute;
+    padding-top: 120px;
+    overflow-y: scroll;
     min-width: 100%;
     width: 100%;
     top: 0;
@@ -327,6 +329,27 @@ textarea{
 .spotbie-place-address{
     font-size: .8rem;
 }
+.spotbie-price-box{
+  display: flex;
+  justify-content: center;
+  flex-wrap: nowrap;
+  flex-direction: row;
+  align-items: center;
+}
+.spotbie-price-box div{
+  margin-left: 20px;
+  margin-right: 20px;
+  border-radius: 20px;
+  background-color: rgba(0,0,0,.25);
+  padding: 40px;
+}
+.spotbie-price-box div:hover{
+  cursor: pointer;
+  box-shadow: 10px 10px 10px #1a1e21;
+}
+h6{
+  font-size: 1.9rem;
+}
 /**WIDTH MEDIA QUERIES */
 @media (max-width: 1300px) {
 
@@ -336,8 +359,89 @@ textarea{
 }
 @media (max-width: 1024px) {
 }
-@media (max-width: 900px) {
+@Media (max-width: 1024px) and (max-height: 600px) {
+  .spotbie-block {
+    margin: 0 auto;
+    margin-bottom: 30px;
+    width: 98%;
+    min-width: 98%;
+    max-width: 98%;
+    padding-left: 1%;
+    padding-right: 1%;
+    border-radius: 0;
+  }
 
+  .spotbie-price-box{
+    display: flex!important;
+    justify-content: center!important;
+    flex-wrap: nowrap!important;
+    flex-direction: column!important;
+    align-items: center;
+  }
+  .spotbie-price-box div{
+    margin-top: 5px;
+    margin-bottom: 20px;
+    padding: 20px;
+    min-width: 360px;
+    max-width: 360px;
+  }
+
+  .spotbie-price-box .spotbie-button{
+    font-size: .9rem !important;
+    max-width: 75%;
+    width: 75%;
+    min-width: 75%;
+  }
+
+  h6{
+    font-size: 1.3rem;
+    margin-top: 15px;
+  }
+}
+@media (max-width: 960px) {
+  .spotbie-price-box{
+    display: flex!important;
+    justify-content: center!important;
+    flex-wrap: nowrap!important;
+    flex-direction: column!important;
+    align-items: center;
+  }
+  .spotbie-price-box div{
+    margin-top: 5px;
+    margin-bottom: 20px;
+    padding: 20px;
+    min-width: 360px;
+    max-width: 360px;
+  }
+
+  .spotbie-price-box .spotbie-button{
+    font-size: .9rem !important;
+    max-width: 75%;
+    width: 75%;
+    min-width: 75%;
+  }
+
+  h6{
+    font-size: 1.3rem;
+    margin-top: 15px;
+  }
+}
+@media (max-width: 820px) and (max-height: 1180px){
+  .spotbie-settings-table {
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+  }
+  .spotbie-block {
+    margin: 0 auto;
+    margin-bottom: 30px;
+    width: 98%;
+    min-width: 98%;
+    max-width: 98%;
+    padding-left: 1%;
+    padding-right: 1%;
+    border-radius: 0;
+  }
 }
 @media (max-width: 768px) {
     .spotbie-block{
@@ -402,9 +506,9 @@ textarea{
     }
     .spotbie-button{
         font-size: .9rem !important;
-        max-width: 90%;
-        width: 90%;
-        min-width: 90%;
+        max-width: 75%;
+        width: 75%;
+        min-width: 75%;
     }
     .spotbie-settings-table td{
         padding-top: 7px !important;
@@ -452,6 +556,10 @@ textarea{
     }
     .sb-topSettingsPadding{
         padding-top: 80px;
+    }
+    .spotbie-price-box div{
+      min-width: 90%;
+      max-width: 90%;
     }
     h4{
         font-size: .9rem;

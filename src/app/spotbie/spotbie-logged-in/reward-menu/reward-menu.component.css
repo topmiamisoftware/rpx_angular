@@ -118,18 +118,19 @@
   }
 }
 @media (max-width: 768px){
-  .sb-menuItem {
-    width: 47%;
-    min-width: 47%;
-    max-width: 47%;
-  }
   .sb-menuItemInner{
     width: 100%;
     min-width: 100%;
     max-width: 100%;
   }
 }
+
 @media (max-width: 460px) {
+  .sb-menuItem {
+    width: 47%;
+    min-width: 47%;
+    max-width: 47%;
+  }
   h4 {
     font-size: 1rem;
   }

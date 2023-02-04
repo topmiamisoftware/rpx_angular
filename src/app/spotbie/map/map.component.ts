@@ -272,6 +272,10 @@ export class MapComponent implements OnInit {
     }, 500)
   }
 
+  changeSorting() {
+    this.sortBy(this.sortAc);
+  }
+
   sortBy(ac: number) {
     this.sortAc = ac
 
@@ -997,7 +1001,7 @@ export class MapComponent implements OnInit {
         case 3:
           business.transactions_on = '1'
           business.transactions = [business.transactions.slice(0, -1).join(', '), business.transactions.slice(-1)[0]].join(business.transactions.length < 2 ? '': ', and ')
-          friendly_transaction = business.transactions.replace('restaurant_reservation', 'restaurant reservations')
+          friendly_transaction = business.transactions.replace('restaurant_reservation', 'reservations')
           friendly_transaction = friendly_transaction + '.'
           break
       }

@@ -5,11 +5,9 @@ import { InfoObjectType } from 'src/app/helpers/enum/info-object-type.enum';
 import { getDistanceFromLatLngInMiles } from 'src/app/helpers/measure-units.helper';
 import { Ad } from 'src/app/models/ad';
 import { Business } from 'src/app/models/business';
-import { LoyaltyPointBalance } from 'src/app/models/loyalty-point-balance';
 import { LoyaltyPointsService } from 'src/app/services/loyalty-points/loyalty-points.service';
 import { EVENT_CATEGORIES, FOOD_CATEGORIES, SHOPPING_CATEGORIES } from '../../map/map_extras/map_extras';
 import { AdsService } from '../ads.service';
-import {map} from "rxjs/operators";
 
 const PLACE_TO_EAT_AD_IMAGE = 'assets/images/def/places-to-eat/featured_banner_in_house.jpg'
 const SHOPPING_AD_IMAGE = 'assets/images/def/shopping/featured_banner_in_house.jpg'

@@ -890,7 +890,7 @@ p.sb-helpInfo{
         padding-bottom: 20px;
     }
     .sb-closeButton{
-        top: 68px;
+        top: 80px;
         right: 2%;
     }
 }
@@ -900,6 +900,9 @@ p.sb-helpInfo{
         -webkit-background-clip: unset;
         -webkit-text-fill-color: unset;
         color: #212529;
+    }
+    .sb-closeButton{
+      top: 70px;
     }
 }
 @media (max-width: 600px) {
@@ -967,6 +970,12 @@ p.sb-helpInfo{
         max-width: 90%;
         width: 90%;
         min-width: 90%;
+    }
+    img.sb-loyalty-points,
+    img.sb-qr {
+      width: 20px;
+      min-width: 20px;
+      max-width: 20px;
     }
 }
 @media (max-width: 460px) {

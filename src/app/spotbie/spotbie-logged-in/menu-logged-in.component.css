@@ -17,16 +17,35 @@
 .sb-loyalty-points:hover{
     width: 25px;
     min-width: 25px;
-    max-width: 25px;    
+    max-width: 25px;
 }
 .sb-userName{
     text-transform: uppercase;
 }
+
+@media(max-width:960px){
+  .sb-desktopNavBar{
+    display: none;
+  }
+  .sb-businessMenu{
+    margin-left: 0px;
+  }
+}
+
 @media(max-width:768px){
     .sb-desktopNavBar{
         display: none;
     }
     .sb-businessMenu{
-        margin-left: 14px;
+        margin-left: 0px;
     }
+}
+
+@media(max-width:560px){
+  .sb-desktopNavBar{
+    display: none;
+  }
+  .sb-businessMenu{
+    margin-left: 0px;
+  }
 }

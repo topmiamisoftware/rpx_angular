@@ -69,6 +69,8 @@ export class LogInComponent implements OnInit {
         this.spotbieSignUpIssues.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' })
         this.spotbieSignUpIssues.nativeElement.innerHTML = `<span class='spotbie-text-gradient spotbie-error'>INVALID USERNAME OR PASSWORD.</span>`
         this.spotbieSignUpIssues.nativeElement.style.display = 'block'
+        this.logInForm.get('spotbiePassword').setErrors({ required: false });
+        this.logInForm.get('spotbieUsername').setErrors({ required: false });
         this.loading = false
         return
       }

@@ -109,7 +109,7 @@
   z-index: 97;
 }
 .spotbie-search-result-transactions{
-  margin-top: 20px;
+  margin-top: 0px;
   margin-bottom: 0px;
   font-size: .6rem;
 }
@@ -244,15 +244,21 @@
   margin-top: 7px;
   font-size: 15px;
 }
-.spotbie-search-result-title{
+.spotbie-search-result-title {
   position: relative;
   width: 100%;
   margin: 0 auto;
   padding-top: 5px;
-  padding-bottom: 5px;
-  font-family: 'Gotham-Bold';
+  padding-bottom: 0px;
+  font-family: Gotham-Bold;
   color: 'white';
-  font-weight: bold;
+  font-weight: 700;
+  font-size: .7rem;
+  text-overflow: ellipsis;
+  overflow-wrap: break-word;
+  max-height: 29px;
+  overflow-wrap: break-word;
+  overflow: hidden;
 }
 .spotbie-review-count{
   position: relative;
@@ -362,17 +368,14 @@
   text-align: center;
   padding-top: 10px;
 }
-.spotbie-search-result{
+.spotbie-search-result {
   position: relative;
   display: inline-block;
   vertical-align: top;
   width: 24%;
   min-width: 24%;
   max-width: 24%;
-  margin-left: 1px;
-  margin-right: 1px;
-  margin-top: 2px;
-  margin-bottom: 2px;
+  margin: 2px 1px;
   padding: 15px;
   border-radius: 5px;
   cursor: pointer;
@@ -380,7 +383,7 @@
   text-align: left;
   text-transform: uppercase;
   font-size: .8rem;
-  min-height: 220px;
+  min-height: 180px;
   max-height: 220px;
 }
 .spotbie-communityMember-search-result{
@@ -585,6 +588,11 @@ span.spotbie-button{
   font-weight: bold;
   color: #332f3e;
   max-width: 350px;
+}
+
+.fa-arrow-up,
+.fa-arrow-down {
+  cursor: pointer;
 }
 
 .gm-style-iw-c{

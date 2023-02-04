@@ -8,7 +8,6 @@ import { Business } from 'src/app/models/business';
 import { LoyaltyPointsService } from 'src/app/services/loyalty-points/loyalty-points.service';
 import { EVENT_CATEGORIES, FOOD_CATEGORIES, SHOPPING_CATEGORIES } from '../../map/map_extras/map_extras';
 import { AdsService } from '../ads.service';
-import {LoyaltyPointBalance} from '../../../models/loyalty-point-balance';
 
 const PLACE_TO_EAT_AD_IMAGE = 'assets/images/def/places-to-eat/footer_banner_in_house.jpg'
 const PLACE_TO_EAT_AD_IMAGE_MOBILE = 'assets/images/def/places-to-eat/featured_banner_in_house.jpg'
@@ -65,15 +64,17 @@ export class BottomAdBannerComponent implements OnInit, OnDestroy {
     let accountType
 
     // Stop the service if there's a window on top of the ad component.
-    const needleElement = document.getElementsByClassName('sb-closeButton')
+    const needleElement = document.getElementsByClassName('sb-closeButton');
 
-    if(needleElement.length > 0){
-      // There's a componenet on top of the bottom header.
+    if (needleElement.length > 1) {
+      // There's a component on top of the bottom header.
+      // I know this a rudimentary way for doing this but yeah.
       return
     }
 
-    if(this.editMode) {
-      if(this.ad == null) {
+    if (this.editMode) {
+
+      if (this.ad == null) {
         this.ad = new Ad()
         this.ad.id = 2
         adId = this.ad.id

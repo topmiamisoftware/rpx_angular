@@ -4,7 +4,7 @@ import { metersToMiles, setYelpRatingImage } from 'src/app/helpers/info-object-h
 import { InfoObjectServiceService } from '../map/info-object/info-object-service.service';
 import { MyFavoritesService } from './my-favorites.service';
 
-const YELP_BUSINESS_DETAILS_API = "https://api.yelp.com/v3/businesses/"
+const YELP_BUSINESS_DETAILS_API = 'https://api.yelp.com/v3/businesses/'
 
 @Component({
   selector: 'app-my-favorites',
@@ -14,7 +14,7 @@ const YELP_BUSINESS_DETAILS_API = "https://api.yelp.com/v3/businesses/"
 export class MyFavoritesComponent implements OnInit {
 
   @Output() closeWindow = new EventEmitter()
-  
+
   public loading: boolean = false
 
   public bgColor: string
@@ -38,7 +38,7 @@ export class MyFavoritesComponent implements OnInit {
   public closeWindowX(){
     this.closeWindow.emit(null)
   }
-  
+
   public getFavorites(){
 
     if(this.isLoggedIn == '1')
@@ -54,7 +54,7 @@ export class MyFavoritesComponent implements OnInit {
 
     this.myFavoritesService.getFavoritesLoggedIn(this.currentPage).subscribe(
       resp => {
-        this.getFavoritesLoggedInCb(resp) 
+        this.getFavoritesLoggedInCb(resp)
       }
     )
 
@@ -64,17 +64,17 @@ export class MyFavoritesComponent implements OnInit {
 
     if(httpResponse.success){
 
-      let favoriteItems = httpResponse.favorite_items.data
-      
+      const favoriteItems = httpResponse.favorite_items.data
+
       this.totalFavoriteItems = favoriteItems.length
 
-      let currentPage = httpResponse.favorite_items.current_page
-      let lastPage = httpResponse.favorite_items.last_page
+      const currentPage = httpResponse.favorite_items.current_page
+      const lastPage = httpResponse.favorite_items.last_page
 
       if(favoriteItems.length == 0) this.loading = false
 
       favoriteItems.forEach(favorite => {
-        
+
         this.populateFavorite(favorite.third_party_id).subscribe(
           resp => {
             this.populateFavoriteCallback(resp, favorite)
@@ -92,14 +92,14 @@ export class MyFavoritesComponent implements OnInit {
       if(httpResponse.favorite_items.total == 0) this.noFavorites = true
 
     } else
-      console.log("getFavoritesLoggedInCb", httpResponse)
+      console.log('getFavoritesLoggedInCb', httpResponse)
 
   }
 
   private getFavoritesLoggedOut(){
 
     const favoriteItems = this.myFavoritesService.getFavoritesLoggedOut()
-    
+
     if(favoriteItems != null && favoriteItems.length > 0){
 
       this.totalFavoriteItems = favoriteItems.length
@@ -113,19 +113,18 @@ export class MyFavoritesComponent implements OnInit {
             this.populateFavoriteCallback(resp, favorite)
           }
         )
-        
+
       })
 
     } else this.noFavorites = true
-    
+
 
   }
 
   public populateFavoriteCallback(resp: any, myFavorite: any){
-    
-    if(resp.success){
+    if (resp.success) {
 
-      let favorite = resp.data
+      const favorite = resp.data
 
       favorite.type_of_info_object = 'yelp_business'
       favorite.type_of_info_object_category = myFavorite.type_of_info_object_category
@@ -139,7 +138,7 @@ export class MyFavoritesComponent implements OnInit {
 
       if (favorite.price) favorite.price_on = '1'
 
-      if (favorite.image_url == '') favorite.image_url = '0'
+      if (favorite.image_url === '') favorite.image_url = '0'
 
       let friendly_transaction = ''
 
@@ -149,18 +148,15 @@ export class MyFavoritesComponent implements OnInit {
         case 0:
           friendly_transaction = ''
           favorite.transactions_on = '0'
-          break
+          break;
         case 1:
         case 2:
         case 3:
-          favorite.transactions_on = '1'            
+          favorite.transactions_on = '1'
           favorite.transactions = [favorite.transactions.slice(0, -1).join(', '), favorite.transactions.slice(-1)[0]].join(favorite.transactions.length < 2 ? '': ', and ')
-
-          friendly_transaction = favorite.transactions.replace('restaurant_reservation', 'restaurant reservations')
-
+          friendly_transaction = favorite.transactions.replace('restaurant_reservation', 'reservations')
           friendly_transaction = `${friendly_transaction}.`
-          
-          break
+          break;
       }
 
       favorite.friendly_transactions = friendly_transaction
@@ -170,11 +166,11 @@ export class MyFavoritesComponent implements OnInit {
       this.favoriteItems.push(favorite)
 
     } else {
-      console.log("populateFavoriteCallback", myFavorite)
-      console.log("populateFavoriteCallback", resp)
+      console.log('populateFavoriteCallback', myFavorite)
+      console.log('populateFavoriteCallback', resp)
     }
 
-    if(this.totalFavoriteItems == this.favoriteItems.length)
+    if(this.totalFavoriteItems === this.favoriteItems.length)
       this.loading = false
 
   }
@@ -185,7 +181,7 @@ export class MyFavoritesComponent implements OnInit {
 
   public populateFavorite(yelpId: string): Observable<any>{
 
-    let url = `${YELP_BUSINESS_DETAILS_API}${yelpId}`
+    const url = `${YELP_BUSINESS_DETAILS_API}${yelpId}`
 
     const infoObjToPull = {
       config_url: url
@@ -210,14 +206,14 @@ export class MyFavoritesComponent implements OnInit {
   }
 
   public pullSearchMarker(infoObject: any): void {
-    
+
     this.infoObjectWindow.open = true
     this.infoObject = infoObject
 
   }
 
   ngOnInit(): void {
-    
+
     this.bgColor = localStorage.getItem('spotbie_backgroundColor')
     this.isLoggedIn = localStorage.getItem('spotbie_loggedIn')
 

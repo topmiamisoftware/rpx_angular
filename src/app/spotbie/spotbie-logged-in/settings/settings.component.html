@@ -278,7 +278,6 @@
                             chosenAccountType != 4 &&
                             user.trial_ends_at !== null
                             else normalSubscriptionTemplate">
-
                     <div class="pb-4">
                         <i class="fa fa-exclamation-triangle"></i>
                     </div>
@@ -287,9 +286,32 @@
                         YOUR MEMBERSHIP IS EXPIRED
                     </h5>
 
-                    <div class='spotbie-button text-uppercase cursor-pointer mt-4'
-                            (click)="activateFullMembership()">
-                        ENABLE MEMBERSHIP
+                    <div *ngIf="!userIsSubscribed && chosenAccountType != 4 && user.trial_ends_at !== null">
+                      <h6 class="mt-4 text-white sb-text-light-green-gradient">PICK YOUR PLAN</h6>
+
+                      <div class="mt-4 spotbie-price-box" style="font-size: .8rem;">
+                        <div class="p2 text-start text-white" (click)="activateFullMembership(1)">
+                          <span style="font-size: 1.2rem;" class="sb-text-light-green-gradient">$69.99/monthly</span>
+                          <ul>
+                            <li>Charged $840 every 12 months</li>
+                          </ul>
+                          <button class="spotbie-button">BUY</button>
+                        </div>
+                        <div class="p2 text-start text-white" (click)="activateFullMembership(2)">
+                          <span style="font-size: 1.2rem;" class="sb-text-light-green-gradient">$79.99/monthly</span>
+                          <ul>
+                            <li>Charged $480 every 6 months</li>
+                          </ul>
+                          <button class="spotbie-button">BUY</button>
+                        </div>
+                        <div class="p2 text-start text-white" (click)="activateFullMembership(3)">
+                          <span style="font-size: 1.2rem;" class="sb-text-light-green-gradient">$99.99/monthly</span>
+                          <ul>
+                            <li>Charged $99 every month</li>
+                          </ul>
+                          <button class="spotbie-button">BUY</button>
+                        </div>
+                      </div>
                     </div>
                 </div>
 
@@ -298,7 +320,7 @@
                                 chosenAccountType != 4 &&
                                 user.trial_ends_at === null"
                         class="sb-text-light-green-gradient">
-                        START YOUR 90-DAY TRIAL
+                        1. START YOUR 2 MONTH TRIAL
                     </h5>
 
                     <div class="spotbie-input-info spotbie-text-gradient text-center mt-4 mb-4">
@@ -324,16 +346,29 @@
                         </div>
                     </div>
 
-                    <div class='spotbie-button text-uppercase cursor-pointer mt-4'
-                            *ngIf="!userIsSubscribed &&
-                                    chosenAccountType != 4 &&
-                                    userIsTrial"
-                            (click)="activateFullMembership()">
-                        END TRIAL
-                    </div>
-
-                    <div class="mt-4" style="font-size: .8rem;" *ngIf="userIsSubscribed">
+                    <div class="mt-4 mb-4" style="font-size: .8rem;" *ngIf="userIsSubscribed">
                         <span class='sb-text-light-green-gradient'>MEMBERSHIP IS ACTIVE</span>
+
+                        <div class="mt-4 mb-4 spotbie-price-box" style="font-size: .8rem;">
+                          <div class="p2 text-start text-white" *ngIf="userSubscriptionPlan === 'spotbie.business_subscription_price_1'">
+                            <span style="font-size: 1.2rem;" class="sb-text-light-green-gradient">$69.99/monthly</span>
+                            <ul>
+                              <li>Charged $840 every 12 months</li>
+                            </ul>
+                          </div>
+                          <div class="p2 text-start text-white" *ngIf="userSubscriptionPlan === 'spotbie.business_subscription_price_2'">
+                            <span style="font-size: 1.2rem;" class="sb-text-light-green-gradient">$79.99/monthly</span>
+                            <ul>
+                              <li>Charged $480 every 6 months</li>
+                            </ul>
+                          </div>
+                          <div class="p2 text-start text-white" *ngIf="userSubscriptionPlan === 'spotbie.business_subscription_price'">
+                            <span style="font-size: 1.2rem;" class="sb-text-light-green-gradient">$99.99/monthly</span>
+                            <ul>
+                              <li>Charged $99 every month</li>
+                            </ul>
+                          </div>
+                        </div>
 
                         <div class='spotbie-text-gradient text-uppercase mt-2 mb-4' style="font-size: .8rem;">
                             NEXT PAYMENT {{ user.trial_ends_at | date:'mediumDate' }}
@@ -342,8 +377,36 @@
                         <span class='sb-text-red-gradient text-uppercase cursor-pointer' (click)="cancelMembership()">
                             CANCEL MEMBERSHIP
                         </span>
+
                     </div>
 
+                    <div *ngIf="!userIsSubscribed && chosenAccountType != 4 && user.trial_ends_at !== null">
+                      <h6 class="mt-4 text-white sb-text-light-green-gradient">PICK YOUR PLAN</h6>
+
+                      <div class="mt-4 spotbie-price-box" style="font-size: .8rem;">
+                        <div class="p2 text-start text-white" (click)="activateFullMembership(1)">
+                          <span style="font-size: 1.2rem;" class="sb-text-light-green-gradient">$69.99/monthly</span>
+                          <ul>
+                            <li>Charged $840 every 12 months</li>
+                          </ul>
+                          <button class="spotbie-button">BUY</button>
+                        </div>
+                        <div class="p2 text-start text-white" (click)="activateFullMembership(2)">
+                          <span style="font-size: 1.2rem;" class="sb-text-light-green-gradient">$79.99/monthly</span>
+                          <ul>
+                            <li>Charged $480 every 6 months</li>
+                          </ul>
+                          <button class="spotbie-button">BUY</button>
+                        </div>
+                        <div class="p2 text-start text-white" (click)="activateFullMembership(3)">
+                          <span style="font-size: 1.2rem;" class="sb-text-light-green-gradient">$99.99/monthly</span>
+                          <ul>
+                            <li>Charged $99 every month</li>
+                          </ul>
+                          <button class="spotbie-button">BUY</button>
+                        </div>
+                      </div>
+                    </div>
                 </ng-template>
             </div>
         </div>

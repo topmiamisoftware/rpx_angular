@@ -10,7 +10,6 @@ import { HeaderAdBannerComponent } from 'src/app/spotbie/ads/header-ad-banner/he
 import { NearbyFeaturedAdComponent } from 'src/app/spotbie/ads/nearby-featured-ad/nearby-featured-ad.component'
 import { environment } from 'src/environments/environment'
 import * as spotbieGlobals from '../../../../globals'
-import {map} from 'rxjs/operators';
 
 const AD_MEDIA_UPLOAD_API_URL = `${spotbieGlobals.API}in-house/upload-media`
 const AD_MEDIA_MAX_UPLOAD_SIZE = 10e+6
@@ -36,25 +35,25 @@ export class AdCreatorComponent implements OnInit {
   @Output() closeThisEvt = new EventEmitter()
   @Output() closeAdCreatorAndRefetchAdListEvt = new EventEmitter()
 
-  public loading: boolean
-  public adCreatorForm: UntypedFormGroup
-  public adCreatorFormUp: boolean
-  public adFormSubmitted: boolean
-  public showErrors: boolean
-  public adUploadImage: string = null
-  public adUploadImageMobile: string = null
-  public adMediaMessage: string = 'Upload Image'
-  public adMediaUploadProgress: number = 0
-  public adTypeList: Array<any> = [
+   loading: boolean
+   adCreatorForm: UntypedFormGroup
+   adCreatorFormUp: boolean
+   adFormSubmitted: boolean
+   showErrors: boolean
+   adUploadImage: string = null
+   adUploadImageMobile: string = null
+   adMediaMessage: string = 'Upload Image'
+   adMediaUploadProgress: number = 0
+   adTypeList: Array<any> = [
     { name: 'Header Banner ($19.99/monthly)', dimensions: '1200x370', dimensionsMobile: '600x600'},
     { name: 'Featured Nearby Banner ($13.99/monthly)', dimensions: '600x600'},
     { name: 'Footer Banner ($16.99)', dimensions: '1200x370', dimensionsMobile: '600x600'}
   ]
-  public adCreated: boolean
-  public adDeleted: boolean
-  public loyaltyPointBalance: any
-  public selected: number = 0
-  public business: Business = null
+   adCreated: boolean
+   adDeleted: boolean
+   loyaltyPointBalance: any
+   selected: number = 0
+   business: Business = null
 
   constructor(private formBuilder: UntypedFormBuilder,
               private adCreatorService: AdCreatorService,
@@ -72,7 +71,7 @@ export class AdCreatorComponent implements OnInit {
 
   get f() { return this.adCreatorForm.controls }
 
-  public initAdForm(){
+   initAdForm(){
     const adTypeValidators = [Validators.required]
     const adNameValidators = [Validators.required, Validators.maxLength(50)]
     const adDescriptionValidators = [Validators.required, Validators.maxLength(250), Validators.minLength(50)]
@@ -105,7 +104,7 @@ export class AdCreatorComponent implements OnInit {
     this.loading = false
   }
 
-  public saveAd(){
+   saveAd(){
     this.adFormSubmitted = true
     this.spbTopAnchor.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' })
 
@@ -129,7 +128,7 @@ export class AdCreatorComponent implements OnInit {
     }
   }
 
-  public saveAdCb(resp: any){
+   saveAdCb(resp: any){
     if(resp.success){
       this.adCreated = true
       const ad = resp.newAd
@@ -141,7 +140,7 @@ export class AdCreatorComponent implements OnInit {
     }
   }
 
-  public startAdMediaUploader(type: string): void {
+   startAdMediaUploader(type: string): void {
     console.log('adType', this.adType);
     if (this.adType === '') {
       this.spbTopAnchor.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -156,7 +155,7 @@ export class AdCreatorComponent implements OnInit {
     }
   }
 
-  public uploadMedia(files, type: string): void {
+   uploadMedia(files, type: string): void {
     const fileListLength = files.length
 
     if (fileListLength === 0) {
@@ -223,7 +222,7 @@ export class AdCreatorComponent implements OnInit {
     this.loading = false;
   }
 
-  public adTypeChange(){
+   adTypeChange(){
     this.adCreatorForm.get('adType').setErrors(null);
     this.showErrors = false;
     if(this.adUploadImage !== null) {
@@ -235,19 +234,19 @@ export class AdCreatorComponent implements OnInit {
     }
   }
 
-  public closeThis(){
+   closeThis(){
     this.closeThisEvt.emit()
   }
 
-  public closeWindow(){
+   closeWindow(){
     this.closeWindowEvt.emit()
   }
 
-  public closeAdCreatorAndRefetchAdList(){
+   closeAdCreatorAndRefetchAdList(){
     this.closeAdCreatorAndRefetchAdListEvt.emit()
   }
 
-  public deleteMe(){
+   deleteMe(){
     const r = confirm('Are you sure you want to delete this Ad?')
 
     if(r){
@@ -267,7 +266,7 @@ export class AdCreatorComponent implements OnInit {
     }
   }
 
-  public adFormatClass(){
+   adFormatClass(){
     switch(this.adType){
       case 0:
         return 'header-banner'
@@ -278,7 +277,7 @@ export class AdCreatorComponent implements OnInit {
     }
   }
 
-  public activateAdMembership(){
+   activateAdMembership(){
     window.open(`${AD_PAYMENT_URL}${this.ad.uuid}`, '_blank')
   }
 

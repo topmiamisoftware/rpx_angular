@@ -14,7 +14,7 @@
 
       <span class='sb-loyalty-points' (click)="toggleLoyaltyPoints()" >{{ userLoyaltyPoints | number:'1.0':'en-US' }}</span>
 
-      <img class='sb-loyalty-points' *ngIf="!isMobile" (click)="toggleRedeemables()"  src="assets/images/spotbie-loyalty-points.svg" />
+      <img class='sb-loyalty-points' *ngIf="!isMobile && !isTablet" (click)="toggleRedeemables()"  src="assets/images/spotbie-loyalty-points.svg" />
 
       <div class="sb-businessMenu" *ngIf="!isDesktop">
         <img class='sb-loyalty-points' (click)="toggleRedeemables()" src="assets/images/spotbie-loyalty-points.svg" />

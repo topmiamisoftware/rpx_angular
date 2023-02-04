@@ -77,6 +77,7 @@ export class SettingsComponent implements OnInit {
   user: User
   userIsSubscribed: boolean = false
   userIsTrial: boolean = false
+  userSubscriptionPlan: string = ''
   submitted: boolean = false
   placeFormSubmitted: boolean = false
   geoCoder: any
@@ -191,7 +192,8 @@ export class SettingsComponent implements OnInit {
       this.user.trial_ends_at = settingsResponse.trial_ends_at
       this.user.uuid = settingsResponse.user.hash
       this.userIsSubscribed = settingsResponse.is_subscribed
-      this.userIsTrial = settingsResponse.is_trial
+      this.userIsTrial = settingsResponse.is_trial;
+      this.userSubscriptionPlan = settingsResponse.userSubscriptionPlan;
 
       if (this.user.spotbie_user.user_type === AllowedAccountTypes.Unset && !this.settingsFormInitiated) {
         this.loadAccountTypes = true
@@ -217,7 +219,6 @@ export class SettingsComponent implements OnInit {
           this.accountTypeCategory = 'PERSONAL'
           this.accountTypeCategoryFriendlyName = 'PERSONAL'
           break
-
       }
 
       this.settingsFormInitiated = true
@@ -308,8 +309,18 @@ export class SettingsComponent implements OnInit {
     this.loading = false
   }
 
-  activateFullMembership() {
-    window.open(`${environment.baseUrl}make-payment/business-membership/${this.user.uuid}`, '_blank')
+  activateFullMembership(ca: number) {
+    switch (ca) {
+      case 1:
+        window.open(`${environment.baseUrl}make-payment/business-membership-1/${this.user.uuid}`, '_blank')
+        break;
+      case 2:
+        window.open(`${environment.baseUrl}make-payment/business-membership-2/${this.user.uuid}`, '_blank')
+        break;
+      case 3:
+        window.open(`${environment.baseUrl}make-payment/business-membership/${this.user.uuid}`, '_blank')
+        break;
+    }
   }
 
   closePassKey() {

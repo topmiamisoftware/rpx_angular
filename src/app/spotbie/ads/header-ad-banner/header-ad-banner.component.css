@@ -137,17 +137,6 @@
   }
 }
 @media (max-width: 768px) {
-  .sb-mobileAdWrapper .spotbie-ad-image,
-  .spotbie-ad-image{
-    position: relative;
-    left: 0;
-    right: 0;
-    min-width: 100%;
-    max-width: 100%;
-    box-shadow: unset;
-    background-color: #26232e !important;
-    background-size: contain !important;
-  }
   .sb-categoryList{
     text-align: center;
   }
@@ -197,6 +186,19 @@
     position:relative;
     background-color: rgb(28 25 36) !important;
     bottom: unset;
+  }
+}
+@media (max-width: 520px) {
+  .sb-mobileAdWrapper .spotbie-ad-image,
+  .spotbie-ad-image {
+    position: relative;
+    left: 0;
+    right: 0;
+    min-width: 100%;
+    max-width: 100%;
+    box-shadow: unset;
+    background-color: #26232e !important;
+    background-size: contain !important;
   }
 }
 @media (max-width: 420px) {

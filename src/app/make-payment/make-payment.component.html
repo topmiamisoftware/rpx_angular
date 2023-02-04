@@ -33,14 +33,22 @@
 
         </div>
 
+        <div *ngIf="paymentType == 'business-membership-1'" class="mb-4">
+            <h4 class="spotbie-text-gradient text-uppercase mt-4">Business Membership $69.99/month</h4>
+
+            <h3 class="sb-text-light-green-gradient mt-4">$840/every 12 months</h3>
+        </div>
+
+        <div *ngIf="paymentType == 'business-membership-2'" class="mb-4">
+          <h4 class="spotbie-text-gradient text-uppercase mt-4">Business Membership $79.99/month</h4>
+
+          <h3 class="sb-text-light-green-gradient mt-2">$480/every 6 months</h3>
+        </div>
+
         <div *ngIf="paymentType == 'business-membership'" class="mb-4">
+          <h4 class="spotbie-text-gradient text-uppercase mt-4">Business Membership $99.99/month</h4>
 
-            <h4 class="spotbie-text-gradient text-uppercase mt-4">{{ ad.name }}</h4>
-
-            <h3 class="sb-text-light-green-gradient mt-4">$99.99/month</h3>
-
-            <img class="sb-adImage" [src]="ad.images" />
-
+          <h3 class="sb-text-light-green-gradient mt-2">$99.99/monthly</h3>
         </div>
 
         <p class='spotbie-login-terms spotbie-text-link'>

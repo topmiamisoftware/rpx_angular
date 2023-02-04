@@ -60,7 +60,8 @@ export class MakePaymentComponent implements OnInit {
   private userPayment(){
     const subscriptionRequestItem = {
       payment_method: this.paymentMethod,
-      uuid: this.uuid
+      uuid: this.uuid,
+      payment_type: this.paymentType
     }
 
     const serviceUrl = 'user/business-membership'
@@ -154,13 +155,14 @@ export class MakePaymentComponent implements OnInit {
 
   checkBusinessMembershipStatus(){
     const businessByUuidReq = {
-      uuid: this.uuid
+      uuid: this.uuid,
+      paymentType: this.paymentType
     }
 
     this.paymentsService.checkBusinessMembershipStatus(businessByUuidReq).subscribe(resp => {
         if(resp.membershipInfo) this.membershipPaidFor = true;
         this.loading = false;
-      })
+      });
   }
 
   initBusinesMembershipPaymentForm(){
@@ -189,6 +191,14 @@ export class MakePaymentComponent implements OnInit {
         this.getAdFromUuid()
         break
       case 'business-membership':
+        this.checkBusinessMembershipStatus()
+        this.initBusinesMembershipPaymentForm()
+        break
+      case 'business-membership-1':
+        this.checkBusinessMembershipStatus()
+        this.initBusinesMembershipPaymentForm()
+        break
+      case 'business-membership-2':
         this.checkBusinessMembershipStatus()
         this.initBusinesMembershipPaymentForm()
         break

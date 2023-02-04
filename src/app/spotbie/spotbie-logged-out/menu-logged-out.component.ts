@@ -22,7 +22,7 @@ export class MenuLoggedOutComponent implements OnInit {
   public signUpWindow = { open: false }
 
   public prevScrollpos
-  
+
   public menuActive: boolean = false
 
   public isMobile: boolean
@@ -39,11 +39,11 @@ export class MenuLoggedOutComponent implements OnInit {
 
     if(slideMenu) this.slideMenu()
     this.spawnCategoriesOut.emit(type)
-    
+
   }
 
   goToBlog(){
-    externalBrowserOpen("https://blog.spotbie.com/")
+    externalBrowserOpen('https://spotbie.com/business');
   }
 
   openWindow(window: any) {
@@ -56,15 +56,15 @@ export class MenuLoggedOutComponent implements OnInit {
 
   signUp(){
     this.logInWindow.open = false
-    this.signUpWindow.open = !this.signUpWindow.open    
+    this.signUpWindow.open = !this.signUpWindow.open
   }
 
   logIn(){
     this.signUpWindow.open = false
-    this.logInWindow.open = !this.logInWindow.open 
+    this.logInWindow.open = !this.logInWindow.open
   }
 
-  slideMenu(){    
+  slideMenu(){
 
     if(this.logInWindow.open)
       this.logInWindow.open = false
@@ -86,12 +86,12 @@ export class MenuLoggedOutComponent implements OnInit {
     const element = document.getElementById(el)
     element.scrollIntoView()
   }
-  
+
   public myFavorites(){
 
     this.menuActive = false
     this.myFavoritesEvt.emit()
-    
+
   }
 
   goToBusiness(){
@@ -106,31 +106,31 @@ export class MenuLoggedOutComponent implements OnInit {
     this.openHome.emit()
   }
 
-  ngOnInit(): void { 
+  ngOnInit(): void {
     const activatedRoute = this.location.path()
 
     this.isMobile = this.deviceService.isMobile()
     this.isDesktop = this.deviceService.isDesktop()
     this.isTablet = this.deviceService.isTablet()
-    
+
     // check if we need to auto log-in
     const cookiedRememberMe = localStorage.getItem('spotbie_rememberMe')
     const logged_in = localStorage.getItem('spotbie_rememberMe')
 
     if(activatedRoute.indexOf('/business') > -1) this.business = true
-    
-    if (cookiedRememberMe == '1' 
+
+    if (cookiedRememberMe == '1'
         && activatedRoute.indexOf('/home') > -1
         && logged_in !== '1'){
       this.logInWindow.open = true
     }
   }
 
-  ngAfterViewInit(): void {    
+  ngAfterViewInit(): void {
     //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
     //Add 'implements AfterViewInit' to the class.
     setTimeout(()=>{
       this.spotbieMainMenu.nativeElement.style.display = 'table'
-    }, 750) 
+    }, 750)
   }
 }
