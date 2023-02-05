@@ -11,26 +11,16 @@ export class LoginGuardServiceService {
   constructor(private router: Router,
               private userAuthService: UserauthService) { }
 
-    async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {  
-
-      const response = await this.userAuthService.checkIfLoggedIn()  
-
-      if (response.message == '1') {
-
-        return true
-      
+  async canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+    await this.userAuthService.checkIfLoggedIn().then((reason) => {
+      if (reason.message === '1') {
+        return true;
       } else {
-
-        let resp = {
-          success : true
-        }
-
-        logOutCallback(resp)
-       
-        return false
-
+        logOutCallback({success : true});
+        return false;
       }
-      
-    }
-
+    }, (reason) => {
+      return true;
+    });
+  }
 }

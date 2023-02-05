@@ -3,55 +3,42 @@
     <div class="sb-top-headerImg"></div>
 
     <h1 class="sb-text-light-green-gradient text-uppercase">
-        EARN<br/>LOYALTY POINTS
+        EARN LOYALTY POINTS
     </h1>
-
-    <div class="spotbie-button sb-getStarted" (click)="spawnCategories('food')">
-        <span>GET STARTED</span>
-    </div>
 
     <img class="sb-logo-withStreet mt-4 mb-4" src="assets/images/spotbie-miami-find-places-to-eat.png" />
 
     <p class="text-center">
-
         <span class="spotbie-text-gradient">FROM NEARBY</span>
 
         <br/><br/>
-        <a class="sb-text-light-green-gradient text-uppercase" [routerLink]="['/business']">SpotBie Community Members</a>
-
-        <br/><br/>
-        <span class="spotbie-text-gradient">Food, Shopping, Events</span>
-        <br/><br/>
-
+        <a class="sb-text-light-green-gradient text-uppercase text-decoration-underline" [routerLink]="['/business']">SpotBie Community Members</a>
     </p>
+
+    <div class="sb-homePageIconsTable mt-3 mb-4">
+      <div (click)="spawnCategories('food')">
+        <img src="assets/images/home_imgs/find-places-to-eat.svg" /><br/>
+        <span class='spotbie-text-gradient'>FOOD</span>
+      </div>
+
+      <div (click)="spawnCategories('events')">
+        <img src="assets/images/home_imgs/find-events.svg" /><br/>
+        <span class='spotbie-text-gradient'>EVENTS</span>
+      </div>
+
+      <div (click)="spawnCategories('shopping')">
+        <img src="assets/images/home_imgs/find-places-for-shopping.svg" /><br/>
+        <span class='spotbie-text-gradient'>RETAIL</span>
+      </div>
+    </div>
 
     <p class="spotbie-text-gradient text-center">Exclusive discounts, drinks & food, event merchandise, and more.<br/><br/></p>
 
-    <p class="sb-text-light-green-gradient text-center mt-2 mb-4">
-        AT ALL SPOTBIE LOCATIONS
-    </p>
-
-    <app-download-mobile [buttonStyle]="1"></app-download-mobile>
-
-    <div class="sb-homePageIconsTable mt-5 mb-4">
-
-        <div (click)="spawnCategories('food')">
-            <img src="assets/images/home_imgs/find-places-to-eat.svg" /><br/>
-            <span class='spotbie-text-gradient'>FOOD</span>
-        </div>
-
-        <div (click)="spawnCategories('events')">
-            <img src="assets/images/home_imgs/find-events.svg" /><br/>
-            <span class='spotbie-text-gradient'>EVENTS</span>
-        </div>
-
-        <div (click)="spawnCategories('shopping')">
-            <img src="assets/images/home_imgs/find-places-for-shopping.svg" /><br/>
-            <span class='spotbie-text-gradient'>RETAIL</span>
-        </div>
-
+    <div class="spotbie-button sb-getStarted mb-5" (click)="spawnCategories('food')">
+      <span>GET STARTED</span>
     </div>
 
+    <app-download-mobile [buttonStyle]="1"></app-download-mobile>
 </section>
 
 <section id="earnPlacesToEat" #earnPlacesToEat>
@@ -60,27 +47,24 @@
     <img class='sb-greenIcon' src='assets/images/home_imgs/spotbie-green-icon.svg' (click)="spawnCategories('food')" />
 
     <h2 class="spotbie-text-gradient text-uppercase" (click)="spawnCategories('food')" #placesToEatTitle id="#placesToEatTitle">
-        - PLACES TO EAT -
+        START EARNING
     </h2>
 
     <div class='sb-whiteIconBg left'></div>
 
     <div class="text-uppercase text-center">
-
         <br/>
-        <h3 class="sb-text-light-green-gradient">EARN LOYALTY POINTS</h3>
+        <h3 class="sb-text-light-green-gradient">LOYALTY POINTS</h3>
         <br/>
-
     </div>
 
     <p class="spotbie-text-gradient text-center">
-        <br/>
-        Exclusive rewards as menu items, points, or discounts.
-        <br/><br/>
+      Earn <b><i>Loyalty Points</i></b> at every SpotBie Community Member location.
+      <br/><br/>
     </p>
 
-    <p class="spotbie-text-gradient text-center mt-2 mb-2">
-        Easily find places to eat near you with our map.
+    <p class="spotbie-text-gradient text-center mt-2 mb-3">
+        SpotBie awards your expenses with <b><i>Loyalty Points</i></b> which you can use to redeem rewards and discounts.
     </p>
 
     <button class="spotbie-button sb-getStarted mt-4 mb-5" (click)="spawnCategories('food')">
@@ -89,33 +73,61 @@
 
 </section>
 
-<section id="earnShopping" #earnShopping>
+<section id="earnEvents" #earnRewards>
+  <div class="mb-4 sb-readImage cursor-pointer" [ngStyle]="{ 'background' : 'url(assets/images/home_imgs/jpg/spotbie-miami-events.jpg)' }" (click)="spawnCategories('events')"></div>
+
+  <img class='sb-greenIcon' src='assets/images/home_imgs/spotbie-green-icon.svg' (click)="spawnCategories('events')" />
+
+  <h2 class="spotbie-text-gradient text-uppercase" (click)="spawnCategories('events')"  #eventsTitle>
+    - EARN REWARDS -
+  </h2>
+
+  <div class='sb-whiteIconBg left'></div>
+
+  <div class="text-uppercase text-center">
+    <br/>
+    <h3 class="spotbie-text-gradient sb-text-light-green-gradient">CLAIM REWARDS & DISCOUNTS</h3>
+    <br/>
+  </div>
+
+  <p class="spotbie-text-gradient text-center">
+    Spend <b><i>Loyalty Points</i></b> at every SpotBie Community Member location.
+  </p>
+
+  <p class="spotbie-text-gradient text-center mt-2 mb-3">
+    <br/>
+    Redeem on-site products, merchandise, discounts and more.
+  </p>
+
+  <button class="spotbie-button sb-getStarted mt-4 mb-5" (click)="spawnCategories('events')">
+    <span>GET STARTED</span>
+  </button>
+</section>
+
+<section id="earnShopping" #earnNearby>
     <div class="mb-4 sb-readImage cursor-pointer" [ngStyle]="{ 'background' : 'url(assets/images/home_imgs/jpg/spotbie-miami-shopping.jpg' }" (click)="spawnCategories('shopping')"></div>
 
     <img class='sb-greenIcon' src='assets/images/home_imgs/spotbie-green-icon.svg' (click)="spawnCategories('shopping')" />
 
     <h2 class="spotbie-text-gradient text-uppercase" (click)="spawnCategories('shopping')"  #shoppingTitle>
-        - RETAIL STORES -
+        - STORE LOCATOR -
     </h2>
 
     <div class='sb-whiteIconBg right'></div>
 
     <div class="text-uppercase text-center">
-
         <br/>
-        <h3 class="sb-text-light-green-gradient">EARN LOYALTY POINTS</h3>
+        <h3 class="sb-text-light-green-gradient">FIND NEARBY STORES</h3>
         <br/>
-
     </div>
 
-    <p class="spotbie-text-gradient text-center mt-2 mb-2">
-        Earn and spend loyalty points at your favorite retail stores.
+    <p class="spotbie-text-gradient text-center">
+        Need to go get something to eat and you don't know from where?
+        <br/><br/>
     </p>
 
-    <p class="spotbie-text-gradient text-center">
-        <br/>
-        Redeem rewards and discounts.
-        <br/><br/>
+    <p class="spotbie-text-gradient text-center mt-2 mb-3">
+        SpotBie <b><i>lists</i></b> the best near by results for what you're craving.
     </p>
 
     <button class="spotbie-button sb-getStarted mt-4 mb-5" (click)="spawnCategories('shopping')">
@@ -123,46 +135,12 @@
     </button>
 </section>
 
-<section id="earnEvents" #earnEvents>
-    <div class="mb-4 sb-readImage cursor-pointer" [ngStyle]="{ 'background' : 'url(assets/images/home_imgs/jpg/spotbie-miami-events.jpg)' }" (click)="spawnCategories('events')"></div>
-
-    <img class='sb-greenIcon' src='assets/images/home_imgs/spotbie-green-icon.svg' (click)="spawnCategories('events')" />
-
-    <h2 class="spotbie-text-gradient text-uppercase" (click)="spawnCategories('events')"  #eventsTitle>
-        - EVENTS NEAR YOU -
-    </h2>
-
-    <div class='sb-whiteIconBg left'></div>
-
-    <div class="text-uppercase text-center">
-
-        <br/>
-        <h3 class="spotbie-text-gradient sb-text-light-green-gradient">EARN LOYALTY POINTS</h3>
-
-    </div>
-
-    <p class="spotbie-text-gradient text-center mt-4 mb-2">
-        Spend Loyalty Points at Events
-    </p>
-
-    <p class="spotbie-text-gradient text-center">
-        <br/>
-        Redeem on-site event merchandise, products, and more.
-        <br/><br/>
-    </p>
-
-    <button class="spotbie-button sb-getStarted mt-4 mb-5" (click)="spawnCategories('events')">
-        <span>GET STARTED</span>
-    </button>
-</section>
-
 <div class="mb-4 sb-readImage cursor-pointer" [ngStyle]="{ 'background' : 'url(assets/images/home_imgs/jpg/spotbie-miami-find-new-friends.jpg)' }"></div>
 
 <div class="sb-footer pt-5 pb-5">
-
     <p [routerLink]="['/terms']">Terms & Privacy Policy</p>
     <img class="mt-3 mb-3" src="assets/images/logo_spotbie_green.svg" />
-    <p [routerLink]="['/terms']">SpotBie, LLC.&copy; Copyright 2022</p>
+    <p [routerLink]="['/terms']">SpotBie, LLC.&copy; Copyright 2023</p>
 
     <div class="mt-4">
         <i class="fab fa-instagram" (click)="openIg()"></i>
@@ -173,5 +151,4 @@
     <div class="mt-4 text-uppercase spotbie-text-link cursor-pointer">
         <span (click)="openBlog()">BLOG</span>
     </div>
-
 </div>

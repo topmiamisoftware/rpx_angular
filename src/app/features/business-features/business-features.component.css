@@ -1,8 +1,6 @@
 .sb-top-headerImg{
-    background: url('../../../assets/images/home_imgs/spotbie-grow-your-business-with-loyalty-points.jpg') !important;
-    background-position: center !important;
-    background-size: cover !important;
-    background-repeat: no-repeat !important;    
+  background-size: cover !important;
+  background: url('../../../assets/images/home_imgs/spotbie-grow-your-business-with-loyalty-points.jpg') no-repeat center !important;
 }
 #sbReadImageRestaurants{
     background: url('../../../assets/images/home_imgs/jpg/spotbie-find-restaurant-customers-near-you.jpg')
@@ -15,7 +13,7 @@
     background: url('../../../assets/images/home_imgs/jpg/spotbie-find-customers-near-you.jpg')
 }
 #sbReadImageUsers{
-    background: url('../../../assets/images/home_imgs/jpg/spotbie-miami-find-new-friends.jpg')    
+    background: url('../../../assets/images/home_imgs/jpg/spotbie-miami-find-new-friends.jpg')
 }
 .fa-users,
 .fa-hamburger,
@@ -38,9 +36,7 @@
 .fa-map-marker-alt{
     color: white;
 }
-.sb-getStarted{
-    color: black !important;
-}
+
 .calendly-inline-widget{
     min-width: 90vw;
     width: 90vw;
@@ -76,14 +72,12 @@
 
 @media (max-width: 650px){
     .sb-top-headerImg {
-        background: url('../../../assets/images/home_imgs/spotbie-miami.jpg') !important;
-        background-position: center !important;
-        background-size: cover !important;
-        background-repeat: no-repeat !important;            
-        box-shadow: inset 0px -80px 65px #332f3e;
+      background-size: cover !important;
+      background: url('../../../assets/images/home_imgs/spotbie-miami.jpg') no-repeat center !important;
+      box-shadow: inset 0px -80px 65px #332f3e;
         max-height: 300px;
         min-height: 300px;
-        height: 300px;     
+        height: 300px;
     }
     .spotbie-overlay-window{
         width: 104%;

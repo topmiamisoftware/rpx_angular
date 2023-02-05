@@ -816,14 +816,14 @@ p.sb-helpInfo{
 }
 
 .sb-getStarted{
-    max-width: 220px;
-    padding-top: 5px !important;
-    padding-bottom: 5px !important;
-    font-size: 20px;
-    border-radius: 13px!important;
-    background: -webkit-linear-gradient(45deg,#64e56f,#35a99f);
-    background: linear-gradient(45deg,#64e56f,#35a99f);
-    color: black;
+  max-width: 220px;
+  padding-top: 10px!important;
+  padding-bottom: 10px!important;
+  font-size: 20px;
+  border-radius: 13px!important;
+  background: -webkit-linear-gradient(45deg,#64e56f,#35a99f);
+  background: linear-gradient(45deg,#64e56f,#35a99f);
+  color: black!important;
 }
 .sb-getStarted span{
     background: linear-gradient(45deg,#212529,#131313);

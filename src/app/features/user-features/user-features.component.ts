@@ -13,9 +13,9 @@ export class UserFeaturesComponent implements OnInit {
 
   @ViewChild('earnLoyaltyPoints') earnLoyaltyPoints: ElementRef
   @ViewChild('earnPlacesToEat') earnPlacesToEat: ElementRef
-  @ViewChild('earnShopping') earnShopping: ElementRef
-  @ViewChild('earnEvents') earnEvents: ElementRef
-  
+  @ViewChild('earnNearby') earnNearby: ElementRef
+  @ViewChild('earnRewards') earnRewards: ElementRef
+
   public isMobile: boolean = true
 
   public business: boolean = false
@@ -30,34 +30,34 @@ export class UserFeaturesComponent implements OnInit {
 
   public openBlog(){
     window.open("https://blog.spotbie.com/","_blank")
-  } 
+  }
 
   public openIg(){
     if(this.business){
       window.open("https://www.instagram.com/spotbie.business/","_blank")
     } else {
-      window.open("https://www.instagram.com/spotbie.loyalty.points/","_blank")   
-    }    
+      window.open("https://www.instagram.com/spotbie.loyalty.points/","_blank")
+    }
   }
 
   public openYoutube(){
-    window.open("https://www.youtube.com/channel/UCtxkgw0SYiihwR7O8f-xIYA","_blank")     
+    window.open("https://www.youtube.com/channel/UCtxkgw0SYiihwR7O8f-xIYA","_blank")
   }
 
   public openTwitter(){
       window.open("https://twitter.com/SpotBie","_blank")
   }
 
-  ngOnInit(): void { 
-    
+  ngOnInit(): void {
+
     this.isMobile = this.deviceDetectorService.isMobile()
-    
+
     this.router.url === '/business' ? this.business = true : this.business = false
 
   }
 
   ngAfterViewInit(){
-    
+
     switch(this.router.url)
     {
       case '/home#earnLoyaltyPoints':
@@ -68,13 +68,13 @@ export class UserFeaturesComponent implements OnInit {
         this.earnPlacesToEat.nativeElement.scrollIntoView()
         break
 
-      case '/home#earnShopping':
-        this.earnShopping.nativeElement.scrollIntoView()
-        break 
-        
-      case '/home#earnEvents':
-        this.earnEvents.nativeElement.scrollIntoView()
-        break                           
+      case '/home#earnRewards':
+        this.earnRewards.nativeElement.scrollIntoView()
+        break
+
+      case '/home#earnNearby':
+        this.earnNearby.nativeElement.scrollIntoView()
+        break
     }
 
   }

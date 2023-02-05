@@ -34,12 +34,11 @@ export class UserauthService {
     return new Promise((resolve, reject) => {
       this.http.post<string>(loginApi, checkLoginObject)
       .subscribe((resp) => {
-        console.log('strill logged in', resp);
         resolve(resp)
       },
 (error) => {
         console.log('checkIfLoggedIn Error', error)
-        this.logOut()
+        this.logOut();
         reject()
       },
 () => {

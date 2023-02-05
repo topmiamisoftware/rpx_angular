@@ -135,11 +135,6 @@ export class LogInComponent implements OnInit {
     this.loading = true
     this.submitted = true
 
-    if (this.logInForm.invalid) {
-      this.loading = false
-      return
-    }
-
     this.userAuthService.userLogin = this.email
     this.userAuthService.userPassword = this.password
     this.userAuthService.userRememberMe = this.rememberMeState
