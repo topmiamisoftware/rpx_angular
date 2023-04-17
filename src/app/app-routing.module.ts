@@ -7,6 +7,10 @@ import { BugsComponent } from './bugs/bugs.component'
 import { LoyaltyPointsComponent } from './spotbie/spotbie-logged-in/loyalty-points/loyalty-points.component'
 import { RewardMenuComponent } from './spotbie/spotbie-logged-in/reward-menu/reward-menu.component'
 import { EulaComponent } from './eula/eula.component'
+import {HowDoesItWorkComponent} from './how-does-it-work/how-does-it-work.component';
+import {DoesItWorkComponent} from './does-it-work/does-it-work.component';
+import {PricingComponent} from './pricing/pricing.component';
+import { BetaComponent } from './beta/beta.component'
 
 export const routes: Routes = [
   { path: 'home', loadChildren: () => import('./home/home.module').then(m => m.HomeModule) },
@@ -14,6 +18,10 @@ export const routes: Routes = [
   { path: 'terms', component: TermsComponent },
   { path: 'terms', component: EulaComponent },
   { path: 'bugs', component: BugsComponent },
+  { path: 'beta', component: BetaComponent },
+  { path: 'how-does-it-work', component: HowDoesItWorkComponent},
+  { path: 'the-idea', component: DoesItWorkComponent },
+  { path: 'pricing', component: PricingComponent },
   { path: 'earn-loyalty-points', component: BugsComponent },
   { path: 'award-loyalty-points', component: BugsComponent },
   { path: 'password', loadChildren: () => import('./spotbie/spotbie-logged-out/forgot-password/forgot-password.module').then(m => m.ForgotPasswordModule ) },
@@ -28,7 +36,7 @@ export const routes: Routes = [
   { path: 'make-payment', loadChildren: () => import('./make-payment/make-payment.module').then(m => m.MakePaymentModule ) },
   { path: 'user-profile', loadChildren: () => import('./user/user.module').then(m => m.UserModule ) },
   { path: 'schedule-demo', redirectTo: '/business#scheduleDemo'},
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
+  { path: '', redirectTo: '/business', pathMatch: 'full' },
 ]
 
 const routerOptions: ExtraOptions = {

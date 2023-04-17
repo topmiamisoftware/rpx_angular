@@ -41,6 +41,10 @@
       <span (click)="goToBusiness()" *ngIf="!business">
         <i class="fa fa-business-time"></i> BUSINESS
       </span>
+
+      <span (click)="goToAppUser()" *ngIf="business">
+        <i class="fa fa-user-alt"></i> APP USERS
+      </span>
     </td>
   </tr>
 </table>

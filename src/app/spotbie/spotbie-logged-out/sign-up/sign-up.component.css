@@ -194,9 +194,9 @@ h2 strong.sep-two {
         margin-top: 40px!important;
     }
     .sb-scroll{
-        min-width: 102%;
-        width: 102%;
-        max-width: 102%;
+        min-width: 100%;
+        width: 100%;
+        max-width: 100%;
     }
 }
 @media (max-width: 700px) {

@@ -1,0 +1,122 @@
+<div class="spotbie-main-holder" id="spotbieMainHolder">
+  <div class="spotbie-overlay-window" id="spotbieMainSpotBieScroll">
+    <div [ngClass]="getMapPromptMobileClass()" #featureWrapper>
+      <div [ngClass]="getMapPromptMobileInnerWrapperClassOne()">
+
+        <table class="spotbie-el-100
+              spotbie-menu
+              spotbie-menu-fixed"
+               #spotbieMainMenu>
+          <tr>
+            <td style="width: 25%;">
+              <img class="spotbie-header-mini-logo" src="assets/images/spotbie_logo_header.svg" />
+            </td>
+
+            <td style="text-align: right; cursor: default;" (click)="goHome()">
+                <span>HOME</span>
+            </td>
+          </tr>
+        </table>
+
+        <div class="menu-padding"></div>
+
+        <div class="mb-3">
+          <h2 class="spotbie-text-gradient" *ngIf="!isMobile">START ATTRACTING MORE USERS</h2>
+          <h2 class="spotbie-text-gradient" *ngIf="isMobile">ATTRACT MORE USERS</h2>
+          <h2 class="sb-text-light-green-gradient">WITH REWARDS & LOYALTY POINTS</h2>
+        </div>
+
+        <div id="pricing1" #attractNewCustomers>
+          <div class="sb-packetWrapper">
+            <h1 class="text-uppercase sb-text-light-green-gradient" style="font-size: 1.2rem; padding: 0 10px;">PRICING #1</h1>
+
+            <h2 class="text-uppercase spotbie-text-gradient">
+              $69.99/monthly
+            </h2>
+
+            <img class="sb-logo-withStreet" #scheduleDemo src="assets/images/spotbie-miami-find-places-to-eat.png" />
+
+            <div class="text-uppercase text-center">
+              <h3 class="sb-text-light-green-gradient">$840.00 USD</h3>
+              <span class="spotbie-text-gradient">Once every 12 months.</span>
+            </div>
+
+            <button class="spotbie-button sb-getStarted mt-4 mb-5" (click)="goHome()">
+              GET STARTED
+            </button>
+          </div>
+
+          <div class="sb-packetWrapper">
+            <h1 class="text-uppercase sb-text-light-green-gradient" style="font-size: 1.2rem; padding: 0 10px;">PRICING #2</h1>
+
+            <h2 class="text-uppercase spotbie-text-gradient">
+              $79.99/monthly
+            </h2>
+
+            <img class="sb-logo-withStreet" #scheduleDemo src="assets/images/spotbie-miami-find-places-to-eat.png" />
+
+            <div class="text-uppercase text-center">
+              <h3 class="sb-text-light-green-gradient">$480.00 USD</h3>
+              <span class="spotbie-text-gradient">Once every 6 months.</span>
+            </div>
+
+            <button class="spotbie-button sb-getStarted mt-4 mb-5" (click)="goHome()">
+              GET STARTED
+            </button>
+          </div>
+
+          <div class="sb-packetWrapper">
+            <h1 class="text-uppercase sb-text-light-green-gradient" style="font-size: 1.2rem; padding: 0 10px;">PRICING #3</h1>
+
+            <h2 class="text-uppercase spotbie-text-gradient">
+              $99.99/monthly
+            </h2>
+
+            <img class="sb-logo-withStreet" #scheduleDemo src="assets/images/spotbie-miami-find-places-to-eat.png" />
+
+            <div class="text-uppercase text-center">
+              <h3 class="sb-text-light-green-gradient">$99.99 USD</h3>
+              <span class="spotbie-text-gradient">Once every month.</span>
+            </div>
+
+            <button class="spotbie-button sb-getStarted mt-4 mb-5" (click)="goHome()">
+              GET STARTED
+            </button>
+          </div>
+        </div>
+
+        <div class='spotbie-overlay-window' style="z-index: 99;" *ngIf="false">
+          <div class='sb-v-wrapper' style="display: grid; align-content: center;">
+
+            <!-- Calendly inline widget begin -->
+            <div id="calendlyEl" class="calendly-inline-widget"></div>
+            <!-- Calendly inline widget end -->
+
+            <div class='spotbie-text-gradient text-center text-uppercase mt-4'
+                 style="cursor: pointer;" (click)="calendly()">CLOSE</div>
+          </div>
+        </div>
+
+        <div class="mb-4 sb-readImage" id="sbReadImageUsers"></div>
+
+        <div class="sb-footer text-uppercase pt-5 pb-5">
+          <p [routerLink]="['/terms']">Terms & Privacy Policy</p>
+
+          <img class="mt-3 mb-3" src="assets/images/logo_spotbie_green.svg" />
+
+          <p [routerLink]="['/terms']">SpotBie, LLC.&copy; Copyright 2023</p>
+
+          <div class="mt-4">
+            <i class="fab fa-instagram" (click)="openIg()"></i>
+            <i class="fab fa-twitter" (click)="openTwitter()"></i>
+            <i class="fab fa-youtube" (click)="openYoutube()"></i>
+          </div>
+
+          <div class="mt-4 text-uppercase spotbie-text-link cursor-pointer">
+            <span (click)="openBlog()">BLOG</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

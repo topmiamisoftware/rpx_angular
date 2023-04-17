@@ -25,13 +25,21 @@ import { StripeModule } from 'stripe-angular';
 import { MakePaymentModule } from './make-payment/make-payment.module';
 import * as Sentry from '@sentry/angular';
 import {Router} from '@angular/router';
+import {HowDoesItWorkComponent} from './how-does-it-work/how-does-it-work.component';
+import {DoesItWorkComponent} from './does-it-work/does-it-work.component';
+import {PricingComponent} from './pricing/pricing.component';
+import {BetaComponent} from './beta/beta.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     UrlSanitizerPipe,
     TermsComponent,
-    BugsComponent
+    BugsComponent,
+    HowDoesItWorkComponent,
+    DoesItWorkComponent,
+    BetaComponent,
+    PricingComponent,
   ],
   imports: [
     FormsModule,

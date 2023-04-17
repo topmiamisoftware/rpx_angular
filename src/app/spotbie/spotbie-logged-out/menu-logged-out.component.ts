@@ -98,6 +98,10 @@ export class MenuLoggedOutComponent implements OnInit {
     this.router.navigate(['/business'])
   }
 
+  goToAppUser(){
+    this.router.navigate(['/home'])
+  }
+
   home(){
     this.menuActive = false
 

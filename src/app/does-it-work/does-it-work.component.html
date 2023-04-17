@@ -1,0 +1,108 @@
+<div class="spotbie-main-holder" id="spotbieMainHolder">
+  <div class="spotbie-overlay-window" id="spotbieMainSpotBieScroll">
+    <div [ngClass]="getMapPromptMobileClass()" #featureWrapper>
+      <div [ngClass]="getMapPromptMobileInnerWrapperClassOne()">
+
+        <table class="spotbie-el-100
+              spotbie-menu
+              spotbie-menu-fixed"
+               #spotbieMainMenu>
+          <tr>
+            <td style="width: 25%;">
+              <img class="spotbie-header-mini-logo" src="assets/images/spotbie_logo_header.svg" />
+            </td>
+
+            <td style="text-align: right; cursor: default;" (click)="goHome()">
+              <span>HOME</span>
+            </td>
+          </tr>
+        </table>
+
+        <div class="menu-padding"></div>
+
+        <div class="does-itWork">
+          <h2 class="spotbie-text-gradient" *ngIf="!isMobile">START ATTRACTING MORE USERS</h2>
+          <h2 class="spotbie-text-gradient" *ngIf="isMobile">ATTRACT MORE USERS</h2>
+          <h2 class="sb-text-light-green-gradient">WITH REWARDS & LOYALTY POINTS</h2>
+
+          <h2 class="sb-text-light-green-gradient mt-5">What problem does SpotBie solve?</h2>
+          <p>
+            Loyalty programs are well known to bring in additional revenue for businesses. Many franchises and
+            retails own their own in-house loyalty program. However, smaller restaurants and stores are
+            left with less options to compete because they lack the funding for maintaining an in-house loyalty program.
+            SpotBie is a solution for small to medium businesses who are looking to build a brand, grow their crowd, and
+            create loyalty in their community.
+          </p>
+          <h2 class="sb-text-light-green-gradient mt-5">Our Vision</h2>
+          <p>
+            We started SpotBie to build a highly rich experience for the people who love the products and services
+            our community members offer and for the ones who provide them; YOU, the business owner.
+          </p>
+
+          <h2 class="sb-text-light-green-gradient mt-5">Creating a Community</h2>
+          <p>
+            Building a loyal audience is a key parameter to your business being successful. With a loyal audience you are almost
+            guaranteed to keep an active flow of revenue. Our Loyalty Points system rewards users for such behavior and
+            gives them additional reasons to visit your store.
+          </p>
+
+          <h2 class="sb-text-light-green-gradient mt-5">Listed amongst Excellence</h2>
+          <p>
+            At SpotBie, you are listed amongst competent restaurants and retails stores who make excellence a habit. We
+            look at ratings and reviews from major platforms and take a closer look at their products and services through
+            personal consumption and use... Yes... we try them out ourselves! We love delicious food, great customer service,
+            and great products. We aren't willing to offer our users anything less!
+          </p>
+
+          <h2 class="sb-text-light-green-gradient mt-5">Delivering to the Right Audience</h2>
+          <p>
+            When you are listed on our platform, your business starts attracting users that are one step away from making
+            a decision and start spending. The intent each user has when they open our app is to look for something that is
+            nearby and solve their dinner plans. Quick and easy, at the tap of three buttons (sometimes two), the user is provided with a list of
+            highly rated and reviewed restaurants or retail stores.
+          </p>
+
+          <h2 class="sb-text-light-green-gradient mt-5">Nearby Results</h2>
+          <p>
+            Your restaurant or retail store will appear in a list according to its category. Results from this list which you appear in,
+            are drawn according to the user's distance from your store. For example, let's say Sam and Frodo are hanging out on a Friday
+            night near the beach. Suddenly Sam gets hungry and decides he wants to eat something... he knows where to go. All he
+            has to do is tap the SpotBie app and he'll be getting a list of nearby results that are going to offer him a superb experience.
+          </p>
+        </div>
+
+        <div class='spotbie-overlay-window' style="z-index: 99;" *ngIf="false">
+          <div class='sb-v-wrapper' style="display: grid; align-content: center;">
+
+            <!-- Calendly inline widget begin -->
+            <div id="calendlyEl" class="calendly-inline-widget"></div>
+            <!-- Calendly inline widget end -->
+
+            <div class='spotbie-text-gradient text-center text-uppercase mt-4'
+                 style="cursor: pointer;" (click)="calendly()">CLOSE</div>
+          </div>
+        </div>
+
+        <div class="mb-4 sb-readImage" id="sbReadImageUsers"></div>
+
+        <div class="sb-footer text-uppercase pt-5 pb-5">
+          <p [routerLink]="['/terms']">Terms & Privacy Policy</p>
+
+          <img class="mt-3 mb-3" src="assets/images/logo_spotbie_green.svg" />
+
+          <p [routerLink]="['/terms']">SpotBie, LLC.&copy; Copyright 2023</p>
+
+          <div class="mt-4">
+            <i class="fab fa-instagram" (click)="openIg()"></i>
+            <i class="fab fa-twitter" (click)="openTwitter()"></i>
+            <i class="fab fa-youtube" (click)="openYoutube()"></i>
+          </div>
+
+          <div class="mt-4 text-uppercase spotbie-text-link cursor-pointer">
+            <span (click)="openBlog()">BLOG</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

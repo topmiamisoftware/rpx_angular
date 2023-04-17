@@ -1,0 +1,92 @@
+<div class="spotbie-main-holder" id="spotbieMainHolder">
+  <div class="spotbie-overlay-window" id="spotbieMainSpotBieScroll">
+    <div [ngClass]="getMapPromptMobileClass()" #featureWrapper>
+      <div [ngClass]="getMapPromptMobileInnerWrapperClassOne()">
+
+        <table class="spotbie-el-100
+              spotbie-menu
+              spotbie-menu-fixed"
+               #spotbieMainMenu>
+          <tr>
+            <td style="width: 25%;">
+              <img class="spotbie-header-mini-logo" src="assets/images/spotbie_logo_header.svg" />
+            </td>
+
+            <td style="text-align: right; cursor: default;" (click)="goHome()">
+              <span>HOME</span>
+            </td>
+          </tr>
+        </table>
+
+        <div class="menu-padding"></div>
+
+        <div class="does-itWork">
+          <h2 class="spotbie-text-gradient">HOW DOES IT WORK</h2>
+          <h2 class="sb-text-light-green-gradient">BUSINESS PLATFORM</h2>
+
+          <h2 class="sb-text-light-green-gradient mt-5">Start by creating an account.</h2>
+          <p>
+            Loyalty programs are well known throughout the U.S. Many of them bring in large sums of revenue for businesses
+            every year. If you are looking for extra revenue somewhere, SpotBie could be your go-to.
+            We started SpotBie to build something fun and worth using. The end result was a SaaS
+            that allows businesses to upload their most successful products and services into a platform which users love to spend time on.
+            Keep reading to find out how we can help increase your revenue.
+          </p>
+
+          <h2 class="sb-text-light-green-gradient mt-5">Set Up Your Loyalty Points.</h2>
+          <p>
+            In order to set up your account begin by signing up. We require most of our business accounts to have a well reviewed Yelp or Google
+            Business profile before completing their onboarding process. When you confirm your interest in our platform, we'll schedule an intro call and
+            go over the basics for your business portal along with your Loyalty Points and Rewards list. We'll also give you a quick look around at what our
+            user's see when driving by or walking by your store and what you can expect from us in the near future.
+          </p>
+
+          <h2 class="sb-text-light-green-gradient mt-5">Post Up Some Swag</h2>
+          <p>
+            Every business begins by completing the onboarding process. After the process is completed, you will receive an onboarding package
+            from SpotBie indicating the next steps. Our care package includes various accessories which will help you as a business owner and your
+            clients and seamless experience while claiming Rewards or Loyalty Points.
+          </p>
+
+          <h2 class="sb-text-light-green-gradient mt-5">Start the Show!</h2>
+          <p>
+            After you are all set in and ready, we'll start sending SpotBie Users directly to your store on the days you've chosen as part of your
+            introductory boost promotion.
+          </p>
+        </div>
+
+        <div class='spotbie-overlay-window' style="z-index: 99;" *ngIf="false">
+          <div class='sb-v-wrapper' style="display: grid; align-content: center;">
+
+            <!-- Calendly inline widget begin -->
+            <div id="calendlyEl" class="calendly-inline-widget"></div>
+            <!-- Calendly inline widget end -->
+
+            <div class='spotbie-text-gradient text-center text-uppercase mt-4'
+                 style="cursor: pointer;" (click)="calendly()">CLOSE</div>
+          </div>
+        </div>
+
+        <div class="mb-4 sb-readImage" id="sbReadImageUsers"></div>
+
+        <div class="sb-footer text-uppercase pt-5 pb-5">
+          <p [routerLink]="['/terms']">Terms & Privacy Policy</p>
+
+          <img class="mt-3 mb-3" src="assets/images/logo_spotbie_green.svg" />
+
+          <p [routerLink]="['/terms']">SpotBie, LLC.&copy; Copyright 2023</p>
+
+          <div class="mt-4">
+            <i class="fab fa-instagram" (click)="openIg()"></i>
+            <i class="fab fa-twitter" (click)="openTwitter()"></i>
+            <i class="fab fa-youtube" (click)="openYoutube()"></i>
+          </div>
+
+          <div class="mt-4 text-uppercase spotbie-text-link cursor-pointer">
+            <span (click)="openBlog()">BLOG</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

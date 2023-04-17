@@ -3,7 +3,8 @@
     <div class="sb-top-headerImg"></div>
 
     <h1 class="sb-text-light-green-gradient text-uppercase">
-        EARN LOYALTY POINTS
+      <span *ngIf="isMobile">EARN<br/>LOYALTY POINTS</span>
+      <span *ngIf="!isMobile">EARN LOYALTY POINTS</span>
     </h1>
 
     <img class="sb-logo-withStreet mt-4 mb-4" src="assets/images/spotbie-miami-find-places-to-eat.png" />

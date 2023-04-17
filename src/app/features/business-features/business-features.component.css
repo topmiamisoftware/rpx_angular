@@ -1,6 +1,6 @@
 .sb-top-headerImg{
-  background-size: cover !important;
   background: url('../../../assets/images/home_imgs/spotbie-grow-your-business-with-loyalty-points.jpg') no-repeat center !important;
+  background-size: cover !important;
 }
 #sbReadImageRestaurants{
     background: url('../../../assets/images/home_imgs/jpg/spotbie-find-restaurant-customers-near-you.jpg')
@@ -46,6 +46,26 @@
     max-height: 70vh;
     overflow-x: hidden;
 }
+
+.spotbiePurchaseIncentives div{
+  color: white;
+  cursor: pointer;
+  padding-left: 10px;
+  padding-right: 10px;
+  text-decoration: underline;
+  font-family: Gotham-Book;
+  font-size: .9rem;
+}
+
+.sb-getStarted{
+    margin: 0 auto;
+}
+
+.sbBetaBtn{
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
 @media (max-width: 1600px){
     .sb-top-headerImg{
         height: 550px;
@@ -71,18 +91,37 @@
 }
 
 @media (max-width: 650px){
-    .sb-top-headerImg {
-      background-size: cover !important;
-      background: url('../../../assets/images/home_imgs/spotbie-miami.jpg') no-repeat center !important;
-      box-shadow: inset 0px -80px 65px #332f3e;
-        max-height: 300px;
-        min-height: 300px;
-        height: 300px;
-    }
-    .spotbie-overlay-window{
-        width: 104%;
-        min-width: 104%;
-        max-width: 104%;
+  .sb-top-headerImg {
+    background: url('../../../assets/images/home_imgs/spotbie-miami.jpg') no-repeat center !important;
+    background-size: cover !important;
+    box-shadow: inset 0px -80px 65px #332f3e;
+      max-height: 300px;
+      min-height: 300px;
+      height: 300px;
+  }
+  .spotbie-overlay-window{
+      width: 104%;
+      min-width: 104%;
+      max-width: 104%;
+  }
+  .spotbiePurchaseIncentives{
+    text-decoration: underline!important;
+    align-content: center!important;
+    justify-content: center!important;
+    display: grid!important;
+  }
+  .spotbiePurchaseIncentives div{
+    margin-top: 15px;
+    margin-bottom: 15px;
+  }
+  .spotbiePurchaseIncentives {
+    margin-bottom: 40px;
+  }
+}
+
+@media(max-width: 420px){
+    .sb-getStarted{
+        margin: 0 auto;
     }
 }
 
