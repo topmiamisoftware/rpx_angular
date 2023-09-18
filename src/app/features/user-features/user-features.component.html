@@ -35,7 +35,7 @@
 
     <p class="spotbie-text-gradient text-center">Exclusive discounts, drinks & food, event merchandise, and more.<br/><br/></p>
 
-    <div class="spotbie-button sb-getStarted mb-5" (click)="spawnCategories('food')">
+    <div class="spotbie-button sb-getStarted mb-5" (click)="signUp()">
       <span>GET STARTED</span>
     </div>
 
@@ -43,11 +43,11 @@
 </section>
 
 <section id="earnPlacesToEat" #earnPlacesToEat>
-    <div class="mb-4 sb-readImage cursor-pointer" [ngStyle]="{ 'background' : 'url(assets/images/home_imgs/jpg/spotbie-find-restaurant-customers-near-you.jpg)' }" (click)="spawnCategories('food')"></div>
+    <div class="mb-4 sb-readImage cursor-pointer" [ngStyle]="{ 'background' : 'url(assets/images/home_imgs/jpg/spotbie-find-restaurant-customers-near-you.jpg)' }" (click)="signUp()"></div>
 
-    <img class='sb-greenIcon' src='assets/images/home_imgs/spotbie-green-icon.svg' (click)="spawnCategories('food')" />
+    <img class='sb-greenIcon' src='assets/images/home_imgs/spotbie-green-icon.svg' (click)="signUp()" />
 
-    <h2 class="spotbie-text-gradient text-uppercase" (click)="spawnCategories('food')" #placesToEatTitle id="#placesToEatTitle">
+    <h2 class="spotbie-text-gradient text-uppercase" (click)="signUp()" #placesToEatTitle id="#placesToEatTitle">
         START EARNING
     </h2>
 
@@ -68,18 +68,18 @@
         SpotBie awards your expenses with <b><i>Loyalty Points</i></b> which you can use to redeem rewards and discounts.
     </p>
 
-    <button class="spotbie-button sb-getStarted mt-4 mb-5" (click)="spawnCategories('food')">
+    <button class="spotbie-button sb-getStarted mt-4 mb-5" (click)="signUp()">
         <span>GET STARTED</span>
     </button>
 
 </section>
 
 <section id="earnEvents" #earnRewards>
-  <div class="mb-4 sb-readImage cursor-pointer" [ngStyle]="{ 'background' : 'url(assets/images/home_imgs/jpg/spotbie-miami-events.jpg)' }" (click)="spawnCategories('events')"></div>
+  <div class="mb-4 sb-readImage cursor-pointer" [ngStyle]="{ 'background' : 'url(assets/images/home_imgs/jpg/spotbie-miami-events.jpg)' }" (click)="signUp()"></div>
 
-  <img class='sb-greenIcon' src='assets/images/home_imgs/spotbie-green-icon.svg' (click)="spawnCategories('events')" />
+  <img class='sb-greenIcon' src='assets/images/home_imgs/spotbie-green-icon.svg' (click)="signUp()" />
 
-  <h2 class="spotbie-text-gradient text-uppercase" (click)="spawnCategories('events')"  #eventsTitle>
+  <h2 class="spotbie-text-gradient text-uppercase" (click)="signUp()"  #eventsTitle>
     - EARN REWARDS -
   </h2>
 
@@ -100,17 +100,17 @@
     Redeem on-site products, merchandise, discounts and more.
   </p>
 
-  <button class="spotbie-button sb-getStarted mt-4 mb-5" (click)="spawnCategories('events')">
+  <button class="spotbie-button sb-getStarted mt-4 mb-5" (click)="signUp()">
     <span>GET STARTED</span>
   </button>
 </section>
 
 <section id="earnShopping" #earnNearby>
-    <div class="mb-4 sb-readImage cursor-pointer" [ngStyle]="{ 'background' : 'url(assets/images/home_imgs/jpg/spotbie-miami-shopping.jpg' }" (click)="spawnCategories('shopping')"></div>
+    <div class="mb-4 sb-readImage cursor-pointer" [ngStyle]="{ 'background' : 'url(assets/images/home_imgs/jpg/spotbie-miami-shopping.jpg' }" (click)="signUp()"></div>
 
-    <img class='sb-greenIcon' src='assets/images/home_imgs/spotbie-green-icon.svg' (click)="spawnCategories('shopping')" />
+    <img class='sb-greenIcon' src='assets/images/home_imgs/spotbie-green-icon.svg' (click)="signUp()" />
 
-    <h2 class="spotbie-text-gradient text-uppercase" (click)="spawnCategories('shopping')"  #shoppingTitle>
+    <h2 class="spotbie-text-gradient text-uppercase" (click)="signUp()"  #shoppingTitle>
         - STORE LOCATOR -
     </h2>
 
@@ -131,7 +131,7 @@
         SpotBie <b><i>lists</i></b> the best near by results for what you're craving.
     </p>
 
-    <button class="spotbie-button sb-getStarted mt-4 mb-5" (click)="spawnCategories('shopping')">
+    <button class="spotbie-button sb-getStarted mt-4 mb-5" (click)="signUp()">
         <span>GET STARTED</span>
     </button>
 </section>

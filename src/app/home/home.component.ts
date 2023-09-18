@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { MapComponent } from '../spotbie/map/map.component';
+import { MenuLoggedOutComponent } from '../spotbie/spotbie-logged-out/menu-logged-out.component';
 
 @Component({
   selector: 'app-home',
@@ -11,6 +12,7 @@ export class HomeComponent implements OnInit {
 
   public arrowOn: boolean = false;
 
+  @ViewChild('appMenuLoggedOut') appMenuLoggedOut: MenuLoggedOutComponent
   @ViewChild('app_map') app_map: MapComponent
 
   constructor(private router: Router) { }
@@ -28,6 +30,12 @@ export class HomeComponent implements OnInit {
 
   public myFavorites(){
     this.app_map.myFavorites()
+  }
+
+
+  public signUp(){
+    console.log('sugb yup')
+    this.appMenuLoggedOut.signUp()
   }
 
   async ngOnInit() {

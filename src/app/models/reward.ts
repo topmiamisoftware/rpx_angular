@@ -1,3 +1,5 @@
+import {LoyaltyTier} from "./loyalty-point-tier.balance";
+
 export class Reward {
     id: number;
     uuid: string;
@@ -7,4 +9,5 @@ export class Reward {
     images: string;
     point_cost: number;
     link: string;
+    tier_id: number;
 }

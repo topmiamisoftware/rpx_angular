@@ -499,11 +499,11 @@
 
     <div [ngClass]="getMapPromptMobileClass()" *ngIf="!business && !showSearchResults && !map" #featureWrapper>
       <div [ngClass]="getMapPromptMobileInnerWrapperClassOne()">
-        <app-user-features (spawnCategoriesEvt)="spawnCategories($event)" *ngIf="isLoggedIn !== '1'"></app-user-features>
+        <app-user-features (spawnCategoriesEvt)="spawnCategories($event)" (signUpEvent)="signUp()" *ngIf="isLoggedIn !== '1'"></app-user-features>
 
         <app-user-dashboard
           *ngIf="isLoggedIn == '1'"
-          (spawnCategoriesEvt)="spawnCategories($event)"
+          (spawnCategoriesEvt)="spawnCategories($event)"      
           #userHomeDashboard></app-user-dashboard>
       </div>
     </div>
@@ -517,9 +517,7 @@
 
   <div class='spotbie-categories animated slideInRight' *ngIf="catsUp && searchCategory == 'events'">
     <div [ngClass]="getSingleCatClass(i)" *ngFor="let category of categories; let i = index" (click)="showEventSub(category)">
-
       {{ category.name }}
-
       <!--<div class='spotbie-sub-cat-wrapper' *ngIf="category.show_sub && category.type !== undefined">
         <div class='spotbie-sub-cat' *ngFor="let sub_cat_type of category.type._embedded.subtypes" (click)="apiSearch(sub_cat_type.name)" [SpotBieStopClickPropagation]>
           {{ sub_cat_type.name }}

@@ -25,8 +25,8 @@ export class UserHomeComponent implements OnInit {
   }
 
   async ngOnInit(){
-    const response = await this.userAuthService.checkIfLoggedIn()
-    this.userId = response.user_id 
+    const response = await this.userAuthService.checkIfLoggedIn();
+    this.userId = response.user_id;
   }
 
   ngAfterViewInit() {}

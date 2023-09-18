@@ -6,7 +6,7 @@ import * as calendly from '../../app/helpers/calendly/calendlyHelper';
 @Component({
   selector: 'app-beta',
   templateUrl: './beta.component.html',
-  styleUrls: ['./beta.component.css']
+  styleUrls: ['./beta.component.css', '../features/features.component.css', '../spotbie/menu.component.css']
 })
 export class BetaComponent implements OnInit {
 

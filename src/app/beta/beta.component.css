@@ -112,8 +112,12 @@ h6{
   }
 }
 @media (max-width: 800px){
+  h2 {
+    max-width: 90%;
+    margin: 10px auto;
+  }
   .does-itWork{
-    max-width: 84%;
+    max-width: 95%;
   }
 }
 @media (max-width: 768px){

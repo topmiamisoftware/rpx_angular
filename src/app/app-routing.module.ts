@@ -18,7 +18,7 @@ export const routes: Routes = [
   { path: 'terms', component: TermsComponent },
   { path: 'terms', component: EulaComponent },
   { path: 'bugs', component: BugsComponent },
-  { path: 'beta', component: BetaComponent },
+  // { path: 'beta', component: BetaComponent },
   { path: 'how-does-it-work', component: HowDoesItWorkComponent},
   { path: 'the-idea', component: DoesItWorkComponent },
   { path: 'pricing', component: PricingComponent },

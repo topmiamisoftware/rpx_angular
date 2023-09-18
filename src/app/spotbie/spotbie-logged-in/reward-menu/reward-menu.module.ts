@@ -8,6 +8,7 @@ import { MatFormFieldModule } from '@angular/material/form-field'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxQRCodeModule } from '@techiediaries/ngx-qrcode';
 import { ShareButtonsModule } from 'ngx-sharebuttons/buttons';
+import { HelperModule } from '../../../helpers/helper.module';
 
 @NgModule({
   declarations: [
@@ -22,9 +23,10 @@ import { ShareButtonsModule } from 'ngx-sharebuttons/buttons';
     FormsModule,
     ReactiveFormsModule,
     NgxQRCodeModule,
+    HelperModule,
     ShareButtonsModule.withConfig({
       include: ['facebook', 'twitter', 'linkedin', 'reddit', 'tumblr', 'mix', 'viber', 'messenger','whatsapp']
-    }),    
+    }),
   ],
   exports : [
     RewardMenuComponent

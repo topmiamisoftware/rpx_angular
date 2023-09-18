@@ -93,6 +93,19 @@ h6{
   text-align: left;
   text-align-last: left;
 }
+
+ul > li {
+  color: white;
+}
+
+h3 {
+  background: -webkit-linear-gradient(0deg,#35a99f,#64e56f);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  letter-spacing: 2px;
+  font-size: .9rem;;
+}
+
 @media (max-width: 1600px){
   .sb-top-headerImg{
     height: 550px;

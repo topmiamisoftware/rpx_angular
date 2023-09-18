@@ -65,9 +65,7 @@ export class RewardMenuComponent implements OnInit {
   }
 
   fetchRewards(qrCodeLink: string = null){
-    let fetchRewardsReq = null
-
-    fetchRewardsReq = {
+    const fetchRewardsReq = {
       qrCodeLink: this.qrCodeLink
     }
 
@@ -77,13 +75,11 @@ export class RewardMenuComponent implements OnInit {
   }
 
   private async fetchRewardsCb(resp){
-    if(resp.success){
-      this.rewards = resp.rewards
+    this.rewards = resp.rewards
 
-      if(this.userType === this.eAllowedAccountTypes.Personal || this.isLoggedIn !== '1'){
-        this.userPointToDollarRatio = resp.loyalty_point_dollar_percent_value
-        this.business = resp.business
-      }
+    if(this.userType === this.eAllowedAccountTypes.Personal || this.isLoggedIn !== '1'){
+      this.userPointToDollarRatio = resp.loyalty_point_dollar_percent_value
+      this.business = resp.business
     }
   }
 

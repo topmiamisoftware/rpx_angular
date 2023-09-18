@@ -17,51 +17,47 @@ const BUSINESS_API = spotbieGlobals.API + 'business'
 })
 export class UserauthService {
 
-  public userLogin: string
-  public userPassword: string
-  public userRememberMe: string
-  public userRememberMeToken: string
-  public userTimezone: string
-  public route: string
+  userLogin: string
+  userPassword: string
+  userRememberMe: string
+  userRememberMeToken: string
+  userTimezone: string
+  route: string
+  userProfile: User;
 
   constructor(private http: HttpClient,
               private router: Router) { }
 
-  public async checkIfLoggedIn(): Promise<any>{
+  async checkIfLoggedIn(): Promise<any>{
     const checkLoginObject = {}
     const loginApi = `${USER_API}/check-user-auth`
 
     return new Promise((resolve, reject) => {
-      this.http.post<string>(loginApi, checkLoginObject)
-      .subscribe((resp) => {
-        resolve(resp)
-      },
-(error) => {
-        console.log('checkIfLoggedIn Error', error)
-        this.logOut();
-        reject()
-      },
-() => {
-          console.log('checkIfLoggedIn Error')
-      })
-    })
+      this.http.post<any>(loginApi, checkLoginObject).pipe().subscribe((resp) => {
+        if(resp.message === '1') {
+          resolve(resp);
+        } else {
+          reject();
+        }
+      });
+    });
   }
 
   private reRouteFromSpotBie(){
     this.router.navigate(['/home'])
   }
 
-  public logOut(): Observable<any> {
+  logOut(): Observable<any> {
     const logOutApi = `${USER_API}/logout`
     return this.http.post<any>(logOutApi, null)
   }
 
-  public closeBrowser(): Observable<any> {
+  closeBrowser(): Observable<any> {
     const logOutApi = `${USER_API}/close-browser`
     return this.http.post<any>(logOutApi, null)
   }
 
-  public initLogin(): Observable<any>{
+  initLogin(): Observable<any>{
     this.userTimezone = Intl.DateTimeFormat().resolvedOptions().timeZone
 
     const params = {
@@ -80,16 +76,20 @@ export class UserauthService {
       }))
   }
 
-  public getSettings(): Observable<any>{
+  getSettings(): Observable<any>{
     const getSettingsApi = `${USER_API}/settings`
 
     return this.http.post<any>(getSettingsApi, null).pipe(
+      tap((settings) => {
+        this.userProfile = settings;
+        console.log('settings', settings);
+      }),
       catchError( err => {
-        throw err
-      }))
+        throw err;
+      }));
   }
 
-  public saveSettings(user: User): Observable<any>{
+  saveSettings(user: User): Observable<any>{
     const saveSettingsApi = `${USER_API}/update`
 
     let saveSettingsObj
@@ -131,7 +131,7 @@ export class UserauthService {
       }))
   }
 
-  public setPassResetPin(emailOrPhone: string): Observable<any>{
+  setPassResetPin(emailOrPhone: string): Observable<any>{
     const resetPasswordApi = `${USER_API}/send-pass-email`
     const setPassResetObj = {
       email: emailOrPhone
@@ -143,7 +143,7 @@ export class UserauthService {
       }))
   }
 
-  public completeReset(password: string, passwordConfirmation: string, email: string, token: string): Observable<any>{
+  completeReset(password: string, passwordConfirmation: string, email: string, token: string): Observable<any>{
     const resetPasswordApi = `${USER_API}/complete-pass-reset`
     const passResetObj = {
       _method: 'PUT',
@@ -159,7 +159,7 @@ export class UserauthService {
       )
   }
 
-  public passwordChange(passwordChangeObj: any): Observable<any>{
+  passwordChange(passwordChangeObj: any): Observable<any>{
     const resetPasswordApi = `${USER_API}/change-password`
 
     const passResetObj = {
@@ -174,7 +174,7 @@ export class UserauthService {
     )
   }
 
-  public deactivateAccount(password: string, is_social_account: boolean): Observable<any>{
+  deactivateAccount(password: string, is_social_account: boolean): Observable<any>{
     const resetPasswordApi = `${USER_API}/deactivate`
     const passResetObj = {
       _method: 'DELETE',
@@ -187,7 +187,7 @@ export class UserauthService {
     )
   }
 
-  public verifyBusiness(businessInfo: any): Observable<any>{
+  verifyBusiness(businessInfo: any): Observable<any>{
     let apiUrl
 
     switch(businessInfo.accountType){
@@ -222,7 +222,7 @@ export class UserauthService {
       )
   }
 
-  public saveBusiness(businessInfo: any): Observable<any>{
+  saveBusiness(businessInfo: any): Observable<any>{
     let apiUrl
 
     switch(businessInfo.accountType){
@@ -255,5 +255,4 @@ export class UserauthService {
         catchError(handleError('saveBusiness'))
       )
   }
-
 }

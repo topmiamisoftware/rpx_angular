@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 
 import * as calendly from '../../helpers/calendly/calendlyHelper'
 import { DeviceDetectorService } from 'ngx-device-detector';
+import {environment} from "../../../environments/environment";
 
 @Component({
   selector: 'app-business-features',
@@ -24,7 +25,7 @@ export class BusinessFeaturesComponent implements OnInit {
   loading: boolean = false
   business: boolean = false
   isMobile: boolean = false;
-  
+
   constructor(private router: Router,
               private deviceDetector: DeviceDetectorService) {
                 this.isMobile = this.deviceDetector.isMobile();
@@ -77,6 +78,10 @@ export class BusinessFeaturesComponent implements OnInit {
 
   signUp(){
     this.signUpEvent.emit()
+  }
+
+  joinTheBeta() {
+    window.open(`${environment.baseUrl}/beta`,'_blank');
   }
 
   spawnCategories(category: string){

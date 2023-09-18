@@ -40,10 +40,10 @@ export class EventCreatorComponent implements OnInit {
   public eventMediaUploadProgress: number = 0
 
   public businessPointsDollarValue: string = '0'
-  
+
   public dollarValueCalculated: boolean = false
-  
-  public eventTypeList: Array<string> = ['Something From Our Menu', 'Discount']
+
+  public eventTypeList: Array<string> = ['Something From Our Menu', 'Discount', 'An Experience']
 
   public eventCreated: boolean = false
   public eventDeleted: boolean = false
@@ -60,7 +60,7 @@ export class EventCreatorComponent implements OnInit {
   get eventValue() {return this.eventCreatorForm.get('eventValue').value }
   get eventName() {return this.eventCreatorForm.get('eventName').value }
   get eventDescription() {return this.eventCreatorForm.get('eventDescription').value }
-  get eventImage() {return this.eventCreatorForm.get('eventImage').value }  
+  get eventImage() {return this.eventCreatorForm.get('eventImage').value }
 
   get f() { return this.eventCreatorForm.controls }
 
@@ -83,16 +83,16 @@ export class EventCreatorComponent implements OnInit {
     })
 
     if(this.event !== null && this.event !== undefined){
-      
+
       //console.log("event is ", this.event)
 
       this.eventCreatorForm.get('eventType').setValue(this.event.type)
       this.eventCreatorForm.get('eventValue').setValue(this.event.point_cost)
       this.eventCreatorForm.get('eventName').setValue(this.event.name)
       this.eventCreatorForm.get('eventDescription').setValue(this.event.description)
-      this.eventCreatorForm.get('eventImage').setValue(this.event.images)      
+      this.eventCreatorForm.get('eventImage').setValue(this.event.images)
       this.eventUploadImage = this.event.images
-      
+
       this.calculateDollarValue()
 
     }
@@ -111,18 +111,18 @@ export class EventCreatorComponent implements OnInit {
       this.businessPointsDollarValue = '0'
     else
       this.businessPointsDollarValue = ( itemPrice * (pointPercentage / 100) ).toFixed(2)
-    
+
     this.dollarValueCalculated = true
 
   }
 
   public saveEvent(){
-    
+
     this.eventFormSubmitted = true
     this.spbTopAnchor.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' })
-    
+
     let itemObj = new SpEvent()
-    itemObj.name = this.eventName   
+    itemObj.name = this.eventName
     itemObj.description = this.eventDescription
     itemObj.images = this.eventImage
     itemObj.point_cost = this.eventValue
@@ -131,7 +131,7 @@ export class EventCreatorComponent implements OnInit {
     if(this.event === null || this.event === undefined){
 
       this.eventCreatorService.saveItem(itemObj).subscribe(
-        resp =>{        
+        resp =>{
           this.saveeventCb(resp)
         }
       )
@@ -141,24 +141,24 @@ export class EventCreatorComponent implements OnInit {
       itemObj.id = this.event.id
 
       this.eventCreatorService.updateItem(itemObj).subscribe(
-        resp =>{        
+        resp =>{
           this.saveeventCb(resp)
         }
       )
 
     }
 
-  } 
+  }
 
   public saveeventCb(resp: any){
 
     console.log(resp)
 
     if(resp.success){
-      this.eventCreated = true    
+      this.eventCreated = true
       setTimeout(() => {
         this.closeeventCreatorAndRefetcheventList()
-      }, 1500)      
+      }, 1500)
     }
 
   }
@@ -182,7 +182,7 @@ export class EventCreatorComponent implements OnInit {
     this.loading = true
 
     const formData = new FormData()
-    
+
     let file_to_upload
     let upload_size = 0
 
@@ -204,10 +204,10 @@ export class EventCreatorComponent implements OnInit {
 
     let token = localStorage.getItem('spotbiecom_session')
 
-    this.http.post(event_MEDIA_UPLOAD_API_URL, formData, 
+    this.http.post(event_MEDIA_UPLOAD_API_URL, formData,
                     {
-                      reportProgress: true, 
-                      observe: 'events', 
+                      reportProgress: true,
+                      observe: 'events',
                       withCredentials: true, headers: {
                         'Authorization' : `Bearer ${token}`
                       }
@@ -234,7 +234,7 @@ export class EventCreatorComponent implements OnInit {
       this.eventCreatorForm.get('eventImage').setValue(this.eventUploadImage)
     } else
       console.log('eventMediaUploadFinished', httpResponse)
-    
+
     this.loading = false
 
   }
@@ -265,7 +265,7 @@ export class EventCreatorComponent implements OnInit {
   }
 
   public deleteMe(){
-    
+
     this.eventCreatorService.deleteMe(this.event).subscribe(
       resp => {
         this.deleteMeCb(resp)
@@ -278,17 +278,17 @@ export class EventCreatorComponent implements OnInit {
 
     if(resp.success){
 
-      this.eventDeleted = true    
+      this.eventDeleted = true
       setTimeout(() => {
         this.closeeventCreatorAndRefetcheventList()
-      }, 1500)  
-      
+      }, 1500)
+
     }
 
   }
 
   public subscribe(){
-  
+
 
   }
 

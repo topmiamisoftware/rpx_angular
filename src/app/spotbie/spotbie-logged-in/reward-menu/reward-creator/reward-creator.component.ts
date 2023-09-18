@@ -7,6 +7,7 @@ import { LoyaltyPointsService } from 'src/app/services/loyalty-points/loyalty-po
 import { RewardCreatorService } from 'src/app/services/spotbie-logged-in/business-menu/reward-creator/reward-creator.service'
 import { environment } from 'src/environments/environment'
 import * as spotbieGlobals from '../../../../globals'
+import {LoyaltyTier} from '../../../../models/loyalty-point-tier.balance';
 
 const REWARD_MEDIA_UPLOAD_API_URL = `${spotbieGlobals.API}reward/upload-media`
 const REWARD_MEDIA_MAX_UPLOAD_SIZE = 25e+6
@@ -39,12 +40,13 @@ export class RewardCreatorComponent implements OnInit {
   rewardMediaUploadProgress: number = 0
   businessPointsDollarValue: string = '0'
   dollarValueCalculated: boolean = false
-  rewardTypeList: Array<string> = ['Something From Our Menu', 'Discount']
+  rewardTypeList: Array<string> = ['Something From Our Menu', 'Discount', 'An Experience']
   rewardCreated: boolean = false
   rewardDeleted: boolean = false
   uploadMediaForm: boolean = false
   loyaltyPointBalance: any
   qrCodeClaimReward = QR_CODE_CALIM_REWARD_SCAN_BASE_URL
+  existingTiers: Array<LoyaltyTier> = this.loyaltyPointsService.existingTiers;
 
   constructor(private formBuilder: UntypedFormBuilder,
               private rewardCreatorService: RewardCreatorService,
@@ -59,6 +61,7 @@ export class RewardCreatorComponent implements OnInit {
   get rewardValue() {return this.rewardCreatorForm.get('rewardValue').value }
   get rewardName() {return this.rewardCreatorForm.get('rewardName').value }
   get rewardDescription() {return this.rewardCreatorForm.get('rewardDescription').value }
+  get tier() {return this.rewardCreatorForm.get('tier').value }
   get rewardImage() {return this.rewardCreatorForm.get('rewardImage').value }
 
   get f() { return this.rewardCreatorForm.controls }
@@ -75,18 +78,20 @@ export class RewardCreatorComponent implements OnInit {
       rewardValue: ['', rewardValueValidators],
       rewardName: ['', rewardNameValidators],
       rewardDescription: ['', rewardDescriptionValidators],
-      rewardImage: ['', rewardImageValidators]
+      rewardImage: ['', rewardImageValidators],
+      tier: ['', null],
     })
 
-    if(this.reward !== null && this.reward !== undefined){
-      this.rewardCreatorForm.get('rewardType').setValue(this.reward.type)
-      this.rewardCreatorForm.get('rewardValue').setValue(this.reward.point_cost)
-      this.rewardCreatorForm.get('rewardName').setValue(this.reward.name)
-      this.rewardCreatorForm.get('rewardDescription').setValue(this.reward.description)
-      this.rewardCreatorForm.get('rewardImage').setValue(this.reward.images)
-      this.rewardUploadImage = this.reward.images
-      this.setRewardLink()
-      this.calculateDollarValue()
+    if(this.reward){
+      this.rewardCreatorForm.get('rewardType').setValue(this.reward.type);
+      this.rewardCreatorForm.get('rewardValue').setValue(this.reward.point_cost);
+      this.rewardCreatorForm.get('rewardName').setValue(this.reward.name);
+      this.rewardCreatorForm.get('rewardDescription').setValue(this.reward.description);
+      this.rewardCreatorForm.get('rewardImage').setValue(this.reward.images);
+      this.rewardCreatorForm.get('tier').setValue(this.reward.tier_id);
+      this.rewardUploadImage = this.reward.images;
+      this.setRewardLink();
+      this.calculateDollarValue();
     }
 
     this.rewardCreatorFormUp = true
@@ -106,46 +111,51 @@ export class RewardCreatorComponent implements OnInit {
     const pointPercentage = this.loyaltyPointBalance.loyalty_point_dollar_percent_value
     const itemPrice = this.rewardValue
 
-    if(pointPercentage === 0 || pointPercentage == null)
+    if(pointPercentage === 0 || pointPercentage == null) {
       this.businessPointsDollarValue = '0'
-    else
-      this.businessPointsDollarValue = ( itemPrice * (pointPercentage / 100) ).toFixed(2)
+    } else {
+      this.businessPointsDollarValue = (itemPrice * (pointPercentage / 100)).toFixed(2)
+    }
 
     this.dollarValueCalculated = true
+  }
+
+  rewardTier(t) {
+    console.log(t)
   }
 
   saveReward(){
     this.rewardFormSubmitted = true
     this.spbTopAnchor.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' })
 
-    const itemObj = new Reward()
+    const reward = new Reward()
+    reward.name = this.rewardName
+    reward.description = this.rewardDescription
+    reward.images = this.rewardImage
+    reward.point_cost = this.rewardValue
+    reward.type = this.rewardType
+    reward.tier_id = this.tier
 
-    itemObj.name = this.rewardName
-    itemObj.description = this.rewardDescription
-    itemObj.images = this.rewardImage
-    itemObj.point_cost = this.rewardValue
-    itemObj.type = this.rewardType
+    console.log('the reward', reward);
 
-    if(this.reward === null || this.reward === undefined){
-      this.rewardCreatorService.saveItem(itemObj).subscribe(resp =>{
-          this.saveRewardCb(resp)
+    if(!this.reward){
+      this.rewardCreatorService.saveReward(reward).subscribe(resp => {
+          this.saveRewardCb()
         })
     } else {
-      itemObj.id = this.reward.id
+      reward.id = this.reward.id
 
-      this.rewardCreatorService.updateItem(itemObj).subscribe(resp =>{
-          this.saveRewardCb(resp)
+      this.rewardCreatorService.updateReward(reward).subscribe(resp =>{
+          this.saveRewardCb()
         })
     }
   }
 
-  saveRewardCb(resp: any){
-    if(resp.success){
-      this.rewardCreated = true
-      setTimeout(() => {
-        this.closeRewardCreatorAndRefetchRewardList()
-      }, 1500)
-    }
+  saveRewardCb(){
+    this.rewardCreated = true
+    setTimeout(() => {
+      this.closeRewardCreatorAndRefetchRewardList()
+    }, 1500)
   }
 
   startRewardMediaUploader(): void{
@@ -184,14 +194,14 @@ export class RewardCreatorComponent implements OnInit {
       formData.append('image', file_to_upload, file_to_upload.name)
     }
 
-    let token = localStorage.getItem('spotbiecom_session')
+    const token = localStorage.getItem('spotbiecom_session')
 
     this.http.post(REWARD_MEDIA_UPLOAD_API_URL, formData,
                     {
                       reportProgress: true,
                       observe: 'events',
                       withCredentials: true, headers: {
-                        'Authorization' : `Bearer ${token}`
+                        Authorization : `Bearer ${token}`
                       }
                     }
                   ).subscribe(event => {
@@ -208,8 +218,9 @@ export class RewardCreatorComponent implements OnInit {
     if (httpResponse.success){
       this.rewardUploadImage = httpResponse.image
       this.rewardCreatorForm.get('rewardImage').setValue(this.rewardUploadImage)
-    } else
+    } else {
       console.log('rewardMediaUploadFinished', httpResponse)
+    }
 
     this.loading = false
   }
@@ -232,13 +243,13 @@ export class RewardCreatorComponent implements OnInit {
   }
 
   closeRewardCreatorAndRefetchRewardList(){
-    this.closeRewardCreatorAndRefetchRewardListEvt.emit()
+    this.closeRewardCreatorAndRefetchRewardListEvt.emit();
   }
 
   deleteMe(){
     this.rewardCreatorService.deleteMe(this.reward).subscribe(resp => {
         this.deleteMeCb(resp)
-      })
+      });
   }
 
   private deleteMeCb(resp){
@@ -246,7 +257,7 @@ export class RewardCreatorComponent implements OnInit {
       this.rewardDeleted = true
       setTimeout(() => {
         this.closeRewardCreatorAndRefetchRewardList()
-      }, 1500)
+      }, 1500);
     }
   }
 

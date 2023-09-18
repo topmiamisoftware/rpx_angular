@@ -4,7 +4,7 @@
 }
 .sb-readImage{
     position: absolute;
-    bottom: 10%;                
+    bottom: 10%;
     margin: 0 auto;
     width: 100%;
     min-width: 100%;
@@ -13,10 +13,10 @@
     min-height: 650px;
     background-position: center !important;
     background-size: cover !important;
-    background-repeat: no-repeat !important;   
-    z-index: -1;      
+    background-repeat: no-repeat !important;
+    z-index: -1;
 }
-.fa-hamburger, .fa-check{
+.fa-hamburger, .fa-check, .fa-coins{
     background: unset !important;
     color: white;
     margin-left: 5px;
@@ -47,7 +47,7 @@ h5{
     top: 50%;
     transform: translateY(-50%);
     font-size: 7rem;
-}  
+}
 .fa-check{
     color: #2ddc5b;
 }
@@ -77,7 +77,7 @@ h5{
     .sb-scanQrTitle{
         margin-top: 15px !important;
         padding-top: 20px !important;
-        margin-bottom: 0px !important;    
+        margin-bottom: 0px !important;
     }
     .sb-qrTitleImage{
         max-width: 35px;
@@ -96,10 +96,10 @@ h5{
         width: 90%;
         min-width: 90%;
         max-width: 90%;
-    }  
+    }
     .sb-v-wrapper p{
         max-width: 82%;
         margin: 0 auto;
-    }     
+    }
 }
 

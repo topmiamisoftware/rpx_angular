@@ -19,7 +19,7 @@
          [ngStyle]="rewardTileStyling(reward)"
          (click)="editReward(reward)">
 
-      <h6 *ngIf="reward.type === 0">
+      <h6 *ngIf="reward.type === 0 || reward.type === 2">
           <span class="spotbie-text-gradient">
               {{ reward.name }}
           </span>
@@ -55,7 +55,7 @@
            (click)="openReward(reward)">
       </div>
 
-      <h6 *ngIf="reward.type === 0">
+      <h6 *ngIf="reward.type === 0 || reward.type === 2">
           <span class="spotbie-text-gradient">
               {{ reward.name }}
           </span>

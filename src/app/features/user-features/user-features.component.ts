@@ -10,6 +10,7 @@ import { DeviceDetectorService } from 'ngx-device-detector'
 export class UserFeaturesComponent implements OnInit {
 
   @Output() spawnCategoriesEvt = new EventEmitter()
+  @Output() signUpEvent = new EventEmitter()
 
   @ViewChild('earnLoyaltyPoints') earnLoyaltyPoints: ElementRef
   @ViewChild('earnPlacesToEat') earnPlacesToEat: ElementRef
@@ -79,4 +80,7 @@ export class UserFeaturesComponent implements OnInit {
 
   }
 
+  signUp(){
+    this.signUpEvent.emit()
+  }
 }

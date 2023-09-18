@@ -17,34 +17,20 @@ const REWARD_API = `${spotbieGlobals.API}reward`
 export class RewardCreatorService {
   constructor(private http: HttpClient, private store: Store<{ loyaltyPoints }>) {}
 
-  public saveItem(itemObj: Reward): Observable<any>{
+  public saveReward(reward: Reward): Observable<any>{
+    console.log('saveReward', reward);
     const placeToEatRewardApi = `${REWARD_API}/create`
-    const itemObjToSave = {
-      name: itemObj.name,
-      description: itemObj.description,
-      images: itemObj.images,
-      point_cost: itemObj.point_cost,
-      type: itemObj.type
-    }
 
-    return this.http.post<any>(placeToEatRewardApi, itemObjToSave).pipe(
-      catchError(handleError('completeReset'))
+    return this.http.post<any>(placeToEatRewardApi, reward).pipe(
+      catchError(handleError('saveReward'))
     )
   }
 
-  public updateItem(itemObj: Reward): Observable<any>{
+  public updateReward(reward: Reward): Observable<any>{
     const placeToEatRewardApi = `${REWARD_API}/update`
-    const itemObjToSave = {
-      name: itemObj.name,
-      description: itemObj.description,
-      images: itemObj.images,
-      point_cost: itemObj.point_cost,
-      type: itemObj.type,
-      id: itemObj.id
-    }
-
-    return this.http.post<any>(placeToEatRewardApi, itemObjToSave).pipe(
-      catchError(handleError('completeReset'))
+    console.log('updateReward', reward);
+    return this.http.post<any>(placeToEatRewardApi, reward).pipe(
+      catchError(handleError('updateReward'))
     )
   }
 
