@@ -24,31 +24,35 @@
         </stripe-card>
 
         <div *ngIf="paymentType == 'in-house'" class="mb-4">
-
             <h4 class="spotbie-text-gradient text-uppercase mt-4">{{ ad.name }}</h4>
 
             <h3 class="sb-text-light-green-gradient mt-4">{{ ad.dollar_cost | currency: 'USD'}}/month</h3>
 
             <img class="sb-adImage" [src]="ad.images" />
-
-        </div>
-
-        <div *ngIf="paymentType == 'business-membership-1'" class="mb-4">
-            <h4 class="spotbie-text-gradient text-uppercase mt-4">Business Membership $69.99/month</h4>
-
-            <h3 class="sb-text-light-green-gradient mt-4">$840/every 12 months</h3>
-        </div>
-
-        <div *ngIf="paymentType == 'business-membership-2'" class="mb-4">
-          <h4 class="spotbie-text-gradient text-uppercase mt-4">Business Membership $79.99/month</h4>
-
-          <h3 class="sb-text-light-green-gradient mt-2">$480/every 6 months</h3>
         </div>
 
         <div *ngIf="paymentType == 'business-membership'" class="mb-4">
-          <h4 class="spotbie-text-gradient text-uppercase mt-4">Business Membership $99.99/month</h4>
+            <p class="spotbie-text-gradient text-uppercase mt-4">Business Membership $199.99/month</p>
 
-          <h3 class="sb-text-light-green-gradient mt-2">$99.99/monthly</h3>
+            <p class="sb-text-light-green-gradient mt-4">2,000 LOYALTY POINTS</p>
+            <p class="sb-text-light-green-gradient mt-1">No Bonus Loyalty Points</p>
+            <p class="sb-text-light-green-gradient mt-1">Default Max Reward Rate</p>
+        </div>
+
+        <div *ngIf="paymentType == 'business-membership-1'" class="mb-4">
+            <p class="spotbie-text-gradient text-uppercase mt-4">Business Membership $299.99/month</p>
+
+            <p class="sb-text-light-green-gradient mt-4">3,500 LOYALTY POINTS</p>
+            <p class="sb-text-light-green-gradient mt-1">500 Bonus Loyalty Points</p>
+            <p class="sb-text-light-green-gradient mt-1">+0.01% Max Reward Rate</p>
+        </div>
+
+        <div *ngIf="paymentType == 'business-membership-2'" class="mb-4">
+            <p class="spotbie-text-gradient text-uppercase mt-4">Business Membership $399.99/month</p>
+
+            <p class="sb-text-light-green-gradient mt-4">4,750 LOYALTY POINTS</p>
+            <p class="sb-text-light-green-gradient mt-1">750 Bonus Loyalty Points</p>
+            <p class="sb-text-light-green-gradient mt-1">+0.02% Max Reward Rate</p>
         </div>
 
         <p class='spotbie-login-terms spotbie-text-link'>
@@ -79,7 +83,7 @@
 
     </div>
 
-    <div class="spotbie-text-gradient text-uppercase mt-4 cursor-pointer" [routerLink]="['/user-home']">RETURN TO HOME PAGE</div>
+    <div class="spotbie-text-gradient text-uppercase mt-4 cursor-pointer" [routerLink]="['/business']">RETURN TO HOME PAGE</div>
 
 </div>
 
@@ -99,17 +103,15 @@
 
     </div>
 
-    <div class="spotbie-text-gradient text-uppercase mt-4 cursor-pointer" [routerLink]="['/user-home']">RETURN TO HOME PAGE</div>
+    <div class="spotbie-text-gradient text-uppercase mt-4 cursor-pointer" [routerLink]="['/business']">RETURN TO HOME PAGE</div>
 
 </div>
 
 
 <div class='spotbie-overlay-window d-flex align-items-center justify-content-center' *ngIf="membershipPaidFor">
-
     <div class="sb-logo mt-3 mb-3"></div>
 
     <div class='sb-makePaymentWrapper' style="box-shadow: unset;">
-
         <h4 class="spotbie-text-gradient spotbie-r-success-title text-uppercase">PAYMENT SUCCESSFUL</h4>
 
         <div class="sb-verificationCheck mt-4 mb-4">
@@ -117,9 +119,7 @@
         </div>
 
         <h4 class="spotbie-text-gradient spotbie-r-success-title text-uppercase">YOUR MEMBERSHIP IS LIVE</h4>
-
     </div>
 
-    <div class="spotbie-text-gradient text-uppercase mt-4 cursor-pointer" [routerLink]="['/user-home']">RETURN TO HOME PAGE</div>
-
+    <div class="spotbie-text-gradient text-uppercase mt-4 cursor-pointer" [routerLink]="['/business']">RETURN TO HOME PAGE</div>
 </div>

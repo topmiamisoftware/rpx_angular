@@ -76,7 +76,6 @@ export class SettingsComponent implements OnInit {
   accountTypeCategoryFriendlyName: string
   user: User
   userIsSubscribed: boolean = false
-  userIsTrial: boolean = false
   userSubscriptionPlan: string = ''
   submitted: boolean = false
   placeFormSubmitted: boolean = false
@@ -174,7 +173,7 @@ export class SettingsComponent implements OnInit {
 
   cancelMembership() {
     const r = confirm(`
-            Are you sure you want to delete your subscription? All yours IN-HOUSE Promotions will also be deleted.
+            Are you sure you want to delete your subscription? All your IN-HOUSE Promotions will also be deleted.
         `)
 
     if (r) {
@@ -189,10 +188,10 @@ export class SettingsComponent implements OnInit {
     if (settingsResponse.success) {
       this.user = settingsResponse.user
       this.user.spotbie_user = settingsResponse.spotbie_user
-      this.user.trial_ends_at = settingsResponse.trial_ends_at
       this.user.uuid = settingsResponse.user.hash
-      this.userIsSubscribed = settingsResponse.is_subscribed
-      this.userIsTrial = settingsResponse.is_trial;
+      this.userIsSubscribed = settingsResponse.is_subscribed;
+      this.user.ends_at = settingsResponse.ends_at;
+      this.user.next_payment = settingsResponse.next_payment;
       this.userSubscriptionPlan = settingsResponse.userSubscriptionPlan;
 
       if (this.user.spotbie_user.user_type === AllowedAccountTypes.Unset && !this.settingsFormInitiated) {
@@ -311,13 +310,13 @@ export class SettingsComponent implements OnInit {
 
   activateFullMembership(ca: number) {
     switch (ca) {
-      case 1:
+      case 2:
         window.open(`${environment.baseUrl}make-payment/business-membership-1/${this.user.uuid}`, '_blank')
         break;
-      case 2:
+      case 3:
         window.open(`${environment.baseUrl}make-payment/business-membership-2/${this.user.uuid}`, '_blank')
         break;
-      case 3:
+      case 1:
         window.open(`${environment.baseUrl}make-payment/business-membership/${this.user.uuid}`, '_blank')
         break;
     }
@@ -473,7 +472,7 @@ export class SettingsComponent implements OnInit {
         this.lng = place.geometry.location.lng()
         this.zoom = 18
 
-        if(!this.user.business){
+        if(this.user.business){
           this.businessSettingsForm.get('spotbieOrigin').setValue(this.user.business.loc_y + ',' + this.user.business.loc_y)
           this.businessSettingsForm.get('originTitle').setValue(this.user.business.name)
           this.businessSettingsForm.get('originAddress').setValue(this.user.business.address)
@@ -921,19 +920,19 @@ export class SettingsComponent implements OnInit {
             await this.classificationSearch().subscribe(resp => {
                 this.classificationSearchCallback(resp)}
             )
-            break
+            break;
           case 'place_to_eat':
             this.accountTypeCategory = 'PLACE TO EAT'
             this.accountTypeCategoryFriendlyName = 'PLACE TO EAT'
             this.businessCategoryList = map_extras.FOOD_CATEGORIES
-            break
+            break;
           case 'shopping':
             this.accountTypeCategory = 'RETAIL STORE'
             this.accountTypeCategoryFriendlyName = 'RETAIL STORE'
             this.businessCategoryList = map_extras.SHOPPING_CATEGORIES
-            break
+            break;
         }
-        this.businessSettingsForm.get('spotbie_acc_type').setValue(this.accountTypeCategory)
+        this.businessSettingsForm.get('spotbie_acc_type').setValue(this.accountTypeCategory);
         break
     }
   }

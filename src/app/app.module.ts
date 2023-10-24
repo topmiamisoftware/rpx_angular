@@ -27,7 +27,6 @@ import * as Sentry from '@sentry/angular';
 import {Router} from '@angular/router';
 import {HowDoesItWorkComponent} from './how-does-it-work/how-does-it-work.component';
 import {DoesItWorkComponent} from './does-it-work/does-it-work.component';
-import {PricingComponent} from './pricing/pricing.component';
 import {BetaComponent} from './beta/beta.component';
 
 @NgModule({
@@ -39,7 +38,6 @@ import {BetaComponent} from './beta/beta.component';
     HowDoesItWorkComponent,
     DoesItWorkComponent,
     BetaComponent,
-    PricingComponent,
   ],
   imports: [
     FormsModule,

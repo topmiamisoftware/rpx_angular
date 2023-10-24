@@ -34,11 +34,7 @@ export class UserauthService {
 
     return new Promise((resolve, reject) => {
       this.http.post<any>(loginApi, checkLoginObject).pipe().subscribe((resp) => {
-        if(resp.message === '1') {
-          resolve(resp);
-        } else {
-          reject();
-        }
+        resolve(resp);
       });
     });
   }
@@ -82,7 +78,6 @@ export class UserauthService {
     return this.http.post<any>(getSettingsApi, null).pipe(
       tap((settings) => {
         this.userProfile = settings;
-        console.log('settings', settings);
       }),
       catchError( err => {
         throw err;

@@ -723,6 +723,12 @@ hr{
 .mat-slider.mat-accent .mat-slider-thumb-label {
     background-color: #332f3e;
 }
+
+.mat-dialog-container{
+    background-color: #23202a;
+    color: white;
+}
+
 .spotbie-ad-wrapper a,
 .spotbie-ad-wrapper img,
 .spotbie-ad-wrapper div{

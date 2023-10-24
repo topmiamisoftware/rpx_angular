@@ -59,12 +59,12 @@
 
             <ng-template #rewardValueNormalTemplate>
                 <label class="spotbie-input-info spotbie-text-gradient mb-2">
-                    Loyalty Point Cost
+                    Dollar Cost
                 </label>
             </ng-template>
 
             <input class="sb-input"
-                    (keyup)="calculateDollarValue()"
+                    (keyup)="calculatePointValue()"
                     formControlName="rewardValue"
                     type="text"
                     placeholder="250"
@@ -75,7 +75,7 @@
             <h6 class='mt-3 mb-3 sb-text-light-green-gradient text-uppercase'
                 style="font-size: .8rem !important;"
                 *ngIf="dollarValueCalculated && businessPointsDollarValue">
-                ${{ businessPointsDollarValue }} dollar value
+                {{ businessPointsDollarValue | number }} LOYALTY POINT VALUE
             </h6>
 
             <div *ngIf="rewardFormSubmitted && f.rewardName.errors else rewardNameNormalTemplate"
@@ -132,7 +132,7 @@
 
             <input type="hidden" formControlName="rewardImage" />
 
-            <label class="spotbie-input-info spotbie-text-gradient mb-2">
+<!--            <label class="spotbie-input-info spotbie-text-gradient mb-2">
               Reward Tier
             </label>
 
@@ -141,10 +141,10 @@
               <mat-select formControlName="tier">
                 <mat-option *ngFor="let tier of existingTiers;" [value]="tier.id">{{tier.name}}</mat-option>
               </mat-select>
-            </mat-form-field>
+            </mat-form-field>-->
         </form>
 
-        <form *ngIf="rewardType === 0">
+        <form *ngIf="rewardType === 0 || rewardType === 2">
             <div *ngIf="rewardFormSubmitted && f.rewardImage.errors else rewardMediaUploadInfoTemplate"
                     class="spotbie-input-info spotbie-text-gradient text-center spotbie-error mt-4 mb-2">
                 <div *ngIf="f.rewardImage.errors.required">

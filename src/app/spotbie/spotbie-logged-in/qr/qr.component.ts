@@ -54,6 +54,7 @@ export class QrComponent implements OnInit {
   reward: Reward = null
   rewarded: boolean = false
   pointsCharged: number
+  totalSpentModified: number = 0;
 
   constructor(private userAuthService: UserauthService,
               private loyaltyPointsService: LoyaltyPointsService,
@@ -81,34 +82,36 @@ export class QrComponent implements OnInit {
 
       alert('First set a balance & dollar-to-loyalty point ratio.')
       return false
-    } else
+    } else {
       return true
+    }
   }
 
   async startAwardProcess() {
-    if (this.loyaltyPointBalance.balance === 0) {
-      this.notEnoughLpEvt.emit()
-      return
-    }
+/*    if (this.loyaltyPointBalance.balance === 0) {
+      this.notEnoughLpEvt.emit();
+      return;
+    }*/
 
     this.businessLoyaltyPointsSubmitted = true
 
-    if (this.businessLoyaltyPointsForm.invalid) return
-
-    const settingsCheck = await this.checkForSetLoyaltyPointSettings()
-
-    if (!settingsCheck) {
-      return
-    } else {
-      this.createRedeemable()
+    if (this.businessLoyaltyPointsForm.invalid) {
+      return;
     }
+
+    this.createRedeemable();
   }
 
   createRedeemable(){
-    const percentValue: number = parseFloat(this.loyaltyPointBalance.loyalty_point_dollar_percent_value.toString())
+    const percentValue: number = parseFloat(this.loyaltyPointBalance.loyalty_point_dollar_percent_value.toString());
 
-    this.loyaltyPointRewardDollarValue = this.totalSpent * ( percentValue / 100);
-    this.loyaltyPointReward = (this.loyaltyPointRewardDollarValue * 100) / percentValue;
+    this.totalSpentModified = this.totalSpent;
+    if(this.totalSpent > 90) {
+      this.totalSpentModified = 90;
+    }
+
+    this.loyaltyPointRewardDollarValue = this.totalSpentModified * (percentValue / 100);
+    this.loyaltyPointReward = (this.loyaltyPointRewardDollarValue * 100);
 
     this.rewardPrompt = true
   }
@@ -116,13 +119,13 @@ export class QrComponent implements OnInit {
   yes(){
     const redeemableObj = {
       amount: this.loyaltyPointReward,
-      total_spent: this.totalSpent,
+      total_spent: this.totalSpentModified,
       dollar_value: this.loyaltyPointRewardDollarValue
     }
 
     this.loyaltyPointsService.createRedeemable(redeemableObj).subscribe(resp =>{
-        this.createRedeemableCb(resp)
-      })
+      this.createRedeemableCb(resp)
+    });
   }
 
   createRedeemableCb(resp: any){

@@ -135,12 +135,7 @@ h2 strong.sep-two {
     background-position: center !important;
     z-index: 97 !important;
 }
-.sb-regularBg{
-    background: url('../../../../assets/images/home_imgs/jpg/spotbie-login-background.jpg');
-}
-.sb-businessBg{
-    background: url('../../../../assets/images/home_imgs/jpg/spotbie-find-restaurant-customers-near-you.jpg');
-}
+
 .sb-signUpGeneralInstructions{
     margin: 0 auto;
     max-width: 440px;

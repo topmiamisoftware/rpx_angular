@@ -19,9 +19,9 @@
         </div>
     </div>
 
-    <div class="sb-dashboardWrapper" #lpAppAnchor *ngIf="!displayBusinessSetUp && businessFetched">
+<!--    <div class="sb-dashboardWrapper" #lpAppAnchor *ngIf="!displayBusinessSetUp && businessFetched">
         <app-loyalty-points [fullScreenWindow]="false" #loyaltyPointsApp></app-loyalty-points>
-    </div>
+    </div>-->
 
     <div class="sb-dashboardWrapper" #qrCodeAppAnchor *ngIf="!displayBusinessSetUp && businessFetched">
       <app-qr [fullScreenWindow]="false"
@@ -37,7 +37,7 @@
         <app-ad-manager-menu [fullScreenWindow]="false" #adManagerApp></app-ad-manager-menu>
     </div>
 
-    <div class="sb-dashboardWrapper" #customerAppAnchor *ngIf="!displayBusinessSetUp && businessFetched">
+<!--    <div class="sb-dashboardWrapper" #customerAppAnchor *ngIf="!displayBusinessSetUp && businessFetched">
       <app-customer-manager></app-customer-manager>
-    </div>
+    </div>-->
 </div>

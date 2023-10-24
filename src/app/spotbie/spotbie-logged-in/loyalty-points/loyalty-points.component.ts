@@ -170,36 +170,6 @@ export class LoyaltyPointsComponent implements OnInit {
     this.loading = false;
   }
 
-  submitBusinessLoyaltyPoints(){
-    this.loading = true;
-    this.businessLoyaltyPointsSubmitted = true;
-
-    if(this.businessLoyaltyPointsForm.invalid){
-      this.loading = false;
-      return;
-    }
-
-    const businessLoyaltyPointsObj = {
-      businessLoyaltyPoints: this.businessLoyaltyPoints,
-      businessCoinPercentage: this.businessCoinPercentage
-    }
-
-    this.loyaltyPointsService.saveLoyaltyPoint(businessLoyaltyPointsObj).subscribe(resp => {
-        this.submitBusinessLoyaltyPointsCB(resp);
-      });
-  }
-
-  submitBusinessLoyaltyPointsCB(resp: any){
-    if(resp.success){
-      this.loading = false;
-      this.businessLoyaltyPointsInfo.nativeElement.innerHTML = 'Your loyalty point monthly budget was updated <i class=\'fa fa-check sb-text-light-green-gradient\'></i>';
-
-      setTimeout(() => {
-        location.reload();
-      }, 570);
-    }
-  }
-
   calculateDollarValue(){
     const monthlyPoints: number = this.businessLoyaltyPoints;
     const pointPercentage: number = this.businessCoinPercentage;
@@ -323,14 +293,6 @@ export class LoyaltyPointsComponent implements OnInit {
     this.helpEnabled = !this.helpEnabled;
   }
 
-  /**
-   * Will reset the user's loyalty point balance to their current reset value.
-   */
-  async resetMyBalance(){
-    const confirm = window.confirm(`Are you sure you want to reset your balance to ${ this.loyaltyPointBalance }?`);
-    if(confirm) await this.loyaltyPointsService.resetMyBalance();
-  }
-
   manageLoyaltyTiers(){
     this.openTiers = true;
 
@@ -351,7 +313,7 @@ export class LoyaltyPointsComponent implements OnInit {
         this.loyaltyPointBalanceBusiness = loyaltyPointBalance;
       });
 
-      this.loyaltyPointsService.getExistingTiers().subscribe();
+     //this.loyaltyPointsService.getExistingTiers().subscribe();
     }
 
     this.loading = false;

@@ -1,7 +1,6 @@
 import { HttpClient, HttpEventType } from '@angular/common/http'
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core'
 import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms'
-import { LoyaltyPointBalance } from 'src/app/models/loyalty-point-balance'
 import { Reward } from 'src/app/models/reward'
 import { LoyaltyPointsService } from 'src/app/services/loyalty-points/loyalty-points.service'
 import { RewardCreatorService } from 'src/app/services/spotbie-logged-in/business-menu/reward-creator/reward-creator.service'
@@ -61,7 +60,7 @@ export class RewardCreatorComponent implements OnInit {
   get rewardValue() {return this.rewardCreatorForm.get('rewardValue').value }
   get rewardName() {return this.rewardCreatorForm.get('rewardName').value }
   get rewardDescription() {return this.rewardCreatorForm.get('rewardDescription').value }
-  get tier() {return this.rewardCreatorForm.get('tier').value }
+  // get tier() {return this.rewardCreatorForm.get('tier').value }
   get rewardImage() {return this.rewardCreatorForm.get('rewardImage').value }
 
   get f() { return this.rewardCreatorForm.controls }
@@ -79,7 +78,7 @@ export class RewardCreatorComponent implements OnInit {
       rewardName: ['', rewardNameValidators],
       rewardDescription: ['', rewardDescriptionValidators],
       rewardImage: ['', rewardImageValidators],
-      tier: ['', null],
+      // tier: ['', null],
     })
 
     if(this.reward){
@@ -88,10 +87,10 @@ export class RewardCreatorComponent implements OnInit {
       this.rewardCreatorForm.get('rewardName').setValue(this.reward.name);
       this.rewardCreatorForm.get('rewardDescription').setValue(this.reward.description);
       this.rewardCreatorForm.get('rewardImage').setValue(this.reward.images);
-      this.rewardCreatorForm.get('tier').setValue(this.reward.tier_id);
+      // this.rewardCreatorForm.get('tier').setValue(this.reward.tier_id);
       this.rewardUploadImage = this.reward.images;
       this.setRewardLink();
-      this.calculateDollarValue();
+      this.calculatePointValue();
     }
 
     this.rewardCreatorFormUp = true
@@ -107,14 +106,14 @@ export class RewardCreatorComponent implements OnInit {
     this.rewardClaimUrl = `${this.qrCodeClaimReward}?&r=${this.reward.uuid}&t=claim_reward`
   }
 
-  calculateDollarValue(){
+  calculatePointValue(){
     const pointPercentage = this.loyaltyPointBalance.loyalty_point_dollar_percent_value
     const itemPrice = this.rewardValue
 
     if(pointPercentage === 0 || pointPercentage == null) {
       this.businessPointsDollarValue = '0'
     } else {
-      this.businessPointsDollarValue = (itemPrice * (pointPercentage / 100)).toFixed(2)
+      this.businessPointsDollarValue = ((itemPrice / (pointPercentage/100))).toFixed(2)
     }
 
     this.dollarValueCalculated = true
@@ -134,9 +133,9 @@ export class RewardCreatorComponent implements OnInit {
     reward.images = this.rewardImage
     reward.point_cost = this.rewardValue
     reward.type = this.rewardType
-    reward.tier_id = this.tier
+    // reward.tier_id = this.tier
 
-    console.log('the reward', reward);
+    // console.log('the reward', reward);
 
     if(!this.reward){
       this.rewardCreatorService.saveReward(reward).subscribe(resp => {

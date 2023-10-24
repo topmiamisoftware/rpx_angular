@@ -18,7 +18,6 @@ export class RewardCreatorService {
   constructor(private http: HttpClient, private store: Store<{ loyaltyPoints }>) {}
 
   public saveReward(reward: Reward): Observable<any>{
-    console.log('saveReward', reward);
     const placeToEatRewardApi = `${REWARD_API}/create`
 
     return this.http.post<any>(placeToEatRewardApi, reward).pipe(
@@ -28,7 +27,6 @@ export class RewardCreatorService {
 
   public updateReward(reward: Reward): Observable<any>{
     const placeToEatRewardApi = `${REWARD_API}/update`
-    console.log('updateReward', reward);
     return this.http.post<any>(placeToEatRewardApi, reward).pipe(
       catchError(handleError('updateReward'))
     )

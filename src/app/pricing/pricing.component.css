@@ -86,8 +86,12 @@ h6{
   padding: 25px 30px;
   border: 1px solid #d5d5d526;
 }
-.sb-packetWrapper span {
+.sb-packetWrapper span,
+.sb-packetWrapper p{
   font-size: .6rem;
+  max-width: unset !important;
+  min-width: unset !important;
+  width: unset !important;
 }
 @media (max-width: 1600px){
   .sb-top-headerImg{

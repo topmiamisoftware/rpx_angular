@@ -71,14 +71,6 @@ export class LoyaltyPointsService {
         });
   }
 
-  saveLoyaltyPoint(businessLoyaltyPointsObj: any): Observable<any>{
-    const apiUrl = `${LOYATLY_POINTS_API}/store`
-
-    return this.http.post<any>(apiUrl, businessLoyaltyPointsObj).pipe(
-      catchError(handleError('saveLoyaltyPoint'))
-    )
-  }
-
   addLoyaltyPoints(businessLoyaltyPointsObj: any, callback): any{
     const apiUrl = `${REDEEMABLE_API}/redeem`
 
@@ -99,19 +91,6 @@ export class LoyaltyPointsService {
     return this.http.post<any>(apiUrl, createRedeemableObj).pipe(
       catchError(handleError('createRedeemable'))
     );
-  }
-
-  public resetMyBalance(): any{
-    const apiUrl = `${LOYATLY_POINTS_API}/reset`
-
-    this.http.post<any>(apiUrl, null).pipe(
-      catchError(handleError('resetMyBalance'))
-    ).subscribe(resp => {
-        if(resp.success){
-          const loyaltyPointBalance: number = resp.loyalty_points
-          this.store.dispatch( setValue({loyaltyPointBalance}) )
-        }
-      });
   }
 
   getExistingTiers(): Observable<any> {

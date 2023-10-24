@@ -60,7 +60,7 @@ h2{
     max-width: 100%;
     height: 650px;
     min-height: 650px;
-    background: url('../../assets/images/spotbie-miami.jpg');
+    background: url("../../assets/images/spotbie-miami.jpg");
     box-shadow: inset 0px -80px 65px #332f3e;
     pointer-events: none;
 }

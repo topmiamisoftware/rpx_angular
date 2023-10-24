@@ -1,4 +1,4 @@
-import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Inject, OnInit, Output, ViewChild } from '@angular/core';
 import { UserauthService } from 'src/app/services/userauth.service';
 import { LoyaltyPointsComponent } from '../loyalty-points/loyalty-points.component';
 import { QrComponent } from '../qr/qr.component';
@@ -59,8 +59,12 @@ export class BusinessDashboardComponent implements OnInit {
 
   checkIfBusinessIsSet(){
     this.userAuthServe.getSettings().subscribe(resp => {
-        if(resp.business === null || (resp.is_subscribed === false && resp.is_trial === false)) {
-          this.displayBusinessSetUp = true
+        console.log('RESp BUSIENSS', resp.business);
+        if(resp.business === null) {
+          this.displayBusinessSetUp = true;
+        } else if(resp.is_subscribed === false) {
+          this.displayBusinessSetUp = false;
+          // this.openSettings();
         } else {
           this.displayBusinessSetUp = false
         }

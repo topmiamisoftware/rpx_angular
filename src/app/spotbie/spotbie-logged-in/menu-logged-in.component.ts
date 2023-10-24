@@ -6,8 +6,7 @@ import { LoyaltyPointsService } from 'src/app/services/loyalty-points/loyalty-po
 import { AllowedAccountTypes } from 'src/app/helpers/enum/account-type.enum'
 import { SettingsComponent } from './settings/settings.component'
 import { logOutCallback } from 'src/app/helpers/logout-callback'
-import { map } from 'rxjs/operators';
-import {LoyaltyPointBalance} from "../../models/loyalty-point-balance";
+import {LoyaltyPointBalance} from '../../models/loyalty-point-balance';
 
 @Component({
   selector: 'app-menu-logged-in',
@@ -82,8 +81,6 @@ export class MenuLoggedInComponent implements OnInit {
     if(this.userType === AllowedAccountTypes.Personal){
       this.spotbieMap.openWelcome()
       this.spotbieMap.closeCategories()
-    } else {
-      this.toggleQRScanner();
     }
   }
 

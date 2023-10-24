@@ -7,6 +7,7 @@ export class User {
   uuid: string
   username: string
   email: string
+  ends_at: string;
   trial_ends_at: string
   created_at: string
   updated_at: string
@@ -14,4 +15,5 @@ export class User {
   business: Business
   lp_balance_list: LoyaltyPointBalance[]
   loyalty_point_balance: any;
+  next_payment: string;
 }

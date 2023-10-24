@@ -84,11 +84,13 @@ export class RewardMenuComponent implements OnInit {
   }
 
   addItem(){
+/*
     if(this.loyaltyPointsBalance.balance === 0){
       this.notEnoughLpEvt.emit()
       this.closeWindow()
       return
     }
+*/
 
     this.itemCreator = !this.itemCreator
   }

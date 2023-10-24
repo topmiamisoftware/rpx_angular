@@ -89,6 +89,7 @@ h5{
     min-width: 103%;
     max-width: 103%;
 }
+.fa-question-circle,
 .fa-refresh,
 .fa-coins{
     color: white;
@@ -202,6 +203,29 @@ h5{
   background: unset;
   -webkit-text-fill-color: unset;
   color: white;
+}
+
+@media (max-width: 1024px){
+    .sb-menuItemWrapper{
+        width: 96%;
+        min-width: 96%;
+        max-width: 96%;
+        text-align: center;
+    }
+    .sb-menuItemInner {
+        margin: 0 auto;
+    }
+}
+
+@media (max-width: 768px){
+    .sb-menuItemInner{
+        width: 100%;
+        min-width: 100%;
+        max-width: 100%;
+    }
+    span.sb-loyalty-points{
+        font-size: 7rem !important;
+    }
 }
 
 @media (max-width: 650px){
@@ -331,28 +355,3 @@ h5{
   }
 }
 
-@media (max-width: 768px){
-  .sb-menuItemInner{
-    width: 100%;
-    min-width: 100%;
-    max-width: 100%;
-  }
-}
-
-@media (max-width: 768px){
-  span.sb-loyalty-points{
-    font-size: 7rem !important;
-  }
-}
-
-@media (max-width: 1024px){
-  .sb-menuItemWrapper{
-    width: 96%;
-    min-width: 96%;
-    max-width: 96%;
-    text-align: center;
-  }
-  .sb-menuItemInner {
-    margin: 0 auto;
-  }
-}

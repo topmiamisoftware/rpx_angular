@@ -33,7 +33,7 @@ export class UserDashboardComponent implements OnInit {
   }
 
   openLoyaltyPoints(){
-    this.loyaltyPointsApp.initBusinessLoyaltyPoints()
+    this.loyaltyPointsApp.initBusinessLoyaltyPoints();
   }
 
   scrollToLpAppAnchor(){
