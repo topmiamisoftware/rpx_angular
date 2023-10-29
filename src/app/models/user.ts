@@ -2,6 +2,13 @@ import { SpotbieUser } from './spotbieuser'
 import { Business } from './business'
 import {LoyaltyPointBalance} from './loyalty-point-balance';
 
+export enum BusinessMembership {
+  Starter = 'spotbie.business_subscription_price1',
+  Intermediate = 'spotbie.business_subscription_price_1_2',
+  Ultimate = 'spotbie.business_subscription_price_2_2',
+  Legacy = 'spotbie.business_subscription_price',
+}
+
 export class User {
   id: number
   uuid: string
@@ -16,4 +23,5 @@ export class User {
   lp_balance_list: LoyaltyPointBalance[]
   loyalty_point_balance: any;
   next_payment: string;
+  userSubscriptionPlan: BusinessMembership;
 }

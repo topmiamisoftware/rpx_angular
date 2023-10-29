@@ -138,13 +138,13 @@
                                 readonly="readonly" />
                     </td>
                 </tr>
-<!--                <tr *ngIf="chosenAccountType != 4" (click)="changeAccType()">
+               <tr *ngIf="chosenAccountType != 4" (click)="changeAccType()">
                     <td>
                         <div class="spotbie-input-info text-center spotbie-text-gradient cursor-pointer mt-2 mb-2">
                             MANAGE MEMBERSHIP
                         </div>
                     </td>
-                </tr>-->
+                </tr>
                 <tr>
                     <td>
                         <div class='spotbie-button spotbie-save-settings-button text-uppercase mb-5' (click)="saveSettings()">
@@ -288,39 +288,42 @@
                         "Events" account type is coming soon.
                     </div>
 
-<!--                    &lt;!&ndash; User's membership is active &ndash;&gt;
+                    <!-- User's membership is active -->
                     <div class="mt-4 mb-4" style="font-size: .8rem;" *ngIf="userIsSubscribed else membershipExpired">
                         <span class='sb-text-light-green-gradient' *ngIf="!user.ends_at">MEMBERSHIP IS ACTIVE</span>
 
                         <div class="mt-4 mb-4 spotbie-price-box" style="font-size: .8rem;">
-                            <div class="p2 text-start text-white" *ngIf="userSubscriptionPlan === 'spotbie.business_subscription_price1'">
-                                <span style="font-size: 1.2rem;" class="sb-text-light-green-gradient">$199.99/monthly</span>
+                            <div class="p2 text-start text-white" *ngIf="userSubscriptionPlan === _businessMembership.Starter">
+                                <span style="font-size: 1.2rem;" class="sb-text-light-green-gradient">$159.99/monthly</span>
                                 <ul>
-                                    <li>2,000 LOYALTY POINTS</li>
-                                    <li>No Bonus Loyalty Points</li>
+                                    <li>Award Loyalty Points</li>
+                                    <li>Upload Rewards</li>
                                     <li>Default Max Reward Rate</li>
+                                    <li>Header Banner Ads</li>
                                 </ul>
                             </div>
 
-                            <div class="p2 text-start text-white" *ngIf="userSubscriptionPlan === 'spotbie.business_subscription_price_1_2'">
-                                <span style="font-size: 1.2rem;" class="sb-text-light-green-gradient">$299.99/monthly</span>
+                            <div class="p2 text-start text-white" *ngIf="userSubscriptionPlan === _businessMembership.Intermediate">
+                                <span style="font-size: 1.2rem;" class="sb-text-light-green-gradient">$259.99/monthly</span>
                                 <ul>
-                                    <li>3,500 LOYALTY POINTS</li>
-                                    <li>500 Bonus Loyalty Points</li>
-                                    <li>+0.01% Max Reward Rate</li>
+                                  <li>+Starter Package</li>
+                                  <li>+Header, Footer, Nearby Featured Ads</li>
+                                  <li>+0.01% Max Reward Rate</li>
+                                  <li>+Text Messaging</li>
                                 </ul>
                             </div>
 
-                            <div class="p2 text-start text-white" *ngIf="userSubscriptionPlan === 'spotbie.business_subscription_price_2_2'">
+                            <div class="p2 text-start text-white" *ngIf="userSubscriptionPlan === _businessMembership.Ultimate">
                                 <span style="font-size: 1.2rem;" class="sb-text-light-green-gradient">$399.99/monthly</span>
                                 <ul>
-                                    <li>4,750 LOYALTY POINTS</li>
-                                    <li>750 Bonus Loyalty Points</li>
-                                    <li>+0.02% Max Reward Rate</li>
+                                  <li>+Starter Package</li>
+                                  <li>+Header, Footer, Nearby Featured Ads</li>
+                                  <li>+0.02% Max Reward Rate</li>
+                                  <li>+Customer Insights, Text Messaging, E-Mail, Push Notifications</li>
                                 </ul>
                             </div>
 
-                            <div class="p2 text-start text-white" *ngIf="userSubscriptionPlan === 'spotbie.business_subscription_price'">
+                            <div class="p2 text-start text-white" *ngIf="userSubscriptionPlan === _businessMembership.Legacy">
                                 <span style="font-size: 1.2rem;" class="sb-text-light-green-gradient">$99.99/monthly</span>
                                 <ul>
                                     <li>LEGACY MEMBERSHIP (10,000 points)</li>
@@ -343,7 +346,7 @@
                         </span>
                     </div>
 
-                    &lt;!&ndash; Membership is Expired Case &ndash;&gt;
+                    <!-- Membership is Expired Case -->
                     <ng-template #membershipExpired>
                         <div *ngIf="!userIsSubscribed && chosenAccountType != 4 && user.business">
                             <div class="pb-4">
@@ -358,37 +361,40 @@
 
                             <div class="mt-4 spotbie-price-box" style="font-size: .8rem;">
                                 <div class="p2 text-start text-white" (click)="activateFullMembership(1)">
-                                    <span style="font-size: 1.2rem;" class="sb-text-light-green-gradient">$199.99/monthly</span>
+                                    <span style="font-size: 1.2rem;" class="sb-text-light-green-gradient">$159.99/monthly</span>
                                     <ul>
-                                        <li>2,000 LOYALTY POINTS</li>
-                                        <li>No Bonus Loyalty Points</li>
+                                        <li>Award Loyalty Points</li>
+                                        <li>Upload Rewards</li>
                                         <li>Default Max Reward Rate</li>
+                                        <li>+Header Banner Ads</li>
                                     </ul>
                                     <button class="spotbie-button">BUY</button>
                                 </div>
 
                                 <div class="p2 text-start text-white" (click)="activateFullMembership(2)">
-                                    <span style="font-size: 1.2rem;" class="sb-text-light-green-gradient">$299.99/monthly</span>
+                                    <span style="font-size: 1.2rem;" class="sb-text-light-green-gradient">$259.99/monthly</span>
                                     <ul>
-                                        <li>3,500 LOYALTY POINTS</li>
-                                        <li>500 Bonus Loyalty Points</li>
-                                        <li>+0.01% Max Reward Rate</li>
+                                      <li>+Starter Package</li>
+                                      <li>+Header, Footer, Nearby<br/>Featured Ads</li>
+                                      <li>+0.01% Max Reward Rate</li>
+                                      <li>+Text Messaging</li>
                                     </ul>
                                     <button class="spotbie-button">BUY</button>
                                 </div>
 
-                                <div class="p2 text-start text-white" (click)="activateFullMembership(3)">
-                                    <span style="font-size: 1.2rem;" class="sb-text-light-green-gradient">$399.99/monthly</span>
+                                <div class="p2 text-start text-white">
+                                    <span style="font-size: 1.2rem;" class="sb-text-light-green-gradient">Coming Soon</span>
                                     <ul>
-                                        <li>4,750 LOYALTY POINTS</li>
-                                        <li>750 Bonus Loyalty Points</li>
-                                        <li>+0.02% Max Reward Rate</li>
+                                      <li>+Starter Package</li>
+                                      <li>+Header, Footer, Nearby<br/>Featured Ads</li>
+                                      <li>+0.02% Max Reward Rate</li>
+                                      <li>+Customer Insights, Text Messaging,<br/>E-Mail, Push Notifications</li>
                                     </ul>
-                                    <button class="spotbie-button">BUY</button>
+                     <!--               <button class="spotbie-button">BUY</button>-->
                                 </div>
                             </div>
                         </div>
-                    </ng-template>-->
+                    </ng-template>
             </div>
         </div>
     </div>

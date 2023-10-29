@@ -43,7 +43,7 @@
                 <mat-label>Promotion Format</mat-label>
 
                 <mat-select formControlName="adType" [(value)]="selected" (selectionChange)="adTypeChange()">
-                  <mat-option *ngFor="let adType of adTypeList; let i = index;" [value]="i">{{ adType.name }}</mat-option>
+                  <mat-option *ngFor="let adType of (adTypeList$ | async); let i = index;" [value]="i">{{ adType.name }}</mat-option>
                 </mat-select>
             </mat-form-field>
 
@@ -65,7 +65,6 @@
             </ng-template>
 
             <input class="sb-input"
-                    (click)="$event.target.select()"
                     formControlName="adName"
                     type="text"
                     placeholder="My Ad"
@@ -86,8 +85,9 @@
 
             <ng-template #adMediaUploadInfoTemplate>
                 <div class="spotbie-input-info text-uppercase spotbie-text-gradient text-center mt-4 mb-2 cursor-pointer"
+                     *ngIf="(adTypeList$ | async) as adTypeList"
                     (click)="startAdMediaUploader('desktop')" #adMediaUploadInfo>
-                    {{ adMediaMessage }} ({{ adTypeList[selected].dimensions }})
+                    {{ adMediaMessage }} ({{ adTypeList[selected].dimensions ?? '' }})
                 </div>
             </ng-template>
 
@@ -120,6 +120,7 @@
 
                 <ng-template #adMediaMobileUploadInfoTemplate>
                     <div class="spotbie-input-info text-uppercase spotbie-text-gradient text-center mt-5 mb-2 cursor-pointer"
+                         *ngIf="(adTypeList$ | async) as adTypeList"
                         (click)="startAdMediaUploader('mobile')" #adMediaUploadInfo>
                         {{ adMediaMessage }} - MOBILE - ({{ adTypeList[selected].dimensionsMobile }})
                     </div>

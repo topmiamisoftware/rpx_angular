@@ -20,7 +20,7 @@ export class AdCreatorService {
     const placeToEatAdApi = `${ADS_API}/create`
 
     const adObjToSave = {
-      name: adObj.name,    
+      name: adObj.name,
       description: adObj.description,
       type: adObj.type,
       images: adObj.images,
@@ -29,17 +29,18 @@ export class AdCreatorService {
 
     return this.http.post<any>(placeToEatAdApi, adObjToSave).pipe(
       catchError(handleError("completeReset"))
-    ) 
+    )
 
   }
 
-  public activateMembership(){
+  public
+  activateMembership(){
 
     const placeToEatAdApi = `${ADS_API}/make-payment`
 
     return this.http.post<any>(placeToEatAdApi, null).pipe(
       catchError(handleError("completeReset"))
-    ) 
+    )
 
   }
 
@@ -48,7 +49,7 @@ export class AdCreatorService {
     const placeToEatAdApi = `${ADS_API}/update`
 
     const adObjToSave = {
-      name: adObj.name,    
+      name: adObj.name,
       description: adObj.description,
       type: adObj.type,
       id: adObj.id,
@@ -58,7 +59,7 @@ export class AdCreatorService {
 
     return this.http.post<any>(placeToEatAdApi, adObjToSave).pipe(
       catchError(handleError("completeReset"))
-    ) 
+    )
 
   }
 
@@ -72,7 +73,7 @@ export class AdCreatorService {
 
     return this.http.post<any>(placeToEatAdApi, adObjToSave).pipe(
       catchError(handleError("deleteMe"))
-    ) 
+    )
   }
 
 }

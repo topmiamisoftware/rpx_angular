@@ -1,5 +1,5 @@
-// const apiEndpoint = 'https://55b8-2601-586-cd80-6e0-8162-5627-eede-5100.ngrok-free.app/'
-const apiEndpoint = 'https://api.spotbie.com/';
+const apiEndpoint = 'https://1446-2601-586-cd80-6e0-8f4e-c712-4713-e036.ngrok-free.app/'
+// const apiEndpoint = 'https://api.spotbie.com/';
 
 const url = window.location.toString();
 const { hostname,protocol }  = new URL(url);

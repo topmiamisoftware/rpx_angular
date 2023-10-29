@@ -1,14 +1,12 @@
 <app-loading-screen *ngIf="loading"></app-loading-screen>
 
 <div class="spotbie-overlay-window d-flex container" [ngClass]="getCurrentWindowBg()">
-
   <div class="sb-closeButton" (click)="closeWindow()">
     <i class="fa fa-times"></i>
   </div>
 
   <div class='sb-scroll'>
     <div class='spotbie-loginWrapper'>
-
       <p class='sb-signUpGeneralInstructions text-uppercase text-center mt-4' id="sign_up_general_instructions" #spotbieSignUpIssues>
         <span class='spotbie-text-gradient' *ngIf="!business">Login to earn rewards</span>
         <span class='spotbie-text-gradient' *ngIf="business">Login to find customers</span>

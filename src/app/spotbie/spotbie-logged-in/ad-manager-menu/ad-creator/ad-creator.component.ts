@@ -1,19 +1,30 @@
-import { HttpClient, HttpEventType } from '@angular/common/http'
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core'
-import { UntypedFormBuilder, UntypedFormGroup, Validators } from '@angular/forms'
-import { Ad } from 'src/app/models/ad'
-import { Business } from 'src/app/models/business'
-import { LoyaltyPointsService } from 'src/app/services/loyalty-points/loyalty-points.service'
-import { AdCreatorService } from 'src/app/services/spotbie-logged-in/ad-manager-menu/ad-creator/ad-creator.service'
-import { BottomAdBannerComponent } from 'src/app/spotbie/ads/bottom-ad-banner/bottom-ad-banner.component'
-import { HeaderAdBannerComponent } from 'src/app/spotbie/ads/header-ad-banner/header-ad-banner.component'
-import { NearbyFeaturedAdComponent } from 'src/app/spotbie/ads/nearby-featured-ad/nearby-featured-ad.component'
-import { environment } from 'src/environments/environment'
+import {HttpClient, HttpEventType} from '@angular/common/http'
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core'
+import {UntypedFormBuilder, UntypedFormGroup, Validators} from '@angular/forms'
+import {Ad} from 'src/app/models/ad'
+import {Business} from 'src/app/models/business'
+import {LoyaltyPointsService} from 'src/app/services/loyalty-points/loyalty-points.service'
+import {AdCreatorService} from 'src/app/services/spotbie-logged-in/ad-manager-menu/ad-creator/ad-creator.service'
+import {BottomAdBannerComponent} from 'src/app/spotbie/ads/bottom-ad-banner/bottom-ad-banner.component'
+import {HeaderAdBannerComponent} from 'src/app/spotbie/ads/header-ad-banner/header-ad-banner.component'
+import {NearbyFeaturedAdComponent} from 'src/app/spotbie/ads/nearby-featured-ad/nearby-featured-ad.component'
+import {environment} from 'src/environments/environment'
 import * as spotbieGlobals from '../../../../globals'
+import {UserauthService} from "../../../../services/userauth.service";
+import {BusinessMembership} from "../../../../models/user";
+import {BehaviorSubject} from "rxjs";
 
 const AD_MEDIA_UPLOAD_API_URL = `${spotbieGlobals.API}in-house/upload-media`
 const AD_MEDIA_MAX_UPLOAD_SIZE = 10e+6
 const AD_PAYMENT_URL = `${environment.baseUrl}make-payment/in-house/`
+
+interface InHouse {
+  name: string;
+  dimensions: string;
+  dimensionsMobile?: string;
+  enabled: boolean;
+  type: 'header' | 'featured' | 'footer';
+}
 
 @Component({
   selector: 'app-ad-creator',
@@ -44,24 +55,42 @@ export class AdCreatorComponent implements OnInit {
    adUploadImageMobile: string = null
    adMediaMessage: string = 'Upload Image'
    adMediaUploadProgress: number = 0
-   adTypeList: Array<any> = [
-    { name: 'Header Banner ($19.99/monthly)', dimensions: '1200x370', dimensionsMobile: '600x600'},
-    { name: 'Featured Nearby Banner ($13.99/monthly)', dimensions: '600x600'},
-    { name: 'Footer Banner ($16.99)', dimensions: '1200x370', dimensionsMobile: '600x600'}
-  ]
+   adTypeList$: BehaviorSubject<Array<InHouse>> = new BehaviorSubject([
+    { name: 'Header Banner', dimensions: '1200x370', dimensionsMobile: '600x600', enabled: false, type: 'header'},
+    { name: 'Featured Nearby Banner', dimensions: '600x600', enabled: false, type: 'featured'},
+    { name: 'Footer Banner', dimensions: '1200x370', dimensionsMobile: '600x600', enabled: false, type: 'footer'}
+   ]);
    adCreated: boolean
    adDeleted: boolean
    loyaltyPointBalance: any
    selected: number = 0
-   business: Business = null
+   business: Business = null;
 
   constructor(private formBuilder: UntypedFormBuilder,
               private adCreatorService: AdCreatorService,
               private http: HttpClient,
+              private userAuthService: UserauthService,
               private loyaltyPointsService: LoyaltyPointsService) {
           this.loyaltyPointsService.userLoyaltyPoints$.subscribe(loyaltyPointBalance => {
             this.loyaltyPointBalance = loyaltyPointBalance
-          })
+          });
+
+          // Enable the in-house ad depending on the BusinessMembership type.
+          let enabledInHouse: Array<InHouse> = [];
+          this.adTypeList$.getValue().forEach((inHouse) => {
+            if (inHouse.type === 'header' && userAuthService.userProfile.userSubscriptionPlan === BusinessMembership.Starter) {
+              inHouse.enabled = true;
+              enabledInHouse.push(inHouse);
+            }
+
+            if ((inHouse.type === 'footer' || inHouse.type === 'featured' || inHouse.type === 'header') &&
+              (userAuthService.userProfile.userSubscriptionPlan === BusinessMembership.Intermediate ||
+               userAuthService.userProfile.userSubscriptionPlan === BusinessMembership.Ultimate)) {
+              inHouse.enabled = true;
+              enabledInHouse.push(inHouse);
+            }
+          });
+          this.adTypeList$.next(enabledInHouse);
   }
 
   get adType() {return this.adCreatorForm.get('adType').value }
@@ -85,7 +114,7 @@ export class AdCreatorComponent implements OnInit {
       adImageMobile: ['']
     })
 
-    if(this.ad !== null && this.ad !== undefined){
+    if(this.ad){
       this.adCreatorForm.get('adType').setValue(this.ad.type)
       this.adCreatorForm.get('adName').setValue(this.ad.name)
       this.adCreatorForm.get('adDescription').setValue(this.ad.description)
@@ -277,7 +306,7 @@ export class AdCreatorComponent implements OnInit {
     }
   }
 
-   activateAdMembership(){
+  activateAdMembership(){
     window.open(`${AD_PAYMENT_URL}${this.ad.uuid}`, '_blank')
   }
 

@@ -2,7 +2,7 @@ import {COMMA, ENTER} from '@angular/cdk/keycodes'
 import {Component, OnInit, ViewChild, NgZone, ElementRef, Output, EventEmitter, Injector} from '@angular/core'
 import {UntypedFormBuilder, Validators, UntypedFormGroup, UntypedFormControl} from '@angular/forms'
 import * as spotbieGlobals from '../../../globals'
-import {User} from '../../../models/user'
+import {BusinessMembership, User} from '../../../models/user'
 import {AgmMap, MapsAPILoader} from '@agm/core'
 import {ValidatePassword} from '../../../helpers/password.validator'
 import {MustMatch} from '../../../helpers/must-match.validator'
@@ -76,7 +76,8 @@ export class SettingsComponent implements OnInit {
   accountTypeCategoryFriendlyName: string
   user: User
   userIsSubscribed: boolean = false
-  userSubscriptionPlan: string = ''
+  userSubscriptionPlan: BusinessMembership;
+  _businessMembership = BusinessMembership;
   submitted: boolean = false
   placeFormSubmitted: boolean = false
   geoCoder: any
@@ -184,7 +185,7 @@ export class SettingsComponent implements OnInit {
     }
   }
 
-  private populateSettings(settingsResponse: any) {
+  private populateSettings(settingsResponse: any & {userSubscriptionPlan: BusinessMembership}) {
     if (settingsResponse.success) {
       this.user = settingsResponse.user
       this.user.spotbie_user = settingsResponse.spotbie_user

@@ -9,12 +9,14 @@ import { SignUpComponent } from 'src/app/spotbie/spotbie-logged-out/sign-up/sign
 import { HelperModule } from 'src/app/helpers/helper.module'
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome'
 import { ForgotPasswordModule } from './forgot-password/forgot-password.module'
+import { PricingComponent } from "../../pricing/pricing.component";
 
 @NgModule({
   declarations: [
     MenuLoggedOutComponent,
     LogInComponent,
     SignUpComponent,
+    PricingComponent
   ],
   imports: [
     CommonModule,

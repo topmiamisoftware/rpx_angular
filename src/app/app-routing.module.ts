@@ -9,6 +9,7 @@ import { RewardMenuComponent } from './spotbie/spotbie-logged-in/reward-menu/rew
 import { EulaComponent } from './eula/eula.component'
 import {HowDoesItWorkComponent} from './how-does-it-work/how-does-it-work.component';
 import {DoesItWorkComponent} from './does-it-work/does-it-work.component';
+import {PricingComponent} from "./pricing/pricing.component";
 
 export const routes: Routes = [
   { path: 'home', loadChildren: () => import('./home/home.module').then(m => m.HomeModule) },
@@ -21,6 +22,7 @@ export const routes: Routes = [
   { path: 'the-idea', component: DoesItWorkComponent },
   { path: 'earn-loyalty-points', component: BugsComponent },
   { path: 'award-loyalty-points', component: BugsComponent },
+  { path: 'pricing', component: PricingComponent },
   { path: 'password', loadChildren: () => import('./spotbie/spotbie-logged-out/forgot-password/forgot-password.module').then(m => m.ForgotPasswordModule ) },
   { path: 'user-home', loadChildren: () => import('./user-home/user-home.module').then(m => m.UserHomeModule), canActivate: [LoginGuardServiceService] },
   { path: 'business-menu/:qrCode/:rewardUuid', component: RewardMenuComponent},

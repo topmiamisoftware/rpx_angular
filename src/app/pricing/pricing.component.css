@@ -92,6 +92,7 @@ h6{
   max-width: unset !important;
   min-width: unset !important;
   width: unset !important;
+  text-align: unset;
 }
 @media (max-width: 1600px){
   .sb-top-headerImg{

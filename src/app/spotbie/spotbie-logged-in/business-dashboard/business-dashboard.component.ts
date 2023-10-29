@@ -59,12 +59,11 @@ export class BusinessDashboardComponent implements OnInit {
 
   checkIfBusinessIsSet(){
     this.userAuthServe.getSettings().subscribe(resp => {
-        console.log('RESp BUSIENSS', resp.business);
         if(resp.business === null) {
           this.displayBusinessSetUp = true;
         } else if(resp.is_subscribed === false) {
           this.displayBusinessSetUp = false;
-          // this.openSettings();
+          this.openSettings();
         } else {
           this.displayBusinessSetUp = false
         }
