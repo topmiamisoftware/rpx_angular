@@ -1,41 +1,45 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { MapComponent } from '../spotbie/map/map.component';
-import { MenuLoggedOutComponent } from '../spotbie/spotbie-logged-out/menu-logged-out.component';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {MapComponent} from '../spotbie/map/map.component';
+import {MenuLoggedOutComponent} from '../spotbie/spotbie-logged-out/menu-logged-out.component';
 
 @Component({
   selector: 'app-business',
   templateUrl: './business.component.html',
-  styleUrls: ['./business.component.css']
+  styleUrls: ['./business.component.css'],
 })
 export class BusinessComponent implements OnInit {
+  scheduleBusinessDemo = true;
 
-  scheduleBusinessDemo: boolean = true
+  @ViewChild('app_map') app_map: MapComponent;
+  @ViewChild('appMenuLoggedOut') appMenuLoggedOut: MenuLoggedOutComponent;
 
-  @ViewChild('app_map') app_map: MapComponent
-  @ViewChild('appMenuLoggedOut') appMenuLoggedOut: MenuLoggedOutComponent
+  constructor(
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
 
-  constructor(private router: Router, private route: ActivatedRoute) { }
-
-  public spawnCategories(category: string): void{
-    this.app_map.spawnCategories( { category } )
+  spawnCategories(category: number): void {
+    this.app_map.spawnCategories(category);
   }
 
-  public openHome(){
-    this.app_map.openWelcome()
+  openHome() {
+    this.app_map.openWelcome();
   }
 
-  public myFavorites(){
-    this.app_map.myFavorites()
+  myFavorites() {
+    this.app_map.myFavorites();
   }
 
-  public signUp(){
-    this.appMenuLoggedOut.signUp()
+  signUp() {
+    this.appMenuLoggedOut.signUp();
   }
 
   async ngOnInit() {
-    const isLoggedIn = localStorage.getItem("spotbie_loggedIn")
+    const isLoggedIn = localStorage.getItem('spotbie_loggedIn');
 
-    if (isLoggedIn === '1') this.router.navigate(['/user-home'])
+    if (isLoggedIn === '1') {
+      this.router.navigate(['/user-home']);
+    }
   }
 }

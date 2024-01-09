@@ -1,6 +1,5 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { RedeemableComponent } from './redeemable.component';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
+import {RedeemableComponent} from './redeemable.component';
 
 describe('RedeemableComponent', () => {
   let component: RedeemableComponent;
@@ -8,9 +7,8 @@ describe('RedeemableComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ RedeemableComponent ]
-    })
-    .compileComponents();
+      declarations: [RedeemableComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

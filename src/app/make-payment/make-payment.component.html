@@ -1,9 +1,7 @@
 <app-loading-screen *ngIf="loading"></app-loading-screen>
 
 <div class="spotbie-overlay-window" *ngIf="!adPaidFor && !membershipPaidFor">
-
     <div class='sb-makePaymentWrapper' [ngStyle]="getPaymentFormStyles()">
-
         <div class="sb-logo mt-3 mb-3"></div>
 
         <h3 class="spotbie-text-gradient text-uppercase mb-4">{{ paymentTitle }}</h3>
@@ -17,7 +15,7 @@
         </div>
 
         <stripe-card #stripeCard
-            (catch) = "onStripeError($event)"
+            (catch)="onStripeError($event)"
             [(complete)] = "cardDetailsFilledOut"
             [(invalid)] = "invalidError"
             (cardMounted) = "onCardCaptureReady()">
@@ -65,17 +63,13 @@
         <button class="spotbie-button text-uppercase" type="button" (click)="stripeSendPayment()">
             SUBSCRIBE
         </button>
-
     </div>
-
 </div>
 
 <div class='spotbie-overlay-window d-flex align-items-center justify-content-center' *ngIf="adPaidFor">
-
     <div class="sb-logo mt-3 mb-3"></div>
 
     <div class='sb-makePaymentWrapper' style="box-shadow: unset;">
-
         <h4 class="spotbie-text-gradient spotbie-r-success-title text-uppercase">PAYMENT SUCCESSFUL</h4>
 
         <div class="sb-verificationCheck mt-4 mb-4">
@@ -83,19 +77,15 @@
         </div>
 
         <h4 class="spotbie-text-gradient spotbie-r-success-title text-uppercase">PROMOTION IS LIVE</h4>
-
     </div>
 
     <div class="spotbie-text-gradient text-uppercase mt-4 cursor-pointer" [routerLink]="['/business']">RETURN TO HOME PAGE</div>
-
 </div>
 
 <div class='spotbie-overlay-window d-flex align-items-center justify-content-center' *ngIf="adWasPaidFor">
-
     <div class="sb-logo mt-3 mb-3"></div>
 
     <div class='sb-makePaymentWrapper' style="box-shadow: unset;">
-
         <h4 class="spotbie-text-gradient spotbie-r-success-title text-uppercase">PROMOTION ALREADY PAID</h4>
 
         <div class="sb-verificationCheck mt-4 mb-4">
@@ -103,11 +93,9 @@
         </div>
 
         <h4 class="spotbie-text-gradient spotbie-r-success-title text-uppercase">PROMOTION IS LIVE</h4>
-
     </div>
 
     <div class="spotbie-text-gradient text-uppercase mt-4 cursor-pointer" [routerLink]="['/business']">RETURN TO HOME PAGE</div>
-
 </div>
 
 

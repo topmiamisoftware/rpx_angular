@@ -1,25 +1,25 @@
-import { NgModule } from '@angular/core'
-import { CommonModule } from '@angular/common'
-import { AgmOverlays } from 'agm-overlays'
-import { AgmCoreModule, GoogleMapsAPIWrapper, MarkerManager } from '@agm/core'
-import { MatSliderModule } from '@angular/material/slider'
-import { MatInputModule } from '@angular/material/input'
-import { environment } from 'src/environments/environment'
-import { SpotbiePipesModule } from 'src/app/spotbie-pipes/spotbie-pipes.module'
-import { MapComponent } from './map.component'
-import { MapObjectIconPipe } from 'src/app/pipes/map-object-icon.pipe'
-import { HelperModule } from 'src/app/helpers/helper.module'
-import { FormsModule, ReactiveFormsModule } from '@angular/forms'
-import { UserInfoObjectComponent } from './user-info-object/user-info-object.component'
-import { RouterModule } from '@angular/router'
-import { BusinessFeaturesComponent } from '../../features/business-features/business-features.component'
-import { UserFeaturesComponent } from '../../features/user-features/user-features.component'
-import { BusinessDashboardModule } from '../spotbie-logged-in/business-dashboard/business-dashboard.module'
-import { UserDashboardModule } from '../spotbie-logged-in/user-dashboard/user-dashboard.module'
-import { ShareIconsModule } from 'ngx-sharebuttons/icons'
-import { InfoObjectModule } from './info-object/info-object.module'
-import { AdsModule } from '../ads/ads.module'
-import { DownloadMobileModule } from 'src/app/download-mobile/download-mobile.module'
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {AgmOverlays} from 'agm-overlays';
+import {AgmCoreModule, GoogleMapsAPIWrapper, MarkerManager} from '@agm/core';
+import {MatSliderModule} from '@angular/material/slider';
+import {MatInputModule} from '@angular/material/input';
+import {MapComponent} from './map.component';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {UserInfoObjectComponent} from './user-info-object/user-info-object.component';
+import {RouterModule} from '@angular/router';
+import {BusinessFeaturesComponent} from '../../features/business-features/business-features.component';
+import {UserFeaturesComponent} from '../../features/user-features/user-features.component';
+import {BusinessDashboardModule} from '../spotbie-logged-in/business-dashboard/business-dashboard.module';
+import {UserDashboardModule} from '../spotbie-logged-in/user-dashboard/user-dashboard.module';
+import {ShareIconsModule} from 'ngx-sharebuttons/icons';
+import {InfoObjectModule} from './info-object/info-object.module';
+import {AdsModule} from '../ads/ads.module';
+import {SpotbiePipesModule} from '../../spotbie-pipes/spotbie-pipes.module';
+import {DownloadMobileModule} from '../../download-mobile/download-mobile.module';
+import {environment} from '../../../environments/environment';
+import {HelperModule} from '../../helpers/helper.module';
+import {MapObjectIconPipe} from '../../pipes/map-object-icon.pipe';
 // import { MyFavoritesModule } from '../my-favorites/my-favorites.module'
 
 @NgModule({
@@ -27,7 +27,7 @@ import { DownloadMobileModule } from 'src/app/download-mobile/download-mobile.mo
     MapComponent,
     UserInfoObjectComponent,
     BusinessFeaturesComponent,
-    UserFeaturesComponent
+    UserFeaturesComponent,
   ],
   imports: [
     AgmOverlays,
@@ -45,20 +45,14 @@ import { DownloadMobileModule } from 'src/app/download-mobile/download-mobile.mo
     AgmCoreModule.forRoot({
       apiKey: environment.google_maps_apiKey,
       language: 'en',
-      libraries: ['geometry', 'places']
+      libraries: ['geometry', 'places'],
     }),
     HelperModule,
     BusinessDashboardModule,
     UserDashboardModule,
-    AdsModule
+    AdsModule,
   ],
-  providers: [
-    MapObjectIconPipe,
-    MarkerManager,
-    GoogleMapsAPIWrapper
-  ],
-  exports : [
-    MapComponent,
-  ]
+  providers: [MapObjectIconPipe, MarkerManager, GoogleMapsAPIWrapper],
+  exports: [MapComponent],
 })
-export class MapModule { }
+export class MapModule {}

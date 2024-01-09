@@ -43,9 +43,9 @@
                     cssClass="spotbie-full-qrCode mt-4 mb-4"
                     colorDark="#000"
                     colorLight="#64e56f"
-                    errorCorrectionLevel="H"></ngx-qrcode>
+                    [errorCorrectionLevel]="correctionLevel"></ngx-qrcode>
 
-        <p class="spotbie-text-gradient text-center text-uppercase mt-3">scan once per table</p>
+        <p class="spotbie-text-gradient text-center text-uppercase mt-3">scan once per user</p>
 
         <p class="spotbie-text-gradient text-center mt-5 text-uppercase">
             Total Points<br/><span class='sb-text-light-green-gradient'>{{ loyaltyPointReward | number:'1.0':'en-US' }}</span>
@@ -96,7 +96,7 @@
         <div *ngIf="!awarded && !rewarded">
             <div class="spotbie-full-qrCode scanner mt-4 mb-4">
                 <zxing-scanner (scanSuccess)="scanSuccessHandler($event)"
-                               [formats]="['QR_CODE']"></zxing-scanner>
+                               [formats]="barcodeFormatList"></zxing-scanner>
             </div>
 
             <p class="sb-helpInfo spotbie-text-gradient text-center text-uppercase">

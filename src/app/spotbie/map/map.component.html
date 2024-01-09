@@ -19,28 +19,25 @@
         <div class='spotbie-text-gradient mt-2'>LOCATION DISABLED</div>
 
         <p class="sb-locationList spotbie-text-gradient text-center mt-3">
-
           <span>Open your browser's settings.</span>
           <span>Navigate to Privacy & Security.</span>
           <span>Go to Site Settings.</span>
           <span>Enable Location Use for SpotBie.</span>
-
         </p>
 
-        <div class="spotbie-button" (click)="spawnCategories('food')">
+        <div class="spotbie-button" (click)="spawnCategories(1)">
           <span class="spotbie-text-gradient text-uppercase mt-5 cursor-pointer">TRY LOCATION</span>
         </div>
     </div>
 
     <agm-map  [ngClass]="getMapClass()"
-              [streetViewControl]="false"
               *ngIf="map"
               #spotbie_map
               [latitude]="lat"
               [longitude]="lng"
               [styles]="map_styles"
               [zoom]="zoom"
-              [gestureHandling]="cooperative"
+              [gestureHandling]="'cooperative'"
               [fitBounds]="fitBounds">
 
         <agm-overlay [latitude]="lat" [longitude]="lng" *ngIf="locationFound">
@@ -108,20 +105,19 @@
               [longitude]="communityMember.loc_y"
               [agmFitBounds]="checkCommunityMemberFitBounds()"
               [visible]="false"></agm-marker>
-
         </div>
     </agm-map>
 
     <div class='spotbie-categoryPull' *ngIf="!isDesktop && map">
-      <div class='sb-optionGet' (click)="spawnCategories('food')">
+      <div class='sb-optionGet' (click)="spawnCategories(1)">
         <img src="assets/images/home_imgs/find-places-to-eat.svg" />
       </div>
 
-      <div class='sb-optionGet' (click)="spawnCategories('events')">
+      <div class='sb-optionGet' (click)="spawnCategories(3)">
           <img src="assets/images/home_imgs/find-events.svg" />
       </div>
 
-      <div class='sb-optionGet' (click)="spawnCategories('shopping')">
+      <div class='sb-optionGet' (click)="spawnCategories(2)">
           <img src="assets/images/home_imgs/find-places-for-shopping.svg" />
       </div>
     </div>
@@ -170,7 +166,7 @@
 
             <div class='spotbie-search-results-title'>
 
-              <table class='spotbie-controls-search-results' *ngIf="searchCategorySorter == 'food'">
+              <table class='spotbie-controls-search-results' *ngIf="searchCategorySorter === 1">
                 <tr>
                   <td (click)="sortBy(0)" title="Sort By Distance">
                     <img src='assets/images/map/distance.svg' />
@@ -202,7 +198,7 @@
                 </tr>
               </table>
 
-              <table class='spotbie-controls-search-results' *ngIf="searchCategorySorter == 'shopping'">
+              <table class='spotbie-controls-search-results' *ngIf="searchCategorySorter === 2">
                 <tr>
                   <td (click)="sortBy(0)" title="Sort By Distance">
                     <img src='assets/images/map/distance.svg' />
@@ -233,20 +229,20 @@
                       (click)="showOpen()"
                       title="Opened or Closed"
                       [ngStyle]="{ 'border-right' : 'unset' }"
-                      *ngIf="searchCategorySorter == 'food'">
+                      *ngIf="searchCategorySorter === 1">
                 <td *ngIf="!isMobile">
                   <span class='fa fa-circle spotbie-is-open'></span>
                 </td>
 
-                <td *ngIf="showOpened == false && !isMobile">
+                <td *ngIf="!showOpened && !isMobile">
                   <span class='fa fa-circle spotbie-is-closed'></span>
                 </td>
 
-                <td *ngIf="showOpened == true">
+                <td *ngIf="showOpened">
                   OPEN
                 </td>
 
-                <td *ngIf="showOpened == false">
+                <td *ngIf="!showOpened">
                   OPEN/CLOSED
                 </td>
               </table>
@@ -255,7 +251,7 @@
                       (click)="showOpen()"
                       title="Opened or Closed"
                       [ngStyle]="{ 'border-right' : 'unset' }"
-                      *ngIf="searchCategorySorter == 'shopping'">
+                      *ngIf="searchCategorySorter === 2">
 
                 <td *ngIf="!isMobile">
                   <span class='fa fa-circle spotbie-is-open'></span>
@@ -274,7 +270,7 @@
                 </td>
               </table>
 
-              <table class='spotbie-controls-search-results text-uppercase' *ngIf="searchCategorySorter == 'events'">
+              <table class='spotbie-controls-search-results text-uppercase' *ngIf="searchCategorySorter === 3">
                 <tr>
                   <td (click)="hideSearchResults()" title="Hide Results"><img src='assets/images/map/hide.svg' /></td>
                   <td (click)="sortBy(0)" title="Sort By Distance"><img src='assets/images/map/distance.svg' /></td>
@@ -286,7 +282,7 @@
             </div>
 
             <div class='spotbie-search-results-title spotbie-sorting text-uppercase'>
-              <ng-template *ngIf="searchCategorySorter != 'events'">
+              <ng-template *ngIf="searchCategorySorter != 3">
                 <span class='fa fa-circle spotbie-is-open' [ngStyle]="{ 'margin-left' : '5px' }"></span>
                 <span class='fa fa-circle spotbie-is-closed' *ngIf="showOpened == false" [ngStyle]="{ 'margin-left' : '5px' }"></span>
               </ng-template>
@@ -509,13 +505,13 @@
     </div>
   </div>
 
-  <div class='spotbie-categories animated slideInRight' *ngIf="catsUp && searchCategory != 'events'">
+  <div class='spotbie-categories animated slideInRight' *ngIf="catsUp && searchCategory !== 3">
     <div *ngFor="let category of categories; let i = index" [ngClass]="getSingleCatClass(i)" (click)="apiSearch(category)">
       {{ category }}
     </div>
   </div>
 
-  <div class='spotbie-categories animated slideInRight' *ngIf="catsUp && searchCategory == 'events'">
+  <div class='spotbie-categories animated slideInRight' *ngIf="catsUp && searchCategory === 3">
     <div [ngClass]="getSingleCatClass(i)" *ngFor="let category of categories; let i = index" (click)="showEventSub(category)">
       {{ category.name }}
       <!--<div class='spotbie-sub-cat-wrapper' *ngIf="category.show_sub && category.type !== undefined">
@@ -524,8 +520,8 @@
         </div>
       </div>-->
 
-      <div class='spotbie-sub-cat-wrapper' *ngIf="category.show_sub && category.segment !== undefined">
-        <div class='spotbie-sub-cat' *ngFor="let sub_cat_type of category.segment._embedded.genres" (click)="apiSearch(sub_cat_type.name, true)" [SpotBieStopClickPropagation]>
+      <div class='spotbie-sub-cat-wrapper' *ngIf="category.show_sub && category.segment">
+        <div class='spotbie-sub-cat' *ngFor="let sub_cat_type of category.segment._embedded.genres" (click)="apiSearch(sub_cat_type.name, true)">
           {{ sub_cat_type.name }}
 
           <!--<div *ngIf="sub_cat_type.show_sub_sub">
@@ -540,15 +536,15 @@
 
   <div class='spotbie-category-search-yelp animated slideInUp' *ngIf="catsUp">
     <div class='spotbie-categoryPull' *ngIf="!isMobile">
-      <div class='sb-optionGet' (click)="spawnCategories('food')">
+      <div class='sb-optionGet' (click)="spawnCategories(1)">
         <img src="assets/images/home_imgs/find-places-to-eat.svg" />
       </div>
 
-      <div class='sb-optionGet' (click)="spawnCategories('events')">
+      <div class='sb-optionGet' (click)="spawnCategories(3)">
           <img src="assets/images/home_imgs/find-events.svg" />
       </div>
 
-      <div class='sb-optionGet' (click)="spawnCategories('shopping')">
+      <div class='sb-optionGet' (click)="spawnCategories(2)">
           <img src="assets/images/home_imgs/find-places-for-shopping.svg" />
       </div>
     </div>
@@ -565,7 +561,7 @@
     </div>
   </div>
 
-  <app-info-object [info_object]="infoObject"
+  <app-info-object [infoObject]="infoObject"
                     [eventsClassification]="eventsClassification"
                     [accountType]="searchCategory"
                     [categories]="number_categories"
@@ -575,12 +571,7 @@
                     *ngIf="infoObjectWindow.open">
   </app-info-object>
 
-  <app-user-info-object [currentMarker]="currentMarker"
-                      *ngIf="sliderRight"
-                      [lat]="lat" [lng]="lng"
-                      (close)="sliderRight = false"></app-user-info-object>
-
   <!--<app-my-favorites *ngIf="myFavoritesWindow.open" (closeWindow)="closeFavorites()"></app-my-favorites>-->
 
-  <app-scroll-to-top [inputWindow]="parentWindow"></app-scroll-to-top>
+  <app-scroll-to-top [inputWindow]="viewParentWindow"></app-scroll-to-top>
 </div>

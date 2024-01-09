@@ -106,7 +106,7 @@
       <i class="fa fa-times"></i>
     </div>
 
-    <app-info-object [info_object]="infoObject" 
+    <app-info-object [infoObject]="infoObject"
     (closeWindow)="infoObjectWindow.open = false" 
     *ngIf="infoObjectWindow.open"
     (removeFavoriteEvent)="removeFavorite($event)"></app-info-object>

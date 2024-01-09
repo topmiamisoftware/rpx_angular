@@ -1,78 +1,55 @@
-import { HttpClient } from '@angular/common/http'
-import { Injectable } from '@angular/core'
-import { Observable } from 'rxjs'
-import { catchError } from 'rxjs/operators'
-import { handleError } from 'src/app/helpers/error-helper'
-import * as spotbieGlobals from 'src/app/globals'
+import {HttpClient} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {Observable} from 'rxjs';
+import {catchError} from 'rxjs/operators';
+import {handleError} from '../../helpers/error-helper';
+import * as spotbieGlobals from '../../globals';
 
-const ADS_API = spotbieGlobals.API+'in-house'
+const ADS_API = spotbieGlobals.API + 'in-house';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AdsService {
+  constructor(private http: HttpClient) {}
 
-  constructor(private http: HttpClient) { }
+  getHeaderBanner(headerBannerReqObj: any): Observable<any> {
+    const getAd = `${ADS_API}/header-banner`;
 
-  public getHeaderBanner(headerBannerReqObj: any): Observable<any>{
-
-    const getAd = `${ADS_API}/header-banner`
-
-    return this.http.post(getAd, headerBannerReqObj).pipe(
-      catchError(
-        handleError("getHeaderBanner")
-      )
-    )
-
+    return this.http
+      .post(getAd, headerBannerReqObj)
+      .pipe(catchError(handleError('getHeaderBanner')));
   }
 
-  public getNearByFeatured(nearByFeaturedReqObj: any): Observable<any>{
+  getNearByFeatured(nearByFeaturedReqObj: any): Observable<any> {
+    const getAd = `${ADS_API}/featured-ad-list`;
 
-    const getAd = `${ADS_API}/featured-ad-list`
-
-    return this.http.post(getAd, nearByFeaturedReqObj).pipe(
-      catchError(
-        handleError("getNearByFeatured")
-      )
-    )
-
-  }  
-
-  public getAds():  Observable<any>{
-    
-    const getAdsApi = `${ADS_API}/index`
-
-    return this.http.post(getAdsApi, null).pipe(
-      catchError(
-        handleError("getAds")
-      )
-    )
-
+    return this.http
+      .post(getAd, nearByFeaturedReqObj)
+      .pipe(catchError(handleError('getNearByFeatured')));
   }
 
-  public getAdByUUID(searchObjSb: any):  Observable<any>{
-    
-    const getAdsApi = `${ADS_API}/get-by-uuid`
+  getAds(): Observable<any> {
+    const getAdsApi = `${ADS_API}/index`;
 
-    return this.http.post(getAdsApi, searchObjSb).pipe(
-      catchError(
-        handleError("getAdByUUID")
-      )
-    )
-
+    return this.http
+      .post(getAdsApi, null)
+      .pipe(catchError(handleError('getAds')));
   }
 
-  public getBottomHeader(searchObjSb: any):  Observable<any>{
+  getAdByUUID(searchObjSb: any): Observable<any> {
+    const getAdsApi = `${ADS_API}/get-by-uuid`;
 
-    const getAdsApi = `${ADS_API}/footer-banner`
-
-    return this.http.post(getAdsApi, searchObjSb).pipe(
-      catchError(
-        handleError("getBottomHeader")
-      )
-    )
-
+    return this.http
+      .post(getAdsApi, searchObjSb)
+      .pipe(catchError(handleError('getAdByUUID')));
   }
 
-  
+  getBottomHeader(searchObjSb: any): Observable<any> {
+    const getAdsApi = `${ADS_API}/footer-banner`;
+
+    return this.http
+      .post(getAdsApi, searchObjSb)
+      .pipe(catchError(handleError('getBottomHeader')));
+  }
 }

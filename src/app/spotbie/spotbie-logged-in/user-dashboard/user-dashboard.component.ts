@@ -1,83 +1,99 @@
-import { Component, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
-import { DeviceDetectorService } from 'ngx-device-detector';
-import { LoyaltyPointsComponent } from '../loyalty-points/loyalty-points.component';
-import { QrComponent } from '../qr/qr.component';
-import { RedeemableComponent } from '../redeemable/redeemable.component';
-import { RewardMenuComponent } from '../reward-menu/reward-menu.component';
+import {
+  Component,
+  ElementRef,
+  EventEmitter,
+  OnInit,
+  Output,
+  ViewChild,
+} from '@angular/core';
+import {DeviceDetectorService} from 'ngx-device-detector';
+import {LoyaltyPointsComponent} from '../loyalty-points/loyalty-points.component';
+import {QrComponent} from '../qr/qr.component';
+import {RedeemableComponent} from '../redeemable/redeemable.component';
+import {RewardMenuComponent} from '../reward-menu/reward-menu.component';
 
 @Component({
   selector: 'app-user-dashboard',
   templateUrl: './user-dashboard.component.html',
-  styleUrls: ['./user-dashboard.component.css']
+  styleUrls: ['./user-dashboard.component.css'],
 })
 export class UserDashboardComponent implements OnInit {
+  @Output() spawnCategoriesEvt = new EventEmitter();
 
-  @Output() spawnCategoriesEvt = new EventEmitter()
+  @ViewChild('loyaltyPointsApp') loyaltyPointsApp: LoyaltyPointsComponent;
+  @ViewChild('rewardMenuApp') rewardMenuApp: RewardMenuComponent;
+  @ViewChild('qrApp') qrApp: QrComponent;
+  @ViewChild('redeemablesApp') redeemablesApp: RedeemableComponent;
+  @ViewChild('lpAppAnchor') lpAppAnchor: ElementRef;
+  @ViewChild('rewardMenuAppAnchor') rewardMenuAppAnchor: ElementRef;
+  @ViewChild('qrCodeAppAnchor') qrCodeAppAnchor: ElementRef;
 
-  @ViewChild('loyaltyPointsApp') loyaltyPointsApp: LoyaltyPointsComponent
-  @ViewChild('rewardMenuApp') rewardMenuApp: RewardMenuComponent
-  @ViewChild('qrApp') qrApp: QrComponent
-  @ViewChild('redeemablesApp') redeemablesApp: RedeemableComponent
-  @ViewChild('lpAppAnchor') lpAppAnchor: ElementRef
-  @ViewChild('rewardMenuAppAnchor') rewardMenuAppAnchor: ElementRef
-  @ViewChild('qrCodeAppAnchor') qrCodeAppAnchor: ElementRef
+  scannerStarted = false;
+  isMobile = false;
+  getRedeemableItems = false;
 
-  scannerStarted: boolean = false
-  isMobile: boolean = false
-  getRedeemableItems: boolean = false
+  constructor(private deviceDetectorService: DeviceDetectorService) {}
 
-  constructor(private deviceDetectorService: DeviceDetectorService) { }
-
-  redeemedLp(){
-    this.getRedeemableItems = true
+  redeemedLp() {
+    this.getRedeemableItems = true;
   }
 
-  openLoyaltyPoints(){
+  openLoyaltyPoints() {
     this.loyaltyPointsApp.initBusinessLoyaltyPoints();
   }
 
-  scrollToLpAppAnchor(){
-    this.lpAppAnchor.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  scrollToLpAppAnchor() {
+    this.lpAppAnchor.nativeElement.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+    });
     this.redeemedLp();
   }
 
-  scrollToQrAppAnchor(){
-    if(typeof this.qrCodeAppAnchor !== undefined) this.qrCodeAppAnchor.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' })
-    this.startQrScanner()
+  scrollToQrAppAnchor() {
+    if (typeof this.qrCodeAppAnchor !== undefined)
+      this.qrCodeAppAnchor.nativeElement.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      });
+    this.startQrScanner();
   }
 
-  scrollToRewardMenuAppAnchor(){
-    this.rewardMenuAppAnchor.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  scrollToRewardMenuAppAnchor() {
+    this.rewardMenuAppAnchor.nativeElement.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+    });
   }
 
-  startQrScanner(){
-    this.scannerStarted = true
+  startQrScanner() {
+    this.scannerStarted = true;
   }
 
-  closeQrScanner(){
-    this.scannerStarted = false
+  closeQrScanner() {
+    this.scannerStarted = false;
   }
 
-  closeRedeemables(){
-    this.getRedeemableItems = false
+  closeRedeemables() {
+    this.getRedeemableItems = false;
   }
 
-  spawnCategories(category: string){
+  spawnCategories(category: number) {
     const obj = {
-      category
-    }
+      category,
+    };
 
-    this.spawnCategoriesEvt.emit(obj)
+    this.spawnCategoriesEvt.emit(obj);
   }
 
-  closeAll(){
+  closeAll() {
     // Close all the windows in the dashboard
-    this.loyaltyPointsApp.closeThis()
-    this.rewardMenuApp.closeWindow()
-    this.qrApp.closeQr()
+    this.loyaltyPointsApp.closeThis();
+    this.rewardMenuApp.closeWindow();
+    this.qrApp.closeQr();
   }
 
   ngOnInit(): void {
-    this.isMobile = this.deviceDetectorService.isMobile()
+    this.isMobile = this.deviceDetectorService.isMobile();
   }
 }

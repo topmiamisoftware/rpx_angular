@@ -1,18 +1,17 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { BusinessDashboardComponent } from './business-dashboard.component';
-import { QrModule } from '../qr/qr.module';
-import { LoyaltyPointsModule } from '../loyalty-points/loyalty-points.module';
-import { RewardMenuModule } from '../reward-menu/reward-menu.module';
-import { RouterModule } from '@angular/router';
-import { RedeemableModule } from '../redeemable/redeemable.module';
-import { AdManagerModule } from '../ad-manager-menu/ad-manager-menu.module';
-import {CustomerManagerModule} from '../customer-manager/customer-manager.module';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {BusinessDashboardComponent} from './business-dashboard.component';
+import {QrModule} from '../qr/qr.module';
+import {LoyaltyPointsModule} from '../loyalty-points/loyalty-points.module';
+import {RewardMenuModule} from '../reward-menu/reward-menu.module';
+import {RouterModule} from '@angular/router';
+import {RedeemableModule} from '../redeemable/redeemable.module';
+import {AdManagerModule} from '../ad-manager-menu/ad-manager-menu.module';
+import {CustomerManagerModule} from './customer-manager/customer-manager.module';
+import {DownloadBusinessMobileModule} from './download-business-mobile/download-business-mobile.module';
 
 @NgModule({
-  declarations: [
-    BusinessDashboardComponent
-  ],
+  declarations: [BusinessDashboardComponent],
   imports: [
     CommonModule,
     LoyaltyPointsModule,
@@ -22,9 +21,8 @@ import {CustomerManagerModule} from '../customer-manager/customer-manager.module
     AdManagerModule,
     RedeemableModule,
     CustomerManagerModule,
+    DownloadBusinessMobileModule,
   ],
-  exports : [
-    BusinessDashboardComponent
-  ]
+  exports: [BusinessDashboardComponent],
 })
-export class BusinessDashboardModule { }
+export class BusinessDashboardModule {}

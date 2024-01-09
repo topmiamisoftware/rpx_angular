@@ -1,19 +1,16 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { QrComponent } from './qr.component';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {QrComponent} from './qr.component';
+import {NgxQRCodeModule} from '@techiediaries/ngx-qrcode';
+import {ZXingScannerModule} from '@zxing/ngx-scanner';
+import {NgxMaskModule, IConfig} from 'ngx-mask';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {RewardMenuModule} from '../reward-menu/reward-menu.module';
 
-import { NgxQRCodeModule } from '@techiediaries/ngx-qrcode';
-import { ZXingScannerModule } from '@zxing/ngx-scanner';
-import { NgxMaskModule, IConfig } from 'ngx-mask';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RewardMenuModule } from '../reward-menu/reward-menu.module';
-
-export const options : Partial<IConfig> | (() => Partial<IConfig>) = null;
+export const options: Partial<IConfig> | (() => Partial<IConfig>) = null;
 
 @NgModule({
-  declarations: [
-    QrComponent
-  ],
+  declarations: [QrComponent],
   imports: [
     CommonModule,
     NgxQRCodeModule,
@@ -21,10 +18,8 @@ export const options : Partial<IConfig> | (() => Partial<IConfig>) = null;
     ReactiveFormsModule,
     RewardMenuModule,
     FormsModule,
-    NgxMaskModule.forRoot(options)  
+    NgxMaskModule.forRoot(options),
   ],
-  exports: [
-    QrComponent
-  ]
+  exports: [QrComponent],
 })
-export class QrModule { }
+export class QrModule {}

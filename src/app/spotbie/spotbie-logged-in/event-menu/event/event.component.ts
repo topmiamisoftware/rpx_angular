@@ -1,25 +1,21 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { SpEvent } from 'src/app/models/event';
+import {Component, Input, OnInit} from '@angular/core';
+import {SpEvent} from '../../../../models/event';
 
 @Component({
   selector: 'app-event',
   templateUrl: './event.component.html',
-  styleUrls: ['./event.component.css']
+  styleUrls: ['./event.component.css'],
 })
 export class EventComponent implements OnInit {
+  @Input('event') event: SpEvent;
 
-  @Input('event') event: SpEvent
+  public loading = false;
 
-  public loading: boolean = false
+  constructor() {}
 
-  constructor() { }
-
-  public deleteMe(){
-    
-  }
+  deleteMe() {}
 
   ngOnInit(): void {
-    console.log('reward_is', this.event)
+    console.log('reward_is', this.event);
   }
-
 }

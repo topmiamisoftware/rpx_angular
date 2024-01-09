@@ -470,7 +470,7 @@
                                 <agm-info-window [isOpen]="claimBusiness">
                                     <table class='spotbie-place-result'>
                                         <tr>
-                                            <td *ngIf="originTitle !== null">
+                                            <td *ngIf="originTitle">
                                                 {{ originTitle }}
                                             </td>
                                         </tr>
@@ -566,46 +566,31 @@
             </tr>
 
             <tr *ngIf="accountTypeCategory !== 'PERSONAL' && locationFound">
-                <mat-form-field class="spotbie-category-pick" appearance="fill">
-                    <div *ngIf="placeFormSubmitted && i.originCategories.errors else originCategoriesNormal"
-                         class="spotbie-input-info spotbie-text-gradient text-center spotbie-error mt-4 mb-2">
-                      <div *ngIf="i.originCategories.errors.required">
-                        Enter {{ accountTypeCategoryFriendlyName }} categories.
-                      </div>
-                    </div>
-                    <ng-template #originCategoriesNormal>
-                      <div class="spotbie-input-info spotbie-text-gradient text-center mt-4 mb-2">
-                        Enter {{ accountTypeCategoryFriendlyName }} categories.
-                      </div>
-                    </ng-template>
+              <td>
+                <div *ngIf="placeFormSubmitted && i.originCategories.errors else originCategoriesNormal"
+                     class="spotbie-input-info spotbie-text-gradient text-center spotbie-error mt-4 mb-2">
+                  <div *ngIf="i.originCategories.errors.required">
+                    Enter {{ accountTypeCategoryFriendlyName }} categories.
+                  </div>
+                </div>
 
-                    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
-                        <mat-option *ngFor="let businessCategory of filteredBusinessCategories | async" [value]="businessCategory">
-                          {{ businessCategory }}
-                        </mat-option>
-                    </mat-autocomplete>
+                <ng-template #originCategoriesNormal>
+                  <div class="spotbie-input-info spotbie-text-gradient text-center mt-4 mb-2">
+                    Enter {{ accountTypeCategoryFriendlyName }} categories.
+                  </div>
+                </ng-template>
 
-                    <mat-chip-list #chipList aria-label="Category selection">
-                      <mat-chip
-                        class="text-uppercase mt-3"
-                        *ngFor="let category of activeBusinessCategories"
-                        [selectable]="selectable"
-                        [removable]="removable"
-                        (removed)="remove(category)">
-                        {{ category }}
-                        <i matChipRemove *ngIf="removable" class="fa fa-times"></i>
-                      </mat-chip>
-
-                      <input
-                        class="sb-input mb-4"
-                        placeholder="New category..."
-                        #businessInput
-                        style="background-color: white;"
-                        formControlName="originCategories"
-                        [matAutocomplete]="auto"
-                        [matChipInputFor]="chipList">
-                    </mat-chip-list>
+                <mat-form-field  class="sb-input sb-select">
+                  <mat-select (selectionChange)="add($event)"
+                              formControlName="originCategories"
+                              [placeholder]="'Select a category'"
+                              [(ngModel)]="selected">
+                    <mat-option *ngFor="let category of businessCategoryList; let i = index;" [value]="i">
+                      {{ category }}
+                    </mat-option>
+                  </mat-select>
                 </mat-form-field>
+              </td>
             </tr>
 
             <tr *ngIf="accountTypeCategory !== 'PERSONAL' && locationFound">

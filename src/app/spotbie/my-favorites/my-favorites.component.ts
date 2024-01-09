@@ -1,224 +1,207 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { Observable } from 'rxjs';
-import { metersToMiles, setYelpRatingImage } from 'src/app/helpers/info-object-helper';
-import { InfoObjectServiceService } from '../map/info-object/info-object-service.service';
-import { MyFavoritesService } from './my-favorites.service';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Observable} from 'rxjs';
+import {
+  metersToMiles,
+  setYelpRatingImage,
+} from '../../helpers/info-object-helper';
+import {InfoObjectServiceService} from '../map/info-object/info-object-service.service';
+import {MyFavoritesService} from './my-favorites.service';
 
-const YELP_BUSINESS_DETAILS_API = 'https://api.yelp.com/v3/businesses/'
+const YELP_BUSINESS_DETAILS_API = 'https://api.yelp.com/v3/businesses/';
 
 @Component({
   selector: 'app-my-favorites',
   templateUrl: './my-favorites.component.html',
-  styleUrls: [ '../map/map.component.css', './my-favorites.component.css']
+  styleUrls: ['../map/map.component.css', './my-favorites.component.css'],
 })
 export class MyFavoritesComponent implements OnInit {
+  @Output() closeWindow = new EventEmitter();
 
-  @Output() closeWindow = new EventEmitter()
+  loading = false;
+  bgColor: string;
+  isLoggedIn: string;
+  favoriteItems: Array<any> = [];
+  totalFavoriteItems = 0;
+  loadMore = false;
+  currentPage = 1;
+  noFavorites = false;
+  infoObjectWindow = {open: false};
+  infoObject: any;
 
-  public loading: boolean = false
+  constructor(
+    private myFavoritesService: MyFavoritesService,
+    private infoObjectService: InfoObjectServiceService
+  ) {}
 
-  public bgColor: string
-  public isLoggedIn: string
-
-  public favoriteItems: Array<any> = []
-  public totalFavoriteItems: number = 0
-
-  public loadMore: boolean = false
-
-  public currentPage: number = 1
-
-  public noFavorites: boolean = false
-
-  public infoObjectWindow = { open: false }
-  public infoObject: any
-
-  constructor(private myFavoritesService: MyFavoritesService,
-              private infoObjectService: InfoObjectServiceService) { }
-
-  public closeWindowX(){
-    this.closeWindow.emit(null)
+  closeWindowX() {
+    this.closeWindow.emit(null);
   }
 
-  public getFavorites(){
-
-    if(this.isLoggedIn == '1')
-      this.getFavoritesLoggedIn()
-    else
-      this.getFavoritesLoggedOut()
-
+  getFavorites() {
+    if (this.isLoggedIn === '1') {
+      this.getFavoritesLoggedIn();
+    } else {
+      this.getFavoritesLoggedOut();
+    }
   }
 
-  private getFavoritesLoggedIn(){
+  private getFavoritesLoggedIn() {
+    this.loading = true;
 
-    this.loading = true
+    this.myFavoritesService
+      .getFavoritesLoggedIn(this.currentPage)
+      .subscribe(resp => {
+        this.getFavoritesLoggedInCb(resp);
+      });
+  }
 
-    this.myFavoritesService.getFavoritesLoggedIn(this.currentPage).subscribe(
-      resp => {
-        this.getFavoritesLoggedInCb(resp)
+  private getFavoritesLoggedInCb(httpResponse: any) {
+    if (httpResponse.success) {
+      const favoriteItems = httpResponse.favorite_items.data;
+
+      this.totalFavoriteItems = favoriteItems.length;
+
+      const currentPage = httpResponse.favorite_items.current_page;
+      const lastPage = httpResponse.favorite_items.last_page;
+
+      if (favoriteItems.length === 0) {
+        this.loading = false;
       }
-    )
-
-  }
-
-  private getFavoritesLoggedInCb(httpResponse: any){
-
-    if(httpResponse.success){
-
-      const favoriteItems = httpResponse.favorite_items.data
-
-      this.totalFavoriteItems = favoriteItems.length
-
-      const currentPage = httpResponse.favorite_items.current_page
-      const lastPage = httpResponse.favorite_items.last_page
-
-      if(favoriteItems.length == 0) this.loading = false
 
       favoriteItems.forEach(favorite => {
-
-        this.populateFavorite(favorite.third_party_id).subscribe(
-          resp => {
-            this.populateFavoriteCallback(resp, favorite)
-          }
-        )
-
+        this.populateFavorite(favorite.third_party_id).subscribe(resp => {
+          this.populateFavoriteCallback(resp, favorite);
+        });
       });
 
-      if(currentPage < lastPage){
-        this.currentPage++
-        this.loadMore = true
-      } else
-        this.loadMore = false
+      if (currentPage < lastPage) {
+        this.currentPage++;
+        this.loadMore = true;
+      } else {
+        this.loadMore = false;
+      }
 
-      if(httpResponse.favorite_items.total == 0) this.noFavorites = true
-
-    } else
-      console.log('getFavoritesLoggedInCb', httpResponse)
-
+      if (httpResponse.favorite_items.total === 0) this.noFavorites = true;
+    } else console.log('getFavoritesLoggedInCb', httpResponse);
   }
 
-  private getFavoritesLoggedOut(){
+  private getFavoritesLoggedOut() {
+    const favoriteItems = this.myFavoritesService.getFavoritesLoggedOut();
 
-    const favoriteItems = this.myFavoritesService.getFavoritesLoggedOut()
+    if (favoriteItems && favoriteItems.length > 0) {
+      this.totalFavoriteItems = favoriteItems.length;
 
-    if(favoriteItems != null && favoriteItems.length > 0){
-
-      this.totalFavoriteItems = favoriteItems.length
-
-      this.loading = true
+      this.loading = true;
 
       favoriteItems.forEach(favorite => {
-
-        this.populateFavorite(favorite.third_party_id).subscribe(
-          resp => {
-            this.populateFavoriteCallback(resp, favorite)
-          }
-        )
-
-      })
-
-    } else this.noFavorites = true
-
-
+        this.populateFavorite(favorite.third_party_id).subscribe(resp => {
+          this.populateFavoriteCallback(resp, favorite);
+        });
+      });
+    } else this.noFavorites = true;
   }
 
-  public populateFavoriteCallback(resp: any, myFavorite: any){
+  populateFavoriteCallback(resp: any, myFavorite: any) {
     if (resp.success) {
+      const favorite = resp.data;
 
-      const favorite = resp.data
+      favorite.type_of_info_object = 'yelp_business';
+      favorite.type_of_info_object_category =
+        myFavorite.type_of_info_object_category;
 
-      favorite.type_of_info_object = 'yelp_business'
-      favorite.type_of_info_object_category = myFavorite.type_of_info_object_category
+      favorite.rating_image = setYelpRatingImage(favorite.rating);
 
-      favorite.rating_image = setYelpRatingImage(favorite.rating)
+      if (favorite.is_closed) {
+        favorite.is_closed_msg = 'Closed';
+      } else {
+        favorite.is_closed_msg = 'Open';
+      }
 
-      if (favorite.is_closed)
-        favorite.is_closed_msg = 'Closed'
-      else
-        favorite.is_closed_msg = 'Open'
+      if (favorite.price) {
+        favorite.price_on = '1';
+      }
 
-      if (favorite.price) favorite.price_on = '1'
+      if (favorite.image_url === '') {
+        favorite.image_url = '0';
+      }
 
-      if (favorite.image_url === '') favorite.image_url = '0'
+      let friendly_transaction = '';
 
-      let friendly_transaction = ''
-
-      favorite.transactions = favorite.transactions.sort()
+      favorite.transactions = favorite.transactions.sort();
 
       switch (favorite.transactions.length) {
         case 0:
-          friendly_transaction = ''
-          favorite.transactions_on = '0'
+          friendly_transaction = '';
+          favorite.transactions_on = '0';
           break;
         case 1:
         case 2:
         case 3:
-          favorite.transactions_on = '1'
-          favorite.transactions = [favorite.transactions.slice(0, -1).join(', '), favorite.transactions.slice(-1)[0]].join(favorite.transactions.length < 2 ? '': ', and ')
-          friendly_transaction = favorite.transactions.replace('restaurant_reservation', 'reservations')
-          friendly_transaction = `${friendly_transaction}.`
+          favorite.transactions_on = '1';
+          favorite.transactions = [
+            favorite.transactions.slice(0, -1).join(', '),
+            favorite.transactions.slice(-1)[0],
+          ].join(favorite.transactions.length < 2 ? '' : ', and ');
+          friendly_transaction = favorite.transactions.replace(
+            'restaurant_reservation',
+            'reservations'
+          );
+          friendly_transaction = `${friendly_transaction}.`;
           break;
       }
 
-      favorite.friendly_transactions = friendly_transaction
+      favorite.friendly_transactions = friendly_transaction;
 
-      favorite.icon = favorite.image_url
+      favorite.icon = favorite.image_url;
 
-      this.favoriteItems.push(favorite)
-
+      this.favoriteItems.push(favorite);
     } else {
-      console.log('populateFavoriteCallback', myFavorite)
-      console.log('populateFavoriteCallback', resp)
+      console.log('populateFavoriteCallback', myFavorite);
+      console.log('populateFavoriteCallback', resp);
     }
 
-    if(this.totalFavoriteItems === this.favoriteItems.length)
-      this.loading = false
-
+    if (this.totalFavoriteItems === this.favoriteItems.length) {
+      this.loading = false;
+    }
   }
 
-  public loadMoreFavorites(){
-    this.getFavoritesLoggedIn()
+  loadMoreFavorites() {
+    this.getFavoritesLoggedIn();
   }
 
-  public populateFavorite(yelpId: string): Observable<any>{
-
-    const url = `${YELP_BUSINESS_DETAILS_API}${yelpId}`
+  populateFavorite(yelpId: string): Observable<any> {
+    const url = `${YELP_BUSINESS_DETAILS_API}${yelpId}`;
 
     const infoObjToPull = {
-      config_url: url
+      config_url: url,
+    };
+
+    return this.infoObjectService.pullInfoObject(infoObjToPull);
+  }
+
+  removeFavorite(evt: any) {
+    this.favoriteItems.find((favorite, index) => {
+      if (favorite.id === evt.favoriteId) {
+        this.favoriteItems.splice(index, 1);
+      }
+    });
+
+    if (this.favoriteItems.length === 0) {
+      this.noFavorites = true;
     }
 
-    return this.infoObjectService.pullInfoObject(infoObjToPull)
-
+    this.infoObjectWindow.open = false;
   }
 
-  public removeFavorite(evt: any){
-
-    this.favoriteItems.find( (favorite, index) => {
-
-      if(favorite.id == evt.favoriteId) this.favoriteItems.splice(index, 1)
-
-    })
-
-    if(this.favoriteItems.length == 0) this.noFavorites = true
-
-    this.infoObjectWindow.open = false
-
-  }
-
-  public pullSearchMarker(infoObject: any): void {
-
-    this.infoObjectWindow.open = true
-    this.infoObject = infoObject
-
+  pullSearchMarker(infoObject: any): void {
+    this.infoObjectWindow.open = true;
+    this.infoObject = infoObject;
   }
 
   ngOnInit(): void {
+    this.bgColor = localStorage.getItem('spotbie_backgroundColor');
+    this.isLoggedIn = localStorage.getItem('spotbie_loggedIn');
 
-    this.bgColor = localStorage.getItem('spotbie_backgroundColor')
-    this.isLoggedIn = localStorage.getItem('spotbie_loggedIn')
-
-    this.getFavorites()
-
+    this.getFavorites();
   }
-
 }

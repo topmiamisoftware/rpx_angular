@@ -92,8 +92,10 @@
 
 @media (max-width: 650px){
   .sb-top-headerImg {
-    background: url('../../../assets/images/home_imgs/spotbie-miami.jpg') no-repeat center !important;
+    background: url('../../../assets/images/spotbie-miami.jpg') !important;
+    background-repeat: no-repeat !important;
     background-size: cover !important;
+    background-position: center !important;
     box-shadow: inset 0px -80px 65px #332f3e;
       max-height: 300px;
       min-height: 300px;

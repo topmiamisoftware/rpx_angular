@@ -37,7 +37,11 @@
         <app-ad-manager-menu [fullScreenWindow]="false" #adManagerApp></app-ad-manager-menu>
     </div>
 
-<!--    <div class="sb-dashboardWrapper" #customerAppAnchor *ngIf="!displayBusinessSetUp && businessFetched">
+    <div class="sb-dashboardWrapper" *ngIf="!displayBusinessSetUp && businessFetched && displayAppDownload">
+      <app-download-business-mobile></app-download-business-mobile>
+    </div>
+
+    <div class="sb-dashboardWrapper" #customerAppAnchor *ngIf="!displayBusinessSetUp && businessFetched">
       <app-customer-manager></app-customer-manager>
-    </div>-->
+    </div>
 </div>

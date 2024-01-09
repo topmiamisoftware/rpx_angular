@@ -50,3 +50,4 @@ Thumbs.db
 #deploy script
 deploy.js
 
+/build/

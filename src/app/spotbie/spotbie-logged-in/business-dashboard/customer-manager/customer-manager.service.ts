@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {handleError} from '../../../helpers/error-helper';
+import {handleError} from '../../../../helpers/error-helper';
 import {catchError, tap} from 'rxjs/operators';
-import * as spotbieGlobals from '../../../globals';
+import * as spotbieGlobals from '../../../../globals';
 import {Observable} from 'rxjs';
-import {User} from "../../../models/user";
+import {User} from "../../../../models/user";
 
 const CUSTOMER_MANAGER_API = `${spotbieGlobals.API}customer-manager`;
 

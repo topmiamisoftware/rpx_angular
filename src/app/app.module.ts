@@ -1,33 +1,34 @@
-import { BrowserModule, BrowserTransferStateModule } from '@angular/platform-browser'
-import {APP_INITIALIZER, ErrorHandler, NgModule} from '@angular/core'
-import { AppRoutingModule } from './app-routing.module'
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
-import { DeviceDetectorService } from 'ngx-device-detector'
-import { AppComponent } from './app.component'
-import { HomeModule } from './home/home.module'
-import { UserHomeModule } from './user-home/user-home.module'
-import { UserModule } from './user/user.module'
-import { UrlSanitizerPipe } from './pipes/url-sanitizer.pipe'
-import { VersionCheckService } from './services/version-check.service'
-import { HelperModule } from './helpers/helper.module'
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-import { TokenInterceptor } from './helpers/token-interceptor/token-interceptor.service'
-import { ServiceWorkerModule } from '@angular/service-worker'
-import { environment } from '../environments/environment'
-import { TermsComponent } from './spotbie/terms/terms.component'
-import { BugsComponent } from './bugs/bugs.component'
-import { TransferHttpCacheModule } from '@nguniversal/common'
-import { FormsModule, ReactiveFormsModule } from '@angular/forms'
-import { UserauthService } from './services/userauth.service'
-import { StoreModule } from '@ngrx/store'
-import { loyaltyPointsReducer } from './spotbie/spotbie-logged-in/loyalty-points/loyalty-points.reducer';
-import { StripeModule } from 'stripe-angular';
-import { MakePaymentModule } from './make-payment/make-payment.module';
+import {
+  BrowserModule,
+  BrowserTransferStateModule,
+} from '@angular/platform-browser';
+import {APP_INITIALIZER, ErrorHandler, NgModule} from '@angular/core';
+import {AppRoutingModule} from './app-routing.module';
+import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
+import {DeviceDetectorService} from 'ngx-device-detector';
+import {AppComponent} from './app.component';
+import {HomeModule} from './home/home.module';
+import {UserHomeModule} from './user-home/user-home.module';
+import {UrlSanitizerPipe} from './pipes/url-sanitizer.pipe';
+import {VersionCheckService} from './services/version-check.service';
+import {HelperModule} from './helpers/helper.module';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {TokenInterceptor} from './helpers/token-interceptor/token-interceptor.service';
+import {ServiceWorkerModule} from '@angular/service-worker';
+import {environment} from '../environments/environment';
+import {TermsComponent} from './spotbie/terms/terms.component';
+import {BugsComponent} from './bugs/bugs.component';
+import {TransferHttpCacheModule} from '@nguniversal/common';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {UserauthService} from './services/userauth.service';
+import {StoreModule} from '@ngrx/store';
+import {loyaltyPointsReducer} from './spotbie/spotbie-logged-in/loyalty-points/loyalty-points.reducer';
+import {StripeModule} from 'stripe-angular';
+import {MakePaymentModule} from './make-payment/make-payment.module';
 import * as Sentry from '@sentry/angular';
 import {Router} from '@angular/router';
 import {HowDoesItWorkComponent} from './how-does-it-work/how-does-it-work.component';
 import {DoesItWorkComponent} from './does-it-work/does-it-work.component';
-import {BetaComponent} from './beta/beta.component';
 
 @NgModule({
   declarations: [
@@ -37,27 +38,27 @@ import {BetaComponent} from './beta/beta.component';
     BugsComponent,
     HowDoesItWorkComponent,
     DoesItWorkComponent,
-    BetaComponent,
   ],
   imports: [
     FormsModule,
     ReactiveFormsModule,
     AppRoutingModule,
-    BrowserModule.withServerTransition({ appId: 'serverApp' }),
+    BrowserModule.withServerTransition({appId: 'serverApp'}),
     BrowserTransferStateModule,
     TransferHttpCacheModule,
     HttpClientModule,
     HomeModule,
     UserHomeModule,
-    UserModule,
     HelperModule,
     MakePaymentModule,
     BrowserAnimationsModule,
     StripeModule.forRoot(''),
     StoreModule.forRoot({
-      loyaltyPoints: loyaltyPointsReducer
+      loyaltyPoints: loyaltyPointsReducer,
     }),
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+    }),
   ],
   providers: [
     DeviceDetectorService,
@@ -79,8 +80,8 @@ import {BetaComponent} from './beta/beta.component';
       deps: [Sentry.TraceService],
       multi: true,
     },
-    { provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true },
+    {provide: HTTP_INTERCEPTORS, useClass: TokenInterceptor, multi: true},
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}

@@ -47,7 +47,7 @@
 
           <div class='mb-2'>
             Loyalty Points:
-            <span *ngIf="redeemedItem.redeemed === 1" class='sb-text-red-gradient'>-{{ redeemedItem.total_spent | number:'1.0':'en-US' }}</span>
+            <span *ngIf="redeemedItem.redeemed === true" class='sb-text-red-gradient'>-{{ redeemedItem.total_spent | number:'1.0':'en-US' }}</span>
           </div>
 
           <div class='mb-2'>

@@ -47,7 +47,7 @@
     <div class='spotbie-share-buttons-wrappper' *ngIf="reward !== undefined">
 
         <share-buttons
-                show="4"
+                [show]="4"
                 theme="material-dark"
                 [url]="reward.link"
                 [title]="reward.name"
@@ -61,7 +61,7 @@
 
     <div class='mt-4' (click)="linkCopy(rewardShareLink)">
 
-        <input class='sb-input sb-infoObjectInputLight' type='text' [(value)]="reward.link" readonly #rewardShareLink />
+        <input class='sb-input sb-infoObjectInputLight' type='text' [value]="reward.link" readonly #rewardShareLink />
 
     </div>
 

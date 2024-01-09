@@ -4,104 +4,69 @@
   </div>
 
   <div class='spotbie-info-object-title' [ngClass]="getFullScreenModeClass()">
-    <img class='sb-miniLogoIcon' src="assets/images/spotbie_community_member_star.svg" *ngIf="info_object.is_community_member" />
+    <img class='sb-miniLogoIcon' src="assets/images/spotbie_community_member_star.svg" *ngIf="infoObject?.is_community_member" />
 
-    <h6 class="spotbie-text-gradient sb-titleGreen text-uppercase" *ngIf="info_object.is_community_member">SPOTBIE COMMUNITY MEMBER</h6>
+    <h6 class="spotbie-text-gradient sb-titleGreen text-uppercase" *ngIf="infoObject.is_community_member">SPOTBIE COMMUNITY MEMBER</h6>
 
-    <h1 class="mb-3" [ngClass]="getTitleStyling()">{{ info_object.name }}</h1>
+    <h1 class="mb-3" [ngClass]="getTitleStyling()">{{ infoObject.name }}</h1>
   </div>
 
-  <div class='spotbie-communityMemberDescription spotbie-text-gradient mb-4' *ngIf="info_object.is_community_member">
-    {{ info_object.description }}
+  <div class='spotbie-communityMemberDescription spotbie-text-gradient mb-4' *ngIf="infoObject?.is_community_member">
+    {{ infoObject.description }}
   </div>
 
-  <div *ngIf="info_object !== null && info_object.hours !== undefined">
-    <div class='spotbie-info-object-open' *ngIf="!info_object.isOpenNow">
+  <div *ngIf="infoObject && infoObject.hours">
+    <div class='spotbie-info-object-open' *ngIf="!infoObject.isOpenNow">
       <span [ngClass]="getFontClasses()">CLOSED </span><span class='fa fa-circle spotbie-is-closed'></span>
     </div>
 
-    <div class='spotbie-info-object-open' *ngIf="info_object.isOpenNow">
+    <div class='spotbie-info-object-open' *ngIf="infoObject.isOpenNow">
       <span [ngClass]="getFontClasses()">OPEN </span><span class='fa fa-circle spotbie-is-open'></span>
     </div>
   </div>
 
   <div class='spotbie-info-object-image-list'
-       *ngIf="(info_object.type_of_info_object != eInfoObjectType.TicketMaster &&
-                    info_object.type_of_info_object != eInfoObjectType.SpotBieCommunity)">
+       *ngIf="(infoObject?.type_of_info_object != eInfoObjectType.TicketMaster &&
+                    infoObject?.type_of_info_object != eInfoObjectType.SpotBieCommunity)">
     <div class='spotbie-info-object-image-thumb'
-         *ngFor="let thumbnail of info_object.photos"
+         *ngFor="let thumbnail of infoObject.photos"
          [ngStyle]="{ 'background' : 'url(' + thumbnail + ')'}"></div>
   </div>
 
   <div class='spotbie-info-object-image-list'
-       *ngIf="info_object.type_of_info_object === eInfoObjectType.SpotBieCommunity && ad === undefined">
+       *ngIf="infoObject?.type_of_info_object === eInfoObjectType.SpotBieCommunity && ad === undefined">
     <div class='spotbie-info-object-image-thumb'
-         [ngStyle]="{ 'background' : 'url(' + info_object.photo + ')'}"></div>
+         [ngStyle]="{ 'background' : 'url(' + infoObject.photo + ')'}"></div>
   </div>
 
   <div class='spotbie-info-object-image-list'
-       *ngIf="info_object.type_of_info_object == eInfoObjectType.SpotBieCommunity && ad !== undefined">
+       *ngIf="infoObject?.type_of_info_object == eInfoObjectType.SpotBieCommunity && ad !== undefined">
     <img [src]="ad.images" />
   </div>
 
-  <div class='spotbie-info-object-image-list' *ngIf="info_object.type_of_info_object == eInfoObjectType.TicketMaster">
+  <div class='spotbie-info-object-image-list' *ngIf="infoObject?.type_of_info_object == eInfoObjectType.TicketMaster">
     <div class='spotbie-info-object-image-thumb'
-         [ngStyle]="{ 'background' : 'url(' + info_object.image_url + ')'}"></div>
+         [ngStyle]="{ 'background' : 'url(' + infoObject?.image_url + ')'}"></div>
   </div>
 
-  <!--<div class='spotbie-button spotbie-add-to-favorites'
-      (click)="addFavorite()"
-      *ngIf="info_object.type_of_info_object != eInfoObjectType.TicketMaster &&
-              showFavorites &&
-              info_object.is_community_member &&
-              ad == undefined">
-
-      <i class="fa fa-star"></i>
-
-      <span class="text-uppercase"> FAVORITE</span>
-  </div>
-
-  <div class='spotbie-button spotbie-add-to-favorites'
-      (click)="removeFavorite()"
-      *ngIf="info_object.type_of_info_object != eInfoObjectType.TicketMaster &&
-      !showFavorites &&
-      info_object.is_community_member &&
-      ad == undefined">
-
-      <i class="fa fa-minus"></i>
-
-      <span class="text-uppercase"> UNFAVORITE</span>
-  </div>-->
-
-  <div class='spotbie-search-result-phone' *ngIf="info_object.phone !== ''">
-
-    <a href="tel:{{info_object.phone}}" class='spotbie-friendly-ph' [ngClass]="getFontClasses()">
-      {{ info_object.display_phone }}
+  <div class='spotbie-search-result-phone' *ngIf="infoObject?.phone !== ''">
+    <a href="tel:{{infoObject.phone}}" class='spotbie-friendly-ph' [ngClass]="getFontClasses()">
+      {{ infoObject.display_phone }}
     </a>
-
   </div>
 
-  <div class='mt-4 mb-4' *ngIf="info_object.is_community_member">
-
-    <span class='sb-text-light-green-gradient'>LOYALTY POINTS THIS MONTH</span><br/>
-
-    <h1 class='spotbie-text-gradient mb-4'>
-      {{ info_object.balance| number:'1.0':'en-US' }}
-    </h1>
-
-    <br/><br/>
-
+  <div class='mt-4 mb-4' *ngIf="infoObject?.is_community_member">
     <span class='spotbie-text-gradient' style='font-size: .8rem;'>DOLLAR VALUE RATE</span><br/>
-    <span class='sb-text-light-green-gradient mt-4 mb-4' style='font-size: 1.8rem;'>{{ info_object.rewardRate | currency : 'USD' }}</span><br/>
-    <span class='spotbie-text-gradient' style='font-size: .8rem;'> PER DOLLAR SPENT</span><br/>
-    <span class='sb-text-light-green-gradient mt-4'> {{ info_object.loyalty_point_dollar_percent_value | number:'1.1-2':'en-US' }}% REWARD RATE</span>
+    <span class='sb-text-light-green-gradient mt-4 mb-4' style='font-size: 1.8rem;'>{{ infoObject?.rewardRate | currency : 'USD' }}</span><br/>
+    <span class='sb-text-light-green-gradient mt-4'> {{ infoObject?.loyalty_point_dollar_percent_value | number:'1.1-2':'en-US' }}% REWARD RATE</span>
   </div>
 
-  <div class='spotbie-info-object-rating' [ngClass]="getFontClasses()" *ngIf="info_object.type_of_info_object == eInfoObjectType.Yelp" (click)="visitInfoObjectPage()">
+
+  <div class='spotbie-info-object-rating' [ngClass]="getFontClasses()" *ngIf="infoObject.type_of_info_object == eInfoObjectType.Yelp" (click)="visitInfoObjectPage()">
     <table class='spotbie-yelp-rating-table'>
       <tr>
         <td>
-          <div class='spotbie-search-result-rating-img' [ngStyle]="{ 'background' : 'url(' + info_object.rating_image + ')' }"></div>
+          <div class='spotbie-search-result-rating-img' [ngStyle]="{ 'background' : 'url(' + infoObject.rating_image + ')' }"></div>
         </td>
         <td>
           <div class='spotbie-search-result-yelp-logo' [ngStyle]="{ 'background' : 'url(assets/images/yelp/yelp_logo.png)' }"></div>
@@ -110,91 +75,85 @@
     </table>
   </div>
 
-  <div class='spotbie-review-count mt-2' [ngClass]="getFontClasses()" *ngIf="info_object.type_of_info_object == eInfoObjectType.Yelp" (click)="visitInfoObjectPage()">
-    Based on {{ info_object.review_count }} Reviews
+  <div class='spotbie-review-count mt-2' [ngClass]="getFontClasses()" *ngIf="infoObject.type_of_info_object == eInfoObjectType.Yelp" (click)="visitInfoObjectPage()">
+    Based on {{ infoObject.review_count }} Reviews
   </div>
 
-  <div class='spotbie-info-object-address' [ngClass]="getFontClasses()" *ngIf="info_object.type_of_info_object == eInfoObjectType.TicketMaster">
-
-    <div class='spotbie-venue-name'>{{ info_object._embedded.venues[0].name }}</div>
+  <div class='spotbie-info-object-address' [ngClass]="getFontClasses()" *ngIf="infoObject.type_of_info_object == eInfoObjectType.TicketMaster">
+    <div class='spotbie-venue-name'>{{ infoObject._embedded.venues[0].name }}</div>
 
     <br/>
 
-    {{ info_object._embedded.venues[0].address.line1 }} {{ info_object._embedded.venues[0].city.name }}, {{ info_object._embedded.venues[0].state.stateCode }} {{ info_object._embedded.venues[0].postalCode }}
+    {{ infoObject._embedded.venues[0].address.line1 }} {{ infoObject._embedded.venues[0].city.name }}, {{ infoObject._embedded.venues[0].state.stateCode }} {{ infoObject._embedded.venues[0].postalCode }}
 
-    <div class='spotbie-time-event mb-2' *ngIf="info_object.dates.start.localDate">
-      {{ info_object.dates.start.spotbieDate }}
+    <div class='spotbie-time-event mb-2' *ngIf="infoObject.dates.start.localDate">
+      {{ infoObject.dates.start.spotbieDate }}
     </div>
 
-    <div class='spotbie-price-ranges mb-2' *ngIf="info_object.priceRanges !== undefined">
-      Price Ranges ${{ info_object.priceRanges[0].min }} to ${{ info_object.priceRanges[0].max }}
+    <div class='spotbie-price-ranges mb-2' *ngIf="infoObject.priceRanges !== undefined">
+      Price Ranges ${{ infoObject.priceRanges[0].min }} to ${{ infoObject.priceRanges[0].max }}
     </div>
 
-    <div class='spotbie-event-code mb-2' *ngIf="info_object.dates.status.code">
-      Status: {{ info_object.dates.status.code }}
+    <div class='spotbie-event-code mb-2' *ngIf="infoObject.dates.status.code">
+      Status: {{ infoObject.dates.status.code }}
     </div>
-
   </div>
 
   <div class='' *ngIf="rewardMenuUp">
-    <app-reward-menu [qrCodeLink]="info_object.qr_code_link"
+    <app-reward-menu [qrCodeLink]="infoObject.qr_code_link"
                      [rewardAppFullScreen]="fullScreenMode"
                      [fullScreenMode]="false">
     </app-reward-menu>
   </div>
 
   <div class="spotbie-info-object-buttons">
-
-    <div class='spotbie-distance mb-2' [ngClass]="getFontClasses()" *ngIf="info_object.distance !== undefined" (click)="openWithGoogleMaps()">
-      {{ info_object.distance }} miles from you.
+    <div class='spotbie-distance mb-2' [ngClass]="getFontClasses()" *ngIf="infoObject.distance !== undefined" (click)="openWithGoogleMaps()">
+      {{ infoObject.distance }} miles from you.
     </div>
 
     <i  class="fa fa-map-marker-alt" [ngClass]="getFontClasses()" aria-hidden="true" (click)="openWithGoogleMaps()"></i>
 
     <i  class="fa fa-globe"
-        *ngIf="!info_object.is_community_member"
+        *ngIf="!infoObject.is_community_member"
         [ngClass]="getFontClasses()"
         aria-hidden="true"
         (click)="visitInfoObjectPage()"></i>
 
-    <div class='spotbie-info-object-address' [ngClass]="getFontClasses()" *ngIf="info_object.type_of_info_object == eInfoObjectType.Yelp" (click)="openWithGoogleMaps()">
-      {{ info_object.location.display_address[0] }}
+    <div class='spotbie-info-object-address' [ngClass]="getFontClasses()" *ngIf="infoObject.type_of_info_object == eInfoObjectType.Yelp" (click)="openWithGoogleMaps()">
+      {{ infoObject.location.display_address[0] }}
       <br/>
-      {{ info_object.location.display_address[1] }}
+      {{ infoObject.location.display_address[1] }}
     </div>
-
   </div>
 
-  <div class='spotbie-info-object-transactions'> {{ info_object.friendly_transactions }} </div>
+  <div class='spotbie-info-object-transactions'> {{ infoObject.friendly_transactions }} </div>
 
-  <div class='spotbie-button spotbie-add-to-favorites' (click)="goToTicket()" *ngIf="info_object.type_of_info_object == eInfoObjectType.TicketMaster">
+  <div class='spotbie-button spotbie-add-to-favorites' (click)="goToTicket()" *ngIf="infoObject.type_of_info_object == eInfoObjectType.TicketMaster">
     Buy Tickets
   </div>
 
-  <div class='spotbie-share-buttons-wrappper mb-4' *ngIf="info_object !== undefined">
+  <div class='spotbie-share-buttons-wrappper mb-4' *ngIf="infoObject !== undefined">
 
     <share-buttons
-      show="4"
+      [show]="4"
       [theme]="getIconTheme()"
       [url]="infoObjectLink"
-      [title]="info_object.name"
+      [title]="infoObject.name"
       [description]="infoObjectDescription"
       [autoSetMeta]="false">
     </share-buttons>
-
   </div>
 
   <div (click)="clickGoToSponsored()"
        class='spotbie-info-object-is-sponsored mt-4'>
 
-    <div *ngIf="info_object.is_community_member">
+    <div *ngIf="infoObject.is_community_member">
       <span class='sb-text-light-green-gradient'>SPONSORED</span> <i class='fa fa-search-dollar sb-text-light-green-gradient'></i>
     </div>
 
-    <div *ngIf="!info_object.is_community_member">
+    <div *ngIf="!infoObject.is_community_member">
       <span>SPONSORED</span> <i class='fa fa-search-dollar'></i>
     </div>
-
   </div>
 
   <app-nearby-ads-three
@@ -208,16 +167,13 @@
   <div class='spotbie-copy-link-button' [ngClass]="getFontClasses()" (click)="linkCopy(infoObjectShareLink)">tap to copy link</div>
 
   <div class='spotbie-share-post-link' (click)="linkCopy(infoObjectShareLink)">
-
-    <input class='sb-input' type='text' [ngClass]="getInputClass()"  [(value)]="infoObjectLink" readonly #infoObjectShareLink />
-
+    <input class='sb-input' type='text' [ngClass]="getInputClass()" [value]="infoObjectLink" readonly #infoObjectShareLink />
   </div>
 
   <div class='spotbie-exif-optional'></div>
   <div class='spotbie-ai-items-in-image'></div>
 
   <div class='spotbie-toast-message text-uppercase animated fadeIn' *ngIf="successful_url_copy">Link copied</div>
-
 </div>
 
 <app-loading-screen *ngIf="loading"></app-loading-screen>

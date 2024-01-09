@@ -1,7 +1,6 @@
 <app-loading-screen *ngIf="loading"></app-loading-screen>
 
 <div class="spotbie-overlay-window">
-
     <div class='sb-closeButton' (click)="closeThis()">
       <i class="fa fa-times"></i>
     </div>
@@ -11,13 +10,12 @@
     <div class='sb-adCreatorWrapper'>
 
         <p class="cursor-pointer"
-            *ngIf="(ad !== null && ad !== undefined) && ad.is_live !== 1"
+            *ngIf="ad && ad.is_live !== 1"
             style="font-size: .8rem;"
             (click)="activateAdMembership()">
 
             <i class="fas fa-exclamation-triangle"></i>
             <span class='spotbie-text-gradient text-uppercase '>ACTIVATE PROMOTION</span>
-
         </p>
 
         <h5 class="spotbie-text-gradient text-center text-uppercase pt-3 mb-4">PROMOTION EDITOR</h5>

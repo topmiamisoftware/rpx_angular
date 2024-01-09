@@ -16,7 +16,8 @@
                         cssClass="spotbie-full-qrCode mt-4 mb-4"
                         colorDark="#000"
                         colorLight="#64e56f"
-                        errorCorrectionLevel="H"></ngx-qrcode>
+                        [elementType]="qrType"
+                        [errorCorrectionLevel]="correctionLevel"></ngx-qrcode>
 
             <span><i class="fa fa-exclamation-triangle"></i></span>
 

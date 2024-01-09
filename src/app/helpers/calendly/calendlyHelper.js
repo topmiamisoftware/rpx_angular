@@ -1,37 +1,37 @@
 export const spawnCalendly = function(title, address, callbackFn){
 
-    setTimeout(()=>{
+  setTimeout(()=>{
 
-        Calendly.initInlineWidget({
-            url: 'https://calendly.com/spotbie-demos/45min',
-            parentElement: document.getElementById('calendlyEl'),
-            prefill: {
-                customAnswers: {
-                    a2: title,
-                    a3: address
-                }
-            },
-            utm: {}
-        });
+    Calendly.initInlineWidget({
+      url: 'https://calendly.com/spotbie-demos/45min',
+      parentElement: document.getElementById('calendlyEl'),
+      prefill: {
+        customAnswers: {
+          a2: title,
+          a3: address
+        }
+      },
+      utm: {}
+    });
 
-        callbackFn()
+    callbackFn()
 
-    }, 500)
+  }, 500)
 
 }
 
 export const spawnCalendlyNormal = function(callbackFn){
 
-    setTimeout(()=>{
+  setTimeout(()=>{
 
-        Calendly.initInlineWidget({
-            url: 'https://calendly.com/spotbie-demos/45min',
-            parentElement: document.getElementById('calendlyEl'),
-            utm: {}
-        });
+    Calendly.initInlineWidget({
+      url: 'https://calendly.com/spotbie-demos/45min',
+      parentElement: document.getElementById('calendlyEl'),
+      utm: {}
+    });
 
-        callbackFn()
+    callbackFn()
 
-    }, 500)
+  }, 500)
 
 }
