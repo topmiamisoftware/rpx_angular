@@ -1,9 +1,8 @@
 import {User} from '../../../../../models/user';
 
 export interface RecentGuest {
-  dollar_value_sum;
   balance: number;
-  user: User & { total_spent_sum: number };
+  user: User & {total_spent_sum: number};
   updated_at: string;
 }
 
