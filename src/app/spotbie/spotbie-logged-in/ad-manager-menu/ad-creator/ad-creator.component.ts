@@ -17,9 +17,9 @@ import {NearbyFeaturedAdComponent} from '../../../ads/nearby-featured-ad/nearby-
 import {Business} from '../../../../models/business';
 import {AdCreatorService} from '../../../../services/spotbie-logged-in/ad-manager-menu/ad-creator/ad-creator.service';
 import {UserauthService} from '../../../../services/userauth.service';
-import {LoyaltyPointsService} from '../../../../services/loyalty-points/loyalty-points.service';
 import {BusinessMembership} from '../../../../models/user';
-import {BehaviorSubject} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
+import {LoyaltyPointsState} from '../../state/lp.state';
 
 const AD_MEDIA_UPLOAD_API_URL = `${spotbieGlobals.API}in-house/upload-media`;
 const AD_MEDIA_MAX_UPLOAD_SIZE = 10e6;
@@ -90,7 +90,6 @@ export class AdCreatorComponent implements OnInit {
   ]);
   adCreated: boolean;
   adDeleted: boolean;
-  loyaltyPointBalance: any;
   selected = 0;
   business: Business = null;
 
@@ -98,15 +97,8 @@ export class AdCreatorComponent implements OnInit {
     private formBuilder: UntypedFormBuilder,
     private adCreatorService: AdCreatorService,
     private http: HttpClient,
-    private userAuthService: UserauthService,
-    private loyaltyPointsService: LoyaltyPointsService
+    userAuthService: UserauthService
   ) {
-    this.loyaltyPointsService.userLoyaltyPoints$.subscribe(
-      loyaltyPointBalance => {
-        this.loyaltyPointBalance = loyaltyPointBalance;
-      }
-    );
-
     // Enable the in-house ad depending on the BusinessMembership type.
     const enabledInHouse: Array<InHouse> = [];
     this.adTypeList$.getValue().forEach(inHouse => {

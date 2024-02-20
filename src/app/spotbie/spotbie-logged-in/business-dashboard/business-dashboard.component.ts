@@ -1,8 +1,8 @@
 import {
+  ChangeDetectionStrategy,
   Component,
   ElementRef,
   EventEmitter,
-  Inject,
   OnInit,
   Output,
   ViewChild,
@@ -13,6 +13,7 @@ import {RedeemableComponent} from '../redeemable/redeemable.component';
 import {RewardMenuComponent} from '../reward-menu/reward-menu.component';
 import {UserauthService} from '../../../services/userauth.service';
 import {DeviceDetectorService, OS} from 'ngx-device-detector';
+import {BusinessMembership, User} from '../../../models/user';
 
 @Component({
   selector: 'app-business-dashboard',
@@ -34,6 +35,8 @@ export class BusinessDashboardComponent implements OnInit {
   businessFetched = false;
   displayAppDownload = false;
   getRedeemableItems = false;
+  canUseCustomerManager = false;
+  businessResponse = null;
 
   constructor(
     private userAuthServe: UserauthService,
@@ -79,14 +82,17 @@ export class BusinessDashboardComponent implements OnInit {
   }
 
   checkIfBusinessIsSet() {
-    this.userAuthServe.getSettings().subscribe(resp => {
+    this.userAuthServe.getSettings().subscribe((resp: User) => {
       if (!resp.business) {
         this.displayBusinessSetUp = true;
       } else if (resp.is_subscribed === false) {
         this.displayBusinessSetUp = false;
         this.openSettings();
       } else {
+        console.log('get settings response', resp);
+        this.businessResponse = resp;
         this.displayBusinessSetUp = false;
+        this.getBusinessPermissions();
       }
       this.businessFetched = true;
       if (
@@ -96,6 +102,20 @@ export class BusinessDashboardComponent implements OnInit {
         this.displayAppDownload = true;
       }
     });
+  }
+
+  getBusinessPermissions() {
+    switch (this.businessResponse.userSubscriptionPlan) {
+      case BusinessMembership.Starter:
+        this.canUseCustomerManager = false;
+        break;
+      case BusinessMembership.Intermediate:
+        this.canUseCustomerManager = true;
+        break;
+      case BusinessMembership.Ultimate:
+        this.canUseCustomerManager = true;
+        break;
+    }
   }
 
   openSettings() {

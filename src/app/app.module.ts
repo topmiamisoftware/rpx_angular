@@ -21,14 +21,22 @@ import {BugsComponent} from './bugs/bugs.component';
 import {TransferHttpCacheModule} from '@nguniversal/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {UserauthService} from './services/userauth.service';
-import {StoreModule} from '@ngrx/store';
-import {loyaltyPointsReducer} from './spotbie/spotbie-logged-in/loyalty-points/loyalty-points.reducer';
 import {StripeModule} from 'stripe-angular';
 import {MakePaymentModule} from './make-payment/make-payment.module';
 import * as Sentry from '@sentry/angular';
 import {Router} from '@angular/router';
 import {HowDoesItWorkComponent} from './how-does-it-work/how-does-it-work.component';
 import {DoesItWorkComponent} from './does-it-work/does-it-work.component';
+import {NgxsModule, NoopNgxsExecutionStrategy} from '@ngxs/store';
+import {NgxsDataPluginModule} from '@angular-ru/ngxs';
+import {NgxsLoggerPluginModule} from '@ngxs/logger-plugin';
+import {
+  NGXS_DATA_STORAGE_CONTAINER,
+  NGXS_DATA_STORAGE_EXTENSION,
+} from '@angular-ru/ngxs/storage';
+import {LoyaltyPointsState} from './spotbie/spotbie-logged-in/state/lp.state';
+import {BusinessLoyaltyPointsState} from './spotbie/spotbie-logged-in/state/business.lp.state';
+import {NgxsReduxDevtoolsPluginModule} from '@ngxs/devtools-plugin';
 
 @NgModule({
   declarations: [
@@ -53,11 +61,20 @@ import {DoesItWorkComponent} from './does-it-work/does-it-work.component';
     MakePaymentModule,
     BrowserAnimationsModule,
     StripeModule.forRoot(''),
-    StoreModule.forRoot({
-      loyaltyPoints: loyaltyPointsReducer,
-    }),
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,
+    }),
+    NgxsModule.forRoot([LoyaltyPointsState, BusinessLoyaltyPointsState], {
+      developmentMode: !environment.production,
+      executionStrategy: NoopNgxsExecutionStrategy,
+    }),
+    NgxsLoggerPluginModule.forRoot(),
+    NgxsDataPluginModule.forRoot([
+      NGXS_DATA_STORAGE_EXTENSION,
+      NGXS_DATA_STORAGE_CONTAINER,
+    ]),
+    NgxsReduxDevtoolsPluginModule.forRoot({
+      disabled: environment.production,
     }),
   ],
   providers: [

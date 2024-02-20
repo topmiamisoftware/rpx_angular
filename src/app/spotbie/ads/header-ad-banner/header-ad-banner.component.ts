@@ -8,10 +8,13 @@ import {
 } from '../../map/map_extras/map_extras';
 import {Business} from '../../../models/business';
 import {Ad} from '../../../models/ad';
-import {LoyaltyPointsService} from '../../../services/loyalty-points/loyalty-points.service';
 import {AllowedAccountTypes} from '../../../helpers/enum/account-type.enum';
 import {InfoObjectType} from '../../../helpers/enum/info-object-type.enum';
 import {getDistanceFromLatLngInMiles} from '../../../helpers/measure-units.helper';
+import {LoyaltyPointsState} from '../../spotbie-logged-in/state/lp.state';
+import {Immutable} from "@angular-ru/cdk/typings";
+import {LoyaltyPointBalance} from "../../../models/loyalty-point-balance";
+import {BusinessLoyaltyPointsState} from "../../spotbie-logged-in/state/business.lp.state";
 
 const PLACE_TO_EAT_AD_IMAGE =
   'assets/images/def/places-to-eat/header_banner_in_house.jpg';
@@ -54,21 +57,17 @@ export class HeaderAdBannerComponent implements OnInit, OnDestroy {
   communityMemberOpen = false;
   currentCategoryList: Array<string> = [];
   categoryListForUi: string = null;
-  loyaltyPointBalance: any;
   genericAdImage: string = PLACE_TO_EAT_AD_IMAGE;
   genericAdImageMobile: string = PLACE_TO_EAT_AD_IMAGE_MOBILE;
   switchAdInterval: any = false;
+  loyaltyPointBalance: Immutable<LoyaltyPointBalance> = null;
 
   constructor(
     private adsService: AdsService,
     private deviceDetectorService: DeviceDetectorService,
-    private loyaltyPointsService: LoyaltyPointsService
+    private businessLoyaltyPointState: BusinessLoyaltyPointsState
   ) {
-    this.loyaltyPointsService.userLoyaltyPoints$.subscribe(
-      loyaltyPointBalance => {
-        this.loyaltyPointBalance = loyaltyPointBalance;
-      }
-    );
+    this.loyaltyPointBalance = this.businessLoyaltyPointState.getState();
   }
 
   getHeaderBanner() {

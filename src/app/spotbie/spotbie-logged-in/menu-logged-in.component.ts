@@ -5,15 +5,17 @@ import {
   EventEmitter,
   Output,
   ElementRef,
+  AfterViewInit,
 } from '@angular/core';
 import {MapComponent} from '../map/map.component';
 import {DeviceDetectorService} from 'ngx-device-detector';
 import {SettingsComponent} from './settings/settings.component';
-import {LoyaltyPointBalance} from '../../models/loyalty-point-balance';
 import {AllowedAccountTypes} from '../../helpers/enum/account-type.enum';
 import {UserauthService} from '../../services/userauth.service';
-import {LoyaltyPointsService} from '../../services/loyalty-points/loyalty-points.service';
 import {logOutCallback} from '../../helpers/logout-callback';
+import {LoyaltyPointsState} from './state/lp.state';
+import {BehaviorSubject, Observable} from 'rxjs';
+import {BusinessLoyaltyPointsState} from "./state/business.lp.state";
 
 @Component({
   selector: 'app-menu-logged-in',
@@ -29,7 +31,7 @@ export class MenuLoggedInComponent implements OnInit {
 
   eAllowedAccountTypes = AllowedAccountTypes;
   foodWindow = {open: false};
-  mapApp = {open: false};
+  mapApp$ = new BehaviorSubject<boolean>(false);
   settingsWindow = {open: false};
   menuActive = false;
   spotType: string;
@@ -37,7 +39,7 @@ export class MenuLoggedInComponent implements OnInit {
   isDesktop: boolean;
   isTablet: boolean;
   userType: number;
-  userLoyaltyPoints: any = 0;
+  userLoyaltyPoints$: Observable<number>;
   userName: string = null;
   qrCode = false;
   business = false;
@@ -47,7 +49,8 @@ export class MenuLoggedInComponent implements OnInit {
   constructor(
     private userAuthService: UserauthService,
     private deviceService: DeviceDetectorService,
-    private loyaltyPointsService: LoyaltyPointsService
+    private loyaltyPointState: LoyaltyPointsState,
+    private businessLoyaltyPointsState: BusinessLoyaltyPointsState
   ) {}
 
   myFavorites() {
@@ -124,8 +127,14 @@ export class MenuLoggedInComponent implements OnInit {
     this.spotbieMap.mobileStartLocation();
   }
 
-  async getLoyaltyPointBalance() {
-    await this.loyaltyPointsService.getLoyaltyPointBalance();
+  getLoyaltyPointBalance() {
+    this.loyaltyPointState.getLoyaltyPointBalance().subscribe((r) => {
+      this.userLoyaltyPoints$ = this.loyaltyPointState.balance$;
+    });
+  }
+
+  getBusinessLoyaltyPointBalance() {
+    this.businessLoyaltyPointsState.getBusinessLoyaltyPointBalance().subscribe();
   }
 
   getPointsWrapperStyle() {
@@ -148,21 +157,15 @@ export class MenuLoggedInComponent implements OnInit {
 
     this.userType = parseInt(localStorage.getItem('spotbie_userType'), 10);
 
-    if (this.userType === AllowedAccountTypes.Personal) this.business = false;
-    else this.business = true;
-
-    this.loyaltyPointsService.userLoyaltyPoints$.subscribe(
-      (loyaltyPointBalance: LoyaltyPointBalance) => {
-        if (this.business) {
-          this.userLoyaltyPoints = loyaltyPointBalance.balance;
-        } else {
-          this.userLoyaltyPoints = loyaltyPointBalance;
-        }
-      }
-    );
+    if (this.userType === AllowedAccountTypes.Personal) {
+      this.business = false;
+      this.getLoyaltyPointBalance();
+    } else {
+      this.business = true;
+      this.getBusinessLoyaltyPointBalance();
+    }
 
     this.userName = localStorage.getItem('spotbie_userLogin');
-    this.getLoyaltyPointBalance();
   }
 
   toggleRedeemables() {
@@ -174,6 +177,6 @@ export class MenuLoggedInComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    this.mapApp.open = true;
+    this.mapApp$.next(true);
   }
 }

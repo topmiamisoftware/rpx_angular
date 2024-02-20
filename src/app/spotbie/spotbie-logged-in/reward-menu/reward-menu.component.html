@@ -1,6 +1,6 @@
 
 
-<div *ngIf="isLoggedIn == '1' && (userType !== eAllowedAccountTypes.Personal && userType !== eAllowedAccountTypes.Unset)">
+<div *ngIf="isLoggedIn === '1' && (userType !== eAllowedAccountTypes.Personal && userType !== eAllowedAccountTypes.Unset)">
   <h4 id="sp-loyaltyMenuTitle" class="spotbie-text-gradient text-center text-uppercase mb-5">REWARD MENU</h4>
 
   <p class="spotbie-loyaltyMenuDescription spotbie-text-gradient text-center mt-2">
@@ -27,7 +27,7 @@
 
       <h6 *ngIf="reward.type === 1">
         <span class='sb-text-light-green-gradient'>
-            {{ (reward.point_cost * (loyaltyPointsBalance.loyalty_point_dollar_percent_value / 100)) | currency : 'USD' }}
+            {{ reward.point_cost | currency : 'USD' }}
         </span>
         <br/>
         <span class='spotbie-text-gradient' style='font-size: .5rem;'>
@@ -63,10 +63,10 @@
 
       <h6 *ngIf="reward.type === 1">
           <span class='sb-text-light-green-gradient'>
-              {{  reward.point_cost * (userPointToDollarRatio / 100) | currency : 'USD' }}
+              {{  reward.point_cost | currency : 'USD' }}
           </span>
         <br/>
-        <span class='spotbie-text-gradient sb-discountTitle' style='font-size: .5rem;'>
+        <span class='spotbie-text-gradient' style='font-size: .5rem;'>
             DISCOUNT
         </span>
       </h6>

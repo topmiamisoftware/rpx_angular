@@ -33,6 +33,9 @@ import {AllowedAccountTypes} from '../../../helpers/enum/account-type.enum';
 import {SpotbiePaymentsService} from '../../../services/spotbie-payments/spotbie-payments.service';
 import GeocoderResult = google.maps.GeocoderResult;
 import {MatSelectChange} from '@angular/material/select';
+import {MatDialog} from '@angular/material/dialog';
+import {TextMessageDialogComponent} from '../business-dashboard/customer-manager/text-message/text-message.component';
+import {AlertDialogComponent} from '../../../helpers/alert/alert.component';
 
 const PLACE_TO_EAT_API = spotbieGlobals.API + 'place-to-eat';
 const PLACE_TO_EAT_MEDIA_MAX_UPLOAD_SIZE = 25e6;
@@ -131,7 +134,8 @@ export class SettingsComponent implements OnInit {
     private userAuthService: UserauthService,
     private locationService: LocationService,
     private injector: Injector,
-    private paymentService: SpotbiePaymentsService
+    private paymentService: SpotbiePaymentsService,
+    public dialog: MatDialog
   ) {}
 
   add(event: MatSelectChange): void {
@@ -219,7 +223,7 @@ export class SettingsComponent implements OnInit {
       this.settingsForm.get('spotbie_email').setValue(this.user.email);
       this.settingsForm
         .get('spotbie_phone_number')
-        .setValue(this.user.spotbie_user.phone_number);
+        .setValue(this.user.spotbie_user.phone_number?.replace('+1', ''));
       this.passwordForm.get('spotbie_password').setValue('userpassword');
       this.passwordForm.get('spotbie_confirm_password').setValue('123456789');
 
@@ -337,6 +341,28 @@ export class SettingsComponent implements OnInit {
     else {
       this.loading = false;
     }
+  }
+
+  infoSms() {
+    const d = this.dialog.open(AlertDialogComponent, {
+      data: {
+        alertText: `By providing your phone number in the settings form you are agreeing 
+                    to receive recurring promotional and personalized text messages (e.g. promotions going on at
+                    restaurants) from SpotBie Community Members at the phone number you are providing in this settings form.
+                    Consent is not a condition to use other features in the SpotBie Platform. Reply HELP for help and STOP
+                    to stop receiving text messages once you consent. Msg. frequency varies. Msg and data rates may apply.
+                    View <a href='/terms'>terms and conditions.</a>`,
+      },
+    });
+
+    d.afterClosed().subscribe((result: {continueWithAction: boolean}) => {
+      if (!result.continueWithAction) {
+        this.loading = false;
+        return;
+      }
+
+      this.finishSaveSettings();
+    });
   }
 
   claimThisBusiness() {
@@ -1013,6 +1039,14 @@ export class SettingsComponent implements OnInit {
       return;
     }
 
+    if (this.spotbie_phone_number !== '') {
+      this.infoSms();
+    } else {
+      this.finishSaveSettings();
+    }
+  }
+
+  private finishSaveSettings() {
     this.user.username = this.username;
     this.user.email = this.email;
     this.user.spotbie_user.first_name = this.first_name;

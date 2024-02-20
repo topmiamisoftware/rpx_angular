@@ -772,19 +772,14 @@ hr{
     color: #35a99f;
 }
 
-.mat-form-field.mat-focused.mat-warn .mat-select-arrow, .mat-form-field .mat-select.mat-select-invalid .mat-select-arrow {
-    color: #64e56f;
-}
 .mat-form-field-type-mat-select:not(.mat-form-field-disabled) .mat-form-field-flex {
     text-align: left;
-    background: white;
 }
-.mat-form-field.mat-form-field-invalid .mat-form-field-ripple, .mat-form-field.mat-form-field-invalid .mat-form-field-ripple.mat-accent {
-    background-color: #64e56f;
+
+.spotbie-dropdown{
+  background-color: #332f3e;
 }
-.mat-form-field-type-mat-native-select.mat-focused:not(.mat-form-field-invalid).mat-warn .mat-form-field-infix:after, .mat-form-field.mat-form-field-invalid .mat-form-field-label, .mat-form-field.mat-form-field-invalid .mat-form-field-label.mat-accent, .mat-form-field.mat-form-field-invalid .mat-form-field-label .mat-form-field-required-marker {
-    color: #332f3e;
-}
+
 .spotbie-full-qrCode{
     position: relative;
     margin: 0 auto;

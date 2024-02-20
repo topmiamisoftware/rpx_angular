@@ -9,6 +9,7 @@ import {RedeemableModule} from '../redeemable/redeemable.module';
 import {AdManagerModule} from '../ad-manager-menu/ad-manager-menu.module';
 import {CustomerManagerModule} from './customer-manager/customer-manager.module';
 import {DownloadBusinessMobileModule} from './download-business-mobile/download-business-mobile.module';
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [BusinessDashboardComponent],
@@ -22,6 +23,8 @@ import {DownloadBusinessMobileModule} from './download-business-mobile/download-
     RedeemableModule,
     CustomerManagerModule,
     DownloadBusinessMobileModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
   exports: [BusinessDashboardComponent],
 })

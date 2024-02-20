@@ -18,6 +18,10 @@ import {
   NgxQrcodeElementTypes,
   NgxQrcodeErrorCorrectionLevels,
 } from '@techiediaries/ngx-qrcode';
+import {LoyaltyPointsState} from "../../state/lp.state";
+import {Immutable} from "@angular-ru/cdk/typings";
+import {LoyaltyPointBalance} from "../../../../models/loyalty-point-balance";
+import {BusinessLoyaltyPointsState} from "../../state/business.lp.state";
 
 const REWARD_MEDIA_UPLOAD_API_URL = `${spotbieGlobals.API}reward/upload-media`;
 const REWARD_MEDIA_MAX_UPLOAD_SIZE = 25e6;
@@ -57,7 +61,7 @@ export class RewardCreatorComponent implements OnInit {
   rewardCreated = false;
   rewardDeleted = false;
   uploadMediaForm = false;
-  loyaltyPointBalance: any;
+  loyaltyPointBalance: Immutable<LoyaltyPointBalance>;
   qrCodeClaimReward = QR_CODE_CALIM_REWARD_SCAN_BASE_URL;
   existingTiers: Array<LoyaltyTier> = this.loyaltyPointsService.existingTiers;
   qrType = NgxQrcodeElementTypes.URL;
@@ -67,13 +71,10 @@ export class RewardCreatorComponent implements OnInit {
     private formBuilder: UntypedFormBuilder,
     private rewardCreatorService: RewardCreatorService,
     private http: HttpClient,
+    private loyaltyPointsState: BusinessLoyaltyPointsState,
     private loyaltyPointsService: LoyaltyPointsService
   ) {
-    this.loyaltyPointsService.userLoyaltyPoints$.subscribe(
-      loyaltyPointsBalance => {
-        this.loyaltyPointBalance = loyaltyPointsBalance;
-      }
-    );
+    this.loyaltyPointBalance = this.loyaltyPointsState.getState();
   }
 
   get rewardType() {

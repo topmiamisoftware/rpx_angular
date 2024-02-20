@@ -44,9 +44,9 @@
                 </label>
             </ng-template>
 
-            <mat-form-field class="sb-input" style="padding-left: 0px;" appearance="fill">
+            <mat-form-field class="sb-input">
                 <mat-label>Reward Type</mat-label>
-                <mat-select formControlName="rewardType" (selectionChange)="rewardTypeChange()">
+                <mat-select formControlName="rewardType" panelClass="spotbie-dropdown" (selectionChange)="rewardTypeChange()">
                   <mat-option *ngFor="let rewardTypeName of rewardTypeList; let i = index;" [value]="i">{{rewardTypeName}}</mat-option>
                 </mat-select>
             </mat-form-field>
@@ -204,9 +204,7 @@
 </div>
 
 <div class='spotbie-overlay-window' *ngIf="rewardDeleted">
-
     <div class='sb-v-wrapper' style="display: grid; align-content: center;">
-
         <h4 class="spotbie-text-gradient text-uppercase">REWARD WAS DELETED</h4>
 
         <div class="sb-verificationCheck sb-text-light-green-gradient mt-4 mb-4">
@@ -214,7 +212,5 @@
         </div>
 
         <h4 class="spotbie-text-gradient text-uppercase">CONTINUE</h4>
-
     </div>
-
 </div>

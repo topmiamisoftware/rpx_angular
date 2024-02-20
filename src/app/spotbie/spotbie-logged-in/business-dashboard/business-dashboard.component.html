@@ -41,7 +41,7 @@
       <app-download-business-mobile></app-download-business-mobile>
     </div>
 
-    <div class="sb-dashboardWrapper" #customerAppAnchor *ngIf="!displayBusinessSetUp && businessFetched">
+    <div class="sb-dashboardWrapper" #customerAppAnchor *ngIf="!displayBusinessSetUp && businessFetched && canUseCustomerManager">
       <app-customer-manager></app-customer-manager>
     </div>
 </div>

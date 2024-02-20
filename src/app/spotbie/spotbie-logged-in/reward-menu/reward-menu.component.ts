@@ -15,6 +15,10 @@ import {RewardCreatorComponent} from './reward-creator/reward-creator.component'
 import {RewardComponent} from './reward/reward.component';
 import {environment} from '../../../../environments/environment';
 import {AllowedAccountTypes} from '../../../helpers/enum/account-type.enum';
+import {LoyaltyPointsState} from "../state/lp.state";
+import {Immutable} from "@angular-ru/cdk/typings";
+import {BusinessLoyaltyPointsState} from "../state/business.lp.state";
+import {LoyaltyPointBalance} from "../../../models/loyalty-point-balance";
 
 @Component({
   selector: 'app-reward-menu',
@@ -41,11 +45,11 @@ export class RewardMenuComponent implements OnInit {
   reward: Reward;
   userType: number = null;
   business: Business = new Business();
-  loyaltyPointsBalance: any;
+  loyaltyPointsBalance: Immutable<LoyaltyPointBalance>;
   isLoggedIn: string = null;
 
   constructor(
-    private loyaltyPointsService: LoyaltyPointsService,
+    private loyaltyPointsState: BusinessLoyaltyPointsState,
     private businessMenuService: BusinessMenuServiceService,
     private router: Router,
     route: ActivatedRoute
@@ -61,11 +65,7 @@ export class RewardMenuComponent implements OnInit {
   }
 
   getLoyaltyPointBalance() {
-    this.loyaltyPointsService.userLoyaltyPoints$.subscribe(
-      loyaltyPointsBalance => {
-        this.loyaltyPointsBalance = loyaltyPointsBalance;
-      }
-    );
+    this.loyaltyPointsBalance = this.loyaltyPointsState.getState();
   }
 
   fetchRewards(qrCodeLink: string = null) {
@@ -108,6 +108,7 @@ export class RewardMenuComponent implements OnInit {
 
   openReward(reward: Reward) {
     this.reward = reward;
+    console.log('THE REWARd', this.reward);
     this.reward.link = `${environment.baseUrl}business-menu/${this.qrCodeLink}/${this.reward.uuid}`;
     this.rewardApp = true;
   }

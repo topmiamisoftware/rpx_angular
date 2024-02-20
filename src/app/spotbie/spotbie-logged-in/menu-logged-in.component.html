@@ -13,7 +13,7 @@
       <ng-container *ngIf="this.userType === eAllowedAccountTypes.Personal else businessAccountToolbar">
         <img class="spotbie-header-mini-logo" src="assets/images/spotbie_logo_header.svg" *ngIf="isDesktop" (click)="home()"/>
 
-        <span class='sb-loyalty-points' (click)="toggleLoyaltyPoints()" >{{ userLoyaltyPoints | number:'1.0':'en-US' }}</span>
+        <span class='sb-loyalty-points' (click)="toggleLoyaltyPoints()" >{{ (userLoyaltyPoints$ | async) | number:'1.0':'en-US' }}</span>
 
         <img class='sb-loyalty-points' *ngIf="!isMobile && !isTablet" (click)="toggleRedeemables()"  src="assets/images/spotbie-loyalty-points.svg" />
 
@@ -94,6 +94,6 @@
   </table>
 </div>
 
-<app-map [business]="business" *ngIf="mapApp.open" #spotbieMap (openBusinessSettingsEvt)="openBusinessSettings()"></app-map>
+<app-map [business]="business" *ngIf="(mapApp$ | async)" #spotbieMap (openBusinessSettingsEvt)="openBusinessSettings()"></app-map>
 
 <app-settings *ngIf="settingsWindow.open" #spotbieSettings (closeWindowEvt)="closeWindow(settingsWindow)"></app-settings>

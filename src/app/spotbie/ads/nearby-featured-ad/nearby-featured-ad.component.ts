@@ -8,10 +8,14 @@ import {
 } from '../../map/map_extras/map_extras';
 import {AdsService} from '../ads.service';
 import {Ad} from '../../../models/ad';
-import {LoyaltyPointsService} from '../../../services/loyalty-points/loyalty-points.service';
 import {InfoObjectType} from '../../../helpers/enum/info-object-type.enum';
 import {AllowedAccountTypes} from '../../../helpers/enum/account-type.enum';
 import {getDistanceFromLatLngInMiles} from '../../../helpers/measure-units.helper';
+import {getRandomInt} from '../../map/info-object/nearby-featured-ad/nearby-featured-ad.component';
+import {LoyaltyPointsState} from "../../spotbie-logged-in/state/lp.state";
+import {LoyaltyPointBalance} from "../../../models/loyalty-point-balance";
+import {Immutable} from "@angular-ru/cdk/typings";
+import {BusinessLoyaltyPointsState} from "../../spotbie-logged-in/state/business.lp.state";
 
 const PLACE_TO_EAT_AD_IMAGE =
   'assets/images/def/places-to-eat/featured_banner_in_house.jpg';
@@ -44,23 +48,19 @@ export class NearbyFeaturedAdComponent implements OnInit, OnDestroy {
   rewardMenuOpen = false;
   isMobile = false;
   currentCategoryList: Array<string> = [];
-  loyaltyPointBalance: any;
   adTypeWithId = false;
   adList: Array<Ad> = [];
   genericAdImage: string = PLACE_TO_EAT_AD_IMAGE;
   businessReady = false;
   switchAdInterval: any = false;
+  loyaltyPointBalance: Immutable<LoyaltyPointBalance> = null;
 
   constructor(
     private adsService: AdsService,
     private deviceDetectorService: DeviceDetectorService,
-    private loyaltyPointsService: LoyaltyPointsService
+    private businessLoyaltyState: BusinessLoyaltyPointsState
   ) {
-    this.loyaltyPointsService.userLoyaltyPoints$.subscribe(
-      loyaltyPointBalance => {
-        this.loyaltyPointBalance = loyaltyPointBalance;
-      }
-    );
+    this.loyaltyPointBalance = this.businessLoyaltyState.getState();
   }
 
   getNearByFeatured() {
@@ -99,6 +99,7 @@ export class NearbyFeaturedAdComponent implements OnInit, OnDestroy {
           break;
       }
     } else {
+      accountType = getRandomInt(1, 3).toString();
       switch (this.accountType) {
         case 1:
           this.genericAdImage = PLACE_TO_EAT_AD_IMAGE;

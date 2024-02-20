@@ -8,7 +8,6 @@ import {
 } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Ad} from '../../../models/ad';
-import {LoyaltyPointsService} from '../../../services/loyalty-points/loyalty-points.service';
 import {AdCreatorComponent} from './ad-creator/ad-creator.component';
 import {AdsService} from '../../ads/ads.service';
 
@@ -34,7 +33,6 @@ export class AdManagerMenuComponent implements OnInit {
   userHash: string = null;
 
   constructor(
-    private loyaltyPointsService: LoyaltyPointsService,
     private adCreatorService: AdsService,
     private router: Router,
     route: ActivatedRoute
@@ -48,14 +46,6 @@ export class AdManagerMenuComponent implements OnInit {
   getWindowClass() {
     if (this.fullScreenWindow) return 'spotbie-overlay-window';
     else return '';
-  }
-
-  getLoyaltyPointBalance() {
-    this.loyaltyPointsService.userLoyaltyPoints$.subscribe(
-      loyaltyPointBalance => {
-        this.userLoyaltyPoints = loyaltyPointBalance;
-      }
-    );
   }
 
   fetchAds() {
@@ -100,7 +90,6 @@ export class AdManagerMenuComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getLoyaltyPointBalance();
     this.fetchAds();
   }
 }

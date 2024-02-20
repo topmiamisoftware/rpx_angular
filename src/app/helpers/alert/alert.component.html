@@ -1,0 +1,8 @@
+<h1 mat-dialog-title>{{ data.alertTitle }}</h1>
+<div mat-dialog-content>
+    <p [innerHTML]="data.alertText"></p>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="continueWithAction()">CONTINUE</button>
+  <button mat-button cdkFocusInitial (click)="cancelAction()">CANCEL</button>
+</div>

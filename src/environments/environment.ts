@@ -1,5 +1,5 @@
-// const apiEndpoint = 'https://1446-2601-586-cd80-6e0-8f4e-c712-4713-e036.ngrok-free.app/'
-const apiEndpoint = 'https://ec98-2601-586-cd00-7900-fddd-889b-e3df-4951.ngrok-free.app/';
+const apiEndpoint = 'https://392e-2601-586-cd00-7900-1947-7be7-ed4e-70bb.ngrok-free.app/';
+// const apiEndpoint = 'http://localhost:8002/';
 
 const url = window.location.toString();
 const {hostname, protocol} = new URL(url);
@@ -16,7 +16,7 @@ export const environment = {
   publishableStripeKey:
     'pk_test_51JrUwnGFcsifY4UhCCJp023Q1dWwv5AabBTsMDwiJ7RycEVLyP1EBpwbXRsfn07qpw5lovv9CGfvfhQ82Zt3Be8U00aH3hD9pj',
   apiEndpoint: `${apiEndpoint}api/`,
-  fakeLocation: false,
+  fakeLocation: true,
   dsn: null,
   myLocX: 25.786286,
   myLocY: -80.186562,

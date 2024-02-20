@@ -22,6 +22,10 @@ import {
   NgxQrcodeElementTypes,
   NgxQrcodeErrorCorrectionLevels,
 } from '@techiediaries/ngx-qrcode';
+import {LoyaltyPointsState} from '../state/lp.state';
+import {Immutable} from '@angular-ru/cdk/typings';
+import {LoyaltyPointBalance} from '../../../models/loyalty-point-balance';
+import {BusinessLoyaltyPointsState} from '../state/business.lp.state';
 
 const QR_CODE_LOYALTY_POINTS_SCAN_BASE_URL = spotbieGlobals.API + 'redeemable';
 
@@ -53,7 +57,7 @@ export class QrComponent implements OnInit {
   loyaltyPointReward: number = null;
   loyaltyPointRewardDollarValue: number = null;
   qrCodeLoyaltyPointsBaseUrl: string = QR_CODE_LOYALTY_POINTS_SCAN_BASE_URL;
-  loyaltyPointBalance: any;
+  loyaltyPointBalance: Immutable<LoyaltyPointBalance>;
   businessLoyaltyPointsSubmitted = false;
   qrWidth = 0;
   scanSuccess = false;
@@ -69,37 +73,17 @@ export class QrComponent implements OnInit {
   constructor(
     private userAuthService: UserauthService,
     private loyaltyPointsService: LoyaltyPointsService,
+    private rewardCreatorService: RewardCreatorService,
     private deviceDetectorService: DeviceDetectorService,
     private formBuilder: UntypedFormBuilder,
-    private rewardService: RewardCreatorService
+    private businessLoyaltyPointsState: BusinessLoyaltyPointsState,
+    private loyaltyPointsState: LoyaltyPointsState
   ) {}
 
   getWindowClass() {
     if (this.fullScreenWindow) {
       return 'spotbie-overlay-window';
-    } else {
-      return '';
-    }
-  }
-
-  checkForSetLoyaltyPointSettings() {
-    if (
-      !this.loyaltyPointBalance.balance ||
-      this.loyaltyPointBalance.balance === 0
-    ) {
-      // Open the users Loyalty Points Balance Window
-      this.openUserLPBalanceEvt.emit();
-
-      // Close the window if full-screened
-      if (this.fullScreenWindow) {
-        this.closeQr();
-      }
-
-      alert('First set a balance & dollar-to-loyalty point ratio.');
-      return false;
-    } else {
-      return true;
-    }
+    } else return '';
   }
 
   async startAwardProcess() {
@@ -113,17 +97,14 @@ export class QrComponent implements OnInit {
   }
 
   createRedeemable() {
-    const percentValue: number = parseFloat(
-      this.loyaltyPointBalance.loyalty_point_dollar_percent_value.toString()
-    );
+    const percentValue: number =
+      this.loyaltyPointBalance.loyalty_point_dollar_percent_value;
 
-    this.totalSpentModified = this.totalSpent;
-    if (this.totalSpent > 90) {
-      this.totalSpentModified = 90;
-    }
+    this.totalSpentModified = parseFloat(this.totalSpent);
 
     this.loyaltyPointRewardDollarValue =
       this.totalSpentModified * (percentValue / 100);
+
     this.loyaltyPointReward = this.loyaltyPointRewardDollarValue * 100;
 
     this.rewardPrompt = true;
@@ -154,13 +135,18 @@ export class QrComponent implements OnInit {
   }
 
   addLp(addLpObj) {
-    this.loyaltyPointsService.addLoyaltyPoints(addLpObj, resp => {
-      this.scanSuccessHandlerCb(resp);
-    });
+    this.loyaltyPointsService
+      .addLoyaltyPoints(addLpObj)
+      .subscribe((resp: {success: boolean; loyalty_points: number}) => {
+        this.loyaltyPointsState.setLoyaltyPoints(resp.loyalty_points);
+        this.scanSuccessHandlerCb(resp);
+      });
   }
 
   claimReward(addLpObj) {
-    this.rewardService.claimReward(addLpObj, resp => {
+    this.rewardCreatorService.claimReward(addLpObj).subscribe(resp => {
+      this.loyaltyPointsState.setLoyaltyPoints(resp.loyalty_points);
+      console.log('resp', resp);
       this.claimRewardCb(resp);
     });
   }
@@ -270,19 +256,8 @@ export class QrComponent implements OnInit {
 
     const accountType = parseInt(localStorage.getItem('spotbie_userType'), 10);
 
-    if (accountType === AllowedAccountTypes.Personal) {
-      this.loyaltyPointsService.userLoyaltyPoints$.subscribe(
-        loyaltyPointBalance => {
-          this.userLoyaltyPoints = loyaltyPointBalance;
-        }
-      );
-      this.startQrCodeScanner();
-    } else {
-      this.loyaltyPointsService.userLoyaltyPoints$.subscribe(
-        loyaltyPointBalance => {
-          this.loyaltyPointBalance = loyaltyPointBalance;
-        }
-      );
+    if (accountType !== AllowedAccountTypes.Personal) {
+      this.loyaltyPointBalance = this.businessLoyaltyPointsState.getState();
       this.isBusiness = true;
       this.getQrCode();
     }

@@ -3,10 +3,8 @@ import * as spotbieGlobals from '../../../../globals';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {catchError} from 'rxjs/operators';
-import {Store} from '@ngrx/store';
 import {Reward} from '../../../../models/reward';
 import {handleError} from '../../../../helpers/error-helper';
-import {setValue} from '../../../../spotbie/spotbie-logged-in/loyalty-points/loyalty-points.actions';
 
 const REWARD_API = `${spotbieGlobals.API}reward`;
 
@@ -14,10 +12,7 @@ const REWARD_API = `${spotbieGlobals.API}reward`;
   providedIn: 'root',
 })
 export class RewardCreatorService {
-  constructor(
-    private http: HttpClient,
-    private store: Store<{loyaltyPoints}>
-  ) {}
+  constructor(private http: HttpClient) {}
 
   saveReward(reward: Reward): Observable<any> {
     const placeToEatRewardApi = `${REWARD_API}/create`;
@@ -45,18 +40,11 @@ export class RewardCreatorService {
       .pipe(catchError(handleError('completeReset')));
   }
 
-  claimReward(businessLoyaltyPointsObj: any, callback): any {
+  claimReward(businessLoyaltyPointsObj: any): any {
     const apiUrl = `${REWARD_API}/claim`;
 
-    this.http
+    return this.http
       .post<any>(apiUrl, businessLoyaltyPointsObj)
-      .pipe(catchError(handleError('claimReward')))
-      .subscribe(resp => {
-        if (resp.success) {
-          const loyaltyPointBalance: number = resp.loyalty_points;
-          this.store.dispatch(setValue({loyaltyPointBalance}));
-        }
-        callback(resp);
-      });
+      .pipe(catchError(handleError('claimReward')));
   }
 }

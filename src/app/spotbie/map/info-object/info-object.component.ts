@@ -101,10 +101,12 @@ export class InfoObjectComponent implements OnInit {
     if (this.router.url.indexOf('event') > -1) {
       this.infoObjectService.pullEventObject(infoObjToPull).subscribe(resp => {
         this.getEventCallback(resp);
+        this.loading = false;
       });
     } else {
       this.infoObjectService.pullInfoObject(infoObjToPull).subscribe(resp => {
         this.pullInfoObjectCallback(resp);
+        this.loading = false;
       });
     }
   }
@@ -354,8 +356,6 @@ export class InfoObjectComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.loading = true;
-
     this.bgColor = localStorage.getItem('spotbie_backgroundColor');
     this.isLoggedIn = localStorage.getItem('spotbie_loggedIn');
 

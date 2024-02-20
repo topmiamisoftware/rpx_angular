@@ -60,11 +60,7 @@ export class EventMenuComponent implements OnInit {
   }
 
   getLoyaltyPointBalance() {
-    this.loyaltyPointsService.userLoyaltyPoints$.subscribe(
-      loyaltyPointBalance => {
-        this.userLoyaltyPoints = loyaltyPointBalance;
-      }
-    );
+    this.userLoyaltyPoints = 0;
   }
 
   fetchRewards(qrCodeLink: string = null, userHash: string = null) {

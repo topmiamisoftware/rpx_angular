@@ -5,13 +5,15 @@ import {InfoObjectType} from '../../../../helpers/enum/info-object-type.enum';
 import {getDistanceFromLatLngInMiles} from '../../../..//helpers/measure-units.helper';
 import {Ad} from '../../../../models/ad';
 import {Business} from '../../../../models/business';
-import {LoyaltyPointsService} from '../../../../services/loyalty-points/loyalty-points.service';
 import {AdsService} from '../../../../spotbie/ads/ads.service';
 import {
   EVENT_CATEGORIES,
   FOOD_CATEGORIES,
   SHOPPING_CATEGORIES,
 } from '../../map_extras/map_extras';
+import {Immutable} from '@angular-ru/cdk/typings';
+import {LoyaltyPointBalance} from '../../../../models/loyalty-point-balance';
+import {BusinessLoyaltyPointsState} from '../../../spotbie-logged-in/state/business.lp.state';
 
 const PLACE_TO_EAT_AD_IMAGE =
   'assets/images/def/places-to-eat/featured_banner_in_house.jpg';
@@ -44,7 +46,7 @@ export class NearbyFeaturedAdComponent implements OnInit, OnDestroy {
   rewardMenuOpen = false;
   isMobile = false;
   currentCategoryList: Array<string> = [];
-  loyaltyPointBalance: any;
+  loyaltyPointBalance: Immutable<LoyaltyPointBalance> = null;
   adTypeWithId = false;
   adList: Array<Ad> = [];
   genericAdImage: string = PLACE_TO_EAT_AD_IMAGE;
@@ -54,13 +56,9 @@ export class NearbyFeaturedAdComponent implements OnInit, OnDestroy {
   constructor(
     private adsService: AdsService,
     private deviceDetectorService: DeviceDetectorService,
-    private loyaltyPointsService: LoyaltyPointsService
+    private businessLoyaltyState: BusinessLoyaltyPointsState
   ) {
-    this.loyaltyPointsService.userLoyaltyPoints$.subscribe(
-      loyaltyPointsBalance => {
-        this.loyaltyPointBalance = loyaltyPointsBalance;
-      }
-    );
+    this.loyaltyPointBalance = this.businessLoyaltyState.getState();
   }
 
   getNearByFeatured() {
@@ -97,6 +95,7 @@ export class NearbyFeaturedAdComponent implements OnInit, OnDestroy {
           break;
       }
     } else {
+      accountType = getRandomInt(1, 3).toString();
       switch (this.accountType) {
         case 1:
           this.genericAdImage = PLACE_TO_EAT_AD_IMAGE;
@@ -227,4 +226,10 @@ export class NearbyFeaturedAdComponent implements OnInit, OnDestroy {
     clearInterval(this.switchAdInterval);
     this.switchAdInterval = false;
   }
+}
+
+export function getRandomInt(min, max) {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  return Math.floor(Math.random() * (max - min) + min); // The maximum is exclusive and the minimum is inclusive
 }

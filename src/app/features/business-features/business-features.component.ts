@@ -92,7 +92,7 @@ export class BusinessFeaturesComponent implements OnInit {
   }
 
   spawnCategories(category: number) {
-    this.spawnCategoriesEvt.emit({category});
+    this.spawnCategoriesEvt.emit(category);
   }
 
   openBlog() {

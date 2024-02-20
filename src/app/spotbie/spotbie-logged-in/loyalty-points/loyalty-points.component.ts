@@ -13,6 +13,10 @@ import {UserauthService} from '../../../services/userauth.service';
 import {AllowedAccountTypes} from '../../../helpers/enum/account-type.enum';
 import {LoyaltyPointBalance} from '../../../models/loyalty-point-balance';
 import {LoyaltyPointsService} from '../../../services/loyalty-points/loyalty-points.service';
+import {LoyaltyPointsState} from '../state/lp.state';
+import {Immutable} from '@angular-ru/cdk/typings';
+import {Observable} from 'rxjs';
+import {BusinessLoyaltyPointsState} from '../state/business.lp.state';
 
 @Component({
   selector: 'app-loyalty-points',
@@ -56,13 +60,15 @@ export class LoyaltyPointsComponent implements OnInit {
   totalSpent: number = null;
   newUserLoyaltyPoints: number;
   userType: number = null;
-  loyaltyPointBalance: any = 0;
-  loyaltyPointBalanceBusiness: any = new LoyaltyPointBalance();
+  loyaltyPointBalance$: Observable<number>;
+  loyaltyPointBalanceBusiness: Immutable<LoyaltyPointBalance> = null;
   loyaltyTier = new LoyaltyTier();
   existingTiers: Array<LoyaltyTier> = this.loyaltyPointsService.existingTiers;
 
   constructor(
     private loyaltyPointsService: LoyaltyPointsService,
+    private businessLoyaltyPointState: BusinessLoyaltyPointsState,
+    private loyaltyPointState: LoyaltyPointsState,
     private formBuilder: UntypedFormBuilder,
     private router: Router,
     private userAuth: UserauthService,
@@ -82,8 +88,9 @@ export class LoyaltyPointsComponent implements OnInit {
     else return '';
   }
 
-  async getLoyaltyPointBalance() {
-    await this.loyaltyPointsService.getLoyaltyPointBalance();
+  getLoyaltyPointBalance() {
+    this.loyaltyPointState.getLoyaltyPointBalance();
+    this.businessLoyaltyPointState.getBusinessLoyaltyPointBalance();
   }
 
   /* TO-DO: Create a function which shows a business's or personal account' past transactions. */
@@ -353,17 +360,9 @@ export class LoyaltyPointsComponent implements OnInit {
     this.userType = parseInt(localStorage.getItem('spotbie_userType'), 10);
 
     if (this.userType === AllowedAccountTypes.Personal) {
-      this.loyaltyPointsService.userLoyaltyPoints$.subscribe(
-        loyaltyPointBalance => {
-          this.loyaltyPointBalance = loyaltyPointBalance;
-        }
-      );
+      this.loyaltyPointBalance$ = this.loyaltyPointState.balance$;
     } else {
-      this.loyaltyPointsService.userLoyaltyPoints$.subscribe(
-        loyaltyPointBalance => {
-          this.loyaltyPointBalanceBusiness = loyaltyPointBalance;
-        }
-      );
+      this.loyaltyPointBalanceBusiness = this.businessLoyaltyPointState.getState();
 
       //this.loyaltyPointsService.getExistingTiers().subscribe();
     }
