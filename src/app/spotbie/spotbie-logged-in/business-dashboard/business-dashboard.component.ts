@@ -1,5 +1,4 @@
 import {
-  ChangeDetectionStrategy,
   Component,
   ElementRef,
   EventEmitter,
@@ -113,6 +112,9 @@ export class BusinessDashboardComponent implements OnInit {
         this.canUseCustomerManager = true;
         break;
       case BusinessMembership.Ultimate:
+        this.canUseCustomerManager = true;
+        break;
+      case BusinessMembership.Legacy:
         this.canUseCustomerManager = true;
         break;
     }
