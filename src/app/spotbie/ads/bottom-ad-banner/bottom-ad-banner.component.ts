@@ -208,8 +208,6 @@ export class BottomAdBannerComponent implements OnInit, OnDestroy {
       this.totalRewards = resp.totalRewards;
       this.displayAd = true;
     } else {
-      console.log('getSingleAdListCb', resp);
-
       if (!this.switchAdInterval) {
         this.switchAdInterval = setInterval(() => {
           if (!this.editMode) this.getBottomHeader();
@@ -223,12 +221,11 @@ export class BottomAdBannerComponent implements OnInit, OnDestroy {
   }
 
   openAd(): void {
-    if (!this.business) {
+    if (this.business?.id) {
       this.communityMemberOpen = true;
     } else {
       window.open('/business', '_blank');
     }
-    // this.router.navigate([`/business-menu/${this.business.qr_code_link}`])
   }
 
   closeRewardMenu() {

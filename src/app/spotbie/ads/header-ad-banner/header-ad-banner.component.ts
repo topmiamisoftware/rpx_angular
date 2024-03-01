@@ -229,7 +229,8 @@ export class HeaderAdBannerComponent implements OnInit, OnDestroy {
   }
 
   openAd(): void {
-    if (!this.business) {
+    console.log('THE BUSINESS', this.business);
+    if (this.business?.id) {
       this.communityMemberOpen = true;
     } else {
       window.open('/business', '_blank');
