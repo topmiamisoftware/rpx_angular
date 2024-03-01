@@ -36,10 +36,12 @@
             <div class="text-uppercase text-center">
               <p class="spotbie-text-gradient">Loyalty Program</p>
               <p class="spotbie-text-gradient">Local Exposure</p>
+              <p class="spotbie-text-gradient">Header Banner Ads</p>
               <p class="spotbie-text-gradient">Default Max Reward Rate</p>
+              <p class="spotbie-text-gradient">Nearby Motivators</p>
             </div>
 
-            <button class="spotbie-button sb-getStarted mt-4 mb-5" (click)="goHome()">
+            <button class="spotbie-button sb-getStarted mt-4" (click)="goHome()">
               GET STARTED
             </button>
           </div>
@@ -53,13 +55,15 @@
 
             <div class="text-uppercase text-center">
               <p class="spotbie-text-gradient">+Starter Package</p>
-              <p class="spotbie-text-gradient">+Header Banner Ads</p>
+              <p class="spotbie-text-gradient">+Loyalty Tiers</p>
+              <p class="spotbie-text-gradient">+Footer Banner Ads</p>
               <p class="spotbie-text-gradient">+0.01% Max Reward Rate</p>
-              <p class="spotbie-text-gradient">+Text Messaging (5,000 sms)</p>
+              <p class="spotbie-text-gradient">+5,000 SMS & 5,000 e-mails</p>
+              <p class="spotbie-text-gradient">+Feedback</p>
               <p class="spotbie-text-gradient">+Customer Insights</p>
             </div>
 
-            <button class="spotbie-button sb-getStarted mt-4 mb-5" (click)="goHome()">
+            <button class="spotbie-button sb-getStarted mt-4" (click)="goHome()">
               GET STARTED
             </button>
           </div>
@@ -73,31 +77,48 @@
 
             <div class="text-uppercase text-center">
               <p class="spotbie-text-gradient">+Starter Package</p>
-              <p class="spotbie-text-gradient">+Header, Footer, Nearby Featured Ads</p>
+              <p class="spotbie-text-gradient">+Nearby Featured Ads</p>
               <p class="spotbie-text-gradient">+0.02% Max Reward Rate</p>
-              <p class="spotbie-text-gradient">+Text Messaging, E-Mail</p>
+              <p class="spotbie-text-gradient">+10,000 SMS & 20,000 e-mails</p>
+              <p class="spotbie-text-gradient">+Advanced Targeting & Insights</p>
               <p class="spotbie-text-gradient">+Automated Push Notifications</p>
             </div>
 
-            <button class="spotbie-button sb-getStarted mt-4 mb-5" (click)="goHome()">
+            <button class="spotbie-button sb-getStarted mt-4" (click)="goHome()">
               GET STARTED
             </button>
           </div>
         </div>
 
-<!--        <div class='spotbie-overlay-window' style="z-index: 99;" *ngIf="false">
+        <ng-container *ngIf="!isMobile">
+          <div class="d-flex align-middle justify-content-center">
+            <button class="sb-getStarted removeBorder mt-4 mb-5" (click)="calendly()">
+              SCHEDULE DEMO
+            </button>
+          </div>
+        </ng-container>
+
+        <ng-container *ngIf="isMobile">
+          <div>
+            <button class="sb-getStarted removeBorder mt-5 mb-4" (click)="calendly()">
+              SCHEDULE DEMO
+            </button>
+          </div>
+        </ng-container>
+
+        <div class='spotbie-overlay-window' style="z-index: 99;" *ngIf="calendlyUp">
           <div class='sb-v-wrapper' style="display: grid; align-content: center;">
 
-            &lt;!&ndash; Calendly inline widget begin &ndash;&gt;
+            <!-- Calendly inline widget begin -->
             <div id="calendlyEl" class="calendly-inline-widget"></div>
-            &lt;!&ndash; Calendly inline widget end &ndash;&gt;
+            <!-- Calendly inline widget end -->
 
             <div class='spotbie-text-gradient text-center text-uppercase mt-4'
                  style="cursor: pointer;" (click)="calendly()">CLOSE</div>
           </div>
-        </div>-->
+        </div>
 
-        <div class="mb-4 sb-readImage" id="sbReadImageUsers"></div>
+        <div class="sb-readImage" id="sbReadImageUsers"></div>
 
         <div class="sb-footer text-uppercase pt-5 pb-5">
           <p [routerLink]="['/terms']">Terms & Privacy Policy</p>
@@ -110,10 +131,6 @@
             <i class="fab fa-instagram" (click)="openIg()"></i>
             <i class="fab fa-twitter" (click)="openTwitter()"></i>
             <i class="fab fa-youtube" (click)="openYoutube()"></i>
-          </div>
-
-          <div class="mt-4 text-uppercase spotbie-text-link cursor-pointer">
-            <span (click)="openBlog()">BLOG</span>
           </div>
         </div>
       </div>
