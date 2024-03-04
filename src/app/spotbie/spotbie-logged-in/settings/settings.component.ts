@@ -34,8 +34,8 @@ import {SpotbiePaymentsService} from '../../../services/spotbie-payments/spotbie
 import GeocoderResult = google.maps.GeocoderResult;
 import {MatSelectChange} from '@angular/material/select';
 import {MatDialog} from '@angular/material/dialog';
-import {TextMessageDialogComponent} from '../business-dashboard/customer-manager/text-message/text-message.component';
 import {AlertDialogComponent} from '../../../helpers/alert/alert.component';
+import {faTruck} from '@fortawesome/free-solid-svg-icons';
 
 const PLACE_TO_EAT_API = spotbieGlobals.API + 'place-to-eat';
 const PLACE_TO_EAT_MEDIA_MAX_UPLOAD_SIZE = 25e6;
@@ -62,6 +62,8 @@ export class SettingsComponent implements OnInit {
   @ViewChild('placeToEatMediaInput') placeToEatMediaInput;
 
   @Output() closeWindowEvt = new EventEmitter();
+
+  faFoodTruckIcon = faTruck;
 
   lat: number;
   lng: number;
@@ -100,7 +102,6 @@ export class SettingsComponent implements OnInit {
   passwordSubmitted = false;
   settingsFormInitiated = false;
   mapStyles: google.maps.MapTypeStyle[] = map_extras.MAP_STYLES;
-  locationPrompt = true;
   showMobilePrompt = false;
   showMobilePrompt2 = false;
   placeSettingsFormUp = false;
@@ -121,7 +122,6 @@ export class SettingsComponent implements OnInit {
   line2: string = null;
   postalCode: string = null;
   state: string = null;
-  isSocialAccount = false;
   selected: number;
 
   @ViewChild('businessInput') businessInput: ElementRef<HTMLInputElement>;
@@ -245,7 +245,8 @@ export class SettingsComponent implements OnInit {
         this.user.business.address = settingsResponse.business.address;
         this.user.business.photo = settingsResponse.business.photo;
         this.user.business.categories = settingsResponse.business.categories;
-        this.selected = settingsResponse.business.categories;
+        this.user.business.is_food_truck =
+          settingsResponse.business.is_food_truck;
 
         this.originPhoto = this.user.business.photo;
       }
@@ -282,6 +283,7 @@ export class SettingsComponent implements OnInit {
       loc_x: this.lat,
       loc_y: this.lng,
       categories: this.activeBusinessCategories.toString(),
+      is_food_truck: this.isFoodTruck,
     };
 
     this.userAuthService.saveBusiness(businessInfo).subscribe();
@@ -334,11 +336,11 @@ export class SettingsComponent implements OnInit {
     this.loading = true;
     this.calendlyUp = !this.calendlyUp;
 
-    if (this.calendlyUp)
+    if (this.calendlyUp) {
       calendly.spawnCalendly(this.originTitle, this.originAddress, () => {
         this.loading = false;
       });
-    else {
+    } else {
       this.loading = false;
     }
   }
@@ -390,6 +392,7 @@ export class SettingsComponent implements OnInit {
       loc_y: this.lng,
       categories: this.activeBusinessCategories.toString(),
       passkey: this.passKey,
+      isFoodTruck: this.isFoodTruck,
     };
 
     this.userAuthService
@@ -648,8 +651,6 @@ export class SettingsComponent implements OnInit {
               'postal_code'
             );
 
-            console.log('POSTAL CODE', this.postalCode);
-
             if (!this.user.business.address) {
               this.businessSettingsForm
                 .get('originAddress')
@@ -900,6 +901,7 @@ export class SettingsComponent implements OnInit {
               Validators.minLength(100),
             ],
           ],
+          isFoodTruck: [''],
           spotbieOrigin: ['', [Validators.required]],
           originCategories: [''],
         });
@@ -929,6 +931,9 @@ export class SettingsComponent implements OnInit {
           this.businessSettingsForm
             .get('originCategories')
             .setValue(this.user.business.categories);
+          this.businessSettingsForm
+            .get('isFoodTruck')
+            .setValue(!!this.user.business.is_food_truck);
           this.activeBusinessCategories =
             this.user.business.categories.toString();
           this.selected = parseInt(this.activeBusinessCategories);
@@ -1024,6 +1029,9 @@ export class SettingsComponent implements OnInit {
   }
   get originCategories() {
     return this.businessSettingsForm.get('originCategories').value;
+  }
+  get isFoodTruck() {
+    return this.businessSettingsForm.get('isFoodTruck').value ?? false;
   }
   get i() {
     return this.businessSettingsForm.controls;
@@ -1129,19 +1137,17 @@ export class SettingsComponent implements OnInit {
 
     let deactivationPassword = null;
 
-    if (!this.isSocialAccount) {
-      if (this.deactivationForm.invalid) {
-        this.spotbieAccountDeactivationInfo.nativeElement.scrollIntoView({
-          behavior: 'smooth',
-          block: 'start',
-        });
-        return;
-      }
-      deactivationPassword = this.deactivationPassword;
+    if (this.deactivationForm.invalid) {
+      this.spotbieAccountDeactivationInfo.nativeElement.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      });
+      return;
     }
+    deactivationPassword = this.deactivationPassword;
 
     this.userAuthService
-      .deactivateAccount(deactivationPassword, this.isSocialAccount)
+      .deactivateAccount(deactivationPassword, false)
       .subscribe(resp => {
         this.deactivateCallback(resp);
       });

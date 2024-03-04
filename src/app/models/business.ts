@@ -24,4 +24,5 @@ export class Business {
   trial_ends_at: string;
   spotbie_user: SpotbieUser;
   loyalty_point_balance: LoyaltyPointBalance;
+  is_food_truck: boolean;
 }

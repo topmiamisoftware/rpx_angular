@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
-import {Observable} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 import {catchError, tap} from 'rxjs/operators';
 import {handleError} from '../helpers/error-helper';
 import {User} from '../models/user';
@@ -22,6 +22,7 @@ export class UserauthService {
   userTimezone: string;
   route: string;
   userProfile: User;
+  userProfile$ = new BehaviorSubject<User>(null);
 
   constructor(
     private http: HttpClient,
@@ -73,6 +74,7 @@ export class UserauthService {
     return this.http.post<any>(getSettingsApi, null).pipe(
       tap(settings => {
         this.userProfile = settings;
+        this.userProfile$.next(this.userProfile);
       }),
       catchError(err => {
         throw err;
@@ -214,6 +216,7 @@ export class UserauthService {
       postal_code: businessInfo.postal_code,
       state: businessInfo.state,
       accountType: businessInfo.accountType,
+      is_food_truck: businessInfo.isFoodTruck,
     };
 
     return this.http
@@ -247,10 +250,32 @@ export class UserauthService {
       postal_code: businessInfo.postal_code,
       state: businessInfo.state,
       accountType: businessInfo.accountType,
+      is_food_truck: businessInfo.is_food_truck,
     };
 
     return this.http
       .post<any>(apiUrl, businessInfoObj)
       .pipe(catchError(handleError('saveBusiness')));
+  }
+
+  saveLocation(businessInfo: any): Observable<any> {
+    const apiUrl = `${BUSINESS_API}/save-location`;
+
+    const businessInfoObj = {
+      address: businessInfo.address,
+      photo: businessInfo.photo,
+      loc_x: businessInfo.loc_x,
+      loc_y: businessInfo.loc_y,
+      city: businessInfo.city,
+      country: businessInfo.country,
+      line1: businessInfo.line1,
+      line2: businessInfo.line2,
+      postal_code: businessInfo.postal_code,
+      state: businessInfo.state,
+    };
+
+    return this.http
+      .put<any>(apiUrl, businessInfoObj)
+      .pipe(catchError(handleError('saveLocation')));
   }
 }

@@ -1,12 +1,11 @@
 import {NgxsDataEntityCollectionsRepository} from '@angular-ru/ngxs/repositories';
 import {RecentGuest} from '../models';
-import {Computed, DataAction, StateRepository} from '@angular-ru/ngxs/decorators';
+import {Computed, StateRepository} from '@angular-ru/ngxs/decorators';
 import {Injectable} from '@angular/core';
 import {State} from '@ngxs/store';
 import {createEntityCollections} from '@angular-ru/cdk/entity';
 import {Observable, tap} from 'rxjs';
 import {CustomerManagerService} from '../customer-manager.service';
-import {map} from "rxjs/operators";
 
 @StateRepository()
 @State({

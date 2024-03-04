@@ -97,11 +97,7 @@
                         <input class="sb-input"
                                 formControlName="spotbie_email"
                                 type="text" value="email"
-                                maxlength="135" *ngIf="!isSocialAccount" />
-
-                        <input class="sb-input"
-                                formControlName="spotbie_email" type="text" readonly
-                                value="email" maxlength="135" *ngIf="isSocialAccount" />
+                                maxlength="135" />
                     </td>
                 </tr>
                 <tr>
@@ -401,7 +397,7 @@
 </div>
 
 <div class='spotbie-overlay-window d-flex flex-column
-            align-content-center justify-content-center align-items-center' *ngIf="accountDeactivation && !isSocialAccount">
+            align-content-center justify-content-center align-items-center' *ngIf="accountDeactivation">
     <h5 class="spotbie-text-gradient">DEACTIVATE ACCOUNT</h5>
 
     <form [formGroup]="deactivationForm">
@@ -580,9 +576,10 @@
                   </div>
                 </ng-template>
 
-                <mat-form-field  class="sb-input sb-select">
+                <mat-form-field class="sb-input sb-select">
                   <mat-select (selectionChange)="add($event)"
                               formControlName="originCategories"
+                              panelClass="spotbie-dropdown"
                               [placeholder]="'Select a category'"
                               [(ngModel)]="selected">
                     <mat-option *ngFor="let category of businessCategoryList; let i = index;" [value]="i">
@@ -625,6 +622,16 @@
                     <div class='spotbie-text-gradient mt-2 mb-2'>{{ originDescription.length }} / 350</div>
                 </td>
             </tr>
+            <ng-container *ngIf="accountTypeCategory === 'PLACE TO EAT'">
+              <tr>
+                <td style="color: white;">
+                  <fa-icon class="food-truck" [icon]="faFoodTruckIcon"></fa-icon>
+                  <mat-slide-toggle ngModel name="isFoodTruck">
+                    Food Truck?
+                  </mat-slide-toggle>
+                </td>
+              </tr>
+            </ng-container>
             <tr>
                 <div class='spotbie-button text-uppercase' (click)="startBusinessVerification()" *ngIf="locationFound">
                     Verify
@@ -632,8 +639,9 @@
             </tr>
             <tr>
                 <div class='spotbie-text-gradient text-center text-uppercase mt-4 mb-5'
-                        *ngIf="!loading"
-                        style="cursor: pointer;" (click)="cancelPlaceSettings()">CANCEL</div>
+                      *ngIf="!loading"
+                      style="cursor: pointer;"
+                     (click)="cancelPlaceSettings()">CANCEL</div>
             </tr>
         </table>
     </form>

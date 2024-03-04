@@ -1,8 +1,8 @@
 .spotbie-block{
     position: relative;
     margin: 0 auto;
-    width: 950px;
-    max-width: 950px;
+    width: 100%;
+    max-width: 100%;
     margin-bottom: 20px;
 }
 .spotbie-info-text{
@@ -356,12 +356,14 @@ textarea{
 h6{
   font-size: 1.9rem;
 }
+.food-truck{
+  margin-right: .5em;
+}
+
 /**WIDTH MEDIA QUERIES */
 @media (max-width: 1300px) {
-
 }
 @media (max-width: 1200px) {
-
 }
 @media (max-width: 1024px) {
 }
@@ -376,7 +378,6 @@ h6{
     padding-right: 1%;
     border-radius: 0;
   }
-
   .spotbie-price-box{
     display: flex!important;
     justify-content: center!important;
@@ -391,14 +392,12 @@ h6{
     min-width: 360px;
     max-width: 360px;
   }
-
   .spotbie-price-box .spotbie-button{
     font-size: .9rem !important;
     max-width: 75%;
     width: 75%;
     min-width: 75%;
   }
-
   h6{
     font-size: 1.3rem;
     margin-top: 15px;

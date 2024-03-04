@@ -5,7 +5,6 @@ import {
   EventEmitter,
   Output,
   ElementRef,
-  AfterViewInit,
 } from '@angular/core';
 import {MapComponent} from '../map/map.component';
 import {DeviceDetectorService} from 'ngx-device-detector';
@@ -15,7 +14,10 @@ import {UserauthService} from '../../services/userauth.service';
 import {logOutCallback} from '../../helpers/logout-callback';
 import {LoyaltyPointsState} from './state/lp.state';
 import {BehaviorSubject, Observable} from 'rxjs';
-import {BusinessLoyaltyPointsState} from "./state/business.lp.state";
+import {BusinessLoyaltyPointsState} from './state/business.lp.state';
+import {faTruck} from '@fortawesome/free-solid-svg-icons';
+import {FoodTruckLocationDialogComponent} from './food-truck-location/food-truck-location-dialog.component';
+import {MatDialog} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-menu-logged-in',
@@ -45,13 +47,39 @@ export class MenuLoggedInComponent implements OnInit {
   business = false;
   getRedeemableItems = false;
   eventMenuOpen = false;
+  user$ = this.userAuthService.userProfile$;
+
+  faFoodTruck = faTruck;
 
   constructor(
     private userAuthService: UserauthService,
     private deviceService: DeviceDetectorService,
     private loyaltyPointState: LoyaltyPointsState,
-    private businessLoyaltyPointsState: BusinessLoyaltyPointsState
+    private businessLoyaltyPointsState: BusinessLoyaltyPointsState,
+    public dialog: MatDialog
   ) {}
+
+  ngOnInit(): void {
+    this.isMobile = this.deviceService.isMobile();
+    this.isDesktop = this.deviceService.isDesktop();
+    this.isTablet = this.deviceService.isTablet();
+
+    this.userType = parseInt(localStorage.getItem('spotbie_userType'), 10);
+
+    if (this.userType === AllowedAccountTypes.Personal) {
+      this.business = false;
+      this.getLoyaltyPointBalance();
+    } else {
+      this.business = true;
+      this.getBusinessLoyaltyPointBalance();
+    }
+
+    this.userName = localStorage.getItem('spotbie_userLogin');
+  }
+
+  ngAfterViewInit() {
+    this.mapApp$.next(true);
+  }
 
   myFavorites() {
     this.menuActive = false;
@@ -128,13 +156,15 @@ export class MenuLoggedInComponent implements OnInit {
   }
 
   getLoyaltyPointBalance() {
-    this.loyaltyPointState.getLoyaltyPointBalance().subscribe((r) => {
+    this.loyaltyPointState.getLoyaltyPointBalance().subscribe(r => {
       this.userLoyaltyPoints$ = this.loyaltyPointState.balance$;
     });
   }
 
   getBusinessLoyaltyPointBalance() {
-    this.businessLoyaltyPointsState.getBusinessLoyaltyPointBalance().subscribe();
+    this.businessLoyaltyPointsState
+      .getBusinessLoyaltyPointBalance()
+      .subscribe();
   }
 
   getPointsWrapperStyle() {
@@ -150,24 +180,6 @@ export class MenuLoggedInComponent implements OnInit {
     this.eventMenuOpen = false;
   }
 
-  ngOnInit(): void {
-    this.isMobile = this.deviceService.isMobile();
-    this.isDesktop = this.deviceService.isDesktop();
-    this.isTablet = this.deviceService.isTablet();
-
-    this.userType = parseInt(localStorage.getItem('spotbie_userType'), 10);
-
-    if (this.userType === AllowedAccountTypes.Personal) {
-      this.business = false;
-      this.getLoyaltyPointBalance();
-    } else {
-      this.business = true;
-      this.getBusinessLoyaltyPointBalance();
-    }
-
-    this.userName = localStorage.getItem('spotbie_userLogin');
-  }
-
   toggleRedeemables() {
     this.getRedeemableItems = !this.getRedeemableItems;
   }
@@ -176,7 +188,7 @@ export class MenuLoggedInComponent implements OnInit {
     this.getRedeemableItems = false;
   }
 
-  ngAfterViewInit() {
-    this.mapApp$.next(true);
+  updateFoodTruck() {
+    const dialogRef = this.dialog.open(FoodTruckLocationDialogComponent);
   }
 }

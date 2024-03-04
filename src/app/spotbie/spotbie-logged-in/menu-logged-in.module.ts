@@ -10,7 +10,7 @@ import {SettingsModule} from './settings/settings.module';
 import {RedeemableModule} from './redeemable/redeemable.module';
 import {SpotbiePipesModule} from '../../spotbie-pipes/spotbie-pipes.module';
 import {HelperModule} from '../../helpers/helper.module';
-// import { EventMenuModule } from './event-menu/event-menu.module'
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [MenuLoggedInComponent],
@@ -26,6 +26,7 @@ import {HelperModule} from '../../helpers/helper.module';
     MapModule,
     SettingsModule,
     RouterModule,
+    FontAwesomeModule,
     // EventMenuModule
   ],
   providers: [DeviceDetectorService],

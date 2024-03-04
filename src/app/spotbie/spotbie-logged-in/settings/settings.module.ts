@@ -4,15 +4,18 @@ import {CommonModule} from '@angular/common';
 import {RouterModule} from '@angular/router';
 import {HttpClientModule} from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {MatChipsModule} from '@angular/material/chips';
-import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import {AgmCoreModule, GoogleMapsAPIWrapper} from '@agm/core';
 import {NgxMaskModule, IConfig} from 'ngx-mask';
 import {environment} from '../../../../environments/environment';
 import {SettingsComponent} from './settings.component';
 import {HelperModule} from '../../../helpers/helper.module';
 import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatSelect, MatSelectModule} from "@angular/material/select";
+import {MatSelectModule} from '@angular/material/select';
+import {
+  _MatSlideToggleRequiredValidatorModule,
+  MatSlideToggleModule,
+} from '@angular/material/slide-toggle';
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 
 export const options: Partial<IConfig> | (() => Partial<IConfig>) = null;
 
@@ -27,12 +30,15 @@ export const options: Partial<IConfig> | (() => Partial<IConfig>) = null;
     RouterModule,
     MatFormFieldModule,
     MatSelectModule,
+    MatSlideToggleModule,
+    _MatSlideToggleRequiredValidatorModule,
     AgmCoreModule.forRoot({
       apiKey: environment.google_maps_apiKey,
       language: 'en',
       libraries: ['geometry', 'places'],
     }),
     NgxMaskModule.forRoot(options),
+    FontAwesomeModule,
   ],
   providers: [GoogleMapsAPIWrapper],
   exports: [SettingsComponent],

@@ -22,6 +22,9 @@
 .sb-userName{
     text-transform: uppercase;
 }
+.faFoodTruck {
+    color: white;
+}
 
 @media(max-width:960px){
   .sb-desktopNavBar{
