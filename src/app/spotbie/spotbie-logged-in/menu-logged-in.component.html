@@ -54,7 +54,7 @@
         LOG OUT
       </span>
 
-      <ng-container *ngIf="(user$ | async)?.business.is_food_truck">
+      <ng-container *ngIf="(user$ | async)?.business.is_food_truck && this.userType === eAllowedAccountTypes.PlaceToEat">
         <span (click)="updateFoodTruck()" style="cursor: pointer">
           <fa-icon class='faFoodTruck' [icon]="faFoodTruck"></fa-icon>
         </span>

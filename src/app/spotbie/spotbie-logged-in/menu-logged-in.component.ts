@@ -36,7 +36,6 @@ export class MenuLoggedInComponent implements OnInit {
   mapApp$ = new BehaviorSubject<boolean>(false);
   settingsWindow = {open: false};
   menuActive = false;
-  spotType: string;
   isMobile: boolean;
   isDesktop: boolean;
   isTablet: boolean;
@@ -81,21 +80,12 @@ export class MenuLoggedInComponent implements OnInit {
     this.mapApp$.next(true);
   }
 
-  myFavorites() {
-    this.menuActive = false;
-    this.spotbieMap.myFavorites();
-  }
-
   toggleLoyaltyPoints() {
     this.spotbieMap.goToLp();
   }
 
   toggleQRScanner() {
     this.spotbieMap.goToQrCode();
-  }
-
-  toggleRewardMenu(ac: string) {
-    this.spotbieMap.goToRewardMenu();
   }
 
   spawnCategories(category: number): void {
@@ -131,12 +121,6 @@ export class MenuLoggedInComponent implements OnInit {
     else this.menuActive = !this.menuActive;
   }
 
-  getMenuStyle() {
-    if (this.menuActive === false) {
-      return {'background-color': 'transparent'};
-    }
-  }
-
   openWindow(window: any): void {
     window.open = true;
   }
@@ -149,10 +133,6 @@ export class MenuLoggedInComponent implements OnInit {
     this.userAuthService.logOut().subscribe(resp => {
       logOutCallback(resp);
     });
-  }
-
-  usersAroundYou() {
-    this.spotbieMap.mobileStartLocation();
   }
 
   getLoyaltyPointBalance() {
@@ -176,16 +156,8 @@ export class MenuLoggedInComponent implements OnInit {
     this.eventMenuOpen = true;
   }
 
-  closeEvents() {
-    this.eventMenuOpen = false;
-  }
-
   toggleRedeemables() {
     this.getRedeemableItems = !this.getRedeemableItems;
-  }
-
-  closeRedeemables() {
-    this.getRedeemableItems = false;
   }
 
   updateFoodTruck() {

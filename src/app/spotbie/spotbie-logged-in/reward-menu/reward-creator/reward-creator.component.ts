@@ -18,10 +18,9 @@ import {
   NgxQrcodeElementTypes,
   NgxQrcodeErrorCorrectionLevels,
 } from '@techiediaries/ngx-qrcode';
-import {LoyaltyPointsState} from "../../state/lp.state";
-import {Immutable} from "@angular-ru/cdk/typings";
-import {LoyaltyPointBalance} from "../../../../models/loyalty-point-balance";
-import {BusinessLoyaltyPointsState} from "../../state/business.lp.state";
+import {Immutable} from '@angular-ru/cdk/typings';
+import {LoyaltyPointBalance} from '../../../../models/loyalty-point-balance';
+import {BusinessLoyaltyPointsState} from '../../state/business.lp.state';
 
 const REWARD_MEDIA_UPLOAD_API_URL = `${spotbieGlobals.API}reward/upload-media`;
 const REWARD_MEDIA_MAX_UPLOAD_SIZE = 25e6;

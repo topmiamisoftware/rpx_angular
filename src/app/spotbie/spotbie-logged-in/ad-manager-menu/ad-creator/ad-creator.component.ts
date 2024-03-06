@@ -18,8 +18,7 @@ import {Business} from '../../../../models/business';
 import {AdCreatorService} from '../../../../services/spotbie-logged-in/ad-manager-menu/ad-creator/ad-creator.service';
 import {UserauthService} from '../../../../services/userauth.service';
 import {BusinessMembership} from '../../../../models/user';
-import {BehaviorSubject, Observable} from 'rxjs';
-import {LoyaltyPointsState} from '../../state/lp.state';
+import {BehaviorSubject} from 'rxjs';
 
 const AD_MEDIA_UPLOAD_API_URL = `${spotbieGlobals.API}in-house/upload-media`;
 const AD_MEDIA_MAX_UPLOAD_SIZE = 10e6;
@@ -220,7 +219,6 @@ export class AdCreatorComponent implements OnInit {
   }
 
   startAdMediaUploader(type: string): void {
-    console.log('adType', this.adType);
     if (this.adType === '') {
       this.spbTopAnchor.nativeElement.scrollIntoView({
         behavior: 'smooth',
@@ -230,6 +228,7 @@ export class AdCreatorComponent implements OnInit {
       this.showErrors = true;
       return;
     }
+
     if (type === 'mobile') {
       this.adMediaMobileInput.nativeElement.click();
     } else {

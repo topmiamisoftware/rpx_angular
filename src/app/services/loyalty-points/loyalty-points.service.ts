@@ -101,8 +101,6 @@ export class LoyaltyPointsService {
   createTier(tier: LoyaltyTier): Observable<any> {
     const apiUrl = `${LOYATLY_POINTS_TIER_API}/store`;
 
-    console.log('createTier', tier);
-
     return this.http
       .post<any>(apiUrl, tier)
       .pipe(catchError(handleError('createTier')));

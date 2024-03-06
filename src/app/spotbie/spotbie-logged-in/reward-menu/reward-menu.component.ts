@@ -9,16 +9,14 @@ import {
 import {ActivatedRoute, Router} from '@angular/router';
 import {Business} from '../../../models/business';
 import {Reward} from '../../../models/reward';
-import {LoyaltyPointsService} from '../../../services/loyalty-points/loyalty-points.service';
 import {BusinessMenuServiceService} from '../../../services/spotbie-logged-in/business-menu/business-menu-service.service';
 import {RewardCreatorComponent} from './reward-creator/reward-creator.component';
 import {RewardComponent} from './reward/reward.component';
 import {environment} from '../../../../environments/environment';
 import {AllowedAccountTypes} from '../../../helpers/enum/account-type.enum';
-import {LoyaltyPointsState} from "../state/lp.state";
-import {Immutable} from "@angular-ru/cdk/typings";
-import {BusinessLoyaltyPointsState} from "../state/business.lp.state";
-import {LoyaltyPointBalance} from "../../../models/loyalty-point-balance";
+import {Immutable} from '@angular-ru/cdk/typings';
+import {BusinessLoyaltyPointsState} from '../state/business.lp.state';
+import {LoyaltyPointBalance} from '../../../models/loyalty-point-balance';
 
 @Component({
   selector: 'app-reward-menu',
