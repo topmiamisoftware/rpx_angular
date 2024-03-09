@@ -1,14 +1,14 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {catchError, tap} from 'rxjs/operators';
-import {Observable} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 import * as spotbieGlobals from '../../globals';
 import {LoyaltyTier} from '../../models/loyalty-point-tier.balance';
 import {LoyaltyPointBalance} from '../../models/loyalty-point-balance';
 import {handleError} from '../../helpers/error-helper';
 
-const LOYATLY_POINTS_API = spotbieGlobals.API + 'loyalty-points';
-const LOYATLY_POINTS_TIER_API = spotbieGlobals.API + 'lp-tiers';
+const LOYALTY_POINTS_API = spotbieGlobals.API + 'loyalty-points';
+const LOYALTY_POINTS_TIER_API = spotbieGlobals.API + 'lp-tiers';
 const REDEEMABLE_API = spotbieGlobals.API + 'redeemable';
 
 @Injectable({
@@ -16,7 +16,7 @@ const REDEEMABLE_API = spotbieGlobals.API + 'redeemable';
 })
 export class LoyaltyPointsService {
   loyaltyPointBalance: LoyaltyPointBalance;
-  existingTiers: Array<LoyaltyTier> = [];
+  existingTiers$ = new BehaviorSubject<LoyaltyTier[]>(null);
 
   constructor(private http: HttpClient) {}
 
@@ -53,7 +53,7 @@ export class LoyaltyPointsService {
   }
 
   getLoyaltyPointBalance(): any {
-    const apiUrl = `${LOYATLY_POINTS_API}/show`;
+    const apiUrl = `${LOYALTY_POINTS_API}/show`;
 
     return this.http
       .post<any>(apiUrl, null)
@@ -77,21 +77,16 @@ export class LoyaltyPointsService {
   }
 
   getExistingTiers(): Observable<any> {
-    const apiUrl = `${LOYATLY_POINTS_TIER_API}/index`;
+    const apiUrl = `${LOYALTY_POINTS_TIER_API}/index`;
 
     return this.http.get<any>(apiUrl).pipe(
-      tap(existingTiers => {
-        existingTiers.data.forEach(tier => {
-          tier.entranceValue = tier.lp_entrance;
-          this.existingTiers.push(tier);
-        });
-      }),
+      tap(existingTiers => this.existingTiers$.next(existingTiers.data)),
       catchError(handleError('existingTiers'))
     );
   }
 
   updateTier(tier: LoyaltyTier): Observable<any> {
-    const apiUrl = `${LOYATLY_POINTS_TIER_API}/update/${tier.uuid}`;
+    const apiUrl = `${LOYALTY_POINTS_TIER_API}/update/${tier.uuid}`;
 
     return this.http
       .patch<any>(apiUrl, tier)
@@ -99,7 +94,7 @@ export class LoyaltyPointsService {
   }
 
   createTier(tier: LoyaltyTier): Observable<any> {
-    const apiUrl = `${LOYATLY_POINTS_TIER_API}/store`;
+    const apiUrl = `${LOYALTY_POINTS_TIER_API}/store`;
 
     return this.http
       .post<any>(apiUrl, tier)
@@ -107,7 +102,7 @@ export class LoyaltyPointsService {
   }
 
   deleteTier(tierUuid: string): Observable<any> {
-    const apiUrl = `${LOYATLY_POINTS_TIER_API}/destroy/${tierUuid}`;
+    const apiUrl = `${LOYALTY_POINTS_TIER_API}/destroy/${tierUuid}`;
 
     return this.http
       .delete<any>(apiUrl)

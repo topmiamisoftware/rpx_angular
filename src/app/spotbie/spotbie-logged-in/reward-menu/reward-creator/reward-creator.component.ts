@@ -9,7 +9,6 @@ import {
 } from '@angular/core';
 import {UntypedFormBuilder, UntypedFormGroup, Validators} from '@angular/forms';
 import * as spotbieGlobals from '../../../../globals';
-import {LoyaltyTier} from '../../../../models/loyalty-point-tier.balance';
 import {environment} from '../../../../../environments/environment';
 import {Reward} from '../../../../models/reward';
 import {RewardCreatorService} from '../../../../services/spotbie-logged-in/business-menu/reward-creator/reward-creator.service';
@@ -21,6 +20,11 @@ import {
 import {Immutable} from '@angular-ru/cdk/typings';
 import {LoyaltyPointBalance} from '../../../../models/loyalty-point-balance';
 import {BusinessLoyaltyPointsState} from '../../state/business.lp.state';
+import {UserauthService} from '../../../../services/userauth.service';
+import {filter, map, take, tap} from 'rxjs/operators';
+import {BusinessMembership} from '../../../../models/user';
+import {Observable, of} from 'rxjs';
+import {LoyaltyTier} from '../../../../models/loyalty-point-tier.balance';
 
 const REWARD_MEDIA_UPLOAD_API_URL = `${spotbieGlobals.API}reward/upload-media`;
 const REWARD_MEDIA_MAX_UPLOAD_SIZE = 25e6;
@@ -42,6 +46,7 @@ export class RewardCreatorComponent implements OnInit {
   @Output() closeRewardCreatorEvt = new EventEmitter();
   @Output() closeRewardCreatorAndRefetchRewardListEvt = new EventEmitter();
 
+  rewardTier: LoyaltyTier;
   loading = false;
   rewardCreatorForm: UntypedFormGroup;
   rewardCreatorFormUp = false;
@@ -62,16 +67,28 @@ export class RewardCreatorComponent implements OnInit {
   uploadMediaForm = false;
   loyaltyPointBalance: Immutable<LoyaltyPointBalance>;
   qrCodeClaimReward = QR_CODE_CALIM_REWARD_SCAN_BASE_URL;
-  existingTiers: Array<LoyaltyTier> = this.loyaltyPointsService.existingTiers;
+  existingTiers$ = this.loyaltyPointsService.existingTiers$;
   qrType = NgxQrcodeElementTypes.URL;
   correctionLevel = NgxQrcodeErrorCorrectionLevels.HIGH;
+  user$ = this.userAuthService.userProfile$;
+  rewardTier$: Observable<LoyaltyTier>;
+  dollarEntranceValue: number;
+  canUseTiers$ = this.user$.pipe(
+    map(
+      user =>
+        user.userSubscriptionPlan === BusinessMembership.Legacy ||
+        user.userSubscriptionPlan === BusinessMembership.Intermediate ||
+        user.userSubscriptionPlan === BusinessMembership.Ultimate
+    )
+  );
 
   constructor(
     private formBuilder: UntypedFormBuilder,
     private rewardCreatorService: RewardCreatorService,
     private http: HttpClient,
     private loyaltyPointsState: BusinessLoyaltyPointsState,
-    private loyaltyPointsService: LoyaltyPointsService
+    private loyaltyPointsService: LoyaltyPointsService,
+    private userAuthService: UserauthService
   ) {
     this.loyaltyPointBalance = this.loyaltyPointsState.getState();
   }
@@ -88,7 +105,11 @@ export class RewardCreatorComponent implements OnInit {
   get rewardDescription() {
     return this.rewardCreatorForm.get('rewardDescription').value;
   }
-  // get tier() {return this.rewardCreatorForm.get('tier').value }
+
+  get tier() {
+    return this.rewardCreatorForm.get('tier').value;
+  }
+
   get rewardImage() {
     return this.rewardCreatorForm.get('rewardImage').value;
   }
@@ -117,7 +138,7 @@ export class RewardCreatorComponent implements OnInit {
       rewardName: ['', rewardNameValidators],
       rewardDescription: ['', rewardDescriptionValidators],
       rewardImage: ['', rewardImageValidators],
-      // tier: ['', null],
+      tier: ['', null],
     });
 
     if (this.reward) {
@@ -130,14 +151,39 @@ export class RewardCreatorComponent implements OnInit {
         .get('rewardDescription')
         .setValue(this.reward.description);
       this.rewardCreatorForm.get('rewardImage').setValue(this.reward.images);
-      // this.rewardCreatorForm.get('tier').setValue(this.reward.tier_id);
+      this.rewardCreatorForm.get('tier').setValue(this.reward.tier_id);
       this.rewardUploadImage = this.reward.images;
       this.setRewardLink();
       this.calculatePointValue();
+      this.setRewardTier();
     }
 
     this.rewardCreatorFormUp = true;
     this.loading = false;
+  }
+
+  setRewardTier() {
+    this.rewardTier$ = this.existingTiers$.pipe(
+      filter(tierList => !!tierList),
+      take(1),
+      map(tierList => tierList?.find(tier => tier.id === this?.tier)),
+      filter(tier => !!tier),
+      tap(tier => (this.rewardTier = tier)),
+      tap(_ => this.calculateTierDollarValue())
+    );
+  }
+
+  calculateTierDollarValue() {
+    const monthlyPoints: number = this.rewardTier.lp_entrance;
+    const pointPercentage: number =
+      this.userAuthService.userProfile.loyalty_point_balance
+        .loyalty_point_dollar_percent_value;
+
+    if (pointPercentage === 0) {
+      this.dollarEntranceValue = 0;
+    } else {
+      this.dollarEntranceValue = monthlyPoints * (pointPercentage / 100);
+    }
   }
 
   setReward(reward: Reward) {
@@ -166,10 +212,6 @@ export class RewardCreatorComponent implements OnInit {
     this.dollarValueCalculated = true;
   }
 
-  rewardTier(t) {
-    console.log(t);
-  }
-
   saveReward() {
     this.rewardFormSubmitted = true;
     this.spbTopAnchor.nativeElement.scrollIntoView({
@@ -183,7 +225,7 @@ export class RewardCreatorComponent implements OnInit {
     reward.images = this.rewardImage;
     reward.point_cost = this.rewardValue;
     reward.type = this.rewardType;
-    // reward.tier_id = this.tier
+    reward.tier_id = this.tier;
 
     // console.log('the reward', reward);
 
@@ -316,5 +358,6 @@ export class RewardCreatorComponent implements OnInit {
 
   ngOnInit(): void {
     this.initRewardForm();
+    this.loyaltyPointsService.getExistingTiers().subscribe();
   }
 }

@@ -1,9 +1,0 @@
-{
-    "/api/*": {
-        "target": "https://192.165.1.65:8000/api/",
-        "secure": true,       
-        "logLevel": "debug",
-        "changeOrigin": true,
-        "timeout" : 360000
-    }   
-}

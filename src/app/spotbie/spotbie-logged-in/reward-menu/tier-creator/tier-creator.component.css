@@ -1,3 +1,98 @@
+span.sb-loyalty-points{
+  font-size: 10rem !important;
+  color: #fff !important;
+  border-right: unset !important;
+}
+img.sb-loyalty-points{
+  width: 25px;
+  min-width: 25px;
+  max-width: 25px;
+  cursor: pointer;
+  vertical-align: unset;
+}
+h3{
+  color: white;
+}
+p{
+  position: relative;
+  margin: 0 auto;
+  max-width: 100%;
+}
+.sb-input{
+  text-align: center;
+  width: 450px;
+  min-width: 450px;
+}
+.spotbie-overlay-window{
+  display: flex!important;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  align-content: center;
+  background: #332f3e;
+  text-align: center;
+  z-index: 97;
+}
+.sb-loyalty-points-wrapper{
+  position: relative;
+}
+.sb-budget-wrapper{
+  position: relative;
+}
+.fa-question-circle{
+  margin-right: 5px;
+}
+.sb-helpBlock{
+  position:relative;
+  margin: 0 auto;
+  max-width: 650px;
+}
+.sb-loyalty-points.sb-text-light-green-gradient{
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 99;
+  letter-spacing: unset;
+  line-height: unset;
+}
+.sb-loyalty-points-new{
+  font-size: 2.5rem;
+  line-height: 2.5rem;
+}
+.sb-added-loyalty-points{
+  position: absolute;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+  font-size: 3.5rem;
+  line-height: 3.5rem;
+  z-index: 999;
+}
+.spotbie-howDoesItWork{
+  font-size: .8rem;
+}
+.sb-helpBlock{
+  font-size: .8rem;
+  margin-bottom: 30px;
+}
+.spotbie-lpResetInfo{
+  font-size: 1rem;
+}
+h5{
+  font-size: 1rem;
+}
+.spotbie-overlay-window{
+  width: 103%;
+  min-width: 103%;
+  max-width: 103%;
+}
+.fa-question-circle,
+.fa-refresh,
+.fa-coins{
+  color: white;
+  margin-left: 15px;
+  font-size: .8rem;
+}
+
 .spotbie-overlay-window{
   z-index: 97;
   background-color: #1c1924!important;
@@ -105,9 +200,6 @@
   -webkit-text-fill-color: unset;
   color: white;
 }
-.fa-coins {
-  color: white;
-}
 
 @media (max-width: 1024px){
   .sb-menuItemWrapper{
@@ -120,15 +212,63 @@
     margin: 0 auto;
   }
 }
+
 @media (max-width: 768px){
   .sb-menuItemInner{
     width: 100%;
     min-width: 100%;
     max-width: 100%;
   }
+  span.sb-loyalty-points{
+    font-size: 7rem !important;
+  }
 }
 
+@media (max-width: 650px){
+  .sb-helpBlock{
+    font-size: .7rem;
+    min-width: 92%;
+    width: 92%;
+    max-width: 92%;
+    margin-bottom: 60px;
+  }
+  .spotbie-redeemItem{
+    max-width: 94%;
+    min-width: 94%;
+    width: 94%;
+  }
+}
 @media (max-width: 460px) {
+  .spotbie-lpResetInfo{
+    font-size: .6rem;
+  }
+  .sb-input{
+    width: 94%;
+    min-width: 94%;
+    max-width: 94%;
+  }
+  .sb-budget-wrapper{
+    width: 91%;
+    min-width: 91%;
+    max-width: 91%;
+  }
+  h4{
+    font-size: 1rem;
+    padding: 0px;
+  }
+  .spotbie-input-info {
+    font-size: .8rem;
+  }
+  span.sb-loyalty-points{
+    font-size: 4rem !important;
+    margin-right: unset;
+  }
+  img.sb-loyalty-points{
+    display: none;
+  }
+  #sp-lpTitle{
+    margin-bottom: 0px !important;
+  }
   .sb-menuItem {
     width: 47%;
     min-width: 47%;
@@ -206,3 +346,4 @@
     max-height: 200px;
   }
 }
+

@@ -17,6 +17,9 @@ import {AllowedAccountTypes} from '../../../helpers/enum/account-type.enum';
 import {Immutable} from '@angular-ru/cdk/typings';
 import {BusinessLoyaltyPointsState} from '../state/business.lp.state';
 import {LoyaltyPointBalance} from '../../../models/loyalty-point-balance';
+import {map} from "rxjs/operators";
+import {BusinessMembership} from "../../../models/user";
+import {UserauthService} from "../../../services/userauth.service";
 
 @Component({
   selector: 'app-reward-menu',
@@ -45,15 +48,38 @@ export class RewardMenuComponent implements OnInit {
   business: Business = new Business();
   loyaltyPointsBalance: Immutable<LoyaltyPointBalance>;
   isLoggedIn: string = null;
+  openTiers = false;
+  user$ = this.userAuthService.userProfile$;
+  canUseTiers$ = this.user$.pipe(
+    map(
+      user =>
+        user.userSubscriptionPlan === BusinessMembership.Legacy ||
+        user.userSubscriptionPlan === BusinessMembership.Intermediate ||
+        user.userSubscriptionPlan === BusinessMembership.Ultimate
+    )
+  );
 
   constructor(
     private loyaltyPointsState: BusinessLoyaltyPointsState,
     private businessMenuService: BusinessMenuServiceService,
     private router: Router,
-    route: ActivatedRoute
+    route: ActivatedRoute,
+    private userAuthService: UserauthService
   ) {
     if (this.router.url.indexOf('business-menu') > -1) {
       this.qrCodeLink = route.snapshot.params.qrCode;
+    }
+  }
+
+  ngOnInit(): void {
+    this.userType = parseInt(localStorage.getItem('spotbie_userType'), 10);
+    this.isLoggedIn = localStorage.getItem('spotbie_loggedIn');
+
+    if (this.userType !== this.eAllowedAccountTypes.Personal) {
+      this.getLoyaltyPointBalance();
+      this.fetchRewards();
+    } else {
+      this.fetchRewards(this.qrCodeLink);
     }
   }
 
@@ -89,14 +115,6 @@ export class RewardMenuComponent implements OnInit {
   }
 
   addItem() {
-    /*
-    if(this.loyaltyPointsBalance.balance === 0){
-      this.notEnoughLpEvt.emit()
-      this.closeWindow()
-      return
-    }
-*/
-
     this.itemCreator = !this.itemCreator;
   }
 
@@ -136,15 +154,7 @@ export class RewardMenuComponent implements OnInit {
     else return {background: 'linear-gradient(90deg,#35a99f,#64e56f)'};
   }
 
-  ngOnInit(): void {
-    this.userType = parseInt(localStorage.getItem('spotbie_userType'), 10);
-    this.isLoggedIn = localStorage.getItem('spotbie_loggedIn');
-
-    if (this.userType !== this.eAllowedAccountTypes.Personal) {
-      this.getLoyaltyPointBalance();
-      this.fetchRewards();
-    } else {
-      this.fetchRewards(this.qrCodeLink);
-    }
+  manageLoyaltyTiers() {
+    this.openTiers = true;
   }
 }

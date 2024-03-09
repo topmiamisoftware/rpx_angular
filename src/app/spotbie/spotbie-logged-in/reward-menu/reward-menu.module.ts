@@ -9,25 +9,29 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxQRCodeModule } from '@techiediaries/ngx-qrcode';
 import { ShareButtonsModule } from 'ngx-sharebuttons/buttons';
 import { HelperModule } from '../../../helpers/helper.module';
+import {NgxMaskModule} from "ngx-mask";
+import { TierCreatorComponent } from './tier-creator/tier-creator.component';
 
 @NgModule({
   declarations: [
     RewardMenuComponent,
     RewardComponent,
-    RewardCreatorComponent
+    RewardCreatorComponent,
+    TierCreatorComponent
   ],
-  imports: [
-    CommonModule,
-    MatSelectModule,
-    MatFormFieldModule,
-    FormsModule,
-    ReactiveFormsModule,
-    NgxQRCodeModule,
-    HelperModule,
-    ShareButtonsModule.withConfig({
-      include: ['facebook', 'twitter', 'linkedin', 'reddit', 'tumblr', 'mix', 'viber', 'messenger','whatsapp']
-    }),
-  ],
+    imports: [
+        CommonModule,
+        MatSelectModule,
+        MatFormFieldModule,
+        FormsModule,
+        ReactiveFormsModule,
+        NgxQRCodeModule,
+        HelperModule,
+        ShareButtonsModule.withConfig({
+            include: ['facebook', 'twitter', 'linkedin', 'reddit', 'tumblr', 'mix', 'viber', 'messenger', 'whatsapp']
+        }),
+        NgxMaskModule,
+    ],
   exports : [
     RewardMenuComponent
   ]
