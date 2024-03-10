@@ -73,6 +73,7 @@ export class RewardCreatorComponent implements OnInit {
   user$ = this.userAuthService.userProfile$;
   rewardTier$: Observable<LoyaltyTier>;
   dollarEntranceValue: number;
+  lpEntranceValue: number;
   canUseTiers$ = this.user$.pipe(
     map(
       user =>
@@ -173,16 +174,22 @@ export class RewardCreatorComponent implements OnInit {
     );
   }
 
+  rewardTierChange(){
+    this.setRewardTier();
+  }
+
   calculateTierDollarValue() {
-    const monthlyPoints: number = this.rewardTier.lp_entrance;
+    const tierEntranceValue: number = this.rewardTier.lp_entrance;
     const pointPercentage: number =
       this.userAuthService.userProfile.loyalty_point_balance
         .loyalty_point_dollar_percent_value;
 
     if (pointPercentage === 0) {
       this.dollarEntranceValue = 0;
+      this.lpEntranceValue = 0;
     } else {
-      this.dollarEntranceValue = monthlyPoints * (pointPercentage / 100);
+      this.dollarEntranceValue = tierEntranceValue * (pointPercentage / 100);
+      this.lpEntranceValue = tierEntranceValue;
     }
   }
 

@@ -141,13 +141,15 @@
 
                 <mat-form-field class="sb-input" style="padding-left: 0px;" appearance="fill">
                   <mat-label>Reward Tier</mat-label>
-                  <mat-select formControlName="tier" panelClass="spotbie-dropdown">
+                  <mat-select formControlName="tier" panelClass="spotbie-dropdown" (selectionChange)="rewardTierChange()">
+                    <mat-option [value]="null">None</mat-option>
                     <mat-option *ngFor="let tier of (existingTiers$ | async);" [value]="tier.id">{{tier.name}}</mat-option>
                   </mat-select>
                 </mat-form-field>
 
                 <p class="spotbie-text-gradient" *ngIf="(rewardTier$ | async)">
-                  User must spend {{ dollarEntranceValue | number: '1.0':'en-US' }} to get into this tier.
+                  Tier Entrance Dollar Value ${{ dollarEntranceValue | number: '1.2':'en-US' }}<br/>
+                  Loyalty Points {{ lpEntranceValue | number: '1.0':'en-US' }}
                 </p>
 
                 <ng-container *ngIf="(existingTiers$ | async)?.length === 0">

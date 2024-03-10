@@ -146,7 +146,6 @@ export class QrComponent implements OnInit {
   claimReward(addLpObj) {
     this.rewardCreatorService.claimReward(addLpObj).subscribe(resp => {
       this.loyaltyPointsState.setLoyaltyPoints(resp.loyalty_points);
-      console.log('resp', resp);
       this.claimRewardCb(resp);
     });
   }
