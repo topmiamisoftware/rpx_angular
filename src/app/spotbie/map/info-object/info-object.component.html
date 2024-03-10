@@ -61,7 +61,6 @@
     <span class='sb-text-light-green-gradient mt-4'> {{ infoObject?.loyalty_point_dollar_percent_value | number:'1.1-2':'en-US' }}% REWARD RATE</span>
   </div>
 
-
   <div class='spotbie-info-object-rating' [ngClass]="getFontClasses()" *ngIf="infoObject.type_of_info_object == eInfoObjectType.Yelp" (click)="visitInfoObjectPage()">
     <table class='spotbie-yelp-rating-table'>
       <tr>
