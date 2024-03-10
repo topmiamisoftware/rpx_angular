@@ -131,7 +131,10 @@ export class QrComponent implements OnInit {
 
       this.rewardPrompt = false;
       this.rewardPrompted = true;
-    } else alert(resp.message);
+    } else {
+      confirm(resp.message);
+      this.closeQrUser();
+    }
   }
 
   addLp(addLpObj) {
@@ -157,9 +160,9 @@ export class QrComponent implements OnInit {
       this.pointsCharged = this.reward.point_cost;
       this.sbEarnedPoints.nativeElement.style.display = 'block';
     } else {
-      alert(resp.message);
+      confirm(resp.message);
+      this.closeQrUser();
     }
-    this.scanSuccess = false;
   }
 
   scanSuccessHandler(urlString: string) {
@@ -191,7 +194,8 @@ export class QrComponent implements OnInit {
       this.userLoyaltyPoints = resp.redeemable.amount;
       this.sbEarnedPoints.nativeElement.style.display = 'block';
     } else {
-      alert(resp.message);
+      confirm(resp.message);
+      this.closeQrUser();
     }
     this.scanSuccess = false;
   }

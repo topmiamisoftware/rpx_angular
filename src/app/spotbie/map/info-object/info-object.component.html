@@ -98,9 +98,11 @@
     </div>
   </div>
 
-  <div class='' *ngIf="rewardMenuUp">
+  <div *ngIf="rewardMenuUp">
     <app-reward-menu [qrCodeLink]="infoObject.qr_code_link"
+                     [infoObject]="infoObject"
                      [rewardAppFullScreen]="fullScreenMode"
+                     [businessTiers]="businessTiers"
                      [fullScreenMode]="false">
     </app-reward-menu>
   </div>

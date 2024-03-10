@@ -1,5 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Reward} from '../../../../models/reward';
+import {LoyaltyTier} from '../../../../models/loyalty-point-tier.balance';
+import {InfoObject} from "../../../../models/info-object";
 
 @Component({
   selector: 'app-reward',
@@ -9,25 +11,19 @@ import {Reward} from '../../../../models/reward';
 export class RewardComponent implements OnInit {
   @Output('closeWindowEvt') closeWindowEvt = new EventEmitter();
 
-  @Input('fullScreenMode') fullScreenMode = true;
-  @Input('reward') reward: Reward;
-  @Input('userPointToDollarRatio') userPointToDollarRatio: number;
+  @Input() fullScreenMode = true;
+  @Input() reward: Reward;
+  @Input() tier: LoyaltyTier;
+  @Input() userPointToDollarRatio: number;
+  @Input() business: InfoObject;
 
   loading = false;
-
-  infoObjectImageUrl = 'assets/images/home_imgs/spotbie-white-icon.svg';
-
   successful_url_copy = false;
-
-  rewardLink: string = null;
 
   constructor() {}
 
   getFullScreenModeClass() {
-    console.log('getFullScreenModeClass', this.fullScreenMode);
-
-    if (this.fullScreenMode) return 'fullScreenMode';
-    else return '';
+    return this.fullScreenMode ? 'fullScreenMode' : '';
   }
 
   closeThis() {

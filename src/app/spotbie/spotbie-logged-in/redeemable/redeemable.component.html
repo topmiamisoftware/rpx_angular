@@ -152,6 +152,12 @@
           </div>
 
           <div class='mb-2'>
+                  <span [ngClass]="getLpStyle(balance.balance_aggregate)">
+                      {{ balance.balance_aggregate | number:'1.0':'en-US' }}
+                  </span> All Time LP
+          </div>
+
+          <div class='mb-2'>
             UPDATED AT {{ balance.updated_at | date:'mediumDate' }}
           </div>
         </div>

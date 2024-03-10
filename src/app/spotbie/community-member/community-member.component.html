@@ -4,6 +4,7 @@
                  [lng]="lng"
                  [categories]="categories"
                  [accountType]="business.user_type"
+                 [businessTiers]="loyaltyTiers$ | async"
                  (closeWindow)="closeWindow()"
                  *ngIf="infoObjectLoaded"
                  [fullScreenMode]="fullScreenMode"></app-info-object>

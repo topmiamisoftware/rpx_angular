@@ -48,7 +48,6 @@ export class BusinessDashboardComponent implements OnInit {
   }
 
   openLoyaltyPoints() {
-    console.log('BusinessDashboardComponent loyaltyPointsApp');
     this.loyaltyPointsApp.initBusinessLoyaltyPoints();
   }
 

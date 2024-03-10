@@ -17,9 +17,11 @@ import {AllowedAccountTypes} from '../../../helpers/enum/account-type.enum';
 import {Immutable} from '@angular-ru/cdk/typings';
 import {BusinessLoyaltyPointsState} from '../state/business.lp.state';
 import {LoyaltyPointBalance} from '../../../models/loyalty-point-balance';
-import {map} from "rxjs/operators";
-import {BusinessMembership} from "../../../models/user";
-import {UserauthService} from "../../../services/userauth.service";
+import {map} from 'rxjs/operators';
+import {BusinessMembership} from '../../../models/user';
+import {UserauthService} from '../../../services/userauth.service';
+import {LoyaltyTier} from '../../../models/loyalty-point-tier.balance';
+import {InfoObject} from "../../../models/info-object";
 
 @Component({
   selector: 'app-reward-menu',
@@ -34,6 +36,8 @@ export class RewardMenuComponent implements OnInit {
   @Input() fullScreenMode = true;
   @Input() loyaltyPoints: string;
   @Input() qrCodeLink: string = null;
+  @Input() businessTiers: LoyaltyTier[];
+  @Input() infoObject: InfoObject;
 
   @Output() closeWindowEvt = new EventEmitter();
   @Output() notEnoughLpEvt = new EventEmitter();
@@ -44,6 +48,7 @@ export class RewardMenuComponent implements OnInit {
   userPointToDollarRatio;
   rewards: Array<Reward> = null;
   reward: Reward;
+  tier: LoyaltyTier;
   userType: number = null;
   business: Business = new Business();
   loyaltyPointsBalance: Immutable<LoyaltyPointBalance>;
@@ -124,7 +129,7 @@ export class RewardMenuComponent implements OnInit {
 
   openReward(reward: Reward) {
     this.reward = reward;
-    console.log('THE REWARd', this.reward);
+    this.tier = this.businessTiers.find((tier) => tier.id === this.reward.tier_id);
     this.reward.link = `${environment.baseUrl}business-menu/${this.qrCodeLink}/${this.reward.uuid}`;
     this.rewardApp = true;
   }

@@ -15,7 +15,7 @@ import {environment} from '../../../../environments/environment';
 import {setYelpRatingImage} from '../../../helpers/info-object-helper';
 import {externalBrowserOpen} from '../../../helpers/cordova/web-intent';
 import {DateFormatPipe, TimeFormatPipe} from '../../../pipes/date-format.pipe';
-import {Business} from '../../../models/business';
+import {LoyaltyTier} from '../../../models/loyalty-point-tier.balance';
 
 const YELP_BUSINESS_DETAILS_API = 'https://api.yelp.com/v3/businesses/';
 
@@ -30,6 +30,7 @@ const SPOTBIE_META_IMAGE = spotbieMetaImage;
 })
 export class InfoObjectComponent implements OnInit {
   @Input() infoObject: InfoObject;
+  @Input() businessTiers: LoyaltyTier[];
   @Input() ad: Ad;
   @Input() fullScreenMode = false;
   @Input() lat: number = null;

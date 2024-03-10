@@ -5,6 +5,7 @@ import {Ad} from '../../models/ad';
 import {BusinessMenuServiceService} from '../../services/spotbie-logged-in/business-menu/business-menu-service.service';
 import {InfoObject} from '../../models/info-object';
 import {BehaviorSubject} from 'rxjs';
+import {LoyaltyTier} from '../../models/loyalty-point-tier.balance';
 
 @Component({
   selector: 'app-community-member',
@@ -27,6 +28,7 @@ export class CommunityMemberComponent implements OnInit {
   infoObjectLoaded = false;
   fullScreenMode = false;
   infoObject$ = new BehaviorSubject<InfoObject>(null);
+  loyaltyTiers$ = new BehaviorSubject<LoyaltyTier[]>(null);
 
   constructor(
     private router: Router,
@@ -46,6 +48,8 @@ export class CommunityMemberComponent implements OnInit {
     this.businessMenuService
       .getCommunityMember(getCommunityMemberReqObj)
       .subscribe(resp => {
+        console.log('getCommunityMember', resp);
+
         const business = resp.business;
         business.is_community_member = true;
         business.type_of_info_object = 'spotbie_community';
@@ -70,6 +74,8 @@ export class CommunityMemberComponent implements OnInit {
         infoObject.rewardRate = business.rewardRate;
 
         this.infoObject$.next(infoObject);
+
+        this.loyaltyTiers$.next(resp.business_tier_list);
 
         this.infoObjectLoaded = true;
       });

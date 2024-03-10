@@ -7,6 +7,7 @@ import {catchError} from 'rxjs/operators';
 
 const PULL_INFO_API = `${spotbieGlobals.API}surroundings/pull-info-object`;
 const PULL_INFO_EVENT_API = `${spotbieGlobals.API}surroundings/get-event`;
+const BUSINESS_TIERS_API = `${spotbieGlobals.API}surroundings/business-tiers`;
 
 @Injectable({
   providedIn: 'root',

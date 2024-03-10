@@ -109,6 +109,8 @@
 <app-reward *ngIf="rewardApp"
             #appRewardViewer
             [reward]="reward"
+            [tier]="tier"
+            [business]="infoObject"
             [fullScreenMode]="rewardAppFullScreen"
             [userPointToDollarRatio]="userPointToDollarRatio"
             (closeWindowEvt)="closeReward()"></app-reward>

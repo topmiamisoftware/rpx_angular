@@ -109,7 +109,6 @@ export class BottomAdBannerComponent implements OnInit, OnDestroy {
           break;
       }
     } else {
-      console.log('THE ACCOUNT TYPE', this.accountType);
       switch (this.accountType) {
         case 1:
           this.genericAdImage = PLACE_TO_EAT_AD_IMAGE;
