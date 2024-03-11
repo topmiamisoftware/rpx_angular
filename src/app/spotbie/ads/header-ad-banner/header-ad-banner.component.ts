@@ -229,7 +229,6 @@ export class HeaderAdBannerComponent implements OnInit, OnDestroy {
   }
 
   openAd(): void {
-    console.log('THE BUSINESS', this.business);
     if (this.business?.id) {
       this.communityMemberOpen = true;
     } else {

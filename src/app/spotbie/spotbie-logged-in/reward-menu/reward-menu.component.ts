@@ -21,7 +21,7 @@ import {map} from 'rxjs/operators';
 import {BusinessMembership} from '../../../models/user';
 import {UserauthService} from '../../../services/userauth.service';
 import {LoyaltyTier} from '../../../models/loyalty-point-tier.balance';
-import {InfoObject} from "../../../models/info-object";
+import {InfoObject} from '../../../models/info-object';
 
 @Component({
   selector: 'app-reward-menu',
@@ -129,7 +129,9 @@ export class RewardMenuComponent implements OnInit {
 
   openReward(reward: Reward) {
     this.reward = reward;
-    this.tier = this.businessTiers.find((tier) => tier.id === this.reward.tier_id);
+    this.tier = this.businessTiers.find(
+      tier => tier.id === this.reward.tier_id
+    );
     this.reward.link = `${environment.baseUrl}business-menu/${this.qrCodeLink}/${this.reward.uuid}`;
     this.rewardApp = true;
   }

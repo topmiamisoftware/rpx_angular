@@ -1,4 +1,5 @@
 import {Business} from './business';
+import {LoyaltyTier} from './loyalty-point-tier.balance';
 
 export class InfoObject {
   qr_code_link: string;
@@ -37,4 +38,5 @@ export class InfoObject {
   display_phone: string;
   business: Business;
   url: string;
+  loyalty_tiers: LoyaltyTier[];
 }

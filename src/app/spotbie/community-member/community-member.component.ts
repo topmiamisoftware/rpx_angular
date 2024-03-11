@@ -48,8 +48,6 @@ export class CommunityMemberComponent implements OnInit {
     this.businessMenuService
       .getCommunityMember(getCommunityMemberReqObj)
       .subscribe(resp => {
-        console.log('getCommunityMember', resp);
-
         const business = resp.business;
         business.is_community_member = true;
         business.type_of_info_object = 'spotbie_community';
