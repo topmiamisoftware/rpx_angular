@@ -39,8 +39,7 @@
               [zoom]="zoom"
               [gestureHandling]="'cooperative'"
               [fitBounds]="fitBounds">
-
-        <agm-overlay [latitude]="lat" [longitude]="lng" *ngIf="locationFound">
+        <agm-overlay [latitude]="lat" [longitude]="lng" [zIndex]="0" *ngIf="locationFound">
           <div class='spotbie-marker-bg'
                 *ngIf="iconUrl"
                 [ngStyle]="{'background' : 'url(' + iconUrl + ')',
@@ -51,19 +50,21 @@
         <agm-marker [latitude]="lat"
                     [longitude]="lng"
                     *ngIf="locationFound"
+                    [zIndex]="0"
                     [opacity]="0"
                     [agmFitBounds]="true">
-          <agm-info-window #spotbie_user_marker_info_window [isOpen]="true">
+          <agm-info-window #spotbie_user_marker_info_window [zIndex]="0" [isOpen]="true">
             <div class='agm_infowindow_color'>{{ spotbie_username }}</div>
           </agm-info-window>
         </agm-marker>
 
         <div *ngIf="displaySurroundingObjectList">
           <agm-overlay *ngFor="let mapObject of surroundingObjectList"
-                      [latitude]="mapObject.loc_x"
-                      [longitude]="mapObject.loc_y">
+                       (click)="pullMarker(mapObject)"
+                       [latitude]="mapObject.loc_x"
+                       [zIndex]="3"
+                       [longitude]="mapObject.loc_y">
             <div class='spotbie-marker-bg'
-                (click)="pullMarker(mapObject)"
                 title="{{ mapObject.username }}"
                 [ngStyle]="{ 'background' : 'url(' + mapObject.map_icon + ')' }">
             </div>

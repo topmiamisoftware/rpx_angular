@@ -11,7 +11,7 @@ import {
 import {MatButtonModule} from '@angular/material/button';
 import {
   MAT_DIALOG_DATA,
-  MatDialog,
+  MatDialog, MatDialogModule,
   MatDialogRef,
 } from '@angular/material/dialog';
 import {NgIf} from '@angular/common';
@@ -24,6 +24,7 @@ import {AlertDialogComponent} from '../../../../../helpers/alert/alert.component
   standalone: true,
   imports: [
     MatFormFieldModule,
+    MatDialogModule,
     MatInputModule,
     FormsModule,
     ReactiveFormsModule,

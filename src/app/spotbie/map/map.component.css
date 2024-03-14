@@ -596,13 +596,19 @@ span.spotbie-button{
 }
 
 .gm-style-iw-c{
+  top: -30px !important;
   background: linear-gradient(#64e56f, #35a99f);
 }
+
 .agm_infowindow_color{
   color: black;
   font-size: 18px;
   padding-left: 5px;
   padding-right: 5px;
+  top: -20px;
+}
+.gm-style .gm-style-iw-c{
+  top: -30px !important;
 }
 .spotbie-marker-bg{
   position: absolute;

@@ -1,15 +1,17 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {catchError, tap} from 'rxjs/operators';
-import {BehaviorSubject, Observable} from 'rxjs';
+import {BehaviorSubject, Observable, of, throwError} from 'rxjs';
 import * as spotbieGlobals from '../../globals';
 import {LoyaltyTier} from '../../models/loyalty-point-tier.balance';
 import {LoyaltyPointBalance} from '../../models/loyalty-point-balance';
 import {handleError} from '../../helpers/error-helper';
+import {ERROR} from "@angular/compiler-cli/src/ngtsc/logging/src/console_logger";
 
 const LOYALTY_POINTS_API = spotbieGlobals.API + 'loyalty-points';
 const LOYALTY_POINTS_TIER_API = spotbieGlobals.API + 'lp-tiers';
 const REDEEMABLE_API = spotbieGlobals.API + 'redeemable';
+const FEEDBACK_API = spotbieGlobals.API + 'feedback';
 
 @Injectable({
   providedIn: 'root',
@@ -107,5 +109,19 @@ export class LoyaltyPointsService {
     return this.http
       .delete<any>(apiUrl)
       .pipe(catchError(handleError('deleteTier')));
+  }
+
+  saveFeedback(feedbackText: string, ledgerRecordId: string) {
+    const apiUrl = `${FEEDBACK_API}/store`;
+
+    return this.http.post<any>(apiUrl, {feedback_text: feedbackText, ledger_id: ledgerRecordId})
+      .pipe(catchError(handleError('saveFeedbackService')));
+  }
+
+  updateFeedback(feedbackText: string, feedbackId: string) {
+    const apiUrl = `${FEEDBACK_API}/update/${feedbackId}`;
+
+    return this.http.patch<any>(apiUrl, {feedback_text: feedbackText})
+      .pipe(catchError(handleError('updateFeedback')));
   }
 }

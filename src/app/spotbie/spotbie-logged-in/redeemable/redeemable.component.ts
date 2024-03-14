@@ -5,6 +5,8 @@ import {LoyaltyPointBalance} from '../../../models/loyalty-point-balance';
 import * as $ from 'jquery';
 import {AllowedAccountTypes} from '../../../helpers/enum/account-type.enum';
 import {LoyaltyPointsService} from '../../../services/loyalty-points/loyalty-points.service';
+import {FeedbackComponent} from './feedback/feedback.component';
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-redeemable',
@@ -34,7 +36,26 @@ export class RedeemableComponent implements OnInit {
   balanceListTotal = 0;
   loadMore: boolean;
 
-  constructor(private loyaltyPointsService: LoyaltyPointsService) {}
+  constructor(
+    private loyaltyPointsService: LoyaltyPointsService,
+    public dialog: MatDialog
+  ) {}
+
+  ngOnInit(): void {
+    this.userType = localStorage.getItem('spotbie_userType');
+    this.showBalanceList = true;
+    this.getBalanceList();
+  }
+
+  ngAfterViewInit() {
+    const menuHeight = document.getElementById('spotbie-topMenu').offsetHeight;
+    document.getElementById('redeemWindow').style.paddingTop =
+      menuHeight + 'px';
+
+    const redeemWindowNavItem = $('#redeemWindowNav').height();
+    document.getElementById('redeemWindowNavMargin').style.marginBottom =
+      redeemWindowNavItem + 20 + 'px';
+  }
 
   loadMoreItems() {
     if (this.rewards) {
@@ -256,19 +277,43 @@ export class RedeemableComponent implements OnInit {
     this.closeWindowEvt.emit();
   }
 
-  ngOnInit(): void {
-    this.userType = localStorage.getItem('spotbie_userType');
-    this.showBalanceList = true;
-    this.getBalanceList();
+  identify(index, item: Redeemable) {
+    return item.uuid;
   }
 
-  ngAfterViewInit() {
-    const menuHeight = document.getElementById('spotbie-topMenu').offsetHeight;
-    document.getElementById('redeemWindow').style.paddingTop =
-      menuHeight + 'px';
+  async leaveFeedback(redeemedItem: Redeemable) {
+    const dialogRef = this.dialog.open(FeedbackComponent, {
+      data: {
+        feedback: redeemedItem?.feedback,
+        ledgerId: redeemedItem?.loyalty_point_ledger?.id,
+        businessName: redeemedItem.business.name,
+      },
+      width: '90vw',
+      height: '80vh',
+    });
 
-    const redeemWindowNavItem = $('#redeemWindowNav').height();
-    document.getElementById('redeemWindowNavMargin').style.marginBottom =
-      redeemWindowNavItem + 20 + 'px';
+    dialogRef.afterClosed().subscribe(result => {
+      if (!result) {
+        return;
+      }
+
+      if (
+        result.role === 'feedback_sent' ||
+        result.role === 'feedback_updated'
+      ) {
+        // Need to update the redeemableItem
+        const newList = this.lpRedeemedList.filter(
+          item => item.uuid !== redeemedItem.uuid
+        );
+
+        if (result.role === 'feedback_sent') {
+          redeemedItem.feedback = result.feedback;
+        } else {
+          redeemedItem.feedback.feedback_text = result.feedback.feedback_text;
+        }
+
+        this.lpRedeemedList = [redeemedItem, ...newList];
+      }
+    });
   }
 }
