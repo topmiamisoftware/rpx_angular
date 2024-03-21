@@ -191,8 +191,8 @@ export class HeaderAdBannerComponent implements OnInit, OnDestroy {
         }
       }
 
-      this.displayAd = true;
       this.totalRewards = resp.totalRewards;
+      this.displayAd = true;
     } else {
       console.log('getHeaderBannerAdCallback', resp);
     }

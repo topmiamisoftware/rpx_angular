@@ -207,11 +207,13 @@ export class BottomAdBannerComponent implements OnInit, OnDestroy {
       this.totalRewards = resp.totalRewards;
       this.displayAd = true;
     } else {
-      if (!this.switchAdInterval) {
-        this.switchAdInterval = setInterval(() => {
-          if (!this.editMode) this.getBottomHeader();
-        }, BOTTOM_BANNER_TIMER_INTERVAL);
-      }
+      console.log('getBottomBannerAdCallback', resp);
+    }
+
+    if (!this.switchAdInterval) {
+      this.switchAdInterval = setInterval(() => {
+        if (!this.editMode) this.getBottomHeader();
+      }, BOTTOM_BANNER_TIMER_INTERVAL);
     }
   }
 
