@@ -1,49 +1,49 @@
-h3{
-    line-height: 60px;
+h3 {
+  line-height: 60px;
 }
-.sb-dashboardWrapper{
-    background-color: #27242e;
-    position: relative;
-    display: block;
-    border-bottom: 8px solid #332f3e;
-    padding-top: 100px;
-    padding-bottom: 100px;
+.sb-dashboardWrapper {
+  background-color: #27242e;
+  position: relative;
+  display: block;
+  border-bottom: 8px solid #332f3e;
+  padding-top: 100px;
+  padding-bottom: 100px;
 }
-.sb-qrImage{
-    position: relative;
-    display: block;
-    margin: 0 auto;
-    width: 250px;
-    min-width: 250px;
-    margin-bottom: 70px;
-    cursor: pointer;
+.sb-qrImage {
+  position: relative;
+  display: block;
+  margin: 0 auto;
+  width: 250px;
+  min-width: 250px;
+  margin-bottom: 70px;
+  cursor: pointer;
 }
-.sb-optionGet{
-    position: relative;
-    display: inline-block;
-    margin-left: 1.5%;
-    margin-right: 1.5%;
-    min-width: 120px;
-    width: 120px;
-    max-width: 120px;
-    padding-top: 15px;
-    padding-bottom: 15px;
-    cursor: pointer;
+.sb-optionGet {
+  position: relative;
+  display: inline-block;
+  margin-left: 1.5%;
+  margin-right: 1.5%;
+  min-width: 120px;
+  width: 120px;
+  max-width: 120px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  cursor: pointer;
 }
-.sb-optionGet span{
-    display: block;
-    margin-top: 10px;
-    font-size: .9rem;
+.sb-optionGet span {
+  display: block;
+  margin-top: 10px;
+  font-size: 0.9rem;
 }
 
-@media (max-width: 768px){
-    .sb-qrImage {
-        width: 150px;
-        min-width: 150px
-    }
-    .sb-optionGet{
-        min-width: 26%;
-        width: 26%;
-        max-width: 26%;  
-    }
+@media (max-width: 768px) {
+  .sb-qrImage {
+    width: 150px;
+    min-width: 150px;
+  }
+  .sb-optionGet {
+    min-width: 26%;
+    width: 26%;
+    max-width: 26%;
+  }
 }

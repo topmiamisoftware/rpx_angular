@@ -1,11 +1,13 @@
-<app-menu-logged-out #appMenuLoggedOut 
-                        class="spotbie-app-menu" 
-                        (myFavoritesEvt)="myFavorites()"
-                        (spawnCategoriesOut)="spawnCategories($event)" 
-                        (openHome)="openHome()"></app-menu-logged-out>
+<app-menu-logged-out
+  #appMenuLoggedOut
+  class="spotbie-app-menu"
+  (myFavoritesEvt)="myFavorites()"
+  (spawnCategoriesOut)="spawnCategories($event)"
+  (openHome)="openHome()"
+></app-menu-logged-out>
 
 <div class="spotbie-main-holder" id="spotbieMainHolder">
-    <app-map #app_map [business]="true" (signUpEvt)="signUp()"></app-map>
+  <app-map #app_map [business]="true" (signUpEvt)="signUp()"></app-map>
 
-    <div class="spotbie-menu-page-padding-top-not-logged"></div>
+  <div class="spotbie-menu-page-padding-top-not-logged"></div>
 </div>

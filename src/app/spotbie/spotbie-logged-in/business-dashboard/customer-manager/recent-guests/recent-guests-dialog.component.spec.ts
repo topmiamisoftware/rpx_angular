@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { RecentGuestsDialogComponent } from './recent-guests-dialog.component';
+import {RecentGuestsDialogComponent} from './recent-guests-dialog.component';
 
 describe('RecentGuestsDialogComponent', () => {
   let component: RecentGuestsDialogComponent;
@@ -8,9 +8,8 @@ describe('RecentGuestsDialogComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ RecentGuestsDialogComponent ]
-    })
-    .compileComponents();
+      declarations: [RecentGuestsDialogComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(RecentGuestsDialogComponent);
     component = fixture.componentInstance;

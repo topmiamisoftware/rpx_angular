@@ -1,54 +1,54 @@
-.spotbie-app-name{
-    position: relative;
-    margin: 0 auto;
-    padding-top: 5px;
-    padding-bottom: 5px;
-    text-align: center;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    color: white;
-    font-size: 14px;
-    max-height: 15px;
-    white-space: nowrap;
+.spotbie-app-name {
+  position: relative;
+  margin: 0 auto;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: white;
+  font-size: 14px;
+  max-height: 15px;
+  white-space: nowrap;
 }
-.spotbie-overlay-window{
-    z-index: 97;
+.spotbie-overlay-window {
+  z-index: 97;
 }
-.sb-loyalty-points:hover{
-    width: 25px;
-    min-width: 25px;
-    max-width: 25px;
+.sb-loyalty-points:hover {
+  width: 25px;
+  min-width: 25px;
+  max-width: 25px;
 }
-.sb-userName{
-    text-transform: uppercase;
+.sb-userName {
+  text-transform: uppercase;
 }
 .faFoodTruck {
-    color: white;
+  color: white;
 }
 
-@media(max-width:960px){
-  .sb-desktopNavBar{
+@media (max-width: 960px) {
+  .sb-desktopNavBar {
     display: none;
   }
-  .sb-businessMenu{
+  .sb-businessMenu {
     margin-left: 0px;
   }
 }
 
-@media(max-width:768px){
-    .sb-desktopNavBar{
-        display: none;
-    }
-    .sb-businessMenu{
-        margin-left: 0px;
-    }
-}
-
-@media(max-width:560px){
-  .sb-desktopNavBar{
+@media (max-width: 768px) {
+  .sb-desktopNavBar {
     display: none;
   }
-  .sb-businessMenu{
+  .sb-businessMenu {
+    margin-left: 0px;
+  }
+}
+
+@media (max-width: 560px) {
+  .sb-desktopNavBar {
+    display: none;
+  }
+  .sb-businessMenu {
     margin-left: 0px;
   }
 }

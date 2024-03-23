@@ -1,10 +1,9 @@
-export const isCordova = function (){
-    
-    let isCordova = localStorage.getItem('isCordova')
+export const isCordova = function () {
+  let isCordova = localStorage.getItem('isCordova');
 
-    if(isCordova === '1') return true; else return false;
-
-}
+  if (isCordova === '1') return true;
+  else return false;
+};
 
 /*Uncomment this in android
 if(cordova != undefined){

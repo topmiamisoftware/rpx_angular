@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { NearbyAdsThreeComponent } from './nearby-ads-three.component';
+import {NearbyAdsThreeComponent} from './nearby-ads-three.component';
 
 describe('NearbyAdsThreeComponent', () => {
   let component: NearbyAdsThreeComponent;
@@ -8,9 +8,8 @@ describe('NearbyAdsThreeComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ NearbyAdsThreeComponent ]
-    })
-    .compileComponents();
+      declarations: [NearbyAdsThreeComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

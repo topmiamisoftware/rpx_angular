@@ -1,23 +1,23 @@
-.spotbie-main-holder{
-    z-index: 96;
-    padding-top: 50px;
+.spotbie-main-holder {
+  z-index: 96;
+  padding-top: 50px;
 }
-.spotbie-app-menu{
-    z-index: 99;
+.spotbie-app-menu {
+  z-index: 99;
 }
-.spotbie-menu-page-padding-top-not-logged{
-    padding-top: 76px;
-    margin-top: env(safe-area-inset-top);
+.spotbie-menu-page-padding-top-not-logged {
+  padding-top: 76px;
+  margin-top: env(safe-area-inset-top);
 }
 
-@media (max-width: 560px) { 
-    .spotbie-menu-page-padding-top-not-logged{
-        padding-top: 66px;
-    }
+@media (max-width: 560px) {
+  .spotbie-menu-page-padding-top-not-logged {
+    padding-top: 66px;
+  }
 }
 
 @media (max-width: 360px) {
-    .spotbie-menu-page-padding-top-not-logged{
-        padding-top: 52px; 
-    } 
+  .spotbie-menu-page-padding-top-not-logged {
+    padding-top: 52px;
+  }
 }

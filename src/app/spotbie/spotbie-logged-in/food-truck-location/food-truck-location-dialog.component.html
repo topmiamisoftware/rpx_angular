@@ -1,117 +1,169 @@
 <app-loading-screen *ngIf="loading"></app-loading-screen>
 
-
-<ng-container *ngIf="!locationSavedSuccessfully else savedLocation">
-    <h1 mat-dialog-title>FOOD TRUCK LOCATION</h1>
+<ng-container *ngIf="!locationSavedSuccessfully; else savedLocation">
+  <h1 mat-dialog-title>FOOD TRUCK LOCATION</h1>
 </ng-container>
 
 <ng-template #savedLocation>
-    <h1 mat-dialog-title>{{ locationSavedSuccessfullyMessage }} <fa-icon class="faCheck" [icon]="faCheckCircle" *ngIf="locationSavedSuccessfully"></fa-icon></h1>
+  <h1 mat-dialog-title>
+    {{ locationSavedSuccessfullyMessage }}
+    <fa-icon
+      class="faCheck"
+      [icon]="faCheckCircle"
+      *ngIf="locationSavedSuccessfully"
+    ></fa-icon>
+  </h1>
 </ng-template>
 
 <div mat-dialog-content>
-    <div>
-        <form [formGroup]="businessSettingsForm">
-            <table class='spotbie-settings-table' style="border-bottom: unset;">
-                <tr>
-                    <td>
-                        <div>
-                            <div *ngIf="businessFormSubmitted && i.spotbieOrigin.errors else spotbie_origin_normal"
-                                 class="spotbie-input-info spotbie-text-gradient text-center spotbie-error">
-                                <div *ngIf="i.spotbieOrigin.errors.required">
-                                    You must choose a place of origin!
-                                </div>
-                            </div>
-                        </div>
-
-                        <ng-template #spotbie_origin_normal>
-                            <div class='mt-4'></div>
-                            <label class="spotbie-input-info spotbie-text-gradient text-center mb-2">
-                                Where is your Food Truck located?
-                            </label>
-                        </ng-template>
-
-                        <div class='spotbie-map'>
-                            <agm-map id="spotbieMapG"
-                                     #spotbie_map
-                                     [styles]="mapStyles"
-                                     [zoom]="zoom"
-                                     *ngIf="locationFound"
-                                     [fitBounds]="fitBounds"
-                                     [latitude]="lat"
-                                     [longitude]="lng">
-
-                                <agm-marker [latitude]="lat"
-                                            [longitude]="lng"
-                                            *ngIf="locationFound"
-                                            [agmFitBounds]="true">
-
-                                    <agm-info-window>
-                                        <table class='spotbie-place-result'>
-                                            <tr>
-                                                <td *ngIf="originTitle">
-                                                    {{ originTitle }}
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </agm-info-window>
-                                </agm-marker>
-                            </agm-map>
-                        </div>
-                    </td>
-                </tr>
-
-                <div class="spotbie-input-info spotbie-text-gradient text-center mt-4" *ngIf="locationFound" >
-                    Enter current address
+  <div>
+    <form [formGroup]="businessSettingsForm">
+      <table class="spotbie-settings-table" style="border-bottom: unset">
+        <tr>
+          <td>
+            <div>
+              <div
+                *ngIf="
+                  businessFormSubmitted && i.spotbieOrigin.errors;
+                  else spotbie_origin_normal
+                "
+                class="spotbie-input-info spotbie-text-gradient text-center spotbie-error"
+              >
+                <div *ngIf="i.spotbieOrigin.errors.required">
+                  You must choose a place of origin!
                 </div>
+              </div>
+            </div>
 
-                <tr *ngIf="locationFound">
-                    <td>
-                        <input class="sb-input spotbie-search-map-input sb-origin-address-input"
-                               (keydown)="searchMapsKeyDown($event)"
-                               autocorrect="off"
-                               autocapitalize="off"
-                               spellcheck="off"
-                               type="text"
-                               formControlName="originAddress"
-                               maxlength="72"
-                               #addressSearch />
+            <ng-template #spotbie_origin_normal>
+              <div class="mt-4"></div>
+              <label
+                class="spotbie-input-info spotbie-text-gradient text-center mb-2"
+              >
+                Where is your Food Truck located?
+              </label>
+            </ng-template>
 
-                        <div class='spotbie-button sb-search-icon' (click)="searchMaps()"><i class='fa fa-search'></i></div>
+            <div class="spotbie-map">
+              <agm-map
+                id="spotbieMapG"
+                #spotbie_map
+                [styles]="mapStyles"
+                [zoom]="zoom"
+                *ngIf="locationFound"
+                [fitBounds]="fitBounds"
+                [latitude]="lat"
+                [longitude]="lng"
+              >
+                <agm-marker
+                  [latitude]="lat"
+                  [longitude]="lng"
+                  *ngIf="locationFound"
+                  [agmFitBounds]="true"
+                >
+                  <agm-info-window>
+                    <table class="spotbie-place-result">
+                      <tr>
+                        <td *ngIf="originTitle">
+                          {{ originTitle }}
+                        </td>
+                      </tr>
+                    </table>
+                  </agm-info-window>
+                </agm-marker>
+              </agm-map>
+            </div>
+          </td>
+        </tr>
 
-                        <input class="sb-input" type="hidden" formControlName="spotbieOrigin" />
+        <div
+          class="spotbie-input-info spotbie-text-gradient text-center mt-4"
+          *ngIf="locationFound"
+        >
+          Enter current address
+        </div>
 
-                        <div class='spotbie-place-picker'>
-                            <div class='spotbie-place' *ngFor="let prediction of addressResults"  (click)="focusPlace(prediction);">
-                                <span class='spotbie-text-gradient'>{{ prediction.description }}</span>
-                            </div>
-                        </div>
+        <tr *ngIf="locationFound">
+          <td>
+            <input
+              class="sb-input spotbie-search-map-input sb-origin-address-input"
+              (keydown)="searchMapsKeyDown($event)"
+              autocorrect="off"
+              autocapitalize="off"
+              spellcheck="off"
+              type="text"
+              formControlName="originAddress"
+              maxlength="72"
+              #addressSearch
+            />
 
-                        <div class="mt-4 mb-4">OR</div>
+            <div class="spotbie-button sb-search-icon" (click)="searchMaps()">
+              <i class="fa fa-search"></i>
+            </div>
 
-                        <div class="mt-4 mb-4 cursor-pointer" (click)="setAsCurrentLocation()">
-                            <fa-icon [icon]="faSearchLocation"></fa-icon>
-                            <span class="text-decoration-underline"> SET AS CURRENT LOCATION</span>
-                        </div>
-                    </td>
-                </tr>
+            <input
+              class="sb-input"
+              type="hidden"
+              formControlName="spotbieOrigin"
+            />
 
-                <div class='spotbie-input-info spotbie-text-gradient text-uppercase text-center mt-2 mb-3'
-                     *ngIf='locationFound'>
-                    {{ originTitle }}
-                </div>
+            <div class="spotbie-place-picker">
+              <div
+                class="spotbie-place"
+                *ngFor="let prediction of addressResults"
+                (click)="focusPlace(prediction)"
+              >
+                <span class="spotbie-text-gradient">{{
+                  prediction.description
+                }}</span>
+              </div>
+            </div>
 
-                <img class='sb-business-img' [ngClass]="getBusinessImgStyle()" *ngIf='locationFound' src="{{originPhoto}}" />
+            <div class="mt-4 mb-4">OR</div>
 
-                <div class='spotbie-input-info spotbie-text-gradient spotbie-place-address text-uppercase text-center mt-4 mb-3'
-                     *ngIf='locationFound && place !== undefined'>
-                    {{  place.formatted_address }}
-                </div>
-            </table>
-        </form>
+            <div
+              class="mt-4 mb-4 cursor-pointer"
+              (click)="setAsCurrentLocation()"
+            >
+              <fa-icon [icon]="faSearchLocation"></fa-icon>
+              <span class="text-decoration-underline">
+                SET AS CURRENT LOCATION</span
+              >
+            </div>
+          </td>
+        </tr>
 
-        <div class="spotbie-button" (click)="saveLocation()">SAVE LOCATION</div>
+        <div
+          class="spotbie-input-info spotbie-text-gradient text-uppercase text-center mt-2 mb-3"
+          *ngIf="locationFound"
+        >
+          {{ originTitle }}
+        </div>
 
-        <div class="mt-4 mb-4 text-decoration-underline cursor-pointer" style="text-align: center;" (click)="close()">CLOSE</div>
+        <img
+          class="sb-business-img"
+          [ngClass]="getBusinessImgStyle()"
+          *ngIf="locationFound"
+          src="{{ originPhoto }}"
+        />
+
+        <div
+          class="spotbie-input-info spotbie-text-gradient spotbie-place-address text-uppercase text-center mt-4 mb-3"
+          *ngIf="locationFound && place !== undefined"
+        >
+          {{ place.formatted_address }}
+        </div>
+      </table>
+    </form>
+
+    <div class="spotbie-button" (click)="saveLocation()">SAVE LOCATION</div>
+
+    <div
+      class="mt-4 mb-4 text-decoration-underline cursor-pointer"
+      style="text-align: center"
+      (click)="close()"
+    >
+      CLOSE
     </div>
+  </div>
 </div>

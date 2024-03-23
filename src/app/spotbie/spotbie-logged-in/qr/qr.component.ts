@@ -105,7 +105,8 @@ export class QrComponent implements OnInit {
     this.loyaltyPointRewardDollarValue =
       this.totalSpentModified * (percentValue / 100);
 
-    this.loyaltyPointReward = (this.loyaltyPointRewardDollarValue * 100) / (percentValue);
+    this.loyaltyPointReward =
+      (this.loyaltyPointRewardDollarValue * 100) / percentValue;
 
     this.rewardPrompt = true;
   }

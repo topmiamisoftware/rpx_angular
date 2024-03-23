@@ -1,19 +1,18 @@
-.sb-top-headerImg{
+.sb-top-headerImg {
   background-size: cover !important;
 }
 .fa-glass-cheers,
 .fa-hamburger,
-.fa-money-bill
-{
-    font-size: 1.8rem;
-    color: white;
+.fa-money-bill {
+  font-size: 1.8rem;
+  color: white;
 }
 .fab.fa-instagram,
 .fab.fa-twitter,
-.fab.fa-youtube{
-    color: white;
-    font-size: 1rem;
-    margin-left: 5px;
-    margin-right: 5px;
-    cursor: pointer;
+.fab.fa-youtube {
+  color: white;
+  font-size: 1rem;
+  margin-left: 5px;
+  margin-right: 5px;
+  cursor: pointer;
 }

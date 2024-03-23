@@ -1,21 +1,43 @@
-<div class='spotbie-overlay-window' id="redeemWindow">
-  <div class="spotbie-redeemListWrapper" *ngIf="(rewards || lpRedeemed || ledger || showBalanceList)">
+<div class="spotbie-overlay-window" id="redeemWindow">
+  <div
+    class="spotbie-redeemListWrapper"
+    *ngIf="rewards || lpRedeemed || ledger || showBalanceList"
+  >
     <div class="nav">
       <table id="redeemWindowNav">
         <tr>
-          <td class="nav-item" (click)="switchTab('balance-list')" [ngStyle]="getBalanceListStyle()">
+          <td
+            class="nav-item"
+            (click)="switchTab('balance-list')"
+            [ngStyle]="getBalanceListStyle()"
+          >
             BALANCES
           </td>
-          <td class="nav-item" (click)="switchTab('rewards')" [ngStyle]="getRewardsStyle()">
+          <td
+            class="nav-item"
+            (click)="switchTab('rewards')"
+            [ngStyle]="getRewardsStyle()"
+          >
             REWARDS
           </td>
-          <td class="nav-item" (click)="switchTab('lpRedeemed')" [ngStyle]="getRedeemedStyle()">
+          <td
+            class="nav-item"
+            (click)="switchTab('lpRedeemed')"
+            [ngStyle]="getRedeemedStyle()"
+          >
             REDEEMED
           </td>
-          <td class="nav-item" (click)="switchTab('ledger')" [ngStyle]="getLedgerStyle()">
+          <td
+            class="nav-item"
+            (click)="switchTab('ledger')"
+            [ngStyle]="getLedgerStyle()"
+          >
             LEDGER
           </td>
-          <td (click)="closeWindow()" style="border: none !important; min-width: 50px;">
+          <td
+            (click)="closeWindow()"
+            style="border: none !important; min-width: 50px"
+          >
             <i class="fa fa-times"></i>
           </td>
         </tr>
@@ -23,81 +45,133 @@
     </div>
     <div id="redeemWindowNavMargin"></div>
     <div *ngIf="rewards">
-      <div class="card spotbie-redeemedItem" *ngFor="let redeemedItem of rewardList">
-        <div class='card-header'>
-          <span class='sb-text-light-green-gradient'>{{ redeemedItem.business.name }}</span>
+      <div
+        class="card spotbie-redeemedItem"
+        *ngFor="let redeemedItem of rewardList"
+      >
+        <div class="card-header">
+          <span class="sb-text-light-green-gradient">{{
+            redeemedItem.business.name
+          }}</span>
 
-          <img *ngIf="redeemedItem.business.spotbie_user.user_type === 1" [src]="'assets/images/home_imgs/find-places-to-eat.svg'" />
-          <img *ngIf="redeemedItem.business.spotbie_user.user_type === 2" [src]="'assets/images/home_imgs/find-places-for-shopping.svg'" />
-          <img *ngIf="redeemedItem.business.spotbie_user.user_type === 3" [src]="'assets/images/home_imgs/find-events.svg'" />
+          <img
+            *ngIf="redeemedItem.business.spotbie_user.user_type === 1"
+            [src]="'assets/images/home_imgs/find-places-to-eat.svg'"
+          />
+          <img
+            *ngIf="redeemedItem.business.spotbie_user.user_type === 2"
+            [src]="'assets/images/home_imgs/find-places-for-shopping.svg'"
+          />
+          <img
+            *ngIf="redeemedItem.business.spotbie_user.user_type === 3"
+            [src]="'assets/images/home_imgs/find-events.svg'"
+          />
         </div>
 
-        <div class='card-body text-uppercase'>
-          <div class='mb-2'>
+        <div class="card-body text-uppercase">
+          <div class="mb-2">
             <img class="sb-rewardImage" [src]="redeemedItem.reward.images" />
           </div>
 
-          <div class='mb-2'>
-            <span class='sb-text-light-green-gradient'>{{ redeemedItem.reward.name }}</span>
+          <div class="mb-2">
+            <span class="sb-text-light-green-gradient">{{
+              redeemedItem.reward.name
+            }}</span>
           </div>
 
-          <div class='mb-2'>
-            {{ redeemedItem.created_at | date:'mediumDate' }}
+          <div class="mb-2">
+            {{ redeemedItem.created_at | date: 'mediumDate' }}
           </div>
 
-          <div class='mb-2'>
+          <div class="mb-2">
             Loyalty Points:
-            <span *ngIf="redeemedItem.redeemed === true" class='sb-text-red-gradient'>-{{ redeemedItem.total_spent | number:'1.0':'en-US' }}</span>
+            <span
+              *ngIf="redeemedItem.redeemed === true"
+              class="sb-text-red-gradient"
+              >-{{ redeemedItem.total_spent | number: '1.0' : 'en-US' }}</span
+            >
           </div>
 
-          <div class='mb-2'>
+          <div class="mb-2">
             Dollar Value:
-            <span class='sb-text-light-green-gradient'>${{ redeemedItem.dollar_value | number:'1.2':'en-US' }}</span>
+            <span class="sb-text-light-green-gradient"
+              >${{ redeemedItem.dollar_value | number: '1.2' : 'en-US' }}</span
+            >
           </div>
         </div>
 
-        <div class='card-footer text-uppercase text-center'>
+        <div class="card-footer text-uppercase text-center">
           award id: {{ redeemedItem.uuid }}
         </div>
       </div>
     </div>
 
     <div *ngIf="lpRedeemed">
-      <div class="card spotbie-redeemedItem" *ngFor="let redeemedItem of lpRedeemedList; trackBy:identify">
-        <div class='card-header'>
-          <span class='sb-text-light-green-gradient'>{{ redeemedItem.business.name }}</span>
+      <div
+        class="card spotbie-redeemedItem"
+        *ngFor="let redeemedItem of lpRedeemedList; trackBy: identify"
+      >
+        <div class="card-header">
+          <span class="sb-text-light-green-gradient">{{
+            redeemedItem.business.name
+          }}</span>
 
-          <img *ngIf="redeemedItem.business.spotbie_user.user_type === 1" [src]="'assets/images/home_imgs/find-places-to-eat.svg'" />
-          <img *ngIf="redeemedItem.business.spotbie_user.user_type === 2" [src]="'assets/images/home_imgs/find-places-for-shopping.svg'" />
-          <img *ngIf="redeemedItem.business.spotbie_user.user_type === 3" [src]="'assets/images/home_imgs/find-events.svg'" />
+          <img
+            *ngIf="redeemedItem.business.spotbie_user.user_type === 1"
+            [src]="'assets/images/home_imgs/find-places-to-eat.svg'"
+          />
+          <img
+            *ngIf="redeemedItem.business.spotbie_user.user_type === 2"
+            [src]="'assets/images/home_imgs/find-places-for-shopping.svg'"
+          />
+          <img
+            *ngIf="redeemedItem.business.spotbie_user.user_type === 3"
+            [src]="'assets/images/home_imgs/find-events.svg'"
+          />
         </div>
 
-        <div class='card-body text-uppercase'>
-          <div class='mb-2'>
-            {{ redeemedItem.created_at | date:'mediumDate' }}
-          </div>
-
-          <div class='mb-2'>
-            Loyalty Points
-            <span class='sb-text-light-green-gradient'>
-                +{{ redeemedItem.amount | number:'1.0':'en-US' }}
-            </span>
-          </div>
-
-          <div class='mb-2'>
-            Total Spent <span class='sb-text-light-green-gradient'>${{ redeemedItem.total_spent | number:'1.2':'en-US' }}</span>
-          </div>
-
-          <div class='mb-2'>
-            Dollar Value <span class='sb-text-light-green-gradient'>${{ redeemedItem.dollar_value | number:'1.2':'en-US' }}</span>
-          </div>
-
-          <div class='mb-2'>
-            Reward Rate <span class='sb-text-light-green-gradient'>{{ redeemedItem.loyalty_point_dollar_percent_value | number:'1.2':'en-US' }}%</span>
+        <div class="card-body text-uppercase">
+          <div class="mb-2">
+            {{ redeemedItem.created_at | date: 'mediumDate' }}
           </div>
 
           <div class="mb-2">
-            <button color="secondary" size="small" (click)="leaveFeedback(redeemedItem)">
+            Loyalty Points
+            <span class="sb-text-light-green-gradient">
+              +{{ redeemedItem.amount | number: '1.0' : 'en-US' }}
+            </span>
+          </div>
+
+          <div class="mb-2">
+            Total Spent
+            <span class="sb-text-light-green-gradient"
+              >${{ redeemedItem.total_spent | number: '1.2' : 'en-US' }}</span
+            >
+          </div>
+
+          <div class="mb-2">
+            Dollar Value
+            <span class="sb-text-light-green-gradient"
+              >${{ redeemedItem.dollar_value | number: '1.2' : 'en-US' }}</span
+            >
+          </div>
+
+          <div class="mb-2">
+            Reward Rate
+            <span class="sb-text-light-green-gradient"
+              >{{
+                redeemedItem.loyalty_point_dollar_percent_value
+                  | number: '1.2' : 'en-US'
+              }}%</span
+            >
+          </div>
+
+          <div class="mb-2">
+            <button
+              color="secondary"
+              size="small"
+              (click)="leaveFeedback(redeemedItem)"
+            >
               <ng-container *ngIf="!redeemedItem.feedback">
                 Leave Feedback
               </ng-container>
@@ -108,92 +182,143 @@
           </div>
         </div>
 
-        <div class='card-footer text-uppercase text-center'>
+        <div class="card-footer text-uppercase text-center">
           award id: {{ redeemedItem.uuid }}
         </div>
       </div>
     </div>
 
     <div *ngIf="ledger">
-      <div class="card spotbie-redeemedItem" *ngFor="let legerRecord of lpLedgerList">
-        <div class='card-header'>
-          <span class='sb-text-light-green-gradient'>{{ legerRecord.business.name }}</span>
+      <div
+        class="card spotbie-redeemedItem"
+        *ngFor="let legerRecord of lpLedgerList"
+      >
+        <div class="card-header">
+          <span class="sb-text-light-green-gradient">{{
+            legerRecord.business.name
+          }}</span>
 
-          <img *ngIf="legerRecord.business.spotbie_user.user_type === 1" [src]="'assets/images/home_imgs/find-places-to-eat.svg'" />
-          <img *ngIf="legerRecord.business.spotbie_user.user_type === 2" [src]="'assets/images/home_imgs/find-places-for-shopping.svg'" />
-          <img *ngIf="legerRecord.business.spotbie_user.user_type === 3" [src]="'assets/images/home_imgs/find-events.svg'" />
+          <img
+            *ngIf="legerRecord.business.spotbie_user.user_type === 1"
+            [src]="'assets/images/home_imgs/find-places-to-eat.svg'"
+          />
+          <img
+            *ngIf="legerRecord.business.spotbie_user.user_type === 2"
+            [src]="'assets/images/home_imgs/find-places-for-shopping.svg'"
+          />
+          <img
+            *ngIf="legerRecord.business.spotbie_user.user_type === 3"
+            [src]="'assets/images/home_imgs/find-events.svg'"
+          />
         </div>
 
-        <div class='card-body text-uppercase'>
-          <div class='mb-2'>
-            {{ legerRecord.created_at | date:'mediumDate' }}
+        <div class="card-body text-uppercase">
+          <div class="mb-2">
+            {{ legerRecord.created_at | date: 'mediumDate' }}
           </div>
 
-          <div class='mb-2'>
+          <div class="mb-2">
             <span [ngClass]="getLpStyle(legerRecord.loyalty_amount)">
-                {{ legerRecord.loyalty_amount | number:'1.0':'en-US' }}
-            </span> Loyalty Points
+              {{ legerRecord.loyalty_amount | number: '1.0' : 'en-US' }}
+            </span>
+            Loyalty Points
           </div>
         </div>
 
-        <div class='card-footer text-uppercase text-center'>
+        <div class="card-footer text-uppercase text-center">
           transaction id: {{ legerRecord.uuid }}
         </div>
       </div>
     </div>
 
     <div *ngIf="showBalanceList">
-      <div class="card spotbie-redeemedItem" *ngFor="let balance of balanceList">
-        <div class='card-header'>
-          <span class='sb-text-light-green-gradient'>{{ balance.from_business.name }}</span>
+      <div
+        class="card spotbie-redeemedItem"
+        *ngFor="let balance of balanceList"
+      >
+        <div class="card-header">
+          <span class="sb-text-light-green-gradient">{{
+            balance.from_business.name
+          }}</span>
 
-          <img *ngIf="balance.from_business.spotbie_user.user_type === 1" [src]="'assets/images/home_imgs/find-places-to-eat.svg'" />
-          <img *ngIf="balance.from_business.spotbie_user.user_type === 2" [src]="'assets/images/home_imgs/find-places-for-shopping.svg'" />
-          <img *ngIf="balance.from_business.spotbie_user.user_type === 3" [src]="'assets/images/home_imgs/find-events.svg'" />
+          <img
+            *ngIf="balance.from_business.spotbie_user.user_type === 1"
+            [src]="'assets/images/home_imgs/find-places-to-eat.svg'"
+          />
+          <img
+            *ngIf="balance.from_business.spotbie_user.user_type === 2"
+            [src]="'assets/images/home_imgs/find-places-for-shopping.svg'"
+          />
+          <img
+            *ngIf="balance.from_business.spotbie_user.user_type === 3"
+            [src]="'assets/images/home_imgs/find-events.svg'"
+          />
         </div>
 
-        <div class='card-body text-uppercase'>
-          <div class='mb-2'>
+        <div class="card-body text-uppercase">
+          <div class="mb-2">
             <img class="sb-rewardImage" [src]="balance.from_business.photo" />
           </div>
 
-          <div class='mb-2'>
+          <div class="mb-2">
             <span [ngClass]="getLpStyle(balance.balance)">
-                {{ balance.balance | number:'1.0':'en-US' }}
-            </span> Loyalty Points
+              {{ balance.balance | number: '1.0' : 'en-US' }}
+            </span>
+            Loyalty Points
           </div>
 
-          <div class='mb-2'>
+          <div class="mb-2">
             <span [ngClass]="getLpStyle(balance.balance_aggregate)">
-                {{ balance.balance_aggregate | number:'1.0':'en-US' }}
-            </span> All Time LP
+              {{ balance.balance_aggregate | number: '1.0' : 'en-US' }}
+            </span>
+            All Time LP
           </div>
 
-          <div class='mb-2'>
-            UPDATED AT {{ balance.updated_at | date:'mediumDate' }}
+          <div class="mb-2">
+            UPDATED AT {{ balance.updated_at | date: 'mediumDate' }}
           </div>
         </div>
       </div>
     </div>
 
-    <div class='spotbie-text-gradient mt-3 cursor-pointer' *ngIf="showLoadMore()" (click)="loadMoreItems()">
+    <div
+      class="spotbie-text-gradient mt-3 cursor-pointer"
+      *ngIf="showLoadMore()"
+      (click)="loadMoreItems()"
+    >
       LOAD MORE
     </div>
 
-    <div class='spotbie-no-notis-box' *ngIf="((rewardList.length === 0 && rewards) ||
-                                                  (lpRedeemedList.length === 0 && lpRedeemed) ||
-                                                  (lpLedgerList.length === 0 && ledger) ||
-                                                  (balanceList.length === 0 && showBalanceList))">
+    <div
+      class="spotbie-no-notis-box"
+      *ngIf="
+        (rewardList.length === 0 && rewards) ||
+        (lpRedeemedList.length === 0 && lpRedeemed) ||
+        (lpLedgerList.length === 0 && ledger) ||
+        (balanceList.length === 0 && showBalanceList)
+      "
+    >
       <i class="fas fa-exclamation-triangle"></i>
-      <br/><br/>
+      <br /><br />
       <p class="spotbie-text-gradient">
-        <span *ngIf="balanceList.length === 0 && showBalanceList">You have not redeemed any points.</span>
-        <span *ngIf="rewardList.length === 0 && rewards">You have no redeemed rewards.</span>
-        <span *ngIf="lpRedeemedList.length === 0 && lpRedeemed">You have no redeemed points.</span>
-        <span *ngIf="lpLedgerList.length === 0 && ledger">You have no transaction history.</span>
+        <span *ngIf="balanceList.length === 0 && showBalanceList"
+          >You have not redeemed any points.</span
+        >
+        <span *ngIf="rewardList.length === 0 && rewards"
+          >You have no redeemed rewards.</span
+        >
+        <span *ngIf="lpRedeemedList.length === 0 && lpRedeemed"
+          >You have no redeemed points.</span
+        >
+        <span *ngIf="lpLedgerList.length === 0 && ledger"
+          >You have no transaction history.</span
+        >
       </p>
-      <br/><br/>
-      <div class='spotbie-text-gradient mt-3 cursor-pointer' (click)="closeWindow()">
+      <br /><br />
+      <div
+        class="spotbie-text-gradient mt-3 cursor-pointer"
+        (click)="closeWindow()"
+      >
         CLOSE
       </div>
     </div>

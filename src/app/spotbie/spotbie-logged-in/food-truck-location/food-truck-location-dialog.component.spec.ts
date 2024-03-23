@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { FoodTruckLocationDialogComponent } from './food-truck-location-dialog.component';
+import {FoodTruckLocationDialogComponent} from './food-truck-location-dialog.component';
 
 describe('FoodTruckLocationComponent', () => {
   let component: FoodTruckLocationDialogComponent;
@@ -8,9 +8,8 @@ describe('FoodTruckLocationComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ FoodTruckLocationDialogComponent ]
-    })
-    .compileComponents();
+      declarations: [FoodTruckLocationDialogComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(FoodTruckLocationDialogComponent);
     component = fixture.componentInstance;

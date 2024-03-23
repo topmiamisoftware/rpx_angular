@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { LoyaltyPointsComponent } from './loyalty-points.component';
+import {LoyaltyPointsComponent} from './loyalty-points.component';
 
 describe('LoyaltyPointsComponent', () => {
   let component: LoyaltyPointsComponent;
@@ -8,9 +8,8 @@ describe('LoyaltyPointsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ LoyaltyPointsComponent ]
-    })
-    .compileComponents();
+      declarations: [LoyaltyPointsComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

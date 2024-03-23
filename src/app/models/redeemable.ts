@@ -1,8 +1,8 @@
 import {Reward} from './reward';
 import {LoyaltyPointsLedger} from './loyalty-points-ledger';
 import {Business} from './business';
-import {SpotbieUser} from "./spotbieuser";
-import {Feedback} from "./feedback";
+import {SpotbieUser} from './spotbieuser';
+import {Feedback} from './feedback';
 
 export class Redeemable {
   uuid: string = null;

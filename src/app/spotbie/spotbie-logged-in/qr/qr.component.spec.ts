@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { QrComponent } from './qr.component';
+import {QrComponent} from './qr.component';
 
 describe('QrComponent', () => {
   let component: QrComponent;
@@ -8,9 +8,8 @@ describe('QrComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ QrComponent ]
-    })
-    .compileComponents();
+      declarations: [QrComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

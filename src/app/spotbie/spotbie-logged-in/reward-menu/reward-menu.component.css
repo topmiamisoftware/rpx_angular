@@ -1,9 +1,9 @@
-.spotbie-overlay-window{
+.spotbie-overlay-window {
   z-index: 97;
-  background-color: #1c1924!important;
+  background-color: #1c1924 !important;
   padding-top: 80px;
 }
-.sb-menuItemWrapper{
+.sb-menuItemWrapper {
   position: relative;
   margin: 0 auto;
   min-width: 900px;
@@ -12,11 +12,11 @@
   display: block;
   text-align: center;
 }
-.sb-addMenuItem{
+.sb-addMenuItem {
   position: relative;
   width: 210px;
   min-width: 210px;
-  max-width:210px;
+  max-width: 210px;
   height: 210px;
   min-height: 210px;
   max-height: 210px;
@@ -26,7 +26,7 @@
   display: inline-block;
   cursor: pointer;
 }
-.sb-addMenuItem h6{
+.sb-addMenuItem h6 {
   position: absolute;
   display: block;
   width: 100%;
@@ -40,11 +40,11 @@
   padding-bottom: 5px;
   text-transform: uppercase;
 }
-.sb-menuItem{
+.sb-menuItem {
   position: relative;
   width: 215px;
   min-width: 215px;
-  max-width:215px;
+  max-width: 215px;
   height: 215px;
   min-height: 215px;
   max-height: 215px;
@@ -61,11 +61,11 @@
   justify-content: center;
   margin-top: 3px;
 }
-.sb-menuItemInner{
+.sb-menuItemInner {
   position: relative;
   width: 215px;
   min-width: 215px;
-  max-width:215px;
+  max-width: 215px;
   height: 215px;
   min-height: 215px;
   max-height: 215px;
@@ -75,7 +75,7 @@
   cursor: pointer;
   margin-top: 3px;
 }
-.sb-menuItem h6{
+.sb-menuItem h6 {
   position: absolute;
   display: block;
   width: 100%;
@@ -90,16 +90,16 @@
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-  font-size: .7rem;
+  font-size: 0.7rem;
   pointer-events: none;
 }
-.sb-titleGreen{
-  background: -webkit-linear-gradient(45deg,#0eb273, #2ddc5b);
+.sb-titleGreen {
+  background: -webkit-linear-gradient(45deg, #0eb273, #2ddc5b);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
-.sb-discountTitle{
-  font-size: .5rem;
+.sb-discountTitle {
+  font-size: 0.5rem;
   line-height: 0.6rem;
   background: unset;
   -webkit-text-fill-color: unset;
@@ -109,8 +109,8 @@
   color: white;
 }
 
-@media (max-width: 1024px){
-  .sb-menuItemWrapper{
+@media (max-width: 1024px) {
+  .sb-menuItemWrapper {
     width: 96%;
     min-width: 96%;
     max-width: 96%;
@@ -120,8 +120,8 @@
     margin: 0 auto;
   }
 }
-@media (max-width: 768px){
-  .sb-menuItemInner{
+@media (max-width: 768px) {
+  .sb-menuItemInner {
     width: 100%;
     min-width: 100%;
     max-width: 100%;
@@ -143,7 +143,7 @@
   }
 
   p {
-    font-size: .8rem;
+    font-size: 0.8rem;
   }
 
   .spotbie-loyaltyMenuDescription {
@@ -170,9 +170,8 @@
     height: 200px;
     min-height: 200px;
     max-height: 200px;
-    font-size: .8rem;
+    font-size: 0.8rem;
     border-radius: 5px;
-
   }
 
   .sb-addMenuItem {
@@ -197,7 +196,7 @@
     line-height: 1rem;
   }
 
-  .sb-menuItemInner{
+  .sb-menuItemInner {
     width: 100%;
     min-width: 100%;
     max-width: 100%;

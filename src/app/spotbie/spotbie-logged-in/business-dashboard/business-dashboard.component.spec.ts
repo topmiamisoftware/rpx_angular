@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { BusinessDashboardComponent } from './business-dashboard.component';
+import {BusinessDashboardComponent} from './business-dashboard.component';
 
 describe('BusinessDashboardComponent', () => {
   let component: BusinessDashboardComponent;
@@ -8,9 +8,8 @@ describe('BusinessDashboardComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ BusinessDashboardComponent ]
-    })
-    .compileComponents();
+      declarations: [BusinessDashboardComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

@@ -1,6 +1,6 @@
-import { TestBed } from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 
-import { SpotbiePaymentsService } from './spotbie-payments.service';
+import {SpotbiePaymentsService} from './spotbie-payments.service';
 
 describe('SpotbiePaymentsService', () => {
   let service: SpotbiePaymentsService;

@@ -1,5 +1,5 @@
-.spotbie-overlay-window{
-  display: flex!important;
+.spotbie-overlay-window {
+  display: flex !important;
   flex-direction: column;
   flex-wrap: nowrap;
   align-content: center;
@@ -7,7 +7,7 @@
   text-align: center;
   z-index: 97;
 }
-.spotbie-redeemedItem{
+.spotbie-redeemedItem {
   position: relative;
   margin: 0 auto 5px;
   border-radius: 5px;
@@ -15,23 +15,23 @@
   min-width: 650px;
   width: 650px;
   color: white;
-  background-color: rgba(0,0,0,.2);
+  background-color: rgba(0, 0, 0, 0.2);
   text-align: left;
 }
-.redeemed-closeButton{
+.redeemed-closeButton {
   border-right: unset !important;
   color: #332f3e !important;
 }
-.card-header{
-  font-size: .9rem;
+.card-header {
+  font-size: 0.9rem;
 }
-.card-body{
-  font-size: .7rem;
+.card-body {
+  font-size: 0.7rem;
 }
-.card-footer{
-  font-size: .6rem;
+.card-footer {
+  font-size: 0.6rem;
 }
-.spotbie-no-notis-box{
+.spotbie-no-notis-box {
   position: fixed;
   left: 0;
   right: 0;
@@ -45,20 +45,20 @@
   padding-bottom: 50px;
   border-radius: 10px;
 }
-.fa-exclamation-triangle{
+.fa-exclamation-triangle {
   position: relative;
   color: #ffc107;
   font-size: 1rem;
   bottom: 4px;
   margin-right: 10px;
 }
-.sb-rewardImage{
+.sb-rewardImage {
   position: relative;
   max-width: 250px;
   width: 250px;
   min-width: 250px;
 }
-.nav{
+.nav {
   position: fixed;
   left: 0px;
   min-width: 100%;
@@ -84,13 +84,13 @@ div.nav > table td {
   padding: 10px 16px;
   padding-top: 14px;
   text-align: center;
-  font-size: .8rem;
+  font-size: 0.8rem;
   cursor: pointer;
   border-radius: 5px;
-  border-bottom: 1px solid rgba(0,0,0,.32);
-  border-right: 1px solid rgba(0,0,0,.38);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.32);
+  border-right: 1px solid rgba(0, 0, 0, 0.38);
 }
-.spotbie-redeemListWrapper{
+.spotbie-redeemListWrapper {
   position: relative;
   margin: 0 auto;
   max-width: 99%;
@@ -101,23 +101,23 @@ div.nav > table td {
   max-width: 25px;
   max-height: 25px;
 }
-@media (max-width: 650px){
-  .spotbie-redeemedItem{
+@media (max-width: 650px) {
+  .spotbie-redeemedItem {
     max-width: 98%;
     min-width: 98%;
     width: 98%;
   }
-  .spotbie-redeemListWrapper{
+  .spotbie-redeemListWrapper {
     width: 99%;
     min-width: 99%;
   }
-  .sb-rewardImage{
+  .sb-rewardImage {
     position: relative;
     max-width: 85px;
     width: 85px;
     min-width: 85px;
   }
-  .spotbie-no-notis-box{
+  .spotbie-no-notis-box {
     max-width: 99%;
     min-width: 99%;
     width: 99%;
@@ -132,8 +132,8 @@ div.nav > table td {
     min-width: 10%;
   }
 }
-@media (max-width: 460px){
-  .spotbie-no-notis-box{
+@media (max-width: 460px) {
+  .spotbie-no-notis-box {
     width: 94%;
     min-width: 94%;
     max-width: 94%;
@@ -148,9 +148,9 @@ div.nav > table td {
     width: 90%;
     min-width: 90%;
   }
-  .nav > table td{
+  .nav > table td {
     border-radius: 0 !important;
-    font-size: .6rem !important;
+    font-size: 0.6rem !important;
     padding: 9px 10px 5px !important;
   }
 }

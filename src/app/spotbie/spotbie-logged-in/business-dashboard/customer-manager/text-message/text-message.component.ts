@@ -11,7 +11,8 @@ import {
 import {MatButtonModule} from '@angular/material/button';
 import {
   MAT_DIALOG_DATA,
-  MatDialog, MatDialogModule,
+  MatDialog,
+  MatDialogModule,
   MatDialogRef,
 } from '@angular/material/dialog';
 import {NgIf} from '@angular/common';

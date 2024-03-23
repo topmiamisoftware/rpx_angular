@@ -1,10 +1,12 @@
-<app-info-object [infoObject]="infoObject$ | async"
-                 [ad]="ad"
-                 [lat]="lat"
-                 [lng]="lng"
-                 [categories]="categories"
-                 [accountType]="business.user_type"
-                 [businessTiers]="loyaltyTiers$ | async"
-                 (closeWindow)="closeWindow()"
-                 *ngIf="infoObjectLoaded"
-                 [fullScreenMode]="fullScreenMode"></app-info-object>
+<app-info-object
+  [infoObject]="infoObject$ | async"
+  [ad]="ad"
+  [lat]="lat"
+  [lng]="lng"
+  [categories]="categories"
+  [accountType]="business.user_type"
+  [businessTiers]="loyaltyTiers$ | async"
+  (closeWindow)="closeWindow()"
+  *ngIf="infoObjectLoaded"
+  [fullScreenMode]="fullScreenMode"
+></app-info-object>

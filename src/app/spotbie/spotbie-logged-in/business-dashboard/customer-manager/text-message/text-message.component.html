@@ -1,8 +1,14 @@
 <h1 mat-dialog-title>Send a Text Message.</h1>
 <div mat-dialog-content>
   <form [formGroup]="textMessageForm">
-    <p>What would you like to tell your recent guests? Message will be sent to recent guests that have opted in to sms and have a valid phone number.</p>
-    <p *ngIf="submitted && f.smsText.errors" class="spotbie-invalid-feedback text-uppercase spotbie-text-gradient spotbie-error">
+    <p>
+      What would you like to tell your recent guests? Message will be sent to
+      recent guests that have opted in to sms and have a valid phone number.
+    </p>
+    <p
+      *ngIf="submitted && f.smsText.errors"
+      class="spotbie-invalid-feedback text-uppercase spotbie-text-gradient spotbie-error"
+    >
       <span *ngIf="f.smsText.errors.required">
         Text message body is required.
       </span>
@@ -13,12 +19,14 @@
     </p>
     <mat-form-field>
       <mat-label>Text Message</mat-label>
-      <textarea formControlName="smsText"
-                matInput
-                cdkTextareaAutosize
-                #autosize="cdkTextareaAutosize"
-                cdkAutosizeMinRows="1"
-                cdkAutosizeMaxRows="15"></textarea>
+      <textarea
+        formControlName="smsText"
+        matInput
+        cdkTextareaAutosize
+        #autosize="cdkTextareaAutosize"
+        cdkAutosizeMinRows="1"
+        cdkAutosizeMaxRows="15"
+      ></textarea>
     </mat-form-field>
   </form>
 </div>

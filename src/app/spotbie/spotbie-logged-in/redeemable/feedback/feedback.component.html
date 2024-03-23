@@ -5,20 +5,29 @@
   </p>
 
   <form [formGroup]="feedbackForm">
-    <ng-container *ngIf="(formSubmitted$ | async) === true && f.feedbackText.errors">
-      <p class="text-warning" *ngIf="f.feedbackText.errors.required">The feedback text is required.</p>
-      <p class="text-warning" *ngIf="f.feedbackText.errors.minlength">The feedback text must be greater than 100.</p>
-      <p class="text-warning" *ngIf="f.feedbackText.errors.maxlength">The feedback text must be less than 1500.</p>
+    <ng-container
+      *ngIf="(formSubmitted$ | async) === true && f.feedbackText.errors"
+    >
+      <p class="text-warning" *ngIf="f.feedbackText.errors.required">
+        The feedback text is required.
+      </p>
+      <p class="text-warning" *ngIf="f.feedbackText.errors.minlength">
+        The feedback text must be greater than 100.
+      </p>
+      <p class="text-warning" *ngIf="f.feedbackText.errors.maxlength">
+        The feedback text must be less than 1500.
+      </p>
     </ng-container>
 
     <mat-form-field>
       <mat-label>Leave your feedback.</mat-label>
-        <textarea matInput
-                  cdkTextareaAutosize
-                  #autosize="cdkTextareaAutosize"
-                  formControlName="feedbackText"
-                  placeholder="Your feedback."
-        ></textarea>
+      <textarea
+        matInput
+        cdkTextareaAutosize
+        #autosize="cdkTextareaAutosize"
+        formControlName="feedbackText"
+        placeholder="Your feedback."
+      ></textarea>
     </mat-form-field>
   </form>
 

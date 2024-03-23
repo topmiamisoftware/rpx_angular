@@ -1,15 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-eula',
   templateUrl: './eula.component.html',
-  styleUrls: ['./eula.component.css']
+  styleUrls: ['./eula.component.css'],
 })
 export class EulaComponent implements OnInit {
+  constructor() {}
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

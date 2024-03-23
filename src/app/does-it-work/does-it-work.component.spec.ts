@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { DoesItWorkComponent } from './does-it-work.component';
+import {DoesItWorkComponent} from './does-it-work.component';
 
 describe('DoesItWorkComponent', () => {
   let component: DoesItWorkComponent;
@@ -8,9 +8,8 @@ describe('DoesItWorkComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DoesItWorkComponent ]
-    })
-    .compileComponents();
+      declarations: [DoesItWorkComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(DoesItWorkComponent);
     component = fixture.componentInstance;

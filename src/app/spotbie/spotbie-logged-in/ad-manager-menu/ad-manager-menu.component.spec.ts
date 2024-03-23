@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { AdManagerMenuComponent } from './ad-manager-menu.component';
+import {AdManagerMenuComponent} from './ad-manager-menu.component';
 
 describe('AdManagerMenuComponent', () => {
   let component: AdManagerMenuComponent;
@@ -8,9 +8,8 @@ describe('AdManagerMenuComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AdManagerMenuComponent ]
-    })
-    .compileComponents();
+      declarations: [AdManagerMenuComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

@@ -1,21 +1,21 @@
-.sb-testMode{
-    position: fixed;
-    left: 20px;
-    bottom: 25px;
-    max-width: 228px;
-    background-color: rgba(0,0,0,.231);
-    border-radius: 5px;
-    color: white;
-    z-index: 99;
-    text-align: center;
-    padding: 2px;
-    font-size: .8rem;
+.sb-testMode {
+  position: fixed;
+  left: 20px;
+  bottom: 25px;
+  max-width: 228px;
+  background-color: rgba(0, 0, 0, 0.231);
+  border-radius: 5px;
+  color: white;
+  z-index: 99;
+  text-align: center;
+  padding: 2px;
+  font-size: 0.8rem;
 }
 
-#sb-testModeTitleTriangle{
-    font-size: 1.4rem !important;
-    color: #ffc107 !important;
+#sb-testModeTitleTriangle {
+  font-size: 1.4rem !important;
+  color: #ffc107 !important;
 }
-.spotbie-overlay-window{
-    z-index: 99 !important;
+.spotbie-overlay-window {
+  z-index: 99 !important;
 }

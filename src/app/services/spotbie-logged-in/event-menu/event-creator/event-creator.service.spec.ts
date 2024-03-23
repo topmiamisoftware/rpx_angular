@@ -1,6 +1,6 @@
-import { TestBed } from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 
-import { EventCreatorService } from './event-creator.service';
+import {EventCreatorService} from './event-creator.service';
 
 describe('RewardCreatorService', () => {
   let service: EventCreatorService;

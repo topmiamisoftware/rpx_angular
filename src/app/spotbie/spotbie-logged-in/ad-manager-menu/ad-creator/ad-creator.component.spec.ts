@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { AdCreatorComponent } from './ad-creator.component';
+import {AdCreatorComponent} from './ad-creator.component';
 
 describe('AdCreatorComponent', () => {
   let component: AdCreatorComponent;
@@ -8,9 +8,8 @@ describe('AdCreatorComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AdCreatorComponent ]
-    })
-    .compileComponents();
+      declarations: [AdCreatorComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

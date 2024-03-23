@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { LoadingScreenComponent } from './loading-screen.component';
+import {LoadingScreenComponent} from './loading-screen.component';
 
 describe('LoadingScreenComponent', () => {
   let component: LoadingScreenComponent;
@@ -8,9 +8,8 @@ describe('LoadingScreenComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LoadingScreenComponent ]
-    })
-    .compileComponents();
+      declarations: [LoadingScreenComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

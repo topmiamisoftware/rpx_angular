@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { DownloadBusinessMobileComponent } from './download-business-mobile.component';
+import {DownloadBusinessMobileComponent} from './download-business-mobile.component';
 
 describe('DownloadBusinessMobileComponent', () => {
   let component: DownloadBusinessMobileComponent;
@@ -8,9 +8,8 @@ describe('DownloadBusinessMobileComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DownloadBusinessMobileComponent ]
-    })
-    .compileComponents();
+      declarations: [DownloadBusinessMobileComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(DownloadBusinessMobileComponent);
     component = fixture.componentInstance;

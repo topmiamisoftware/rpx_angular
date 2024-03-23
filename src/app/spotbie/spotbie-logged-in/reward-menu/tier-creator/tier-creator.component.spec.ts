@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { TierCreatorComponent } from './tier-creator.component';
+import {TierCreatorComponent} from './tier-creator.component';
 
 describe('TierCreatorComponent', () => {
   let component: TierCreatorComponent;
@@ -8,9 +8,8 @@ describe('TierCreatorComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TierCreatorComponent ]
-    })
-    .compileComponents();
+      declarations: [TierCreatorComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(TierCreatorComponent);
     component = fixture.componentInstance;

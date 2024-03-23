@@ -12,9 +12,9 @@ import {AllowedAccountTypes} from '../../../helpers/enum/account-type.enum';
 import {InfoObjectType} from '../../../helpers/enum/info-object-type.enum';
 import {getDistanceFromLatLngInMiles} from '../../../helpers/measure-units.helper';
 import {LoyaltyPointsState} from '../../spotbie-logged-in/state/lp.state';
-import {Immutable} from "@angular-ru/cdk/typings";
-import {LoyaltyPointBalance} from "../../../models/loyalty-point-balance";
-import {BusinessLoyaltyPointsState} from "../../spotbie-logged-in/state/business.lp.state";
+import {Immutable} from '@angular-ru/cdk/typings';
+import {LoyaltyPointBalance} from '../../../models/loyalty-point-balance';
+import {BusinessLoyaltyPointsState} from '../../spotbie-logged-in/state/business.lp.state';
 
 const PLACE_TO_EAT_AD_IMAGE =
   'assets/images/def/places-to-eat/header_banner_in_house.jpg';

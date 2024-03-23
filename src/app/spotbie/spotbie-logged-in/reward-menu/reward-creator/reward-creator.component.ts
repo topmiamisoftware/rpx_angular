@@ -174,7 +174,7 @@ export class RewardCreatorComponent implements OnInit {
     );
   }
 
-  rewardTierChange(){
+  rewardTierChange() {
     this.setRewardTier();
   }
 

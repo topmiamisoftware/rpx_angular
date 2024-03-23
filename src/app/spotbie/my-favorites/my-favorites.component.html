@@ -1,114 +1,138 @@
 <app-loading-screen *ngIf="loading"></app-loading-screen>
 
 <div class="spotbie-overlay-window">
+  <h4 class="spotbie-text-gradient mt-5 mb-2" *ngIf="!noFavorites">
+    MY FAVORITES
+  </h4>
 
-    <h4 class='spotbie-text-gradient mt-5 mb-2' *ngIf="!noFavorites">MY FAVORITES</h4>
+  <div
+    class="spotbie-search-result"
+    *ngFor="let favorite of favoriteItems"
+    (click)="pullSearchMarker(favorite)"
+  >
+    <div class="spotbie-search-result-title">
+      {{ favorite.name }}
 
-    <div class='spotbie-search-result' *ngFor='let favorite of favoriteItems' (click)="pullSearchMarker(favorite)">
-      
-        <div class='spotbie-search-result-title' >
-          
-          {{ favorite.name }} 
-          
-          <span class='spotbie-search-result-price' *ngIf="favorite.price_on == '1'">({{ favorite.price }})</span>
-
-        </div>
-        
-        <table class='spotbie-search-result-table'>
-          <tr>
-            
-            <td *ngIf="favorite.image_url != '0'">
-              <div class='spotbie-search-result-image'[ngStyle]="{ 'background' : 'url(' + favorite.image_url + ')' }" ></div>          
-            </td>
-            
-            <td *ngIf="favorite.type_of_info_object == 'yelp_business'">
-  
-              <table class='spotbie-yelp-rating-table'>
-
-                <tr>
-
-                  <td>
-                    <div class='spotbie-search-result-rating-img' [ngStyle]="{ 'background' : 'url(' + favorite.rating_image + ')' }"></div>
-                  </td>
-
-                  <td>
-                    <div class='spotbie-search-result-yelp-logo' [ngStyle]="{ 'background' : 'url(assets/images/yelp/yelp_logo.png)' }"></div>
-                  </td>
-
-                </tr>
-
-              </table>
-    
-              <div class='spotbie-review-count'>
-                Based on {{ favorite.review_count }} Reviews
-              </div>                      
-  
-              <div class='spotbie-search-result-phone' *ngIf="favorite.phone != ''">
-                {{ favorite.display_phone }}
-              </div>       
-  
-            </td>
-  
-            <td *ngIf="favorite.type_of_info_object == 'ticketmaster_events'">
-  
-              <div class='spotbie-venue-name' *ngIf="favorite._embedded.venues[0]">
-                {{ favorite._embedded.venues[0].name }}
-              </div>
-  
-              <div class='spotbie-distance'>
-                {{ favorite.distance }} miles from you.
-              </div>
-                          
-              <div class='spotbie-time-event' *ngIf="favorite.dates.start.localDate">
-                {{ favorite.dates.start.spotbieDate }}
-              </div>
-  
-              <div class='spotbie-time-event' *ngIf="favorite.dates.start.spotbieHour">
-                {{ favorite.dates.start.spotbieHour }}
-              </div>
-  
-              <div class='spotbie-price-ranges' *ngIf="favorite.priceRanges !== undefined">
-                Price Ranges ${{ favorite.priceRanges[0].min }} to ${{ favorite.priceRanges[0].max }}
-              </div>
-  
-              <div class='spotbie-event-code' *ngIf="favorite.dates.status.code">
-                Status: {{ favorite.dates.status.code }}
-              </div>      
-  
-            </td>
-  
-          </tr>
-  
-        </table>
-    
-        <div class='spotbie-search-result-transactions' *ngIf="favorite.transactions_on == '1'">{{ favorite.friendly_transactions }}</div>
-    
-    </div>     
-
-    <div class='spotbie-load-more-button spotbie-button' *ngIf="loadMore" (click)="loadMoreFavorites()">load more</div>
-    
-    <div class='spotbie-no-notis-box' *ngIf="noFavorites">
-
-        <i class="fas fa-exclamation-triangle"></i>
-
-        <p class="spotbie-text-gradient">
-            You have no favorites yet.<br/>
-            Add favorites through your map.
-        </p>
-
-        <div class="spotbie-text-gradient cursor-pointer" (click)="closeWindowX()">
-          CLOSE
-        </div>
-
-    </div>
-    
-    <div class="sb-closeButton" (click)="closeWindowX()">
-      <i class="fa fa-times"></i>
+      <span class="spotbie-search-result-price" *ngIf="favorite.price_on == '1'"
+        >({{ favorite.price }})</span
+      >
     </div>
 
-    <app-info-object [infoObject]="infoObject"
-    (closeWindow)="infoObjectWindow.open = false" 
+    <table class="spotbie-search-result-table">
+      <tr>
+        <td *ngIf="favorite.image_url != '0'">
+          <div
+            class="spotbie-search-result-image"
+            [ngStyle]="{background: 'url(' + favorite.image_url + ')'}"
+          ></div>
+        </td>
+
+        <td *ngIf="favorite.type_of_info_object == 'yelp_business'">
+          <table class="spotbie-yelp-rating-table">
+            <tr>
+              <td>
+                <div
+                  class="spotbie-search-result-rating-img"
+                  [ngStyle]="{background: 'url(' + favorite.rating_image + ')'}"
+                ></div>
+              </td>
+
+              <td>
+                <div
+                  class="spotbie-search-result-yelp-logo"
+                  [ngStyle]="{
+                    background: 'url(assets/images/yelp/yelp_logo.png)'
+                  }"
+                ></div>
+              </td>
+            </tr>
+          </table>
+
+          <div class="spotbie-review-count">
+            Based on {{ favorite.review_count }} Reviews
+          </div>
+
+          <div class="spotbie-search-result-phone" *ngIf="favorite.phone != ''">
+            {{ favorite.display_phone }}
+          </div>
+        </td>
+
+        <td *ngIf="favorite.type_of_info_object == 'ticketmaster_events'">
+          <div class="spotbie-venue-name" *ngIf="favorite._embedded.venues[0]">
+            {{ favorite._embedded.venues[0].name }}
+          </div>
+
+          <div class="spotbie-distance">
+            {{ favorite.distance }} miles from you.
+          </div>
+
+          <div
+            class="spotbie-time-event"
+            *ngIf="favorite.dates.start.localDate"
+          >
+            {{ favorite.dates.start.spotbieDate }}
+          </div>
+
+          <div
+            class="spotbie-time-event"
+            *ngIf="favorite.dates.start.spotbieHour"
+          >
+            {{ favorite.dates.start.spotbieHour }}
+          </div>
+
+          <div
+            class="spotbie-price-ranges"
+            *ngIf="favorite.priceRanges !== undefined"
+          >
+            Price Ranges ${{ favorite.priceRanges[0].min }} to ${{
+              favorite.priceRanges[0].max
+            }}
+          </div>
+
+          <div class="spotbie-event-code" *ngIf="favorite.dates.status.code">
+            Status: {{ favorite.dates.status.code }}
+          </div>
+        </td>
+      </tr>
+    </table>
+
+    <div
+      class="spotbie-search-result-transactions"
+      *ngIf="favorite.transactions_on == '1'"
+    >
+      {{ favorite.friendly_transactions }}
+    </div>
+  </div>
+
+  <div
+    class="spotbie-load-more-button spotbie-button"
+    *ngIf="loadMore"
+    (click)="loadMoreFavorites()"
+  >
+    load more
+  </div>
+
+  <div class="spotbie-no-notis-box" *ngIf="noFavorites">
+    <i class="fas fa-exclamation-triangle"></i>
+
+    <p class="spotbie-text-gradient">
+      You have no favorites yet.<br />
+      Add favorites through your map.
+    </p>
+
+    <div class="spotbie-text-gradient cursor-pointer" (click)="closeWindowX()">
+      CLOSE
+    </div>
+  </div>
+
+  <div class="sb-closeButton" (click)="closeWindowX()">
+    <i class="fa fa-times"></i>
+  </div>
+
+  <app-info-object
+    [infoObject]="infoObject"
+    (closeWindow)="infoObjectWindow.open = false"
     *ngIf="infoObjectWindow.open"
-    (removeFavoriteEvent)="removeFavorite($event)"></app-info-object>
-
+    (removeFavoriteEvent)="removeFavorite($event)"
+  ></app-info-object>
 </div>

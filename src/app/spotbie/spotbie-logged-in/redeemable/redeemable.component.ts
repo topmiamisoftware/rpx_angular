@@ -6,7 +6,7 @@ import * as $ from 'jquery';
 import {AllowedAccountTypes} from '../../../helpers/enum/account-type.enum';
 import {LoyaltyPointsService} from '../../../services/loyalty-points/loyalty-points.service';
 import {FeedbackComponent} from './feedback/feedback.component';
-import {MatDialog} from "@angular/material/dialog";
+import {MatDialog} from '@angular/material/dialog';
 
 @Component({
   selector: 'app-redeemable',

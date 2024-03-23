@@ -1,8 +1,5 @@
 import {NgxsDataRepository} from '@angular-ru/ngxs/repositories';
-import {
-  Computed,
-  StateRepository,
-} from '@angular-ru/ngxs/decorators';
+import {Computed, StateRepository} from '@angular-ru/ngxs/decorators';
 import {Injectable} from '@angular/core';
 import {State} from '@ngxs/store';
 import {Observable, tap} from 'rxjs';
@@ -17,9 +14,7 @@ import {map} from 'rxjs/operators';
 })
 @Injectable()
 export class BusinessLoyaltyPointsState extends NgxsDataRepository<LoyaltyPointBalance> {
-  constructor(
-    private loyaltyPointsService: LoyaltyPointsService,
-  ) {
+  constructor(private loyaltyPointsService: LoyaltyPointsService) {
     super();
   }
 

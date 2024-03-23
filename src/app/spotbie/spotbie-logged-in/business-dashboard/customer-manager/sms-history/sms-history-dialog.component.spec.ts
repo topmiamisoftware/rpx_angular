@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { SmsHistoryDialogComponent } from './sms-history-dialog.component';
+import {SmsHistoryDialogComponent} from './sms-history-dialog.component';
 
 describe('SmsHistoryDialogComponent', () => {
   let component: SmsHistoryDialogComponent;
@@ -8,9 +8,8 @@ describe('SmsHistoryDialogComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ SmsHistoryDialogComponent ]
-    })
-    .compileComponents();
+      declarations: [SmsHistoryDialogComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(SmsHistoryDialogComponent);
     component = fixture.componentInstance;

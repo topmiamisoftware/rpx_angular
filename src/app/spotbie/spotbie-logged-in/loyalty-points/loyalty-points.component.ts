@@ -47,7 +47,6 @@ export class LoyaltyPointsComponent implements OnInit {
   loyaltyPointBalance$: Observable<number>;
   loyaltyPointBalanceBusiness: Immutable<LoyaltyPointBalance> = null;
 
-
   constructor(
     private businessLoyaltyPointState: BusinessLoyaltyPointsState,
     private loyaltyPointState: LoyaltyPointsState,
@@ -165,7 +164,8 @@ export class LoyaltyPointsComponent implements OnInit {
     if (this.userType === AllowedAccountTypes.Personal) {
       this.loyaltyPointBalance$ = this.loyaltyPointState.balance$;
     } else {
-      this.loyaltyPointBalanceBusiness = this.businessLoyaltyPointState.getState();
+      this.loyaltyPointBalanceBusiness =
+        this.businessLoyaltyPointState.getState();
     }
 
     this.loading = false;

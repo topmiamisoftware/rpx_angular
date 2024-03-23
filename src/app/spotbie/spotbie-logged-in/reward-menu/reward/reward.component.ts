@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Reward} from '../../../../models/reward';
 import {LoyaltyTier} from '../../../../models/loyalty-point-tier.balance';
-import {InfoObject} from "../../../../models/info-object";
+import {InfoObject} from '../../../../models/info-object';
 
 @Component({
   selector: 'app-reward',

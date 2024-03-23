@@ -1,6 +1,6 @@
-import { TestBed } from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 
-import { EmailConfirmationService } from './email-confirmation.service';
+import {EmailConfirmationService} from './email-confirmation.service';
 
 describe('EmailConfirmationService', () => {
   let service: EmailConfirmationService;

@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { InfoObjectComponent } from './info-object.component';
+import {InfoObjectComponent} from './info-object.component';
 
 describe('InfoObjectComponent', () => {
   let component: InfoObjectComponent;
@@ -8,9 +8,8 @@ describe('InfoObjectComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ InfoObjectComponent ]
-    })
-    .compileComponents();
+      declarations: [InfoObjectComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

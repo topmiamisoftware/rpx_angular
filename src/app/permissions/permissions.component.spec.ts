@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { PermissionsComponent } from './permissions.component';
+import {PermissionsComponent} from './permissions.component';
 
 describe('PermissionsComponent', () => {
   let component: PermissionsComponent;
@@ -8,9 +8,8 @@ describe('PermissionsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ PermissionsComponent ]
-    })
-    .compileComponents();
+      declarations: [PermissionsComponent],
+    }).compileComponents();
   }));
 
   beforeEach(() => {

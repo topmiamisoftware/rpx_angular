@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { AdvertiseMyBusinessComponent } from './advertise-my-business.component';
+import {AdvertiseMyBusinessComponent} from './advertise-my-business.component';
 
 describe('AdvertiseMyBusinessComponent', () => {
   let component: AdvertiseMyBusinessComponent;
@@ -8,9 +8,8 @@ describe('AdvertiseMyBusinessComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AdvertiseMyBusinessComponent ]
-    })
-    .compileComponents();
+      declarations: [AdvertiseMyBusinessComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

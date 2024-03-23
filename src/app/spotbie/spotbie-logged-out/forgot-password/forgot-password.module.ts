@@ -4,7 +4,7 @@ import {ForgotPasswordComponent} from './forgot-password.component';
 import {RouterModule, Routes} from '@angular/router';
 import {HttpClientModule} from '@angular/common/http';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {HelperModule} from "../../../helpers/helper.module";
+import {HelperModule} from '../../../helpers/helper.module';
 
 const routes: Routes = [
   {path: 'password', component: ForgotPasswordComponent},

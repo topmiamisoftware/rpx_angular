@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { EulaComponent } from './eula.component';
+import {EulaComponent} from './eula.component';
 
 describe('EulaComponent', () => {
   let component: EulaComponent;
@@ -8,9 +8,8 @@ describe('EulaComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ EulaComponent ]
-    })
-    .compileComponents();
+      declarations: [EulaComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

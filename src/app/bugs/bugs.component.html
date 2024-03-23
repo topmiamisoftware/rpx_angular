@@ -1,64 +1,69 @@
 <div class="sb-mainWrapper" *ngIf="showSubmitBug">
+  <h1 class="spotbie-text-gradient text-uppercase">Submit a Bug</h1>
 
-    <h1 class="spotbie-text-gradient text-uppercase">Submit a Bug</h1>
+  <form [formGroup]="bugsForm">
+    <div
+      *ngIf="submitted && f.description.errors; else descriptionNormalTemplate"
+      class="spotbie-invalid-feedback spotbie-text-gradient spotbie-error text-uppercase"
+    >
+      <div *ngIf="f.description.errors.required">
+        Brief bug description and your e-mail.
+      </div>
 
-    <form [formGroup]="bugsForm">
+      <div *ngIf="f.description.errors.minlength">
+        Your bug description must be at least 100 characters long.
+      </div>
 
-        <div *ngIf="submitted && f.description.errors else descriptionNormalTemplate" class="spotbie-invalid-feedback spotbie-text-gradient spotbie-error text-uppercase">
-
-            <div *ngIf="f.description.errors.required">
-                Brief bug description and your e-mail.
-            </div>  
-
-            <div *ngIf="f.description.errors.minlength">
-                Your bug description must be at least 100 characters long.
-            </div>
-
-            <div *ngIf="f.description.errors.maxlength">
-                Your bug description can only be 500 characters long.
-            </div>                       
-
-        </div> 
-
-        <ng-template #descriptionNormalTemplate>
-            <label class="spotbie-text-gradient mt-4 mb-4">Brief bug description and your e-mail.</label>
-        </ng-template>
-        
-        <textarea formControlName="description" placeholder="Bug details..." maxlength="500"></textarea>
-
-        <p class="spotbie-text-gradient mt-2 mb-2">
-            {{ description.length }} / 500
-        </p>
-
-    </form>
-    
-    <div class="spotbie-button text-uppercase" (click)="insertBug()">Send</div>
-
-
-    <div class="text-uppercase mt-4 text-center" style="font-size: 2rem; color: white;">
-        <i class='fa fa-bug'></i>
+      <div *ngIf="f.description.errors.maxlength">
+        Your bug description can only be 500 characters long.
+      </div>
     </div>
 
-    <div class="mt-4 mb-4 text-uppercase spotbie-text-gradient">
-        <p>Developer Info</p>
-        <p>admin@spotbie.com</p>
-        <p>Franco N. Petitfour, CEO</p>
-    </div>
+    <ng-template #descriptionNormalTemplate>
+      <label class="spotbie-text-gradient mt-4 mb-4"
+        >Brief bug description and your e-mail.</label
+      >
+    </ng-template>
 
+    <textarea
+      formControlName="description"
+      placeholder="Bug details..."
+      maxlength="500"
+    ></textarea>
+
+    <p class="spotbie-text-gradient mt-2 mb-2">
+      {{ description.length }} / 500
+    </p>
+  </form>
+
+  <div class="spotbie-button text-uppercase" (click)="insertBug()">Send</div>
+
+  <div
+    class="text-uppercase mt-4 text-center"
+    style="font-size: 2rem; color: white"
+  >
+    <i class="fa fa-bug"></i>
+  </div>
+
+  <div class="mt-4 mb-4 text-uppercase spotbie-text-gradient">
+    <p>Developer Info</p>
+    <p>admin@spotbie.com</p>
+    <p>Franco N. Petitfour, CEO</p>
+  </div>
 </div>
 
-<div class='sb-mainWrapper' *ngIf="success">
+<div class="sb-mainWrapper" *ngIf="success">
+  <div class="sb-v-wrapper" style="display: grid; align-content: center">
+    <h4 class="spotbie-text-gradient spotbie-r-success-title text-uppercase">
+      BUG SUBMITTED
+    </h4>
 
-    <div class='sb-v-wrapper' style="display: grid; align-content: center;">
-        
-        <h4 class="spotbie-text-gradient spotbie-r-success-title text-uppercase">BUG SUBMITTED</h4>
-
-        <div class="sb-verificationCheck mt-4 mb-4">
-            <i class="fa fa-check sb-text-light-green-gradient"></i>
-        </div>
-
-        <h4 class="spotbie-text-gradient spotbie-r-success-title text-uppercase">THANK YOU</h4>
-
+    <div class="sb-verificationCheck mt-4 mb-4">
+      <i class="fa fa-check sb-text-light-green-gradient"></i>
     </div>
 
+    <h4 class="spotbie-text-gradient spotbie-r-success-title text-uppercase">
+      THANK YOU
+    </h4>
+  </div>
 </div>

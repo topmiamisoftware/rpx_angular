@@ -1,6 +1,6 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { NearbyFeaturedAdComponent } from './nearby-featured-ad.component';
+import {NearbyFeaturedAdComponent} from './nearby-featured-ad.component';
 
 describe('NearbyFeaturedAdComponent', () => {
   let component: NearbyFeaturedAdComponent;
@@ -8,9 +8,8 @@ describe('NearbyFeaturedAdComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ NearbyFeaturedAdComponent ]
-    })
-    .compileComponents();
+      declarations: [NearbyFeaturedAdComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

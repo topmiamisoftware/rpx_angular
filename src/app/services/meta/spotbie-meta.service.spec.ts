@@ -1,6 +1,6 @@
-import { TestBed } from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 
-import { SpotbieMetaService } from './spotbie-meta.service';
+import {SpotbieMetaService} from './spotbie-meta.service';
 
 describe('SpotbieMetaService', () => {
   let service: SpotbieMetaService;
