@@ -93,7 +93,7 @@
 
       <ng-container
         *ngIf="
-          (user$ | async)?.business.is_food_truck &&
+          (user$ | async)?.business?.is_food_truck &&
           this.userType === eAllowedAccountTypes.PlaceToEat
         "
       >

@@ -1031,7 +1031,8 @@ export class SettingsComponent implements OnInit {
     return this.businessSettingsForm.get('originCategories').value;
   }
   get isFoodTruck() {
-    return this.businessSettingsForm.get('isFoodTruck').value ?? false;
+    return (this.businessSettingsForm.get('isFoodTruck').value === '')
+      ? false : this.businessSettingsForm.get('isFoodTruck').value;
   }
   get i() {
     return this.businessSettingsForm.controls;
