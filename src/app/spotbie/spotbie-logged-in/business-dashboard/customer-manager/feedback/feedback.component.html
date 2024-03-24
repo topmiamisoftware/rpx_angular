@@ -1,7 +1,6 @@
-<div class="spotbie-overlay-window p-3">
-  <h1 class="spotbie-text-gradient">GUEST FEEDBACK</h1>
-
-  <p class='pt-3'>
+<h1 mat-dialog-title>GUEST FEEDBACK</h1>
+<div mat-dialog-content>
+  <p>
     This is a list of feedback left by your visitors on each of their transactions. All feedback is currently private.
   </p>
 
@@ -29,8 +28,7 @@
       <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="openEntireFeedback(row)"></tr>
     </table>
   </ng-container>
-
-  <div class="mt-3">
-    <button mat-button [style.color]="'white'" (click)="closeDialog()">Close</button>
-  </div>
+</div>
+<div mat-dialog-actions>
+  <button mat-button [style.color]="'white'" (click)="closeDialog()">Close</button>
 </div>

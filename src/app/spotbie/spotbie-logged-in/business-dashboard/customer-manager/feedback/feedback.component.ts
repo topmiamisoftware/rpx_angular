@@ -1,4 +1,4 @@
-import {Component, Inject} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {MatButtonModule} from '@angular/material/button';
 import {MatTableModule} from '@angular/material/table';
@@ -7,6 +7,7 @@ import {Observable} from 'rxjs';
 import {
   MAT_DIALOG_DATA,
   MatDialog,
+  MatDialogModule,
   MatDialogRef,
 } from '@angular/material/dialog';
 import {FeedbackEntitiesState} from './feedback.state';
@@ -18,9 +19,15 @@ import {AlertDialogComponent} from '../../../../../helpers/alert/alert.component
   templateUrl: './feedback.component.html',
   styleUrls: ['./feedback.component.scss'],
   standalone: true,
-  imports: [CommonModule, MatButtonModule, MatTableModule, SpotbiePipesModule],
+  imports: [
+    CommonModule,
+    MatDialogModule,
+    MatButtonModule,
+    MatTableModule,
+    SpotbiePipesModule,
+  ],
 })
-export class FeedbackComponent {
+export class FeedbackComponent implements OnInit {
   feedbackList$: Observable<Feedback[]> = this.feedbackState.feedbackList$;
 
   displayedColumns: string[] = ['user_id', 'feedback_text', 'updated_at'];
@@ -31,6 +38,10 @@ export class FeedbackComponent {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private matDialog: MatDialog
   ) {}
+
+  ngOnInit() {
+    this.feedbackState.getFeedbackList().subscribe();
+  }
 
   closeDialog() {
     this.dialogRef.close(null);

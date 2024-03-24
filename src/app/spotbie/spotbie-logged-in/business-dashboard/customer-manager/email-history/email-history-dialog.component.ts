@@ -1,8 +1,10 @@
-import {Component, Inject} from '@angular/core';
+import {Component, Inject, OnInit} from '@angular/core';
 import {MatButtonModule} from '@angular/material/button';
 import {CommonModule} from '@angular/common';
 import {
-  MAT_DIALOG_DATA, MatDialog,
+  MAT_DIALOG_DATA,
+  MatDialog,
+  MatDialogModule,
   MatDialogRef,
 } from '@angular/material/dialog';
 import {Observable} from 'rxjs';
@@ -17,9 +19,15 @@ import {AlertDialogComponent} from '../../../../../helpers/alert/alert.component
   templateUrl: './email-history-dialog.component.html',
   styleUrls: ['./email-history-dialog.component.css'],
   standalone: true,
-  imports: [CommonModule, MatButtonModule, MatTableModule, SpotbiePipesModule],
+  imports: [
+    CommonModule,
+    MatDialogModule,
+    MatButtonModule,
+    MatTableModule,
+    SpotbiePipesModule,
+  ],
 })
-export class EmailHistoryDialogComponent {
+export class EmailHistoryDialogComponent implements OnInit {
   emailGroupList$: Observable<EmailGroup[]> =
     this.emailGroupEntitiesState.entitiesArray$;
 
@@ -36,6 +44,10 @@ export class EmailHistoryDialogComponent {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private matDialog: MatDialog
   ) {}
+
+  ngOnInit() {
+    this.emailGroupEntitiesState.getEmailGroupList();
+  }
 
   viewGroup(emailGroup: EmailGroup) {
     this.matDialog.open(AlertDialogComponent, {

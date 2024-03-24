@@ -24,6 +24,7 @@
   </section>
 
   <div class="spotbie-button" (click)="openTextMessage()">SEND SMS</div>
+  <div class="spotbie-button" (click)="openEmail()">SEND EMAIL</div>
 
   <ng-container *ngIf="messageSent$ | async">
     <p class="spotbie-text-gradient text-center mt-5">

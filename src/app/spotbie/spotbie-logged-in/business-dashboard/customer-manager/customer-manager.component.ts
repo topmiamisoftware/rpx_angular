@@ -7,6 +7,7 @@ import {RecentGuestsDialogComponent} from './recent-guests/recent-guests-dialog.
 import {SmsHistoryDialogComponent} from './sms-history/sms-history-dialog.component';
 import { EmailHistoryDialogComponent } from './email-history/email-history-dialog.component';
 import { FeedbackComponent } from './feedback/feedback.component';
+import { EmailDialogComponent } from './email/email.component';
 
 @Component({
   selector: 'app-customer-manager',
@@ -71,6 +72,37 @@ export class CustomerManagerComponent implements OnInit {
   sendTextMessage(text: string) {
     this.customerManagementService
       .sendSms(text)
+      .pipe(
+        tap(resp => {
+          if (resp.success) {
+            this.messageSent$.next(true);
+            setTimeout(() => {
+              this.messageSent$.next(false);
+            }, 5000);
+          }
+        })
+      )
+      .subscribe();
+  }
+
+  openEmail() {
+    const dialogRef = this.dialog.open(EmailDialogComponent, {
+      enterAnimationDuration: '0ms',
+      exitAnimationDuration: '0ms',
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (!result) {
+        return;
+      }
+
+      this.sendEmail(result.text);
+    });
+  }
+
+  sendEmail(text: string) {
+    this.customerManagementService
+      .sendEmail(text)
       .pipe(
         tap(resp => {
           if (resp.success) {
