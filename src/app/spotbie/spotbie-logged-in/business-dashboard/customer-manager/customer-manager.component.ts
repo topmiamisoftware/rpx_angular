@@ -5,6 +5,8 @@ import {MatDialog} from '@angular/material/dialog';
 import {BehaviorSubject, tap} from 'rxjs';
 import {RecentGuestsDialogComponent} from './recent-guests/recent-guests-dialog.component';
 import {SmsHistoryDialogComponent} from './sms-history/sms-history-dialog.component';
+import { EmailHistoryDialogComponent } from './email-history/email-history-dialog.component';
+import { FeedbackComponent } from './feedback/feedback.component';
 
 @Component({
   selector: 'app-customer-manager',
@@ -23,13 +25,34 @@ export class CustomerManagerComponent implements OnInit {
   ngOnInit(): void {}
 
   openRecentGuests() {
-    const dialogRef = this.dialog.open(RecentGuestsDialogComponent);
+    this.dialog.open(RecentGuestsDialogComponent, {
+      enterAnimationDuration: '0ms',
+      exitAnimationDuration: '0ms',
+    });
   }
 
   openSmsHistory() {
-    const dialogRef = this.dialog.open(SmsHistoryDialogComponent, {
+    this.dialog.open(SmsHistoryDialogComponent, {
       height: '90%',
       width: '90%',
+      enterAnimationDuration: '0ms',
+      exitAnimationDuration: '0ms',
+    });
+  }
+
+  openEmailHistory() {
+    this.dialog.open(EmailHistoryDialogComponent, {
+      width: '90%',
+      enterAnimationDuration: '0ms',
+      exitAnimationDuration: '0ms',
+    });
+  }
+
+  openFeedback() {
+    this.dialog.open(FeedbackComponent, {
+      width: '90%',
+      enterAnimationDuration: '0ms',
+      exitAnimationDuration: '0ms',
     });
   }
 

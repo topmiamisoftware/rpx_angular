@@ -13,3 +13,12 @@ export interface SmsGroup {
   total: number;
   total_sent: number;
 }
+
+export interface EmailGroup {
+  id: number;
+  email_body: string;
+  user_list?: User[];
+  created_at: string;
+  total: number;
+  total_sent: number;
+}
