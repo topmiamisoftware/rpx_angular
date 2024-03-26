@@ -212,9 +212,10 @@ export class AdCreatorComponent implements OnInit {
   saveAdCb(resp: any) {
     if (resp.success) {
       this.adCreated = true;
-      const ad = resp.newAd;
 
-      this.closeAdCreatorAndRefetchAdList();
+      setTimeout(() => {
+        this.closeAdCreatorAndRefetchAdList();
+      }, 1500);
     }
   }
 
