@@ -37,12 +37,14 @@ import {
 import {LoyaltyPointsState} from './spotbie/spotbie-logged-in/state/lp.state';
 import {BusinessLoyaltyPointsState} from './spotbie/spotbie-logged-in/state/business.lp.state';
 import {NgxsReduxDevtoolsPluginModule} from '@ngxs/devtools-plugin';
+import {DeleteAccountComponent} from './spotbie/delete-account/delete-account.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     UrlSanitizerPipe,
     TermsComponent,
+    DeleteAccountComponent,
     BugsComponent,
     HowDoesItWorkComponent,
     DoesItWorkComponent,

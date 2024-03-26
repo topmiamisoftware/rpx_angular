@@ -10,6 +10,7 @@ import {EulaComponent} from './eula/eula.component';
 import {HowDoesItWorkComponent} from './how-does-it-work/how-does-it-work.component';
 import {DoesItWorkComponent} from './does-it-work/does-it-work.component';
 import {PricingComponent} from './pricing/pricing.component';
+import {DeleteAccountComponent} from "./spotbie/delete-account/delete-account.component";
 
 export const routes: Routes = [
   {
@@ -23,6 +24,7 @@ export const routes: Routes = [
   },
   {path: 'terms', component: TermsComponent},
   {path: 'terms', component: EulaComponent},
+  {path: 'delete-account', component: DeleteAccountComponent},
   {path: 'bugs', component: BugsComponent},
   {path: 'how-does-it-work', component: HowDoesItWorkComponent},
   {path: 'the-idea', component: DoesItWorkComponent},

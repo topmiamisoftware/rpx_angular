@@ -50,21 +50,21 @@
 
       <mat-form-field
         class="sb-input"
-        style="padding-left: 0px"
+        style="padding-left: 0"
         appearance="fill"
       >
         <mat-label>Promotion Format</mat-label>
 
         <mat-select
           formControlName="adType"
+          panelClass="spotbie-dropdown"
           [(value)]="selected"
           (selectionChange)="adTypeChange()"
         >
           <mat-option
-            *ngFor="let adType of adTypeList$ | async; let i = index"
+            *ngFor="let adType of adTypeList; let i = index"
             [value]="i"
-            >{{ adType.name }}</mat-option
-          >
+            >{{ adType.name }}</mat-option>
         </mat-select>
       </mat-form-field>
 
@@ -112,11 +112,11 @@
       <ng-template #adMediaUploadInfoTemplate>
         <div
           class="spotbie-input-info text-uppercase spotbie-text-gradient text-center mt-4 mb-2 cursor-pointer"
-          *ngIf="adTypeList$ | async as adTypeList"
+          *ngIf="adTypeList"
           (click)="startAdMediaUploader('desktop')"
           #adMediaUploadInfo
         >
-          {{ adMediaMessage }} ({{ adTypeList[selected].dimensions ?? '' }})
+          {{ adMediaMessage }} ({{ adTypeList[selected]?.dimensions ?? '' }})
         </div>
       </ng-template>
 
@@ -181,12 +181,12 @@
         <ng-template #adMediaMobileUploadInfoTemplate>
           <div
             class="spotbie-input-info text-uppercase spotbie-text-gradient text-center mt-5 mb-2 cursor-pointer"
-            *ngIf="adTypeList$ | async as adTypeList"
+            *ngIf="adTypeList"
             (click)="startAdMediaUploader('mobile')"
             #adMediaUploadInfo
           >
             {{ adMediaMessage }} - MOBILE - ({{
-              adTypeList[selected].dimensionsMobile
+              adTypeList[selected]?.dimensionsMobile
             }})
           </div>
         </ng-template>
@@ -248,11 +248,11 @@
 
     <div
       class="mt-5 mb-5 sb-deleteMe"
-      *ngIf="ad !== null && ad !== undefined"
+      *ngIf="ad"
       (click)="deleteMe()"
     >
-      <span class="spotbie-text-gradient">DELETE SUBSCRIPTION </span
-      ><i class="fa fa-trash"></i>
+      <span class="spotbie-text-gradient">DELETE ME </span>
+      <i class="fa fa-trash"></i>
     </div>
 
     <div class="mt-5 mb-5 cursor-pointer" (click)="closeThis()">
@@ -270,10 +270,6 @@
     <div class="sb-verificationCheck sb-text-light-green-gradient mt-4 mb-4">
       <i class="fa fa-check"></i>
     </div>
-
-    <h4 class="spotbie-text-gradient spotbie-r-success-title text-uppercase">
-      PAYMENT PENDING
-    </h4>
   </div>
 </div>
 

@@ -18,7 +18,6 @@ import {Business} from '../../../../models/business';
 import {AdCreatorService} from '../../../../services/spotbie-logged-in/ad-manager-menu/ad-creator/ad-creator.service';
 import {UserauthService} from '../../../../services/userauth.service';
 import {BusinessMembership} from '../../../../models/user';
-import {BehaviorSubject} from 'rxjs';
 
 const AD_MEDIA_UPLOAD_API_URL = `${spotbieGlobals.API}in-house/upload-media`;
 const AD_MEDIA_MAX_UPLOAD_SIZE = 10e6;
@@ -65,7 +64,7 @@ export class AdCreatorComponent implements OnInit {
   adUploadImageMobile: string = null;
   adMediaMessage = 'Upload Image';
   adMediaUploadProgress = 0;
-  adTypeList$: BehaviorSubject<Array<InHouse>> = new BehaviorSubject([
+  adTypeList: InHouse[] = [
     {
       name: 'Header Banner',
       dimensions: '1200x370',
@@ -86,7 +85,8 @@ export class AdCreatorComponent implements OnInit {
       enabled: false,
       type: 'footer',
     },
-  ]);
+  ];
+
   adCreated: boolean;
   adDeleted: boolean;
   selected = 0;
@@ -100,7 +100,7 @@ export class AdCreatorComponent implements OnInit {
   ) {
     // Enable the in-house ad depending on the BusinessMembership type.
     const enabledInHouse: Array<InHouse> = [];
-    this.adTypeList$.getValue().forEach(inHouse => {
+    this.adTypeList.forEach(inHouse => {
       if (
         inHouse.type === 'header' &&
         userAuthService.userProfile.userSubscriptionPlan ===
@@ -117,13 +117,16 @@ export class AdCreatorComponent implements OnInit {
         (userAuthService.userProfile.userSubscriptionPlan ===
           BusinessMembership.Intermediate ||
           userAuthService.userProfile.userSubscriptionPlan ===
-            BusinessMembership.Ultimate)
+            BusinessMembership.Ultimate ||
+          userAuthService.userProfile.userSubscriptionPlan ===
+            BusinessMembership.Legacy)
       ) {
         inHouse.enabled = true;
         enabledInHouse.push(inHouse);
       }
     });
-    this.adTypeList$.next(enabledInHouse);
+    console.log();
+    this.adTypeList = enabledInHouse;
   }
 
   get adType() {
@@ -194,7 +197,7 @@ export class AdCreatorComponent implements OnInit {
     adObj.images_mobile = this.adUploadImageMobile;
     adObj.type = this.adType;
 
-    if (this.ad === null || this.ad === undefined) {
+    if (!this.ad) {
       this.adCreatorService.saveAd(adObj).subscribe(resp => {
         this.saveAdCb(resp);
       });
@@ -211,10 +214,7 @@ export class AdCreatorComponent implements OnInit {
       this.adCreated = true;
       const ad = resp.newAd;
 
-      setTimeout(() => {
-        window.open(`${AD_PAYMENT_URL}${ad.uuid}`, '_blank');
-        this.closeAdCreatorAndRefetchAdList();
-      }, 1500);
+      this.closeAdCreatorAndRefetchAdList();
     }
   }
 
