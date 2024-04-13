@@ -104,7 +104,9 @@ h3 {
   letter-spacing: 2px;
   font-size: 0.9rem;
 }
-
+.spotbie-overlay-window {
+  align-content: unset !important;
+}
 @media (max-width: 1600px) {
   .sb-top-headerImg {
     height: 550px;

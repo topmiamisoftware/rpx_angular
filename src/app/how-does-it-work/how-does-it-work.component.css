@@ -92,6 +92,9 @@ h6 {
   text-align: left;
   text-align-last: left;
 }
+.spotbie-overlay-window {
+  align-content: unset !important;
+}
 @media (max-width: 1600px) {
   .sb-top-headerImg {
     height: 550px;

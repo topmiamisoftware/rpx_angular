@@ -16,9 +16,9 @@
   background: url('../../assets/images/home_imgs/jpg/spotbie-miami-shopping.jpg');
 }
 
-/*.spotbie-overlay-window{
-  background-color: #d4d4d4 !important;
-}*/
+.spotbie-overlay-window{
+  align-content: unset !important;
+}
 
 .fa-users,
 .fa-hamburger,
