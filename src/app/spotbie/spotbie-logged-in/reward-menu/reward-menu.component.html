@@ -50,37 +50,19 @@
       </h6>
     </div>
 
-    <ng-container *ngIf="(canUseTiers$ | async) === true; else upgradeForTiers">
-      <div
-        style="cursor: pointer"
-        class="mt-4"
-        *ngIf="userType !== eAllowedAccountTypes.Personal"
-        (click)="manageLoyaltyTiers()"
-      >
-        <span class="spotbie-text-gradient">MANAGE TIERS </span
-        ><i class="fa fa-coins"></i>
-      </div>
+    <div
+      style="cursor: pointer"
+      class="mt-4"
+      *ngIf="userType !== eAllowedAccountTypes.Personal"
+      (click)="manageLoyaltyTiers()"
+    >
+      <span class="spotbie-text-gradient">MANAGE TIERS </span
+      ><i class="fa fa-coins"></i>
+    </div>
 
-      <ng-container *ngIf="openTiers">
-        <app-tier-creator (closeTiers)="openTiers = false"></app-tier-creator>
-      </ng-container>
+    <ng-container *ngIf="openTiers">
+      <app-tier-creator (closeTiers)="openTiers = false"></app-tier-creator>
     </ng-container>
-
-    <ng-template #upgradeForTiers>
-      <div
-        style="cursor: pointer"
-        class="mt-4"
-        *ngIf="userType !== eAllowedAccountTypes.Personal"
-      >
-        <span class="spotbie-text-gradient">Looking for Loyalty Tiers? </span>
-        <i class="fa fa-coins"></i><br />
-        <span
-          class="text-decoration-underline"
-          style="color: white; font-size: 0.7em"
-          >Upgrade to Intermediate.</span
-        >
-      </div>
-    </ng-template>
   </div>
 
   <div
