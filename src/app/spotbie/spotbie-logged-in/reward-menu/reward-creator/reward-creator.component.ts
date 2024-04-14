@@ -70,18 +70,9 @@ export class RewardCreatorComponent implements OnInit {
   existingTiers$ = this.loyaltyPointsService.existingTiers$;
   qrType = NgxQrcodeElementTypes.URL;
   correctionLevel = NgxQrcodeErrorCorrectionLevels.HIGH;
-  user$ = this.userAuthService.userProfile$;
   rewardTier$: Observable<LoyaltyTier>;
   dollarEntranceValue: number;
   lpEntranceValue: number;
-  canUseTiers$ = this.user$.pipe(
-    map(
-      user =>
-        user.userSubscriptionPlan === BusinessMembership.Legacy ||
-        user.userSubscriptionPlan === BusinessMembership.Intermediate ||
-        user.userSubscriptionPlan === BusinessMembership.Ultimate
-    )
-  );
 
   constructor(
     private formBuilder: UntypedFormBuilder,
