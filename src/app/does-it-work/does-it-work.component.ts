@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {DeviceDetectorService} from 'ngx-device-detector';
 import {Router} from '@angular/router';
+import * as calendly from '../helpers/calendly/calendlyHelper';
 
 @Component({
   selector: 'app-does-it-work',
@@ -14,7 +15,9 @@ import {Router} from '@angular/router';
 export class DoesItWorkComponent implements OnInit {
   isDesktop: boolean;
   isTablet: boolean;
-  isMobile: boolean = true;
+  isMobile = true;
+  loading = false;
+  calendlyUp = false;
 
   constructor(
     private deviceService: DeviceDetectorService,
@@ -31,7 +34,16 @@ export class DoesItWorkComponent implements OnInit {
     this.route.navigate(['business']);
   }
 
-  calendly() {}
+  calendly() {
+    this.loading = true;
+    this.calendlyUp = !this.calendlyUp;
+
+    if (this.calendlyUp)
+      calendly.spawnCalendly('', '', () => {
+        this.loading = false;
+      });
+    else this.loading = false;
+  }
 
   openBlog() {
     window.open('https://blog.spotbie.com/', '_blank');

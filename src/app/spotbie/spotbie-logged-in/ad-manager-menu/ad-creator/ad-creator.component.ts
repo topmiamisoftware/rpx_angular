@@ -102,7 +102,7 @@ export class AdCreatorComponent implements OnInit {
     const enabledInHouse: Array<InHouse> = [];
     this.adTypeList.forEach(inHouse => {
       if (
-        inHouse.type === 'header' &&
+        inHouse.type === 'footer' &&
         userAuthService.userProfile.userSubscriptionPlan ===
           BusinessMembership.Starter
       ) {
@@ -125,7 +125,6 @@ export class AdCreatorComponent implements OnInit {
         enabledInHouse.push(inHouse);
       }
     });
-    console.log();
     this.adTypeList = enabledInHouse;
   }
 
