@@ -1048,7 +1048,7 @@ export class SettingsComponent implements OnInit {
       return;
     }
 
-    if (this.spotbie_phone_number !== '' && this.spotbie_phone_number !== null) {
+    if (this.spotbie_phone_number !== '' && this.spotbie_phone_number) {
       this.infoSms();
     } else {
       this.finishSaveSettings();
