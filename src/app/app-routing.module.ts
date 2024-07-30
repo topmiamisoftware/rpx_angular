@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core';
-import {Routes, RouterModule, ExtraOptions} from '@angular/router';
+import {ExtraOptions, RouterModule, Routes} from '@angular/router';
 import {TermsComponent} from './spotbie/terms/terms.component';
 import {LoginGuardServiceService} from './services/route-services/login-guard-service.service';
 import {InfoObjectComponent} from './spotbie/map/info-object/info-object.component';
@@ -43,6 +43,13 @@ export const routes: Routes = [
     loadChildren: () =>
       import('./user-home/user-home.module').then(m => m.UserHomeModule),
     canActivate: [LoginGuardServiceService],
+  },
+  {
+    path: 'business-app-download',
+    loadChildren: () =>
+      import('./pages/download-app/download-app.module').then(
+        m => m.DownloadAppModule
+      ),
   },
   {path: 'business-menu/:qrCode/:rewardUuid', component: RewardMenuComponent},
   {path: 'business-menu/:qrCode', component: RewardMenuComponent},

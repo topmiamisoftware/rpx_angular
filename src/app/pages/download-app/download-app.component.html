@@ -1,0 +1,28 @@
+<app-scroll-to-top></app-scroll-to-top>
+
+<div class="spotbie-overlay-window">
+  <div class="sb-top-headerImg"></div>
+
+  <div class="termsWrapper mt-5 mb-5 flex-column align-content-center justify-content-center text-center">
+    <h2>How to Update Your App</h2>
+
+    <div class="spotbie-button mb-5" (click)="downloadApp()">
+      DOWNLOAD APP
+    </div>
+
+    <div class="mt-5 mb-5" *ngIf=" (_progress$ | async) > 0">
+      Your app is downloading {{ (_progress$ | async) }}.
+    </div>
+
+    <p>
+      1. Uninstall the current app by going to "Settings" > "Apps" > "SB-Business" > "Uninstall".
+    </p>
+    <p>
+      2. Navigate to the Downloads folder by opening your Files app in your Android Tablet.
+    </p>
+    <p>
+      3. Find the SB-Business.apk file, it will ask
+    </p>
+  </div>
+  <div class="mt-5 mb-5"></div>
+</div>
