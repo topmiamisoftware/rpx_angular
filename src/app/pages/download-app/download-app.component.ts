@@ -1,8 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {BehaviorSubject, Observable} from 'rxjs';
+import {BehaviorSubject} from 'rxjs';
 import * as spotbieGlobals from '../../globals';
 import {HttpClient, HttpEventType} from '@angular/common/http';
 import {tap} from 'rxjs/operators';
+import {User} from "../../models/user";
 
 const UPDATE_API = spotbieGlobals.API + 'business-app';
 
@@ -13,8 +14,17 @@ const UPDATE_API = spotbieGlobals.API + 'business-app';
 })
 export class DownloadAppComponent implements OnInit {
   _progress$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
+  canDownload$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+  ) {
+    const token = localStorage.getItem('spotbiecom_session');
+    console.log('User', token);
+    if (token) {
+      this.canDownload$.next(true);
+    }
+  }
 
   ngOnInit(): void {}
 
