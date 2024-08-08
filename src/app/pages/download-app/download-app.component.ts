@@ -3,7 +3,6 @@ import {BehaviorSubject} from 'rxjs';
 import * as spotbieGlobals from '../../globals';
 import {HttpClient, HttpEventType} from '@angular/common/http';
 import {tap} from 'rxjs/operators';
-import {User} from "../../models/user";
 
 const UPDATE_API = spotbieGlobals.API + 'business-app';
 
