@@ -1,5 +1,5 @@
 import {NgxsDataEntityCollectionsRepository} from '@angular-ru/ngxs/repositories';
-import {RecentGuest, SmsGroup} from '../models';
+import {SmsGroup} from '../models';
 import {DataAction, StateRepository} from '@angular-ru/ngxs/decorators';
 import {Injectable} from '@angular/core';
 import {State} from '@ngxs/store';
@@ -37,7 +37,6 @@ export class SmsGroupEntitiesState extends NgxsDataEntityCollectionsRepository<S
           per_page: number;
           total: number;
         }) => {
-          console.log('getSmsGroupList', response);
           this.upsertMany(response.data);
           this.patchState({
             ...this.ctx.getState(),
