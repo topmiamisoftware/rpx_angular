@@ -71,13 +71,6 @@
         [opacity]="0"
         [agmFitBounds]="true"
       >
-        <agm-info-window
-          #spotbie_user_marker_info_window
-          [zIndex]="0"
-          [isOpen]="true"
-        >
-          <div class="agm_infowindow_color">{{ spotbie_username }}</div>
-        </agm-info-window>
       </agm-marker>
 
       <div *ngIf="displaySurroundingObjectList">
