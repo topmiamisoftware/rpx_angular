@@ -8,10 +8,10 @@ const UPDATE_API = spotbieGlobals.API + 'business-app';
 
 @Component({
   selector: 'app-download-app',
-  templateUrl: './download-app.component.html',
-  styleUrls: ['./download-app.component.css'],
+  templateUrl: './download-app.page.html',
+  styleUrls: ['./download-app.page.css'],
 })
-export class DownloadAppComponent implements OnInit {
+export class DownloadAppPage implements OnInit {
   _progress$: BehaviorSubject<number> = new BehaviorSubject<number>(0);
   canDownload$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 

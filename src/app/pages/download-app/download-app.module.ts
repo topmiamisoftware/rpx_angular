@@ -1,18 +1,18 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {RouterModule, Routes} from '@angular/router';
-import {DownloadAppComponent} from "./download-app.component";
+import {DownloadAppPage} from "./download-app.page";
 import {HelperModule} from "../../helpers/helper.module";
 
-const routes: Routes = [{path: '', component: DownloadAppComponent}];
+const routes: Routes = [{path: '', component: DownloadAppPage}];
 
 @NgModule({
-  declarations: [DownloadAppComponent],
+  declarations: [DownloadAppPage],
   imports: [
     CommonModule,
     HelperModule,
     RouterModule.forChild(routes),
   ],
-  exports: [DownloadAppComponent],
+  exports: [DownloadAppPage],
 })
 export class DownloadAppModule {}
