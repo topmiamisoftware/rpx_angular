@@ -11,6 +11,7 @@ import {Location} from '@angular/common';
 import {externalBrowserOpen} from '../../helpers/cordova/web-intent';
 import {DeviceDetectorService} from 'ngx-device-detector';
 import {Router} from '@angular/router';
+import {environment} from "../../../environments/environment";
 
 @Component({
   selector: 'app-menu-logged-out',
@@ -64,8 +65,11 @@ export class MenuLoggedOutComponent implements OnInit {
   }
 
   logIn() {
-    this.signUpWindow.open = false;
-    this.logInWindow.open = !this.logInWindow.open;
+    if (this.business) {
+      window.location.assign(environment.businessClientApp);
+    } else {
+      window.location.assign(environment.personalClientApp);
+    }
   }
 
   slideMenu() {
