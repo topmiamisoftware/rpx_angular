@@ -29,7 +29,7 @@ export class HomeComponent implements OnInit {
   }
 
   signUp() {
-    this.appMenuLoggedOut.signUp();
+    window.location.assign('https://home.spotbie.com/');
   }
 
   async ngOnInit() {
