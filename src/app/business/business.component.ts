@@ -32,7 +32,7 @@ export class BusinessComponent implements OnInit {
   }
 
   signUp() {
-    this.appMenuLoggedOut.signUp();
+    window.location.assign('https://business.spotbie.com/');
   }
 
   async ngOnInit() {
