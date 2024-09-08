@@ -1022,7 +1022,7 @@ export class MapComponent implements OnInit {
       this.catsUp = false;
       const placesResult = httpResponse.data;
       this.populateYelpResults(placesResult);
-      this.spotbie_user_marker_info_window.open();
+
       this.searchCategorySorter = this.searchCategory;
       this.displaySurroundingObjectList = false;
       this.show_search_box = true;
