@@ -432,6 +432,7 @@ export const SHOPPING_CATEGORIES = [
   'Watches',
   'Wholesale Stores',
   'Wigs',
+  'Smoke Shops',
 ];
 
 export const EVENT_CATEGORIES = [
