@@ -27,6 +27,7 @@
               "src/assets",
               "src/manifest.webmanifest",
               "src/.htaccess",
+              "src/.well-known/apple-app-site-association",
               {
                 "glob": "_redirects",
                 "input": "src",
