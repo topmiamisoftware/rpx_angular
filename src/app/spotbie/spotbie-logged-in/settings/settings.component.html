@@ -782,25 +782,21 @@
         {{ place.formatted_address }}
       </div>
 
-      <!--
-            <h6 class="spotbie-text-gradient text-uppercase mt-5 mb-4" #placeToEatMediaUploadInfo>
-                {{ placeToEatMediaMessage }}
-            </h6>
+      <span #placeToEatMediaUploadInfo></span>
 
-            <input type="file"
-                class='spotbie-background-upload-input'
-                #placeToEatMediaInput (change)="uploadMedia(placeToEatMediaInput.files)"
-                accept="image/jpeg, image/gif, image/png"
-                multiple=false >
+      <input type="hidden" formControlName="spotbiePhoto" value="" />
 
-            <div class='spotbie-upload-new-background-holder'
-                [ngStyle]="{ 'background' : 'url(' + originPhoto + ')' }"
-                (click)="startPlaceToEatMediaUploader()"
-                #placeToEatUploader>
-                <div class='spotbie-click-or-drag-upload'>
-                    <span class="spotbie-text-gradient text-uppercase">tap or drag to upload</span>
-                </div>
-            </div>-->
+      <input type="file"
+             [accept]="'image/*'"
+             [multiple]="false"
+             #placeToEatMediaInput
+             (change)="uploadMedia(placeToEatMediaInput.files)"
+             style="display: none;"
+      />
+
+      <div (click)="startRewardMediaUploader()">
+        <img class='sb-business-img' [ngClass]="getBusinessImgStyle()" *ngIf='locationFound' src="{{spotbiePhoto}}" />
+      </div>
 
       <tr *ngIf="accountTypeCategory !== 'PERSONAL' && locationFound">
         <td>

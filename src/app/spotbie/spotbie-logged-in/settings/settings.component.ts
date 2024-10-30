@@ -279,7 +279,7 @@ export class SettingsComponent implements OnInit {
       line2: this.line2,
       postal_code: this.postalCode,
       state: this.state,
-      photo: this.originPhoto,
+      photo: this.spotbiePhoto,
       loc_x: this.lat,
       loc_y: this.lng,
       categories: this.activeBusinessCategories.toString(),
@@ -387,7 +387,7 @@ export class SettingsComponent implements OnInit {
       line2: this.line2,
       postal_code: this.postalCode,
       state: this.state,
-      photo: this.originPhoto,
+      photo: this.spotbiePhoto,
       loc_x: this.lat,
       loc_y: this.lng,
       categories: this.activeBusinessCategories.toString(),
@@ -578,9 +578,14 @@ export class SettingsComponent implements OnInit {
   }
 
   private placeToEatMediaUploadFinished(httpResponse: any): void {
-    if (httpResponse.success)
-      this.originPhoto = httpResponse.background_picture;
-    else console.log('placeToEatMediaUploadFinished', httpResponse);
+    if (httpResponse.success) {
+      this.user.business.photo = httpResponse.image;
+      this.businessSettingsForm
+        .get('spotbiePhoto')
+        .setValue(this.user.business.photo);
+    } else {
+      console.log('placeToEatMediaUploadFinished', httpResponse);
+    }
 
     this.loading = false;
   }
@@ -934,6 +939,7 @@ export class SettingsComponent implements OnInit {
           this.businessSettingsForm
             .get('isFoodTruck')
             .setValue(!!this.user.business.is_food_truck);
+          this.businessSettingsForm.get('spotbiePhoto').setValue(this.user.business.photo);
           this.activeBusinessCategories =
             this.user.business.categories.toString();
           this.selected = parseInt(this.activeBusinessCategories);
@@ -1030,6 +1036,11 @@ export class SettingsComponent implements OnInit {
   get originCategories() {
     return this.businessSettingsForm.get('originCategories').value;
   }
+
+  get spotbiePhoto() {
+    return this.businessSettingsForm.get('spotbiePhoto').value;
+  }
+
   get isFoodTruck() {
     return !!this.businessSettingsForm.get('isFoodTruck').value;
   }
