@@ -16,7 +16,7 @@ import {ShareIconsModule} from 'ngx-sharebuttons/icons';
 import {InfoObjectModule} from './info-object/info-object.module';
 import {AdsModule} from '../ads/ads.module';
 import {SpotbiePipesModule} from '../../spotbie-pipes/spotbie-pipes.module';
-import {DownloadMobileModule} from '../../download-mobile/download-mobile.module';
+import {DownloadMobileModule} from '../../pages/download-mobile/download-mobile.module';
 import {environment} from '../../../environments/environment';
 import {HelperModule} from '../../helpers/helper.module';
 import {MapObjectIconPipe} from '../../pipes/map-object-icon.pipe';

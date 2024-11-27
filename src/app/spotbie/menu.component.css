@@ -402,7 +402,7 @@ img.sb-qr {
 ::-webkit-scrollbar-button {
   background: transparent;
 }
-/**WIDTH MEDIA QUERIES */
+
 @media (max-width: 1600px) {
   .sb-userName,
   .spotbie-menu-fixed span {

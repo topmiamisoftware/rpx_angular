@@ -1,19 +1,19 @@
 .sb-top-headerImg {
-  background: url('../../assets/images/home_imgs/spotbie-grow-your-business-with-loyalty-points.jpg')
+  background: url('../../../assets/images/home_imgs/spotbie-grow-your-business-with-loyalty-points.jpg')
     no-repeat center !important;
   background-size: cover !important;
 }
 #sbReadImageRestaurants {
-  background: url('../../assets/images/home_imgs/jpg/spotbie-find-restaurant-customers-near-you.jpg');
+  background: url('../../../assets/images/home_imgs/jpg/spotbie-find-restaurant-customers-near-you.jpg');
 }
 #sbReadImageEvents {
-  background: url('../../assets/images/home_imgs/jpg/spotbie-find-restaurant-customers.jpg');
+  background: url('../../../assets/images/home_imgs/jpg/spotbie-find-restaurant-customers.jpg');
 }
 #sbReadImageShopping {
-  background: url('../../assets/images/home_imgs/jpg/spotbie-find-customers-near-you.jpg');
+  background: url('../../../assets/images/home_imgs/jpg/spotbie-find-customers-near-you.jpg');
 }
 #sbReadImageUsers {
-  background: url('../../assets/images/home_imgs/jpg/spotbie-miami-find-new-friends.jpg');
+  background: url('../../../assets/images/home_imgs/jpg/spotbie-miami-find-new-friends.jpg');
 }
 .fa-users,
 .fa-hamburger,
@@ -92,18 +92,6 @@ h6 {
   text-align: left;
   text-align-last: left;
 }
-
-ul > li {
-  color: white;
-}
-
-h3 {
-  background: -webkit-linear-gradient(0deg, #35a99f, #64e56f);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  letter-spacing: 2px;
-  font-size: 0.9rem;
-}
 .spotbie-overlay-window {
   align-content: unset !important;
 }
@@ -134,7 +122,6 @@ h3 {
     max-width: 95%;
   }
 }
-
 @media (max-width: 768px) {
   .sb-top-headerImg {
     box-shadow: inset 0 0px 65px #332f3e;
@@ -143,6 +130,8 @@ h3 {
 
 @media (max-width: 650px) {
   .sb-top-headerImg {
+    background: url('../../../assets/images/home_imgs/spotbie-miami.jpg') no-repeat
+      center !important;
     background-size: cover !important;
     box-shadow: inset 0px -80px 65px #332f3e;
     max-height: 300px;

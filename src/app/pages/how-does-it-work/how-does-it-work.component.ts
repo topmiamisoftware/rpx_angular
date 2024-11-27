@@ -1,15 +1,15 @@
 import {Component, OnInit} from '@angular/core';
 import {DeviceDetectorService} from 'ngx-device-detector';
 import {Router} from '@angular/router';
-import * as calendly from '../../app/helpers/calendly/calendlyHelper';
+import * as calendly from '../../helpers/calendly/calendlyHelper';
 
 @Component({
   selector: 'app-how-does-it-work',
   templateUrl: './how-does-it-work.component.html',
   styleUrls: [
     './how-does-it-work.component.css',
-    '../features/features.component.css',
-    '../spotbie/menu.component.css',
+    '../../features/features.component.css',
+    '../../spotbie/menu.component.css',
   ],
 })
 export class HowDoesItWorkComponent implements OnInit {

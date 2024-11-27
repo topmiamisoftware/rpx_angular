@@ -7,10 +7,9 @@ import {BugsComponent} from './bugs/bugs.component';
 import {LoyaltyPointsComponent} from './spotbie/spotbie-logged-in/loyalty-points/loyalty-points.component';
 import {RewardMenuComponent} from './spotbie/spotbie-logged-in/reward-menu/reward-menu.component';
 import {EulaComponent} from './eula/eula.component';
-import {HowDoesItWorkComponent} from './how-does-it-work/how-does-it-work.component';
-import {DoesItWorkComponent} from './does-it-work/does-it-work.component';
+import {HowDoesItWorkComponent} from './pages/how-does-it-work/how-does-it-work.component';
+import {DoesItWorkComponent} from './pages/does-it-work/does-it-work.component';
 import {PricingComponent} from './pricing/pricing.component';
-import {DeleteAccountComponent} from "./spotbie/delete-account/delete-account.component";
 
 export const routes: Routes = [
   {
@@ -24,7 +23,6 @@ export const routes: Routes = [
   },
   {path: 'terms', component: TermsComponent},
   {path: 'terms', component: EulaComponent},
-  {path: 'delete-account', component: DeleteAccountComponent},
   {path: 'bugs', component: BugsComponent},
   {path: 'how-does-it-work', component: HowDoesItWorkComponent},
   {path: 'the-idea', component: DoesItWorkComponent},
@@ -67,6 +65,13 @@ export const routes: Routes = [
   {path: 'place-to-eat/:name/:id', component: InfoObjectComponent},
   {path: 'shopping/:name/:id', component: InfoObjectComponent},
   {path: 'event/:name/:id', component: InfoObjectComponent},
+  {
+    path: 'delete-account-and-data',
+    loadChildren: () =>
+      import('./pages/delete-account/delete-account.module').then(
+        m => m.DeleteAccountModule
+      ),
+  },
   {
     path: 'make-payment',
     loadChildren: () =>
