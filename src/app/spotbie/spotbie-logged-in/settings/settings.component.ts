@@ -939,7 +939,9 @@ export class SettingsComponent implements OnInit {
           this.businessSettingsForm
             .get('isFoodTruck')
             .setValue(!!this.user.business.is_food_truck);
-          this.businessSettingsForm.get('spotbiePhoto').setValue(this.user.business.photo);
+          this.businessSettingsForm
+            .get('spotbiePhoto')
+            .setValue(this.user.business.photo);
           this.activeBusinessCategories =
             this.user.business.categories.toString();
           this.selected = parseInt(this.activeBusinessCategories);

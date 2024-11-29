@@ -58,6 +58,11 @@
 h6 {
   font-size: 1rem !important;
 }
+
+.delete-account-image {
+  max-width: 750px;
+}
+
 #spotbieMainSpotBieScroll {
   overflow-y: scroll;
   width: 100%;
