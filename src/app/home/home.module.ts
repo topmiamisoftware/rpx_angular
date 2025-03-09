@@ -4,25 +4,27 @@ import {HomeComponent} from './home.component';
 import {Routes, RouterModule} from '@angular/router';
 import {MenuModule} from '../spotbie/menu.module';
 import {SpotbiePipesModule} from '../spotbie-pipes/spotbie-pipes.module';
-import {MapModule} from '../spotbie/map/map.module';
-import {MapComponent} from '../spotbie/map/map.component';
 import {HelperModule} from '../helpers/helper.module';
 import {MenuLoggedOutModule} from '../spotbie/spotbie-logged-out/menu-logged-out.module';
+import { UserFeaturesComponent } from '../features/user-features/user-features.component';
+import { DownloadMobileModule } from '../pages/download-mobile/download-mobile.module';
 
 const routes: Routes = [{path: '', component: HomeComponent}];
 
 @NgModule({
-  declarations: [HomeComponent],
+  declarations: [
+    HomeComponent,
+    UserFeaturesComponent
+  ],
   imports: [
+    DownloadMobileModule,
     CommonModule,
     MenuLoggedOutModule,
     MenuModule,
     SpotbiePipesModule,
-    MapModule,
     HelperModule,
     RouterModule.forChild(routes),
   ],
   exports: [HomeComponent],
-  providers: [MapComponent],
 })
 export class HomeModule {}

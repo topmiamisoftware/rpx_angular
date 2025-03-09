@@ -1,6 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {Router} from '@angular/router';
-import {MapComponent} from '../spotbie/map/map.component';
+import {Component, ViewChild} from '@angular/core';
 import {MenuLoggedOutComponent} from '../spotbie/spotbie-logged-out/menu-logged-out.component';
 
 @Component({
@@ -8,33 +6,29 @@ import {MenuLoggedOutComponent} from '../spotbie/spotbie-logged-out/menu-logged-
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css'],
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent {
   arrowOn = false;
 
   @ViewChild('appMenuLoggedOut') appMenuLoggedOut: MenuLoggedOutComponent;
-  @ViewChild('app_map') app_map: MapComponent;
 
-  constructor(private router: Router) {}
+  constructor() {}
 
-  spawnCategories(category: number): void {
-    this.app_map.spawnCategories(category);
+  openBlog() {
+    window.open('https://blog.spotbie.com/', '_blank');
   }
 
-  openHome() {
-    this.app_map.openWelcome();
+  openIg() {
+    window.open('https://www.instagram.com/spotbie.business/', '_blank');
   }
 
-  myFavorites() {
-    this.app_map.myFavorites();
+  openYoutube() {
+    window.open(
+      'https://www.youtube.com/channel/UCtxkgw0SYiihwR7O8f-xIYA',
+      '_blank'
+    );
   }
 
-  signUp() {
-    window.location.assign('https://home.spotbie.com/');
-  }
-
-  async ngOnInit() {
-    const isLoggedIn = localStorage.getItem('spotbie_loggedIn');
-
-    if (isLoggedIn === '1') this.router.navigate(['/user-home']);
+  openTwitter() {
+    window.open('https://twitter.com/SpotBie', '_blank');
   }
 }

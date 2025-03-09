@@ -1,13 +1,11 @@
 import {
   Component,
   ElementRef,
-  EventEmitter,
   OnInit,
-  Output,
   ViewChild,
 } from '@angular/core';
 import {Router} from '@angular/router';
-import {DeviceDetectorService} from 'ngx-device-detector';
+import {DeviceDetectorService, DeviceInfo} from 'ngx-device-detector';
 
 @Component({
   selector: 'app-user-features',
@@ -15,8 +13,6 @@ import {DeviceDetectorService} from 'ngx-device-detector';
   styleUrls: ['../features.component.css', './user-features.component.css'],
 })
 export class UserFeaturesComponent implements OnInit {
-  @Output() spawnCategoriesEvt = new EventEmitter();
-  @Output() signUpEvent = new EventEmitter();
 
   @ViewChild('earnLoyaltyPoints') earnLoyaltyPoints: ElementRef;
   @ViewChild('earnPlacesToEat') earnPlacesToEat: ElementRef;
@@ -24,30 +20,22 @@ export class UserFeaturesComponent implements OnInit {
   @ViewChild('earnRewards') earnRewards: ElementRef;
 
   isMobile = true;
-  business = false;
+  plaform: DeviceInfo;
 
   constructor(
     private deviceDetectorService: DeviceDetectorService,
     private router: Router
   ) {}
 
-  spawnCategories(category: number) {
-    this.spawnCategoriesEvt.emit(category);
-  }
-
   openBlog() {
     window.open('https://blog.spotbie.com/', '_blank');
   }
 
   openIg() {
-    if (this.business) {
-      window.open('https://www.instagram.com/spotbie.business/', '_blank');
-    } else {
       window.open(
         'https://www.instagram.com/spotbie.loyalty.points/',
         '_blank'
       );
-    }
   }
 
   openYoutube() {
@@ -63,10 +51,7 @@ export class UserFeaturesComponent implements OnInit {
 
   ngOnInit(): void {
     this.isMobile = this.deviceDetectorService.isMobile();
-
-    this.router.url === '/business'
-      ? (this.business = true)
-      : (this.business = false);
+    this.plaform = this.deviceDetectorService.getDeviceInfo();
   }
 
   ngAfterViewInit() {
@@ -90,6 +75,10 @@ export class UserFeaturesComponent implements OnInit {
   }
 
   signUp() {
-    this.signUpEvent.emit();
+    if (this.plaform.os === 'android ') {
+      window.open('https://play.google.com/store/apps/details?id=com.spotbie.home', '_blank');
+    } else {
+      window.open('https://apps.apple.com/us/app/spotbie/id1439327004', '_blank');
+    }
   }
 }

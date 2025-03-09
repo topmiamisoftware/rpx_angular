@@ -8,7 +8,6 @@
     <td style="width: 25%">
       <img
         class="spotbie-header-mini-logo"
-        (click)="home()"
         src="assets/images/spotbie_logo_header.svg"
       />
     </td>
@@ -18,16 +17,6 @@
       class="sb-desktopNavBar"
       style="text-align: right; cursor: default"
     >
-      <span (click)="home()"> HOME </span>
-
-      <span (click)="spawnCategories(1, false)"> PLACES TO EAT </span>
-
-      <span (click)="spawnCategories(2, false)"> RETAIL </span>
-
-      <span (click)="spawnCategories(3, false)" style="border: unset"> EVENTS </span>
-
-      <span class="sb-loginTop" (click)="logIn()"> LOGIN </span>
-
       <span (click)="goToBusiness()" *ngIf="!business">
         <i class="fa fa-business-time"></i> BUSINESS
       </span>
@@ -43,35 +32,9 @@
   <table class="spotbie-slider-menu animated slideInLeft">
     <tr>
       <td>
-        <div (click)="home()">HOME</div>
-
-        <div (click)="spawnCategories(1)">
-          PLACES TO EAT <i class="fa fa-angle-right"></i>
-        </div>
-
-        <div (click)="spawnCategories(2)">
-          RETAIL <i class="fa fa-angle-right"></i>
-        </div>
-
-        <div (click)="spawnCategories(3)">
-          EVENTS <i class="fa fa-angle-right"></i>
-        </div>
-
-        <div (click)="openWindow(signUpWindow)">SIGN UP</div>
-
-        <div (click)="openWindow(logInWindow)">LOGIN</div>
-
-        <div (click)="goToBlog()" *ngIf="!business">BUSINESS PLATFORM</div>
+        <div (click)="goToBusiness()" *ngIf="!business">BUSINESS PLATFORM</div>
+        <div (click)="goToAppUser()" *ngIf="business">APP USERS</div>
       </td>
     </tr>
   </table>
 </div>
-
-<app-log-in *ngIf="logInWindow.open"></app-log-in>
-
-<app-sign-up
-  *ngIf="signUpWindow.open"
-  [windowObj]="signUpWindow"
-  (closeWindow)="closeWindow($event)"
-  (logInEvent)="logIn()"
-></app-sign-up>

@@ -1,15 +1,12 @@
 import {NgModule} from '@angular/core';
 import {ExtraOptions, RouterModule, Routes} from '@angular/router';
 import {TermsComponent} from './spotbie/terms/terms.component';
-import {LoginGuardServiceService} from './services/route-services/login-guard-service.service';
-import {InfoObjectComponent} from './spotbie/map/info-object/info-object.component';
 import {BugsComponent} from './bugs/bugs.component';
-import {LoyaltyPointsComponent} from './spotbie/spotbie-logged-in/loyalty-points/loyalty-points.component';
-import {RewardMenuComponent} from './spotbie/spotbie-logged-in/reward-menu/reward-menu.component';
 import {EulaComponent} from './eula/eula.component';
 import {HowDoesItWorkComponent} from './pages/how-does-it-work/how-does-it-work.component';
 import {DoesItWorkComponent} from './pages/does-it-work/does-it-work.component';
 import {PricingComponent} from './pricing/pricing.component';
+import {RedirectToStoreGuard} from './guards/redirect-to-store.guard';
 
 export const routes: Routes = [
   {
@@ -18,53 +15,14 @@ export const routes: Routes = [
   },
   {
     path: 'business',
-    loadChildren: () =>
-      import('./business/business.module').then(m => m.BusinessModule),
+    loadChildren: () => import('./business/business.module').then(m => m.BusinessModule),
   },
+  {path: 'privacy', component: TermsComponent},
   {path: 'terms', component: TermsComponent},
-  {path: 'terms', component: EulaComponent},
   {path: 'bugs', component: BugsComponent},
   {path: 'how-does-it-work', component: HowDoesItWorkComponent},
   {path: 'the-idea', component: DoesItWorkComponent},
-  {path: 'earn-loyalty-points', component: BugsComponent},
-  {path: 'award-loyalty-points', component: BugsComponent},
   {path: 'pricing', component: PricingComponent},
-  {
-    path: 'password',
-    loadChildren: () =>
-      import(
-        './spotbie/spotbie-logged-out/forgot-password/forgot-password.module'
-      ).then(m => m.ForgotPasswordModule),
-  },
-  {
-    path: 'user-home',
-    loadChildren: () =>
-      import('./user-home/user-home.module').then(m => m.UserHomeModule),
-    canActivate: [LoginGuardServiceService],
-  },
-  {
-    path: 'business-app-download',
-    loadChildren: () =>
-      import('./pages/download-app/download-app.module').then(
-        m => m.DownloadAppModule
-      ),
-  },
-  {path: 'business-menu/:qrCode/:rewardUuid', component: RewardMenuComponent},
-  {path: 'business-menu/:qrCode', component: RewardMenuComponent},
-  {
-    path: 'community',
-    loadChildren: () =>
-      import('./spotbie/community-member/community-member.module').then(
-        m => m.CommunityMemberModule
-      ),
-  },
-  {
-    path: 'loyalty-points/:qrCode/:totalSpent/:loyaltyPointReward',
-    component: LoyaltyPointsComponent,
-  },
-  {path: 'place-to-eat/:name/:id', component: InfoObjectComponent},
-  {path: 'shopping/:name/:id', component: InfoObjectComponent},
-  {path: 'event/:name/:id', component: InfoObjectComponent},
   {
     path: 'delete-account-and-data',
     loadChildren: () =>
@@ -73,14 +31,11 @@ export const routes: Routes = [
       ),
   },
   {
-    path: 'make-payment',
-    loadChildren: () =>
-      import('./make-payment/make-payment.module').then(
-        m => m.MakePaymentModule
-      ),
+    path: 'promotions/sign-up',
+    canActivate: [RedirectToStoreGuard],
   },
-  {path: 'schedule-demo', redirectTo: '/business#scheduleDemo'},
-  {path: '', redirectTo: '/business', pathMatch: 'full'},
+  // {path: 'schedule-demo', redirectTo: '/business#scheduleDemo'},
+  {path: '', redirectTo: '/home', pathMatch: 'full'},
 ];
 
 const routerOptions: ExtraOptions = {

@@ -4,19 +4,12 @@
   "version": "1.0.2",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --host=0.0.0.0 --ssl",
+    "start": "ng serve",
+    "watch": "ng build --watch --configuration development",
     "build": "ng build",
-    "post-build": "node ./build/post-build.js",
     "test": "ng test",
     "lint": "gts lint",
     "e2e": "ng e2e",
-    "dev:ssr": "ng run spotbie:serve-ssr",
-    "serve:ssr": "node dist/spotbie/server/main.js",
-    "build:ssr": "ng build --configuration production --output-hashing=all && ng run spotbie:server:production",
-    "prerender": "ng run spotbie:prerender",
-    "build:android": "ng build --configuration production --base-href . --output-path /home/spotbie/Desktop/spotbie/spotbie_android/www/",
-    "build:ios": "ng build --configuration production --base-href . --output-path ~/Desktop/spotbie/spotbie_ios/www/",
-    "deploy:server": "node deploy",
     "clean": "gts clean",
     "compile": "tsc",
     "fix": "gts fix",
@@ -47,7 +40,6 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.36",
     "@fortawesome/free-brands-svg-icons": "^5.15.4",
     "@fortawesome/free-solid-svg-icons": "^5.15.4",
-    "@nguniversal/express-engine": "^14.2.0",
     "@ngx-share/button": "^7.1.4",
     "@ngx-share/buttons": "^7.1.4",
     "@ngx-share/core": "^7.1.4",
@@ -114,7 +106,6 @@
     "typescript": "~4.6"
   },
   "description": "This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.9.",
-  "main": "deploy.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/0456franco/angular_spotbie.git"

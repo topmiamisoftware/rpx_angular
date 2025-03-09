@@ -16,9 +16,8 @@ import {environment} from '../../../environments/environment';
   templateUrl: './business-features.component.html',
   styleUrls: ['../features.component.css', './business-features.component.css'],
 })
-export class BusinessFeaturesComponent implements OnInit {
+export class BusinessFeaturesComponent {
   @Output() spawnCategoriesEvt = new EventEmitter();
-  @Output() signUpEvent = new EventEmitter();
 
   @ViewChild('awardLoyaltyPointsToCustomers')
   awardLoyaltyPointsToCustomers: ElementRef;
@@ -38,7 +37,7 @@ export class BusinessFeaturesComponent implements OnInit {
   ) {
     this.isMobile = this.deviceDetector.isMobile();
   }
-
+  
   calendly() {
     this.loading = true;
     this.calendlyUp = !this.calendlyUp;
@@ -54,9 +53,6 @@ export class BusinessFeaturesComponent implements OnInit {
     switch (action) {
       case 0:
         this.openPricing();
-        break;
-      case 1:
-        this.openLiveDemo();
         break;
       case 2:
         this.openHowDoesItWork();
@@ -75,39 +71,16 @@ export class BusinessFeaturesComponent implements OnInit {
     this.router.navigate(['the-idea']);
   }
 
-  openLiveDemo() {
-    window.open('https://demo.spotbie.com', '_blank');
-  }
-
   openPricing() {
     this.router.navigate(['pricing']);
-  }
-
-  signUp() {
-    this.signUpEvent.emit();
   }
 
   joinTheBeta() {
     window.open(`${environment.baseUrl}/beta`, '_blank');
   }
 
-  spawnCategories(category: number) {
-    this.spawnCategoriesEvt.emit(category);
-  }
-
-  openBlog() {
-    window.open('https://blog.spotbie.com/', '_blank');
-  }
-
   openIg() {
-    if (this.business) {
-      window.open('https://www.instagram.com/spotbie.business/', '_blank');
-    } else {
-      window.open(
-        'https://www.instagram.com/spotbie.loyalty.points/',
-        '_blank'
-      );
-    }
+    window.open('https://www.instagram.com/spotbie.business/', '_blank');
   }
 
   openYoutube() {
@@ -119,12 +92,6 @@ export class BusinessFeaturesComponent implements OnInit {
 
   openTwitter() {
     window.open('https://twitter.com/SpotBie', '_blank');
-  }
-
-  ngOnInit(): void {
-    this.router.url === '/business'
-      ? (this.business = true)
-      : (this.business = false);
   }
 
   ngAfterViewInit() {

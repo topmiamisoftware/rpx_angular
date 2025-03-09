@@ -79,7 +79,6 @@ h4 {
   padding-top: 15px;
   padding-bottom: 20px;
 }
-
 h4::after {
   position: relative;
   width: 100%;
@@ -87,7 +86,6 @@ h4::after {
   min-height: 1px;
   height: 1px;
 }
-
 h5 {
   position: relative;
   margin: 0 auto;
@@ -98,7 +96,6 @@ h5 {
   text-align: center;
   letter-spacing: 1px;
 }
-
 p {
   margin: 0 auto;
   font-size: 1rem;
@@ -125,7 +122,6 @@ p {
   width: 25%;
   min-width: 25%;
   font-size: 0.7rem;
-  cursor: pointer;
 }
 .sb-homePageIconsTable img {
   max-width: 100px;
@@ -137,6 +133,28 @@ p {
 h1 {
   font-size: 1.5rem;
 }
+.content-user-features {
+  position: relative;
+  max-height: 100vh;
+  min-width: 102vw;
+  overflow-y: scroll;
+  text-align: center;
+  background-color: #332f3e;
+}
+
+#sbReadImageRestaurants {
+  background: url('../../assets/images/home_imgs/jpg/spotbie-find-restaurant-customers-near-you.jpg');
+}
+#sbReadImageEvents {
+  background: url('../../assets/images/home_imgs/jpg/spotbie-find-restaurant-customers.jpg');
+}
+#sbReadImageShopping {
+  background: url('../../assets/images/home_imgs/jpg/spotbie-find-customers-near-you.jpg');
+}
+#sbReadImageUsers {
+  background: url('../../assets/images/home_imgs/jpg/spotbie-miami-find-new-friends.jpg');
+}
+
 @media (max-width: 840px) {
   p {
     width: 90%;
@@ -184,5 +202,22 @@ h1 {
   .sb-homePageIconsTable img {
     width: 70px;
     min-width: 70px;
+  }
+}
+
+.spotbie-menu-page-padding-top-not-logged {
+  padding-top: 0;
+  margin-top: env(safe-area-inset-top);
+}
+
+@media (max-width: 560px) {
+  .spotbie-menu-page-padding-top-not-logged {
+    padding-top: 66px;
+  }
+}
+
+@media (max-width: 360px) {
+  .spotbie-menu-page-padding-top-not-logged {
+    padding-top: 52px;
   }
 }

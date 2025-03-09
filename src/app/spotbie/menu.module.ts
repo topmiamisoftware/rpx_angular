@@ -5,14 +5,12 @@ import {MenuComponent} from './menu.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HelperModule} from '../helpers/helper.module';
 import {RouterModule} from '@angular/router';
-import {MenuLoggedInModule} from './spotbie-logged-in/menu-logged-in.module';
 import {MenuLoggedOutModule} from './spotbie-logged-out/menu-logged-out.module';
 
 @NgModule({
   declarations: [MenuComponent],
   imports: [
     CommonModule,
-    MenuLoggedInModule,
     MenuLoggedOutModule,
     HttpClientModule,
     FormsModule,
